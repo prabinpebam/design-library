@@ -88,10 +88,11 @@ export function loadFace(id: string): Promise<void> {
  * The family each role resolves to under a choice of faces: an unset role collapses onto the one above it (ui → text →
  * display); code with no face stays on the system monospace.
  */
-export function resolveRoles(roles: Record<FontRoleId, string | null>): Record<FontRoleId, FontFace | null> {
-  const display = faceOf(roles.display) ?? null;
-  const text = faceOf(roles.text) ?? display;
-  const ui = faceOf(roles.ui) ?? text;
-  const code = faceOf(roles.code) ?? null;
+export function resolveRoles(roles: Record<FontRoleId, string | null>, extra: FontFace[] = []): Record<FontRoleId, FontFace | null> {
+  const of = (id: string | null | undefined) => extra.find((f) => f.id === id) ?? faceOf(id);
+  const display = of(roles.display) ?? null;
+  const text = of(roles.text) ?? display;
+  const ui = of(roles.ui) ?? text;
+  const code = of(roles.code) ?? null;
   return { display, text, ui, code };
 }

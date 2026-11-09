@@ -12,7 +12,8 @@ import '@design-library/core/css/index.css';
 // Q70: the library's global token choices (colour, type, icons, space, shape) apply here too and follow live.
 import './data/presets';
 import { FloatingBar, Notifications, SegmentedControl, suspendMotion, Text } from '@design-library/core/react';
-import { applyBrand, applySettings, type BaseColours } from '@design-library/core/theme';
+import { applyBrand, applyFonts, applySettings, type BaseColours } from '@design-library/core/theme';
+import siteFaceUrl from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
 import { themeBrand } from './data/brand';
 import { AppearanceContext, type Contrast, type Scheme } from './data/contexts';
 import { layoutOf, statesOf } from './data/templates';
@@ -43,6 +44,23 @@ if (base && BASES[base]) applyBrand({ ...themeBrand, base: BASES[base] });
  * bright accent (pinned at step 500 with `pin`), with or without `contrast: 'guard'`.
  */
 const query = new URLSearchParams(window.location.search);
+/**
+ * A site-supplied face on the Typography page (IP23): `site.html?face=site#/app/…` sets the display role to a face the
+ * site serves itself (an open-licence file, registered under the site's own family name), with a metric-matched fallback.
+ */
+if (query.get('face') === 'site')
+  void applyFonts({
+    roles: { display: 'site-display' },
+    faces: [
+      {
+        id: 'site-display',
+        family: 'Site Grotesk',
+        classification: 'sans',
+        sources: [{ url: siteFaceUrl, format: 'woff2', weight: '300 700' }],
+        fallback: { local: 'Arial', sizeAdjust: '102%', ascentOverride: '96%', descentOverride: '28%', lineGapOverride: '0%' },
+      },
+    ],
+  });
 const seed = query.get('seed');
 if (seed && /^#[0-9a-f]{6}$/i.test(seed))
   applyBrand({ colours: { 1: { seed, ...(query.get('pin') ? { pins: { '500': seed } } : {}) } }, contrast: query.get('guard') ? 'guard' : 'keep' });

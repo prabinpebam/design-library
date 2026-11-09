@@ -346,3 +346,4 @@ export { default as skeletonStories } from './stories/Skeleton.stories';
 export { default as loadingStories } from './stories/Loading.stories';
 export { default as motionStories } from './stories/Motion.stories';
 export { default as themeStories } from './stories/Theme.stories';
+export { default as fontsStories } from './stories/Fonts.stories';

@@ -277,22 +277,63 @@ const FALLBACK: Record<FontFace['classification'], string> = {
   serif: "Georgia, 'Times New Roman', serif",
   mono: "ui-monospace, SFMono-Regular, 'Cascadia Code', Consolas, monospace",
 };
+/**
+ * A typeface the site supplies itself (IP23): its own files, served by the site, under the site's licence. Name it by
+ * `id` in `roles` like any registry face, and core headings, text and controls use it.
+ */
+export interface SiteFace {
+  /** The id roles name, e.g. `'brand-display'`. Must not be a registry face's id. */
+  id: string;
+  /** The CSS family name the files register under, e.g. `'Bebas Neue'`. */
+  family: string;
+  /** Picks the system fallback while the files load. */
+  classification: 'sans' | 'serif' | 'mono';
+  /** The files: one entry per weight or style range. */
+  sources: { url: string; format?: 'woff2' | 'woff' | 'truetype' | 'opentype'; weight?: string; style?: 'normal' | 'italic'; unicodeRange?: string }[];
+  /** `font-display`: `swap` (default) shows the fallback at once; `optional` keeps the fallback when the files are late. */
+  display?: 'swap' | 'optional' | 'fallback' | 'block';
+  /**
+   * A metric-matched fallback so the swap doesn't move the page: a local face reshaped to the site face's size and
+   * line metrics (CSS `size-adjust` and the overrides), e.g. `{ local: 'Arial', sizeAdjust: '92%', ascentOverride: '96%' }`.
+   */
+  fallback?: { local: string; sizeAdjust?: string; ascentOverride?: string; descentOverride?: string; lineGapOverride?: string };
+}
+
 export interface FontChoice {
   /** A font preset id from `fontPresets` (`@design-library/core/fonts`); the theme's default when left out. */
   preset?: string;
-  /** Face id per role (`display`, `text`, `ui`, `code`) over the preset's; `null` lets a role use the one it collapses to. */
+  /** Face id per role (`display`, `text`, `ui`, `code`) over the preset's; `null` lets a role use the one it collapses to. A site face's id works too. */
   roles?: Partial<Record<FontRoleId, string | null>>;
   /** Variable-font axes per role, e.g. `{ display: { opsz: 72 } }`. */
   axes?: Partial<Record<FontRoleId, Record<string, number>>>;
+  /** Typefaces the site supplies (IP23), for `roles` to name by id. Without it, only registry faces. */
+  faces?: SiteFace[];
 }
+
+const asFace = (s: SiteFace): FontFace => ({
+  id: s.id,
+  name: s.family,
+  family: s.family,
+  classification: s.classification,
+  suits: ['display', 'text', 'ui', 'code'],
+  sample: '',
+  description: 'Supplied by the site',
+  designer: '',
+  licence: "The site's",
+  package: '',
+  axes: [],
+  italic: s.sources.some((x) => x.style === 'italic'),
+});
+const fallbackName = (s: SiteFace) => `${s.family} fallback`;
 
 /** The font-role custom properties for a choice, and the faces it needs. Throws on an unknown preset or face. */
 export function fontVars(choice: FontChoice = {}): { vars: Record<string, string>; faces: string[] } {
   const preset = choice.preset ? fontPresets.find((p) => p.id === choice.preset) : (fontPresets.find((p) => p.default) ?? fontPresets[0]);
   if (!preset) throw new Error(`fontVars: no font preset "${choice.preset}"; use one of ${fontPresets.map((p) => p.id).join(', ')}`);
+  const site = choice.faces ?? [];
   const roles = { ...preset.roles, ...(choice.roles ?? {}) } as Record<FontRoleId, string | null>;
   const axes = { ...(preset.axes ?? {}), ...(choice.axes ?? {}) } as Partial<Record<FontRoleId, Record<string, number>>>;
-  const faces = resolveRoles(roles);
+  const faces = resolveRoles(roles, site.map(asFace));
   for (const [role, id] of Object.entries(roles)) if (id && !faces[role as FontRoleId]) throw new Error(`fontVars: no font face "${id}" for ${role}`);
   const source = (role: FontRoleId): FontRoleId => {
     if (role === 'code' || roles[role]) return role;
@@ -303,15 +344,71 @@ export function fontVars(choice: FontChoice = {}): { vars: Record<string, string
   const vars: Record<string, string> = {};
   for (const role of fontRoles) {
     const face = faces[role.id];
-    vars[role.variable] = face ? `'${face.family}', ${FALLBACK[face.classification]}` : FALLBACK.mono;
+    const own = face && site.find((s) => s.id === face.id);
+    const stack = face ? `'${face.family}', ${own?.fallback ? `'${fallbackName(own)}', ` : ''}${FALLBACK[face.classification]}` : FALLBACK.mono;
+    vars[role.variable] = stack;
     vars[`--axes-${role.id}`] = settings(axes[source(role.id)]);
   }
   return { vars, faces: [...new Set(Object.values(faces).flatMap((f) => (f ? [f.id] : [])))] };
 }
 
-/** Loads a choice's faces (from the installed `@fontsource-variable` packages) and sets its roles on an element. */
+/** The `@font-face` rules for a choice's site faces (IP23), for a stylesheet with no script; empty without `faces`. */
+export function fontFacesCss(choice: FontChoice = {}): string {
+  const rules: string[] = [];
+  for (const s of choice.faces ?? []) {
+    for (const src of s.sources)
+      rules.push(
+        `@font-face {\n  font-family: '${s.family}';\n  src: url('${src.url}')${src.format ? ` format('${src.format}')` : ''};\n  font-display: ${s.display ?? 'swap'};${src.weight ? `\n  font-weight: ${src.weight};` : ''}${src.style ? `\n  font-style: ${src.style};` : ''}${src.unicodeRange ? `\n  unicode-range: ${src.unicodeRange};` : ''}\n}`,
+      );
+    if (s.fallback) {
+      const f = s.fallback;
+      rules.push(
+        `@font-face {\n  font-family: '${fallbackName(s)}';\n  src: local('${f.local}');${f.sizeAdjust ? `\n  size-adjust: ${f.sizeAdjust};` : ''}${f.ascentOverride ? `\n  ascent-override: ${f.ascentOverride};` : ''}${f.descentOverride ? `\n  descent-override: ${f.descentOverride};` : ''}${f.lineGapOverride ? `\n  line-gap-override: ${f.lineGapOverride};` : ''}\n}`,
+      );
+    }
+  }
+  return rules.join('\n');
+}
+
+const registered = new Set<string>();
+/** Adds a site face's files (and its metric-matched fallback) to the document once; resolves when they've loaded. */
+function loadSiteFace(s: SiteFace): Promise<void> {
+  const fonts = document.fonts;
+  const made: globalThis.FontFace[] = [];
+  for (const src of s.sources) {
+    const key = `${s.family}|${src.url}`;
+    if (registered.has(key)) continue;
+    registered.add(key);
+    made.push(
+      new globalThis.FontFace(s.family, `url('${src.url}')${src.format ? ` format('${src.format}')` : ''}`, {
+        display: s.display ?? 'swap',
+        ...(src.weight ? { weight: src.weight } : {}),
+        ...(src.style ? { style: src.style } : {}),
+        ...(src.unicodeRange ? { unicodeRange: src.unicodeRange } : {}),
+      }),
+    );
+  }
+  if (s.fallback && !registered.has(fallbackName(s))) {
+    registered.add(fallbackName(s));
+    const f = s.fallback;
+    // size-adjust and the overrides are newer FontFace descriptors than the DOM types in use here.
+    const descriptors = { sizeAdjust: f.sizeAdjust, ascentOverride: f.ascentOverride, descentOverride: f.descentOverride, lineGapOverride: f.lineGapOverride } as FontFaceDescriptors;
+    fonts.add(new globalThis.FontFace(fallbackName(s), `local('${f.local}')`, descriptors));
+  }
+  for (const face of made) fonts.add(face);
+  return Promise.all(made.map((face) => face.load().catch(() => undefined))).then(() => undefined);
+}
+
+/**
+ * Loads a choice's faces (from the installed `@fontsource-variable` packages, or a site face's own files) and sets its
+ * roles on an element. A site face that fails to load leaves its fallback in place.
+ */
 export function applyFonts(choice: FontChoice = {}, target: HTMLElement = document.documentElement): Promise<void> {
   const { vars, faces } = fontVars(choice);
   for (const [k, v] of Object.entries(vars)) target.style.setProperty(k, v);
-  return Promise.all(faces.map((id) => loadFace(id))).then(() => undefined);
+  const site = choice.faces ?? [];
+  return Promise.all(faces.map((id) => {
+    const own = site.find((s) => s.id === id);
+    return own ? loadSiteFace(own) : loadFace(id);
+  })).then(() => undefined);
 }
