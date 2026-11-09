@@ -3,6 +3,12 @@
   "template": "conference",
   "shared": true,
   "contentVersion": 1,
+  "strings": {
+    "unconfirmed": {
+      "speaker": "Speaker to confirm",
+      "place": "Room to confirm"
+    }
+  },
   "regions": {
     "header": [
       {

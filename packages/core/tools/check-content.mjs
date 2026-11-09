@@ -18,6 +18,8 @@
  *
  * Content outside templates (IP39, DP7): `--content <folder>` (repeatable) checks every .json file under it that names
  * a `$schema` against that schema: a path relative to the file, a core schema's $id, or a template's content $id.
+ * Values not yet confirmed (DP4): `{ "unconfirmed": "speaker" }` in any core text field is counted by file; its key needs
+ * a phrase in the template's shared file (`strings.unconfirmed`); `--release` fails while any remain.
  * Template-aware warnings (they don't fail the run during the Beta, Q105.3; `--strict` makes them fail): a part file
  * under parts/fundamentals|compounds|layouts/ the manifest doesn't list, and, with `--src <site source>`, a template
  * whose screens nothing outside it renders (no file imports the template, or none uses TemplateView).
@@ -37,6 +39,7 @@ const templatesDir = resolve(root, arg('templates') ?? 'packages/templates');
 const indexFile = arg('index') ? resolve(root, arg('index')) : join(templatesDir, 'index.ts');
 const contentDirs = process.argv.flatMap((a, i) => (a === '--content' && process.argv[i + 1] ? [resolve(root, process.argv[i + 1])] : []));
 const strict = process.argv.includes('--strict');
+const release = process.argv.includes('--release');
 const srcDir = arg('src') ? resolve(root, arg('src')) : undefined;
 const walkCode = (d) =>
   existsSync(d)
@@ -84,6 +87,18 @@ const lint = (file, value, pointer = '', key = '') => {
     if (key !== 'code' && key !== '$schema' && looksLikeCode.test(value)) fail(file, pointer, 'looks like markup, CSS or script', 'write plain words; structure goes in blocks and look in the template');
   } else if (Array.isArray(value)) value.forEach((v, i) => lint(file, v, `${pointer}/${i}`, key));
   else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) lint(file, v, `${pointer}/${k}`, k);
+};
+
+// Values not yet confirmed (DP4): counted by file; a key needs the template's phrase; `--release` fails on any.
+const unconfirmed = new Map();
+const isUnconfirmed = (v) => !!v && typeof v === 'object' && !Array.isArray(v) && typeof v.unconfirmed === 'string' && Object.keys(v).length === 1;
+const countUnconfirmed = (file, value, phrases, pointer = '') => {
+  if (isUnconfirmed(value)) {
+    unconfirmed.set(rel(file), (unconfirmed.get(rel(file)) ?? 0) + 1);
+    if (phrases && !phrases[value.unconfirmed]) fail(file, pointer, `is unconfirmed "${value.unconfirmed}", which has no phrase`, `add "${value.unconfirmed}": "… to confirm" to strings.unconfirmed in the shared file`);
+    if (release) fail(file, pointer, `is still unconfirmed ("${value.unconfirmed}")`, 'confirm the value before a release build, or drop --release');
+  } else if (Array.isArray(value)) value.forEach((v, i) => countUnconfirmed(file, v, phrases, `${pointer}/${i}`));
+  else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) countUnconfirmed(file, v, phrases, `${pointer}/${k}`);
 };
 
 // References: pictures by id, `/layout` links to built layouts of the same template.
@@ -224,6 +239,8 @@ for (const id of folders) {
       outOf(items, `/sections/${si}`, `section "${s.id}"`);
     });
   }
+  const sharedFile = manifest.shared ? join(dir, manifest.shared) : undefined;
+  const phrases = (sharedFile && existsSync(sharedFile) ? JSON.parse(readFileSync(sharedFile, 'utf8'))?.strings?.unconfirmed : undefined) ?? {};
   const ctx = { id, assets: new Set(Object.keys(assetData?.assets ?? {})), built: new Set(layouts.map((l) => l.id)) };
   const sharedRegions = new Set(layouts.flatMap((l) => (l.regions ?? []).filter((r) => r.shared).map((r) => r.id)));
   const blockSchema = (type) => (customBlocks.has(type) ? `${schema.$id}${customBlocks.get(type).schema}` : coreBlocks.includes(type) ? `https://design-library.local/core/blocks/1#/$defs/${type}` : undefined);
@@ -264,6 +281,7 @@ for (const id of folders) {
     }
     lint(file, data);
     refs(file, data, ctx);
+    countUnconfirmed(file, data, phrases);
   };
 
   for (const l of layouts) {
@@ -359,7 +377,13 @@ for (const d of contentDirs) {
     const { $schema: _ref, ...content } = data;
     check(file, target, content);
     lint(file, content);
+    countUnconfirmed(file, content);
   }
+}
+
+if (unconfirmed.size) {
+  const total = [...unconfirmed.values()].reduce((a, b) => a + b, 0);
+  console.log(`check:content: ${total} value${total === 1 ? '' : 's'} not yet confirmed${release ? '' : ' (--release fails on any)'}\n` + [...unconfirmed].map(([file, n]) => `  ${file}: ${n}`).join('\n'));
 }
 
 if (warnings.length) console.warn(`check:content: ${warnings.length} warning${warnings.length === 1 ? '' : 's'}${strict ? '' : ' (not failing the run; --strict makes them fail)'}\n` + warnings.map((w) => `  ${w}`).join('\n'));

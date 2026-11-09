@@ -17,6 +17,14 @@
       "propertyNames": { "$ref": "#/$defs/id" },
       "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/block" } }
     },
+    "strings": {
+      "type": "object",
+      "description": "Words the renderer needs that no one block holds (shared file only). `unconfirmed`: the phrase shown for each kind of value not yet confirmed (DP4), such as { \"speaker\": \"Speaker to confirm\" }.",
+      "properties": {
+        "unconfirmed": { "type": "object", "propertyNames": { "$ref": "#/$defs/id" }, "additionalProperties": { "type": "string", "minLength": 1 } }
+      },
+      "additionalProperties": false
+    },
     "record": { "type": "object", "description": "An application layout's data; checked against the template's `#/$defs/record.{layout}` (`record.shared` in the shared file)." }
   },
   "additionalProperties": false,

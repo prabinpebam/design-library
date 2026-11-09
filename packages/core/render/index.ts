@@ -5,4 +5,5 @@ export { BLOCKS, actionButtons } from './blocks';
 export { fill } from './fill';
 export { RichText, richText, plainText } from './rich-text';
 export { loadTemplate } from './load';
+export { resolveUnconfirmed, findUnconfirmed, isUnconfirmed } from './unconfirmed';
 export type * from './types';

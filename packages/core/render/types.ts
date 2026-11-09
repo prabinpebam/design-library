@@ -212,7 +212,15 @@ export interface TemplateContent {
   settings?: Record<string, unknown>;
   regions?: Record<string, Block[]>;
   record?: Record<string, unknown>;
+  /** Shared file only: words the renderer needs that no block holds; `unconfirmed` maps each kind of unconfirmed value to its phrase (DP4). */
+  strings?: { unconfirmed?: Record<string, string> };
 }
+
+/**
+ * A value not yet confirmed (DP4): allowed wherever content takes core text, and shown as the shared file's phrase for
+ * its key. The renderer resolves it before blocks see it, so block types keep their plain `string` fields.
+ */
+export type Unconfirmed = { unconfirmed: string };
 
 /** A picture tone (DP3): drawn by the picture treatments (IP31). */
 export type PictureTone = 'none' | 'greyscale' | 'duotone';

@@ -5,8 +5,41 @@
   "description": "The standard block types every template may use (Q64). Each `$defs` entry named after a block type is that block's shape; `packages/core/render/blocks.tsx` maps each to core components. `settings.{Layout}` entries are the options of core layout components. Every word a person reads, including labels and messages, is in the block (Q64); words are plain text (backticks for inline code are the only mark); pictures are asset ids; `/layout` links point at a layout of the same template.",
   "$defs": {
     "text": {
-      "type": "string",
-      "minLength": 1
+      "description": "Words a person reads: a non-empty string, or a value not yet confirmed (DP4).",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/unconfirmed"
+        }
+      ]
+    },
+    "words": {
+      "description": "Words that may be empty: a string, or a value not yet confirmed (DP4).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/unconfirmed"
+        }
+      ]
+    },
+    "unconfirmed": {
+      "description": "A value not yet confirmed (DP4): { \"unconfirmed\": \"speaker\" }. The renderer shows the template's phrase for the key (the shared file's `strings.unconfirmed`, such as \"Speaker to confirm\"); the content check counts them by file and `--release` fails on any.",
+      "type": "object",
+      "required": [
+        "unconfirmed"
+      ],
+      "properties": {
+        "unconfirmed": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      },
+      "additionalProperties": false
     },
     "richText": {
       "description": "Rich inline text (DP1): a plain string, or a list of strings and marked runs ({ \"text\", \"mark\" }). Marks: emphasis, strong, accent (the brand colour, Text tone accent), code, link (with href) and break (a new line, { \"mark\": \"break\" }). No markup.",
@@ -246,19 +279,19 @@
                 "$ref": "#/$defs/href"
               },
               "kind": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "people": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "$ref": "#/$defs/words"
                 }
               },
               "place": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "description": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "pause": {
                 "type": "boolean"
@@ -489,10 +522,10 @@
                 ]
               },
               "unit": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "description": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               }
             },
             "additionalProperties": false
@@ -539,7 +572,7 @@
                 "$ref": "#/$defs/text"
               },
               "eyebrow": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "description": {
                 "$ref": "#/$defs/text"
@@ -548,7 +581,7 @@
                 "$ref": "#/$defs/asset"
               },
               "meta": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "href": {
                 "$ref": "#/$defs/href"
@@ -744,7 +777,7 @@
                 ]
               },
               "hint": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "optional": {
                 "type": "boolean"
@@ -1077,7 +1110,7 @@
                     "$ref": "#/$defs/text"
                   },
                   "name": {
-                    "type": "string"
+                    "$ref": "#/$defs/words"
                   }
                 },
                 "required": [
@@ -1173,7 +1206,7 @@
                 "$ref": "#/$defs/text"
               },
               "eyebrow": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               },
               "description": {
                 "$ref": "#/$defs/text"
@@ -1480,7 +1513,7 @@
                 "$ref": "#/$defs/text"
               },
               "meta": {
-                "type": "string"
+                "$ref": "#/$defs/words"
               }
             },
             "additionalProperties": false

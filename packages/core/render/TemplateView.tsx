@@ -9,6 +9,7 @@ import { Fragment, type ReactNode } from 'react';
 import { Alert, SiteLayout, Text } from '../react';
 import { BLOCKS } from './blocks';
 import type { Block, BlockRenderer, LayoutBinding, RenderContext, Template, TemplateContent } from './types';
+import { resolveUnconfirmed } from './unconfirmed';
 
 /** The address of a template's layout; the library and the standalone site share it. */
 export const defaultHref = (template: string, layout: string) => `#/app/${template}/${layout}`;
@@ -63,8 +64,11 @@ export function TemplateView({ template, layout, hrefFor = defaultHref }: Templa
   const raw = entry ? contentFor(template, entry.id, entry.stateOf) : undefined;
   if (!entry || !raw) return <Text as="p">{`${manifest.title} has no built layout called “${layout}”.`}</Text>;
   const href = (to: string) => hrefFor(manifest.id, to);
-  const content: TemplateContent = resolveLinks(raw, href);
-  const shared = template.shared ? resolveLinks(template.shared, href) : undefined;
+  // Values not yet confirmed (DP4) read the shared file's phrase for their key, before any block sees them.
+  const phrases = template.shared?.strings?.unconfirmed;
+  const resolve = <T,>(value: T): T => resolveUnconfirmed(resolveLinks(value, href), phrases);
+  const content: TemplateContent = resolve(raw);
+  const shared = template.shared ? resolve(template.shared) : undefined;
   const custom = template.registry?.blocks ?? {};
 
   const ctx: RenderContext = {
@@ -93,5 +97,5 @@ export function TemplateView({ template, layout, hrefFor = defaultHref }: Templa
   };
   const component = entry.component ?? '';
   const binding = template.registry?.layouts?.[component] ?? LAYOUTS[component];
-  return binding ? binding({ content, shared, contentOf: (id) => (template.content[id] ? resolveLinks(template.content[id], href) : undefined), ctx, region }) : problem('layout', `${manifest.title}’s “${entry.title}” names layout “${component}”, which isn’t a core layout or one the template registers.`);
+  return binding ? binding({ content, shared, contentOf: (id) => (template.content[id] ? resolve(template.content[id]) : undefined), ctx, region }) : problem('layout', `${manifest.title}’s “${entry.title}” names layout “${component}”, which isn’t a core layout or one the template registers.`);
 }

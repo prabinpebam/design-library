@@ -88,7 +88,7 @@
                     "people": [
                       "Sana Iqbal"
                     ],
-                    "place": "Studio",
+                    "place": { "unconfirmed": "place" },
                     "description": "Bring a laptop. 20 places, first come.",
                     "href": "/speaker"
                   }
@@ -117,7 +117,7 @@
                     "people": [
                       "Priya Raman",
                       "Jonas Lind",
-                      "Ama Mensah"
+                      { "unconfirmed": "speaker" }
                     ],
                     "place": "Room 2",
                     "href": "/speaker"
