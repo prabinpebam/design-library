@@ -4,7 +4,7 @@
   "tier": "fundamental",
   "import": "@design-library/core/react",
   "file": "@design-library/core/react/fundamentals/Grid.tsx",
-  "summary": "Equal columns for things compared side by side (options, variants), as many as fit at `size.column-min` each, a gutter apart; rows sit a group's space apart. Below two columns' width it becomes one column, so it never scrolls sideways from 320 px. Not for a page's regions (use LibraryLayout), a column of unrelated content (use Stack) or a wrapping row of small marks (use Cluster).",
+  "summary": "Equal columns for things compared side by side (options, variants), as many as fit at `size.column-min` each, a gutter apart; rows sit a group's space apart. Below two columns' width it becomes one column, so it never scrolls sideways from 320 px. With `ratio` it draws two uneven columns instead (a wide and a narrow one, or a heading beside its content) that stack when their container is narrow. Not for a page's regions (use LibraryLayout), a column of unrelated content (use Stack) or a wrapping row of small marks (use Cluster).",
   "family": "arrangement",
   "a11y": [
     "A plain `div` with no role: it arranges, it doesn't group for assistive technology. Reading order is the source order, row by row."
@@ -27,16 +27,29 @@
         {
           "name": "max",
           "type": "2 | 3 | 4",
-          "description": "The most columns, even with room for more: 2 keeps four things 2 × 2 instead of 3 + 1. Default: as many as fit."
+          "description": "The most columns, even with room for more: 2 keeps four things 2 × 2 instead of 3 + 1. Default: as many as fit. Ignored with `ratio`."
+        },
+        {
+          "name": "ratio",
+          "type": "'2:1' | '3:2' | '1:2' | '2:3' | 'aside'",
+          "description": "Two uneven columns instead of equal ones (IP20): `2:1` and `3:2` give the start column the larger share, `1:2` and `2:3` the end column; `aside` keeps the start column at `--c-grid-aside` (a heading beside its content) and gives the end column the rest. Children alternate start, end, start, end. Below two columns' width (two `size.column-min` and a gutter) they stack in source order. Default: equal columns."
         }
       ]
     }
   ],
   "uses": [],
   "tokens": [
+    "--c-grid-aside",
     "--size-column-min",
     "--space-gutter",
     "--space-stack-group"
+  ],
+  "settings": [
+    {
+      "var": "--c-grid-aside",
+      "default": "16rem",
+      "description": "The start column's width when ratio is aside, a heading beside its content (default size.column-min, 16rem)."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/grid",
   "principles": [

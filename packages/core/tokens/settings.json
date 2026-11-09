@@ -8,6 +8,9 @@
     "--c-site-layout-padding-block": "The space above the first band and under the last (default space.stack-page).",
     "--c-site-layout-padding-start": "The space above the first band only; follows padding-block when not set. 0 puts the first band right under the header, as opening=\"flush\" does."
   },
+  "Grid": {
+    "--c-grid-aside": "The start column's width when ratio is aside, a heading beside its content (default size.column-min, 16rem)."
+  },
   "Link": {
     "--link-decoration": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus.",
     "--link-decoration-hover": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour."

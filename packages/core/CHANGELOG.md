@@ -8,6 +8,8 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
+- **Added (IP20):** `Grid` `ratio` for two uneven columns: `'2:1'`, `'3:2'`, `'1:2'`, `'2:3'`, and `'aside'` (a heading beside its content, the start column at the new theme setting `--c-grid-aside`, default 16 rem). Children alternate start and end; the pair stacks in source order when the narrower share would fall below `size.column-min`, so nothing scrolls sideways at 320 px. Without `ratio` nothing changes. **Adopt:** replace DesignUp's hand splits (`designup.css` `526fr 565fr`, `553fr 530fr`, `665fr 520fr` and the hero words column) with `<Grid ratio="…">`, and the sponsors layout's intro beside the wall (`sponsors-layout.css`, `--t-designup-sponsors-layout-intro-width`) with `<Grid ratio="aside">` plus `applySettings({ '--c-grid-aside': … })`.
+
 ## 0.2.0-beta.2 (2026-11-10): first improvements from a real site
 
 The first round of improvements from the DesignUp beta report: install guidance, theme settings, link decoration, a base (canvas) colour, tracking, link buttons, Section tone, lead and statement text, wider picture ratios with a focal point, live and form-mode fields, the project check and `Hero` media. **Nothing breaks:** every line is an addition, an opt-in or a default kept, except one default change under reduced motion only (`viewTransition`). How to adopt each: `UPGRADE.md`.

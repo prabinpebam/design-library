@@ -28,4 +28,40 @@
   [data-dl='grid'] > * {
     min-inline-size: 0;
   }
+
+  /*
+   * Two uneven columns (IP20). Each child's basis is its exact share of the row less the gutter, so a start and an end
+   * child fill a row together and a third never joins them; each is at least size.column-min, so when the narrower
+   * share would fall below it the pair no longer fits and every child takes a full row (stacked, in source order).
+   * The 1px slack keeps rounding from breaking a pair that fits.
+   */
+  [data-dl='grid'][data-ratio] {
+    display: flex;
+    flex-wrap: wrap;
+    --dl-grid-start: 0.5;
+    --dl-grid-end: 0.5;
+  }
+
+  [data-dl='grid'][data-ratio='2:1'] { --dl-grid-start: calc(2 / 3); --dl-grid-end: calc(1 / 3); }
+  [data-dl='grid'][data-ratio='1:2'] { --dl-grid-start: calc(1 / 3); --dl-grid-end: calc(2 / 3); }
+  [data-dl='grid'][data-ratio='3:2'] { --dl-grid-start: 0.6; --dl-grid-end: 0.4; }
+  [data-dl='grid'][data-ratio='2:3'] { --dl-grid-start: 0.4; --dl-grid-end: 0.6; }
+
+  [data-dl='grid'][data-ratio] > * {
+    flex: 1 1 calc((100% - var(--space-gutter)) * var(--dl-grid-share) - 1px);
+    min-inline-size: min(100%, var(--size-column-min));
+  }
+
+  [data-dl='grid'][data-ratio] > :nth-child(odd) { --dl-grid-share: var(--dl-grid-start); }
+  [data-dl='grid'][data-ratio] > :nth-child(even) { --dl-grid-share: var(--dl-grid-end); }
+
+  /* A heading beside its content: the start column keeps its own width, the end column the rest. */
+  [data-dl='grid'][data-ratio='aside'] > :nth-child(odd) {
+    flex-basis: min(100%, var(--c-grid-aside));
+    min-inline-size: min(100%, var(--c-grid-aside));
+  }
+
+  [data-dl='grid'][data-ratio='aside'] > :nth-child(even) {
+    flex-basis: calc(100% - var(--c-grid-aside) - var(--space-gutter) - 1px);
+  }
 }
