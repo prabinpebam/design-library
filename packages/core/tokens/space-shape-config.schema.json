@@ -16,7 +16,7 @@
     },
     "shape": {
       "description": "How round corners are. Re-maps the radius roles (sm, md, lg, pill); shapes round by nature (radius.full) never change.",
-      "enum": ["sharp", "rounded", "soft", "super-soft"],
+      "enum": ["sharp", "mild", "rounded", "soft", "super-soft"],
       "default": "rounded"
     }
   }

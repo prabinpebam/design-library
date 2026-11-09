@@ -54,6 +54,11 @@
         "for": "Precise, technical or editorial brands: data tools, finance, newspapers. Only shapes that are round by nature stay round (a switch, a dot, a spinner, an avatar).",
         "values": { "sm": "0rem", "md": "0rem", "lg": "0rem", "pill": "0rem" }
       },
+      "mild": {
+        "label": "Mild",
+        "for": "Calm, dense or professional tools: dashboards, editors, admin apps. A hint of a curve, half of Rounded, so a dense screen reads as precise without looking hard.",
+        "values": { "sm": "0.125rem", "md": "0.25rem", "lg": "0.375rem", "pill": "999px" }
+      },
       "rounded": {
         "label": "Rounded",
         "for": "The default: friendly but businesslike, for most products.",

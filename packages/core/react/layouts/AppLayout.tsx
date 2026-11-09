@@ -63,7 +63,8 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
 
   return (
     <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width}>
-      <aside id={sidebarId} data-dl-part="sidebar" aria-label={sidebarLabel} hidden={!sidebarOpen}>
+      {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
+      <aside id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         <ScrollArea data-dl-part="sidebar-list">
           <div data-dl-part="sidebar-content">{sidebar}</div>
         </ScrollArea>
@@ -89,7 +90,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
               )}
             </main>
             {aside && (
-              <aside data-dl-part="aside" aria-label={asideLabel}>
+              <aside data-dl-part="aside" data-density="compact" aria-label={asideLabel}>
                 {aside}
               </aside>
             )}

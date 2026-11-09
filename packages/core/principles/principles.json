@@ -107,12 +107,14 @@
           "A preset is a saved choice per category: colour, type, icons, space, shape, material. A global preset names one per category.",
           "Built-in presets are read-only; user presets are saved beside them (design-library.presets) and sync across tabs.",
           "Templates inherit the global preset; a template never hard-codes a category choice.",
-          "Choose at run time with @design-library/core/presets (applyGlobalPreset, applyCategoryPreset); change defaults at build time through the token config files."
+          "Choose at run time with @design-library/core/presets (applyGlobalPreset, applyCategoryPreset); change defaults at build time through the token config files.",
+          "Chrome is a context, not a size: a region that is app chrome (a sidebar of places, an inspector or property panel, a layers panel, a details column, an editor) carries data-density=\"compact\" on its root, so text takes the small size and corners the shape's small radius. Content (a main view, a conversation, a page column, a canvas's document) stays in the default context. Never shrink chrome by passing size props to each control or overriding a radius. AppLayout's sidebar and details column and ChatLayout's sidebar are compact already; put it on an EditorLayout's root."
         ],
         "decide": [
           "The product owns this repository look: change the theme (config file, npm run tokens).",
           "The app needs another built-in option: apply a category or global preset at run time.",
-          "A person wants to keep their choice: saveCategoryPreset or saveGlobalPreset."
+          "A person wants to keep their choice: saveCategoryPreset or saveGlobalPreset.",
+          "A region looks too big or too round for a tool: ask whether it would change if the content changed. If not, it's chrome: set data-density=\"compact\" on it, then run tools/context-probe.js."
         ],
         "checks": [
           "npm run tokens:check",

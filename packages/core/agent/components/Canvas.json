@@ -192,6 +192,7 @@
     "--c-canvas-shape-fill",
     "--c-canvas-shape-radius",
     "--c-canvas-size-padding",
+    "--c-canvas-text-size",
     "--color-bg",
     "--color-category-1",
     "--color-category-2",
@@ -210,7 +211,6 @@
     "--radius-sm",
     "--size-focus-width",
     "--type-body-leading",
-    "--type-body-size",
     "--type-caption-leading",
     "--type-caption-size"
   ],

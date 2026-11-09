@@ -479,6 +479,7 @@
   --c-canvas-handle: var(--space-2);
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
+  --c-canvas-text-size: var(--text-m);
   --c-editor-layout-bar: var(--size-control-md);
   --c-editor-layout-bar-gap: var(--space-inline-pair);
   --c-editor-layout-inset: var(--space-inset-sm);
@@ -2555,6 +2556,70 @@
   --c-tree-view-radius: var(--radius-md);
 }
 
+[data-shape='mild'] {
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-pill: 999px;
+  --c-accordion-radius: var(--radius-md);
+  --c-agenda-session-radius: var(--radius-md);
+  --c-alert-radius: var(--radius-md);
+  --c-alignment-picker-radius: var(--radius-md);
+  --c-allocation-slider-radius: var(--radius-md);
+  --c-badge-radius: var(--radius-pill);
+  --c-board-card-radius: var(--radius-md);
+  --c-board-column-radius: var(--radius-lg);
+  --c-button-radius: var(--radius-md);
+  --c-button-radius-lg: var(--radius-lg);
+  --c-button-radius-sm: var(--radius-sm);
+  --c-canvas-shape-radius: var(--radius-sm);
+  --c-card-radius: var(--radius-lg);
+  --c-carousel-radius: var(--radius-lg);
+  --c-chat-message-bubble-radius: var(--radius-lg);
+  --c-checkbox-radius: var(--radius-sm);
+  --c-chip-radius: var(--radius-pill);
+  --c-code-block-radius: var(--radius-md);
+  --c-code-key-radius: var(--radius-sm);
+  --c-colour-field-radius: var(--radius-md);
+  --c-composer-drop-radius: var(--radius-lg);
+  --c-composer-tile-radius: var(--radius-md);
+  --c-context-matrix-radius: var(--radius-lg);
+  --c-conversation-list-radius: var(--radius-md);
+  --c-data-table-radius: var(--radius-lg);
+  --c-dialog-radius: var(--radius-lg);
+  --c-empty-state-silhouette-radius: var(--radius-sm);
+  --c-example-radius: var(--radius-lg);
+  --c-field-radius: var(--radius-md);
+  --c-file-upload-zone-radius: var(--radius-md);
+  --c-floating-bar-radius: var(--radius-lg);
+  --c-gradient-editor-radius: var(--radius-md);
+  --c-image-generation-radius: var(--radius-lg);
+  --c-image-radius: var(--radius-lg);
+  --c-list-item-radius: var(--radius-md);
+  --c-media-player-radius: var(--radius-lg);
+  --c-menu-button-radius: var(--radius-md);
+  --c-navigation-item-radius: var(--radius-md);
+  --c-pagination-radius: var(--radius-md);
+  --c-popup-radius: var(--radius-md);
+  --c-radio-group-tile-radius: var(--radius-md);
+  --c-screen-preview-radius: var(--radius-md);
+  --c-scroll-area-radius: var(--radius-pill);
+  --c-scroll-area-surface-radius: var(--radius-md);
+  --c-segmented-control-radius: var(--radius-md);
+  --c-sheet-radius: var(--radius-lg);
+  --c-site-header-link-radius: var(--radius-md);
+  --c-skeleton-radius: var(--radius-sm);
+  --c-slider-bubble-radius: var(--radius-sm);
+  --c-stacked-bar-radius: var(--radius-pill);
+  --c-tabs-radius: var(--radius-md);
+  --c-text-area-composer-radius: var(--radius-lg);
+  --c-time-field-segment-radius: var(--radius-sm);
+  --c-token-specimen-colour-radius: var(--radius-md);
+  --c-token-specimen-sample-radius: var(--radius-sm);
+  --c-token-specimen-shadow-radius: var(--radius-lg);
+  --c-tree-view-radius: var(--radius-md);
+}
+
 [data-shape='rounded'] {
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
@@ -2743,6 +2808,58 @@
   --c-time-field-segment-radius: var(--radius-sm);
   --c-token-specimen-colour-radius: var(--radius-md);
   --c-token-specimen-sample-radius: var(--radius-sm);
+  --c-token-specimen-shadow-radius: var(--radius-lg);
+  --c-tree-view-radius: var(--radius-md);
+}
+
+[data-density='compact'] {
+  --type-body-size: var(--text-s);
+  --type-label-size: var(--text-s);
+  --radius-md: var(--radius-sm);
+  --radius-lg: var(--radius-sm);
+  --c-accordion-radius: var(--radius-md);
+  --c-agenda-session-radius: var(--radius-md);
+  --c-alert-radius: var(--radius-md);
+  --c-alignment-picker-radius: var(--radius-md);
+  --c-allocation-slider-radius: var(--radius-md);
+  --c-board-card-radius: var(--radius-md);
+  --c-board-column-radius: var(--radius-lg);
+  --c-button-radius: var(--radius-md);
+  --c-button-radius-lg: var(--radius-lg);
+  --c-card-radius: var(--radius-lg);
+  --c-carousel-radius: var(--radius-lg);
+  --c-chat-message-bubble-radius: var(--radius-lg);
+  --c-code-block-radius: var(--radius-md);
+  --c-colour-field-radius: var(--radius-md);
+  --c-composer-drop-radius: var(--radius-lg);
+  --c-composer-tile-radius: var(--radius-md);
+  --c-context-matrix-radius: var(--radius-lg);
+  --c-conversation-list-radius: var(--radius-md);
+  --c-data-table-radius: var(--radius-lg);
+  --c-dialog-radius: var(--radius-lg);
+  --c-example-radius: var(--radius-lg);
+  --c-field-radius: var(--radius-md);
+  --c-file-upload-zone-radius: var(--radius-md);
+  --c-floating-bar-radius: var(--radius-lg);
+  --c-gradient-editor-radius: var(--radius-md);
+  --c-image-generation-radius: var(--radius-lg);
+  --c-image-radius: var(--radius-lg);
+  --c-list-item-radius: var(--radius-md);
+  --c-media-player-radius: var(--radius-lg);
+  --c-menu-button-radius: var(--radius-md);
+  --c-navigation-item-radius: var(--radius-md);
+  --c-pagination-radius: var(--radius-md);
+  --c-popup-radius: var(--radius-md);
+  --c-quote-text-size-s: var(--type-body-size);
+  --c-radio-group-tile-radius: var(--radius-md);
+  --c-screen-preview-radius: var(--radius-md);
+  --c-scroll-area-surface-radius: var(--radius-md);
+  --c-segmented-control-radius: var(--radius-md);
+  --c-sheet-radius: var(--radius-lg);
+  --c-site-header-link-radius: var(--radius-md);
+  --c-tabs-radius: var(--radius-md);
+  --c-text-area-composer-radius: var(--radius-lg);
+  --c-token-specimen-colour-radius: var(--radius-md);
   --c-token-specimen-shadow-radius: var(--radius-lg);
   --c-tree-view-radius: var(--radius-md);
 }

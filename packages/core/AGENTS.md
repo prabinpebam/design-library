@@ -60,6 +60,7 @@ These rules are easy to miss: each one is written down, but nothing at the momen
 | Rule | Use | Not | Caught by |
 | --- | --- | --- | --- |
 | Every scroll region uses the library's scrollbar, with the bar at the surface's edge and focus never cut off | `ScrollArea` (`axis`, `maxSize`, `inset`; `contain` only in a popup or modal); layouts and Dialog, Sheet, Canvas and Board already have it | `overflow: auto` or `scroll`, a padded scroll box, a scroll box held in from its surface's edge | `check:clipping` in the library; [`tools/scroll-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/scroll-probe.js) on the screen (SB1–SB5) |
+| Chrome is sized as chrome: small text and the shape's small corners in sidebars, inspectors, property and layers panels, details columns and editors; content stays at the body size | `data-density="compact"` on the chrome region's root (AppLayout's sidebar and details column and ChatLayout's sidebar have it; put it on an EditorLayout); see [Density: content and chrome](https://prabinpebam.github.io/design-library/docs/#foundation.md#density-content-and-chrome) | `size="s"` on every control in a panel, a radius override, compact on a main view or a document | [`tools/context-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/context-probe.js) (CX1–CX4) |
 | Space comes from the layout and role tokens, from the hierarchy | Stack, Cluster, Grid, Section, a layout's own gaps | Margins, literal sizes, one equal gap between everything | [`tools/spacing-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/spacing-probe.js), `check:views` |
 | Colour means something only through semantic roles | `color.status.*` with an icon or words; text and surface roles | `p.*`, `spectrum.*` for meaning, colour alone | `tokens:check`, `check:views` |
 | Layers stack through layer tokens | `layer.*` tokens; Dialog, Sheet, popups and FloatingBar | A literal `z-index` | `check:layers` |
@@ -80,7 +81,7 @@ When something doesn't look or behave as you need, take the first step that work
 | --- | --- | --- |
 | 1 | A **prop or variant** the component already has | `<Button label="Delete page" emphasis="danger" size="l" />` (check `agent/components/Button.json`) |
 | 2 | A **slot**: pass another part as children or a `ReactNode` prop | A `Badge` into a `Card`'s `meta`, buttons into its `actions` |
-| 3 | A **context attribute** on an ancestor | `data-density="compact"`, `data-scheme="dark"`, `data-contrast="more"` |
+| 3 | A **context attribute** on an ancestor | `data-density="compact"` (app chrome: small text, tighter corners), `data-scheme="dark"`, `data-contrast="more"` |
 | 4 | The **theme**: a preset, your brand colours and fonts (`@design-library/core/theme`) | `applyBrand({ colours: { 1: { seed: '#1f6f8b' } } })`, `applyFonts({ preset: 'bookish' })`, `data-space="loose"` ([step 3](guide/3-tokens.md)) |
 | 5 | A **custom part inside your template** (fundamental, compound, layout or block type) with its own `t.{template}.*` tokens | `conference.SponsorWall` in `@design-library/templates/conference/parts/` |
 | 6 | A **core change**: a new variant or slot, reviewed on its own | Only when two or more products need it |

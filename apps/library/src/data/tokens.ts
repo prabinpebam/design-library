@@ -51,7 +51,7 @@ function flatten(group: Node, prefix: string[] = []): TokenEntry[] {
 const baseTokens = [...flatten(authored as Node), ...flatten(spaceShapeTokens as Node), ...flatten(colourTokens as Node)];
 
 export type SpaceOption = 'compact' | 'normal' | 'loose' | 'extra-loose';
-export type ShapeOption = 'sharp' | 'rounded' | 'soft' | 'super-soft';
+export type ShapeOption = 'sharp' | 'mild' | 'rounded' | 'soft' | 'super-soft';
 /** One space or shape option: its name, who it's for, and the scale step or radius each role takes. */
 export interface ThemeOption<Id extends string> {
   id: Id;

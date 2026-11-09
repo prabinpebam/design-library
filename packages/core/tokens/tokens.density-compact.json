@@ -1,0 +1,31 @@
+{
+  "$comment": "Density context (owner Q97): [data-density='compact'] on a region that is app chrome (a design tool's inspector and panels, a dense toolbar or property panel), not content. Text steps down to the small size and controls' and surfaces' corners take the shape's small radius, so dense tool UI reads as tools, at the same brand. Space is a separate context (data-space). tools/token-contexts.mjs echoes every alias of these tokens, so a component's own tokens (field, button, segmented control radius) follow inside the region.",
+  "type": {
+    "body": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{text.s}",
+        "$description": "Body: size, in app chrome (compact density): the small size"
+      }
+    },
+    "label": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{text.s}",
+        "$description": "Control and field labels: size, in app chrome (compact density): the small size"
+      }
+    }
+  },
+  "radius": {
+    "md": {
+      "$type": "dimension",
+      "$value": "{radius.sm}",
+      "$description": "Controls' corners in app chrome (compact density): the shape's small radius"
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "{radius.sm}",
+      "$description": "Surfaces' corners in app chrome (compact density): the shape's small radius"
+    }
+  }
+}

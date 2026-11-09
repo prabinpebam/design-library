@@ -136,7 +136,7 @@
   [data-dl='canvas'] [data-category='8'] { --canvas-category: var(--color-category-8); }
 
   [data-dl='canvas'] [data-dl-part='text'] {
-    font-size: var(--type-body-size);
+    font-size: var(--c-canvas-text-size);
     line-height: var(--type-body-leading);
     overflow: hidden;
   }

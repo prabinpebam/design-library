@@ -121,7 +121,8 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
 
   return (
     <div ref={root} {...data} data-dl="chat-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-empty={empty ? '' : undefined}>
-      <aside id={sidebarId} data-dl-part="sidebar" aria-label={sidebarLabel} hidden={!sidebarOpen} data-footer={sidebarFooter ? '' : undefined}>
+      {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
+      <aside id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen} data-footer={sidebarFooter ? '' : undefined}>
         {/* Every scroll region is a ScrollArea (Q96): the library's bar, at the sidebar's edge, padding on the content. */}
         <ScrollArea data-dl-part="sidebar-list" viewportRef={list}>
           <div data-dl-part="sidebar-content">{sidebar}</div>

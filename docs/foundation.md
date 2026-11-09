@@ -458,10 +458,12 @@ Owner F12 (2026-11-07 15:20): "Things like spacing and shapes should have variat
 | inset xs / sm / md / lg | 2 / 8 / 12 / 16 | 2 / 8 / 16 / 24 | 2 / 12 / 24 / 32 | 2 / 16 / 32 / 48 |
 | gutter / page margin | 16 / 12 | 24 / 16 | 32 / 24 | 48 / 24 |
 
-| Radius role | Sharp | Rounded | Soft | Super soft |
-| --- | --- | --- | --- | --- |
-| sm / md / lg | 0 / 0 / 0 | 4 / 8 / 12 px | 6 / 12 / 16 px | 8 / 18 / 24 px |
-| pill | 0 | pill | pill | pill |
+| Radius role | Sharp | Mild | Rounded | Soft | Super soft |
+| --- | --- | --- | --- | --- | --- |
+| sm / md / lg | 0 / 0 / 0 | 2 / 4 / 6 px | 4 / 8 / 12 px | 6 / 12 / 16 px | 8 / 18 / 24 px |
+| pill | 0 | pill | pill | pill | pill |
+
+**Mild (owner Q97.2, 2026-11-09):** the step between Sharp and Rounded the owner asked for ("mildly rounded but not as rounded as Rounded"): half of Rounded at every role, for calm, dense or professional tools. In the gear's shape presets after Sharp.
 
 **Invariants the check holds in every option:** every space role reads a scale step; a pair is never wider than an item; groups sit at least 1.5 times the item space apart and sections at least twice the group space; no gap inside an enclosure exceeds its inset; insets grow xs ≤ sm ≤ md ≤ lg; sharp is 0 everywhere; radii grow sm ≤ md ≤ lg. **Held by construction:** stacked-bar inner segments are square (they never read a radius role); focus rings are outlines, so they follow each corner; the SegmentedControl's inner radius is its outer radius minus its inset (concentric), clamped to 0 when sharp. **Checked in the browser:** button height 44 px in all four space options; no sideways scroll at about 320 px in extra loose + super soft on Space and size, Shape, Button, Colour and Overview.
 
@@ -523,6 +525,33 @@ Framework, roles, audit and build log: [Materials and backgrounds](materials.md)
 | AS5 preferences | reduced transparency, more contrast, forced colours, print and no backdrop-filter support force solid first | stand down whenever solid is forced |
 
 **Enforcement** (`npm run check:materials`, `tools/check-materials.mjs`): backdrop filters only through `--material-backdrop`, one blur of at most 24 px (AR10); no translucent literal backgrounds outside `materials.css`; every frosted fill paired with the backdrop; frosted only in the listed FR places (a new one is added to the tool on purpose); `backdrop-filter` never animated (AR12); the AR7 nesting rule and the forced-solid fallbacks present; and the tint floor (AR9): `text`/`text-muted` 4.5:1 and `focus`/`border-strong` 3:1 on each frosted fill over uniform black and white, light and dark, with no help from the blur. Not covered: AS3's `effect` value is reserved, not built; no add-on is installed.
+
+## Density: content and chrome
+
+Owner Q97 (2026-11-09): components used as app chrome must be sized as chrome, not as content: the Design tool's inspector at a narrow width showed content-size body text (16 px), so "256 px" and "100 %" wrapped, and fields far too rounded. Chrome and content are different contexts, so the library has one context seam for it, `data-density`, set on the region, never a per-component override.
+
+### Part 1: the framework
+
+1. **Know which one a region is.** *Content* is what the page or app is for: an article, a conversation, an issue, a form a person fills in, the canvas's document. *Chrome* is the tool around it: a sidebar of places, an inspector or property panel, a layers panel, a details column, an editor's bar. Ask: would this region change if the content changed? If it's the same frame around any content, it's chrome.
+2. **Put chrome in the compact context.** `data-density="compact"` on the region's root (or the layout's region part). Inside it, body and label text take the small size (`text.s`, 14 px at the default scale), and controls' and surfaces' corners take the shape's small radius (4 px when Rounded, 2 px when Mild). Space is unchanged: it's its own context (`data-space`). Field labels take the compact label role (one line, muted).
+3. **Content stays in the default context.** Never set compact on a main view, a conversation, a page column or a canvas's document; a person reads content at the body size.
+4. **The layouts already decide it.** AppLayout's sidebar and details column, ChatLayout's sidebar are compact by default; EditorLayout takes `data-density="compact"` on its root (an editor is chrome around a canvas, and the canvas's document keeps its own type, `c.canvas.text-size`). A custom layout says it the same way on its chrome regions.
+5. **One seam, never overrides.** Don't pass `size="s"` to every field in a panel or restyle a component's radius: the context changes the roles every component reads. Keep content out of chrome regions rather than undoing the context inside them (the context has no way back to the content size within a compact region yet).
+6. **Shape still comes from the brand.** Compact takes the *shape's* small radius, so a Sharp brand stays square and a Super soft one stays soft, only one step tighter.
+
+### Part 2: the checklist
+
+Each row passes or fails on a measurement. **DOM** rows are measured by `tools/context-probe.js` (`window.contextProbe()`).
+
+| ID | Passes when | How | Severity |
+| --- | --- | --- | --- |
+| CX1 | Every chrome region (a layout's sidebar, details column, an editor's bar and panels) is inside a compact context | DOM | S2 |
+| CX2 | Inside a compact region, running text and control text are no larger than the small body size (headings and a canvas's document excepted) | DOM | S2 |
+| CX3 | Inside a compact region, controls' corners are no rounder than the shape's small radius (round-by-nature shapes excepted) | DOM | S2 |
+| CX4 | Content regions (a layout's main view, a conversation, a site page's column) aren't compact | DOM | S2 |
+| CX5 | Values in a chrome panel fit on one line at the panel's narrowest width ("256 px", "100 %") | look, at the panel's least width | S2 |
+
+**Results, F15.CX1 (2026-11-09 about 13:05):** the context probe on 51 template layouts across all eight templates: no CX row fails. The Design tool's inspector at a 320 px window and in its 256 px panel: Dev mode values at 14 px on one line each (21 px rows); the Design tab's fields at 14 px with 4 px corners (were 8 px at Rounded), every value fitting its field. The spacing and scroll probes on the 52 Chat, Design and Projects layouts: no regression.
 
 ## Clipping
 

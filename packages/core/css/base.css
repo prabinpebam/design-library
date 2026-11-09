@@ -67,6 +67,12 @@
     background-color: var(--color-bg);
   }
 
+  /* A density root re-resolves the text size (Q97): inherited sizes were computed with the parent's body size. */
+  [data-density] {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+  }
+
   h1 {
     font-size: var(--type-heading-1-size);
     line-height: var(--type-heading-1-leading);
