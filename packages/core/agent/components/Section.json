@@ -71,12 +71,14 @@
     "Heading"
   ],
   "tokens": [
+    "--c-section-content-gap",
     "--c-section-gap",
     "--c-section-head-gap",
     "--c-section-index-column",
     "--c-section-index-gap",
     "--c-section-index-size",
     "--c-section-intro-measure",
+    "--c-section-nested-content-gap",
     "--c-section-nested-gap",
     "--c-section-nested-head-gap",
     "--color-accent",

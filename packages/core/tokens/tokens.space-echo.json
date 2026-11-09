@@ -1335,6 +1335,11 @@
       "$extensions": {
         "owner": "Section"
       },
+      "content-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between the parts of a section's content (its groups): a group apart, half the space between the head and the content, so the head leads all of them and they read as one section (Q85 SC5) (echoed for space contexts)"
+      },
       "gap": {
         "$type": "dimension",
         "$value": "{space.stack-section}",
@@ -1350,10 +1355,15 @@
         "$value": "{space.gutter}",
         "$description": "Between the numeral column and the section body (echoed for space contexts)"
       },
+      "nested-content-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Between the parts of a nested section's content (rows of one group): an item apart, half the group space around the nested section (Q85) (echoed for space contexts)"
+      },
       "nested-gap": {
         "$type": "dimension",
-        "$value": "{space.stack-group}",
-        "$description": "Inside a nested section: between its heading, its intro and its content, closer than a page section (echoed for space contexts)"
+        "$value": "{space.stack-item}",
+        "$description": "Inside a nested section (one group of an outer section): between its head and its content, an item apart, half the group space between it and its sibling groups (Q85) (echoed for space contexts)"
       },
       "nested-head-gap": {
         "$type": "dimension",
@@ -1457,8 +1467,8 @@
       },
       "padding-block": {
         "$type": "dimension",
-        "$value": "{space.stack-section}",
-        "$description": "Above the first part and under the last (echoed for space contexts)"
+        "$value": "{space.stack-page}",
+        "$description": "Above the first band and under the last: never less than the gap between the column's bands, so the first and last bands read as the page's, not the header's or the footer's (Q92) (echoed for space contexts)"
       }
     },
     "slider": {

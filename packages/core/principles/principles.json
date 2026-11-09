@@ -194,13 +194,14 @@
         "rules": [
           "One 4 px base unit; components read roles (space.stack-pair, stack-item, stack-group, stack-section, inline-*, inset-*, gutter, margin-page), never a scale step.",
           "Space inside a group is never larger than the space around it.",
+          "The page is a group too (title bar · page content · footer): the first unit sits at least as far from the title bar, and the last unit at least as far from the footer, as the largest gap between the page content's units (a frame counts as one unit, measured from its outer edge). SiteLayout's column padding-block is the page level for this; a layout of your own does the same.",
           "The parent owns space: gap and padding on the container (Stack, Cluster, Grid gap props); never margins set by a sibling position.",
           "Geometry never moves on hover, focus or loading: borders are always there, transparent at rest.",
           "Targets are at least size.target (44 px), or size.target-dense in dense contexts.",
           "Framing (Frame, a hero's `standalone`) isolates a piece and so interrupts reading: frame only what gains from being read alone (a brand opening, a statement, a quote, a call to action, a status message). Task and reference pages (tickets, schedules, lists, forms, settings, detail pages) never frame their heading away from their content: the title and intro sit with the task, which starts in the first view."
         ],
         "decide": [
-          "Related items (label and value): stack-pair. Items in a list: stack-item. Groups: stack-group. Sections: stack-section.",
+          "Related items (label and value): stack-pair. Items in a list: stack-item. Groups: stack-group. Sections: stack-section. A page's bands, and its edges to the title bar and the footer: stack-page.",
           "Side by side: inline-pair, inline-item, inline-group by the same levels.",
           "Inside a surface: inset-* at the first content level, not on the wrapper.",
           "Need a whole product denser or looser? Change the space option (compact, normal, loose, extra-loose), never single values.",

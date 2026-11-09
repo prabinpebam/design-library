@@ -62,7 +62,7 @@
 
   window.spacingProbe = function (rootSelector) {
     const root = document.querySelector(rootSelector ?? 'main, [data-dl-part="main"]') ?? document.body;
-    const rows = Object.fromEntries(['SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SC6', 'SC7', 'SC8', 'FR1', 'FR2', 'FR3', 'FR4', 'FR5', 'FR6', 'FR7', 'FR8', 'FR9', 'FR11', 'FR12', 'FR14', 'FR15', 'FR16', 'FR17'].map((id) => [id, { pass: true, findings: [] }]));
+    const rows = Object.fromEntries(['SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SC6', 'SC7', 'SC8', 'SC14', 'FR1', 'FR2', 'FR3', 'FR4', 'FR5', 'FR6', 'FR7', 'FR8', 'FR9', 'FR11', 'FR12', 'FR14', 'FR15', 'FR16', 'FR17'].map((id) => [id, { pass: true, findings: [] }]));
     const fail = (id, finding, severity = 'S2') => {
       rows[id].findings.push({ severity, ...finding });
       if (severity !== 'S4') rows[id].pass = false;
@@ -108,6 +108,18 @@
         if (enclosed(up)) break;
         up = up.parentElement;
       }
+      // A group's head belongs to it: a stack that is only [head, content] isn't the group's neighbours, so the gap
+      // around the group is measured one stack further out (SC2 judges the head's own space).
+      const headOnly = (st) => st && st.rows.length === 2 && st.rows[0].els.some((e) => HEAD_PART.has(e.getAttribute('data-dl-part') ?? '') || /^H[1-6]$/.test(e.tagName));
+      while (up && stackOf.has(up) && headOnly(stackOf.get(up)) && !enclosed(up)) {
+        let next = up.parentElement;
+        while (next && next !== root.parentElement && !stackOf.has(next)) {
+          if (enclosed(next)) break;
+          next = next.parentElement;
+        }
+        if (!next || !stackOf.has(next)) break;
+        up = next;
+      }
       const outer = up && stackOf.get(up);
       if (!outer || enclosed(s.el) || (up && enclosed(up))) continue;
       const inner = Math.max(...s.gaps);
@@ -133,7 +145,8 @@
     const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1;
     const seen = new Set();
     for (const h of root.querySelectorAll('h1,h2,h3,h4,h5,h6')) {
-      if (!visible(h) || h.closest('[data-dl="card"],[data-dl="statistic"]')) continue;
+      // An accordion's headings are its rows' triggers, separated by the accordion's own rules, not heads of flow.
+      if (!visible(h) || h.closest('[data-dl="card"],[data-dl="statistic"],[data-dl="accordion"]')) continue;
       let head = h;
       if (HEAD_PART.has(h.parentElement?.getAttribute('data-dl-part') ?? '')) head = h.parentElement;
       if (HEAD_PART.has(head.parentElement?.getAttribute('data-dl-part') ?? '')) head = head.parentElement;
@@ -149,8 +162,9 @@
       if (above < 2 * below - 2) fail('SC2', { where: `${name(head)} “${h.textContent.trim().slice(0, 40)}”`, above, below });
     }
 
-    // SC6 levels.
-    if (levels.size < 3) fail('SC6', { levels: [...levels].sort((a, b) => a - b) });
+    // SC6 levels: judged on a page with two or more headings (a page of one list has no hierarchy to show).
+    const headings = [...root.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(visible).length;
+    if (headings >= 2 && levels.size < 3) fail('SC6', { levels: [...levels].sort((a, b) => a - b), headings });
 
     // SC7 edges.
     const doc = document.documentElement;
@@ -165,6 +179,27 @@
       if (b.el.closest('[data-bleed]') || scrolledSideways(b.el)) continue;
       if (b.r.left < edge - 0.5 || doc.clientWidth - b.r.right < edge - 0.5) {
         if (b.r.width < doc.clientWidth - 1) fail('SC7', { where: name(b.el), left: Math.round(b.r.left), right: Math.round(doc.clientWidth - b.r.right) }, 'S1');
+      }
+    }
+
+    // SC14 page level (Q92): title bar · page content · footer. The space from the title bar to the first unit and from
+    // the last unit to the footer is never smaller than the largest gap between the page content's units (a frame is
+    // one unit; space inside it is ignored).
+    const main = document.querySelector('main');
+    const col = main?.querySelector(':scope > [data-dl-part="column"]') ?? main;
+    if (col) {
+      const units = [...col.children].filter(visible).map((el) => el.getBoundingClientRect());
+      const between = units.slice(1).map((r, n) => Math.round(r.top - units[n].bottom));
+      const largest = Math.max(0, ...between);
+      const bar = document.querySelector('[data-dl="site-layout"] > [data-dl-part="header"]')?.getBoundingClientRect();
+      const foot = document.querySelector('[data-dl="site-layout"] > [data-dl="footer"]')?.getBoundingClientRect();
+      if (units.length && bar) {
+        const top = Math.round(units[0].top - bar.bottom);
+        if (top < largest - 1) fail('SC14', { edge: 'title bar', space: top, largestInside: largest });
+      }
+      if (units.length && foot && foot.top >= units[units.length - 1].bottom - 1) {
+        const bottom = Math.round(foot.top - units[units.length - 1].bottom);
+        if (bottom < largest - 1) fail('SC14', { edge: 'footer', space: bottom, largestInside: largest });
       }
     }
 

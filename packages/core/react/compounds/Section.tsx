@@ -49,7 +49,7 @@ export function Section({ heading, level = 2, size, intro, index, nested = false
   const parts = (
     <>
       {head}
-      {children}
+      {children != null && children !== false && <div data-dl-part="content">{children}</div>}
     </>
   );
   return (

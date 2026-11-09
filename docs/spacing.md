@@ -25,6 +25,7 @@ Like every UX framework in this project, it comes in two parts ([the two-part fr
 5. **The layout owns the space.** A parent sets the gap between its children and its own padding; components have no outer margin; nothing depends on a sibling's position.
 6. **Every value is a role token.** Components read a role (`space.stack-group`) or their own component token aliasing one, never a literal or a bare scale step. Density swaps the roles' values in one place; the ratios hold in every density.
 7. **Content says what it is, never how far apart.** Template content (JSON) names blocks and their order; it never carries a size or a gap. A view that needs a different rhythm gets it from its layout, block or a template token.
+8. **The page is a group too: title bar · page content · footer (owner Q92).** The page content's first unit sits at least as far from the title bar, and its last unit at least as far from the footer, as the largest gap between units inside the page content. Otherwise the last band (a closing invitation, a list's last row) reads as part of the footer and the first as part of the header. A frame counts as one whole unit: measure from its outer edge and ignore the space inside it (a frame's own space never pays for the page's edge). In SiteLayout the column's padding-block is the page level, the same as the gap between its bands.
 
 ### The rhythm: five levels
 
@@ -55,10 +56,10 @@ Each shape gives its levels a wrapper of their own, so one parent `gap` never ha
 
 | Shape | Structure | Gaps (normal) |
 | --- | --- | --- |
-| Site page (SiteLayout) | header · main column of bands · footer | bands `stack-page` 64; padding-block `stack-section` 32 |
+| Site page (SiteLayout) | header · main column of bands · footer | bands `stack-page` 64; padding-block `stack-page` 64, so header → first band and last band → footer are never less than the bands' gap (principle 8) |
 | Library page (PageLayout) | page header · sections | sections `stack-page` 64 |
-| Section | **head** (heading, intro) · content parts | head: heading → intro `stack-item` 8; head → content and between parts `stack-section` 32 |
-| Nested section | head · content, inside another section's content | head: `stack-pair` 4; head → content and parts `stack-group` 16 |
+| Section | **head** (heading, intro) · **content** (its parts) | head: heading → intro `stack-item` 8; head → content `stack-section` 32; between the content's parts `stack-group` 16, so the head leads them all |
+| Nested section | head · content, inside another section's content (one of its groups) | head: `stack-pair` 4; head → content `stack-item` 8; content's parts `stack-item` 8; sibling groups `stack-group` 16 apart in the outer content |
 | Hero | words (**message**: heading part, lead · **doing**: actions, note) · picture | eyebrow → title `stack-pair` 4; title → lead `stack-group` 16; message → doing `stack-section` 32; actions → note `stack-pair` 4; words ↔ picture `stack-section` |
 | Card | media (bleeds) · body (heading part, text, actions) | body inset `inset-md` 16; eyebrow → title `stack-pair` 4; heading → text `stack-item` 8 |
 | Card grid, statistics | items in rows | `stack-group` 16 (below the section's 32) |
@@ -79,6 +80,7 @@ Density changes every role at once (the table above), so the five levels and the
 ### Never
 
 - One gap for two levels: a heading, its intro and its content all at the same distance; a hero's title, lead and buttons at one gap; page bands at the same distance as a section's parts.
+- A page's last band nearer the footer (or its first nearer the title bar) than the bands are to each other.
 - A heading nearer the content above it than its own content.
 - A literal or a bare scale step in a component, a margin on a component, sibling-position selectors (`:first-child`, `+`, `* + *`) to make space.
 - Space in content JSON or in a view.
@@ -102,6 +104,7 @@ Each row passes or fails on a measurement. Rows marked **DOM** are measured by `
 | SC11 | Content JSON carries no size or gap | static: `npm run check:content` (schemas reject unknown fields) | S3 |
 | SC12 | Reading top to bottom, an evaluator can name each band, its heading and what belongs to it without relying on borders | look | S2 |
 | SC13 | Hover, focus, press, loading and validation move no box | look, or the motion and clipping probes | S1 |
+| SC14 | Page level (Q92): the space from the title bar to the page content's first unit, and from its last unit to the footer, is at least the largest gap between the page content's units; a frame is one unit measured from its outer edge | DOM | S2 |
 
 ### How to run it
 
@@ -155,6 +158,10 @@ Fixed at the owners: Card's new **message** part (heading and description an ite
 | Blog | 22 | 10 | 1 | 2 | 5 | 6 | 0 | 0 |
 | Portfolio | 16 | 6 | 0 | 2 | 1 | 5 | 0 | 0 |
 | Design | 20 | 10 | 4 | 4 | 8 | 4 | 2 | 5 |
+
+### F15.SP-page: the page level and the section anatomy (2026-11-09 about 12:00)
+
+Fixed at the owners: SiteLayout's padding-block is now the page level (`c.site-layout.padding-block` → `space.stack-page`), so the title bar → first unit and last unit → footer are never less than the bands' 64 px gap (principle 8, SC14; owner Q92: Conference home's closing invitation sat about 40 px above the footer). Section's content got its own part: head → content stays the section level, the content's parts sit a group apart, and a nested section (one group of the outer one) has its head an item above its rows, so settings pages read h2 → groups → rows instead of one equal 32 px. The probe adds SC14, judges SC3 against a group's sibling groups (not its own head), exempts an accordion's trigger headings from SC2 and judges SC6 only on pages with two or more headings. **17 of 168 layouts fail a grouping row** (29 before); SC14 passes on every page.
 
 ## Framing: presenting one piece of content
 

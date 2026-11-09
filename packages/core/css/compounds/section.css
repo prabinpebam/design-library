@@ -1,6 +1,7 @@
 /*
  * Tier 2 compound: Section. A head (heading and intro, an item apart) then the content, a section's space apart
- * (Q85): the head reads as one, and as the start of what follows. Nested sections sit closer at every level.
+ * (Q85): the head reads as one, and as the start of what follows. The content's own parts sit a group apart, so the
+ * head leads all of them rather than reading as one more part (SC5). Nested sections sit closer at every level.
  * An indexed section puts its numeral in its own column, stacking above the body below breakpoint.sm.
  */
 @layer compounds {
@@ -10,6 +11,19 @@
     flex-direction: column;
     gap: var(--c-section-gap);
     min-inline-size: 0;
+  }
+
+  [data-dl='section'] > [data-dl-part='content'],
+  [data-dl='section'] > [data-dl-part='body'] > [data-dl-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-section-content-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='section'][data-nested] > [data-dl-part='content'],
+  [data-dl='section'][data-nested] > [data-dl-part='body'] > [data-dl-part='content'] {
+    gap: var(--c-section-nested-content-gap);
   }
 
   [data-dl='section'] > [data-dl-part='head'],
