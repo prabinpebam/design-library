@@ -82,7 +82,8 @@ export interface ResolveDataOptions {
   /** The collection that item belongs to. */
   collection?: string;
   /** Told of a reference or path that finds nothing (the content check reports the same). */
-  missing?: (what: string) => void;
+  /** Told of a reference or path that finds nothing, with the JSON path of the value that asked (`sections[1].items[0]`). */
+  missing?: (what: string, path: string) => void;
   /** The date `"today"` means in a binding's `before` and `after`, as `YYYY-MM-DD`; defaults to the reader's. */
   today?: string;
 }
@@ -94,6 +95,17 @@ export interface ResolveDataOptions {
  */
 export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections'>, options: ResolveDataOptions = {}): T {
   const seen = new Set<string>();
+  // Where in the value the walk is, for the JSON path a problem is reported at.
+  const trail: (string | number)[] = [];
+  const here = () => trail.map((k, i) => (typeof k === 'number' ? `[${k}]` : i ? `.${k}` : k)).join('');
+  const inside = <R,>(key: string | number, run: () => R): R => {
+    trail.push(key);
+    try {
+      return run();
+    } finally {
+      trail.pop();
+    }
+  };
   const withAddress = (collection: string, item: Item): Item => {
     const id = String(item[site.collections[collection]?.idField ?? 'id']);
     const href = itemRoute(site, collection, id);
@@ -103,7 +115,7 @@ export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections
     const [collection, id] = ref.split('/');
     const found = findItem(site.collections[collection], id);
     if (!found) {
-      options.missing?.(`“${ref}” isn’t an item of a collection`);
+      options.missing?.(`“${ref}” isn’t an item of a collection`, here());
       return undefined;
     }
     if (seen.has(ref)) return withAddress(collection, found);
@@ -118,7 +130,7 @@ export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections
       if (isRef(at)) at = refItem(at.ref);
       at = isObject(at) ? at[part] : undefined;
       if (at === undefined) {
-        options.missing?.(`${label} has no “${dotted}”`);
+        options.missing?.(`${label} has no “${dotted}”`, here());
         return undefined;
       }
     }
@@ -128,8 +140,8 @@ export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections
     if (isRef(v)) return v.field ? path(refItem(v.ref), v.field, `“${v.ref}”`) : refItem(v.ref);
     if (isItemValue(v)) return options.item ? path(options.item, v.item, `the ${options.collection ?? ''} item`.replace('  ', ' ')) : undefined;
     if (isBinding(v)) return bind(v);
-    if (Array.isArray(v)) return v.flatMap((x) => (isBinding(x) ? (bind(x) as unknown[]) : [walk(x)])).filter((x) => x !== undefined);
-    if (isObject(v)) return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, walk(x)]).filter(([, x]) => x !== undefined));
+    if (Array.isArray(v)) return v.flatMap((x, i) => inside(i, () => (isBinding(x) ? (bind(x) as unknown[]) : [walk(x)]))).filter((x) => x !== undefined);
+    if (isObject(v)) return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, inside(k, () => walk(x))]).filter(([, x]) => x !== undefined));
     return v;
   }
   // A list binding (DP13): the collection's items that meet `where`, in `sort` order, at most `limit`, each with its
@@ -137,7 +149,7 @@ export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections
   function bind(b: Binding): unknown[] {
     const collection = site.collections[b.from];
     if (!collection) {
-      options.missing?.(`“${b.from}” isn’t a collection`);
+      options.missing?.(`“${b.from}” isn’t a collection`, here());
       return [];
     }
     const where = (b.where ? walk(b.where) : {}) as Record<string, unknown>;

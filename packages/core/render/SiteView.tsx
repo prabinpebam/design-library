@@ -8,12 +8,12 @@
  * window title, description, preview picture, canonical address and `noindex` come from the page. No styles.
  */
 import { Component, Fragment, useEffect, type ReactNode } from 'react';
-import { Alert } from '../react';
+import { Alert, Text } from '../react';
 import { useRouter } from '../react/behaviour/router';
 import { SectionAnchor } from '../react/behaviour/section-anchor';
 import { matchPath, Router } from '../site';
 import { BLOCKS } from './blocks';
-import { findItem, resolveData } from './collections';
+import { findItem, isBinding, resolveData } from './collections';
 import { LAYOUTS, resolveLinks } from './TemplateView';
 import type { Block, BlockRenderer, PageDocument, RenderContext, Site, SiteDocument, TemplateContent } from './types';
 import { resolveUnconfirmed } from './unconfirmed';
@@ -205,10 +205,13 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       hidden: true,
       sections: [{ type: 'status', title: words.title, text: words.text, links: [{ label: words.home, href: '/' }] }],
     };
+  // What's wrong in the site's JSON (DP20): gathered while the page is drawn, shown in development as one notice.
+  const problems: { where: string; what: string }[] = [];
+  const pageFile = missing && !notFoundPage ? 'site' : `page “${raw.id}”`;
   // References and an item page's own values (DP12) are resolved before anything reads the page.
-  const data = <T,>(value: T): T =>
-    resolveData(value, site, { item: match?.item, collection: raw.collection, missing: development ? (what) => console.warn(`${raw.id}: ${what}`) : undefined });
-  const page = data(raw) as PageDocument & { title: string; description?: string; picture?: string };
+  const data = <T,>(value: T, file: string): T =>
+    resolveData(value, site, { item: match?.item, collection: raw.collection, missing: (what, at) => problems.push({ where: at ? `${file} ${at}` : file, what }) });
+  const page = data(raw, pageFile) as PageDocument & { title: string; description?: string; picture?: string };
 
   const title = titleFor(doc, page.route === '/' && !page.windowTitle && page.id === doc.home ? { title: page.title, windowTitle: doc.title } : page);
   useEffect(() => {
@@ -224,11 +227,18 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
   const current = page.current ?? page.route.split('/')[1] ?? '';
   const settings = { ...doc.layout?.settings, ...page.settings, current };
   const withPlaces = (blocks: Block[] | undefined) => (blocks ?? []).map((b) => (b.type === 'site-header' && !b.places && doc.navigation ? { ...b, places: doc.navigation } : b));
-  const header = resolve(data(withPlaces(doc.header)));
-  const footer = resolve(data(doc.footer ?? []));
-  const sections = resolve(page.sections);
+  const header = resolve(data(withPlaces(doc.header), 'site header'));
+  const footer = resolve(data(doc.footer ?? [], 'site footer'));
+  // A section whose list comes from a binding (DP13) that found nothing, and that says nothing for an empty list
+  // (`empty`), is left out rather than shown as a heading over nothing.
+  const kept = page.sections.map((_, i) => i).filter((i) => {
+    const before = raw.sections[i] as Record<string, unknown> | undefined;
+    const after = page.sections[i] as Record<string, unknown>;
+    return !before || 'empty' in after || !Object.entries(before).some(([k, v]) => isBinding(v) && Array.isArray(after[k]) && (after[k] as unknown[]).length === 0);
+  });
+  const sections = resolve(kept.map((i) => page.sections[i]));
   const custom = registry?.blocks ?? {};
-  const file = missing && !notFoundPage ? 'site' : `page “${page.id}”`;
+  const file = pageFile;
 
   // The page's first picture (DR44) loads at once, ahead of the rest: in the first section that shows one.
   const firstAt = sections.findIndex((s) => firstPicture(s) !== undefined);
@@ -243,6 +253,7 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
   };
   function one(block: Block, i: number, at: RenderContext, path: string): ReactNode {
     const render = (custom[block.type] ?? (BLOCKS as Record<string, BlockRenderer<never>>)[block.type]) as BlockRenderer<Block> | undefined;
+    if (!render) problems.push({ where: path, what: `“${block.type}” isn’t a block type this site knows` });
     if (!render)
       return development ? (
         <Alert key={i} tone="error" title={`${path} can’t be shown`}>
@@ -255,7 +266,7 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
     const items = blocks ?? [];
     const local: RenderContext = { ...base, siblings: items.length, neighbours: items, region };
     return items.map((b, i) => {
-      const path = `${where === 'sections' ? file : 'site'} ${where}[${i}]`;
+      const path = `${where === 'sections' ? file : 'site'} ${where}[${region === 'main' ? kept[i] : i}]`;
       const anchor = typeof b.anchor === 'string' ? b.anchor : undefined;
       const at = region === 'main' && i === firstAt ? { ...local, picture: (id: string) => (id === first && assets[id] ? { ...assets[id], priority: true } : local.picture(id)) } : local;
       return (
@@ -266,9 +277,23 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       );
     });
   }
+  const main = list(sections, ctx, 'main');
+  const notice =
+    development && problems.length ? (
+      <Alert tone="warning" title={problems.length === 1 ? 'One problem in this page’s content' : `${problems.length} problems in this page’s content`}>
+        {problems.map((p, i) => (
+          <Text key={i} as="p">{`${p.where}: ${p.what}. Fix it in that file; the content check lists the same.`}</Text>
+        ))}
+      </Alert>
+    ) : null;
   const regions: Record<string, ReactNode> = {
     header: header.length ? <Fragment>{list(header, ctx, 'header', 'header')}</Fragment> : null,
-    main: <Fragment>{list(sections, ctx, 'main')}</Fragment>,
+    main: (
+      <Fragment>
+        {notice}
+        {main}
+      </Fragment>
+    ),
     footer: footer.length ? <Fragment>{list(footer, ctx, 'footer', 'footer')}</Fragment> : null,
   };
   const component = page.layout ?? doc.layout?.component ?? 'SiteLayout';
