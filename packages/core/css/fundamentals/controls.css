@@ -151,6 +151,13 @@
       visibility 0s;
   }
 
+  /* A spinner in a layer that isn't shown (a Button's, a MenuButton trigger's) doesn't turn: nothing loops at rest
+     (motion MO1, MP3, MP4). */
+  [data-dl='button'] > [data-dl-part='layer']:not([data-shown]) [data-dl='progress'],
+  [data-dl='menu-button'] > [data-dl-part='trigger'] > [data-dl-part='layer']:not([data-shown]) [data-dl='progress'] {
+    animation-play-state: paused;
+  }
+
   [data-dl='button'][data-emphasis='default'] {
     border-color: var(--color-border-control);
     background-color: var(--color-bg-control);

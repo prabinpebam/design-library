@@ -41,6 +41,10 @@
 | **MU8** | (*revised F15.83*) act on one, several or all items (remove 40 selected rows, select all, clear a list) and see one coherent change, not 40 animations | MJ1 |
 | **MU9** | (*revised F15.83*) with a screen reader or the keyboard, never land on content that is leaving, and hear the new state once | MJ1, MJ4 |
 
+## Part 1: the framework
+
+Like every UX framework here, motion comes in two parts ([the two-part frameworks](spacing.md#the-two-part-frameworks), owner Q85): the sections from Principles through [Performance rules](#performance-rules) are the framework to design with (principles M1–M14, the strategy ladder, the morph catalogue, value interpolation, the zero-latency places, timing, interruption, enter and exit, reduced motion); [Part 2](#part-2-the-checklist) is the checklist to judge with. The method starts from the same [hierarchy tree](spacing.md#the-method-hierarchy-first-then-space-and-frames-owner-q93) as space: for each change of state, find which node of the tree persists (the wrapper that stays), morph that node and fade only what's inside it; a node the person drives directly (a value they type, step or drag) changes with zero latency.
+
 ## Principles
 
 | # | Principle | In practice |
@@ -340,6 +344,29 @@ Components never import P5–P7 to invent new effects: each catalogue row (C1–
 | **MD5** | Count-up animations for dashboard figures from data? | Never / data-only | **Never**: a number mid-tween is false (Z10) |
 | **MD6** | (*Added F15.83*) Build own primitives or adopt an animation library (Motion / Framer Motion, GSAP, React Spring)? | Own on CSS transitions + Web Animations / a library | **Own.** The core is CSS and a markup contract, not React ([Architecture](foundation.md#why-the-core-is-css-markup-contract-not-a-framework)); state changes are CSS transitions (native retargeting), so script is needed only for FLIP and View Transitions, both small. A library would be React-bound, add weight and become the de facto contract. Revisit if P3 or P6 grows past a few hundred lines |
 | **MD7** | (*Added F15.83*) Reveal through `interpolate-size` (not in every engine) with a fallback, or one mechanism? | Two paths / grid rows only | **Grid rows `0fr` ↔ `1fr` only**: one mechanism in every engine; a second path is a redundant variant (Q34) |
+
+## Part 2: the checklist
+
+The rows are the [Definition of Done for motion](#definition-of-done-for-motion) (MV1–MV8), with how each is checked and its severity, plus MV9 (owner Q85.2). **DOM** rows are read by `tools/motion-probe.js` (`window.motionProbe({ places })`, with `places` from `packages/core/motion/zero-latency.json`); **static** rows by `npm run check:motion`; **look** rows by an evaluator. A view passes when no row fails.
+
+| ID | Passes when | How | Severity |
+| --- | --- | --- | --- |
+| MV1 | Anything present in two consecutive states is drawn in every frame between them (at 10 % speed) | look, the Animations panel | S2 |
+| MV2 | A value the person drives (a key, a wheel step, a drag) is in the DOM in the same task, with nothing animating on it | DOM (with `places`) | S1 |
+| MV3 | Reversing a change half-way returns from where it is | look, or a timed probe | S2 |
+| MV4 | No long animation frame over 50 ms and no layout shift during a change, at 4× CPU throttle | Performance panel | S2 |
+| MV5 | With reduced motion nothing travels or resizes; fades remain | DOM, with reduced motion emulated | S1 |
+| MV6 | No literal duration or curve, no `transition: all`, nothing on a zero-latency selector, layout transitions only on the allow-list | static `check:motion` | S3 |
+| MV7 | A leaving layer is `inert` and `aria-hidden`; focus never falls to the page body during a morph | DOM | S1 |
+| MV8 | An agent given new state pairs picks the documented strategy | trial prompt | S3 |
+| MV9 | At rest nothing loops unseen: a repeating animation runs only on something drawn (a visible loading indicator) | DOM, after the page settles | S3 |
+
+```js
+// Playwright: await page.addScriptTag({ path: 'tools/motion-probe.js' })
+window.motionProbe({ places }).findings; // [{ rule, element, detail }]
+```
+
+**F15.MO1 sweep (2026-11-09 about 14:25, owner Q85.2):** at rest, on a 16-page sample across the templates, 5 pages had spinners turning forever inside hidden layers: every Button and MenuButton trigger keeps its pending layer (a Progress) in the same box for the in-place morph (C2), hidden while idle, and its animation ran regardless. A hidden spinner in a hidden layer now pauses (`controls.css`), and resumes when its layer is shown. MV9 and MV7 then pass on all 168 rendered template layouts; with reduced motion emulated, nothing runs on the sample (MV5).
 
 ## Definition of Done for motion
 

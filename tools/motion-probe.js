@@ -11,6 +11,7 @@
  *   transform, translate, scale or size changing between keyframes, or a running view transition. Fades are fine.
  * - MV7 `leaving-layer`: a leaving layer (`[data-leaving]`) that isn't both `inert` and `aria-hidden`; and focus on the
  *   page body while a morph (`dl-morph`) runs.
+ * - MV9 `at-rest` (Q85.2): a repeating animation running on something that isn't drawn (a spinner in a hidden layer).
  *
  * Not covered here: MV3 (reversal mid-way) and MV4 (long frames, layout shift) need timed sampling; MV1 and MV8 are
  * reviews. Call it during a change (a key press, a click) as well as at rest: at rest nothing should be running.
@@ -90,6 +91,21 @@
       if (!el.inert || el.getAttribute('aria-hidden') !== 'true') findings.push({ rule: 'MV7 leaving-layer', element: describe(el), detail: `inert ${el.inert}, aria-hidden ${el.getAttribute('aria-hidden')}` });
     }
     if (running.some((a) => a.id === 'dl-morph') && document.activeElement === document.body) findings.push({ rule: 'MV7 leaving-layer', element: 'body', detail: 'focus is on the page body while a morph runs' });
+
+    // MV9 (Q85.2): at rest, nothing loops unseen. A repeating animation that is running on something not drawn (hidden,
+    // transparent or without a box) costs frames and says nothing; a visible loading indicator is allowed.
+    const drawn = (el) => {
+      if (!el?.getClientRects?.().length) return false;
+      for (let e = el; e && e !== document.documentElement; e = e.parentElement) {
+        const cs = getComputedStyle(e);
+        if (cs.visibility === 'hidden' || cs.display === 'none' || Number(cs.opacity) === 0) return false;
+      }
+      return true;
+    };
+    for (const a of document.getAnimations()) {
+      if (a.playState !== 'running' || a.effect?.getTiming?.().iterations !== Infinity) continue;
+      if (!drawn(a.effect?.target)) findings.push({ rule: 'MV9 at-rest', element: describe(a.effect?.target), detail: `${a.animationName ?? 'animation'} loops while not drawn` });
+    }
 
     return { running: running.length, findings };
   };
