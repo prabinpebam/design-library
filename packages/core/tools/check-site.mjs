@@ -182,12 +182,14 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
   const lib = await loadResolver();
   if (!lib) info(dir, '/', "references and bindings weren't resolved (this Node has no type stripping; Node 22.13 or later does)");
   const siteData = { pages: pages.map((p) => p.doc), collections: Object.fromEntries(Object.entries(byCollection).map(([k, c]) => [k, c.doc])) };
+  // Derived values (DP14), worked out as `loadSite` does; a derivation that finds nothing is reported on site.json.
+  if (lib?.deriveValues) siteData.derived = lib.deriveValues(site.derive, siteData, { missing: (what, path) => fail(files.site, `/${path.replace(/\./g, '/')}`, what, 'name a collection the site has') });
   const coreTypes = new Set(Object.entries(schemas.blocks.$defs).filter(([, d]) => d.properties?.type?.const).map(([k]) => k));
   const blockSchema = (type) => (coreTypes.has(type) ? strict.getSchema(`https://design-library.local/core/blocks/1#/$defs/${type}`) : undefined);
   // Where a block's values came from a reference, an item value or a binding: the renderer passes those items whole
   // (with fields the block doesn't draw), so extra fields there aren't the writer's.
   const dataPaths = (value, at = '') => {
-    if (lib && (lib.isRef(value) || lib.isItemValue(value) || lib.isBinding(value))) return [at];
+    if (lib && (lib.isRef(value) || lib.isItemValue(value) || lib.isBinding(value) || lib.isDerived?.(value))) return [at];
     if (Array.isArray(value)) return value.flatMap((v, i) => dataPaths(v, `${at}/${i}`));
     if (isObject(value)) return Object.entries(value).flatMap(([k, v]) => dataPaths(v, `${at}/${k}`));
     return [];
