@@ -1,6 +1,21 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
   "assets": {
-    "shelves": { "src": "assets/shelves.svg", "alt": "Two wooden shelves of coloured book spines above a pale blue floor." }
+    "shopfront": {
+      "src": "assets/shopfront.webp",
+      "alt": "The shop’s lit window on a cobbled quay at dusk: shelves of books, an armchair under a reading lamp, a rowing boat moored alongside."
+    },
+    "theLongShore": {
+      "src": "assets/the-long-shore.webp",
+      "alt": "The Long Shore on a reading table, its cover a lighthouse above a snowy, rocky shore, beside a bundle of letters tied with string."
+    },
+    "saltAndInk": {
+      "src": "assets/salt-and-ink.webp",
+      "alt": "Salt and Ink on a reading table, its cover an old map of a harbour with a compass rose, beside a dip pen and a bottle of ink."
+    },
+    "smallBoats": {
+      "src": "assets/small-boats.webp",
+      "alt": "Small Boats on a reading table, its cover a red rowing boat on a bright blue sea, beside a little wooden toy boat."
+    }
   }
 }

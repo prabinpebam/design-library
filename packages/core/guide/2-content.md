@@ -40,7 +40,7 @@ Pick the shape for each layout:
      "regions": {
        "main": [
          { "type": "hero", "eyebrow": "Open every day", "title": "Books for slow evenings", "lead": "A small shop by the water.",
-           "actions": [{ "label": "See new books", "primary": true, "says": "New books open here once that page is built." }], "picture": "shelves" },
+           "actions": [{ "label": "See new books", "primary": true, "says": "New books open here once that page is built." }], "picture": "shopfront" },
          { "type": "cards", "heading": "New this week", "items": [{ "title": "The Long Shore", "description": "A quiet novel about a lighthouse keeper." }] }
        ]
      }
@@ -77,7 +77,7 @@ Every template has `content.schema.json` beside its manifest. Its `$id` must end
 | Allowed | Never |
 | --- | --- |
 | Plain text, numbers, booleans, values from an enum | HTML, Markdown, CSS, class names, `style` keys |
-| Ids: an asset (`"picture": "shelves"`), an icon (`"mark": "organisation"`), a layout of the same template (`"href": "/about"`), an outside address (`https://…`) | Colours, sizes, pixel values, durations, component names |
+| Ids: an asset (`"picture": "shopfront"`), an icon (`"mark": "organisation"`), a layout of the same template (`"href": "/about"`), an outside address (`https://…`) | Colours, sizes, pixel values, durations, component names |
 | Inline code between backticks, the only mark inside text | Functions, expressions, template strings (`${…}`, `{{…}}`) |
 | Every word a person reads, including button labels and messages | Words left inside a component for content to override |
 

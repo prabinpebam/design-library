@@ -1,0 +1,14 @@
+{
+  "id": "shopfront",
+  "set": "SS1 Harbour",
+  "slot": "IA-H1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "size": "1536x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/harbour/assets/shopfront.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "The shop’s lit window on a cobbled quay at dusk: shelves of books, an armchair under a reading lamp, a rowing boat moored alongside.",
+  "prompt": "Use: hero picture for a small bookshop's website, shown at about 560 by 373 pixels beside the heading 'Books for slow evenings'.\nSubject: a small independent bookshop on a harbour quay at early evening, seen from the quay.\nDetails: a wide shop window glowing with lamplight, shelves of books inside, one armchair with a reading lamp by the window, a stack of books on a small table in the window; the shop front is painted deep blue; cobbled quay in front with a mooring bollard; calm water and a moored rowing boat at the edge; first lights across the harbour.\nComposition: the shop window is the centre of interest and sits in the middle third; eye level; the whole shop front fits with some quay below.\nStyle: warm editorial illustration, flat shapes with soft painted edges, no outlines; palette of deep harbour blue, lamp amber, paper cream and brick red; evening lamplight from the left; calm and uncluttered.\nConstraints: no text, no letters or numbers, no sign lettering, no logos, no watermark, no frame or border, no people."
+}

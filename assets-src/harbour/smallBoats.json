@@ -1,0 +1,14 @@
+{
+  "id": "smallBoats",
+  "set": "SS1 Harbour",
+  "slot": "IA-H4",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/harbour/reference.webp",
+  "size": "1536x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/harbour/assets/small-boats.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "Small Boats on a reading table, its cover a red rowing boat on a bright blue sea, beside a little wooden toy boat.",
+  "prompt": "Image 1 is a style reference only: copy its medium, painterly brushwork, palette, lamplight and level of detail. Do not copy its subject or composition.\nUse: card picture for one book in a bookshop's 'New this week' list, shown at about 360 by 203 pixels (cropped to 16:9 from the centre).\nSubject: a square children's picture book called Small Boats: its cover art shows a little red rowing boat on a bright blue sea; next to it a tiny wooden toy boat, lying on a wooden reading table by the shop window in the evening.\nComposition: top-down three-quarter view, the book fills about 55% of the width and sits in the centre third, nothing important near the top or bottom edges.\nStyle: warm editorial illustration, flat shapes with soft painted edges, no outlines; palette of deep harbour blue, lamp amber, paper cream and brick red; evening lamplight from the left; calm and uncluttered.\nConstraints: the cover has no title lettering and no text at all, no letters or numbers anywhere, no logos, no watermark, no frame or border, no people."
+}

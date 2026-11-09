@@ -1,0 +1,14 @@
+{
+  "id": "saltAndInk",
+  "set": "SS1 Harbour",
+  "slot": "IA-H3",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/harbour/reference.webp",
+  "size": "1536x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/harbour/assets/salt-and-ink.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "Salt and Ink on a reading table, its cover an old map of a harbour with a compass rose, beside a dip pen and a bottle of ink.",
+  "prompt": "Image 1 is a style reference only: copy its medium, painterly brushwork, palette, lamplight and level of detail. Do not copy its subject or composition.\nUse: card picture for one book in a bookshop's 'New this week' list, shown at about 360 by 203 pixels (cropped to 16:9 from the centre).\nSubject: a paperback essay collection called Salt and Ink: its cover art shows an old hand-drawn harbour map with a compass rose; next to it a dip pen and a small ink bottle, lying on a wooden reading table by the shop window in the evening.\nComposition: top-down three-quarter view, the book fills about 55% of the width and sits in the centre third, nothing important near the top or bottom edges.\nStyle: warm editorial illustration, flat shapes with soft painted edges, no outlines; palette of deep harbour blue, lamp amber, paper cream and brick red; evening lamplight from the left; calm and uncluttered.\nConstraints: the cover has no title lettering and no text at all, no letters or numbers anywhere, no logos, no watermark, no frame or border, no people."
+}
