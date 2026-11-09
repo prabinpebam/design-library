@@ -1,14 +1,18 @@
 /**
- * The core router on a small site (IP27): `site.html?demo=router`. Three pages under hash routes, a header whose links
- * go through the router, in-page links to anchored sections, and a page for an unknown address. View data only; no
+ * The core router on a small site (IP27, IP30): `site.html?demo=router`. Four pages under hash routes, a header whose links
+ * go through the router, in-page links to anchored sections, a page whose picture is loaded before it shows, a fade
+ * between pages that a Switch turns off, and a page for an unknown address. View data only; no
  * styles. Shown on the library's Routing page in a ScreenPreview.
  */
-import { Cluster, Link, PageHeader, Section, SiteHeader, SiteLayout, Stack, TableOfContents, Text } from '@design-library/core/react';
-import { matchPath, Router, useRoute } from '@design-library/core/site';
+import { useState } from 'react';
+import { Cluster, Image, Link, PageHeader, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/react';
+import { loadPicture, matchPath, Router, useRoute, type Route } from '@design-library/core/site';
+import hall from '../../../../packages/templates/conference/assets/main-hall.webp?url';
 
 const pages = [
   { href: '/', label: 'Home' },
   { href: '/talks', label: 'Talks' },
+  { href: '/venue', label: 'Venue' },
   { href: '/about', label: 'About' },
 ];
 
@@ -48,6 +52,13 @@ function View() {
         ))}
       </Stack>
     );
+  if (matchPath('/venue', path))
+    return (
+      <Stack gap="section">
+        <PageHeader title="The venue" lead="The old print hall by the river. The router loaded this picture before showing the page, so it arrived whole." />
+        <Image src={hall} alt="The main hall just before the first talk: a lit stage with a blank screen, rows of people seated, the river and a suspension bridge through tall windows." ratio="wide" rounded />
+      </Stack>
+    );
   if (matchPath('/about', path))
     return <PageHeader title="About" lead="A yearly day of talks, run by volunteers. The router moved focus to this page’s heading and said its name." />;
   return (
@@ -58,19 +69,23 @@ function View() {
   );
 }
 
-function Shell() {
+function Shell({ fade, onFade }: { fade: boolean; onFade: (next: boolean) => void }) {
   const { path } = useRoute();
   return (
-    <SiteLayout header={<SiteHeader name="Talks on design" href="/" links={pages.map((p) => ({ ...p, current: p.href === path }))} />}>
+    <SiteLayout header={<SiteHeader name="Talks on design" href="/" links={pages.map((p) => ({ ...p, current: p.href === path }))} actions={<Switch label="Fade between pages" checked={fade} onChange={onFade} />} />}>
       <View />
     </SiteLayout>
   );
 }
 
+/** The venue page needs its picture: the router holds the old page until it is decoded (at most 300 ms). */
+const prepare = (to: Route) => (to.path === '/venue' ? loadPicture(hall) : undefined);
+
 export function RouterDemo() {
+  const [fade, setFade] = useState(true);
   return (
-    <Router>
-      <Shell />
+    <Router transition={fade ? 'fade' : 'none'} prepare={prepare} warm={prepare}>
+      <Shell fade={fade} onFade={setFade} />
     </Router>
   );
 }

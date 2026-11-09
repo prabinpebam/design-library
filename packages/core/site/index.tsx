@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { flushSync } from 'react-dom';
 import { announce } from '../react/behaviour/announce';
-import { prefersReducedMotion } from '../react/behaviour/motion';
+import { cssMs } from '../react/behaviour/anchor';
+import { prefersReducedMotion, viewTransition } from '../react/behaviour/motion';
 import { RouterContext, useRouter, type Route, type RouterApi } from '../react/behaviour/router';
 
 export type { Route, RouterApi } from '../react/behaviour/router';
@@ -19,7 +21,32 @@ export interface RouterProps {
   handleLinks?: boolean;
   /** Told of every route change, after it is shown. */
   onChange?: (route: Route) => void;
+  /**
+   * How a new page replaces the old one (IP30): `'none'` (default, swaps at once, as before) or `'fade'` (one
+   * cross-fade on the motion tokens through `viewTransition`). A function picks per change. Reduced motion always
+   * swaps at once. Only a change of path counts as a new page; an anchor or query change on the same page never fades.
+   */
+  transition?: PageTransition | ((to: Route, from: Route) => PageTransition);
+  /**
+   * Gets a new page ready before it is shown (load its picture or data). The old page stays, usable, until the promise
+   * settles or `wait` passes, whichever is first; a failure still shows the page. Called only for a change of path.
+   */
+  prepare?: (to: Route, from: Route) => Promise<unknown> | void;
+  /** The longest `prepare` may hold the old page, in ms; defaults to the `--duration-indicator-delay` token (300 ms), so the swap never needs a loading indicator. */
+  wait?: number;
+  /** Called when the pointer rests on, or focus reaches, a link to another page, so its picture can start loading early. */
+  warm?: (to: Route) => void;
   children: ReactNode;
+}
+
+/** The page transitions a router can run by name. */
+export type PageTransition = 'none' | 'fade';
+
+/** Loads and decodes a picture: resolves when it can be drawn at once, or when it fails. For `Router` `prepare` and `warm`. */
+export function loadPicture(src: string): Promise<void> {
+  const img = new Image();
+  img.src = src;
+  return img.decode().catch(() => undefined);
 }
 
 type Entry = { route: Route; how: 'first' | 'push' | 'pop'; scroll?: number };
@@ -68,14 +95,49 @@ function focusQuietly(el: HTMLElement) {
  * read `useRoute()` to choose a view, and every `Link` (and any link in the page) to a route or an anchor goes through
  * it. A page change scrolls to the top (or to its anchor), moves focus to the new page's heading and announces it; an
  * anchor link scrolls to its target and focuses it without replacing the route; Back and Forward return to where the
- * person was. Behaviour only: no styles, no views, no route table (the site decides what each path shows).
+ * person was. With `prepare` the old page stays until the new one is ready (IP30), and `transition="fade"` swaps them
+ * in one cross-fade. Behaviour only: no styles, no views, no route table (the site decides what each path shows).
  */
-export function Router({ mode = 'hash', base = '', focus = 'main h1', announcement, handleLinks = true, onChange, children }: RouterProps) {
+export function Router({ mode = 'hash', base = '', focus = 'main h1', announcement, handleLinks = true, onChange, transition = 'none', prepare, wait, warm, children }: RouterProps) {
   const root = clean(base) === '/' ? '' : clean(base);
   const [entry, setEntry] = useState<Entry>(() => ({ route: readRoute(mode, root, null), how: 'first' }));
+  const [pending, setPending] = useState<Route | null>(null);
   const shown = useRef<Route | null>(null);
   const current = useRef(entry.route);
   current.current = entry.route;
+  // The latest change wins: a slower prepare for an earlier click never shows its page.
+  const latest = useRef(0);
+  const swapWith = useRef({ transition, prepare, wait });
+  swapWith.current = { transition, prepare, wait };
+
+  const show = useCallback(async (next: Entry) => {
+    const from = current.current;
+    const id = ++latest.current;
+    const { transition: pick, prepare: ready, wait: most } = swapWith.current;
+    if (next.route.path === from.path) {
+      setPending(null);
+      setEntry(next);
+      return;
+    }
+    if (ready) {
+      setPending(next.route);
+      const limit = most ?? (cssMs(document.documentElement, '--duration-indicator-delay') || 300);
+      await Promise.race([Promise.resolve().then(() => ready(next.route, from)).catch(() => undefined), new Promise((done) => window.setTimeout(done, limit))]);
+      if (id !== latest.current) return;
+    }
+    const name = typeof pick === 'function' ? pick(next.route, from) : pick;
+    const apply = () =>
+      flushSync(() => {
+        setPending(null);
+        setEntry(next);
+      });
+    if (name === 'fade') void viewTransition(apply);
+    else if (ready) apply();
+    else {
+      setPending(null);
+      setEntry(next);
+    }
+  }, []);
 
   const owns = useCallback((to: string) => (to.startsWith('/') && !to.startsWith('//')) || to.startsWith('#'), []);
 
@@ -103,9 +165,9 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
       history.replaceState({ ...(history.state ?? {}), dlScroll: window.scrollY }, '');
       if (options?.replace) history.replaceState({ dlScroll: 0 }, '', url);
       else history.pushState({ dlScroll: 0 }, '', url);
-      setEntry({ route: readRoute(mode, root, current.current), how: 'push' });
+      void show({ route: readRoute(mode, root, current.current), how: 'push' });
     },
-    [mode, root, owns, urlFor],
+    [mode, root, owns, urlFor, show],
   );
 
   // Back, Forward and an address typed by hand.
@@ -116,7 +178,7 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
       const route = readRoute(mode, root, current.current);
       if (sameRoute(route, current.current)) return;
       const scroll = typeof history.state?.dlScroll === 'number' ? (history.state.dlScroll as number) : undefined;
-      setEntry({ route, how: event.type === 'popstate' ? 'pop' : 'push', scroll });
+      void show({ route, how: event.type === 'popstate' ? 'pop' : 'push', scroll });
     };
     window.addEventListener('popstate', onPop);
     if (mode === 'hash') window.addEventListener('hashchange', onPop);
@@ -125,7 +187,33 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
       window.removeEventListener('popstate', onPop);
       window.removeEventListener('hashchange', onPop);
     };
-  }, [mode, root]);
+  }, [mode, root, show]);
+
+  // A link to another page under the pointer or focus: the site may start loading what that page needs.
+  const warmRef = useRef(warm);
+  warmRef.current = warm;
+  const warms = !!warm;
+  useEffect(() => {
+    if (!warms) return;
+    const seen = new Set<string>();
+    const onIntent = (event: Event) => {
+      const a = (event.target as Element | null)?.closest?.('a[href]');
+      let to = a?.getAttribute('href') ?? '';
+      if (mode === 'history' && root && to.startsWith(`${root}/`)) to = to.slice(root.length);
+      if (mode === 'hash' && to.startsWith('#/')) to = to.slice(1);
+      if (!to.startsWith('/') || to.startsWith('//') || seen.has(to)) return;
+      const { path, search, anchor } = split(to);
+      if (clean(path) === current.current.path) return;
+      seen.add(to);
+      warmRef.current?.({ path: clean(path), query: new URLSearchParams(search), anchor });
+    };
+    document.addEventListener('pointerover', onIntent, { passive: true });
+    document.addEventListener('focusin', onIntent);
+    return () => {
+      document.removeEventListener('pointerover', onIntent);
+      document.removeEventListener('focusin', onIntent);
+    };
+  }, [warms, mode, root]);
 
   // Links anywhere in the page: a route or an anchor goes through the router; anything else is the browser's.
   useEffect(() => {
@@ -176,7 +264,7 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
     onChange?.(route);
   }, [entry, focus, announcement, onChange]);
 
-  const api = useMemo<RouterApi>(() => ({ route: entry.route, href: (to) => (owns(to) ? urlFor(to) : to), navigate, owns }), [entry.route, owns, urlFor, navigate]);
+  const api = useMemo<RouterApi>(() => ({ route: entry.route, pending, href: (to) => (owns(to) ? urlFor(to) : to), navigate, owns }), [entry.route, pending, owns, urlFor, navigate]);
   return <RouterContext.Provider value={api}>{children}</RouterContext.Provider>;
 }
 

@@ -13,6 +13,8 @@ export interface Route {
 /** What `Link` and `Button` with `href` read from the core router, when a site has one (`@design-library/core/site`). */
 export interface RouterApi {
   route: Route;
+  /** The page being got ready while the old one stays (`Router` `prepare`), or `null`. */
+  pending?: Route | null;
   /** The `href` to write for a route (`/talks` → `#/talks` in hash mode), an anchor (`#speakers`) or an address (unchanged). */
   href: (to: string) => string;
   /** Goes to a route or an anchor; `replace` changes the current history entry instead of adding one. */
