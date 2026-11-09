@@ -7,6 +7,7 @@ import elevation from '../../../../packages/core/principles/elevation.json';
 import principles from '../../../../packages/core/principles/principles.json';
 import { countsOf, placeOf, statesOf, templates, type Template, type TemplateLayout } from './templates';
 import { templateOf } from '@design-library/templates';
+import { partRoute } from '@design-library/core/render';
 import { docsHref, docsSource } from './site-links';
 import corePackage from '../../../../packages/core/package.json';
 import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories,  conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, themeStories, fontsStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, linkStories, navigationStories, segmentedControlStories, schemeControlStories, tableOfContentsStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories, type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/react';
@@ -443,6 +444,7 @@ const partsPage = (t: Template): Page[] => {
   const stories = templateOf(t.id)?.stories ?? [];
   if (!stories.length) return [];
   const order = { fundamental: 0, compound: 1, layout: 2 };
+  const placed = (templateOf(t.id)?.manifest.parts?.blocks ?? []).filter((b) => b.example);
   return [
     {
       id: `${t.id}-parts`,
@@ -456,7 +458,17 @@ const partsPage = (t: Template): Page[] => {
           { heading: `${file.component} (${file.tier})`, intro: file.summary, block: { type: 'stories', file } },
           { heading: 'Props', minor: true, block: { type: 'props', component: file.component } },
           { heading: 'Accessibility', minor: true, block: { type: 'access', component: file.component } },
-        ]),
+        ])
+        .concat(
+          placed.flatMap((b): PageBlock[] => [
+            {
+              heading: `${b.type}, placed from a page document`,
+              intro: `The block’s example from template.json, as a page document’s section: SiteView draws it through ${t.title}’s registry (partsSite), the same way a site’s own page would.`,
+              block: { type: 'screen', src: `site.html?demo=parts&template=${t.id}#${partRoute(b.type)}`, title: `${b.type} placed from a page document`, width: 'fill' },
+            },
+            { heading: `${b.type}: the section`, minor: true, block: { type: 'code', label: `${b.type} example`, code: JSON.stringify(b.example, null, 2) } },
+          ]),
+        ),
     },
   ];
 };

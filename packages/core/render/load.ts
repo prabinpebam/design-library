@@ -57,3 +57,27 @@ export function loadSite(files: SiteFiles): Site {
   const collections = Object.fromEntries((list(files.collections) as CollectionDocument[]).map((c) => [c.id, c]));
   return { site: files.site as SiteDocument, pages: list(files.pages) as PageDocument[], collections, assets: resolveAssets(files.assets, files.assetUrls ?? {}), registry: files.registry };
 }
+
+/** The route `partsSite` gives a block type: `conference.sponsor-wall` → `/conference/sponsor-wall`. */
+export const partRoute = (type: string) => `/${type.replace('.', '/')}`;
+
+/**
+ * A template's own block types as a small site (DP18): one page per block type that declares an `example` in the
+ * manifest, each placing that example from a page document through the template's registry, with its pictures. What
+ * a story, a preview or an authoring tool opens to show a part in place; nothing beyond the manifest is needed.
+ */
+export function partsSite(template: Template): Site {
+  const { manifest } = template;
+  const parts = (manifest.parts?.blocks ?? []).filter((b) => b.example);
+  const pages: PageDocument[] = parts.map((b) => ({ pageVersion: 1, id: b.type, route: partRoute(b.type), title: b.type, current: b.type.split('.')[1], sections: [b.example!] }));
+  const site: SiteDocument = {
+    siteVersion: 1,
+    id: `${manifest.id}-parts`,
+    title: `${manifest.title}: own blocks`,
+    home: parts[0]?.type ?? '',
+    navigation: parts.map((b) => ({ label: b.type, href: partRoute(b.type) })),
+    header: [{ type: 'site-header', name: `${manifest.title}: own blocks` }],
+    aliases: parts[0] ? { '/': partRoute(parts[0].type) } : undefined,
+  };
+  return { site, pages, collections: {}, assets: template.assets, registry: template.registry };
+}

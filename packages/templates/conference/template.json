@@ -1739,12 +1739,33 @@
       {
         "type": "conference.countdown",
         "schema": "#/$defs/countdown",
-        "renders": "conference.Countdown"
+        "renders": "conference.Countdown",
+        "example": {
+          "type": "conference.countdown",
+          "label": "Doors open in",
+          "until": "2027-03-11T09:00:00+00:00",
+          "passed": "The conference has started: see today’s schedule."
+        }
       },
       {
         "type": "conference.sponsor-wall",
         "schema": "#/$defs/sponsorWall",
-        "renders": "conference.SponsorWall"
+        "renders": "conference.SponsorWall",
+        "example": {
+          "type": "conference.sponsor-wall",
+          "levels": [
+            { "id": "lead", "title": "Lead partner", "size": "l", "sponsors": [{ "name": "Northwind Freight", "note": "Supports every student ticket", "picture": "markNorthwindFreight" }] },
+            {
+              "id": "partners",
+              "title": "Partners",
+              "size": "m",
+              "sponsors": [
+                { "name": "Kitewing", "note": "The Thursday evening party", "picture": "markKitewing" },
+                { "name": "Larchfield Type", "note": "The workshops", "picture": "markLarchfieldType" }
+              ]
+            }
+          ]
+        }
       }
     ]
   }

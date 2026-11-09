@@ -21,6 +21,7 @@ import { layoutScreens } from './views/templates';
 import { PresetSettings } from './inspectors/presets';
 import { RouterDemo } from './views/RouterDemo';
 import { SiteDemo } from './views/SiteDemo';
+import { PartsDemo } from './views/PartsDemo';
 
 const routeOf = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, '')).replace(/^app\//, '');
 
@@ -146,7 +147,7 @@ function TemplateSite() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* The core router on a small site (IP27): `site.html?demo=router`, shown on the Routing page. A data-driven site (DP8, DP9): `site.html?demo=site`. */}
-    {query.get('demo') === 'router' ? <RouterDemo /> : query.get('demo') === 'site' ? <SiteDemo /> : <TemplateSite />}
+    {/* The core router on a small site (IP27): `site.html?demo=router`, shown on the Routing page. A data-driven site (DP8, DP9): `site.html?demo=site`. A template's own blocks from page documents (DP18): `site.html?demo=parts&template={id}`. */}
+    {query.get('demo') === 'router' ? <RouterDemo /> : query.get('demo') === 'site' ? <SiteDemo /> : query.get('demo') === 'parts' ? <PartsDemo template={query.get('template') ?? ''} /> : <TemplateSite />}
   </StrictMode>,
 );

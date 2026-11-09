@@ -206,7 +206,19 @@ export interface TemplateManifest {
    * hold 3–5 items: a flow of 3+ screens is a group of its own; a shorter flow's screens sit in the section.
    */
   sections: TemplateSection[];
-  parts?: { fundamentals?: TemplatePart[]; compounds?: TemplatePart[]; layouts?: TemplatePart[]; blocks?: { type: string; schema: string; renders: string }[] };
+  parts?: { fundamentals?: TemplatePart[]; compounds?: TemplatePart[]; layouts?: TemplatePart[]; blocks?: TemplateBlockPart[] };
+}
+
+/** One of a template's own block types (template.schema.json `parts.blocks`). */
+export interface TemplateBlockPart {
+  /** Namespaced: `{template}.{name}`. */
+  type: string;
+  /** Its schema in the content schema: `#/$defs/…`. */
+  schema: string;
+  /** The component that draws it. */
+  renders: string;
+  /** A sample block of this type, valid against its schema (DP18): what stories, previews and `partsSite` start from. */
+  example?: Block;
 }
 
 /** One content file, as content.schema.json defines it. */

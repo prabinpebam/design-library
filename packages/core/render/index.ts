@@ -4,7 +4,7 @@ export type { TemplateViewProps } from './TemplateView';
 export { BLOCKS, actionButtons } from './blocks';
 export { fill } from './fill';
 export { RichText, richText, plainText } from './rich-text';
-export { loadTemplate, loadSite } from './load';
+export { loadTemplate, loadSite, partsSite, partRoute } from './load';
 export type { SiteFiles } from './load';
 export { SiteView, aliasFor, matchPage, pageFor, titleFor } from './SiteView';
 export type { SiteViewProps, PageMatch } from './SiteView';

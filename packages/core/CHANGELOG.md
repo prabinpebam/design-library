@@ -8,7 +8,7 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
-Nothing yet.
+- **Added (DP18; 0.4.0):** a template's own block types placed from page documents. `template.json` `parts.blocks[]` entries take an `example` (a sample block, typed `TemplateBlockPart`); `@design-library/core/render` exports `partsSite(template)`, a small site with one page per block type that has an example (route `partRoute(type)`, `conference.sponsor-wall` → `/conference/sponsor-wall`), drawn by `SiteView` through the template's registry with its pictures. A site places a template's blocks by passing its registry to `loadSite({ registry })`. The Conference template's countdown and sponsor wall declare examples; its Own parts page shows each placed from a page document beside the section's JSON (`site.html?demo=parts&template=conference`). **Adopt:** optional. Give each of your template's block types an `example`, and preview them with `<SiteView site={partsSite(template)} />`.
 
 ## 0.3.0-beta.1 (2026-11-10): the next minor from a real site, and foundations for data-driven sites
 
