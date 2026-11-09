@@ -481,6 +481,64 @@ const componentPage = (file: StoryFile): Page => {
     blocks: [{ heading: 'Examples', minor: true, block: { type: 'stories', file } }, ...contract(file.component)],
   };
 };
+/** IP16 (F10, F15, F50, N10, N11): the needs brand-led sites rebuilt as custom parts, each met by a core part. */
+function coreFirst(): Page {
+  const needs: [string, string, string, string, string][] = [
+    ['The page’s opening', 'Hero', 'Eyebrow, a big title with accent words, lead, buttons, a note; a picture with a focal point, any media, a trail of facts; fill the first screen', 'Animate its own title letter by letter', 'hero'],
+    ['A big number with its label', 'Statistic', 'Format the number in the reader’s language, a unit, a change and a trend, two sizes', 'Count up as it scrolls in', 'statistic'],
+    ['A quote and who said it', 'Quote', 'Three sizes, a portrait, a role and a source link, start or centre', 'Sit on a photo as a collage', 'quote'],
+    ['A list of links to pages', 'IndexList, RowList, Card in a Grid', 'Titles, summaries and links in reading order, in columns that collapse when narrow', 'Filter as you type', 'indexlist'],
+    ['Key–value facts', 'DescriptionList', 'Terms and details that wrap cleanly: date, place, price', 'A timeline', 'descriptionlist'],
+    ['A tinted band between sections', 'Section tone="tint" with bleed', 'A full-width band in every scheme and contrast; sunken and raised too', 'A gradient or a texture of the brand’s own', 'section'],
+    ['A status on a card', 'Card meta with a Badge', 'Ended, Coming up, Sold out: words and colour in the card’s own place', '—', 'card'],
+    ['Film or a picture that plays in place', 'Reveal around MediaPlayer or Image', 'Swap the still for the film when asked, with controls and captions', 'Play on its own with sound', 'mediaplayer'],
+    ['Accent words in a heading', 'Rich text in content, Heading tone="accent"', 'A brand colour that keeps 3:1 for display and 4.5:1 for text', 'A colour per letter', 'heading'],
+    ['A heading beside its text, uneven columns', 'Grid ratio="aside" or "2:1"', 'One column when the window is narrow', 'Overlap', 'grid'],
+  ];
+  return {
+    id: 'core-first',
+    section: 'start',
+    title: 'Core first',
+    summary: 'Before you make a part of your own, look the need up here: ten things sites often rebuild by hand that a core part already does, with what it can and can’t do.',
+    blocks: [
+      {
+        heading: 'Find the core part',
+        intro: 'When the “can’t” column is what you need, a custom part inside your template is fair.',
+        block: {
+          type: 'table',
+          label: 'Needs and the core part for each',
+          columns: [
+            { key: 'need', header: 'Need' },
+            { key: 'part', header: 'Core part' },
+            { key: 'can', header: 'It can' },
+            { key: 'cant', header: 'It can’t' },
+          ],
+          rows: needs.map(([need, part, can, cant]) => ({ need, part, can, cant })),
+        },
+      },
+      {
+        heading: 'Open each part',
+        block: { type: 'links', items: needs.map(([need, part, , , page]) => ({ label: `${part.split(/[ ,]/)[0]}: ${need.toLowerCase()}`, href: `#/${page}` })) },
+      },
+      {
+        heading: 'If you still need a part of your own',
+        block: {
+          type: 'points',
+          items: [
+            'Make it inside your template, in its namespace, with its own tokens and stories.',
+            'Build it from core Link, Heading, Image, Button and Text, never from raw links, headings, pictures or buttons, so focus, names and theme changes come with it.',
+            'Keep parts of your own to about a third of a page. More than that usually means a core part or a theme setting was missed.',
+          ],
+        },
+      },
+      {
+        heading: 'The full recipe',
+        block: { type: 'links', items: [{ label: 'A brand-led site, step by step (guide)', href: 'https://github.com/prabinpebam/design-library/blob/main/packages/core/guide/recipe-brand-led-site.md', newTab: true }] },
+      },
+    ],
+  };
+}
+
 export const pages: Page[] = withDocs(withPrinciples([
   {
     id: 'overview',
@@ -490,6 +548,7 @@ export const pages: Page[] = withDocs(withPrinciples([
     blocks: [{ block: { type: 'overview' } }],
   },
   getStarted(),
+  coreFirst(),
   {
     id: 'colour',
     section: 'foundations',
