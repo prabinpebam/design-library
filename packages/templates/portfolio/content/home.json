@@ -34,7 +34,7 @@
             "eyebrow": "Wayfinding",
             "title": "Harbour wayfinding",
             "description": "Signs and maps for a working port open to visitors.",
-            "picture": "harbour",
+            "picture": "wayfindingModel",
             "meta": "2025",
             "href": "/project"
           },
@@ -42,7 +42,7 @@
             "eyebrow": "Book",
             "title": "Paths of the north",
             "description": "A walking guide with 40 hand-drawn maps.",
-            "picture": "frost",
+            "picture": "trailMap",
             "meta": "2024",
             "href": "/project"
           },
@@ -50,7 +50,7 @@
             "eyebrow": "Exhibition",
             "title": "Desert light",
             "description": "Graphics for a touring photography show.",
-            "picture": "sand",
+            "picture": "clayDunes",
             "meta": "2023",
             "href": "/project"
           },
@@ -58,7 +58,7 @@
             "eyebrow": "Identity",
             "title": "Meadow school",
             "description": "A name, a mark and signs for a primary school.",
-            "picture": "meadow",
+            "picture": "paperSchool",
             "meta": "2022",
             "href": "/project"
           }

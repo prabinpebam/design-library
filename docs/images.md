@@ -119,6 +119,7 @@ Each set has one style block, pasted verbatim into every prompt in the set, and 
 | IA-P10 | `speaking` post "Designing for the week before payday" | A purse and coins on a kitchen table, paper style | `harbour` | SC1 | D |
 | IA-P11 | `speaking` post "Twenty minutes to two" | A paper clock face at 1:40 | `frost` | SC1 | D |
 | IA-P12 | `process` figure "The wall of quotes we sorted by moment." | A wall of sticky notes in columns (scribbles, no readable text) | `sand` | SC1 | I |
+| IA-P13–P16 | `project` gallery "Harbour wayfinding pictures" (quilted, after IA-P1): the sign detail, the quay map, the colour swatches, early sketches | Show the case study's parts (found while wiring IP5; the audit's scan missed gallery lists) | `dusk`, `frost`, `meadow`, `sand` | SC1 | I |
 
 ### Chat (SS6)
 
@@ -170,7 +171,7 @@ One style set per packet, each openable in the template's standalone site, small
 | IP2 = F15.I4 | Corporate (SS2) | 15, **done** |
 | IP3 = F15.I5 | Conference (SS3) | 5, **done** |
 | IP4 = F15.I6 | Blog (SS4) | 7, **done** |
-| IP5 | Portfolio (SS5) | 12 |
+| IP5 = F15.I7 | Portfolio (SS5) | 16, **done** |
 | IP6 | Chat (SS6) and Design (IA-D1), plus the library's chat view data (IB19–IB23) | 6 |
 | IP7 | Library scenes, portraits and the media poster (SS7) | 18 |
 | IP8 | Seams IS1–IS6, after the gates | — |
@@ -182,6 +183,8 @@ One style set per packet, each openable in the template's standalone site, small
 **IP3 as built (F15.I5):** IA-C1 (the main hall before the first talk) is the reference; the venue and three places to stay are edits from it, in the same warm late-afternoon light. Six uses across four content files; the drawn landscapes are gone. 86–182 KB each (the tiled hotel front at WebP 74).
 
 **IP4 as built (F15.I6):** IA-B4 (the reservoir path) is the reference; the other six are edits from it. The model painted it as soft gouache with visible brushwork rather than strictly flat fields, and the set follows it. IA-B2 was regenerated once: the first ripples crossed, which contradicts the post ("Focus rings that never overlap"). Eleven uses across five content files; the drawn landscapes are gone. 91–187 KB each (the stepping stones at WebP 72).
+
+**IP5 as built (F15.I7):** IA-P1 (the paper model of the quay and its sign post, 2304×1296) is the reference; IA-P2–P16 are edits from it: matte paper and clay on a sage backdrop. The project gallery (IA-P13–P16) was missing from the audit and is now part of it. Thirteen picture fields and the five-item gallery rewired; the drawn landscapes are gone. The flat studio backdrop compresses well: 26–39 KB each, the wide hero 84 KB.
 
 Each packet replaces its placeholder SVGs, writes alt from the finished pictures, keeps `npm run check:content` and the build passing, and records the pictures here as done.
 

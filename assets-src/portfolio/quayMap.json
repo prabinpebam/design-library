@@ -1,0 +1,13 @@
+{
+  "id": "quayMap",
+  "set": "SS5 Portfolio",
+  "slot": "IA-P14",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/portfolio/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/portfolio/assets/quay-map.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A card map panel on two legs showing the quay from above: blue water, piers and a dotted walking route.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: gallery picture for 'Harbour wayfinding': the area map.\nSubject: a card map panel on two short legs showing the quay from above as pastel shapes: water, piers and a dotted walking route, with a round you-are-here dot.\nComposition: the objects grouped in the centre third so a 16:9 crop from the centre keeps them, plenty of empty backdrop around.\nStyle: studio still-life photograph for a product designer's portfolio: matte paper, card and clay models that stand for the project, on a seamless pastel backdrop; soft diffuse top light, one small soft shadow; muted pastel palette of sage, powder blue, sand and terracotta; crafted, calm, tactile.\nConstraints: no text, no letters or numbers anywhere, screens show only abstract coloured blocks, no logos, no watermark, no frame or border, no people."
+}

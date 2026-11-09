@@ -1,0 +1,13 @@
+{
+  "id": "wayfindingModel",
+  "set": "SS5 Portfolio",
+  "slot": "IA-P1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/portfolio/assets/wayfinding-model.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 1152 --density 2",
+  "alt": "A paper model of a small harbour quay with a sign post of pastel arrow panels pointing different ways, card boats in a paper harbour.",
+  "prompt": "Use: wide hero picture for the case study 'Harbour wayfinding', shown at about 1152 by 648 pixels, and its card.\nSubject: a paper-and-card scale model of a small harbour quay with a wayfinding sign post: arrow-shaped panels pointing in different directions, each a different pastel colour.\nDetails: tiny card boats in a blue paper harbour, a bollard of clay, a few tiny trees.\nComposition: the objects grouped in the centre third so a 16:9 crop from the centre keeps them, plenty of empty backdrop around.\nStyle: studio still-life photograph for a product designer's portfolio: matte paper, card and clay models that stand for the project, on a seamless pastel backdrop; soft diffuse top light, one small soft shadow; muted pastel palette of sage, powder blue, sand and terracotta; crafted, calm, tactile.\nConstraints: no text, no letters or numbers anywhere, screens show only abstract coloured blocks, no logos, no watermark, no frame or border, no people."
+}

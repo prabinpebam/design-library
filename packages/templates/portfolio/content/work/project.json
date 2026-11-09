@@ -25,7 +25,7 @@
         "eyebrow": "Wayfinding, 2025",
         "title": "Harbour wayfinding",
         "lead": "A working port opened its quays to visitors. Signs and maps had to guide them without slowing the cranes.",
-        "picture": "harbour",
+        "picture": "wayfindingModel",
         "layout": "stacked"
       },
       {
@@ -81,11 +81,11 @@
         "label": "Harbour wayfinding pictures",
         "layout": "quilted",
         "items": [
-          "harbour",
-          "dusk",
-          "frost",
-          "meadow",
-          "sand"
+          "wayfindingModel",
+          "signDetail",
+          "quayMap",
+          "signColours",
+          "arrowSketches"
         ]
       },
       {

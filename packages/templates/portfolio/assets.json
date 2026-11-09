@@ -1,25 +1,69 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
   "assets": {
-    "harbour": {
-      "src": "assets/harbour.svg",
-      "alt": "Blue hills by the sea under a pale sky and a low sun."
+    "wayfindingModel": {
+      "src": "assets/wayfinding-model.webp",
+      "alt": "A paper model of a small harbour quay with a sign post of pastel arrow panels pointing different ways, card boats in a paper harbour."
     },
-    "meadow": {
-      "src": "assets/meadow.svg",
-      "alt": "A green meadow rising to soft hills."
+    "trailMap": {
+      "src": "assets/trail-map.webp",
+      "alt": "A folded paper trail map standing in a zigzag like a mountain range, a dotted path across it and a tiny flag on top."
     },
-    "dusk": {
-      "src": "assets/dusk.svg",
-      "alt": "Violet hills at dusk with an orange horizon."
+    "clayDunes": {
+      "src": "assets/clay-dunes.webp",
+      "alt": "Sculpted clay dunes in sand and terracotta, lit low from one side, a paper sun on a wire above them."
     },
-    "sand": {
-      "src": "assets/sand.svg",
-      "alt": "Golden dunes under a warm sky."
+    "paperSchool": {
+      "src": "assets/paper-school.webp",
+      "alt": "A paper model of a small school with round windows among paper grass, flowers and a tiny swing."
     },
-    "frost": {
-      "src": "assets/frost.svg",
-      "alt": "White hills under a cold blue sky."
+    "bankingPhone": {
+      "src": "assets/banking-phone.webp",
+      "alt": "A card model of a phone whose screen is blue blocks and a wave-shaped line, clay coins beside it and a paper wave behind."
+    },
+    "groceryBags": {
+      "src": "assets/grocery-bags.webp",
+      "alt": "Small paper grocery bags full of clay carrots, leeks and tomatoes in front of a little card shelf."
+    },
+    "parkingPermit": {
+      "src": "assets/parking-permit.webp",
+      "alt": "A card parking permit hanging above a small clay car parked in a bay on a paper street map."
+    },
+    "typeShapes": {
+      "src": "assets/type-shapes.webp",
+      "alt": "Abstract wooden and card shapes like parts of letters, curves and stems standing with generous even space between them."
+    },
+    "potteryBooking": {
+      "src": "assets/pottery-booking.webp",
+      "alt": "Three glazed bowls beside a small card calendar with one day marked, and a tiny model kiln."
+    },
+    "purseAndCalendar": {
+      "src": "assets/purse-and-calendar.webp",
+      "alt": "A small fabric purse and a few coins beside a card calendar with one week marked in blue."
+    },
+    "paperClock": {
+      "src": "assets/paper-clock.webp",
+      "alt": "A round paper clock face in pastel segments with card hands and no numbers."
+    },
+    "quoteWall": {
+      "src": "assets/quote-wall.webp",
+      "alt": "A board of pastel sticky notes in four tidy columns, one colour per column, each note covered in scribbles."
+    },
+    "signDetail": {
+      "src": "assets/sign-detail.webp",
+      "alt": "A close-up of the sign post's pastel arrow panels, the top one marked with a small anchor."
+    },
+    "quayMap": {
+      "src": "assets/quay-map.webp",
+      "alt": "A card map panel on two legs showing the quay from above: blue water, piers and a dotted walking route."
+    },
+    "signColours": {
+      "src": "assets/sign-colours.webp",
+      "alt": "A fan of colour swatches in sage, powder blue, sand and terracotta, the sign's colours, beside a small arrow cut-out."
+    },
+    "arrowSketches": {
+      "src": "assets/arrow-sketches.webp",
+      "alt": "Pencil sketches of arrows and sign shapes on paper, with cut-out arrow trials and a pencil on top."
     }
   }
 }

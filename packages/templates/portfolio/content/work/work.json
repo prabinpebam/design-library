@@ -25,35 +25,35 @@
             "title": "Tidewater banking app",
             "description": "Moving money for people paid by the hour.",
             "href": "/project",
-            "picture": "harbour"
+            "picture": "bankingPhone"
           },
           {
             "eyebrow": "Identity · 2025",
             "title": "Meadow Grocers",
             "description": "A neighbourhood shop that grew to nine.",
             "href": "/project",
-            "picture": "meadow"
+            "picture": "groceryBags"
           },
           {
             "eyebrow": "Service · 2024",
             "title": "City parking permits",
             "description": "Twenty minutes to two.",
             "href": "/project",
-            "picture": "frost"
+            "picture": "parkingPermit"
           },
           {
             "eyebrow": "Experiment · 2024",
             "title": "Type that breathes",
             "description": "Variable fonts that follow your reading speed.",
             "href": "/project",
-            "picture": "dusk"
+            "picture": "typeShapes"
           },
           {
             "eyebrow": "Product · 2023",
             "title": "Kiln pottery booking",
             "description": "Studios full on weekday mornings.",
             "href": "/project",
-            "picture": "sand"
+            "picture": "potteryBooking"
           }
         ]
       }

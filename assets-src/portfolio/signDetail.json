@@ -1,0 +1,13 @@
+{
+  "id": "signDetail",
+  "set": "SS5 Portfolio",
+  "slot": "IA-P13",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/portfolio/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/portfolio/assets/sign-detail.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A close-up of the sign post's pastel arrow panels, the top one marked with a small anchor.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: gallery picture for the case study 'Harbour wayfinding': a close detail of the sign.\nSubject: a close-up of the pastel arrow panels on the card sign post, showing their layered paper edges and a simple anchor-shaped symbol on one panel.\nComposition: the objects grouped in the centre third so a 16:9 crop from the centre keeps them, plenty of empty backdrop around.\nStyle: studio still-life photograph for a product designer's portfolio: matte paper, card and clay models that stand for the project, on a seamless pastel backdrop; soft diffuse top light, one small soft shadow; muted pastel palette of sage, powder blue, sand and terracotta; crafted, calm, tactile.\nConstraints: no text, no letters or numbers anywhere, screens show only abstract coloured blocks, no logos, no watermark, no frame or border, no people."
+}
