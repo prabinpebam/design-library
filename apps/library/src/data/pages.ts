@@ -352,7 +352,7 @@ const templatesOverview: Page = {
         'Items per group, before and after',
         [['template', 'Template'], ['before', 'Before (top · each section · flow groups)'], ['after', 'After (top · each section · flow groups)']],
         templates.map((t) => {
-          const parts = templateOf(t.id)?.stories?.length ? 1 : 0;
+          const parts = templateOf(t.id)?.stories?.length || templateOf(t.id)?.manifest.parts?.blocks?.some((b) => b.example) ? 1 : 0;
           const sections = t.sections.map((s) => {
             const groups = s.flows.map((f) => f.screens.filter((id) => id !== t.home).length);
             return { title: s.title, items: groups.reduce((n, g) => n + (g >= 3 ? 1 : g), 0), groups: s.flows.filter((_, i) => groups[i] >= 3).map((f) => `${f.title} ${f.screens.filter((id) => id !== t.home).length}`) };
@@ -442,9 +442,11 @@ const layoutPage = (t: Template, l: TemplateLayout): Page => {
 /** A template's own parts (Q64): its custom fundamentals, compounds and layouts, each with its stories, props and accessibility, read from the template's folder like a core component's. */
 const partsPage = (t: Template): Page[] => {
   const stories = templateOf(t.id)?.stories ?? [];
-  if (!stories.length) return [];
   const order = { fundamental: 0, compound: 1, layout: 2 };
   const placed = (templateOf(t.id)?.manifest.parts?.blocks ?? []).filter((b) => b.example);
+  if (!stories.length && !placed.length) return [];
+  // A block whose part has no stories yet gets a stub from its example (DP18, DR37): the same placed section, said so.
+  const storied = new Set(stories.map((f) => f.component));
   return [
     {
       id: `${t.id}-parts`,
@@ -462,8 +464,10 @@ const partsPage = (t: Template): Page[] => {
         .concat(
           placed.flatMap((b): PageBlock[] => [
             {
-              heading: `${b.type}, placed from a page document`,
-              intro: `The block’s example from template.json, as a page document’s section: SiteView draws it through ${t.title}’s registry (partsSite), the same way a site’s own page would.`,
+              heading: storied.has(b.renders) ? `${b.type}, placed from a page document` : `${b.renders}: a stub from its example`,
+              intro: storied.has(b.renders)
+                ? `The block’s example from template.json, as a page document’s section: SiteView draws it through ${t.title}’s registry (partsSite), the same way a site’s own page would.`
+                : `${b.renders} has no stories yet, so its block’s example from template.json stands in: a page document’s section, drawn by SiteView through ${t.title}’s registry (partsSite). Add parts/…/${b.renders.split('.').pop()}.stories.tsx to replace it.`,
               block: { type: 'screen', src: `site.html?demo=parts&template=${t.id}#${partRoute(b.type)}`, title: `${b.type} placed from a page document`, width: 'fill' },
             },
             { heading: `${b.type}: the section`, minor: true, block: { type: 'code', label: `${b.type} example`, code: JSON.stringify(b.example, null, 2) } },
