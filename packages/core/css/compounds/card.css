@@ -185,7 +185,7 @@
     column-gap: var(--space-inline-group);
   }
 
-  /* Row: the words first, a small square picture at the end. */
+  /* Row: the words first, a small square picture at the end (in source order too: Card renders it after the body). */
   [data-dl='card'][data-layout='row'] {
     grid-template-columns: 1fr auto;
     grid-template-rows: none;
@@ -193,7 +193,6 @@
   }
 
   [data-dl='card'][data-layout='row'] > [data-dl-part='media'] {
-    order: 1;
     inline-size: var(--c-card-row-media);
     border-radius: var(--c-card-radius);
   }

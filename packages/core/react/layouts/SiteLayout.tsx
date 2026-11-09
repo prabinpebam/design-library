@@ -35,17 +35,27 @@ export function SiteLayout({ header, children, footer, width = 'wide', skipLabel
     return () => window.removeEventListener('scroll', read);
   }, []);
   // A Frame sized to the window (Q90) subtracts the header it shares the window with; written straight to the style.
+  // The window scrolls under the sticky header, so the page's scroll padding is the header's height: anything focused
+  // or jumped to stops below it, never under it (WCAG 2.4.11; layout LY4).
   const root = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = root.current;
     const head = headerRef.current;
     if (!el || !head || typeof ResizeObserver === 'undefined') return;
-    const measure = () => el.style.setProperty('--dl-chrome-block', `${head.getBoundingClientRect().height}px`);
+    const page = document.documentElement;
+    const measure = () => {
+      const height = `${head.getBoundingClientRect().height}px`;
+      el.style.setProperty('--dl-chrome-block', height);
+      page.style.scrollPaddingBlockStart = height;
+    };
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(head);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      page.style.removeProperty('scroll-padding-block-start');
+    };
   }, []);
   return (
     <div {...data} ref={root} data-dl="site-layout" data-width={width}>

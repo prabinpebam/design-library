@@ -94,8 +94,8 @@ export function Card({
 
   return (
     <article {...data} data-dl="card" data-layout={layout} data-variant={variant} data-linked={href ? '' : undefined}>
-      {media && (
-        <div data-dl-part="media" data-ratio={layout === 'row' ? 'square' : ratio}>
+      {media && layout !== 'row' && (
+        <div data-dl-part="media" data-ratio={ratio}>
           {media}
         </div>
       )}
@@ -123,6 +123,11 @@ export function Card({
           </div>
         )}
       </div>
+      {media && layout === 'row' && (
+        <div data-dl-part="media" data-ratio="square">
+          {media}
+        </div>
+      )}
       {placeholder && (
         <div data-dl-part="placeholder" aria-hidden="true" inert>
           {skeleton}

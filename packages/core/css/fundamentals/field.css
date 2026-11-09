@@ -82,6 +82,8 @@
 
   [data-dl='field'] > [data-dl-part='control'] {
     display: grid;
+    /* One track as wide as the field: a control's own minimum (an input's default width) never pushes past it (LY1). */
+    grid-template-columns: minmax(0, 1fr);
     min-inline-size: 0;
   }
 

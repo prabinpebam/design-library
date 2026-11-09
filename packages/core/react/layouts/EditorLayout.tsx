@@ -45,7 +45,7 @@ const STEP = 8;
  * conversation (ChatLayout).
  * @tier 3
  * @a11y Each panel is a labelled `aside` its toggle controls (`aria-expanded`), in the bar or, without a bar, at the working area's top corners; the bar is the `header`; the
- * working area follows the start panel in the source, and the floating tools bar (a labelled region) follows the working area. Each panel scrolls on its own, with the library's overlay scrollbar (ScrollArea), never sideways. In a narrow window a floating panel
+ * working area (the `main` landmark) follows the start panel in the source, and the floating tools bar (a labelled region) follows the working area. Each panel scrolls on its own, with the library's overlay scrollbar (ScrollArea), never sideways. In a narrow window a floating panel
  * closes with Escape and returns focus to its toggle. With `resizable`, each docked panel's handle is a focusable
  * `separator` with the panel's width as its value, controlling the panel.
  * @key Escape: closes a floating panel
@@ -202,7 +202,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
           </ScrollArea>
           {resizeHandle('start', startLabel, startId)}
         </aside>
-        <div data-dl-part="work">
+        <main data-dl-part="work">
           {children}
           {floating && !startOpen && startTogglePart('corner')}
           {floating && !endOpen && endTogglePart('corner')}
@@ -214,7 +214,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
               </FloatingBar>
             </div>
           )}
-        </div>
+        </main>
         <aside id={endId} data-dl-part="panel" data-side="end" aria-label={endLabel} hidden={!endOpen} style={sized('end')}>
           {(endHead || floating) && (
             <div data-dl-part="panel-head">

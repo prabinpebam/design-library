@@ -41,7 +41,8 @@ const stickSlack = 48;
  * composer instead.
  * Not for a document beside a list (ListDetail) or a page of reading (PageLayout).
  * @tier 3
- * @a11y The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the conversation is a labelled
+ * @a11y The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the main area (header,
+ * conversation and composer) is the `main` landmark; the conversation is a labelled
  * region whose scroller is focusable, so the keyboard can scroll it; the composer follows it in the source. Jump to
  * newest moves the view, not focus. In a narrow window the floating sidebar closes with Escape and returns focus to the
  * toggle.
@@ -133,7 +134,7 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
           </div>
         )}
       </aside>
-      <div data-dl-part="main">
+      <main data-dl-part="main">
         <header data-dl-part="header">
           <span ref={toggle} data-dl-part="toggle">
             <Button label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'} icon="menu" iconOnly size="s" emphasis="quiet" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} />
@@ -172,7 +173,7 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
         <div data-dl-part="composer" data-flip-key="composer">
           <div data-dl-part="column">{composer}</div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

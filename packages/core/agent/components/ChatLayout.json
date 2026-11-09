@@ -6,7 +6,7 @@
   "file": "@design-library/core/react/layouts/ChatLayout.tsx",
   "summary": "A conversation with an assistant: a collapsible sidebar of chats, a header, the messages in a reading column that scrolls on its own, and the composer under it that never scrolls away. While the person is at the newest message, new words keep them there; once they scroll up, a Jump to newest button appears. A new chat centres a greeting and the composer instead. Not for a document beside a list (ListDetail) or a page of reading (PageLayout).",
   "a11y": [
-    "The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the conversation is a labelled region whose scroller is focusable, so the keyboard can scroll it; the composer follows it in the source. Jump to newest moves the view, not focus. In a narrow window the floating sidebar closes with Escape and returns focus to the toggle."
+    "The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the main area (header, conversation and composer) is the `main` landmark; the conversation is a labelled region whose scroller is focusable, so the keyboard can scroll it; the composer follows it in the source. Jump to newest moves the view, not focus. In a narrow window the floating sidebar closes with Escape and returns focus to the toggle."
   ],
   "keys": [
     {

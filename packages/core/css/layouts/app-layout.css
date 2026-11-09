@@ -87,6 +87,7 @@
 
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: var(--c-app-layout-gutter);
     box-sizing: border-box;
@@ -97,12 +98,15 @@
     max-inline-size: calc(var(--c-app-layout-column) + 2 * var(--c-app-layout-margin));
   }
 
+  /* The view is the main region, so it's always the widest (layout LY8): it takes what the details leave and never less
+     than half the body; where that can't hold beside the details, the details wrap under it, across the body. The
+     decision comes from the body's own width, not the window's. */
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 999 1 0;
     gap: var(--c-app-layout-gap);
-    min-inline-size: 0;
+    min-inline-size: 50%;
   }
 
   /* With a head, the view is head · content (Q93): the title is one of the view's units at the page level, so the first
@@ -121,9 +125,9 @@
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='aside'] {
     display: flex;
     flex-direction: column;
-    flex: none;
+    flex: 1 0 var(--c-app-layout-aside);
     gap: var(--c-app-layout-gap);
-    inline-size: var(--c-app-layout-aside);
+    min-inline-size: 0;
   }
 
   @container (max-width: 48rem) {
