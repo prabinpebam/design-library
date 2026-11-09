@@ -46,6 +46,10 @@ The owner's premise holds, with conditions that the rest of this page turns into
 
 **A myth we don't use:** "people process visuals 60,000 times faster than text" has no traceable research source. The real numbers above are strong enough.
 
+## Part 1: the framework
+
+Like every UX framework here, this page comes in two parts ([the two-part frameworks](spacing.md#the-two-part-frameworks)): Part 1, from here to [Consistency with visual noise](#consistency-with-visual-noise-and-the-owner-rules), is what an agent or a person applies while designing; [Part 2](#part-2-the-checklist) is the checklist an evaluator who didn't build the screen scores it with. **Where it starts:** the same hierarchy tree as spacing and framing ([the method](spacing.md#the-method-hierarchy-first-then-space-and-frames-owner-q93)). For each group's information, run [the reasoning chain](#the-reasoning-chain) (RC1–RC8) at that node: the reader's task there decides the representation, the group's frame decides its size and density, and its text twin sits in the same group.
+
 ## Principles
 
 | # | Principle |
@@ -376,7 +380,31 @@ Run these at RC6. Each is a known way a visual says something the data doesn't (
 | No redundant variants | One chart component per task family, one loading indicator, one image component with slots, never a second pattern for the same job (owner Q34). |
 | Notifications | A visual alert (a badge, a status chip) follows the library's notification and status rules; nothing flashes. |
 
-## Agent checklist
+## Part 2: the checklist
+
+Each row passes or fails on a measurement. **DOM** rows are measured by [`tools/visual-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/visual-probe.js) (`window.visualProbe().rows`); **look** rows by an evaluator who didn't build the screen, who writes down the chain's choice (task, representation, text twin) for each group. Severity follows the `spacing` skill: S1 broken, S2 misgrouped or inconsistent, S3 fragile. A screen passes when no S1–S3 row fails.
+
+| ID | Passes when | How | Severity |
+| --- | --- | --- | --- |
+| VR1 | Every picture (`img`) has `alt` (empty when decorative), every `role="img"` has a name, and every other drawn graphic (`svg`) is named or hidden (VA1, VA2) | DOM | S1 |
+| VR2 | No alternative names the medium or a file ("Image of…", "photo.webp"): it says what the picture shows or means (VA3) | DOM | S3 |
+| VR3 | Every control that shows only an icon has a name, said and shown as its tooltip (IC1) | DOM | S1 |
+| VR4 | Every part-to-whole bar names its parts in words beside their colours (a legend or the numbers written beside it): colour is never the only cue (CH2, CH7, VA6) | DOM | S1 |
+| VR5 | Inner segments of a stacked or segmented bar are square; only the whole bar's outer ends round (CH5, owner Q34) | DOM | S2 |
+| VR6 | Every picture holds its box before it loads: its width and height, a ratio, a CSS height or ratio, or out of flow (IM8) | DOM | S3 |
+| VR7 | Nothing plays with sound by itself; a moving picture that starts by itself can be paused (MD2, VA9) | DOM | S1 |
+| VR8 | For every group, the evaluator can name the reader's task and the chain's choice; nothing that must stay exact, verbatim or read as content became a visual (RC1–RC8, VX1–VX10) | look | S2 |
+| VR9 | Every chart: a takeaway title, direct labels, honest axes, colours by purpose, a table or description, every state (CH1–CH12); no ML pitfall | look | S1 |
+| VR10 | Icons come from one set and one style, filled only for state; every picture is real when it claims to be, cropped to its subject (IC2–IC6, IM1–IM4) | look | S2 |
+
+```js
+// Playwright: await page.addScriptTag({ path: 'tools/visual-probe.js' })
+window.visualProbe().rows; // { VR1: { pass, findings, count }, … }
+```
+
+**F15.VR1 (2026-11-09 about 16:00, Q85.2):** a control case (a picture with no `alt`, an alternative that names the medium, an unnamed icon button, a bar told apart by colour with a rounded inner segment, a video that plays sound by itself) fails VR1–VR5 and VR7 as it should. Probed where this packet changed things and on the templates with pictures (Q101: only what a packet touches; the full sweep is in the Q99 audit): the 70 template layouts with pictures, avatars, media or data at 1000 CSS px pass VR1–VR7. **Fixed at the owner:** StackedBar's parts were told apart by colour alone (AF1, G1): it now draws a legend under the bar (each part's name and share beside its colour, hidden from assistive technology since the bar's name already says it; `legend={false}` only when the numbers are written beside it) and a hairline of the surface between segments; inner segments stay square. AF2 (category colours) stays in the build plan.
+
+### Agent checklist (the look rows, in short)
 
 - [ ] RC1–RC8 run for every piece of information; each choice recorded (task, primary, accompanying visual, alternative)
 - [ ] Nothing that must be exact, verbatim or read as content was replaced by a visual (VX1–VX10)
@@ -433,7 +461,7 @@ Run these at RC6. Each is a known way a visual says something the data doesn't (
 
 | # | Sev | Where | Finding | Rule | Fix (owner of the change) |
 | --- | --- | --- | --- | --- | --- |
-| AF1 | **G1** | StackedBar | The parts are told apart on screen only by colour: no visible labels or legend in the component, and adjacent segments touch with no separation. The accessible name carries the shares, but a sighted reader with a colour-vision deficiency has only colour. | CH2, CH7, VA6, CH5 (hairline gap) | Add direct labels or a legend (`labels="legend" \| "inline" \| "none"`, legend by default) and a hairline gap in the surface colour between segments; the component, not the view (BP3). |
+| AF1 | **G1, fixed F15.VR1** | StackedBar | The parts are told apart on screen only by colour: no visible labels or legend in the component, and adjacent segments touch with no separation. The accessible name carries the shares, but a sighted reader with a colour-vision deficiency has only colour. | CH2, CH7, VA6, CH5 (hairline gap) | Add direct labels or a legend (`labels="legend" \| "inline" \| "none"`, legend by default) and a hairline gap in the surface colour between segments; the component, not the view (BP3). |
 | AF2 | **G1** | StackedBar | Status colours only (`status: success…neutral`), so any part-to-whole that isn't a status (a budget by team, storage by file type) either can't use it or would misuse status colours for categories. | CH6, VK1, colour model | Add `category` per segment (reads `color.category.n`), keep `status` for status data; one of the two per bar (BP3). |
 | AF3 | **G1** | Template assets (blog, conference, corporate, portfolio) | Five generic landscape pictures (`harbour`, `meadow`, `dusk`, `sand`, `frost`) illustrate cards, posts and heroes about unrelated topics, each with an informative alternative ("Blue hills by the sea…"). A screen reader hears a landscape on a card about a service; sighted people get decoration the framework says to drop. | IM1, IM5, V4, ML13 | Short term: mark placeholder pictures decorative where they're used. Root cause is AF4. Long term: templates show topic pictures or none. |
 | AF4 | **G2** | `assets.schema.json`, render `picture` fields | Alternative text is fixed per *asset*, but its role is per *use* (the same picture is informative in a gallery and decorative beside a card title that says it all; [W3C decision tree](#sources)). Content can't say "decorative here". | IM5, VA2 | Allow a picture reference to carry its role: `"picture": { "id": "harbour", "decorative": true }` or an `alt` override per use; schema, render and `check:content` together (BP2). |
@@ -448,7 +476,7 @@ Run these at RC6. Each is a known way a visual says something the data doesn't (
 | AF13 | **G3** | Agent guide, guide/2-content.md | Nothing tells an agent how to decide whether to show information as a visual or as text, or that a picture's alternative depends on its use. | VE1, VA2 | Link this page from the agent guide's task map (done in this packet); a line in guide/2-content after AF4 lands. |
 | AF14 | **G3** | Slate docs host (outside the library) | The Slate TL;DR band draws a one-sided accent stripe. Slate is the docs runtime, not this library, so Q34 binds it only by the owner's taste; reported, not changed (Slate owns its runtime). | Q34 | Slate's owner decides; no library change. |
 
-**No G1 in Icon, Image, Statistic, MediaPlayer, Carousel or the owner's segment rule.** The three G1 findings are StackedBar's colour-only parts (AF1, AF2) and the templates' placeholder pictures (AF3).
+**No G1 in Icon, Image, Statistic, MediaPlayer, Carousel or the owner's segment rule.** The three G1 findings were StackedBar's colour-only parts (AF1, fixed in F15.VR1: a legend and a hairline between parts), its status-only colours (AF2) and the templates' placeholder pictures (AF3).
 
 ### Build plan
 

@@ -340,6 +340,7 @@ Every UX framework in this project has the same two parts: the framework to desi
 | Scrolling and scrollbars | [The framework](scrolling.md#part-1-the-framework) | [SB rows](scrolling.md#part-2-the-checklist) | `tools/scroll-probe.js`, `npm run check:clipping` |
 | Clipping | [The framework](clipping.md#part-1-the-framework) | [CL rows](clipping.md#part-2-the-checklist) | `tools/clipping-probe.js`, `npm run check:clipping` |
 | UI states: commit, load, error, empty, notification | [The framework](ui-states.md#part-1-the-framework) | [US rows](ui-states.md#part-2-the-checklist) | `tools/ui-states-probe.js` |
+| Visual representation: icons, pictures, media, charts | [The framework](visual-representation.md#part-1-the-framework) | [VR rows](visual-representation.md#part-2-the-checklist) | `tools/visual-probe.js` |
 
 ## The adversarial loop
 

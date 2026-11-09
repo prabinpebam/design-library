@@ -81,7 +81,7 @@
     },
     {
       "file": "packages/core/css/compounds/stacked-bar.css",
-      "selector": "[data-dl='stacked-bar']",
+      "selector": "[data-dl='stacked-bar'] > [data-dl-part='bar']",
       "kind": "shape crop",
       "reason": "Crops square segments to the whole bar’s rounded ends; nothing inside is focusable or shadowed"
     },

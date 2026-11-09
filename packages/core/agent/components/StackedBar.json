@@ -4,10 +4,10 @@
   "tier": "compound",
   "import": "@design-library/core/react",
   "file": "@design-library/core/react/compounds/StackedBar.tsx",
-  "summary": "Parts of a whole by status, in one bar: inner segments are square so small parts stay legible; only the outer ends of the whole bar are rounded. Status colours only: categorical series arrive with the first chart, from the spectrum. Not for progress over time (use Progress) or for comparing values that aren't parts of one whole.",
+  "summary": "Parts of a whole by status, in one bar: inner segments are square so small parts stay legible, a hairline of the surface between them; only the outer ends of the whole bar are rounded. A legend under the bar names every part with its share. Status colours only: categorical series arrive with the first chart, from the spectrum. Not for progress over time (use Progress) or for comparing values that aren't parts of one whole.",
   "family": "data",
   "a11y": [
-    "`role=\"img\"`, named by the label and every part with its share in order, so the colours are never the only carrier of meaning. Show the same numbers as text nearby when people need to read them."
+    "The bar is `role=\"img\"`, named by the label and every part with its share in order; the legend repeats it as words for sighted readers and is hidden from assistive technology, so it isn't read twice."
   ],
   "keys": [],
   "sealed": true,
@@ -28,6 +28,12 @@
           "name": "segments",
           "type": "StackedBarSegment[]",
           "required": true
+        },
+        {
+          "name": "legend",
+          "type": "boolean",
+          "default": "true",
+          "description": "Each part's name and share as words under the bar, beside its colour, so colour is never the only cue. On by default; turn it off only when the same numbers are written right beside the bar."
         }
       ]
     },
@@ -63,6 +69,7 @@
   ],
   "uses": [],
   "tokens": [
+    "--border-hairline",
     "--c-stacked-bar-danger",
     "--c-stacked-bar-info",
     "--c-stacked-bar-measure",
@@ -70,7 +77,13 @@
     "--c-stacked-bar-radius",
     "--c-stacked-bar-success",
     "--c-stacked-bar-thickness",
-    "--c-stacked-bar-warning"
+    "--c-stacked-bar-warning",
+    "--color-text-muted",
+    "--space-inline-group",
+    "--space-inline-pair",
+    "--space-stack-pair",
+    "--type-body-sm-leading",
+    "--type-body-sm-size"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/stackedbar",
   "principles": [

@@ -1,37 +1,77 @@
 /*
- * Tier 2 compound: StackedBar. Parts of a whole in one bar; inner segments square, only the whole bar's outer ends
- * rounded (clipped by the bar), so small parts stay legible.
+ * Tier 2 compound: StackedBar. Parts of a whole in one bar; inner segments square, a hairline of the surface between
+ * them, only the whole bar's outer ends rounded (clipped by the bar), so small parts stay legible. The legend under it
+ * names each part with its share beside its colour (docs/visual-representation.md, CH2, CH5, CH7).
  */
 @layer compounds {
   [data-dl='stacked-bar'] {
     display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+    inline-size: 100%;
     max-inline-size: var(--c-stacked-bar-measure);
+  }
+
+  [data-dl='stacked-bar'] > [data-dl-part='bar'] {
+    display: flex;
+    gap: var(--border-hairline);
     block-size: var(--c-stacked-bar-thickness);
     border-radius: var(--c-stacked-bar-radius);
     overflow: hidden;
   }
 
-  [data-dl='stacked-bar'] > span {
-    inline-size: var(--share);
+  [data-dl='stacked-bar'] > [data-dl-part='bar'] > span {
+    flex: 0 1 var(--share);
+    min-inline-size: var(--border-hairline);
   }
 
-  [data-dl='stacked-bar'] > [data-status='success'] {
+  [data-dl='stacked-bar'] > [data-dl-part='legend'] {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--space-inline-group);
+    row-gap: var(--space-stack-pair);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='stacked-bar'] > [data-dl-part='legend'] > [data-dl-part='entry'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='stacked-bar'] > [data-dl-part='legend'] > [data-dl-part='entry'] > [data-dl-part='key'] {
+    inline-size: var(--c-stacked-bar-thickness);
+    block-size: var(--c-stacked-bar-thickness);
+    border-radius: var(--c-stacked-bar-radius);
+  }
+
+  [data-dl='stacked-bar'] [data-status='success'] {
     background-color: var(--c-stacked-bar-success);
   }
 
-  [data-dl='stacked-bar'] > [data-status='warning'] {
+  [data-dl='stacked-bar'] [data-status='warning'] {
     background-color: var(--c-stacked-bar-warning);
   }
 
-  [data-dl='stacked-bar'] > [data-status='danger'] {
+  [data-dl='stacked-bar'] [data-status='danger'] {
     background-color: var(--c-stacked-bar-danger);
   }
 
-  [data-dl='stacked-bar'] > [data-status='info'] {
+  [data-dl='stacked-bar'] [data-status='info'] {
     background-color: var(--c-stacked-bar-info);
   }
 
-  [data-dl='stacked-bar'] > [data-status='neutral'] {
+  [data-dl='stacked-bar'] [data-status='neutral'] {
     background-color: var(--c-stacked-bar-neutral);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='stacked-bar'] > [data-dl-part='bar'] > span,
+    [data-dl='stacked-bar'] > [data-dl-part='legend'] > [data-dl-part='entry'] > [data-dl-part='key'] {
+      outline: var(--border-hairline) solid CanvasText;
+      outline-offset: calc(-1 * var(--border-hairline));
+    }
   }
 }
