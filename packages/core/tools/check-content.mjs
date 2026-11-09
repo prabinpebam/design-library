@@ -19,6 +19,8 @@
  * Content outside templates (IP39, DP7): `--content <folder>` (repeatable) checks every .json file under it that names
  * a `$schema` against that schema: a path relative to the file, a core schema's $id or hosted address
  * (https://prabinpebam.github.io/design-library/schemas/{name}/{version}.json, DP5), or a template's content $id.
+ * Data-driven sites (DP19): each template's `site/` folder, and each `--site <folder>`, is checked by check-site.mjs
+ * (documents, items, ids, routes, aliases, anchors, references and bindings resolved, blocks and slots by type).
  * Values not yet confirmed (DP4): `{ "unconfirmed": "speaker" }` in any core text field is counted by file; its key needs
  * a phrase in the template's shared file (`strings.unconfirmed`); `--release` fails while any remain.
  * Template-aware warnings (they don't fail the run during the Beta, Q105.3; `--strict` makes them fail): a part file
@@ -29,6 +31,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
+import { checkSite } from './check-site.mjs';
 
 const root = process.cwd();
 const core = fileURLToPath(new URL('..', import.meta.url));
@@ -41,6 +44,9 @@ const indexFile = arg('index') ? resolve(root, arg('index')) : join(templatesDir
 const contentDirs = process.argv.flatMap((a, i) => (a === '--content' && process.argv[i + 1] ? [resolve(root, process.argv[i + 1])] : []));
 const strict = process.argv.includes('--strict');
 const release = process.argv.includes('--release');
+const siteDirs = process.argv.flatMap((a, i) => (a === '--site' && process.argv[i + 1] ? [resolve(root, process.argv[i + 1])] : []));
+const infos = [];
+const info = (file, pointer, what) => infos.push(`${rel(file)} · ${pointer || '/'} · ${what}`);
 const srcDir = arg('src') ? resolve(root, arg('src')) : undefined;
 const walkCode = (d) =>
   existsSync(d)
@@ -385,6 +391,22 @@ for (const d of contentDirs) {
   }
 }
 
+// Data-driven sites (DP19): each template's site/ folder and each --site folder.
+let siteCount = 0;
+for (const d of [...folders.map((id) => join(templatesDir, id, 'site')).filter((d) => existsSync(join(d, 'site.json'))), ...siteDirs]) {
+  if (!existsSync(join(d, 'site.json'))) {
+    fail(d, '/', 'has no site.json', 'point --site at the folder holding site.json, pages/ and collections/');
+    continue;
+  }
+  const found = await checkSite(d, { schemas, fail, info, rel, extraChecks: (file, data) => {
+    files += 1;
+    lint(file, data);
+    countUnconfirmed(file, data);
+  } });
+  if (found) siteCount += 1;
+}
+if (infos.length) console.log(`check:content: ${infos.length} note${infos.length === 1 ? '' : 's'}\n` + infos.map((i) => `  ${i}`).join('\n'));
+
 if (unconfirmed.size) {
   const total = [...unconfirmed.values()].reduce((a, b) => a + b, 0);
   console.log(`check:content: ${total} value${total === 1 ? '' : 's'} not yet confirmed${release ? '' : ' (--release fails on any)'}\n` + [...unconfirmed].map(([file, n]) => `  ${file}: ${n}`).join('\n'));
@@ -397,4 +419,4 @@ if (errors.length) {
   console.error(`check:content: ${errors.length} problem${errors.length === 1 ? '' : 's'}\n` + errors.map((e) => `  ${e}`).join('\n'));
   process.exit(1);
 }
-console.log(`check:content: ${folders.length} templates${contentDirs.length ? `, ${contentDirs.length} content folder${contentDirs.length === 1 ? '' : 's'}` : ''}, ${files} content files, ${coreBlocks.length} core block types: all valid.`);
+console.log(`check:content: ${folders.length} templates${siteCount ? `, ${siteCount} site${siteCount === 1 ? '' : 's'}` : ''}${contentDirs.length ? `, ${contentDirs.length} content folder${contentDirs.length === 1 ? '' : 's'}` : ''}, ${files} content files, ${coreBlocks.length} core block types: all valid.`);
