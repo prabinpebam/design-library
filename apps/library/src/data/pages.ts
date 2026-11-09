@@ -205,7 +205,19 @@ function getStarted(): Page {
         block: {
           type: 'code',
           label: 'AGENTS.md',
-          code: "## UI: Design Library\nThis project's UI uses @design-library/core. Before any UI work, read node_modules/@design-library/core/AGENTS.md\nand follow it: its Never rules, the seam ladder, and the task steps in its guide/ folder.",
+          code: "## UI: Design Library\nThis project's UI uses @design-library/core. Before any UI work, read node_modules/@design-library/core/AGENTS.md\nand follow it: its Never rules, the seam ladder, and the task steps in its guide/ folder. No screen is done until it\npasses the adversarial loop in guide/8-review.md, scored by an evaluator who did not build it.",
+        },
+      },
+      {
+        heading: 'Check every screen',
+        intro: 'Someone who didn’t build a screen judges it against each framework’s checklist, before it’s called done.',
+        block: {
+          type: 'points',
+          items: [
+            'Build it with the frameworks: spacing, layout, visual noise, materials, motion, clipping, UI states and the rest.',
+            'A second agent or person, who didn’t build it, scores every checklist row with the probes the package ships.',
+            'Fix each fail where it starts, then score again until every checklist passes.',
+          ],
         },
       },
       {

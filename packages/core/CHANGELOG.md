@@ -6,7 +6,7 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 **Contracts that carry their own version:** the content schemas (`schemas/*.json`, `$id …/1`), the colour config (`colour-config/2`, `CONTRACT` in `@design-library/core/colour`), and each template's `content.schema.json`. A release that changes one names it here with the migration.
 
-## Unreleased: 0.2.0-beta.1, Beta for early trials (draft, Q99)
+## 0.2.0-beta.1 (2026-11-09): Beta, for early trials
 
 The first **Beta**: ready for early trials in separate projects (React 19 with Vite 8). Every UX framework now comes in two parts, a guideline to design with and an objective checklist with a browser probe to judge with, and the library passed them on every template layout.
 

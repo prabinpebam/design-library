@@ -28,6 +28,7 @@
     { "path": "ui-states.md", "title": "UI states", "order": 10.4, "icon": "published_with_changes", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "layout.md", "title": "Layout: regions, columns and reflow", "order": 10.25, "icon": "dashboard", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "visual-noise.md", "title": "Visual noise", "order": 10.27, "icon": "filter_center_focus", "type": "page", "status": "draft", "updated": "2026-11-09" },
+    { "path": "adversarial-loop.md", "title": "The adversarial loop", "order": 10.45, "icon": "sync_problem", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "visual-representation.md", "title": "Visual representation", "order": 10.5, "icon": "insights", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "images.md", "title": "Images: audit and generation", "order": 10.6, "icon": "image", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "consumer-audit.md", "title": "Consumer guide audit", "order": 11, "icon": "rule", "type": "page", "status": "draft", "updated": "2026-11-09" },

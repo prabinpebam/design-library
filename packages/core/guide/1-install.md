@@ -13,7 +13,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
 | Stack | Status |
 | --- | --- |
 | React 19 in the browser, bundled by **Vite 8** (`@vitejs/plugin-react`), TypeScript with `moduleResolution: "Bundler"` | Supported and proven (this repository's apps, and a separate project in [Handoff readiness](https://prabinpebam.github.io/design-library/docs/#handoff-readiness.md)) |
-| Other bundlers (webpack, Next.js with `transpilePackages`, Parcel, Rspack) | Not supported in 0.1: `@design-library/templates` loads content with `import.meta.glob`, and `@design-library/core/react` also exports the component stories, whose media use Vite's `?url` imports |
+| Other bundlers (webpack, Next.js with `transpilePackages`, Parcel, Rspack) | Not supported in 0.2: `@design-library/templates` loads content with `import.meta.glob`, and `@design-library/core/react` also exports the component stories, whose media use Vite's `?url` imports |
 | Server rendering (Next.js, Remix, Vite SSR) | Not proven: modules guard browser globals, but nothing has been rendered on a server |
 | Other frameworks (Vue, Svelte, Angular, plain HTML) | Not supported: the components are React. The CSS (`css/index.css`) and tokens work anywhere, but the markup contract is the React components' |
 | React 18 or earlier | Not supported (`peerDependencies` `react` `^19.0.0`) |
@@ -22,10 +22,10 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 1. **Start a Vite + React + TypeScript app** if you don't have one (any folder; nothing from the library repository is needed). Your `package.json` needs `"type": "module"` and these scripts: `"dev": "vite"`, `"build": "vite build"`.
 
-2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.1.1), with React and the build tools:
+2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.2.0-beta.1, the Beta), with React and the build tools:
 
    ```sh
-   npm install https://github.com/prabinpebam/design-library/releases/download/v0.1.1/design-library-core-0.1.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.1.1/design-library-templates-0.1.1.tgz react@^19 react-dom@^19
+   npm install https://github.com/prabinpebam/design-library/releases/download/v0.2.0-beta.1/design-library-core-0.2.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.2.0-beta.1/design-library-templates-0.2.0-beta.1.tgz react@^19 react-dom@^19
    npm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19
    ```
 
@@ -119,7 +119,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 ## Inside the library repository
 
-To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.1.1"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
+To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.2.0-beta.1"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
 
 ## Do and don't
 

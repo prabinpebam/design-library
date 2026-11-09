@@ -22,7 +22,7 @@ Owner, 2026-11-09 07:59 ([DoD Q83](definition-of-done.md#owner-instructions)): *
 - **Together:** templates depends on the core of the same version (`"@design-library/core": "{version}"`). Install both in one command from the same release.
 - **Versioning:** `MAJOR.MINOR.PATCH`. While the major is `0`, a minor release may break a public contract and says how to upgrade; a patch never breaks one. Contracts with their own version: the content schemas (`$id …/1`), the colour config (`colour-config/2`) and each template's `contentVersion`. Every change is in `node_modules/@design-library/core/CHANGELOG.md`.
 - **Without access to GitHub releases:** clone the repository and run `npm run pack` at its root (Node only, no install needed); the tarballs land in `.packages/`. Install those files by path.
-- **Current version:** 0.1.1.
+- **Current version:** 0.2.0-beta.1 (Beta, for early trials).
 
 ## Step by step
 
@@ -33,7 +33,7 @@ Any folder. `package.json` needs `"type": "module"` and scripts `"dev": "vite"`,
 ### 2. Install
 
 ```sh
-npm install https://github.com/prabinpebam/design-library/releases/download/v0.1.1/design-library-core-0.1.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.1.1/design-library-templates-0.1.1.tgz react@^19 react-dom@^19
+npm install https://github.com/prabinpebam/design-library/releases/download/v0.2.0-beta.1/design-library-core-0.2.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.2.0-beta.1/design-library-templates-0.2.0-beta.1.tgz react@^19 react-dom@^19
 npm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19
 ```
 
@@ -173,10 +173,12 @@ The package guide's steps 2, 5 and 6 hold the full content model (regions, block
   ```markdown
   ## UI: Design Library
   This project's UI uses @design-library/core. Before any UI work, read node_modules/@design-library/core/AGENTS.md
-  and follow it: its Never rules, the seam ladder, and the task steps in its guide/ folder.
+  and follow it: its Never rules, the seam ladder, and the task steps in its guide/ folder. No screen is done until it
+  passes the adversarial loop in guide/8-review.md, scored by an evaluator who did not build it.
   ```
 
-- **Steps:** `guide/1-install.md` to `guide/7-principles.md`.
+- **Steps:** `guide/1-install.md` to `guide/8-review.md`.
+- **Review every screen:** [the adversarial loop](adversarial-loop.md) (`guide/8-review.md` in the package). The builder creates with part 1 of each framework; an evaluator who didn't build the screen (a fresh agent session or a person) runs every probe the package ships (`@design-library/core/probes/{name}.js`, loaded with `page.addScriptTag({ path })` or pasted into the browser console) and scores every part 2 row with evidence; fix each fail at its owner (theme, layout choice, props and slots, your custom part, content) and repeat until every framework's pass rule holds.
 - **Exact names:** `agent/index.json` (components with required props, block types, layouts, templates, semantic tokens, presets, icons, schemas, commands) and `agent/components/{Name}.json`. Paths written `@design-library/core/…` are inside the installed package.
 
 ## Checks
@@ -187,6 +189,7 @@ The package guide's steps 2, 5 and 6 hold the full content model (regions, block
 | `npx tsc --noEmit` | Imports, props, brand and preset shapes right |
 | `npx vite build` | It bundles |
 | `npx vite`, then open it in light, dark and more contrast, at 320 px and wide | It renders, follows every context and never scrolls sideways |
+| The adversarial loop (`guide/8-review.md`): every probe in `@design-library/core/probes/`, scored by an evaluator who didn't build the screen | Every framework's checklist passes |
 
 ## Deploy
 

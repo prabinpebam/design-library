@@ -30,6 +30,17 @@ Goal: a whole product's screens from a template: first by using one as it is, wi
 
 A copy that keeps the library's id stays a copy of that template; to make it yours, adapt it as below.
 
+## Your own pictures
+
+Every picture a template shows is a file in its `assets/` folder and an entry in its `assets.json`; content names it by id (`"picture": "shopfront"`).
+
+1. **Size it for where it shows:** twice the largest width it is drawn at (a split hero or card picture about 1200 × 800, a wide hero 2304 × 1296, a square 960 × 960, a portrait 192 × 192). The component reserves its box from the ratio, so the page never jumps while it loads.
+2. **Ship WebP** (about quality 82); SVG for drawn marks. File names are lower-case kebab case (`assets/the-long-shore.webp`), the only form `assets.schema.json` accepts.
+3. **Trim transparent pictures** to their visible edge: space around a picture comes from the layout, never from empty pixels.
+4. **Write the alt from the finished picture:** what it shows or means in this place, in a sentence (`"The shop's lit window on a cobbled quay at dusk…"`), never the medium or the file ("image of", "hero.webp"). Use `""` only when the picture is decoration and the words beside it say everything.
+5. **Keep a set consistent:** one style across a template's pictures (the same light, palette and finish); example pictures in the shipped templates are stand-ins a real site replaces with its own.
+6. **Check:** `npx design-library-check-content --templates src/templates` (every id exists, every file is in `assets/`, every entry has `alt`); the visual probe's VR1, VR2 and VR6 rows in [step 8](8-review.md). How the library's own pictures were made: [Images](https://prabinpebam.github.io/design-library/docs/#images.md).
+
 ## Adapt a template as your own
 
 Copy the nearest template into a new namespace and change it there. Never edit core, and never import another template's parts.

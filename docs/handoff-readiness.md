@@ -1,6 +1,8 @@
 # Handoff readiness
 
-> **TL;DR:** Can an AI agent in a **separate project** pick this library up and implement it with no hiccups? **Yes, for React 19 with Vite 8 (F15.R6, 2026-11-09 about 09:50 +05:30).** At F15.R1 12 of 37 checks passed, 22 failed and 3 needed the owner; the owner decided those three on 07:57 (recommendations taken, MIT licence), and F15.R2–R5 fixed every failing row: installable tarballs on a [GitHub release](https://github.com/prabinpebam/design-library/releases/tag/v0.1.1), a guide written for a separate project, a shipped content check, a theme API, hosted links, the SiteHeader fix. The proof: a fresh project outside this repository, following only the shipped guide, built a themed site from its own template; its two hiccups were fixed in 0.1.1, then it ran clean ([The proof](#the-proof-f15r6)). Other bundlers, server rendering and other frameworks are out of scope for 0.1 and stated as such.
+> **Beta audit (Q99, F15.AUDIT draft, 2026-11-09 about 16:05 +05:30, worker 48):** re-run of every row below against the current source, plus 14 new rows for what changed since 0.1.1 ([Beta audit](#beta-audit-q99)). **Not yet Beta:** of the original 37 rows, 19 pass re-checked, 11 are carried to the Beta proof, 5 hold again only after the Beta release, and 2 regressed (B2 `validate-setup`, G7 the agent index); of the 14 new rows, 6 pass and 8 fail. The numbered gaps (15 open; E6 closed in this packet) in [Gaps to close](#gaps-to-close) are worker 47's to close, ending with the Beta release and a fresh separate-project proof.
+
+> **TL;DR (0.1.1):** Can an AI agent in a **separate project** pick this library up and implement it with no hiccups? **Yes, for React 19 with Vite 8 (F15.R6, 2026-11-09 about 09:50 +05:30).** At F15.R1 12 of 37 checks passed, 22 failed and 3 needed the owner; the owner decided those three on 07:57 (recommendations taken, MIT licence), and F15.R2–R5 fixed every failing row: installable tarballs on a [GitHub release](https://github.com/prabinpebam/design-library/releases/tag/v0.1.1), a guide written for a separate project, a shipped content check, a theme API, hosted links, the SiteHeader fix. The proof: a fresh project outside this repository, following only the shipped guide, built a themed site from its own template; its two hiccups were fixed in 0.1.1, then it ran clean ([The proof](#the-proof-f15r6)). Other bundlers, server rendering and other frameworks are out of scope for 0.1 and stated as such.
 
 Owner's words, 2026-11-09 07:48 +05:30 ([DoD Q81](definition-of-done.md#owner-instructions)): *"Are we ready to hand off this library to an agent in a separate project for that project to implement this library? Make a checklist o qualify the above question objectively and go through each one to make sure everything is addressed and there won't be any hccups when the AI agent in the other project ries to implement this."*
 
@@ -122,3 +124,58 @@ Owner's words, 2026-11-09 07:48 +05:30 ([DoD Q81](definition-of-done.md#owner-in
 | `npx tsc --noEmit` | No errors |
 | `npx vite build` | Built |
 | `npx vite`, opened at 800 px and 320 px | The café's own words and picture; headings in Fraunces (the `editorial` preset); `--p-brand-1-500` = `#0f766e`; `data-space="loose"`, `data-shape="super-soft"`; no sideways scroll (310 px of 320) |
+
+## Beta audit (Q99)
+
+Owner's words, 2026-11-09 12:46 +05:30 ([DoD Q99](definition-of-done.md#owner-instructions)): *"When everything is done, I want a final audit for the readiness of the design library for being handed over to other projects for implementation in other projects. Complete anything pending and we will declare this as the Beta version ready for early trials."*
+
+**Method (F15.AUDIT, 2026-11-09 about 16:05 +05:30, worker 48, read-only):** every row above re-checked against the current working tree (not the 0.1.1 tarballs), then new rows for what changed since 0.1.1: the two-part frameworks and their probes, the adversarial loop, chrome context, `npm run check`, "Rules agents miss", picture assets and the modifiers spec. Commands run from the repository root; URLs checked with a HEAD request. No package was built or released and no separate project was made: those are the Beta packet's (worker 47).
+
+### The 37 rows, re-run
+
+| Result | Rows | Evidence |
+| --- | --- | --- |
+| **Pass, re-checked** (19) | D2, D3, D4, P1–P7, G1, G2, G4, G5, G6, L1, L2, B3, V2 | Both packages `0.1.1`, `MIT`, `LICENSE` in root and both packages; `exports` now also has `./theme`, `./guide/*`, `./tools/*`, `./CHANGELOG.md`; 0 `127.0.0.1` in `agent/`, `AGENTS.md`, `guide/`; `npm run check:content`: *8 templates, 174 content files, 26 core block types: all valid*; `node .\tools\lockfile-hosts.mjs --check`: every tarball URL on `registry.npmjs.org`; the v0.1.1 core tarball URL answers 200 |
+| **Carried** (11): unchanged since R6, proved again only by the Beta proof | A1–A4, C1–C4, T1, T2, B1 | No change to imports, fonts, icons, `theme/`, `render/` or SiteHeader was audited here; the fresh separate-project proof on the Beta re-proves them |
+| **Holds again only after the Beta release** (5) | D1, D5, D6, G3, V1 | The source has moved past 0.1.1 (CHANGELOG `## Unreleased`; new guide step 8; the forms' failed state; picture and image-fill fields), so the 0.1.1 tarballs, the guide's install URLs (`v0.1.1`), the `Version 0.1.1` line and the tarball file count no longer describe it |
+| **Regressed** (2) | G7, B2 | **G7:** `node .\tools\agent-index.mjs --check` fails: *stale: agent/components/StackedBar.json, agent/index.json*. **B2:** `node .\tools\validate-setup.mjs` fails at line 49: the project skill list gained `image-prompting` (Q84), which the expected list doesn't have |
+
+### New rows since 0.1.1
+
+| # | Check | Status | Evidence |
+| --- | --- | --- | --- |
+| E1 | Every UX framework comes in two parts (Q85.2) | **Pass** | `## Part 1: the framework` and `## Part 2: the checklist` in spacing, layout, visual noise, materials (with elevation), motion, clipping, UI states, scrolling and visual representation; density (chrome context) in [Foundation](foundation.md#density-content-and-chrome) with CX rows |
+| E2 | Every part 2 has a probe or check and a pass rule | **Pass** | Ten probes in `tools/*-probe.js`, each `window.{name}Probe()` returning `{ rows }`; each checklist states its pass rule ([When the loop ends](adversarial-loop.md#when-the-loop-ends)) |
+| E3 | The adversarial loop is written and wired in (Q85.3) | **Pass** | [The adversarial loop](adversarial-loop.md); root `AGENTS.md` project rule; package `AGENTS.md` section, task row, checks row and paste-in block; `guide/8-review.md` with the evaluator prompt |
+| E4 | A separate project gets the probes from the package it installed | **Fail** | `packages/core/tools/` holds only `check-content.mjs`; the probes are repository-only, so step 8 links GitHub `main` (unversioned: a consumer on one version runs another's probes) |
+| E5 | Every probe link in the shipped guide resolves | **Fail** | `raw.githubusercontent.com/…/main/tools/visual-probe.js` answers 404 (not pushed yet); `ui-states-probe.js` answers 200 |
+| E6 | "Rules agents miss" has a row for every framework with its probe | **Pass** (fixed in this packet, about 16:00, at worker 47's request) | 18 rows: spacing, columns, layout, chrome context, scrolling, visual noise, motion, materials, clipping, UI states and now visual representation (Image `alt`, Button `iconOnly` + `label`, StackedBar's legend; `visual-probe.js` VR1–VR7) |
+| E7 | Chrome context reaches the consumer | **Pass** | "Rules agents miss" row (CX1–CX4, `context-probe.js`); seam ladder step 3 `data-density="compact"`; guide steps 3 and 4 |
+| E8 | `npm run check` passes | **Fail** | Stops at `check:parts`: *packages/core/css/compounds/stacked-bar.css: 1 descendant part selectors (allowed 0)*; `check:content` passes alone; the agent index is stale (G7). Every check before `check:parts` passes |
+| E9 | The frameworks' own pages agree with the loop page | **Fail** | [Spacing](spacing.md#the-two-part-frameworks)'s frameworks table has no visual representation row, and its "The adversarial loop" section is one paragraph that doesn't link [the loop page](adversarial-loop.md) |
+| E10 | A consumer knows how to prepare its own pictures | **Fail** | The guide covers `assets.json` ids with alt text (step 2, step 6) and the content check validates them, but not format, display resolution, transparent trimming or what good alt text says; [Images](images.md) and the `image-prompting` skill are repository-only |
+| E11 | Modifiers are spec-only and the package claims nothing about them | **Pass** | [Modifiers](modifiers.md) is a spec; 0 mentions of modifiers in the package `AGENTS.md`, `guide/` or `CHANGELOG.md` |
+| E12 | The people-facing Get started pages match the shipped guide | **Fail** | The paste-in `AGENTS.md` block in [Get started (technical)](get-started.md) and the library's Get started (`apps/library/src/data/pages.ts`) is the old one (no adversarial loop); neither names step 8, the frameworks or the probes |
+| E13 | The changelog records everything since 0.1.1 | **Fail** | `## Unreleased` lists only the people `picture` and Canvas image fill; missing: guide step 8 and the loop, the frameworks and probes, the forms' failed state (`answer`/`invalid`), ListItem `busy` locked, layout fixes (SiteLayout scroll padding, `main` in ChatLayout/EditorLayout, AppLayout head slot), Morph when hidden, paused hidden spinners, clipping fixes, StackedBar changes |
+| E14 | The hosted docs serve every page the guide links | **Fail until the release deploy** | `…/docs/adversarial-loop.md` answers 404 (Q101: one push and deploy at the Beta); library and docs roots and `ui-states.md` answer 200 |
+
+### Gaps to close
+
+For worker 47, in this order; each names the row it closes.
+
+1. **E8, `check:parts`:** use child paths in `packages/core/css/compounds/stacked-bar.css` (the descendant part selector), then `npm run check` to the end.
+2. **G7:** `npm run agent:index` after the StackedBar work; `npm run agent:index:check` passes.
+3. **B2:** add `image-prompting` to the expected project skills in `tools/validate-setup.mjs`; `node .\tools\validate-setup.mjs` passes.
+4. **E6 (done in F15.AUDIT, about 16:00):** a "Rules agents miss" row for visual representation in `packages/core/AGENTS.md` (use: an alternative that says what the picture means, icon-only controls named, part-to-whole parts named in words, square inner segments, reserved picture boxes, no autoplay with sound; caught by `visual-probe.js` VR1–VR7).
+5. **E4, E5 (docs side done by worker 48, about 16:15: guide step 8, the package `AGENTS.md` and the loop page name `probes/{name}-probe.js` in the package; worker 47 ships the files and the `./probes/*` export):** ship the probes in core (copy `tools/*-probe.js` into the package, e.g. `packages/core/probes/` with a `./probes/*` export, kept identical by a check), then point guide step 8 and the package `AGENTS.md` probe links at `node_modules/@design-library/core/probes/…`.
+6. **E9 (done, about 16:15: VR row by worker 47, loop link by worker 48):** in [Spacing](spacing.md), add the visual representation row to the frameworks table and replace the short loop section with a link to [The adversarial loop](adversarial-loop.md).
+7. **E12 (done by worker 48, about 16:15: both blocks updated; the library Get started has "Check every screen", the technical one "Review every screen" and a Checks row):** update the paste-in block in [Get started (technical)](get-started.md) and the library Get started (`pages.ts`) to the package `AGENTS.md` wording, and add one step there: review each screen with the loop (guide step 8).
+8. **E10 (done by worker 48, about 16:15: "Your own pictures" in guide step 6):** a short "Your own pictures" section in guide step 6 (WebP at the size shown, transparent pictures trimmed, `width`/`height` or ratio reserved, alt text says what the picture shows or means; decorative pictures marked) with a link to the hosted [Images](images.md).
+9. **E13:** complete `## Unreleased` in `packages/core/CHANGELOG.md` and turn it into the Beta version's entry, saying whether anything breaks (the form block's new fields are additive).
+10. **D1, D5, D6, G3, V1:** the Beta release: bump both packages together, update the `Version` line in the package `AGENTS.md` and the install URLs in guide step 1 and Get started, `npm run pack`, recount the tarball (D6), attach both tarballs to the GitHub release.
+11. **E14:** one push and Pages deploy at the release; then HEAD-check every hosted link the guide and the package `AGENTS.md` name (including `adversarial-loop.md` and each probe).
+12. **A1–A4, C1–C4, T1, T2, B1 (carried):** the fresh separate-project proof on the Beta, following only the shipped guide, with the clean-run table recorded here as for R6.
+13. **E3 in the proof:** in that proof, run step 8 once: an evaluator session scores the built screen with every probe and the table is recorded here; any fail is fixed at its owner before the Beta is declared.
+14. **The sweep (Q101.2):** the full probe sweep over the 168 template layouts and the library pages once, at the release, with the counts recorded in each framework's Results.
+15. **Rows above:** after the release, mark D1, D5, D6, G3, V1, G7, B2 and E4–E14 with their new evidence and update this page's TL;DR to say Beta.
+16. **Q100:** main tells the owner the library is ready to hand off, with the release link and this page.

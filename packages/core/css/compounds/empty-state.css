@@ -1,6 +1,6 @@
 /*
  * Tier 2 compound: EmptyState (F15.57, catalogue Feedback "Empty state"; ui-states empty-states reference). It fills
- * the content's own wrapper at the scope's least height, centred, so the wrapper never collapses to one line and the
+ * the content's own wrapper at the scope's least height (centred in a view, from the top in a section), so the wrapper never collapses to one line and the
  * first item replaces it in place. No enclosure of its own: the wrapper's boundary is the only one. The silhouette is
  * hairline outlines, still and faint, so it can't be taken for a loading skeleton (solid shapes that shimmer).
  */
@@ -20,6 +20,14 @@
   [data-dl='empty-state'][data-scope='view'] {
     min-block-size: var(--c-empty-state-min-block-view);
     padding: var(--c-empty-state-padding-view);
+  }
+
+  /* A section's empty message is that section's content: it starts where the content would, right under the
+     section's head (proximity, docs/spacing.md SC2): no block-start padding, the held height below it. A view's stays
+     centred in the view. */
+  [data-dl='empty-state'][data-scope='section'] {
+    justify-content: flex-start;
+    padding-block-start: 0;
   }
 
   [data-dl='empty-state'][data-scope='component'] {
