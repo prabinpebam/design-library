@@ -61,7 +61,18 @@ export type ProseItem =
 export type CoreBlock =
   | { type: 'site-header'; name: string; mark?: IconName; places: { label: string; href: string }[]; actions?: SiteAction[] }
   | { type: 'site-footer'; sectionsLabel: string; sections: FooterSection[]; links: FooterLink[]; identity: string; legal: string }
-  | { type: 'hero'; eyebrow?: string; title: string; lead?: string; actions?: SiteAction[]; note?: string; picture?: string; layout?: 'split' | 'stacked' }
+  | {
+      type: 'hero';
+      eyebrow?: string;
+      title: string;
+      lead?: string;
+      actions?: SiteAction[];
+      note?: string;
+      picture?: string;
+      layout?: 'split' | 'stacked';
+      /** A statement meant to be read on its own (a brand opening), so the page presents it framed. Leave it out on task and reference pages: their title and intro sit with their content (Q91). */
+      standalone?: boolean;
+    }
   | { type: 'stats'; heading: string; intro?: string; items: { label: string; value: number | string; unit?: string; description?: string }[] }
   | { type: 'cards'; heading: string; intro?: string; max?: 2 | 3 | 4; items: { title: string; eyebrow?: string; description: string; picture?: string; meta?: string; href?: string }[]; empty?: SiteEmpty }
   | { type: 'quote'; text: string; name: string; role: string }
@@ -73,7 +84,15 @@ export type CoreBlock =
   | { type: 'search'; heading: string; label: string; button: string; query: string; summary: string; results: { title: string; href: string; description: string; eyebrow?: string }[]; none: { title: string; text: string; links?: SiteLink[] } }
   | { type: 'settings'; heading: string; intro?: string; saved: string; groups: { heading: string; items: { id: string; label: string; description?: string; kind: 'switch' | 'choice'; on?: boolean; value?: string; options?: string[] }[] }[]; links?: SiteLink[] }
   | { type: 'empty'; reason: 'first-use' | 'cleared' | 'no-results' | 'no-access' | 'done'; title: string; text: string; silhouette?: 'list' | 'tiles' | 'table'; links?: SiteLink[] }
-  | { type: 'cta'; title: string; lead: string; actions: SiteAction[]; note?: string }
+  | {
+      type: 'cta';
+      title: string;
+      lead: string;
+      actions: SiteAction[];
+      note?: string;
+      /** A closing invitation meant to stand on its own (a marketing or editorial page's last word), so the page frames it. Leave it out on task pages, where the action is one more step of the work (Q91). */
+      standalone?: boolean;
+    }
   | { type: 'gallery'; heading?: string; label: string; layout?: 'standard' | 'quilted' | 'masonry'; items: string[] }
   | { type: 'breadcrumbs'; items: { label: string; href?: string }[] }
   | { type: 'byline'; name: string; href: string; date: string; read: string; picture?: string }
@@ -194,6 +213,12 @@ export interface RenderContext {
   picture: (id: string) => TemplateAsset;
   /** Renders blocks through the registry: core blocks, then the template's own. */
   blocks: (blocks: Block[] | undefined) => ReactNode;
+  /** How many blocks share the region being rendered: a stage alone in its region is framed distraction-free (Q90). */
+  siblings?: number;
+  /** The blocks sharing that region, in order: a block reads its neighbours (two framed blocks never sit side by side, FR9). */
+  neighbours?: Block[];
+  /** The layout region being filled, for its top-level blocks only: framing applies in the page's `main` region, never in a side column or inside another block (Q89.2). */
+  region?: string;
 }
 
 export type BlockRenderer<B = Block> = (block: B, ctx: RenderContext, key: number) => ReactNode;

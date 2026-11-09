@@ -10,6 +10,7 @@
     "main": [
       {
         "type": "hero",
+        "standalone": true,
         "title": "Asha Rao designs signs, maps and books that help people find their way",
         "lead": "Independent designer in Lisbon. Wayfinding for ports, museums and hospitals since 2014.",
         "actions": [

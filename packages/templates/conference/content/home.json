@@ -10,6 +10,7 @@
     "main": [
       {
         "type": "hero",
+        "standalone": true,
         "eyebrow": "11–12 March 2027 · Lisbon",
         "title": "Two days on the craft of interfaces",
         "lead": "Talks, workshops and long lunches with the people who build design systems, accessible products and the tools behind them.",
@@ -140,6 +141,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Early tickets end 31 January",
         "lead": "Two days, lunches and the evening party included.",
         "actions": [

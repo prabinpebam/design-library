@@ -24,7 +24,12 @@
     "stack-section": {
       "$type": "dimension",
       "$value": "{space.8}",
-      "$description": "Sections of a view (normal space)"
+      "$description": "Sections of a view; a section's head to its content (normal space)"
+    },
+    "stack-page": {
+      "$type": "dimension",
+      "$value": "{space.16}",
+      "$description": "Between the top-level parts of a page: a site's bands, a library page's sections (twice the section level) (normal space)"
     },
     "inline-pair": {
       "$type": "dimension",

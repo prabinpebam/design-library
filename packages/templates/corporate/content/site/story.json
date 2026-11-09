@@ -76,6 +76,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Want results like these?",
         "lead": "Talk to the planner who set this up.",
         "actions": [

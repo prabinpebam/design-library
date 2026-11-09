@@ -5,8 +5,10 @@ import { Button } from '../fundamentals/Button';
 import type { DataAttributes } from '../types';
 
 export interface ChatLayoutProps extends DataAttributes {
-  /** The sidebar: New chat, Search chats, a ConversationList, the account at the bottom. */
+  /** The sidebar: New chat, Search chats, a ConversationList. It scrolls on its own above `sidebarFooter`. */
   sidebar: ReactNode;
+  /** Pinned to the bottom of the sidebar, never scrolling away: the account (a Persona and its menu, with Settings). */
+  sidebarFooter?: ReactNode;
   /** Names the sidebar region: "Chat history" (default). */
   sidebarLabel?: string;
   /** Whether the sidebar shows. In a narrow window it floats over the conversation while open. */
@@ -44,12 +46,27 @@ const stickSlack = 48;
  * toggle.
  * @key Escape: closes the floating sidebar
  */
-export function ChatLayout({ sidebar, sidebarLabel = 'Chat history', sidebarOpen, onSidebarToggle, header, headerEnd, children, label, composer, empty, height = 'fill', ...data }: ChatLayoutProps) {
+export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat history', sidebarOpen, onSidebarToggle, header, headerEnd, children, label, composer, empty, height = 'fill', ...data }: ChatLayoutProps) {
   const sidebarId = useId();
   const scroller = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
   const atEnd = useRef(true);
   const [away, setAway] = useState(false);
+  // The pinned footer's hairline shows only while the list runs on under it (materials AD2): one boolean, set on change only.
+  const [listUnder, setListUnder] = useState(false);
+  const readList = useCallback((el: HTMLElement | null) => {
+    if (el) setListUnder(el.scrollHeight - el.scrollTop - el.clientHeight > 1);
+  }, []);
+  const list = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const el = list.current;
+    if (!el || !sidebarFooter) return;
+    const grown = new ResizeObserver(() => readList(el));
+    grown.observe(el);
+    if (el.firstElementChild) grown.observe(el.firstElementChild);
+    readList(el);
+    return () => grown.disconnect();
+  }, [readList, sidebarFooter, sidebarOpen]);
 
   const measure = useCallback(() => {
     const el = scroller.current;
@@ -94,8 +111,19 @@ export function ChatLayout({ sidebar, sidebarLabel = 'Chat history', sidebarOpen
 
   return (
     <div ref={root} {...data} data-dl="chat-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-empty={empty ? '' : undefined}>
-      <aside id={sidebarId} data-dl-part="sidebar" aria-label={sidebarLabel} hidden={!sidebarOpen}>
-        {sidebar}
+      <aside id={sidebarId} data-dl-part="sidebar" aria-label={sidebarLabel} hidden={!sidebarOpen} data-footer={sidebarFooter ? '' : undefined}>
+        {sidebarFooter ? (
+          <>
+            <div ref={list} data-dl-part="sidebar-list" onScroll={(e) => readList(e.currentTarget)}>
+              <div data-dl-part="sidebar-content">{sidebar}</div>
+            </div>
+            <div data-dl-part="sidebar-footer" data-under={listUnder ? '' : undefined}>
+              {sidebarFooter}
+            </div>
+          </>
+        ) : (
+          sidebar
+        )}
       </aside>
       <div data-dl-part="main">
         <header data-dl-part="header">

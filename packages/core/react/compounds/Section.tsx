@@ -32,8 +32,8 @@ export interface SectionProps extends DataAttributes {
  */
 export function Section({ heading, level = 2, size, intro, index, nested = false, children, headingData, introData, ...data }: SectionProps) {
   const id = useId();
-  const parts = (
-    <>
+  const head = (heading || intro) && (
+    <div data-dl-part="head">
       {heading && (
         <Heading level={level} size={size} id={id} {...headingData}>
           {heading}
@@ -44,6 +44,11 @@ export function Section({ heading, level = 2, size, intro, index, nested = false
           {intro}
         </p>
       )}
+    </div>
+  );
+  const parts = (
+    <>
+      {head}
       {children}
     </>
   );

@@ -70,17 +70,19 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
     <header {...data} data-dl="hero" data-layout={arrangement} data-picture={picture ? '' : undefined}>
       <div data-dl-part="body">
         <div data-dl-part="words">
-          <div data-dl-part="heading">
-            {eyebrow && (
-              <Text as="p" variant="body-sm" tone="muted">
-                {eyebrow}
-              </Text>
-            )}
-            <Heading level={level} size="display">
-              {title}
-            </Heading>
+          <div data-dl-part="message">
+            <div data-dl-part="heading">
+              {eyebrow && (
+                <Text as="p" variant="body-sm" tone="muted">
+                  {eyebrow}
+                </Text>
+              )}
+              <Heading level={level} size="display">
+                {title}
+              </Heading>
+            </div>
+            {lead && <p data-dl-part="lead">{lead}</p>}
           </div>
-          {lead && <p data-dl-part="lead">{lead}</p>}
           {arrangement !== 'divided' && doing}
         </div>
         {arrangement === 'divided' && doing}

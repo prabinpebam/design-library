@@ -72,6 +72,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Work with us",
         "lead": "We’re hiring planners, drivers and engineers in eight countries.",
         "actions": [

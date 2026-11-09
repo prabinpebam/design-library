@@ -6,7 +6,7 @@
 import { Fragment, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react';
 import { fill } from './fill';
-import type { BlockRenderer, CoreBlock, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
+import type { BlockRenderer, CoreBlock, RenderContext, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
 
 type Of<T extends CoreBlock['type']> = Extract<CoreBlock, { type: T }>;
 
@@ -242,6 +242,31 @@ const inSection = (key: number, heading: string | undefined, body: ReactNode) =>
     <Fragment key={key}>{body}</Fragment>
   );
 
+// Framing by block type and context (Q88–Q91). Framing isolates a piece, which interrupts reading, so only what gains
+// from being read alone is framed: a hero or call to action declared `standalone` (a brand opening, a marketing page's
+// closing invitation), a quote and a status message. Anything else flows with its content.
+const FRAMED = new Set(['hero', 'quote', 'cta', 'status']);
+type Placed = { type: string; standalone?: boolean };
+const frames = (b: Placed | undefined) => !!b && FRAMED.has(b.type) && (!['hero', 'cta'].includes(b.type) || b.standalone === true);
+const isStage = (list: Placed[] | undefined, i: number) =>
+  list?.[i]?.type === 'status' || (list?.[i]?.type === 'hero' && list.slice(0, i).every((b) => b.type === 'breadcrumbs'));
+/** Whether the block at `i` is framed: framing blocks are, except a feature right after a framed block (FR9: two spotlights in a row are a flow again). */
+const framedAt = (list: Placed[] | undefined, i: number): boolean =>
+  !!list && frames(list[i]) && (isStage(list, i) || i === 0 || !framedAt(list, i - 1));
+
+const isFramed = (ctx: RenderContext, i: number) => ctx.region === 'main' && framedAt(ctx.neighbours, i);
+
+function frame(ctx: RenderContext, i: number, kind: 'stage' | 'feature', body: ReactNode) {
+  // Framing presents a piece on the page itself: only in the page's main region, never in a side column (Q89.2).
+  if (!isFramed(ctx, i)) return <Fragment key={i}>{body}</Fragment>;
+  // A stage alone in its region is the page's whole point: distraction-free. With more to come, it peeks (Q90).
+  const mode = kind === 'stage' && ctx.siblings === 1 ? 'distraction-free' : 'peek';
+  return (
+    <Frame key={i} kind={kind} mode={mode}>
+      {body}
+    </Frame>
+  );
+}
 /** The registry: one entry per core block type. */
 export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
   'site-header': (b, ctx, i) => {
@@ -258,12 +283,25 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     );
   },
   'site-footer': (b, _ctx, i) => <Footer key={i} sectionsLabel={b.sectionsLabel} sections={b.sections} links={b.links} identity={b.identity} legal={b.legal} />,
-  // Q88: a page's opening is its stage; a hero further down is a feature.
-  hero: (b, ctx, i) => (
-    <Frame key={i} kind={i === 0 ? 'stage' : 'feature'}>
-      <Hero eyebrow={b.eyebrow} title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} picture={b.picture ? ctx.picture(b.picture) : undefined} layout={b.layout} />
-    </Frame>
-  ),
+  // Q88–Q91: a hero declared standalone (a brand opening) is the page's stage, or a feature further down; any other
+  // hero flows with its content. A stage alone in its region is distraction-free; with more to come it peeks. A framed
+  // hero's picture sits beside its words (split; its container still stacks them when narrow), so words and picture
+  // fit the window together and the next band peeks: stacked, the picture alone can be taller than the window.
+  hero: (b, ctx, i) =>
+    frame(
+      ctx,
+      i,
+      isStage(ctx.neighbours, i) ? 'stage' : 'feature',
+      <Hero
+        eyebrow={b.eyebrow}
+        title={b.title}
+        lead={b.lead}
+        actions={actionButtons(b.actions)}
+        note={b.note}
+        picture={b.picture ? ctx.picture(b.picture) : undefined}
+        layout={b.picture && isFramed(ctx, i) ? 'split' : b.layout}
+      />,
+    ),
   stats: (b, _ctx, i) => (
     <Section key={i} heading={b.heading} intro={b.intro}>
       <Grid max={4}>
@@ -291,13 +329,15 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       </Grid>)}
     </Section>
   ),
-  quote: (b, _ctx, i) => (
-    <Frame key={i} kind="feature">
+  quote: (b, ctx, i) =>
+    frame(
+      ctx,
+      i,
+      'feature',
       <Quote size="l" align="center" author={{ name: b.name, role: b.role }}>
         {b.text}
-      </Quote>
-    </Frame>
-  ),
+      </Quote>,
+    ),
   points: (b, _ctx, i) => (
     <Section key={i} heading={b.heading} intro={b.intro}>
       <List variant="bulleted" items={b.items.map((t, n) => ({ id: String(n), content: t }))} />
@@ -314,11 +354,8 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       {b.text}
     </Alert>
   ),
-  status: (b, _ctx, i) => (
-    <Frame key={i} kind="stage">
-      <Hero layout="stacked" eyebrow={b.eyebrow} title={b.title} lead={b.text} actions={linkList(b.links)} note={b.note} />
-    </Frame>
-  ),
+  status: (b, ctx, i) =>
+    frame(ctx, i, 'stage', <Hero layout="stacked" eyebrow={b.eyebrow} title={b.title} lead={b.text} actions={linkList(b.links)} note={b.note} />),
   search: (b, _ctx, i) => <SearchBlock key={i} block={b} />,
   settings: (b, _ctx, i) => <SettingsBlock key={i} block={b} />,
   empty: (b, _ctx, i) => (
@@ -326,11 +363,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       {b.text}
     </EmptyState>
   ),
-  cta: (b, _ctx, i) => (
-    <Frame key={i} kind="feature">
-      <Hero level={2} layout="divided" title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} />
-    </Frame>
-  ),
+  cta: (b, ctx, i) => frame(ctx, i, 'feature', <Hero level={2} layout="divided" title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} />),
   gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />),
   breadcrumbs: (b, _ctx, i) => <Breadcrumbs key={i} items={b.items} />,
   byline: (b, ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} src={b.picture ? ctx.picture(b.picture).src : undefined} />,

@@ -54,6 +54,7 @@
   "tokens": [
     "--c-title-bar-brand-size",
     "--c-title-bar-gap",
+    "--c-title-bar-row-gap",
     "--color-text",
     "--weight-bold"
   ],

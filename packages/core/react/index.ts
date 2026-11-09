@@ -66,6 +66,8 @@ export type { ConversationListProps, Conversation, ConversationGroup } from './c
 export { ChatLayout } from './layouts/ChatLayout';
 export type { ChatLayoutProps } from './layouts/ChatLayout';
 export { SiteLayout } from './layouts/SiteLayout';
+export { Frame } from './layouts/Frame';
+export type { FrameProps } from './layouts/Frame';
 export type { SiteLayoutProps } from './layouts/SiteLayout';
 export { SiteHeader } from './compounds/SiteHeader';
 export type { SiteHeaderProps, SiteHeaderLink } from './compounds/SiteHeader';

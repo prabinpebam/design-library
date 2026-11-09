@@ -122,8 +122,8 @@
       },
       "gap": {
         "$type": "dimension",
-        "$value": "{space.stack-section}",
-        "$description": "Between the view's parts, and the details column's (echoed for space contexts)"
+        "$value": "{space.stack-page}",
+        "$description": "Between the view's parts (its header and its sections), and the details column's: the page level, twice a section's own gap (Q85) (echoed for space contexts)"
       },
       "gutter": {
         "$type": "dimension",
@@ -295,10 +295,15 @@
         "$value": "{space.inline-item}",
         "$description": "Between a card's actions (echoed for space contexts)"
       },
+      "body-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between the message, the content and the footer: a group apart, never more than the card's inset (Q85) (echoed for space contexts)"
+      },
       "gap": {
         "$type": "dimension",
         "$value": "{space.stack-item}",
-        "$description": "Between the heading, the description, the content, the facts and the actions (echoed for space contexts)"
+        "$description": "Inside the message (the heading and the description), between the parts of the content, and between the facts and the actions (echoed for space contexts)"
       },
       "heading-gap": {
         "$type": "dimension",
@@ -552,8 +557,8 @@
       },
       "gap": {
         "$type": "dimension",
-        "$value": "{space.stack-group}",
-        "$description": "Between term and details pairs (echoed for space contexts)"
+        "$value": "{space.stack-item}",
+        "$description": "Between term and details pairs: items of one list, closer than the group around them (Q85) (echoed for space contexts)"
       },
       "stacked-gap": {
         "$type": "dimension",
@@ -786,6 +791,16 @@
         "$description": "At the footer's start and end: the page margin, so its words line up with the page's (echoed for space contexts)"
       }
     },
+    "frame": {
+      "$extensions": {
+        "owner": "Frame"
+      },
+      "space-min": {
+        "$type": "dimension",
+        "$value": "{space.stack-page}",
+        "$description": "A feature frame's least space above and below: the page level; it grows with the window to twice this (Q88) (echoed for space contexts)"
+      }
+    },
     "gradient-editor": {
       "$extensions": {
         "owner": "GradientEditor"
@@ -815,10 +830,15 @@
         "$value": "{space.stack-pair}",
         "$description": "Between the eyebrow and the title (echoed for space contexts)"
       },
-      "words-gap": {
+      "message-gap": {
         "$type": "dimension",
         "$value": "{space.stack-group}",
-        "$description": "Between the heading block, the lead and the actions (echoed for space contexts)"
+        "$description": "Between the heading block and the lead (Q85) (echoed for space contexts)"
+      },
+      "words-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Between the message (heading and lead) and what to do (actions and note): the section level (Q85) (echoed for space contexts)"
       }
     },
     "image-generation": {
@@ -1066,6 +1086,16 @@
         "$description": "Between the eyebrow, title, lead and source lines (echoed for space contexts)"
       }
     },
+    "page-layout": {
+      "$extensions": {
+        "owner": "PageLayout"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-page}",
+        "$description": "Between a page's header and its sections, and between sections: the page level, so each section reads as its own group (Q85) (echoed for space contexts)"
+      }
+    },
     "pagination": {
       "$extensions": {
         "owner": "Pagination"
@@ -1305,6 +1335,16 @@
       "$extensions": {
         "owner": "Section"
       },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Inside a section: between its head (heading and intro) and its content, and between its content's parts (Q85: the section level) (echoed for space contexts)"
+      },
+      "head-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Inside a section's head: between its heading and its intro, so the two read as one head (Q85) (echoed for space contexts)"
+      },
       "index-gap": {
         "$type": "dimension",
         "$value": "{space.gutter}",
@@ -1314,6 +1354,11 @@
         "$type": "dimension",
         "$value": "{space.stack-group}",
         "$description": "Inside a nested section: between its heading, its intro and its content, closer than a page section (echoed for space contexts)"
+      },
+      "nested-head-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "Inside a nested section's head: between its heading and its intro (echoed for space contexts)"
       }
     },
     "segmented-control": {
@@ -1402,8 +1447,8 @@
       },
       "gap": {
         "$type": "dimension",
-        "$value": "{space.stack-section}",
-        "$description": "Between the column's parts (echoed for space contexts)"
+        "$value": "{space.stack-page}",
+        "$description": "Between the column's bands (hero, sections, call to action): the page level, twice a section's own gap (Q85) (echoed for space contexts)"
       },
       "margin": {
         "$type": "dimension",
@@ -1514,6 +1559,11 @@
         "$type": "dimension",
         "$value": "{space.inline-group}",
         "$description": "Between the identity and the actions, and between the parts inside each (echoed for space contexts)"
+      },
+      "row-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Between rows when the bar wraps in a narrow window, closer than the inline gap so the wrapped bar stays slim (owner Q87) (echoed for space contexts)"
       }
     },
     "token-specimen": {

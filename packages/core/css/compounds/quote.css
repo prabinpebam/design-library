@@ -39,7 +39,7 @@
     text-align: center;
   }
 
-  [data-dl='quote'] [data-dl-part='text'] {
+  [data-dl='quote'] > [data-dl-part='text'] {
     display: grid;
     gap: var(--c-quote-paragraph-gap);
     min-inline-size: 0;
@@ -52,37 +52,37 @@
     overflow-wrap: break-word;
   }
 
-  [data-dl='quote'][data-align='center'] [data-dl-part='text'] {
+  [data-dl='quote'][data-align='center'] > [data-dl-part='text'] {
     inline-size: 100%;
     max-inline-size: var(--c-quote-measure);
   }
 
-  [data-dl='quote'] [data-dl-part='text'] > p {
+  [data-dl='quote'] > [data-dl-part='text'] > p {
     margin: 0;
   }
 
-  [data-dl='quote'] [data-dl-part='text'] > p:first-child::before { content: open-quote; }
-  [data-dl='quote'] [data-dl-part='text'] > p:last-child::after { content: close-quote; }
+  [data-dl='quote'] > [data-dl-part='text'] > p:first-child::before { content: open-quote; }
+  [data-dl='quote'] > [data-dl-part='text'] > p:last-child::after { content: close-quote; }
 
-  [data-dl='quote'][data-size='s'] [data-dl-part='text'] {
+  [data-dl='quote'][data-size='s'] > [data-dl-part='text'] {
     font-size: var(--c-quote-text-size-s);
   }
 
-  [data-dl='quote'][data-size='l'] [data-dl-part='text'] {
+  [data-dl='quote'][data-size='l'] > [data-dl-part='text'] {
     font-family: var(--font-display);
     font-size: var(--c-quote-text-size-l);
     font-weight: var(--type-heading-3-weight);
     line-height: var(--type-heading-2-leading);
   }
 
-  [data-dl='quote'] [data-dl-part='attribution'] {
+  [data-dl='quote'] > [data-dl-part='attribution'] {
     display: grid;
     justify-items: start;
     gap: var(--c-quote-attribution-gap);
     min-inline-size: 0;
   }
 
-  [data-dl='quote'][data-align='center'] [data-dl-part='attribution'] {
+  [data-dl='quote'][data-align='center'] > [data-dl-part='attribution'] {
     justify-items: center;
   }
 
@@ -93,7 +93,7 @@
     color: var(--color-text-muted);
   }
 
-  [data-dl='quote'] [data-dl-part='text'] [data-dl='skeleton'] {
+  [data-dl='quote'] > [data-dl-part='text'] [data-dl='skeleton'] {
     inline-size: 100%;
   }
 }

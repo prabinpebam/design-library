@@ -39,7 +39,8 @@
     flex-wrap: wrap;
     align-items: baseline;
     gap: var(--space-inline-group);
-    padding-block: var(--space-inset-md);
+    /* Q87: a slim bar, an inset-sm above and below its 36 px controls. */
+    padding-block: var(--space-inset-sm);
     padding-inline: var(--space-margin-page);
     /* The one rule between the header and everything below it; navigation and main separate by space alone. */
     border-block-end: var(--border-hairline) solid var(--color-border);

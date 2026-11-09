@@ -72,11 +72,13 @@
   ],
   "tokens": [
     "--c-section-gap",
+    "--c-section-head-gap",
     "--c-section-index-column",
     "--c-section-index-gap",
     "--c-section-index-size",
     "--c-section-intro-measure",
     "--c-section-nested-gap",
+    "--c-section-nested-head-gap",
     "--color-accent",
     "--leading-tight",
     "--space-stack-item",

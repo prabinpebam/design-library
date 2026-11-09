@@ -104,6 +104,14 @@ const tiers: { section: 'foundations' | 'fundamentals' | 'compounds' | 'layouts'
 export function Overview() {
   return (
     <Stack gap="section">
+      <Section heading="Made for AI agents first" size={3} nested>
+        <Text>
+          This library is meant mainly for AI agents to read and build with. People won’t be reading design libraries to put them into their projects for much longer, and much of this may one day be part of the models themselves.
+        </Text>
+        <Text>
+          For now, it means every element’s detailed behaviour is already worked out. A project uses it as it is, instead of spending tokens, time and effort building every basic component and interaction again.
+        </Text>
+      </Section>
       <Section heading="How it’s built" size={3} nested>
         <Text>
           Four tiers, each made only from the ones before it. Tokens hold every value. Fundamentals are the universal building blocks, built from tokens alone. Compounds arrange fundamentals for a particular need. Layouts are reusable views and sections. Views are data mapped onto layouts and carry no styles of their own.

@@ -54,6 +54,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Sound like you?",
         "lead": "Applying takes about ten minutes.",
         "actions": [

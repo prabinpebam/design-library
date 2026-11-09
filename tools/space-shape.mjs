@@ -11,7 +11,7 @@
  *                                        broken invariant in any option (below)
  *
  * Invariants, in every option: each space role reads a step of the 4 px scale; a pair is never wider than an item;
- * groups sit at least 1.5 times the item space apart and sections at least twice the group space; inside an enclosure
+ * groups sit at least 1.5 times the item space apart, sections at least twice the group space and page parts at least twice the section space; inside an enclosure
  * no gap exceeds its inset; insets grow sm ≤ md ≤ lg. Sharp is 0 everywhere; radii grow sm ≤ md ≤ lg; radius.none and
  * radius.full (round by nature) never change and only the allow-listed round-by-nature parts read radius.full. Sizes
  * and targets aren't roles, so no option can touch them.
@@ -91,6 +91,7 @@ export function problems(/** @type {any} */ config, /** @type {any} */ options, 
     hold(v['stack-group'] >= 1.5 * v['stack-item'], 'groups sit less than 1.5 times the item space apart');
     hold(v['inline-group'] >= 1.5 * v['inline-item'], 'inline groups sit less than 1.5 times the item space apart');
     hold(v['stack-section'] >= 2 * v['stack-group'], 'sections sit less than twice the group space apart');
+    hold(v['stack-page'] >= 2 * v['stack-section'], 'page parts sit less than twice the section space apart (Q85)');
     hold(v['stack-item'] <= v['inset-sm'] && v['inline-item'] <= v['inset-sm'], 'items inside a compact container sit further apart than its inset');
     hold(v['stack-group'] <= v['inset-md'], 'groups inside a card sit further apart than its inset');
     hold(v['inset-xs'] <= v['inset-sm'] && v['inset-sm'] <= v['inset-md'] && v['inset-md'] <= v['inset-lg'], 'insets must grow xs ≤ sm ≤ md ≤ lg');

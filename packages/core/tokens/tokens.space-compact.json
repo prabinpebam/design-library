@@ -24,7 +24,12 @@
     "stack-section": {
       "$type": "dimension",
       "$value": "{space.6}",
-      "$description": "Sections of a view (compact space)"
+      "$description": "Sections of a view; a section's head to its content (compact space)"
+    },
+    "stack-page": {
+      "$type": "dimension",
+      "$value": "{space.12}",
+      "$description": "Between the top-level parts of a page: a site's bands, a library page's sections (twice the section level) (compact space)"
     },
     "inline-pair": {
       "$type": "dimension",

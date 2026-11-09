@@ -6,7 +6,8 @@
       "stack-row": "Between rows of a list whose rows carry their own fill (navigation items, menu items), so two fills never touch",
       "stack-item": "Stacked items in one group",
       "stack-group": "Groups within a section; fields in a form",
-      "stack-section": "Sections of a view",
+      "stack-section": "Sections of a view; a section's head to its content",
+      "stack-page": "Between the top-level parts of a page: a site's bands, a library page's sections (twice the section level)",
       "inline-pair": "Side-by-side pair: icon and label",
       "inline-item": "Items in one row: buttons in a group",
       "inline-group": "Groups in a row: toolbar groups",
@@ -21,22 +22,22 @@
       "compact": {
         "label": "Compact",
         "for": "Dense working screens people use all day: tables, dashboards, admin and developer tools, where seeing more at once matters more than breathing room.",
-        "values": { "stack-pair": "space.1", "stack-row": "space.0-5", "stack-item": "space.2", "stack-group": "space.3", "stack-section": "space.6", "inline-pair": "space.1", "inline-item": "space.2", "inline-group": "space.3", "inset-xs": "space.0-5", "inset-sm": "space.2", "inset-md": "space.3", "inset-lg": "space.4", "gutter": "space.4", "margin-page": "space.3" }
+        "values": { "stack-pair": "space.1", "stack-row": "space.0-5", "stack-item": "space.2", "stack-group": "space.3", "stack-section": "space.6", "stack-page": "space.12", "inline-pair": "space.1", "inline-item": "space.2", "inline-group": "space.3", "inset-xs": "space.0-5", "inset-sm": "space.2", "inset-md": "space.3", "inset-lg": "space.4", "gutter": "space.4", "margin-page": "space.3" }
       },
       "normal": {
         "label": "Normal",
         "for": "The default for most products: forms, settings and content pages read comfortably without wasting room.",
-        "values": { "stack-pair": "space.1", "stack-row": "space.1", "stack-item": "space.2", "stack-group": "space.4", "stack-section": "space.8", "inline-pair": "space.2", "inline-item": "space.2", "inline-group": "space.4", "inset-xs": "space.0-5", "inset-sm": "space.2", "inset-md": "space.4", "inset-lg": "space.6", "gutter": "space.6", "margin-page": "space.4" }
+        "values": { "stack-pair": "space.1", "stack-row": "space.1", "stack-item": "space.2", "stack-group": "space.4", "stack-section": "space.8", "stack-page": "space.16", "inline-pair": "space.2", "inline-item": "space.2", "inline-group": "space.4", "inset-xs": "space.0-5", "inset-sm": "space.2", "inset-md": "space.4", "inset-lg": "space.6", "gutter": "space.6", "margin-page": "space.4" }
       },
       "loose": {
         "label": "Loose",
         "for": "Calmer products people visit now and then: marketing pages, onboarding, consumer apps, where each screen asks for one thing at a time.",
-        "values": { "stack-pair": "space.1", "stack-row": "space.1", "stack-item": "space.3", "stack-group": "space.6", "stack-section": "space.12", "inline-pair": "space.2", "inline-item": "space.3", "inline-group": "space.6", "inset-xs": "space.0-5", "inset-sm": "space.3", "inset-md": "space.6", "inset-lg": "space.8", "gutter": "space.8", "margin-page": "space.6" }
+        "values": { "stack-pair": "space.1", "stack-row": "space.1", "stack-item": "space.3", "stack-group": "space.6", "stack-section": "space.12", "stack-page": "space.24", "inline-pair": "space.2", "inline-item": "space.3", "inline-group": "space.6", "inset-xs": "space.0-5", "inset-sm": "space.3", "inset-md": "space.6", "inset-lg": "space.8", "gutter": "space.8", "margin-page": "space.6" }
       },
       "extra-loose": {
         "label": "Extra loose",
         "for": "Editorial and showcase pages on large screens: portfolios, long reads and launches, where space itself sets the tone.",
-        "values": { "stack-pair": "space.2", "stack-row": "space.1", "stack-item": "space.4", "stack-group": "space.8", "stack-section": "space.16", "inline-pair": "space.3", "inline-item": "space.4", "inline-group": "space.8", "inset-xs": "space.0-5", "inset-sm": "space.4", "inset-md": "space.8", "inset-lg": "space.12", "gutter": "space.12", "margin-page": "space.6" }
+        "values": { "stack-pair": "space.2", "stack-row": "space.1", "stack-item": "space.4", "stack-group": "space.8", "stack-section": "space.16", "stack-page": "space.32", "inline-pair": "space.3", "inline-item": "space.4", "inline-group": "space.8", "inset-xs": "space.0-5", "inset-sm": "space.4", "inset-md": "space.8", "inset-lg": "space.12", "gutter": "space.12", "margin-page": "space.6" }
       }
     }
   },

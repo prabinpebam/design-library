@@ -62,6 +62,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Have your own conversation",
         "lead": "Ask anything; it’s free to start.",
         "actions": [

@@ -35,6 +35,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Have a project for June?",
         "lead": "Tell me about it now; good projects are worth waiting for.",
         "actions": [

@@ -52,6 +52,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Not sure which fits?",
         "lead": "Tell a planner what you’re moving; they’ll suggest a route and a price.",
         "actions": [

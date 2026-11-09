@@ -90,6 +90,7 @@
       },
       {
         "type": "cta",
+        "standalone": true,
         "title": "Have a place people get lost in?",
         "lead": "I take on two projects a year.",
         "actions": [

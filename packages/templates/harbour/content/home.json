@@ -6,7 +6,7 @@
   "settings": { "current": "home" },
   "regions": {
     "main": [
-      { "type": "hero", "eyebrow": "Open every day by the water", "title": "Books for slow evenings", "lead": "A small shop on the quay, with a reading chair by every window.",
+      { "type": "hero", "standalone": true, "eyebrow": "Open every day by the water", "title": "Books for slow evenings", "lead": "A small shop on the quay, with a reading chair by every window.",
         "actions": [{ "label": "See new books", "primary": true, "says": "New books open here once that page is built." }], "picture": "shopfront" },
       { "type": "cards", "heading": "New this week", "intro": "Three books our staff couldn’t put down.", "max": 3,
         "items": [

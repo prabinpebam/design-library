@@ -131,7 +131,7 @@ Full framework: The colour model (docs/foundation.md#colour-model).
 
 ## Spacing
 
-Full framework: Spacing in the foundation plan (docs/foundation.md#space-and-shape-options).
+Full framework: Spacing and layout rhythm (docs/spacing.md).
 
 **Rules**
 
@@ -140,6 +140,7 @@ Full framework: Spacing in the foundation plan (docs/foundation.md#space-and-sha
 - The parent owns space: gap and padding on the container (Stack, Cluster, Grid gap props); never margins set by a sibling position.
 - Geometry never moves on hover, focus or loading: borders are always there, transparent at rest.
 - Targets are at least size.target (44 px), or size.target-dense in dense contexts.
+- Framing (Frame, a hero's `standalone`) isolates a piece and so interrupts reading: frame only what gains from being read alone (a brand opening, a statement, a quote, a call to action, a status message). Task and reference pages (tickets, schedules, lists, forms, settings, detail pages) never frame their heading away from their content: the title and intro sit with the task, which starts in the first view.
 
 **Decide**
 
@@ -147,6 +148,7 @@ Full framework: Spacing in the foundation plan (docs/foundation.md#space-and-sha
 2. Side by side: inline-pair, inline-item, inline-group by the same levels.
 3. Inside a surface: inset-* at the first content level, not on the wrapper.
 4. Need a whole product denser or looser? Change the space option (compact, normal, loose, extra-loose), never single values.
+5. About to frame something? Ask in order: what does the reader gain from seeing it alone? What did they come to this page to do? Would the frame push that below the first view? Nothing gained, or the task delayed: don't frame it. Gained: a stage for an opening (distraction-free when it's the page's only content, peek otherwise), a feature for a piece within the page.
 
 **Check:** `npm run tokens:check`, `npm run check:clipping`
 

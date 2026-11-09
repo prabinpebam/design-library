@@ -88,6 +88,7 @@
     "--c-hero-lead-leading",
     "--c-hero-lead-size",
     "--c-hero-measure",
+    "--c-hero-message-gap",
     "--c-hero-split-min",
     "--c-hero-words-gap",
     "--color-text-muted"

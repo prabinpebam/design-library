@@ -75,12 +75,15 @@
   --space-8: 2rem;
   --space-12: 3rem;
   --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
   --space-0-5: 0.125rem;
   --space-stack-pair: var(--space-1);
   --space-stack-row: var(--space-1);
   --space-stack-item: var(--space-2);
   --space-stack-group: var(--space-4);
   --space-stack-section: var(--space-8);
+  --space-stack-page: var(--space-16);
   --space-inline-pair: var(--space-2);
   --space-inline-item: var(--space-2);
   --space-inline-group: var(--space-4);
@@ -316,7 +319,7 @@
   --c-data-table-head-bg: var(--color-bg-sunken);
   --c-data-table-head-fg: var(--color-text-muted);
   --c-data-table-stack-gap: var(--space-stack-pair);
-  --c-description-list-gap: var(--space-stack-group);
+  --c-description-list-gap: var(--space-stack-item);
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
   --c-description-list-stacked-gap: var(--space-stack-item);
@@ -510,7 +513,7 @@
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
   --c-app-layout-gutter: var(--space-gutter);
-  --c-app-layout-gap: var(--space-stack-section);
+  --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-column: 72rem;
   --c-app-layout-aside: var(--size-pane-width);
   --c-app-layout-height-lg: 36rem;
@@ -534,10 +537,13 @@
   --c-agenda-session-fill: var(--color-bg-sunken);
   --c-agenda-title-size: var(--type-heading-4-size);
   --c-agenda-meta-gap: var(--space-inline-pair);
+  --c-frame-space-min: var(--space-stack-page);
+  --c-frame-ground: var(--color-bg-sunken);
+  --c-frame-peek: var(--space-12);
   --c-site-layout-width: 72rem;
   --c-site-layout-reading: var(--size-measure);
   --c-site-layout-margin: var(--space-margin-page);
-  --c-site-layout-gap: var(--space-stack-section);
+  --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-padding-block: var(--space-stack-section);
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
@@ -625,13 +631,16 @@
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-chevron: var(--size-icon-sm);
   --c-title-bar-gap: var(--space-inline-group);
-  --c-title-bar-brand-size: var(--size-target);
+  --c-title-bar-row-gap: var(--space-stack-item);
+  --c-title-bar-brand-size: var(--size-target-dense);
   --c-page-header-gap: var(--space-stack-item);
   --c-page-header-measure: var(--size-measure);
   --c-page-header-eyebrow-size: var(--size-target);
   --c-page-header-lead-size: var(--text-l);
   --c-page-header-lead-leading: var(--leading-normal);
-  --c-section-gap: var(--space-6);
+  --c-section-gap: var(--space-stack-section);
+  --c-section-head-gap: var(--space-stack-item);
+  --c-section-nested-head-gap: var(--space-stack-pair);
   --c-section-intro-measure: 32rem;
   --c-section-index-column: 4rem;
   --c-section-index-size: 6rem;
@@ -767,7 +776,8 @@
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-rise: var(--space-2);
   --c-hero-gap: var(--space-stack-section);
-  --c-hero-words-gap: var(--space-stack-group);
+  --c-hero-words-gap: var(--space-stack-section);
+  --c-hero-message-gap: var(--space-stack-group);
   --c-hero-heading-gap: var(--space-stack-pair);
   --c-hero-actions-gap: var(--space-inline-item);
   --c-hero-lead-size: var(--text-l);
@@ -844,6 +854,7 @@
   --c-card-radius: var(--radius-lg);
   --c-card-padding: var(--space-inset-md);
   --c-card-gap: var(--space-stack-item);
+  --c-card-body-gap: var(--space-stack-group);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-beside-min: 14rem;
   --c-card-row-media: var(--size-control-3xl);
@@ -894,7 +905,7 @@
   --c-list-detail-back-gap: var(--space-stack-item);
   --c-list-detail-max-md: var(--size-scroll-md);
   --c-list-detail-max-lg: var(--size-scroll-lg);
-  --c-page-layout-gap: var(--space-16);
+  --c-page-layout-gap: var(--space-stack-page);
   --c-page-layout-max: 90rem;
   --c-scroll-area-rest-scale: 0.5;
   --c-scroll-area-thumb-hover: var(--size-scrollbar-thumb-hover);
@@ -1396,6 +1407,7 @@
   --space-stack-item: var(--space-2);
   --space-stack-group: var(--space-3);
   --space-stack-section: var(--space-6);
+  --space-stack-page: var(--space-12);
   --space-inline-pair: var(--space-1);
   --space-inline-item: var(--space-2);
   --space-inline-group: var(--space-3);
@@ -1423,7 +1435,7 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
-  --c-app-layout-gap: var(--space-stack-section);
+  --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
@@ -1450,6 +1462,7 @@
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
   --c-card-actions-gap: var(--space-inline-item);
+  --c-card-body-gap: var(--space-stack-group);
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
@@ -1486,7 +1499,7 @@
   --c-date-field-label-gap: var(--space-stack-pair);
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
-  --c-description-list-gap: var(--space-stack-group);
+  --c-description-list-gap: var(--space-stack-item);
   --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
@@ -1525,11 +1538,13 @@
   --c-footer-meta-link-gap: var(--space-inline-group);
   --c-footer-padding-block: var(--space-stack-section);
   --c-footer-padding-inline: var(--space-margin-page);
+  --c-frame-space-min: var(--space-stack-page);
   --c-gradient-editor-gap: var(--space-stack-pair);
   --c-hero-actions-gap: var(--space-inline-item);
   --c-hero-gap: var(--space-stack-section);
   --c-hero-heading-gap: var(--space-stack-pair);
-  --c-hero-words-gap: var(--space-stack-group);
+  --c-hero-message-gap: var(--space-stack-group);
+  --c-hero-words-gap: var(--space-stack-section);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -1566,6 +1581,7 @@
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
   --c-page-header-gap: var(--space-stack-item);
+  --c-page-layout-gap: var(--space-stack-page);
   --c-pagination-gap: var(--space-inline-pair);
   --c-pagination-group-gap: var(--space-inline-group);
   --c-pagination-sequence-gap: var(--space-stack-pair);
@@ -1600,8 +1616,11 @@
   --c-scroll-area-inset-md: var(--space-inset-md);
   --c-scroll-area-inset-sm: var(--space-inset-sm);
   --c-scroll-area-track-inset: var(--space-stack-pair);
+  --c-section-gap: var(--space-stack-section);
+  --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-gap: var(--space-stack-group);
+  --c-section-nested-head-gap: var(--space-stack-pair);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -1615,7 +1634,7 @@
   --c-site-header-mark-gap: var(--space-inline-pair);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
-  --c-site-layout-gap: var(--space-stack-section);
+  --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-margin: var(--space-margin-page);
   --c-site-layout-padding-block: var(--space-stack-section);
   --c-slider-bubble-gap: var(--space-stack-pair);
@@ -1632,6 +1651,7 @@
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
+  --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
   --c-token-specimen-ramp-column-gap: var(--space-inline-item);
   --c-token-specimen-ramp-row-gap: var(--space-stack-group);
@@ -1652,6 +1672,7 @@
   --space-stack-item: var(--space-2);
   --space-stack-group: var(--space-4);
   --space-stack-section: var(--space-8);
+  --space-stack-page: var(--space-16);
   --space-inline-pair: var(--space-2);
   --space-inline-item: var(--space-2);
   --space-inline-group: var(--space-4);
@@ -1679,7 +1700,7 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
-  --c-app-layout-gap: var(--space-stack-section);
+  --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
@@ -1706,6 +1727,7 @@
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
   --c-card-actions-gap: var(--space-inline-item);
+  --c-card-body-gap: var(--space-stack-group);
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
@@ -1742,7 +1764,7 @@
   --c-date-field-label-gap: var(--space-stack-pair);
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
-  --c-description-list-gap: var(--space-stack-group);
+  --c-description-list-gap: var(--space-stack-item);
   --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
@@ -1781,11 +1803,13 @@
   --c-footer-meta-link-gap: var(--space-inline-group);
   --c-footer-padding-block: var(--space-stack-section);
   --c-footer-padding-inline: var(--space-margin-page);
+  --c-frame-space-min: var(--space-stack-page);
   --c-gradient-editor-gap: var(--space-stack-pair);
   --c-hero-actions-gap: var(--space-inline-item);
   --c-hero-gap: var(--space-stack-section);
   --c-hero-heading-gap: var(--space-stack-pair);
-  --c-hero-words-gap: var(--space-stack-group);
+  --c-hero-message-gap: var(--space-stack-group);
+  --c-hero-words-gap: var(--space-stack-section);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -1822,6 +1846,7 @@
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
   --c-page-header-gap: var(--space-stack-item);
+  --c-page-layout-gap: var(--space-stack-page);
   --c-pagination-gap: var(--space-inline-pair);
   --c-pagination-group-gap: var(--space-inline-group);
   --c-pagination-sequence-gap: var(--space-stack-pair);
@@ -1856,8 +1881,11 @@
   --c-scroll-area-inset-md: var(--space-inset-md);
   --c-scroll-area-inset-sm: var(--space-inset-sm);
   --c-scroll-area-track-inset: var(--space-stack-pair);
+  --c-section-gap: var(--space-stack-section);
+  --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-gap: var(--space-stack-group);
+  --c-section-nested-head-gap: var(--space-stack-pair);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -1871,7 +1899,7 @@
   --c-site-header-mark-gap: var(--space-inline-pair);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
-  --c-site-layout-gap: var(--space-stack-section);
+  --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-margin: var(--space-margin-page);
   --c-site-layout-padding-block: var(--space-stack-section);
   --c-slider-bubble-gap: var(--space-stack-pair);
@@ -1888,6 +1916,7 @@
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
+  --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
   --c-token-specimen-ramp-column-gap: var(--space-inline-item);
   --c-token-specimen-ramp-row-gap: var(--space-stack-group);
@@ -1908,6 +1937,7 @@
   --space-stack-item: var(--space-3);
   --space-stack-group: var(--space-6);
   --space-stack-section: var(--space-12);
+  --space-stack-page: var(--space-24);
   --space-inline-pair: var(--space-2);
   --space-inline-item: var(--space-3);
   --space-inline-group: var(--space-6);
@@ -1935,7 +1965,7 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
-  --c-app-layout-gap: var(--space-stack-section);
+  --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
@@ -1962,6 +1992,7 @@
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
   --c-card-actions-gap: var(--space-inline-item);
+  --c-card-body-gap: var(--space-stack-group);
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
@@ -1998,7 +2029,7 @@
   --c-date-field-label-gap: var(--space-stack-pair);
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
-  --c-description-list-gap: var(--space-stack-group);
+  --c-description-list-gap: var(--space-stack-item);
   --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
@@ -2037,11 +2068,13 @@
   --c-footer-meta-link-gap: var(--space-inline-group);
   --c-footer-padding-block: var(--space-stack-section);
   --c-footer-padding-inline: var(--space-margin-page);
+  --c-frame-space-min: var(--space-stack-page);
   --c-gradient-editor-gap: var(--space-stack-pair);
   --c-hero-actions-gap: var(--space-inline-item);
   --c-hero-gap: var(--space-stack-section);
   --c-hero-heading-gap: var(--space-stack-pair);
-  --c-hero-words-gap: var(--space-stack-group);
+  --c-hero-message-gap: var(--space-stack-group);
+  --c-hero-words-gap: var(--space-stack-section);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -2078,6 +2111,7 @@
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
   --c-page-header-gap: var(--space-stack-item);
+  --c-page-layout-gap: var(--space-stack-page);
   --c-pagination-gap: var(--space-inline-pair);
   --c-pagination-group-gap: var(--space-inline-group);
   --c-pagination-sequence-gap: var(--space-stack-pair);
@@ -2112,8 +2146,11 @@
   --c-scroll-area-inset-md: var(--space-inset-md);
   --c-scroll-area-inset-sm: var(--space-inset-sm);
   --c-scroll-area-track-inset: var(--space-stack-pair);
+  --c-section-gap: var(--space-stack-section);
+  --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-gap: var(--space-stack-group);
+  --c-section-nested-head-gap: var(--space-stack-pair);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2127,7 +2164,7 @@
   --c-site-header-mark-gap: var(--space-inline-pair);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
-  --c-site-layout-gap: var(--space-stack-section);
+  --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-margin: var(--space-margin-page);
   --c-site-layout-padding-block: var(--space-stack-section);
   --c-slider-bubble-gap: var(--space-stack-pair);
@@ -2144,6 +2181,7 @@
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
+  --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
   --c-token-specimen-ramp-column-gap: var(--space-inline-item);
   --c-token-specimen-ramp-row-gap: var(--space-stack-group);
@@ -2164,6 +2202,7 @@
   --space-stack-item: var(--space-4);
   --space-stack-group: var(--space-8);
   --space-stack-section: var(--space-16);
+  --space-stack-page: var(--space-32);
   --space-inline-pair: var(--space-3);
   --space-inline-item: var(--space-4);
   --space-inline-group: var(--space-8);
@@ -2191,7 +2230,7 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
-  --c-app-layout-gap: var(--space-stack-section);
+  --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
@@ -2218,6 +2257,7 @@
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
   --c-card-actions-gap: var(--space-inline-item);
+  --c-card-body-gap: var(--space-stack-group);
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
@@ -2254,7 +2294,7 @@
   --c-date-field-label-gap: var(--space-stack-pair);
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
-  --c-description-list-gap: var(--space-stack-group);
+  --c-description-list-gap: var(--space-stack-item);
   --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
@@ -2293,11 +2333,13 @@
   --c-footer-meta-link-gap: var(--space-inline-group);
   --c-footer-padding-block: var(--space-stack-section);
   --c-footer-padding-inline: var(--space-margin-page);
+  --c-frame-space-min: var(--space-stack-page);
   --c-gradient-editor-gap: var(--space-stack-pair);
   --c-hero-actions-gap: var(--space-inline-item);
   --c-hero-gap: var(--space-stack-section);
   --c-hero-heading-gap: var(--space-stack-pair);
-  --c-hero-words-gap: var(--space-stack-group);
+  --c-hero-message-gap: var(--space-stack-group);
+  --c-hero-words-gap: var(--space-stack-section);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -2334,6 +2376,7 @@
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
   --c-page-header-gap: var(--space-stack-item);
+  --c-page-layout-gap: var(--space-stack-page);
   --c-pagination-gap: var(--space-inline-pair);
   --c-pagination-group-gap: var(--space-inline-group);
   --c-pagination-sequence-gap: var(--space-stack-pair);
@@ -2368,8 +2411,11 @@
   --c-scroll-area-inset-md: var(--space-inset-md);
   --c-scroll-area-inset-sm: var(--space-inset-sm);
   --c-scroll-area-track-inset: var(--space-stack-pair);
+  --c-section-gap: var(--space-stack-section);
+  --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-gap: var(--space-stack-group);
+  --c-section-nested-head-gap: var(--space-stack-pair);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2383,7 +2429,7 @@
   --c-site-header-mark-gap: var(--space-inline-pair);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
-  --c-site-layout-gap: var(--space-stack-section);
+  --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-margin: var(--space-margin-page);
   --c-site-layout-padding-block: var(--space-stack-section);
   --c-slider-bubble-gap: var(--space-stack-pair);
@@ -2400,6 +2446,7 @@
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
+  --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
   --c-token-specimen-ramp-column-gap: var(--space-inline-item);
   --c-token-specimen-ramp-row-gap: var(--space-stack-group);

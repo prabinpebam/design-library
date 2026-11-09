@@ -100,6 +100,7 @@ export function Card({
         </div>
       )}
       <div data-dl-part="body">
+        <div data-dl-part="message">
         <div data-dl-part="heading">
           {eyebrow && <p data-dl-part="eyebrow">{eyebrow}</p>}
           <Heading level={headingLevel} size={4}>
@@ -113,6 +114,7 @@ export function Card({
           </Heading>
         </div>
         {description && <p data-dl-part="description">{description}</p>}
+        </div>
         {children && <div data-dl-part="content">{children}</div>}
         {(meta || actions) && (
           <div data-dl-part="footer">

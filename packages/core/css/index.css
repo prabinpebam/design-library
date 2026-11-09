@@ -94,6 +94,7 @@
 @import url('./layouts/editor-layout.css');
 @import url('./layouts/app-layout.css');
 @import url('./layouts/site-layout.css');
+@import url('./layouts/frame.css');
 @import url('./fundamentals/controls.css');
 @import url('./fundamentals/pickers.css');
 @import url('./fundamentals/feedback.css');

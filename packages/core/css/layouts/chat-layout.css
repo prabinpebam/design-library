@@ -37,6 +37,36 @@
     display: none;
   }
 
+  /*
+   * Q86: with a footer (the account), the sidebar itself doesn't scroll: its list does, edge to edge, and the footer
+   * stays pinned at the bottom. Padding moves to the list's content and the footer. The footer's hairline shows only
+   * while the list runs on under it; the border is always there, transparent at rest, so nothing moves.
+   */
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'][data-footer] {
+    overflow-y: visible;
+    padding: 0;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] {
+    flex: 1;
+    min-block-size: 0;
+    overflow-y: auto;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] > [data-dl-part='sidebar-content'] {
+    padding: var(--c-chat-layout-inset);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-footer'] {
+    flex: none;
+    padding: var(--c-chat-layout-inset);
+    border-block-start: var(--border-hairline) solid transparent;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-footer'][data-under] {
+    border-block-start-color: var(--color-border);
+  }
+
   @container (max-width: 48rem) {
     /* Over the conversation it's a non-blocking drawer: floating material (MT7, FR7), frosted when on (materials MB5). */
     [data-dl='chat-layout'] > [data-dl-part='sidebar'] {

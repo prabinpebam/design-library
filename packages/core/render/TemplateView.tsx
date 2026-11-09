@@ -74,16 +74,22 @@ export function TemplateView({ template, layout, hrefFor = defaultHref }: Templa
     state: typeof content.settings?.state === 'string' ? content.settings.state : undefined,
     href,
     picture: (id) => template.assets[id] ?? { src: '', alt: '' },
-    blocks: (blocks) => (blocks ?? []).map((b, i) => renderBlock(b, i)),
+    blocks: (blocks) => renderList(blocks, ctx),
   };
-  function renderBlock(block: Block, i: number): ReactNode {
+  // A region's blocks know their neighbours and, at the top level, which region they fill (framing, Q88–Q90).
+  function renderList(blocks: Block[] | undefined, base: RenderContext): ReactNode {
+    const list = blocks ?? [];
+    const local: RenderContext = { ...base, siblings: list.length, neighbours: list };
+    return list.map((b, i) => renderBlock(b, i, local));
+  }
+  function renderBlock(block: Block, i: number, at: RenderContext): ReactNode {
     const render = (custom[block.type] ?? (BLOCKS as Record<string, BlockRenderer<never>>)[block.type]) as BlockRenderer<Block> | undefined;
-    return render ? render(block, ctx, i) : problem(i, `This part can’t be shown: “${block.type}” isn’t a block type ${manifest.title} knows.`);
+    return render ? render(block, at, i) : problem(i, `This part can’t be shown: “${block.type}” isn’t a block type ${manifest.title} knows.`);
   }
   const region = (id: string) => {
     const declared = entry.regions?.find((r) => r.id === id);
     const blocks = declared?.shared ? shared?.regions?.[id] : content.regions?.[id];
-    return blocks?.length ? <Fragment>{ctx.blocks(blocks)}</Fragment> : null;
+    return blocks?.length ? <Fragment>{renderList(blocks, { ...ctx, region: id })}</Fragment> : null;
   };
   const component = entry.component ?? '';
   const binding = template.registry?.layouts?.[component] ?? LAYOUTS[component];

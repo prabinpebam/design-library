@@ -26,7 +26,12 @@
           "name": "sidebar",
           "type": "ReactNode",
           "required": true,
-          "description": "The sidebar: New chat, Search chats, a ConversationList, the account at the bottom."
+          "description": "The sidebar: New chat, Search chats, a ConversationList. It scrolls on its own above `sidebarFooter`."
+        },
+        {
+          "name": "sidebarFooter",
+          "type": "ReactNode",
+          "description": "Pinned to the bottom of the sidebar, never scrolling away: the account (a Persona and its menu, with Settings)."
         },
         {
           "name": "sidebarLabel",
@@ -103,6 +108,7 @@
     "--c-chat-layout-sidebar-fill",
     "--color-bg",
     "--color-bg-raised",
+    "--color-border",
     "--color-focus",
     "--color-text",
     "--duration-change",

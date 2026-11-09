@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 
 export interface SiteLayoutProps extends DataAttributes {
@@ -34,12 +34,25 @@ export function SiteLayout({ header, children, footer, width = 'wide', skipLabel
     window.addEventListener('scroll', read, { passive: true });
     return () => window.removeEventListener('scroll', read);
   }, []);
+  // A Frame sized to the window (Q90) subtracts the header it shares the window with; written straight to the style.
+  const root = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = root.current;
+    const head = headerRef.current;
+    if (!el || !head || typeof ResizeObserver === 'undefined') return;
+    const measure = () => el.style.setProperty('--dl-chrome-block', `${head.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(head);
+    return () => observer.disconnect();
+  }, []);
   return (
-    <div {...data} data-dl="site-layout" data-width={width}>
+    <div {...data} ref={root} data-dl="site-layout" data-width={width}>
       <a href={`#${mainId}`} data-dl-skip="">
         {skipLabel}
       </a>
-      <header data-dl-part="header" data-material="chrome" data-elevation="2" data-under={under ? '' : undefined}>
+      <header ref={headerRef} data-dl-part="header" data-material="chrome" data-elevation="2" data-under={under ? '' : undefined}>
         <div data-dl-part="column">{header}</div>
       </header>
       <main id={mainId} tabIndex={-1} data-dl-part="main">

@@ -428,19 +428,21 @@ export function ChatApp({ view, height, picture, open: opening }: ChatAppProps) 
               <ListItem role="button" icon="search" label={s.searchChats} size="s" onClick={() => setDialog({ kind: 'search' })} />
             </Stack>
             <ConversationList groups={groups} current={current} onOpen={open} onRename={rename} onAction={onAction} />
-            <Cluster gap="item" align="center">
-              <Persona name={view.sidebar.account.name} secondary={view.sidebar.account.plan} />
-              <MenuButton
-                label={s.account}
-                icon="more"
-                iconOnly
-                emphasis="quiet"
-                size="s"
-                items={view.sidebar.account.menu}
-                onSelect={(v) => (v === 'settings' ? setDialog({ kind: 'settings' }) : notify({ message: fill(s.notInExample, { label: String(view.sidebar.account.menu.find((m) => m.value === v)?.label ?? '') }) }))}
-              />
-            </Cluster>
           </Stack>
+        }
+        sidebarFooter={
+          <Cluster gap="item" align="center">
+            <Persona name={view.sidebar.account.name} secondary={view.sidebar.account.plan} />
+            <MenuButton
+              label={s.account}
+              icon="more"
+              iconOnly
+              emphasis="quiet"
+              size="s"
+              items={view.sidebar.account.menu}
+              onSelect={(v) => (v === 'settings' ? setDialog({ kind: 'settings' }) : notify({ message: fill(s.notInExample, { label: String(view.sidebar.account.menu.find((m) => m.value === v)?.label ?? '') }) }))}
+            />
+          </Cluster>
         }
         header={<MenuButton label={fill(s.model, { model: String(view.models.find((m) => m.value === model)?.label ?? '') })} emphasis="quiet" size="s" items={view.models} onSelect={setModel} />}
         headerEnd={

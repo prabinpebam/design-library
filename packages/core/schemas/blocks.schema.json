@@ -298,6 +298,10 @@
             "split",
             "stacked"
           ]
+        },
+        "standalone": {
+          "description": "A statement meant to be read on its own (a brand opening): the page presents it framed. Leave it out on task and reference pages, whose title and intro sit with their content (Q91).",
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -708,6 +712,10 @@
         },
         "note": {
           "$ref": "#/$defs/text"
+        },
+        "standalone": {
+          "description": "A closing invitation meant to stand on its own (a marketing or editorial page's last word): the page frames it. Leave it out on task pages (Q91).",
+          "type": "boolean"
         }
       },
       "additionalProperties": false
