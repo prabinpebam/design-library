@@ -17,6 +17,6 @@
     --t-conference-sponsor-wall-mark-s: var(--size-icon-xl);
     --t-conference-sponsors-layout-column-gap: var(--space-gutter);
     --t-conference-sponsors-layout-intro-width: var(--size-pane-width);
-    --t-conference-sponsors-layout-stack-gap: var(--space-stack-group);
+    --t-conference-sponsors-layout-stack-gap: var(--space-stack-page);
   }
 }

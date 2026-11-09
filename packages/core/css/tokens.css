@@ -464,6 +464,7 @@
   --c-property-section-head: var(--size-target-dense);
   --c-property-section-head-compact: var(--size-target-min);
   --c-property-section-gap: var(--space-stack-item);
+  --c-property-section-head-gap: var(--space-stack-item);
   --c-property-section-actions-gap: var(--space-inline-pair);
   --c-property-row-gap: var(--space-inline-pair);
   --c-property-row-action: var(--size-target-min);
@@ -562,6 +563,8 @@
   --c-chat-layout-layer: var(--layer-raised);
   --c-chat-message-gap: var(--space-stack-item);
   --c-chat-message-part-gap: var(--space-stack-pair);
+  --c-chat-message-reply-gap: var(--space-stack-group);
+  --c-chat-message-list-gap: var(--space-stack-pair);
   --c-chat-message-bubble-fill: var(--color-bg-tint);
   --c-chat-message-bubble-radius: var(--radius-lg);
   --c-chat-message-bubble-padding-block: var(--space-inset-sm);
@@ -1474,7 +1477,9 @@
   --c-chat-message-bubble-padding-block: var(--space-inset-sm);
   --c-chat-message-bubble-padding-inline: var(--space-inset-md);
   --c-chat-message-gap: var(--space-stack-item);
+  --c-chat-message-list-gap: var(--space-stack-pair);
   --c-chat-message-part-gap: var(--space-stack-pair);
+  --c-chat-message-reply-gap: var(--space-stack-group);
   --c-chat-thinking-gap: var(--space-stack-pair);
   --c-checkbox-gap: var(--space-inline-pair);
   --c-checkbox-group-gap: var(--space-stack-pair);
@@ -1603,6 +1608,7 @@
   --c-property-row-gap: var(--space-inline-pair);
   --c-property-section-actions-gap: var(--space-inline-pair);
   --c-property-section-gap: var(--space-stack-item);
+  --c-property-section-head-gap: var(--space-stack-item);
   --c-quote-attribution-gap: var(--space-stack-pair);
   --c-quote-gap: var(--space-stack-group);
   --c-quote-paragraph-gap: var(--space-stack-item);
@@ -1741,7 +1747,9 @@
   --c-chat-message-bubble-padding-block: var(--space-inset-sm);
   --c-chat-message-bubble-padding-inline: var(--space-inset-md);
   --c-chat-message-gap: var(--space-stack-item);
+  --c-chat-message-list-gap: var(--space-stack-pair);
   --c-chat-message-part-gap: var(--space-stack-pair);
+  --c-chat-message-reply-gap: var(--space-stack-group);
   --c-chat-thinking-gap: var(--space-stack-pair);
   --c-checkbox-gap: var(--space-inline-pair);
   --c-checkbox-group-gap: var(--space-stack-pair);
@@ -1870,6 +1878,7 @@
   --c-property-row-gap: var(--space-inline-pair);
   --c-property-section-actions-gap: var(--space-inline-pair);
   --c-property-section-gap: var(--space-stack-item);
+  --c-property-section-head-gap: var(--space-stack-item);
   --c-quote-attribution-gap: var(--space-stack-pair);
   --c-quote-gap: var(--space-stack-group);
   --c-quote-paragraph-gap: var(--space-stack-item);
@@ -2008,7 +2017,9 @@
   --c-chat-message-bubble-padding-block: var(--space-inset-sm);
   --c-chat-message-bubble-padding-inline: var(--space-inset-md);
   --c-chat-message-gap: var(--space-stack-item);
+  --c-chat-message-list-gap: var(--space-stack-pair);
   --c-chat-message-part-gap: var(--space-stack-pair);
+  --c-chat-message-reply-gap: var(--space-stack-group);
   --c-chat-thinking-gap: var(--space-stack-pair);
   --c-checkbox-gap: var(--space-inline-pair);
   --c-checkbox-group-gap: var(--space-stack-pair);
@@ -2137,6 +2148,7 @@
   --c-property-row-gap: var(--space-inline-pair);
   --c-property-section-actions-gap: var(--space-inline-pair);
   --c-property-section-gap: var(--space-stack-item);
+  --c-property-section-head-gap: var(--space-stack-item);
   --c-quote-attribution-gap: var(--space-stack-pair);
   --c-quote-gap: var(--space-stack-group);
   --c-quote-paragraph-gap: var(--space-stack-item);
@@ -2275,7 +2287,9 @@
   --c-chat-message-bubble-padding-block: var(--space-inset-sm);
   --c-chat-message-bubble-padding-inline: var(--space-inset-md);
   --c-chat-message-gap: var(--space-stack-item);
+  --c-chat-message-list-gap: var(--space-stack-pair);
   --c-chat-message-part-gap: var(--space-stack-pair);
+  --c-chat-message-reply-gap: var(--space-stack-group);
   --c-chat-thinking-gap: var(--space-stack-pair);
   --c-checkbox-gap: var(--space-inline-pair);
   --c-checkbox-group-gap: var(--space-stack-pair);
@@ -2404,6 +2418,7 @@
   --c-property-row-gap: var(--space-inline-pair);
   --c-property-section-actions-gap: var(--space-inline-pair);
   --c-property-section-gap: var(--space-stack-item);
+  --c-property-section-head-gap: var(--space-stack-item);
   --c-quote-attribution-gap: var(--space-stack-pair);
   --c-quote-gap: var(--space-stack-group);
   --c-quote-paragraph-gap: var(--space-stack-item);

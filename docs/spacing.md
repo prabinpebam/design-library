@@ -21,7 +21,8 @@ Like every UX framework in this project, it comes in two parts ([the two-part fr
 - **Page:** the whole thing a person sees at one address: the header (title bar), the page content and the footer.
 - **Page content:** the content of the page apart from the header and the footer; what this page is for.
 - **Group:** elements more related to one another than to anything around them. Groups nest: a page holds groups, a group holds groups, down to a **pair** that reads as one thing.
-- **Unit:** one child of a group, seen from that group. A frame (a stage, a feature) is one unit to its parent, however much space it holds inside.
+- **Unit:** one child of a group, seen from that group.
+- **Frame:** a unit presented alone (a stage, a feature): its own room, sized to the window, between its outer edge and its content. Spacing and framing are one model (below): a frame is one unit in its parent group, and inside it the method starts again.
 
 ### The method: hierarchy first, then space and frames (owner Q93)
 
@@ -29,8 +30,19 @@ Space isn't chosen per element or per special case. It falls out of the informat
 
 1. **Map the hierarchy.** Write the page as a tree of groups: every element belongs to exactly one group, and a group's members are more related to one another than to anything outside it. Ask of each element: what does it belong with? What would a reader name as one thing? At the top, this brings out the page's own groups: the header and footer (which serve every page) and the page content (which serves this one). Inside the page content: its units (bands, sections), each unit's head and content, the groups in that content, their items, and the pairs. Nothing is placed by habit: a closing invitation is one of the page content's units, not part of the footer, because that's what it belongs with.
 2. **Give each group one gap, by its depth.** A group's children sit apart by that group's level; the deeper the group, the smaller the gap (the [rhythm](#the-rhythm-five-levels)). One invariant holds at every node: **the space between a group's children is smaller than the space between the group and its siblings** (proximity). A heading is its group's first member, so it sits nearer its own content than the content above. Where space alone can't show a boundary, a group may draw an enclosure instead; inside it, no gap exceeds its inset.
-3. **Frame only where isolation gains.** Decide for each unit whether the reader gains from seeing it alone ([Framing](#framing-presenting-one-piece-of-content), Q91); a frame changes how the unit is presented, never where it sits in the tree.
-4. **Build the tree, one wrapper per group.** Each group of the tree is one wrapper (a layout, a compound's part) that owns its children's gap and serves only its level; content names the tree (blocks and their order), never sizes.
+3. **Frame only where isolation gains.** Decide for each unit whether the reader gains from seeing it alone ([Framing](#framing-presenting-one-piece-of-content), Q91). A frame changes how the unit is presented, never where it sits in the tree: to its parent it stays one unit, at the parent's gap.
+4. **Inside a frame, start again.** A frame's content is a tree of its own: map it (a quote's words and attribution; an opening's message, its actions and its picture) and give its groups their gaps by depth, from its own root. The frame's room (the space between its edge and its content) is presentation, not a gap between groups (owner Q94).
+5. **Build the tree, one wrapper per group.** Each group of the tree is one wrapper (a layout, a compound's part, a Frame) that owns its children's gap and serves only its level; content names the tree (blocks and their order), never sizes.
+
+### One model: a frame is a unit outside and a root inside (owner Q94)
+
+Spacing and framing exist together, so they're one model, not two rulebooks. Spacing works on units and the gaps between them; framing decides how much room one unit takes for itself. The two never measure the same space:
+
+- **Outside, a frame is one unit.** Its parent group places it like any other member, at the parent's gap, measured from the frame's outer edge. Proximity is judged there: the frame's neighbours are its siblings, and the page content's edges against the header and footer (principle 8) count the frame as one unit.
+- **Inside, the method applies again on its own.** The frame's content is the root of a new tree; its groups get their own gaps by their own depth (a quote's words → attribution at the group level, its name → role at the pair level). Those gaps are compared only with each other.
+- **The room in between belongs to neither.** The space from a frame's edge to its content (a feature's band padding, a stage's share of the window) is the unit's presentation. It isn't a gap between groups, so it never has to be smaller than anything outside, and nothing inside has to be smaller than it.
+
+That's why a frame's large inner space doesn't defy the spacing rules. Seen from outside, a 128 px band around a quote is one unit 64 px from its neighbours, exactly like an unframed section; seen from inside, the quote's own groups sit 16 and 4 px apart, exactly as they would anywhere. The room makes the unit read alone (that's its job); grouping still holds at every node of both trees. A frame that broke grouping would have to change a gap between units or inside its content, and the checklist measures both.
 
 The principles below aren't extra rules; each is the method applied to a case that comes up often.
 
@@ -95,6 +107,54 @@ Each shape gives its levels a wrapper of their own, so one parent `gap` never ha
 
 Density changes every role at once (the table above), so the five levels and their ratios survive. Below the `sm` breakpoint the page margin stays `space.margin-page`; levels don't collapse into one, and nothing scrolls sideways at 320 CSS px.
 
+### Framing: presenting one piece of content
+
+Grouping space answers *what belongs together*; **framing** answers *how one piece of content is presented so it stands on its own* (owner Q88, 2026-11-09). A quote, a statement, a statistic, a call to action, a showcase picture or a page's opening isn't just the next group in the flow: it gets a frame, its own room sized to the window and isolated from what's around it, so it's read without distraction and makes sense alone. It's steps 3 and 4 of [the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93), in [one model](#one-model-a-frame-is-a-unit-outside-and-a-root-inside-owner-q94) with grouping: the tree names the units, framing decides which one is presented alone, the frame stays one unit at its parent's gap, and the method runs again inside it.
+
+Grounded in: Mark Boulton's *active* macro whitespace, space added around one element to draw the eye to it, versus the passive space that only gives breathing room ([A List Apart, "Whitespace"](https://alistapart.com/article/whitespace/)); Jan Tschichold's "whitespace is an active element, not a passive background" ([IxDF, Negative space](https://ixdf.org/literature/topics/negative-space)); common region: a background tone groups and separates a region, but overuse creates clutter ([NN/g, Common region](https://www.nngroup.com/articles/common-region/)); visual hierarchy by scale, contrast and grouping ([NN/g, Visual hierarchy](https://www.nngroup.com/articles/visual-hierarchy-ux-definition/)); the false floor: full-screen heroes and vast empty bands read as the end of the page unless the next content peeks in ([NN/g, Illusion of completeness](https://www.nngroup.com/articles/illusion-of-completeness/)); sizing to the window with `svh`/`dvh` units, which account for mobile toolbars ([web.dev, viewport units](https://web.dev/blog/viewport-units)); interpolating space between a small and a large screen instead of jumping at breakpoints ([Utopia, fluid scales](https://utopia.fyi/blog/designing-with-fluid-type-scales/)); and keeping a quotation short and set apart rather than a dumped block ([Butterick, Block quotations](https://practicaltypography.com/block-quotations.html)).
+
+**When to frame.** Frame a piece when it is *one thing to read or look at on its own*, and the page is better if the reader pauses on it: a testimonial or pull quote, a single statement or statistic, a call to action, a showcase picture or video, a page's opening (hero) or a status screen's message. Don't frame lists, grids, forms, navigation, settings or anything a person works through; they flow at the grouping levels. At most one **stage** per page, and two frames never sit next to each other (two spotlights in a row are a flow again).
+
+**Frame only what gains from it: the context decides (owner Q91).** A frame isolates its piece, and isolation interrupts reading: the reader stops, takes the piece in alone, then has to find their way back into the page. That pays only when the piece is worth meeting alone. A page title isn't: a Tickets or Schedule page that opens with its title and intro alone in a window-high stage makes people scroll past an empty screen to the ticket choice or the day tabs they came for, and splits the heading from the content it introduces. Before framing anything, answer in order; the first "no" means don't frame it:
+
+1. **What does the reader gain from seeing this alone?** A statement with weight (a brand opening, a manifesto line, a quote), an invitation that closes a page, or a message that is the whole page (a status screen). "It's the title" or "it's at the top" is not a gain.
+2. **What did the reader come to this page to do?** If the answer is a task or a look-up (choose a ticket, read the schedule, scan a list, fill a form, change a setting, read a detail page), the page's title and intro belong *with* that content, at the grouping levels, and the content starts in the first view.
+3. **Would the frame delay that?** If the frame pushes the page's main content below the first view, or separates a heading from what it introduces, it fails, however good it looks alone.
+
+In this library that decision is made once, in content: a hero or a call to action is framed only when its block says `"standalone": true` (a brand opening on a home page; a marketing or editorial page's closing invitation). Quotes and status messages are framed by nature. Everything else flows. Applied: the four home openings (Corporate, Conference, Portfolio, Harbour) and nine closing invitations are standalone; the openings of every task and reference page (Tickets, Schedule, Speakers, FAQ, Careers, Services, About, detail pages, lists) flow with their content, and a call to action on an app page (Dashboard, Members, Trash, My tickets, Voice) is one more step of the work, not a frame.
+
+**Three frames, by how much isolation the piece needs:**
+
+| Frame | For | Space | Window-relative | Ground |
+| --- | --- | --- | --- | --- |
+| **Flow** (no frame) | Ordinary sections, grids, lists, forms | The grouping levels only | No | None |
+| **Feature** | A quote, a statement, a statistic, a call to action, a single picture in a long page | `space.frame-feature` above and below, inside the band: fluid between the page level (64 px) at 320 px wide and twice it (128 px) on a wide window | Space grows with the window's width and height (`clamp` with `svh`) | Optional quiet tone (`color.bg-sunken`) edge to edge, when space alone can't separate it from busy neighbours |
+| **Stage** | A page's opening, a showcase, a status screen's message | Its least height a share of the window: `size.frame-stage` (about 70 % of the small viewport height), content centred in it | Yes (`svh`, so mobile toolbars never hide it) | Its own picture or none |
+
+**Two modes, by what the reader should do next (owner Q90).** Every frame is in one of two modes:
+
+| Mode | What the reader sees | Use it when | How it answers the window |
+| --- | --- | --- | --- |
+| **Peek** (default) | The piece, framed, with part of the next (and, scrolled, the previous) content in view | More content follows that the reader should explore: a page's opening, a quote or call to action between sections, a sequence of slides or cards (a Carousel's `peek` shows part of the next item sideways) | A stage takes about 70 % of the window and always leaves at least `c.frame.peek` (48 px) of the next band showing, below the measured header; a feature's band stays shorter than the window less the header and that peek |
+| **Distraction-free** | Only the piece, centred in the window below the header; nothing else in view until the reader scrolls | The piece is the page's whole point and nothing follows that competes with it: a status or error screen, a confirmation, a maintenance notice, a single message or showcase meant to be read alone | It fills exactly the window below the header (the layout's own space above and below included), with the content centred; it never steps down, because it has no neighbours to crowd and its least height is the window, so it never forces a scroll |
+
+Choose by the page, not the piece: the renderer frames a stage **distraction-free when it's the only block in its region** and **peek when more follows**; features are peek. The layout tells the frame what it shares the window with: SiteLayout measures its sticky header into `--dl-chrome-block` and gives its first space as `--dl-frame-start`; outside a layout both are 0 and a frame answers the plain window.
+
+**Rules.**
+
+1. **Framing is the unit's room, not a gap.** A frame is the band's own padding (and optional ground), set by the layout's Frame part, between the unit's edge and its content; the gap between units stays the parent's (the page level between the page content's units). So the isolation a reader sees around a framed piece is the parent's gap plus the frame's room, while grouping, measured at the edges, is unchanged.
+2. **Isolate by space first, tone second, never a box.** A feature's isolation is space; add the quiet ground only when its neighbours are dense (a card grid, a footer). A ground spans the window edge to edge (a band, not a card) and carries no border or shadow: one mechanism per boundary, coherent with the `visual-noise` skill and the elevation ladder ([Materials](materials.md#elevation-one-ladder)): framing stays on the page plane (elevation 0); lifting with a shadow is for overlays only.
+3. **The frame fits the window, and in peek mode leaves a peek.** A peek stage is window-relative but never the full window: at least 48 px of the next band shows on first load, so the page never looks finished (NN/g false floor). On a short window (under about 500 px tall) it shrinks to its content. A distraction-free stage is the exception by design: the whole window below the header, because nothing follows it.
+4. **Fluid, not stepped.** Frame space interpolates with the window (`clamp(min, preferred svh/vw, max)`), so a phone gets a calm frame and a wide screen a generous one, without breakpoints; it never drops below the page level.
+5. **Inside, the method starts again.** The frame's content is its own tree: a framed quote's words and attribution keep their group gap, its name and role their pair gap; the frame never stretches the gaps inside it, and they're compared only with each other.
+6. **Make it make sense alone.** A framed piece carries what it needs to be read standalone: a quote has its attribution, a statistic its label and unit, a call to action its one action.
+7. **Measure and alignment.** Framed words sit on the reading measure (at most `size.measure`, 42 rem; a quote's own is 40 rem), centred in the column or aligned to the column's start edge: never wider than the column and never out of line with it.
+8. **Type steps up.** A framed statement is set at least one step above body (a quote at `size l`, an opening at display) so the frame and the type agree on its importance.
+9. **Chrome is not a neighbour to lean on.** A frame is one of the page content's units, so the page content's edges hold for it like any other (principle 8): never nearer the header or the footer than the page level.
+10. **Edges in line.** The footer's and the header's content align with the page column, so a frame's centred words, the column and the footer share one set of edges.
+11. **Viewport-aware: the frame adapts to the window's width and height (owner Q89).** Size, space and level all answer the window: frame space interpolates with the window's height (`svh`) between the page level and twice it; a peek stage takes about 70 % of a tall window, shrinks to its content on a short one (under 31 rem tall) and never forces an empty screen or needless scrolling; on a narrow window (under 40 rem wide) a peek stage drops to a feature (space below it the page level, above it only what reaches the page level from the header) and a feature drops to flow when its frame space would exceed a third of the window's height (under 24 rem tall). A stage always keeps the page level from the header, even when its content is taller than its share. The level is chosen for the window it's seen in, not fixed in content.
+12. **Frame the unit of comprehension, never fragments (owner Q89).** Content that must be read together to be understood is one frame: a quote with its attribution; a statistic with its label, unit and the sentence that explains it; a call to action with its lead and its action; a picture with its caption; an opening with its title, lead and actions. To choose the unit, ask: would a reader who sees only this piece understand it? If not, widen the unit until they would. Never put two frames around parts of one idea (a heading framed apart from its statement, a statistic apart from its explanation), and never frame a piece whose meaning depends on the list or grid it came from: those stay in flow with their group.
+
 ### Never
 
 - Space chosen element by element, or by a rule for one kind of page, before the hierarchy tree is written.
@@ -125,6 +185,30 @@ Each row passes or fails on a measurement. Rows marked **DOM** are measured by `
 | SC13 | Hover, focus, press, loading and validation move no box | look, or the motion and clipping probes | S1 |
 | SC14 | The invariant at the page's top level (principle 8; Q92, Q93): the page content sits from the header and from the footer at least as far as the largest gap between its own units; a frame is one unit, measured from its outer edge | DOM | S2 |
 | SC15 | The evaluator can write the page's hierarchy tree (header · page content · footer, then each unit, its head and content, groups, items, pairs) and every group in it is one wrapper whose gap serves only that level: no wrapper mixes two levels, no group is split across wrappers | look | S2 |
+
+### Framing rows
+
+| ID | Passes when | How | Severity |
+| --- | --- | --- | --- |
+| FR1 | Every framed piece is isolated: the space from its content to the nearest content outside it (the parent's gap plus the frame's room) is at least 1.5 times the page level (96 px at normal density); the grouping rows judge the frame's edges as a unit's (SC3, SC14) and its content as a tree of its own | DOM | S2 |
+| FR2 | A stage is at least half the window's height on a window 700 px or taller, and at least 48 px of the next band is visible on first load | DOM | S2 |
+| FR3 | Framed words sit on the reading measure (at most `size.measure`, 42 rem) and inside the column | DOM | S2 |
+| FR4 | A frame has no border or shadow; a ground, where there is one, spans the window edge to edge | DOM | S2 |
+| FR5 | Centred framed content is centred in the column (left and right space within 2 px) | DOM | S4 |
+| FR6 | Nothing framed is closer than the page level to the header or the footer | DOM | S2 |
+| FR7 | At 320 px wide, frame space is at least the page level and nothing scrolls sideways | DOM | S1 |
+| FR8 | A framed statement's type is at least the heading-3 size | DOM | S3 |
+| FR9 | At most one stage per page; no two framed bands are adjacent | DOM | S2 |
+| FR10 | Read alone, each framed piece makes sense (attribution, label, unit or action present) | look | S2 |
+| FR11 | Header, column and footer content share one start and end edge at every width | DOM | S2 |
+| FR12 | Measured at 1600 × 900, 1280 × 720, 768 × 1024, 390 × 844 and 1280 × 480: a peek stage is 50–80 % of the window's height where the window is 700 px tall or more and no taller than its content on a window under 500 px tall; no peek frame's space exceeds a third of the window's height; no window shows only empty frame space; nothing scrolls sideways | DOM at five sizes | S2 |
+| FR13 | Each framed unit holds everything it needs to be understood (no heading, attribution, label, unit, caption or action of the same idea outside it), and no two adjacent frames split one idea | look, with the DOM listing each frame's parts | S2 |
+| FR14 | A distraction-free frame shows nothing else: a stage's content is centred in the window below the header (within 2 px) with no other content in view on first load and nothing before it in its region; a feature is at least the window's height less the header | DOM | S2 |
+| FR15 | A peek frame invites exploring: a peek stage passes FR2, and a peek feature is shorter than the window less the header and `c.frame.peek` (48 px), so its neighbours stay in view (judged where its content alone would fit: a frame gives back its own space, it can't shrink its content) | DOM | S2 |
+| FR16 | Context: every frame gains from isolation. A peek stage holds more than a title and an intro (a picture or an action); no task or reference page (tickets, schedule, lists, forms, settings, detail) frames its heading; an evaluator can name what each frame gains (the three questions in part 1) | DOM, and look | S1 |
+| FR17 | The task comes first: with frames at the top of a page, the first band of the page's own content still shows at least 48 px in the first view on a window 700 px tall or more, wherever the frames' own space is what pushes it out (content taller than the window is judged by its own rules) | DOM | S1 |
+
+Grouping rows and framing rows divide the space the same way the model does: SC2–SC5 and SC14 treat each `data-frame` element as one unit (measured from its outer edge) and judge the tree inside it from its own root (a heading inside a frame is compared only with content inside it; a group inside it only with gaps inside it); SC1 skips the frame's own room, which the FR rows judge. `tools/spacing-probe.js` measures FR1–FR9, FR11, FR12 and FR14–FR17 on elements marked `data-frame` (the Frame part sets it, with `data-frame-mode`) at the current window, and lists each frame's parts in `frames` for FR10, FR13 and the look half of FR16.
 
 ### How to run it
 
@@ -187,79 +271,12 @@ Fixed at the owners: SiteLayout's padding-block is now the page level (`c.site-l
 
 The framework now starts from [the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93): map the page's information hierarchy as a tree of groups, then give each group one gap by its depth and frame only units that gain from isolation. The [terms](#terms) are exact: the *page* is the whole thing; *page content* is everything apart from the header and footer, and it comes out of the tree as one of the page's three top-level groups. Principle 8 and SC14 are now the proximity invariant applied at that top level, not a page-specific rule; SC15 (look) asks the evaluator to write the tree and match each group to one wrapper. The agent guide follows the same order (`principles.json` → `guide/7-principles.md`: "Hierarchy first"). No values changed.
 
-## Framing: presenting one piece of content
+### F15.SP-unit: spacing and framing as one model, and the grouping fails by root cause (2026-11-09 about 12:20, owner Q94, Q85.4)
 
-Grouping space (above) answers *what belongs together*. **Framing** answers a different question: *how one piece of content is presented so it stands on its own* (owner Q88, 2026-11-09). A quote, a statement, a statistic, a call to action, a showcase picture or a page's opening isn't just the next group in the flow: it gets a frame, its own room sized to the window and isolated from what's around it, so it's read without distraction and makes sense alone. Framing adds to the grouping rules; it never replaces them inside the frame. It is step 3 of [the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93): the hierarchy tree names the units, and framing decides, unit by unit, whether one is presented alone; the unit's place in the tree doesn't change.
-
-Grounded in: Mark Boulton's *active* macro whitespace, space added around one element to draw the eye to it, versus the passive space that only gives breathing room ([A List Apart, "Whitespace"](https://alistapart.com/article/whitespace/)); Jan Tschichold's "whitespace is an active element, not a passive background" ([IxDF, Negative space](https://ixdf.org/literature/topics/negative-space)); common region: a background tone groups and separates a region, but overuse creates clutter ([NN/g, Common region](https://www.nngroup.com/articles/common-region/)); visual hierarchy by scale, contrast and grouping ([NN/g, Visual hierarchy](https://www.nngroup.com/articles/visual-hierarchy-ux-definition/)); the false floor: full-screen heroes and vast empty bands read as the end of the page unless the next content peeks in ([NN/g, Illusion of completeness](https://www.nngroup.com/articles/illusion-of-completeness/)); sizing to the window with `svh`/`dvh` units, which account for mobile toolbars ([web.dev, viewport units](https://web.dev/blog/viewport-units)); interpolating space between a small and a large screen instead of jumping at breakpoints ([Utopia, fluid scales](https://utopia.fyi/blog/designing-with-fluid-type-scales/)); and keeping a quotation short and set apart rather than a dumped block ([Butterick, Block quotations](https://practicaltypography.com/block-quotations.html)).
-
-### Part 1: the framing framework
-
-**When to frame.** Frame a piece when it is *one thing to read or look at on its own*, and the page is better if the reader pauses on it: a testimonial or pull quote, a single statement or statistic, a call to action, a showcase picture or video, a page's opening (hero) or a status screen's message. Don't frame lists, grids, forms, navigation, settings or anything a person works through; they flow at the grouping levels. At most one **stage** per page, and two frames never sit next to each other (two spotlights in a row are a flow again).
-
-**Frame only what gains from it: the context decides (owner Q91).** A frame isolates its piece, and isolation interrupts reading: the reader stops, takes the piece in alone, then has to find their way back into the page. That pays only when the piece is worth meeting alone. A page title isn't: a Tickets or Schedule page that opens with its title and intro alone in a window-high stage makes people scroll past an empty screen to the ticket choice or the day tabs they came for, and splits the heading from the content it introduces. Before framing anything, answer in order; the first "no" means don't frame it:
-
-1. **What does the reader gain from seeing this alone?** A statement with weight (a brand opening, a manifesto line, a quote), an invitation that closes a page, or a message that is the whole page (a status screen). "It's the title" or "it's at the top" is not a gain.
-2. **What did the reader come to this page to do?** If the answer is a task or a look-up (choose a ticket, read the schedule, scan a list, fill a form, change a setting, read a detail page), the page's title and intro belong *with* that content, at the grouping levels, and the content starts in the first view.
-3. **Would the frame delay that?** If the frame pushes the page's main content below the first view, or separates a heading from what it introduces, it fails, however good it looks alone.
-
-In this library that decision is made once, in content: a hero or a call to action is framed only when its block says `"standalone": true` (a brand opening on a home page; a marketing or editorial page's closing invitation). Quotes and status messages are framed by nature. Everything else flows. Applied: the four home openings (Corporate, Conference, Portfolio, Harbour) and nine closing invitations are standalone; the openings of every task and reference page (Tickets, Schedule, Speakers, FAQ, Careers, Services, About, detail pages, lists) flow with their content, and a call to action on an app page (Dashboard, Members, Trash, My tickets, Voice) is one more step of the work, not a frame.
-
-**Three frames, by how much isolation the piece needs:**
-
-| Frame | For | Space | Window-relative | Ground |
-| --- | --- | --- | --- | --- |
-| **Flow** (no frame) | Ordinary sections, grids, lists, forms | The grouping levels only | No | None |
-| **Feature** | A quote, a statement, a statistic, a call to action, a single picture in a long page | `space.frame-feature` above and below, inside the band: fluid between the page level (64 px) at 320 px wide and twice it (128 px) on a wide window | Space grows with the window's width and height (`clamp` with `svh`) | Optional quiet tone (`color.bg-sunken`) edge to edge, when space alone can't separate it from busy neighbours |
-| **Stage** | A page's opening, a showcase, a status screen's message | Its least height a share of the window: `size.frame-stage` (about 70 % of the small viewport height), content centred in it | Yes (`svh`, so mobile toolbars never hide it) | Its own picture or none |
-
-**Two modes, by what the reader should do next (owner Q90).** Every frame is in one of two modes:
-
-| Mode | What the reader sees | Use it when | How it answers the window |
-| --- | --- | --- | --- |
-| **Peek** (default) | The piece, framed, with part of the next (and, scrolled, the previous) content in view | More content follows that the reader should explore: a page's opening, a quote or call to action between sections, a sequence of slides or cards (a Carousel's `peek` shows part of the next item sideways) | A stage takes about 70 % of the window and always leaves at least `c.frame.peek` (48 px) of the next band showing, below the measured header; a feature's band stays shorter than the window less the header and that peek |
-| **Distraction-free** | Only the piece, centred in the window below the header; nothing else in view until the reader scrolls | The piece is the page's whole point and nothing follows that competes with it: a status or error screen, a confirmation, a maintenance notice, a single message or showcase meant to be read alone | It fills exactly the window below the header (the layout's own space above and below included), with the content centred; it never steps down, because it has no neighbours to crowd and its least height is the window, so it never forces a scroll |
-
-Choose by the page, not the piece: the renderer frames a stage **distraction-free when it's the only block in its region** and **peek when more follows**; features are peek. The layout tells the frame what it shares the window with: SiteLayout measures its sticky header into `--dl-chrome-block` and gives its first space as `--dl-frame-start`; outside a layout both are 0 and a frame answers the plain window.
-
-**Rules.**
-
-1. **Framing is the band's, not the gap's.** A frame is the band's own padding (and optional ground), set by the layout's Frame part; the gap between bands stays the page level. Isolation around a framed piece = page gap + its frame space.
-2. **Isolate by space first, tone second, never a box.** A feature's isolation is space; add the quiet ground only when its neighbours are dense (a card grid, a footer). A ground spans the window edge to edge (a band, not a card) and carries no border or shadow: one mechanism per boundary, coherent with the `visual-noise` skill and the elevation ladder ([Materials](materials.md#elevation-one-ladder)): framing stays on the page plane (elevation 0); lifting with a shadow is for overlays only.
-3. **The frame fits the window, and in peek mode leaves a peek.** A peek stage is window-relative but never the full window: at least 48 px of the next band shows on first load, so the page never looks finished (NN/g false floor). On a short window (under about 500 px tall) it shrinks to its content. A distraction-free stage is the exception by design: the whole window below the header, because nothing follows it.
-4. **Fluid, not stepped.** Frame space interpolates with the window (`clamp(min, preferred svh/vw, max)`), so a phone gets a calm frame and a wide screen a generous one, without breakpoints; it never drops below the page level.
-5. **Inside, the grouping levels still hold.** A framed quote's words and attribution keep their group gap; the frame never stretches the gaps inside it.
-6. **Make it make sense alone.** A framed piece carries what it needs to be read standalone: a quote has its attribution, a statistic its label and unit, a call to action its one action.
-7. **Measure and alignment.** Framed words sit on the reading measure (at most `size.measure`, 42 rem; a quote's own is 40 rem), centred in the column or aligned to the column's start edge: never wider than the column and never out of line with it.
-8. **Type steps up.** A framed statement is set at least one step above body (a quote at `size l`, an opening at display) so the frame and the type agree on its importance.
-9. **Chrome is not a neighbour to lean on.** Nothing framed sits flush against the header or the footer: the page's own padding-block keeps the page level before the footer.
-10. **Edges in line.** The footer's and the header's content align with the page column, so a frame's centred words, the column and the footer share one set of edges.
-11. **Viewport-aware: the frame adapts to the window's width and height (owner Q89).** Size, space and level all answer the window: frame space interpolates with the window's height (`svh`) between the page level and twice it; a peek stage takes about 70 % of a tall window, shrinks to its content on a short one (under 31 rem tall) and never forces an empty screen or needless scrolling; on a narrow window (under 40 rem wide) a peek stage drops to a feature (space below it the page level, above it only what reaches the page level from the header) and a feature drops to flow when its frame space would exceed a third of the window's height (under 24 rem tall). A stage always keeps the page level from the header, even when its content is taller than its share. The level is chosen for the window it's seen in, not fixed in content.
-12. **Frame the unit of comprehension, never fragments (owner Q89).** Content that must be read together to be understood is one frame: a quote with its attribution; a statistic with its label, unit and the sentence that explains it; a call to action with its lead and its action; a picture with its caption; an opening with its title, lead and actions. To choose the unit, ask: would a reader who sees only this piece understand it? If not, widen the unit until they would. Never put two frames around parts of one idea (a heading framed apart from its statement, a statistic apart from its explanation), and never frame a piece whose meaning depends on the list or grid it came from: those stay in flow with their group.
-
-### Part 2: the framing checklist
-
-| ID | Passes when | How | Severity |
-| --- | --- | --- | --- |
-| FR1 | Every framed piece is isolated: the space from its content to the nearest content above and below is at least 1.5 times the page level (96 px at normal density) | DOM | S2 |
-| FR2 | A stage is at least half the window's height on a window 700 px or taller, and at least 48 px of the next band is visible on first load | DOM | S2 |
-| FR3 | Framed words sit on the reading measure (at most `size.measure`, 42 rem) and inside the column | DOM | S2 |
-| FR4 | A frame has no border or shadow; a ground, where there is one, spans the window edge to edge | DOM | S2 |
-| FR5 | Centred framed content is centred in the column (left and right space within 2 px) | DOM | S4 |
-| FR6 | Nothing framed is closer than the page level to the header or the footer | DOM | S2 |
-| FR7 | At 320 px wide, frame space is at least the page level and nothing scrolls sideways | DOM | S1 |
-| FR8 | A framed statement's type is at least the heading-3 size | DOM | S3 |
-| FR9 | At most one stage per page; no two framed bands are adjacent | DOM | S2 |
-| FR10 | Read alone, each framed piece makes sense (attribution, label, unit or action present) | look | S2 |
-| FR11 | Header, column and footer content share one start and end edge at every width | DOM | S2 |
-| FR12 | Measured at 1600 × 900, 1280 × 720, 768 × 1024, 390 × 844 and 1280 × 480: a peek stage is 50–80 % of the window's height where the window is 700 px tall or more and no taller than its content on a window under 500 px tall; no peek frame's space exceeds a third of the window's height; no window shows only empty frame space; nothing scrolls sideways | DOM at five sizes | S2 |
-| FR13 | Each framed unit holds everything it needs to be understood (no heading, attribution, label, unit, caption or action of the same idea outside it), and no two adjacent frames split one idea | look, with the DOM listing each frame's parts | S2 |
-| FR14 | A distraction-free frame shows nothing else: a stage's content is centred in the window below the header (within 2 px) with no other content in view on first load and nothing before it in its region; a feature is at least the window's height less the header | DOM | S2 |
-| FR15 | A peek frame invites exploring: a peek stage passes FR2, and a peek feature is shorter than the window less the header and `c.frame.peek` (48 px), so its neighbours stay in view (judged where its content alone would fit: a frame gives back its own space, it can't shrink its content) | DOM | S2 |
-| FR16 | Context: every frame gains from isolation. A peek stage holds more than a title and an intro (a picture or an action); no task or reference page (tickets, schedule, lists, forms, settings, detail) frames its heading; an evaluator can name what each frame gains (the three questions in part 1) | DOM, and look | S1 |
-| FR17 | The task comes first: with frames at the top of a page, the first band of the page's own content still shows at least 48 px in the first view on a window 700 px tall or more, wherever the frames' own space is what pushes it out (content taller than the window is judged by its own rules) | DOM | S1 |
-
-`tools/spacing-probe.js` measures FR1–FR9, FR11, FR12 and FR14–FR17 on elements marked `data-frame` (the Frame part sets it, with `data-frame-mode`) at the current window, and lists each frame's parts in `frames` for FR10, FR13 and the look half of FR16.
+- **One model (Q94):** [Terms](#terms) define a frame; [the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93) gains step 4 (inside a frame, start again); [One model](#one-model-a-frame-is-a-unit-outside-and-a-root-inside-owner-q94) says why a frame's room doesn't defy grouping. Framing's guideline now sits in Part 1, its rows in Part 2 ([Framing rows](#framing-rows)) and its as-built notes here; framing rules 1, 5 and 9 and row FR1 are restated in unit terms. The probe treats a `data-frame` element as one unit outside (an atom at its outer edge) and the root of its own tree inside (SC2 and SC3 stop at it). The agent guide adds the rule (`principles.json` → `guide/7-principles.md`), and Frame's own docs say it.
+- **Fixed at the owners (core first):** PropertySection's rows are their own part (head → rows, rows apart: no stack mixes two levels); ChatMessage splits a reply into runs at each heading (a run's blocks an item apart, a heading leading a body part; the reply's thinking, runs, files and actions a group apart, `c.chat-message.reply-gap`; a list inside a reply keeps its items a pair apart, `c.chat-message.list-gap`); the Design inspector gives each field of a one-column row its own row and marks the selection's name as the panel's head; Conference sponsors' intro units sit at the page level (`t.conference.sponsors-layout.stack-gap`).
+- **Probe, measuring what the eye sees:** a boundary is a border or fill whether its padding is on itself or one level down (an outlined card); a heading is judged inside its own surface (a scroll region, an enclosure or a frame), not against the bar above it; a tree's rows keep one rhythm (depth by indent, spacing rule 4); a tab bar is its panel's head; legends, drawn shapes and visible boundaries count as atoms; an optical lift (`--dl-optical: lift`, Alert's first-line alignment) isn't a gap; surfaces may bleed to the window's edge (SC7 judges content).
+- **Sweep** (168 layouts, 1000 × 800): **4 fail a grouping row** (17 before): Design drafts (SC6), Projects backlog (SC5) and Projects issue and issue-edit (SC2, SC3). Next packet.
 
 ### Framing as built, F15.SP-frame2 (2026-11-09 about 10:55)
 
@@ -283,6 +300,7 @@ Choose by the page, not the piece: the renderer frames a stage **distraction-fre
 - **A framed opening's picture sits beside its words** (the renderer arranges a framed hero with a picture as split; its container still stacks it when narrow), and a stage measures where it starts (`--dl-frame-top`: header, first space, breadcrumbs), so its peek holds under breadcrumbs too.
 - **Guidance:** the decision rule is in part 1 above, rows FR16 (context) and FR17 (the task first) in part 2 and the probe, and the agent guide's Spacing rules and decision procedure (`packages/core/principles/principles.json` → `guide/7-principles.md`, `Frame` and the block docs in `agent/`).
 - **Sweep** (131 built pages with an opening, at 1280 × 720 and 390 × 844): no framing row fails.
+
 ## The two-part frameworks
 
 Every UX framework in this project has the same two parts: the framework to design with, and a checklist of measurable rows to judge with. Spacing and layout rhythm is the first written in this shape; the others follow it.

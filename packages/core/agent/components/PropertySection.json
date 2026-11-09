@@ -56,7 +56,8 @@
     "--c-property-section-actions-gap",
     "--c-property-section-gap",
     "--c-property-section-head",
-    "--c-property-section-head-compact"
+    "--c-property-section-head-compact",
+    "--c-property-section-head-gap"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/propertysection",
   "principles": [

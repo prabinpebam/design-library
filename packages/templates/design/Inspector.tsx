@@ -178,8 +178,16 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
         </>
       ) : undefined;
       first = false;
+      const columns = drawn.length === 1 || inRow.some((f) => f.kind === 'switch') ? 1 : drawn.length >= 3 ? 3 : 2;
+      // One column holding several fields is several rows: each field is its own row of the section (Q93).
+      if (columns === 1 && drawn.length > 1)
+        return drawn.map((d, n) => (
+          <PropertyRow key={`${i}-${n}`} columns={1} action={n === 0 ? end : undefined}>
+            {d}
+          </PropertyRow>
+        ));
       return (
-        <PropertyRow key={i} columns={drawn.length === 1 || inRow.some((f) => f.kind === 'switch') ? 1 : drawn.length >= 3 ? 3 : 2} lead={drawn.length === 2 && (inRow[0].kind === 'colour' || !!inRow[0].wide)} action={end}>
+        <PropertyRow key={i} columns={columns} lead={drawn.length === 2 && (inRow[0].kind === 'colour' || !!inRow[0].wide)} action={end}>
           {drawn}
         </PropertyRow>
       );

@@ -1,4 +1,5 @@
-import { useId, type ReactNode } from 'react';
+import { Children, isValidElement, useId, type ReactNode } from 'react';
+import { Heading } from '../fundamentals/Heading';
 import { Icon } from '../fundamentals/Icon';
 import { Image } from '../fundamentals/Image';
 import { Text } from '../fundamentals/Text';
@@ -23,8 +24,9 @@ export interface ChatMessageProps extends DataAttributes {
   /** The author's name, said before the message ("You said", "Assistant said") and never shown: the layout says who is who. */
   author: string;
   /**
-   * The message itself, placed in order with one gap between blocks: Text and Heading for words, List, Code and
-   * CodeBlock, Image, Card, Carousel, Chip for a citation. A plain string becomes one paragraph.
+   * The message itself, in order: Text and Heading for words, List, Code and CodeBlock, Image, Card, Carousel, Chip for
+   * a citation. A plain string becomes one paragraph. In a reply, each Heading starts a run: blocks in a run sit an item
+   * apart, and runs sit a group apart, like the reply's thinking, files and actions.
    */
   children: ReactNode;
   /** Pictures and files sent with it, shown above a person's bubble or under an assistant's words. */
@@ -53,6 +55,7 @@ export interface ChatMessageProps extends DataAttributes {
 export function ChatMessage({ from, author, children, attachments, actions, headingLevel = 3, thinking, streaming = false, ...data }: ChatMessageProps) {
   const id = useId();
   const Said = `h${headingLevel}` as const;
+  const blocks = typeof children === 'string' ? [<Text key="p" as="p">{children}</Text>] : Children.toArray(children);
   const files = attachments?.length ? (
     <ul data-dl-part="attachments" aria-label="Attachments">
       {attachments.map((a, i) =>
@@ -88,9 +91,34 @@ export function ChatMessage({ from, author, children, attachments, actions, head
       </Said>
       {from === 'assistant' && thinking}
       {from === 'person' && files}
-      <div data-dl-part="content">{typeof children === 'string' ? <Text as="p">{children}</Text> : children}</div>
+      {from === 'person' ? (
+        <div data-dl-part="content">{blocks}</div>
+      ) : (
+        runsOf(blocks).map((run, i, all) => (
+          <div key={i} data-dl-part="run" data-tail={i === all.length - 1 ? '' : undefined}>
+            {isValidElement(run[0]) && run[0].type === Heading && run.length > 1 ? (
+              <>
+                {run[0]}
+                <div data-dl-part="body">{run.slice(1)}</div>
+              </>
+            ) : (
+              run
+            )}
+          </div>
+        ))
+      )}
       {from === 'assistant' && files}
       {actions && <div data-dl-part="actions">{actions}</div>}
     </article>
   );
+}
+
+/** A reply's runs: a Heading starts a new run, so a heading sits with the blocks it introduces (spacing method, Q93). */
+function runsOf(blocks: ReactNode[]): ReactNode[][] {
+  const runs: ReactNode[][] = [];
+  for (const b of blocks) {
+    if (!runs.length || (isValidElement(b) && b.type === Heading)) runs.push([]);
+    runs[runs.length - 1].push(b);
+  }
+  return runs;
 }

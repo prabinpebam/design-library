@@ -34,7 +34,7 @@
           "name": "children",
           "type": "ReactNode",
           "required": true,
-          "description": "The message itself, placed in order with one gap between blocks: Text and Heading for words, List, Code and CodeBlock, Image, Card, Carousel, Chip for a citation. A plain string becomes one paragraph."
+          "description": "The message itself, in order: Text and Heading for words, List, Code and CodeBlock, Image, Card, Carousel, Chip for a citation. A plain string becomes one paragraph. In a reply, each Heading starts a run: blocks in a run sit an item apart, and runs sit a group apart, like the reply's thinking, files and actions."
         },
         {
           "name": "attachments",
@@ -98,6 +98,7 @@
     }
   ],
   "uses": [
+    "Heading",
     "Icon",
     "Image",
     "Text"
@@ -111,7 +112,9 @@
     "--c-chat-message-bubble-radius",
     "--c-chat-message-file-max",
     "--c-chat-message-gap",
+    "--c-chat-message-list-gap",
     "--c-chat-message-part-gap",
+    "--c-chat-message-reply-gap",
     "--c-chat-message-thumb",
     "--color-bg-sunken",
     "--color-border",

@@ -18,8 +18,9 @@ export interface FrameProps extends DataAttributes {
 
 /**
  * Presents one piece of content so it stands on its own (owner Q88, docs/spacing.md#framing-presenting-one-piece-of-content):
- * its own room sized to the window and isolated from what's around it. Framing is the band's; the gap between bands
- * stays the layout's. Never a box: space first, an optional edge-to-edge tone second, no border or shadow.
+ * its own room sized to the window and isolated from what's around it. To spacing it's one unit (Q94): its parent places
+ * it at the parent's gap, measured from its outer edge, and inside it the spacing method starts again (its content is a
+ * tree of its own). Never a box: space first, an optional edge-to-edge tone second, no border or shadow.
  * It steps down with the window (Q89): a peek stage becomes a feature on a narrow window and its content's height on a
  * short one; a feature drops to flow when its space would pass a third of the window's height.
  * Not for lists, grids, forms or anything a person works through (they flow), and at most one stage per page. Frame

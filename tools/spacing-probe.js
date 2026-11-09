@@ -14,11 +14,14 @@
  *   SC8 margins   no component (data-dl) carries an outer block margin
  *   SC14 page     the same invariant at the page's top level: page content apart from header and footer ≥ its own gaps
  *
+ * Frames (owner Q94): outside, a `data-frame` element is one unit measured from its outer edge; inside, its content is
+ * the root of a tree of its own, judged only against itself. The frame's room between the two is judged by FR rows.
+ *
  * Returns { rows: { SC1: { pass, findings }, … }, levels, stacks } with distances in CSS px.
  */
 (function () {
   const SCALE = [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128];
-  const ATOM = 'h1,h2,h3,h4,h5,h6,p,img,picture,video,button,input,select,textarea,label,dl,table,ul,ol,blockquote,figure,svg,[data-dl="card"],[data-dl="statistic"],[data-dl="button"],[data-dl="avatar"]';
+  const ATOM = 'h1,h2,h3,h4,h5,h6,p,img,picture,video,button,input,select,textarea,label,legend,dl,table,ul,ol,blockquote,figure,svg,[aria-hidden="true"],[data-frame],[data-dl="card"],[data-dl="statistic"],[data-dl="button"],[data-dl="avatar"]';
   const HEAD_PART = new Set(['heading', 'head']);
   const px = (v) => parseFloat(v) || 0;
   const name = (el) => {
@@ -31,11 +34,20 @@
     const cs = getComputedStyle(el);
     return r.height > 0 && r.width > 0 && cs.visibility !== 'hidden' && cs.position !== 'absolute' && cs.position !== 'fixed';
   };
-  const enclosed = (el) => {
+  // A visible boundary (border or fill). Its padding may sit on itself or one level down (spacing rule 14), so the
+  // boundary alone separates what's inside from what's outside.
+  const bounded = (el) => {
     const cs = getComputedStyle(el);
     const border = ['Top', 'Right', 'Bottom', 'Left'].some((s) => px(cs[`border${s}Width`]) > 0 && cs[`border${s}Style`] !== 'none' && !/rgba\(0, 0, 0, 0\)|transparent/.test(cs[`border${s}Color`]));
     const fill = cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== 'transparent';
-    return (border || fill) && px(cs.paddingTop) + px(cs.paddingLeft) > 0;
+    return border || fill;
+  };
+  // Where one tree ends and another starts (owner Q94): a visible boundary, or a frame. Outside, a frame is one unit
+  // measured from its outer edge; inside, its content is the root of a tree of its own.
+  const boundary = (el) => bounded(el) || el.hasAttribute('data-frame');
+  const enclosed = (el) => {
+    const cs = getComputedStyle(el);
+    return bounded(el) && px(cs.paddingTop) + px(cs.paddingLeft) > 0;
   };
   const kind = (el) => {
     if (/^H[1-6]$/.test(el.tagName) || HEAD_PART.has(el.getAttribute('data-dl-part') ?? '')) return 'heading';
@@ -86,6 +98,9 @@
         const indent = prop.startsWith('padding') && /Left|Right/.test(prop) && /--(depth|level|indent)/.test((el.getAttribute('style') ?? '') + (el.parentElement?.getAttribute('style') ?? ''));
         // A frame's space is fluid by design (Q88); the framing rows FR1–FR11 judge it.
         if (el.getAttribute('data-dl') === 'frame' && prop.startsWith('padding')) continue;
+        // An optical lift (spacing rule 7: measure to what the eye sees) lines a first line of text up with a control's
+        // centre; it's alignment, not a gap. Components mark it with `--dl-optical: lift`.
+        if (prop === 'paddingTop' && cs.getPropertyValue('--dl-optical').trim() === 'lift') continue;
         if (!onScale(v) && !onScale(v + border) && !own && !indent) fail('SC1', { where: name(el), prop, value: Math.round(v * 10) / 10 }, 'S3');
       }
       if (el.hasAttribute('data-dl') && el !== root && (px(cs.marginTop) !== 0 || px(cs.marginBottom) !== 0)) fail('SC8', { where: name(el), marginBlock: [px(cs.marginTop), px(cs.marginBottom)] }, 'S3');
@@ -99,6 +114,9 @@
 
     // SC3 nesting and SC4 enclosure.
     for (const s of stacks) {
+      // A tree shows depth by indent and keeps one row rhythm at every depth (spacing rule 4: nesting never escalates
+      // space), so its nested rows aren't groups to space apart.
+      if (s.el.closest('[role="tree"]')) continue;
       const box = enclosed(s.el) ? getComputedStyle(s.el) : null;
       if (box) {
         const inset = Math.min(px(box.paddingTop), px(box.paddingLeft));
@@ -106,26 +124,27 @@
       }
       let up = s.el.parentElement;
       while (up && up !== root.parentElement && !stackOf.has(up)) {
-        if (enclosed(up)) break;
+        if (boundary(up)) break;
         up = up.parentElement;
       }
       // A group's head belongs to it: a stack that is only [head, content] isn't the group's neighbours, so the gap
-      // around the group is measured one stack further out (SC2 judges the head's own space).
-      const headOnly = (st) => st && st.rows.length === 2 && st.rows[0].els.some((e) => HEAD_PART.has(e.getAttribute('data-dl-part') ?? '') || /^H[1-6]$/.test(e.tagName));
-      while (up && stackOf.has(up) && headOnly(stackOf.get(up)) && !enclosed(up)) {
+      // around the group is measured one stack further out (SC2 judges the head's own space). A tab bar is its panel's
+      // head: it names what the panel shows.
+      const headOnly = (st) => st && st.rows.length === 2 && st.rows[0].els.some((e) => HEAD_PART.has(e.getAttribute('data-dl-part') ?? '') || /^H[1-6]$/.test(e.tagName) || e.matches('[role="tablist"]') || !!e.querySelector('[role="tablist"]'));
+      while (up && stackOf.has(up) && headOnly(stackOf.get(up)) && !boundary(up)) {
         let next = up.parentElement;
         while (next && next !== root.parentElement && !stackOf.has(next)) {
-          if (enclosed(next)) break;
+          if (boundary(next)) break;
           next = next.parentElement;
         }
         if (!next || !stackOf.has(next)) break;
         up = next;
       }
       const outer = up && stackOf.get(up);
-      if (!outer || enclosed(s.el) || (up && enclosed(up))) continue;
+      if (!outer || boundary(s.el) || (up && boundary(up))) continue;
       const inner = Math.max(...s.gaps);
       const around = Math.min(...outer.gaps);
-      const membersEnclosed = s.rows.every((r) => r.els.every(enclosed));
+      const membersEnclosed = s.rows.every((r) => r.els.every(bounded));
       if (inner <= 0 || around <= 0) continue;
       if (membersEnclosed ? inner >= around : around < 1.5 * inner) fail('SC3', { where: name(s.el), inside: inner, around: around, in: name(outer.el) });
       else if (!membersEnclosed && around < 2 * inner) fail('SC3', { where: name(s.el), inside: inner, around, in: name(outer.el), note: 'between 1.5× and 2×' }, 'S4');
@@ -140,8 +159,9 @@
       if (equal && kinds.has('heading') && kinds.has('block')) fail('SC5', { where: name(s.el), gaps: s.gaps, kinds: s.rows.map((r) => kind(r.els[0])) });
     }
 
-    // SC2 headings: the head's space above vs below, measured between the nearest atoms that overlap it sideways.
-    const atoms = [...root.querySelectorAll(ATOM)].filter((el) => visible(el) && !el.parentElement.closest('[data-dl="card"],[data-dl="statistic"],[data-dl="button"],button,a,label,dl,table,ul,ol,blockquote,figure,svg,picture'));
+    // SC2 headings: the head's space above vs below, measured between the nearest atoms that overlap it sideways. What the
+    // eye sees counts (spacing rule 7): words, media, controls, a legend, a drawn shape and a visible enclosure's edge.
+    const atoms = [...new Set([...root.querySelectorAll(ATOM), ...all.filter((el) => el !== root && bounded(el))])].filter((el) => visible(el) && !el.parentElement.closest('[data-dl="card"],[data-dl="statistic"],[data-dl="button"],button,a,label,dl,table,ul,ol,blockquote,figure,svg,picture'));
     const boxes = atoms.map((el) => ({ el, r: el.getBoundingClientRect() }));
     const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1;
     const seen = new Set();
@@ -154,8 +174,13 @@
       if (seen.has(head)) continue;
       seen.add(head);
       const r = head.getBoundingClientRect();
-      const before = boxes.filter((b) => !head.contains(b.el) && !b.el.contains(head) && b.r.bottom <= r.top + 1 && overlap(b.r, r));
-      const after = boxes.filter((b) => !head.contains(b.el) && !b.el.contains(head) && b.r.top >= r.bottom - 1 && overlap(b.r, r));
+      // Proximity is judged inside the heading's own surface: a scroll region or an enclosure is a separate surface from
+      // the bar above it, which its boundary (not space) separates.
+      let surface = head.parentElement;
+      while (surface && surface !== root && !boundary(surface) && !/auto|scroll/.test(getComputedStyle(surface).overflowY)) surface = surface.parentElement;
+      surface = surface ?? root;
+      const before = boxes.filter((b) => surface.contains(b.el) && !head.contains(b.el) && !b.el.contains(head) && b.r.bottom <= r.top + 1 && overlap(b.r, r));
+      const after = boxes.filter((b) => surface.contains(b.el) && !head.contains(b.el) && !b.el.contains(head) && b.r.top >= r.bottom - 1 && overlap(b.r, r));
       if (!before.length || !after.length) continue;
       const above = Math.round(r.top - Math.max(...before.map((b) => b.r.bottom)));
       const below = Math.round(Math.min(...after.map((b) => b.r.top)) - r.bottom);
@@ -177,7 +202,7 @@
       return false;
     };
     for (const b of boxes) {
-      if (b.el.closest('[data-bleed]') || scrolledSideways(b.el)) continue;
+      if (b.el.closest('[data-bleed]') || scrolledSideways(b.el) || (!b.el.matches(ATOM) && boundary(b.el))) continue;
       if (b.r.left < edge - 0.5 || doc.clientWidth - b.r.right < edge - 0.5) {
         if (b.r.width < doc.clientWidth - 1) fail('SC7', { where: name(b.el), left: Math.round(b.r.left), right: Math.round(doc.clientWidth - b.r.right) }, 'S1');
       }
@@ -224,7 +249,7 @@
     return v;
   }
 
-  // Framing rows (docs/spacing.md#part-2-the-framing-checklist), measured on the page as first loaded (scroll 0) at the
+  // Framing rows (docs/spacing.md#framing-rows), measured on the page as first loaded (scroll 0) at the
   // current window size; a sweep runs them at the five FR12 sizes. FR10 and FR13 are judged by eye: `frames` lists each
   // frame's parts for them.
   function framing(fail) {

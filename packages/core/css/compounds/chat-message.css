@@ -1,7 +1,7 @@
 /*
  * Tier 2 compound: ChatMessage (F15.65, Q57). A person's message is a bubble at the end of the line (one tinted fill,
  * no outline: one enclosure); an assistant's reply is full width with no enclosure, so long rich content reads as a
- * document. Space between blocks comes from the content's gap; attachments, content and actions are one group.
+ * document: a heading starts a run, runs and the reply's other units sit a group apart, a run's blocks an item apart.
  */
 @layer compounds {
   [data-dl='chat-message'] {
@@ -17,6 +17,21 @@
 
   [data-dl='chat-message'][data-from='person'] {
     align-items: flex-end;
+  }
+
+  /* A reply's units (thinking, runs, files, actions) sit a group apart; inside a run, blocks an item apart (Q93). */
+  [data-dl='chat-message'][data-from='assistant'] {
+    gap: var(--c-chat-message-reply-gap);
+  }
+
+  [data-dl='chat-message'] > [data-dl-part='run'],
+  [data-dl='chat-message'] > [data-dl-part='run'] > [data-dl-part='body'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-chat-message-gap);
+    min-inline-size: 0;
+    /* A list is one group among the run's blocks, so its items sit closer than the blocks do. */
+    --c-list-gap: var(--c-chat-message-list-gap);
   }
 
   [data-dl='chat-message'] > [data-dl-part='author'] {
@@ -117,7 +132,7 @@
   }
 
   /* ChatMessage streaming (F15.67): a soft caret after the last words while the reply arrives. */
-  [data-dl='chat-message'][data-streaming] > [data-dl-part='content'] > :last-child::after {
+  [data-dl='chat-message'][data-streaming] > [data-dl-part='run'][data-tail] > :last-child::after {
     content: '';
     display: inline-block;
     inline-size: var(--size-indicator);
@@ -136,12 +151,12 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-dl='chat-message'][data-streaming] > [data-dl-part='content'] > :last-child::after {
+    [data-dl='chat-message'][data-streaming] > [data-dl-part='run'][data-tail] > :last-child::after {
       animation: none;
     }
   }
 
-  [data-motion='reduce'] [data-dl='chat-message'][data-streaming] > [data-dl-part='content'] > :last-child::after {
+  [data-motion='reduce'] [data-dl='chat-message'][data-streaming] > [data-dl-part='run'][data-tail] > :last-child::after {
     animation: none;
   }
 }

@@ -35,7 +35,7 @@ export function PropertySection({ heading, level = 3, actions, density = 'normal
         </Heading>
         {actions && <div data-dl-part="actions">{actions}</div>}
       </div>
-      {children}
+      {children != null && children !== false && <div data-dl-part="rows">{children}</div>}
     </section>
   );
 }

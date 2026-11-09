@@ -179,7 +179,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
           <DesignComments spec={view.comments} layerOf={(id) => find(shapes, id)} selected={selected} onShow={select} />
         ) : shape ? (
           <>
-            <Stack gap="pair">
+            <Stack gap="pair" data-dl-part="head">
               <Heading level={2} size="label">
                 {shape.label}
               </Heading>

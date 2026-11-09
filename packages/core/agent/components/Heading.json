@@ -76,6 +76,7 @@
   "usedBy": [
     "Popover",
     "Card",
+    "ChatMessage",
     "Dialog",
     "EmptyState",
     "Example",
