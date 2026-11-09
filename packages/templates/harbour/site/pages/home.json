@@ -23,11 +23,7 @@
       "heading": "New this week",
       "intro": "Three books our staff couldn’t put down.",
       "max": 3,
-      "items": [
-        { "title": "The Long Shore", "eyebrow": "Novel", "description": "A lighthouse keeper’s last winter, told in letters.", "picture": "theLongShore" },
-        { "title": "Salt and Ink", "eyebrow": "Essays", "description": "Twelve short pieces on harbours, maps and the people who draw them.", "picture": "saltAndInk" },
-        { "title": "Small Boats", "eyebrow": "Children", "description": "A picture book about a rowing boat that wants to see the sea.", "picture": "smallBoats" }
-      ]
+      "items": [{ "ref": "books/the-long-shore" }, { "ref": "books/salt-and-ink" }, { "ref": "books/small-boats" }]
     },
     {
       "type": "points",

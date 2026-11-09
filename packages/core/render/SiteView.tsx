@@ -3,15 +3,17 @@
  * at the current route in its layout, with the site's header and footer, through the same block registry as
  * TemplateView. Each section renders on its own: a section that fails, or names a block type nobody knows, is left
  * out (in development it shows what's wrong and where, by its JSON path), so one bad section never blanks the page.
- * Routes come from the page documents on the core router; the window title, description, preview picture, canonical
- * address and `noindex` come from the page. No styles.
+ * Routes come from the page documents on the core router; a page whose route holds `:id` and names a collection is
+ * each item's own page (DP12), and `{ "ref" }` and `{ "item" }` values are resolved before any block sees them. The
+ * window title, description, preview picture, canonical address and `noindex` come from the page. No styles.
  */
 import { Component, Fragment, useEffect, type ReactNode } from 'react';
 import { Alert } from '../react';
 import { useRouter } from '../react/behaviour/router';
 import { SectionAnchor } from '../react/behaviour/section-anchor';
-import { Router } from '../site';
+import { matchPath, Router } from '../site';
 import { BLOCKS } from './blocks';
+import { findItem, resolveData } from './collections';
 import { LAYOUTS, resolveLinks } from './TemplateView';
 import type { Block, BlockRenderer, PageDocument, RenderContext, Site, SiteDocument, TemplateContent } from './types';
 import { resolveUnconfirmed } from './unconfirmed';
@@ -29,11 +31,37 @@ export interface SiteViewProps {
 
 const isDevelopment = () => Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
 
-/** The page a path opens: home at `/`, else the page with that route. */
-export function pageFor(site: Site, path: string): PageDocument | undefined {
+/** A page a path opens, and on an item's page the item it shows. */
+export interface PageMatch {
+  page: PageDocument;
+  /** The collection item an item's page shows (`undefined` on other pages). */
+  item?: Record<string, unknown>;
+}
+
+/**
+ * The page a path opens: home at `/`, else the page with that route; else a page whose route has `:id` and names a
+ * collection, when the path's id is one of its items (DP12).
+ */
+export function matchPage(site: Site, path: string): PageMatch | undefined {
   const { site: doc, pages } = site;
-  if (path === '/') return pages.find((p) => p.id === doc.home) ?? pages.find((p) => p.route === '/');
-  return pages.find((p) => p.route === path);
+  if (path === '/') {
+    const home = pages.find((p) => p.id === doc.home) ?? pages.find((p) => p.route === '/');
+    return home ? { page: home } : undefined;
+  }
+  const exact = pages.find((p) => p.route === path);
+  if (exact) return { page: exact };
+  for (const page of pages) {
+    if (!page.collection || !page.route.includes(':id')) continue;
+    const params = matchPath(page.route, path);
+    const item = params ? findItem(site.collections[page.collection], params.id) : undefined;
+    if (item) return { page, item };
+  }
+  return undefined;
+}
+
+/** The page a path opens (see `matchPage`). */
+export function pageFor(site: Site, path: string): PageDocument | undefined {
+  return matchPage(site, path)?.page;
 }
 
 /** The window title for a page, from the site's pattern. */
@@ -127,11 +155,12 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
     const timer = window.setTimeout(() => router.navigate(to, { replace: true }), 0);
     return () => window.clearTimeout(timer);
   }, [moved, router]);
-  const found = pageFor(site, moved ?? path);
-  const missing = !found;
+  const routeKey = moved ?? path;
+  const match = matchPage(site, routeKey);
+  const missing = !match;
   const notFoundPage = doc.notFound ? site.pages.find((p) => p.id === doc.notFound) : undefined;
   const words = doc.strings?.notFound ?? { title: 'Page not found', text: 'There’s no page at this address.', home: 'Go to the home page' };
-  const page: PageDocument = found ??
+  const raw: PageDocument = match?.page ??
     notFoundPage ?? {
       pageVersion: 1,
       id: 'not-found',
@@ -140,6 +169,10 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       hidden: true,
       sections: [{ type: 'status', title: words.title, text: words.text, links: [{ label: words.home, href: '/' }] }],
     };
+  // References and an item page's own values (DP12) are resolved before anything reads the page.
+  const data = <T,>(value: T): T =>
+    resolveData(value, site, { item: match?.item, collection: raw.collection, missing: development ? (what) => console.warn(`${raw.id}: ${what}`) : undefined });
+  const page = data(raw) as PageDocument & { title: string; description?: string; picture?: string };
 
   const title = titleFor(doc, page.route === '/' && !page.windowTitle && page.id === doc.home ? { title: page.title, windowTitle: doc.title } : page);
   useEffect(() => {
@@ -155,8 +188,8 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
   const current = page.current ?? page.route.split('/')[1] ?? '';
   const settings = { ...doc.layout?.settings, ...page.settings, current };
   const withPlaces = (blocks: Block[] | undefined) => (blocks ?? []).map((b) => (b.type === 'site-header' && !b.places && doc.navigation ? { ...b, places: doc.navigation } : b));
-  const header = resolve(withPlaces(doc.header));
-  const footer = resolve(doc.footer ?? []);
+  const header = resolve(data(withPlaces(doc.header)));
+  const footer = resolve(data(doc.footer ?? []));
   const sections = resolve(page.sections);
   const custom = registry?.blocks ?? {};
   const file = missing && !notFoundPage ? 'site' : `page “${page.id}”`;
@@ -186,7 +219,7 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       const path = `${where === 'sections' ? file : 'site'} ${where}[${i}]`;
       const anchor = typeof b.anchor === 'string' ? b.anchor : undefined;
       return (
-        <SectionBoundary key={`${page.id}-${where}-${i}`} path={path} development={development}>
+        <SectionBoundary key={`${routeKey}-${where}-${i}`} path={path} development={development}>
           {anchor && <SectionAnchor id={anchor} />}
           {one(b, i, local, path)}
         </SectionBoundary>

@@ -4,7 +4,7 @@
  * its files, so a template only ever reads inside its own folder. Public (`@design-library/core/render`), so a
  * separate project makes its own templates the same way (Q81).
  */
-import type { PageDocument, Site, SiteDocument, Template, TemplateAsset, TemplateContent, TemplateManifest } from './types';
+import type { CollectionDocument, PageDocument, Site, SiteDocument, Template, TemplateAsset, TemplateContent, TemplateManifest } from './types';
 
 export function loadTemplate(
   manifest: unknown,
@@ -36,11 +36,24 @@ function resolveAssets(assetsFile: unknown, assetUrls: Record<string, unknown>):
   return Object.fromEntries(Object.entries(declared).map(([id, a]) => [id, { ...a, src: String(assetUrls[`./${a.src}`] ?? a.src), alt: a.decorative ? '' : (a.alt ?? '') }]));
 }
 
-/**
- * Builds a data-driven site for `SiteView` (DP8, DP9) from its files: the site document, every page document and the
- * pictures. Asset `src` paths are looked up in `assetUrls` as `./{src}` (what `import.meta.glob` returns), else kept.
- */
-export function loadSite(siteFile: unknown, pageFiles: Record<string, unknown> | unknown[], assetsFile?: unknown, assetUrls: Record<string, unknown> = {}, registry?: Site['registry']): Site {
-  const pages = (Array.isArray(pageFiles) ? pageFiles : Object.values(pageFiles)) as PageDocument[];
-  return { site: siteFile as SiteDocument, pages, assets: resolveAssets(assetsFile, assetUrls), registry };
+/** A data-driven site's files, for `loadSite`. */
+export interface SiteFiles {
+  /** The site document (site.json). */
+  site: unknown;
+  /** Page documents: a list, or what `import.meta.glob` returns. */
+  pages: Record<string, unknown> | unknown[];
+  /** Collection documents (DP12), keyed by their own `id`. */
+  collections?: Record<string, unknown> | unknown[];
+  /** The assets file (assets.json). */
+  assets?: unknown;
+  /** Picture addresses by `./{src}` (what `import.meta.glob` returns); a `src` not found is kept as written. */
+  assetUrls?: Record<string, unknown>;
+  registry?: Site['registry'];
+}
+
+/** Builds a data-driven site for `SiteView` (DP8, DP9, DP12) from its files: the site, its pages, its collections and its pictures. */
+export function loadSite(files: SiteFiles): Site {
+  const list = (v: Record<string, unknown> | unknown[] | undefined) => (Array.isArray(v) ? v : Object.values(v ?? {}));
+  const collections = Object.fromEntries((list(files.collections) as CollectionDocument[]).map((c) => [c.id, c]));
+  return { site: files.site as SiteDocument, pages: list(files.pages) as PageDocument[], collections, assets: resolveAssets(files.assets, files.assetUrls ?? {}), registry: files.registry };
 }

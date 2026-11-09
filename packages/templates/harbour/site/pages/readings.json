@@ -17,11 +17,7 @@
       "anchor": "coming-up",
       "heading": "Coming up",
       "max": 3,
-      "items": [
-        { "title": "The Long Shore", "eyebrow": "Novel", "meta": "Thursday 4 March, 19:00", "description": "The author reads the keeper’s last three letters and answers questions.", "picture": "theLongShore" },
-        { "title": "Salt and Ink", "eyebrow": "Essays", "meta": "Thursday 1 April, 19:00", "description": "An evening of maps: the essayist brings the harbour charts behind the book.", "picture": "saltAndInk" },
-        { "title": "Small Boats", "eyebrow": "Children", "meta": "Thursday 6 May, 16:00", "description": "An afternoon reading for children, with paper boats to fold and take home.", "picture": "smallBoats" }
-      ]
+      "items": [{ "ref": "readings/the-long-shore" }, { "ref": "readings/salt-and-ink" }, { "ref": "readings/small-boats" }]
     },
     {
       "type": "questions",

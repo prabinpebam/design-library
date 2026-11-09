@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../core/schemas/page.schema.json",
+  "pageVersion": 1,
+  "id": "reading",
+  "route": "/readings/:id",
+  "collection": "readings",
+  "title": { "item": "title" },
+  "description": { "item": "description" },
+  "picture": { "item": "picture" },
+  "sections": [
+    { "type": "breadcrumbs", "items": [{ "label": "Readings", "href": "/readings" }, { "label": { "item": "title" } }] },
+    {
+      "type": "hero",
+      "eyebrow": { "item": "meta" },
+      "title": { "item": "title" },
+      "lead": { "item": "description" },
+      "picture": { "item": "picture" },
+      "actions": [{ "label": "Plan a visit", "href": "/visit" }],
+      "note": "Free, with tea. Seats go to whoever comes first."
+    },
+    {
+      "type": "cards",
+      "heading": "The book",
+      "max": 3,
+      "items": [{ "item": "book" }]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../core/schemas/collection.schema.json",
+  "collectionVersion": 1,
+  "id": "readings",
+  "title": "Readings",
+  "item": {
+    "type": "object",
+    "required": ["id", "title", "eyebrow", "meta", "description", "picture", "book"],
+    "properties": {
+      "id": { "type": "string" },
+      "title": { "type": "string", "description": "What the evening is called (usually the book's title)." },
+      "eyebrow": { "type": "string", "description": "The kind of reading." },
+      "meta": { "type": "string", "description": "When: the day and the time." },
+      "description": { "type": "string", "description": "What happens, in one sentence." },
+      "picture": { "type": "string", "description": "An asset id." },
+      "book": { "$ref": "https://design-library.local/core/collection/1#/$defs/ref", "description": "The book read: a reference into books." }
+    },
+    "additionalProperties": false
+  },
+  "items": [
+    { "id": "the-long-shore", "title": "The Long Shore", "eyebrow": "Novel", "meta": "Thursday 4 March, 19:00", "description": "The author reads the keeper’s last three letters and answers questions.", "picture": "theLongShore", "book": { "ref": "books/the-long-shore" } },
+    { "id": "salt-and-ink", "title": "Salt and Ink", "eyebrow": "Essays", "meta": "Thursday 1 April, 19:00", "description": "An evening of maps: the essayist brings the harbour charts behind the book.", "picture": "saltAndInk", "book": { "ref": "books/salt-and-ink" } },
+    { "id": "small-boats", "title": "Small Boats", "eyebrow": "Children", "meta": "Thursday 6 May, 16:00", "description": "An afternoon reading for children, with paper boats to fold and take home.", "picture": "smallBoats", "book": { "ref": "books/small-boats" } }
+  ]
+}

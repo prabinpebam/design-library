@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-library.local/core/collection/1",
+  "title": "Collection, version 1",
+  "description": "A typed list of like things a site shows in many places (DP12, DR21, DR22): talks, people, books, offices. Each item has an id unique in the collection; `item` is the JSON schema every item meets. Page documents and other collections point at an item with { \"ref\": \"books/the-long-shore\" } (the whole item) or { \"ref\": \"books/the-long-shore\", \"field\": \"title\" } (one value, a dotted path that follows references); a page whose route has `:id` and names the collection is each item's own page, and reads the item it shows with { \"item\": \"title\" }. Pure data: no markup, styles or code.",
+  "type": "object",
+  "required": ["collectionVersion", "id", "items"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "collectionVersion": { "const": 1, "description": "The collection document's shape version." },
+    "id": { "$ref": "#/$defs/id", "description": "The collection's name: the first part of a reference (`books` in `books/the-long-shore`)." },
+    "title": { "type": "string", "minLength": 1, "description": "What the items are, for people (\"Books\")." },
+    "idField": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$", "default": "id", "description": "The item field that holds its id." },
+    "item": { "type": "object", "description": "The JSON schema every item meets (its fields, types and which are required); the content check validates each item against it. A field that points at another collection's item holds a reference." },
+    "items": {
+      "type": "array",
+      "description": "The items, in their default order.",
+      "items": { "type": "object" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "ref": {
+      "type": "object",
+      "description": "A reference to a collection's item, or to one value of it.",
+      "required": ["ref"],
+      "properties": {
+        "ref": { "type": "string", "pattern": "^[a-z][a-z0-9-]*/[a-z0-9][a-z0-9-]*$", "description": "`{collection}/{item id}`." },
+        "field": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$", "description": "One value of the item, by a dotted path; a reference along the way is followed." }
+      },
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "description": "On an item's own page: one value of the item shown, by a dotted path that follows references.",
+      "required": ["item"],
+      "properties": {
+        "item": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

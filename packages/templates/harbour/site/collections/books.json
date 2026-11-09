@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../core/schemas/collection.schema.json",
+  "collectionVersion": 1,
+  "id": "books",
+  "title": "Books",
+  "item": {
+    "type": "object",
+    "required": ["id", "title", "eyebrow", "description", "picture"],
+    "properties": {
+      "id": { "type": "string" },
+      "title": { "type": "string", "description": "The book's title." },
+      "eyebrow": { "type": "string", "description": "Its shelf: novel, essays, children." },
+      "description": { "type": "string", "description": "One sentence about it." },
+      "picture": { "type": "string", "description": "Its cover on the reading table (an asset id)." }
+    },
+    "additionalProperties": false
+  },
+  "items": [
+    { "id": "the-long-shore", "title": "The Long Shore", "eyebrow": "Novel", "description": "A lighthouse keeper’s last winter, told in letters.", "picture": "theLongShore" },
+    { "id": "salt-and-ink", "title": "Salt and Ink", "eyebrow": "Essays", "description": "Twelve short pieces on harbours, maps and the people who draw them.", "picture": "saltAndInk" },
+    { "id": "small-boats", "title": "Small Boats", "eyebrow": "Children", "description": "A picture book about a rowing boat that wants to see the sea.", "picture": "smallBoats" }
+  ]
+}

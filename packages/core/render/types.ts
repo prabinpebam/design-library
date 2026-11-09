@@ -325,16 +325,36 @@ export interface SiteDocument {
 /** A page section: a block with an optional anchor (page.schema.json `$defs.section`). */
 export type PageSection = Block & { anchor?: string };
 
+/** On an item's page: one value of the item shown, by a dotted path (collection.schema.json `$defs.item`). */
+export type ItemValue = { item: string };
+
+/** A reference to a collection's item, or one value of it (collection.schema.json `$defs.ref`). */
+export type ItemRef = { ref: string; field?: string };
+
+/** A collection, as collection.schema.json (version 1) defines it (DP12). */
+export interface CollectionDocument {
+  collectionVersion: 1;
+  id: string;
+  title?: string;
+  /** The item field holding its id; default `id`. */
+  idField?: string;
+  /** The JSON schema every item meets. */
+  item?: Record<string, unknown>;
+  items: Record<string, unknown>[];
+}
+
 /** One page, as page.schema.json (version 1) defines it (DP9). */
 export interface PageDocument {
   pageVersion: 1;
   id: string;
   route: string;
-  title: string;
+  /** The collection whose items this page shows one at a time (its route holds `:id`). */
+  collection?: string;
+  title: string | ItemValue;
   windowTitle?: string;
-  description?: string;
+  description?: string | ItemValue;
   /** An asset id for link previews. */
-  picture?: string;
+  picture?: string | ItemValue;
   canonical?: string;
   hidden?: boolean;
   /** The navigation place it belongs to (a route without its slash); defaults to the first part of its route. */
@@ -348,6 +368,8 @@ export interface PageDocument {
 export interface Site {
   site: SiteDocument;
   pages: PageDocument[];
+  /** Collections by id (DP12). */
+  collections: Record<string, CollectionDocument>;
   assets: Record<string, TemplateAsset>;
   registry?: Template['registry'];
 }
