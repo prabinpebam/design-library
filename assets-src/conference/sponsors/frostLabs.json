@@ -1,0 +1,14 @@
+{
+  "id": "frostLabs",
+  "set": "SS10 Conference sponsor marks (fictional companies, transparent)",
+  "slot": "IS5",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/conference/sponsors/reference.webp",
+  "size": "1024x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/conference/assets/mark-frost-labs.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 64 --height 64 --fit inside --density 2",
+  "alt": "(empty: decorative, the sponsor's name is beside it)",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: the symbol mark of a made-up company on a conference's sponsors page, shown 32 to 64 px tall above the company's name, on a light surface in light mode and a dark surface in dark mode.\nSubject: the mark of Frost Labs, a research lab: a six-pointed ice crystal built from a hexagon and short rays.\nDetails: an ice-blue hexagon, mid blue rays, a small lilac centre.\nComposition: one symbol centred, filling about 80% of the canvas, simple enough to read at 32 px.\nStyle: flat geometric symbol mark, two or three bold flat colour shapes with crisp edges, no gradients, no outlines, no texture; mid-tone saturated colours that stay visible on both a light and a dark surface, never black, never white, never very dark navy.\nConstraints: isolated mark on a fully transparent background; no backdrop, no badge or circle behind it unless it is part of the mark, no cast shadow, no checkerboard, no frame; no text, no letters, no initials, no numbers, no watermark, not resembling any real company's logo."
+}

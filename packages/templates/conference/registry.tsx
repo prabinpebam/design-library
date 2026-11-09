@@ -5,7 +5,7 @@
 import { SiteLayout } from '@design-library/core/react';
 import type { BlockRenderer, Template } from '@design-library/core/render';
 import { Countdown } from './parts/fundamentals/Countdown';
-import { SponsorWall, type SponsorLevel } from './parts/compounds/SponsorWall';
+import { SponsorWall, type Sponsor, type SponsorLevel } from './parts/compounds/SponsorWall';
 import { SponsorsLayout } from './parts/layouts/SponsorsLayout';
 import './tokens/tokens.css';
 import './parts/fundamentals/countdown.css';
@@ -21,12 +21,19 @@ interface CountdownBlock {
 
 interface SponsorWallBlock {
   type: 'conference.sponsor-wall';
-  levels: SponsorLevel[];
+  /** As the wall's levels, but each sponsor names its mark by asset id (`picture`) rather than by address. */
+  levels: (Omit<SponsorLevel, 'sponsors'> & { sponsors: (Omit<Sponsor, 'mark'> & { picture?: string })[] })[];
 }
 
 const BLOCKS: { 'conference.countdown': BlockRenderer<CountdownBlock>; 'conference.sponsor-wall': BlockRenderer<SponsorWallBlock> } = {
   'conference.countdown': (b, _ctx, i) => <Countdown key={i} label={b.label} until={b.until} passed={b.passed} />,
-  'conference.sponsor-wall': (b, ctx, i) => <SponsorWall key={i} levels={b.levels} headingLevel={ctx.layout === 'sponsors' ? 2 : 3} />,
+  'conference.sponsor-wall': (b, ctx, i) => (
+    <SponsorWall
+      key={i}
+      levels={b.levels.map((l) => ({ ...l, sponsors: l.sponsors.map(({ picture, ...s }) => ({ ...s, mark: picture ? ctx.picture(picture).src : undefined })) }))}
+      headingLevel={ctx.layout === 'sponsors' ? 2 : 3}
+    />
+  ),
 };
 
 export const registry: Template['registry'] = {

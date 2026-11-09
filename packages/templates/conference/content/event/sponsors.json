@@ -45,7 +45,8 @@
             "sponsors": [
               {
                 "name": "Northwind Freight",
-                "note": "Supports every student ticket"
+                "note": "Supports every student ticket",
+                "picture": "markNorthwindFreight"
               }
             ]
           },
@@ -56,15 +57,18 @@
             "sponsors": [
               {
                 "name": "Kitewing",
-                "note": "The Thursday evening party"
+                "note": "The Thursday evening party",
+                "picture": "markKitewing"
               },
               {
                 "name": "Larchfield Type",
-                "note": "The workshops"
+                "note": "The workshops",
+                "picture": "markLarchfieldType"
               },
               {
                 "name": "Tarn Studio",
-                "note": "Captions for every talk"
+                "note": "Captions for every talk",
+                "picture": "markTarnStudio"
               }
             ]
           },
@@ -74,16 +78,20 @@
             "size": "s",
             "sponsors": [
               {
-                "name": "Harbour Coffee"
+                "name": "Harbour Coffee",
+                "picture": "markHarbourCoffee"
               },
               {
-                "name": "Meadow Print"
+                "name": "Meadow Print",
+                "picture": "markMeadowPrint"
               },
               {
-                "name": "Dune Audio"
+                "name": "Dune Audio",
+                "picture": "markDuneAudio"
               },
               {
-                "name": "Frost Labs"
+                "name": "Frost Labs",
+                "picture": "markFrostLabs"
               }
             ]
           }

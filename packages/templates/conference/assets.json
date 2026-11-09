@@ -60,6 +60,38 @@
     "lenaNovak": {
       "src": "assets/portrait-lena-novak.webp",
       "alt": ""
+    },
+    "markNorthwindFreight": {
+      "src": "assets/mark-northwind-freight.webp",
+      "alt": ""
+    },
+    "markKitewing": {
+      "src": "assets/mark-kitewing.webp",
+      "alt": ""
+    },
+    "markLarchfieldType": {
+      "src": "assets/mark-larchfield-type.webp",
+      "alt": ""
+    },
+    "markTarnStudio": {
+      "src": "assets/mark-tarn-studio.webp",
+      "alt": ""
+    },
+    "markHarbourCoffee": {
+      "src": "assets/mark-harbour-coffee.webp",
+      "alt": ""
+    },
+    "markMeadowPrint": {
+      "src": "assets/mark-meadow-print.webp",
+      "alt": ""
+    },
+    "markDuneAudio": {
+      "src": "assets/mark-dune-audio.webp",
+      "alt": ""
+    },
+    "markFrostLabs": {
+      "src": "assets/mark-frost-labs.webp",
+      "alt": ""
     }
   }
 }

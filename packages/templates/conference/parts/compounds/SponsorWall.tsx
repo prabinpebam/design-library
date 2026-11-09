@@ -6,6 +6,8 @@ export interface Sponsor {
   href?: string;
   /** A few words under the name: what they support. */
   note?: string;
+  /** The address of their symbol mark (a wordless picture), drawn above the name; decorative, since the name is beside it. */
+  mark?: string;
 }
 
 export interface SponsorLevel {
@@ -25,14 +27,16 @@ export interface SponsorWallProps extends DataAttributes {
 }
 
 /**
- * The sponsors of an event by level, largest first: each level a heading, then its sponsors as tiles (the name set in
- * the display face, and a few words under it), larger tiles for higher levels. A tile is one quiet surface with no
+ * The sponsors of an event by level, largest first: each level a heading, then its sponsors as tiles (their wordless
+ * mark when there is one, the name set in the display face, and a few words under it), larger tiles and marks for higher
+ * levels. A tile is one quiet surface with no
  * border; a sponsor with a site has its name as the link. A Conference template part (Q64).
  * Not for logos of customers on a company's home page (a logo strip), or for people (use Persona).
  * @tier compound
  * @family conference
  * @a11y Each level is a section named by its heading, and its sponsors a list, so assistive technology says how many
- * there are. Names are text, never a picture of text; a linked name is an ordinary link with its focus ring.
+ * there are. Names are text, never a picture of text; a mark is decorative (empty alt) because the name beside it says
+ * who it is. A linked name is an ordinary link with its focus ring.
  */
 export function SponsorWall({ levels, headingLevel = 2, ...data }: SponsorWallProps) {
   return (
@@ -45,6 +49,7 @@ export function SponsorWall({ levels, headingLevel = 2, ...data }: SponsorWallPr
           <ul data-dl-part="tiles" data-size={level.size}>
             {level.sponsors.map((s) => (
               <li key={s.name} data-dl-part="tile">
+                {s.mark && <img data-dl-part="mark" src={s.mark} alt="" />}
                 <span data-dl-part="name">{s.href ? <Link href={s.href}>{s.name}</Link> : s.name}</span>
                 {s.note && <span data-dl-part="note">{s.note}</span>}
               </li>

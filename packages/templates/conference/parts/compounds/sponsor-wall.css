@@ -39,6 +39,20 @@
     text-align: center;
   }
 
+  [data-dl='conference-sponsor-wall'] [data-dl-part='mark'] {
+    justify-self: center;
+    block-size: var(--t-conference-sponsor-wall-mark-m);
+    inline-size: auto;
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-size='l'] [data-dl-part='mark'] {
+    block-size: var(--t-conference-sponsor-wall-mark-l);
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-size='s'] [data-dl-part='mark'] {
+    block-size: var(--t-conference-sponsor-wall-mark-s);
+  }
+
   [data-dl='conference-sponsor-wall'] [data-dl-part='name'] {
     font-family: var(--font-display);
     font-size: var(--t-conference-sponsor-wall-name-m);

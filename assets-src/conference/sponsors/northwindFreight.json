@@ -1,0 +1,14 @@
+{
+  "id": "northwindFreight",
+  "set": "SS10 Conference sponsor marks (fictional companies, transparent)",
+  "slot": "IS5",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate (the set's reference)",
+  "size": "1024x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/conference/assets/mark-northwind-freight.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 64 --height 64 --fit inside --density 2",
+  "alt": "(empty: decorative, the sponsor's name is beside it)",
+  "prompt": "Use: the symbol mark of a made-up company on a conference's sponsors page, shown 32 to 64 px tall above the company's name, on a light surface in light mode and a dark surface in dark mode.\nSubject: the mark of Northwind Freight, a shipping company: a sail-like triangle leaning into the wind over a single wave.\nDetails: a mid blue triangle, a teal wave beneath it, a small amber sun-dot.\nComposition: one symbol centred, filling about 80% of the canvas, simple enough to read at 32 px.\nStyle: flat geometric symbol mark, two or three bold flat colour shapes with crisp edges, no gradients, no outlines, no texture; mid-tone saturated colours that stay visible on both a light and a dark surface, never black, never white, never very dark navy.\nConstraints: isolated mark on a fully transparent background; no backdrop, no badge or circle behind it unless it is part of the mark, no cast shadow, no checkerboard, no frame; no text, no letters, no initials, no numbers, no watermark, not resembling any real company's logo."
+}

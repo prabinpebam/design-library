@@ -5,10 +5,10 @@
   "template": "conference",
   "import": "@design-library/templates/conference/parts/compounds/SponsorWall",
   "file": "@design-library/templates/conference/parts/compounds/SponsorWall.tsx",
-  "summary": "The sponsors of an event by level, largest first: each level a heading, then its sponsors as tiles (the name set in the display face, and a few words under it), larger tiles for higher levels. A tile is one quiet surface with no border; a sponsor with a site has its name as the link. A Conference template part (Q64). Not for logos of customers on a company's home page (a logo strip), or for people (use Persona).",
+  "summary": "The sponsors of an event by level, largest first: each level a heading, then its sponsors as tiles (their wordless mark when there is one, the name set in the display face, and a few words under it), larger tiles and marks for higher levels. A tile is one quiet surface with no border; a sponsor with a site has its name as the link. A Conference template part (Q64). Not for logos of customers on a company's home page (a logo strip), or for people (use Persona).",
   "family": "conference",
   "a11y": [
-    "Each level is a section named by its heading, and its sponsors a list, so assistive technology says how many there are. Names are text, never a picture of text; a linked name is an ordinary link with its focus ring."
+    "Each level is a section named by its heading, and its sponsors a list, so assistive technology says how many there are. Names are text, never a picture of text; a mark is decorative (empty alt) because the name beside it says who it is. A linked name is an ordinary link with its focus ring."
   ],
   "keys": [],
   "sealed": true,
@@ -50,6 +50,11 @@
           "name": "note",
           "type": "string",
           "description": "A few words under the name: what they support."
+        },
+        {
+          "name": "mark",
+          "type": "string",
+          "description": "The address of their symbol mark (a wordless picture), drawn above the name; decorative, since the name is beside it."
         }
       ]
     },
@@ -95,6 +100,9 @@
     "--space-stack-item",
     "--space-stack-pair",
     "--t-conference-sponsor-wall-level-gap",
+    "--t-conference-sponsor-wall-mark-l",
+    "--t-conference-sponsor-wall-mark-m",
+    "--t-conference-sponsor-wall-mark-s",
     "--t-conference-sponsor-wall-name-l",
     "--t-conference-sponsor-wall-name-m",
     "--t-conference-sponsor-wall-name-s",

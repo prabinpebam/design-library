@@ -89,6 +89,10 @@
                     },
                     "note": {
                       "type": "string"
+                    },
+                    "picture": {
+                      "description": "The sponsor's symbol mark: an asset id in assets.json, drawn above the name (never the name itself as a picture).",
+                      "$ref": "https://design-library.local/core/blocks/1#/$defs/asset"
                     }
                   },
                   "additionalProperties": false
