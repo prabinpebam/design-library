@@ -28,8 +28,6 @@
     flex: none;
     inline-size: var(--c-chat-layout-sidebar);
     min-block-size: 0;
-    overflow-y: auto;
-    padding: var(--c-chat-layout-inset);
     background-color: var(--c-chat-layout-sidebar-fill);
   }
 
@@ -38,22 +36,17 @@
   }
 
   /*
-   * Q86: with a footer (the account), the sidebar itself doesn't scroll: its list does, edge to edge, and the footer
-   * stays pinned at the bottom. Padding moves to the list's content and the footer. The footer's hairline shows only
-   * while the list runs on under it; the border is always there, transparent at rest, so nothing moves.
+   * The sidebar itself doesn't scroll: its list does, in a ScrollArea (Q96), edge to edge with the library's bar at the
+   * sidebar's edge, and padding on the list's content. With a footer (the account, Q86) the footer stays pinned at the
+   * bottom; its hairline shows only while the list runs on under it; the border is always there, transparent at rest,
+   * so nothing moves.
    */
-  [data-dl='chat-layout'] > [data-dl-part='sidebar'][data-footer] {
-    overflow-y: visible;
-    padding: 0;
-  }
-
   [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] {
     flex: 1;
     min-block-size: 0;
-    overflow-y: auto;
   }
 
-  [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] > [data-dl-part='sidebar-content'] {
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='sidebar-content'] {
     padding: var(--c-chat-layout-inset);
   }
 
@@ -127,25 +120,20 @@
     min-block-size: 0;
   }
 
-  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'],
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'],
   [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='composer'] {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
+  /* The conversation is a ScrollArea (Q96): the library's bar at the main area's edge; its focus ring is ScrollArea's. */
   [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] {
     flex: 1;
     min-block-size: 0;
-    overflow-y: auto;
-    outline: none;
   }
 
-  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll']:focus-visible {
-    box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
-  }
-
-  [data-dl='chat-layout'] > [data-dl-part='main'] :is([data-dl-part='greeting-area'], [data-dl-part='scroll'], [data-dl-part='composer']) > [data-dl-part='column'] {
+  [data-dl='chat-layout'] > [data-dl-part='main'] :is([data-dl-part='greeting-area'], [data-dl-part='composer'], [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content']) > [data-dl-part='column'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-chat-layout-gap);
@@ -155,7 +143,7 @@
     padding-inline: var(--c-chat-layout-page-margin);
   }
 
-  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] > [data-dl-part='column'] {
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] {
     padding-block: var(--c-chat-layout-page-margin);
   }
 

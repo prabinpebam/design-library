@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface CarouselSlide {
@@ -288,7 +289,8 @@ export function Carousel({
               </>
             )}
           </div>
-          {pager !== 'none' && (
+          {pager !== 'none' && (() => {
+            const picker = (
             <div data-dl-part="pager" data-pager={pager} role="tablist" aria-label={`Choose a slide of ${label}`} onKeyDown={onPagerKey}>
               {Array.from({ length: positions }, (_, i) => {
                 const s = slides[i];
@@ -310,7 +312,16 @@ export function Carousel({
                 );
               })}
             </div>
-          )}
+            );
+            // A long row of thumbnails scrolls sideways in a ScrollArea (Q96): the library's bar, never the native one.
+            return pager === 'thumbnails' ? (
+              <ScrollArea axis="inline" data-dl-part="pager-scroll">
+                {picker}
+              </ScrollArea>
+            ) : (
+              picker
+            );
+          })()}
         </div>
       )}
     </section>

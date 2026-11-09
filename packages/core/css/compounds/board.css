@@ -7,20 +7,20 @@
  * closes up the same way; a card moved with its menu travels across the board. Reduced motion: nothing slides.
  */
 @layer compounds {
+  /* The columns scroll sideways in a ScrollArea (Q96): the library's bar at the board's edge; its viewport is the named
+     region and draws the focus ring. The room under the columns keeps the bar off the cards. */
   [data-dl='board'] {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--c-board-column-gap);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     min-inline-size: 0;
-    overflow-x: auto;
-    padding-block-end: var(--c-board-scroll-room);
-    outline: none;
     color: var(--color-text);
   }
 
-  [data-dl='board']:focus-visible {
-    outline: var(--size-focus-width) solid var(--color-focus);
-    outline-offset: calc(-1 * var(--size-focus-width));
+  [data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-board-column-gap);
+    padding-block-end: var(--c-board-scroll-room);
   }
 
   [data-dl='board'] [data-dl-part='column'] {

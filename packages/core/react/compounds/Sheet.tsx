@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
 import { Heading } from '../fundamentals/Heading';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import { Skeleton } from '../fundamentals/Skeleton';
 import { Stack } from '../fundamentals/Stack';
 import type { DataAttributes } from '../types';
@@ -119,17 +120,19 @@ export function Sheet({
         </div>
       </header>
       {(children || loading) && (
-        <div data-dl-part="body" aria-busy={loading || undefined}>
-          {loading ? (
-            <Stack gap="group">
-              <Skeleton lines={3} />
-              <Skeleton shape="block" />
-              <Skeleton lines={2} />
-            </Stack>
-          ) : (
-            children
-          )}
-        </div>
+        <ScrollArea data-dl-part="body" contain>
+          <div data-dl-part="body-content" aria-busy={loading || undefined}>
+            {loading ? (
+              <Stack gap="group">
+                <Skeleton lines={3} />
+                <Skeleton shape="block" />
+                <Skeleton lines={2} />
+              </Stack>
+            ) : (
+              children
+            )}
+          </div>
+        </ScrollArea>
       )}
       {actions && <footer data-dl-part="actions">{actions}</footer>}
     </div>

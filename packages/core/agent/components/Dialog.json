@@ -83,7 +83,8 @@
   "uses": [
     "Button",
     "Heading",
-    "Morph"
+    "Morph",
+    "ScrollArea"
   ],
   "tokens": [
     "--border-hairline",

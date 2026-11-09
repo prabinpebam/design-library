@@ -100,7 +100,8 @@
     }
   ],
   "uses": [
-    "Button"
+    "Button",
+    "ScrollArea"
   ],
   "tokens": [
     "--border-hairline",
@@ -120,9 +121,7 @@
     "--c-app-layout-sidebar-fill",
     "--c-app-layout-sidebar-gap",
     "--color-bg",
-    "--color-focus",
-    "--color-text",
-    "--size-focus-width"
+    "--color-text"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/applayout"
 }

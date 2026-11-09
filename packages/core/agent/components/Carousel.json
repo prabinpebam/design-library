@@ -126,7 +126,8 @@
     }
   ],
   "uses": [
-    "Button"
+    "Button",
+    "ScrollArea"
   ],
   "tokens": [
     "--border-hairline",

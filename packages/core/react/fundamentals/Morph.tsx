@@ -69,7 +69,8 @@ export function Morph({ state, size = 'layout', motion = 'fade', children, ...da
     const old = el.querySelector<HTMLElement>(':scope > [data-dl-part="layer"][data-leaving]');
     if (layer && old?.contains(document.activeElement)) {
       const target = layer.querySelector<HTMLElement>('[data-morph-focus]') ?? layer.querySelector<HTMLElement>(FOCUSABLE) ?? layer;
-      if (target === layer) layer.tabIndex = -1;
+      // The layer, or a marked element that can't take focus on its own (a heading's region), takes it from code only.
+      if (!target.matches(FOCUSABLE) && !target.hasAttribute('tabindex')) target.tabIndex = -1;
       target.focus();
     }
     const move = durationOf(el, '--duration-move');

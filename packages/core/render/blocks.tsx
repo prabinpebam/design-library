@@ -62,9 +62,7 @@ function FormBlock({ block, named }: { block: Of<'form'>; named?: string }) {
     const o = block.outcome;
     return (
       <Morph state="done">
-        <div data-morph-focus="" tabIndex={-1}>
-          <Hero layout="stacked" eyebrow={o.eyebrow} title={o.title} lead={o.text} actions={linkList(o.links)} note={o.note} />
-        </div>
+        <Hero data-morph-focus="" layout="stacked" eyebrow={o.eyebrow} title={o.title} lead={o.text} actions={linkList(o.links)} note={o.note} />
       </Morph>
     );
   }

@@ -15,7 +15,7 @@
     gap: var(--c-hero-gap);
   }
 
-  [data-dl='hero'] [data-dl-part='words'] {
+  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -24,21 +24,21 @@
     min-inline-size: 0;
   }
 
-  [data-dl='hero'] [data-dl-part='message'] {
+  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-hero-message-gap);
     min-inline-size: 0;
   }
 
-  [data-dl='hero'] [data-dl-part='heading'] {
+  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] > [data-dl-part='heading'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-hero-heading-gap);
     overflow-wrap: break-word;
   }
 
-  [data-dl='hero'] [data-dl-part='lead'] {
+  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] > [data-dl-part='lead'] {
     margin: 0;
     font-size: var(--c-hero-lead-size);
     line-height: var(--c-hero-lead-leading);
@@ -58,7 +58,7 @@
     gap: var(--c-hero-actions-gap);
   }
 
-  [data-dl='hero'] [data-dl-part='picture'] {
+  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='picture'] {
     min-inline-size: 0;
   }
 

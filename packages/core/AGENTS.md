@@ -51,6 +51,26 @@ Search the index before writing anything: `Select-String -Path node_modules/@des
 6. **Never add a core component to solve one product's need.** Make a custom part inside your template; promotion to core is a separate, reviewed change.
 7. **Never use colour alone for meaning, or a button as an on/off toggle.** Status reads `color.status.*` with an icon or words; binary settings use `Switch`.
 8. **Never hard-code words a person reads inside a component.** They come from content or props.
+9. **Never make a scroll region yourself.** No `overflow: auto` or `scroll` on any element, in CSS or inline: it draws the browser's bar beside the content. Every scroll region is a `ScrollArea`, placed where the region meets its surface's edge, with padding on the content inside. A `TextArea` scrolls its own text and already uses the library's bar.
+
+## Rules agents miss
+
+These rules are easy to miss: each one is written down, but nothing at the moment you write the code points you to it. Before you call a screen done, go down this list. Each row names the seam to use and the check that catches a miss.
+
+| Rule | Use | Not | Caught by |
+| --- | --- | --- | --- |
+| Every scroll region uses the library's scrollbar, with the bar at the surface's edge and focus never cut off | `ScrollArea` (`axis`, `maxSize`, `inset`; `contain` only in a popup or modal); layouts and Dialog, Sheet, Canvas and Board already have it | `overflow: auto` or `scroll`, a padded scroll box, a scroll box held in from its surface's edge | `check:clipping` in the library; [`tools/scroll-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/scroll-probe.js) on the screen (SB1–SB5) |
+| Space comes from the layout and role tokens, from the hierarchy | Stack, Cluster, Grid, Section, a layout's own gaps | Margins, literal sizes, one equal gap between everything | [`tools/spacing-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/spacing-probe.js), `check:views` |
+| Colour means something only through semantic roles | `color.status.*` with an icon or words; text and surface roles | `p.*`, `spectrum.*` for meaning, colour alone | `tokens:check`, `check:views` |
+| Layers stack through layer tokens | `layer.*` tokens; Dialog, Sheet, popups and FloatingBar | A literal `z-index` | `check:layers` |
+| Motion runs through motion tokens and the motion parts | `Morph`, `Reveal`, `duration.*` and `easing.*` | A literal duration or easing, an animated size outside the motion parts | `check:motion` |
+| Blur and see-through fills come only from materials | `data-material` (chrome, floating, modal, veil) | A `backdrop-filter` or translucent fill of your own | `check:materials` |
+| Nothing clips without a reason, and focus rings are never cut off | The component's own crop or truncation | `overflow: hidden` on a wrapper | `check:clipping`, [`tools/clipping-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/clipping-probe.js) |
+| A custom part reaches its own children by child paths | `> [data-dl-part='…']` | A descendant selector into another component's parts | `check:parts` |
+| A binary setting is a switch; a choice from a list is a Select | `Switch`, `Select`, `SegmentedControl` | A button used as an on/off toggle, a native `<select>` | `check:views` (native selects), and review |
+| Content is plain JSON | Text, numbers, enums, ids and links | HTML, Markdown, sizes or colours in content | `check:content` |
+
+Missed rules share a cause: the rule lives in a document, while the code is written somewhere else. So each row points to one seam you can find in the component index (`agent/components/{Name}.json`), and a check that fails with the fix in its message. In the library repository, `npm run check` runs every static check at once.
 
 ## The seam ladder
 
@@ -89,18 +109,19 @@ Steps are written in the order an agent usually needs them; each stands alone an
 | Content JSON, a manifest or a template schema | `npx design-library-check-content --templates src/templates` (the folder holding your template folders; add `--index src/templates/index.ts` to check each is registered) |
 | TypeScript or TSX | `npx tsc --noEmit` |
 | Anything before you call it done | `npx vite build`, then open the screen in light, dark and more contrast, at 320 px and wide |
-| A view, content or a custom part | Read it against the [Never](#never) rules: no `className`, `style` or CSS in views; custom-part CSS reaches its children by child paths and reads only semantic roles or its own tokens. The library repository enforces these with `check:views`, `check:parts`, `check:materials` and `check:motion`; they aren't shipped |
+| A view, content or a custom part | Read it against the [Never](#never) rules and [Rules agents miss](#rules-agents-miss): no `className`, `style` or CSS in views; no scroll region outside `ScrollArea`; custom-part CSS reaches its children by child paths and reads only semantic roles or its own tokens. The library repository enforces these with `check:views`, `check:parts`, `check:clipping`, `check:materials` and `check:motion`; they aren't shipped. On the screen, run [`tools/scroll-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/scroll-probe.js) and [`tools/spacing-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/spacing-probe.js) in the browser console (`window.scrollProbe()`, `window.spacingProbe()`) |
 
 **In the library repository** (changing the library itself), from its root:
 
 | After you change | Run |
 | --- | --- |
+| Anything | `npm run check`: every static check below at once (tokens, views, layers, motion, materials, clipping and scroll regions, parts, content, the agent index) |
 | Content JSON, a manifest or a template schema | `npm run check:content` |
 | A template's `types.ts` (application records) | `npm run content:schemas`, then `npm run check:content` |
 | A token config, a template's tokens | `npm run tokens`, then `npm run tokens:check` |
 | TypeScript or TSX | `npm run typecheck` |
 | A view or a template's bindings | `npm run check:views` |
-| A custom part's CSS | `npm run check:parts`, `npm run check:materials`, `npm run check:motion` |
+| A custom part's CSS | `npm run check:parts`, `npm run check:materials`, `npm run check:motion`, `npm run check:clipping` |
 | A component, block type, template or token | `npm run agent:index` (keeps this index true; `npm run agent:index:check` fails when stale) |
 | A principle or the elevation ladder (`principles/*.json`) | `npm run agent:index` (rewrites `guide/7-principles.md`; the library's Principles sections read the same file) |
 | Anything before you call it done | `npm run build -w apps/library`, then open the screen |

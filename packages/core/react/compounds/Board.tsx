@@ -5,6 +5,7 @@ import { dropIndex } from '../behaviour/reorder';
 import { Avatar } from '../fundamentals/Avatar';
 import { Badge, type BadgeTone } from '../fundamentals/Badge';
 import { MenuButton } from '../fundamentals/MenuButton';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface BoardCard {
@@ -99,7 +100,8 @@ export function Board({ label, columns, onMove, headingLevel = 2, emptyText = 'N
   };
 
   return (
-    <div {...data} ref={root} data-dl="board" role="region" aria-label={label} tabIndex={0} data-dragging={dragging ? '' : undefined}>
+    <div {...data} ref={root} data-dl="board" data-dragging={dragging ? '' : undefined}>
+      <ScrollArea axis="inline" label={label}>
       {columns.map((column) => {
         const heading = `${base}-${column.id}`;
         const count = column.limit ? `${column.cards.length} of ${column.limit}` : String(column.cards.length);
@@ -191,6 +193,7 @@ export function Board({ label, columns, onMove, headingLevel = 2, emptyText = 'N
           </section>
         );
       })}
+      </ScrollArea>
     </div>
   );
 }

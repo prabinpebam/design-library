@@ -95,7 +95,8 @@
   "uses": [
     "Avatar",
     "Badge",
-    "Persona"
+    "Persona",
+    "ScrollArea"
   ],
   "tokens": [
     "--border-hairline",
@@ -118,7 +119,6 @@
     "--c-popup-bg",
     "--c-popup-border",
     "--c-popup-border-width",
-    "--c-popup-inset",
     "--c-popup-layer",
     "--c-popup-offset",
     "--c-popup-radius",

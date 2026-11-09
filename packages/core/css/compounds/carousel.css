@@ -133,10 +133,14 @@
     min-inline-size: 0;
   }
 
+  [data-dl='carousel'] > [data-dl-part='controls'] > [data-dl-part='pager-scroll'] {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+  }
+
   [data-dl='carousel'] [data-dl-part='pager'][data-pager='thumbnails'] {
     flex-wrap: nowrap;
     gap: var(--space-stack-pair);
-    overflow-x: auto;
     padding: var(--size-focus-width);
   }
 

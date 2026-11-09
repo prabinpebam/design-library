@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
 import { Heading } from '../fundamentals/Heading';
 import { Morph } from '../fundamentals/Morph';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface DialogProps extends DataAttributes {
@@ -88,7 +89,11 @@ export function Dialog({ open, onClose, title, description, children, actions, s
         </div>
         {!alert && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" onClick={() => close.current()} />}
       </header>
-      {children && <div data-dl-part="body">{children}</div>}
+      {children && (
+        <ScrollArea data-dl-part="body" contain>
+          {children}
+        </ScrollArea>
+      )}
       {actions && <footer data-dl-part="actions">{actions}</footer>}
     </div>
   );

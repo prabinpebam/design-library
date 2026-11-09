@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type 
 import { useFlipList } from '../behaviour/flip';
 import { usePresence } from '../behaviour/presence';
 import { Button } from '../fundamentals/Button';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface ChatLayoutProps extends DataAttributes {
@@ -64,8 +65,13 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
     const grown = new ResizeObserver(() => readList(el));
     grown.observe(el);
     if (el.firstElementChild) grown.observe(el.firstElementChild);
+    const scrolled = () => readList(el);
+    el.addEventListener('scroll', scrolled, { passive: true });
     readList(el);
-    return () => grown.disconnect();
+    return () => {
+      grown.disconnect();
+      el.removeEventListener('scroll', scrolled);
+    };
   }, [readList, sidebarFooter, sidebarOpen]);
 
   const measure = useCallback(() => {
@@ -85,8 +91,12 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
       measure();
     });
     grown.observe(column);
+    el.addEventListener('scroll', measure, { passive: true });
     el.scrollTop = el.scrollHeight;
-    return () => grown.disconnect();
+    return () => {
+      grown.disconnect();
+      el.removeEventListener('scroll', measure);
+    };
   }, [measure, empty]);
 
   // Q65 C12/C18: a new chat becoming a conversation is one screen changing state. The composer and greeting travel to
@@ -112,17 +122,14 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
   return (
     <div ref={root} {...data} data-dl="chat-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-empty={empty ? '' : undefined}>
       <aside id={sidebarId} data-dl-part="sidebar" aria-label={sidebarLabel} hidden={!sidebarOpen} data-footer={sidebarFooter ? '' : undefined}>
-        {sidebarFooter ? (
-          <>
-            <div ref={list} data-dl-part="sidebar-list" onScroll={(e) => readList(e.currentTarget)}>
-              <div data-dl-part="sidebar-content">{sidebar}</div>
-            </div>
-            <div data-dl-part="sidebar-footer" data-under={listUnder ? '' : undefined}>
-              {sidebarFooter}
-            </div>
-          </>
-        ) : (
-          sidebar
+        {/* Every scroll region is a ScrollArea (Q96): the library's bar, at the sidebar's edge, padding on the content. */}
+        <ScrollArea data-dl-part="sidebar-list" viewportRef={list}>
+          <div data-dl-part="sidebar-content">{sidebar}</div>
+        </ScrollArea>
+        {sidebarFooter && (
+          <div data-dl-part="sidebar-footer" data-under={listUnder ? '' : undefined}>
+            {sidebarFooter}
+          </div>
         )}
       </aside>
       <div data-dl-part="main">
@@ -143,9 +150,9 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
           )}
           {!empty && (
             <>
-              <div ref={scroller} data-dl-part="scroll" tabIndex={0} onScroll={measure}>
+              <ScrollArea data-dl-part="scroll" viewportRef={scroller} tabIndex={0}>
                 <div data-dl-part="column">{children}</div>
-              </div>
+              </ScrollArea>
               {away && (
                 <span data-dl-part="jump" data-material="floating" data-elevation="3">
                   <Button

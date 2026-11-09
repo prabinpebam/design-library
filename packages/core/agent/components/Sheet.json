@@ -95,6 +95,7 @@
   "uses": [
     "Button",
     "Heading",
+    "ScrollArea",
     "Skeleton",
     "Stack"
   ],

@@ -3,6 +3,7 @@ import { usePopup } from '../behaviour/popup';
 import { Avatar, type AvatarKind, type AvatarSize } from './Avatar';
 import type { Presence } from './Badge';
 import { Persona } from './Persona';
+import { ScrollArea } from './ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface AvatarGroupMember {
@@ -93,13 +94,15 @@ export function AvatarGroup({ members, label, max = 4, layout = 'stack', size = 
           }}
         >
           {open && (
-            <ul data-dl-part="list">
-              {hidden.map((m, i) => (
-                <li key={`${m.name}-${i}`}>
-                  <Persona name={m.name} src={m.src} kind={m.kind} presence={m.presence} secondary={m.secondary} size={32} />
-                </li>
-              ))}
-            </ul>
+            <ScrollArea contain>
+              <ul data-dl-part="list">
+                {hidden.map((m, i) => (
+                  <li key={`${m.name}-${i}`}>
+                    <Persona name={m.name} src={m.src} kind={m.kind} presence={m.presence} secondary={m.secondary} size={32} />
+                  </li>
+                ))}
+              </ul>
+            </ScrollArea>
           )}
         </div>
       )}

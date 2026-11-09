@@ -27,6 +27,20 @@
     justify-self: start;
   }
 
+  /* Holding a ScrollArea (a tools row that scrolls across in a narrow window, Q96): the padding moves onto the scroll
+     content and the viewport takes the bar's corners, so the region reaches the bar's edges and its bar sits on them. */
+  [data-dl='floating-bar']:has(> [data-dl='scroll-area']) {
+    padding: 0;
+  }
+
+  [data-dl='floating-bar'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] {
+    border-radius: var(--c-floating-bar-radius);
+  }
+
+  [data-dl='floating-bar'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    padding: var(--c-floating-bar-padding);
+  }
+
   @media (forced-colors: active) {
     [data-dl='floating-bar'] {
       outline: var(--border-hairline) solid CanvasText;

@@ -282,39 +282,116 @@
       "selector": "[data-dl='image']",
       "file": "packages/core/css/fundamentals/image.css",
       "reason": "Image (F15.36): crops the picture to its frame's shape and corners and holds the space while it loads; nothing inside is focusable"
+    },
+    {
+      "file": "packages/core/css/compounds/canvas.css",
+      "selector": "[data-dl='canvas'] [data-dl-part='inside']",
+      "kind": "shape crop",
+      "reason": "Canvas (Q68): a frame's contents are clipped to the frame, as in a design tool; nothing inside is focusable"
+    },
+    {
+      "file": "packages/core/css/compounds/canvas.css",
+      "selector": "[data-dl='canvas'] [data-dl-part='text']",
+      "kind": "shape crop",
+      "reason": "Canvas: a text layer is clipped to its own box, as drawn in the document; not focusable"
+    },
+    {
+      "file": "packages/core/css/compounds/canvas.css",
+      "selector": "[data-dl='canvas'] [data-dl-part='name']",
+      "kind": "text truncation",
+      "reason": "Canvas: a frame's name above it truncates to the frame's width; the layers panel shows it in full"
+    },
+    {
+      "file": "packages/core/css/compounds/chat-message.css",
+      "selector": "[data-dl='chat-message'] > [data-dl-part='author']",
+      "kind": "visually hidden",
+      "reason": "ChatMessage: who said it, read by assistive technology; the bubble's side and style show it"
+    },
+    {
+      "file": "packages/core/css/compounds/chat-message.css",
+      "selector": "[data-dl='chat-message'] [data-dl-part='file-words'] > *",
+      "kind": "text truncation",
+      "reason": "ChatMessage: an attached file's name and kind truncate on one line; the file opens with its full name"
+    },
+    {
+      "file": "packages/core/css/compounds/composer.css",
+      "selector": "[data-dl='composer'] [data-dl-part='file-words'] > *",
+      "kind": "text truncation",
+      "reason": "Composer: an attached file's name and kind truncate on one line; its remove button names it in full"
+    },
+    {
+      "file": "packages/core/css/compounds/conversation-list.css",
+      "selector": "[data-dl='conversation-list'] [data-dl-part='link']",
+      "kind": "text truncation",
+      "reason": "ConversationList: a chat's title truncates on one line; the link's focus ring is drawn inside it (inset), so it's never cut"
+    },
+    {
+      "file": "packages/core/css/compounds/image-generation.css",
+      "selector": "[data-dl='image-generation'] > [data-dl-part='frame']",
+      "kind": "media crop",
+      "reason": "ImageGeneration (Q58): the generating picture and its effect are cropped to the picture's frame; nothing inside is focusable"
+    },
+    {
+      "file": "packages/core/css/compounds/message-actions.css",
+      "selector": "[data-dl='message-actions'] [data-dl-part='spoken']",
+      "kind": "visually hidden",
+      "reason": "MessageActions: the outcome of an action (copied, saved), said to assistive technology"
+    },
+    {
+      "file": "packages/core/css/compounds/tree-view.css",
+      "selector": "[data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='label']",
+      "kind": "text truncation",
+      "reason": "TreeView: a long layer name truncates on its row; the row (not the label) takes focus, so its ring is never cut"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='switch'] [data-dl-part='name'][data-hidden]",
+      "kind": "visually hidden",
+      "reason": "Switch: a name given for assistive technology only, where the setting's row shows it"
+    },
+    {
+      "file": "packages/core/css/fundamentals/field.css",
+      "selector": "[data-density='compact'] [data-dl='field'] > [data-dl-part='label']",
+      "kind": "text truncation",
+      "reason": "Field in compact density: a label truncates beside its field; the field's accessible name is the full label"
+    },
+    {
+      "file": "packages/core/css/fundamentals/slider.css",
+      "selector": "[data-density='compact'] [data-dl='slider'] [data-dl-part='label']",
+      "kind": "text truncation",
+      "reason": "Slider in compact density: a label truncates beside its track; the slider's accessible name is the full label"
+    },
+    {
+      "file": "packages/core/css/layouts/app-layout.css",
+      "selector": "[data-dl='app-layout']",
+      "kind": "axis lock",
+      "reason": "AppLayout: the layout holds its height and its regions scroll on their own (ScrollArea); the clip keeps a floating drawer and moving parts inside the layout. Every region's focus ring is drawn inside it"
+    },
+    {
+      "file": "packages/core/css/layouts/chat-layout.css",
+      "selector": "[data-dl='chat-layout']",
+      "kind": "axis lock",
+      "reason": "ChatLayout: the layout holds its height and its regions scroll on their own (ScrollArea); the clip keeps a floating drawer and moving parts inside the layout. Every region's focus ring is drawn inside it"
+    },
+    {
+      "file": "packages/core/css/layouts/editor-layout.css",
+      "selector": "[data-dl='editor-layout']",
+      "kind": "axis lock",
+      "reason": "EditorLayout: the layout holds its height and its regions scroll on their own (ScrollArea); the clip keeps a floating drawer and moving parts inside the layout. Every region's focus ring is drawn inside it"
+    },
+    {
+      "file": "packages/core/css/motion.css",
+      "selector": "::view-transition-group(*.dl-rounded)",
+      "kind": "transient clip",
+      "reason": "Motion: a rounded element's view-transition snapshot keeps its corners only while it moves; nothing is clipped at rest"
     }
   ],
   "scrollRegions": [
     {
-      "file": "packages/core/css/fundamentals/scroll-area.css",
-      "selector": "[data-dl='scroll-area'] > [data-dl-part='viewport']",
-      "reason": "Every ScrollArea: the scroll box bleeds to its surface; padding sits on its content part; the drawn bar sits in the content inset",
-      "bar": "ScrollArea"
-    },
-    {
       "selector": "[data-dl='carousel'] > [data-dl-part='track']",
       "file": "packages/core/css/compounds/carousel.css",
-      "reason": "Carousel: the slide track scrolls with snap and draws no bar (arrows, the picker, swipe and keys replace it; data-scrollbar=\"none\" in ScrollArea's file); the track's own focus ring is its outline; slides' content keeps its rings inside each slide"
-    },
-    {
-      "selector": "[data-dl='carousel'] [data-dl-part='pager'][data-pager='thumbnails']",
-      "file": "packages/core/css/compounds/carousel.css",
-      "reason": "Carousel: a long row of thumbnails scrolls sideways; its padding is the focus ring's width and each thumb draws its ring inset"
-    },
-    {
-      "selector": "[data-dl='dialog'] [data-dl-part='body']",
-      "file": "packages/core/css/compounds/dialog.css",
-      "reason": "Dialog: the body scrolls on its own with its padding inside, so the scrollbar sits at the dialog's edge and the fields' focus rings are never clipped"
-    },
-    {
-      "selector": "[data-dl='sheet'] [data-dl-part='body']",
-      "file": "packages/core/css/compounds/sheet.css",
-      "reason": "Sheet: the body scrolls on its own with its padding inside, so the scrollbar sits at the sheet's edge and the fields' focus rings are never clipped"
-    },
-    {
-      "selector": "[data-dl='avatar-group'] > [data-dl-part='popup']",
-      "file": "packages/core/css/fundamentals/avatar-group.css",
-      "reason": "AvatarGroup (F15.26): the \"+n\" list of everyone else scrolls inside its popup like every popup list; rows draw their focus inside themselves"
+      "reason": "Carousel: the slide track scrolls with snap and carries data-scrollbar=\"none\": its arrows, picker, swipe and keys replace the bar (the one barless region; every other scroll region is a ScrollArea, Q96)",
+      "bar": "none: its arrows, picker, swipe and keys replace it"
     }
   ]
 }

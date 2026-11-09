@@ -7,25 +7,23 @@
  * coordinates, so it does not mirror in right-to-left (physical left/top on purpose).
  */
 @layer compounds {
+  /* The working area pans in a ScrollArea (Q96, both ways): its viewport is the named region and draws the focus ring. */
   [data-dl='canvas'] {
     position: relative;
-    overflow: auto;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     inline-size: 100%;
     block-size: 100%;
     min-block-size: 0;
     background-color: var(--c-canvas-fill);
-    outline: none;
   }
 
   [data-dl='canvas'][data-size='md'] {
     block-size: var(--c-canvas-height-md);
   }
 
-  [data-dl='canvas']:focus-visible {
-    box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
-  }
 
-  [data-dl='canvas'] [data-dl-part='document'] {
+  [data-dl='canvas'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='document'] {
     position: relative;
     box-sizing: content-box;
     inline-size: var(--w);
@@ -81,6 +79,7 @@
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
     background-color: var(--canvas-category, var(--c-canvas-shape-fill));
     border-radius: var(--c-canvas-shape-radius);
+    box-shadow: inset 0 0 0 var(--doc-stroke-weight) var(--doc-stroke);
   }
 
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
@@ -102,10 +101,6 @@
     border-radius: var(--doc-radius, var(--c-canvas-shape-radius));
   }
 
-  [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
-    border-radius: var(--doc-radius, var(--radius-none));
-  }
-
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'],
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
@@ -113,6 +108,7 @@
   }
 
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
+    border-radius: var(--doc-radius, var(--radius-none));
     background-color: var(--doc-fill, var(--c-canvas-frame-fill));
   }
 
@@ -124,11 +120,6 @@
     background-position: center;
     background-repeat: var(--doc-image-repeat, no-repeat);
     background-size: var(--doc-image-size, cover);
-  }
-
-  [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
-  [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
-    box-shadow: inset 0 0 0 var(--doc-stroke-weight) var(--doc-stroke);
   }
 
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='text'] {

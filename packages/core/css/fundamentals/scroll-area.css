@@ -3,7 +3,8 @@
  * native scrolling stays, and a thin thumb sits on an overlay track at the end edge. Content width and alignment are
  * the same whether the content overflows or not. Modes: `auto` (shown while scrolling, on hover, while dragged) and
  * `always` (shown whenever the content overflows). Forced colours and touch screens get the system's bar back.
- * The only place in the library that styles a scrollbar (npm run check:clipping fails on any other).
+ * The only place in the library that styles a scrollbar (npm run check:clipping fails on any other), including the one
+ * control that scrolls its own text (TextArea).
  */
 @layer fundamentals {
   [data-dl='scroll-area'] {
@@ -182,6 +183,20 @@
      draws none and isn't wrapped in ScrollArea. The one opt-out; scrollbar styling still lives only in this file. */
   [data-scrollbar='none'] {
     scrollbar-width: none;
+  }
+
+  /*
+   * A control that scrolls its own text (a TextArea's textarea) can't be wrapped in ScrollArea: its text is the
+   * scroller. It takes the library's thin bar in the library's colours instead of the browser's default (Q96), so it
+   * matches every ScrollArea; forced colours and touch keep the system's.
+   */
+  [data-dl='text-area'] textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-scroll-area-colour) transparent;
+  }
+
+  [data-dl='text-area'] textarea:hover {
+    scrollbar-color: var(--c-scroll-area-colour-active) transparent;
   }
 
   /* Touch screens draw their own overlay bar while scrolling: keep it, and draw none. */

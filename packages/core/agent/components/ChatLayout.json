@@ -92,7 +92,8 @@
     }
   ],
   "uses": [
-    "Button"
+    "Button",
+    "ScrollArea"
   ],
   "tokens": [
     "--border-hairline",
@@ -109,14 +110,12 @@
     "--color-bg",
     "--color-bg-raised",
     "--color-border",
-    "--color-focus",
     "--color-text",
     "--duration-change",
     "--duration-quick",
     "--easing-enter",
     "--easing-exit",
     "--radius-md",
-    "--size-focus-width",
     "--space-inline-pair",
     "--space-stack-group"
   ],

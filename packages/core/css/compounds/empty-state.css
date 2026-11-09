@@ -30,7 +30,7 @@
     text-align: start;
   }
 
-  [data-dl='empty-state'] [data-dl-part='words'] {
+  [data-dl='empty-state'] > [data-dl-part='words'] {
     display: flex;
     flex-direction: column;
     align-items: inherit;
@@ -38,21 +38,21 @@
     max-inline-size: var(--c-empty-state-words-max);
   }
 
-  [data-dl='empty-state'] [data-dl-part='actions'] {
+  [data-dl='empty-state'] > [data-dl-part='actions'] {
     display: flex;
     flex-wrap: wrap;
     justify-content: inherit;
     gap: var(--c-empty-state-actions-gap);
   }
 
-  [data-dl='empty-state'] [data-dl-part='silhouette'] {
+  [data-dl='empty-state'] > [data-dl-part='silhouette'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-empty-state-silhouette-gap);
     inline-size: min(100%, var(--c-empty-state-silhouette-width));
   }
 
-  [data-dl='empty-state'] [data-dl-part='illustration'] {
+  [data-dl='empty-state'] > [data-dl-part='illustration'] {
     display: block;
     max-inline-size: min(100%, var(--c-empty-state-silhouette-width));
     block-size: auto;

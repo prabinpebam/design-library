@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface AppLayoutProps extends DataAttributes {
@@ -63,7 +64,9 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   return (
     <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width}>
       <aside id={sidebarId} data-dl-part="sidebar" aria-label={sidebarLabel} hidden={!sidebarOpen}>
-        {sidebar}
+        <ScrollArea data-dl-part="sidebar-list">
+          <div data-dl-part="sidebar-content">{sidebar}</div>
+        </ScrollArea>
       </aside>
       <div data-dl-part="main">
         <header data-dl-part="header">
@@ -73,7 +76,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
           <span data-dl-part="header-start">{header}</span>
           <span data-dl-part="header-end">{headerEnd}</span>
         </header>
-        <div data-dl-part="scroll" tabIndex={0}>
+        <ScrollArea data-dl-part="scroll" axis="both" tabIndex={0}>
           <div data-dl-part="body">
             <main data-dl-part="view" aria-label={label}>
               {head ? (
@@ -91,7 +94,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
               </aside>
             )}
           </div>
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );

@@ -121,7 +121,8 @@
   "uses": [
     "Avatar",
     "Badge",
-    "MenuButton"
+    "MenuButton",
+    "ScrollArea"
   ],
   "tokens": [
     "--border-hairline",

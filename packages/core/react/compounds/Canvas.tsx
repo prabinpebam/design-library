@@ -1,4 +1,5 @@
 import { type CSSProperties } from 'react';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
 
 export interface CanvasShape {
@@ -126,10 +127,13 @@ export function Canvas({ label, shapes, selected, onSelect, zoom = 1, width, hei
     });
 
   return (
-    <div {...data} data-dl="canvas" data-size={size} role="region" aria-label={label} tabIndex={0} onClick={() => onSelect?.(undefined)}>
-      <div data-dl-part="document" style={{ '--w': px(width, zoom), '--h': px(height, zoom) } as CSSProperties}>
-        {draw(shapes, 0)}
-      </div>
+    <div {...data} data-dl="canvas" data-size={size} onClick={() => onSelect?.(undefined)}>
+      {/* The working area pans in a ScrollArea (Q96): the library's bars at the canvas's edges; it's the named region. */}
+      <ScrollArea axis="both" label={label}>
+        <div data-dl-part="document" style={{ '--w': px(width, zoom), '--h': px(height, zoom) } as CSSProperties}>
+          {draw(shapes, 0)}
+        </div>
+      </ScrollArea>
     </div>
   );
 }

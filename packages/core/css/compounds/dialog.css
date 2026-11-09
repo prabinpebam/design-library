@@ -98,11 +98,13 @@
     color: var(--color-text-muted);
   }
 
+  /* The body is a ScrollArea (Q96): the library's bar at the dialog's edge; padding on its content, so it scrolls edge to edge. */
   :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] {
     flex: 1 1 auto;
     min-block-size: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
     padding: 0 var(--c-dialog-padding) var(--c-dialog-gap);
   }
 

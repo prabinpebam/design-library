@@ -18,6 +18,7 @@
     "dev": "npm run dev -w apps/library",
     "build:library": "npm run tokens && npm run build -w apps/library",
     "revisions": "node ./tools/library-revisions.mjs",
+    "check": "npm run tokens:check && npm run check:views && npm run check:layers && npm run check:motion && npm run check:materials && npm run check:clipping && npm run check:parts && npm run check:content && npm run agent:index:check",
     "check:views": "node ./tools/check-views.mjs",
     "check:layers": "node ./tools/check-layers.mjs",
     "check:motion": "node ./tools/check-motion.mjs",

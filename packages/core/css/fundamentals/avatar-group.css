@@ -96,10 +96,11 @@
     inset: auto;
     inset-block-start: calc(var(--popup-edge, 0px) + var(--c-popup-offset));
     inset-inline-start: var(--popup-start, 0px);
-    overflow: auto;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     max-block-size: calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset));
     margin: 0;
-    padding: var(--c-popup-inset);
+    padding: 0;
     border: var(--c-popup-border-width) solid var(--c-popup-border);
     border-radius: var(--c-popup-radius);
     background-color: var(--material-floating-bg, var(--c-popup-bg));
@@ -123,10 +124,12 @@
     outline-offset: var(--size-focus-offset);
   }
 
+  /* Padding is the shared popup list's (pickers.css: the ScrollArea's content), once, never padding inside padding. */
   [data-dl='avatar-group'] [data-dl-part='list'] {
     display: grid;
     gap: var(--space-stack-item);
-    padding: var(--c-popup-inset);
+    margin: 0;
+    padding: 0;
     list-style: none;
   }
 

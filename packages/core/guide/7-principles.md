@@ -71,6 +71,7 @@ Full framework: Design constraints (docs/brief.md#design-constraints).
 - A binary setting is a Switch, never a Button used as an on/off toggle.
 - Inner segments of a stacked or segmented bar are square; only the outer ends of the whole bar may round.
 - Pad once at the right interior level (one or two levels below the visual wrapper), never all around a wrapper or per leaf; scroll regions bleed to the surface edge with the scrollbar at the edge; never clip a focus ring.
+- Every scroll region is a ScrollArea: never `overflow: auto` or `scroll` on any other element, in CSS or inline, since that draws the browser's bar beside the content. Put ScrollArea where the region meets its surface's edge, with its padding on the content inside (its `inset`, or a padded child). A TextArea scrolls its own text and already uses the library's bar.
 - One component variant per need: no second pattern where one already does the job.
 - Notifications auto-dismiss; manual dismiss only when the person must read it.
 
@@ -79,6 +80,7 @@ Full framework: Design constraints (docs/brief.md#design-constraints).
 1. Before adding an accent, choose fill, tint, full outline, icon or badge, in that order of preference.
 2. Before adding a variant, search agent/components/{Name}.json for an existing prop that covers the need.
 3. Before adding padding, find the wrapper that owns the visual edge and pad the first content level inside it; keep the scroll container itself unpadded.
+4. Before letting anything scroll, wrap it in ScrollArea (axis, maxSize, inset; contain only in a popup or modal) placed at its surface's edge; then run the scroll probe (tools/scroll-probe.js) on the screen.
 
 **Check:** `npm run check:clipping`, `npm run check:views`
 

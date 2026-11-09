@@ -178,6 +178,8 @@ The brief's [add-on contract](brief.md#optional-add-ons-and-integrations) asks f
 
 **Liquid Glass for Web** maps to AS1–AS4 on FR3–FR6 compact floating surfaces only (the brief restricts glass to compact floating and navigation surfaces), with its displacement filter on the slot, never on text. **UI Lighting** reads `data-elevation` and the elevation tokens through AS1–AS2 to cast its shadows and rims; core shadows stay as the fallback. Neither is installed (O14); this page plans the seams so adding one needs no core change.
 
+**Architecture and plan (Q95, F15.AX1–AX3):** [Modifiers and add-ons](modifiers.md) studies both kits from source, gives `data-elevation` one physical meaning, replaces AS3's reserved `effect` value with `data-finish` and core-read effect hooks, makes Glass a third finish (glass → frosted → solid), and plans the build in packets MD-P1–MD11. Spec only.
+
 ## Assumptions and risks
 
 | # | Assumption | Risk if wrong | Cheapest check |

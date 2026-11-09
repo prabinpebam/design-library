@@ -158,6 +158,8 @@
     "--c-field-radius",
     "--c-field-readonly-border",
     "--c-field-size",
+    "--c-scroll-area-colour",
+    "--c-scroll-area-colour-active",
     "--c-text-area-bar-gap",
     "--c-text-area-composer-radius",
     "--c-text-area-inset",

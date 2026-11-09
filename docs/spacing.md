@@ -317,6 +317,11 @@ The framework now starts from [the method](#the-method-hierarchy-first-then-spac
 
 Every UX framework in this project has the same two parts: the framework to design with, and a checklist of measurable rows to judge with. Spacing and layout rhythm is the first written in this shape; the others follow it.
 
+| Framework | Part 1 | Part 2 | Probe or check |
+| --- | --- | --- | --- |
+| Spacing, framing | [The framework](#part-1-the-framework) | [SC and FR rows](#part-2-the-checklist) | `tools/spacing-probe.js` |
+| Scrolling and scrollbars | [The framework](scrolling.md#part-1-the-framework) | [SB rows](scrolling.md#part-2-the-checklist) | `tools/scroll-probe.js`, `npm run check:clipping` |
+
 ## The adversarial loop
 
 Create with part 1, judge with part 2, by someone who didn't build it: the evaluator scores every row with its evidence (a measurement, a probe result or a screenshot), the builder fixes the failing rows at their owner (token, layout, compound, then content), and the loop repeats until no S1–S3 row fails.

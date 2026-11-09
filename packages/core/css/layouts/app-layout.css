@@ -26,14 +26,24 @@
   [data-dl='app-layout'] > [data-dl-part='sidebar'] {
     display: flex;
     flex-direction: column;
-    gap: var(--c-app-layout-sidebar-gap);
     flex: none;
     box-sizing: border-box;
     inline-size: var(--c-app-layout-sidebar);
     min-block-size: 0;
-    overflow-y: auto;
-    padding: var(--c-app-layout-inset);
     background-color: var(--c-app-layout-sidebar-fill);
+  }
+
+  /* The sidebar scrolls in a ScrollArea (Q96): the library's bar at the sidebar's edge, padding on its content. */
+  [data-dl='app-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] {
+    flex: 1;
+    min-block-size: 0;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='sidebar-content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-app-layout-sidebar-gap);
+    padding: var(--c-app-layout-inset);
   }
 
   [data-dl='app-layout'] > [data-dl-part='sidebar'][hidden] {
@@ -69,18 +79,13 @@
     justify-content: flex-end;
   }
 
+  /* The view's scroller is a ScrollArea (Q96): edge to edge, the library's bar at the main area's edge, its focus ring ScrollArea's. */
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] {
     flex: 1;
     min-block-size: 0;
-    overflow: auto;
-    outline: none;
   }
 
-  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll']:focus-visible {
-    box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
-  }
-
-  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] {
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] {
     display: flex;
     align-items: flex-start;
     gap: var(--c-app-layout-gutter);
@@ -88,11 +93,11 @@
     padding: var(--c-app-layout-margin);
   }
 
-  [data-dl='app-layout'][data-width='column'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] {
+  [data-dl='app-layout'][data-width='column'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] {
     max-inline-size: calc(var(--c-app-layout-column) + 2 * var(--c-app-layout-margin));
   }
 
-  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='view'] {
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -102,18 +107,18 @@
 
   /* With a head, the view is head · content (Q93): the title is one of the view's units at the page level, so the first
      section's head stays nearer its own content than the title. */
-  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='view']:has(> [data-dl-part='head']) {
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view']:has(> [data-dl-part='head']) {
     gap: var(--c-app-layout-head-gap);
   }
 
-  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='content'] {
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='content'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-app-layout-gap);
     min-inline-size: 0;
   }
 
-  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='aside'] {
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='aside'] {
     display: flex;
     flex-direction: column;
     flex: none;
@@ -134,12 +139,12 @@
       box-shadow: var(--c-app-layout-overlay-shadow);
     }
 
-    [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] {
+    [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] {
       flex-direction: column;
       align-items: stretch;
     }
 
-    [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='aside'] {
+    [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='aside'] {
       inline-size: auto;
     }
   }

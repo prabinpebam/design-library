@@ -171,11 +171,13 @@
     gap: var(--c-sheet-tools-gap);
   }
 
+  /* The body is a ScrollArea (Q96): the library's bar at the sheet's edge; padding on its content, so it scrolls edge to edge. */
   [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='body'] {
     flex: 1 1 auto;
     min-block-size: 0;
-    overflow-y: auto;
-    overscroll-behavior: contain;
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='body'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
     padding: 0 var(--c-sheet-padding) var(--c-sheet-gap);
   }
 

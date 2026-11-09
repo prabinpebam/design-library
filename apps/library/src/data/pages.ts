@@ -790,8 +790,10 @@ export const pages: Page[] = withDocs(withPrinciples([
           items: [
             'Main region: always shown.',
             'Navigation and the revision pane: shown on scroll or hover.',
+            'App, chat and editor layouts (Q96): the sidebar, the view or conversation, and each panel: shown on scroll or hover, at the region’s edge.',
+            'Dialog and Sheet bodies, Canvas (both ways), Board columns and a Carousel’s thumbnails (sideways): shown on scroll or hover.',
             'Code blocks, tables, context matrices and example previews: sideways, shown on scroll or hover.',
-            'Select and MenuButton lists: shown on scroll or hover, through the same overlay scroll behaviour.',
+            'Select, MenuButton and AvatarGroup lists: shown on scroll or hover, through the same overlay scroll behaviour.',
             ...clipping.scrollRegions.filter((s) => 'bar' in s && s.bar !== 'ScrollArea').map((s) => `${s.selector}: ${s.bar}.`),
           ],
         },
