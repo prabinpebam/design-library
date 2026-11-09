@@ -29,6 +29,11 @@ export interface SiteField {
   hint?: string;
   optional?: boolean;
   options?: string[];
+  /** The failed screen state's kept answer (Q85.2 UI states): shown in the field when the form failed, so the fields
+   * without one are the ones marked at fault. A failure that isn't about the answers gives every field one. */
+  answer?: string;
+  /** With `answer`: the words under the field when that kept answer is the fault ("Check for a missing @."). */
+  invalid?: string;
 }
 
 /** What a form becomes in its own box once it's sent (Q65 TP2): the same shape as a status block. */

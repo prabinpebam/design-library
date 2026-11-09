@@ -170,7 +170,7 @@ export function ListItem({
       data-description={description && descriptionPosition === 'inline' ? 'inline' : undefined}
       aria-selected={role === 'option' ? !!selected : role === 'row' && selected !== undefined ? selected : undefined}
       aria-checked={checkable ? !!selected : undefined}
-      aria-disabled={unavailable || undefined}
+      aria-disabled={unavailable || busy || undefined}
       aria-busy={busy || undefined}
       aria-expanded={expanded === undefined ? undefined : expanded}
       aria-keyshortcuts={shortcut}

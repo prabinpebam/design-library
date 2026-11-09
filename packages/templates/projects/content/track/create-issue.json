@@ -55,7 +55,8 @@
               "Story",
               "Bug",
               "Task"
-            ]
+            ],
+            "answer": "Bug"
           },
           {
             "id": "assignee",
@@ -67,13 +68,15 @@
               "Jonas Lind",
               "Keiko Arai",
               "Luis Ortega"
-            ]
+            ],
+            "answer": "Keiko Arai"
           },
           {
             "id": "description",
             "label": "Description",
             "kind": "long",
-            "hint": "What should happen, and how we’ll know it’s done."
+            "hint": "What should happen, and how we’ll know it’s done.",
+            "answer": "The export button stays greyed out after the file finishes uploading."
           }
         ],
         "submit": "Create issue",

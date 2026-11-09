@@ -26,13 +26,15 @@
               "It’s spam or advertising",
               "It shares someone’s private details",
               "Something else"
-            ]
+            ],
+            "answer": "It’s spam or advertising"
           },
           {
             "id": "details",
             "label": "Anything the editors should know",
             "kind": "long",
-            "optional": true
+            "optional": true,
+            "answer": "The same link is posted under three articles."
           }
         ],
         "submit": "Send report",

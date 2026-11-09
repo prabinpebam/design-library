@@ -46,7 +46,8 @@
             "id": "name",
             "label": "Type the project’s name to confirm",
             "kind": "text",
-            "hint": "Kitewing app"
+            "hint": "Kitewing app",
+            "answer": "Kitewing app"
           }
         ],
         "submit": "Archive project",

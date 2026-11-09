@@ -20,13 +20,16 @@
           {
             "id": "email",
             "label": "Email address",
-            "kind": "email"
+            "kind": "email",
+            "answer": "ama.example.com",
+            "invalid": "Check for a missing @ or a typo."
           },
           {
             "id": "name",
             "label": "First name",
             "kind": "text",
-            "optional": true
+            "optional": true,
+            "answer": "Ama"
           }
         ],
         "submit": "Subscribe",

@@ -3,7 +3,7 @@
  * props; no styles. `npm run check:content` holds this list equal to blocks.schema.json's block types. A template adds
  * its own (namespaced) types in its registry; it never replaces these.
  */
-import { Fragment, useState, type ReactNode } from 'react';
+import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react';
 import { fill } from './fill';
 import type { BlockRenderer, CoreBlock, RenderContext, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
@@ -46,6 +46,7 @@ function FormBlock({ block, named }: { block: Of<'form'>; named?: string }) {
   const [state, setState] = useScreenState(named, ['failed', 'done'] as const, 'form' as 'form' | 'failed' | 'done');
   const sent = state === 'done';
   const set = (id: string) => (v: string) => setValues((x) => ({ ...x, [id]: v }));
+  const missingOf = (v: Record<string, string>) => Object.fromEntries(block.fields.filter((f) => !f.optional && !v[f.id]?.trim()).map((f) => [f.id, fill(f.kind === 'choice' ? block.pick : block.enter, { field: f.label.toLowerCase() })]));
   const field = (f: SiteField) => {
     const common = { label: f.label, hint: f.hint, optional: f.optional, error: errors[f.id] };
     if (f.kind === 'long') return <TextArea key={f.id} {...common} value={values[f.id] ?? ''} onChange={set(f.id)} />;
@@ -53,11 +54,20 @@ function FormBlock({ block, named }: { block: Of<'form'>; named?: string }) {
     return <TextField key={f.id} {...common} type={f.kind} value={values[f.id] ?? ''} onCommit={set(f.id)} />;
   };
   const send = () => {
-    const missing = Object.fromEntries(block.fields.filter((f) => !f.optional && !values[f.id]?.trim()).map((f) => [f.id, fill(f.kind === 'choice' ? block.pick : block.enter, { field: f.label.toLowerCase() })]));
+    const missing = missingOf(values);
     setErrors(missing);
     if (Object.keys(missing).length) return;
     setState('done');
   };
+  // The failed screen state: the kept answers are back in their fields and the fields without one are marked at
+  // fault, so the error shows on the field as well as above the form (docs/ui-states.md, US4).
+  useEffect(() => {
+    if (state !== 'failed') return;
+    const kept = Object.fromEntries(block.fields.filter((f) => f.answer).map((f) => [f.id, f.answer as string]));
+    setValues(kept);
+    setErrors({ ...missingOf(kept), ...Object.fromEntries(block.fields.filter((f) => f.answer && f.invalid).map((f) => [f.id, f.invalid as string])) });
+  }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
+  const fieldErrors = Object.keys(errors).length > 0;
   if (sent && block.outcome) {
     const o = block.outcome;
     return (
@@ -73,7 +83,7 @@ function FormBlock({ block, named }: { block: Of<'form'>; named?: string }) {
           {block.error && (
             <Reveal open={state === 'failed'}>
               {state === 'failed' && (
-                <Alert tone="error" announce="assertive">
+                <Alert tone="error" announce="assertive" data-error-scope={fieldErrors ? 'fields' : 'form'}>
                   {block.error}
                 </Alert>
               )}

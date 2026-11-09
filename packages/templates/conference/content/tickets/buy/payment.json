@@ -20,24 +20,28 @@
           {
             "id": "card",
             "label": "Card number",
-            "kind": "text"
+            "kind": "text",
+            "answer": "4000 0000 0000 0002"
           },
           {
             "id": "expiry",
             "label": "Expiry date",
             "kind": "text",
-            "hint": "MM/YY"
+            "hint": "MM/YY",
+            "answer": "08/29"
           },
           {
             "id": "cvc",
             "label": "Security code",
             "kind": "text",
-            "hint": "The three digits on the back."
+            "hint": "The three digits on the back.",
+            "answer": "123"
           },
           {
             "id": "billing",
             "label": "Billing email",
-            "kind": "email"
+            "kind": "email",
+            "answer": "sam@example.com"
           }
         ],
         "submit": "Pay €780",

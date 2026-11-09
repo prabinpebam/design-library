@@ -20,7 +20,8 @@
           {
             "id": "email",
             "label": "Email address",
-            "kind": "email"
+            "kind": "email",
+            "answer": "lena@example.com"
           },
           {
             "id": "kind",
@@ -31,12 +32,14 @@
               "A website",
               "A design system",
               "Something else"
-            ]
+            ],
+            "answer": "A website"
           },
           {
             "id": "brief",
             "label": "What you need, and by when",
-            "kind": "long"
+            "kind": "long",
+            "answer": "A new site for our studio before the spring show, about eight pages."
           },
           {
             "id": "budget",

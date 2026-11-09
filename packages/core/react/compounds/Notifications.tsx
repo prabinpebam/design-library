@@ -106,6 +106,7 @@ function Pill({ item, leaving = false }: { item: NotificationItem; leaving?: boo
       data-elevation="3"
       data-flip-key={item.id}
       data-tone={item.tone}
+      data-dismiss={item.tone === 'progress' ? undefined : item.dismiss}
       data-leaving={leaving ? '' : undefined}
       inert={leaving}
       onKeyDown={(e) => {

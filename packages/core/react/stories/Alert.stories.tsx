@@ -64,7 +64,7 @@ export default {
           <Alert tone="warning" title="Your trial ends in 3 days">
             Choose a plan to keep your projects. Nothing is deleted when it ends.
           </Alert>
-          <Alert tone="error" title="Couldn’t load the latest figures">
+          <Alert tone="error" title="Couldn’t load the latest figures" actions={<Button label="Refresh" size="s" />}>
             Showing figures from 09:40. Check your connection, then refresh.
           </Alert>
           <Alert tone="neutral">Prices include tax. Delivery is added at checkout.</Alert>

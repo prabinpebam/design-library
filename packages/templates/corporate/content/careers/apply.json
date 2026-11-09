@@ -20,7 +20,8 @@
           {
             "id": "name",
             "label": "Your name",
-            "kind": "text"
+            "kind": "text",
+            "answer": "Jonas Lind"
           },
           {
             "id": "email",
@@ -41,7 +42,8 @@
               "Dutch",
               "Other EU",
               "None yet"
-            ]
+            ],
+            "answer": "Dutch"
           },
           {
             "id": "why",

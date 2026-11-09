@@ -608,6 +608,14 @@
                 "items": {
                   "$ref": "#/$defs/text"
                 }
+              },
+              "answer": {
+                "description": "The failed screen state's kept answer: shown in the field when the form failed; required fields without one are marked at fault.",
+                "type": "string"
+              },
+              "invalid": {
+                "description": "With answer: the words under the field when that kept answer is the fault.",
+                "$ref": "#/$defs/text"
               }
             },
             "additionalProperties": false,

@@ -20,12 +20,14 @@
           {
             "id": "email",
             "label": "Email address",
-            "kind": "email"
+            "kind": "email",
+            "answer": "ama@example.com"
           },
           {
             "id": "password",
             "label": "Password",
-            "kind": "password"
+            "kind": "password",
+            "answer": "harbour-lights"
           }
         ],
         "submit": "Sign in",

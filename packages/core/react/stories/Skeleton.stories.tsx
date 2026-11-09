@@ -11,6 +11,7 @@ function Replay() {
   const [run, setRun] = useState(0);
   return (
     <Stack gap="group">
+      <div aria-busy="true">
       <Grid max={3} key={run}>
         {[0, 1, 2].map((i) => (
           <Cluster key={i} gap="item" wrap={false}>
@@ -19,6 +20,7 @@ function Replay() {
           </Cluster>
         ))}
       </Grid>
+      </div>
       <Cluster gap="item">
         <Button size="s" label="Shimmer again" onClick={() => setRun((r) => r + 1)} />
       </Cluster>
@@ -38,6 +40,7 @@ export default {
 <Skeleton shape="block" />
 <Skeleton shape="circle" size="sm" /> <Skeleton shape="circle" /> <Skeleton shape="circle" size="lg" />`,
       render: () => (
+        <div aria-busy="true">
         <Grid max={3}>
           <Skeleton lines={3} />
           <Skeleton shape="block" />
@@ -47,6 +50,7 @@ export default {
             <Skeleton shape="circle" size="lg" />
           </Cluster>
         </Grid>
+        </div>
       ),
     },
     {

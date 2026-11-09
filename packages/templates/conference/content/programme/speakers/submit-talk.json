@@ -36,17 +36,20 @@
               "Introductory",
               "Intermediate",
               "Advanced"
-            ]
+            ],
+            "answer": "Intermediate"
           },
           {
             "id": "name",
             "label": "Your name",
-            "kind": "text"
+            "kind": "text",
+            "answer": "Priya Nair"
           },
           {
             "id": "email",
             "label": "Email address",
-            "kind": "email"
+            "kind": "email",
+            "answer": "priya@example.com"
           }
         ],
         "submit": "Submit talk",

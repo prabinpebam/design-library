@@ -25,6 +25,7 @@
     { "path": "spacing.md", "title": "Spacing and layout rhythm", "order": 10.2, "icon": "space_bar", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "scrolling.md", "title": "Scrolling and scrollbars", "order": 10.3, "icon": "swap_vert", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "clipping.md", "title": "Clipping", "order": 10.35, "icon": "crop", "type": "page", "status": "draft", "updated": "2026-11-09" },
+    { "path": "ui-states.md", "title": "UI states", "order": 10.4, "icon": "published_with_changes", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "layout.md", "title": "Layout: regions, columns and reflow", "order": 10.25, "icon": "dashboard", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "visual-noise.md", "title": "Visual noise", "order": 10.27, "icon": "filter_center_focus", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "visual-representation.md", "title": "Visual representation", "order": 10.5, "icon": "insights", "type": "page", "status": "draft", "updated": "2026-11-09" },
