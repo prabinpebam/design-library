@@ -1,0 +1,14 @@
+{
+  "id": "lagoon",
+  "set": "SS7 Library examples: scenes",
+  "slot": "IB4",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/library/scenes/reference.webp",
+  "size": "1536x864",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/core/react/stories/media/scenes/lagoon.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 720 --density 2 --fit cover",
+  "alt": "Turquoise pools and rippled sand bars at low tide, low dunes on the far shore.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: an example landscape photograph for a component library's Carousel, Image and Card stories, shown up to 720×405 (16:9) and also cropped to 3:2, square and 4:5, so the subject must survive a centre crop.\nSubject: a shallow lagoon at low tide.\nDetails: wet sand bars and pools of clear turquoise water, a mint-pale sky, soft sun, low green dunes at the far shore, ripples in the sand.\nComposition: wide 16:9 landscape, eye level, horizon at about two thirds height, the main subject in the centre third, uncluttered foreground.\nStyle: natural landscape photograph, real lens and depth, gentle natural colour grading, soft clean light, crisp detail without oversharpening, calm and uncluttered, no people.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no buildings with signs, no people, no animals in close-up."
+}

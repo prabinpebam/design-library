@@ -41,8 +41,8 @@ export default {
     {
       title: 'With a caption and a credit',
       description: 'A caption makes it a figure: the caption is read with the picture.',
-      code: `<Image src={…} alt="…" caption="Harvest time in the valley." credit="Drawn for this library" />`,
-      render: () => <Image src={scenes[6].src} alt={scenes[6].alt} caption={scenes[6].caption} credit="Drawn for this library" />,
+      code: `<Image src={…} alt="…" caption="Harvest time in the valley." credit="Generated for this library" />`,
+      render: () => <Image src={scenes[6].src} alt={scenes[6].alt} caption={scenes[6].caption} credit="Generated for this library" />,
     },
     {
       title: 'Failed to load',

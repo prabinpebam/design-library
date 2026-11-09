@@ -1,0 +1,14 @@
+{
+  "id": "anaRuiz",
+  "set": "SS7 Library examples: portraits",
+  "slot": "IB8",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate (the set's reference)",
+  "size": "1024x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/core/react/stories/media/people/anaRuiz.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 96 --density 2 --no-trim",
+  "alt": "(none in the file: Avatar and Persona name the person from their name prop)",
+  "prompt": "Use: an example avatar for a made-up person in a component library's Avatar, Persona and people-list stories, shown in a circle from 24 to 96 px, so it must read at small sizes and survive a circular crop.\nSubject: a woman in her thirties with warm light-brown skin.\nDetails: dark brown wavy shoulder-length hair, small gold stud earrings, a mustard-yellow top, on a soft sage-green background.\nComposition: square, head and shoulders, facing the viewer or slightly turned, the head centred horizontally, the face in the centre third, the top of the head about 15% from the top edge, shoulders reaching the bottom edge, nothing important in the corners.\nStyle: flat illustrated portrait, simple flat colour shapes with soft gouache edges, no outlines, simplified stylised features (small dot eyes, a short curved mouth, a simple nose shape), clearly a drawing and not a real person, warm friendly expression, one plain flat pastel background colour, gentle light from the upper left with one soft shadow tone.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no photorealism, not a likeness of any real or famous person, nothing in the background."
+}

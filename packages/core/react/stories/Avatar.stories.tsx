@@ -1,7 +1,7 @@
 import { Avatar, type AvatarSize } from '../fundamentals/Avatar';
 import type { Presence } from '../fundamentals/Badge';
 import { Cluster } from '../fundamentals/Cluster';
-import { people, portrait } from './people';
+import { people, portrait, portraits } from './people';
 import type { StoryFile } from './story';
 
 const sizes: AvatarSize[] = [16, 20, 24, 32, 36, 40, 44, 48, 56, 64, 80, 96, 128];
@@ -106,7 +106,7 @@ export default {
           <Avatar name="Sofia Rossi" status="declined" size={48} />
           <Avatar name="Mei Lin" status="warning" size={48} />
           <Avatar name="Kwame Mensah" count={3} countLabel="3 unread messages" presence="available" size={48} />
-          <Avatar name="Yusuf Demir" count={120} size={64} src={portrait} presence="away" />
+          <Avatar name="Yusuf Demir" count={120} size={64} src={portraits['Yusuf Demir']} presence="away" />
         </>
       ),
     },

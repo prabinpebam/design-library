@@ -1,0 +1,14 @@
+{
+  "id": "morningHills",
+  "set": "SS7 Library examples: scenes",
+  "slot": "IB1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate (the set's reference)",
+  "size": "1536x864",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/core/react/stories/media/scenes/morningHills.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 720 --density 2 --fit cover",
+  "alt": "Rolling green hills at sunrise, with mist in the valleys and dew on the grass.",
+  "prompt": "Use: an example landscape photograph for a component library's Carousel, Image and Card stories, shown up to 720×405 (16:9) and also cropped to 3:2, square and 4:5, so the subject must survive a centre crop.\nSubject: rolling green hills in early morning, before anyone is up.\nDetails: low mist in the valleys between the hills, a pale blue sky, the sun just above the hills on the right, dew on the grass in the foreground, a few scattered trees on the ridges.\nComposition: wide 16:9 landscape, eye level, horizon at about two thirds height, the main subject in the centre third, uncluttered foreground.\nStyle: natural landscape photograph, real lens and depth, gentle natural colour grading, soft clean light, crisp detail without oversharpening, calm and uncluttered, no people.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no buildings with signs, no people, no animals in close-up."
+}

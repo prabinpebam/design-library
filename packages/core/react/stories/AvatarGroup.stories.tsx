@@ -1,11 +1,11 @@
 import { AvatarGroup, type AvatarGroupMember } from '../fundamentals/AvatarGroup';
 import type { Presence } from '../fundamentals/Badge';
-import { people, portrait } from './people';
+import { people, portraits } from './people';
 import type { StoryFile } from './story';
 
 const roles = ['Design lead', 'Engineer', 'Product manager', 'Researcher', 'Engineer', 'Content designer', 'Engineer', 'Data scientist', 'Accessibility specialist', 'Engineer'];
 const presences: Presence[] = ['available', 'busy', 'away', 'available', 'offline', 'do-not-disturb', 'available', 'away', 'busy', 'available'];
-const team: AvatarGroupMember[] = people.map((name, i) => ({ name, secondary: roles[i], presence: presences[i], src: i === 2 ? portrait : undefined }));
+const team: AvatarGroupMember[] = people.map((name, i) => ({ name, secondary: roles[i], presence: presences[i], src: i % 4 === 1 ? undefined : portraits[name] }));
 
 export default {
   component: 'AvatarGroup',

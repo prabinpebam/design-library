@@ -1,6 +1,27 @@
-/** Shared example data for the people stories (Avatar, AvatarGroup, Persona): made-up names and a drawn portrait. */
-// A drawn stand-in for a photograph: a shoulders-and-head silhouette on a soft gradient, made for these examples.
-export const portrait = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9cc7d9"/><stop offset="1" stop-color="#4f7a8f"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><circle cx="48" cy="38" r="17" fill="#f1d3bd"/><path d="M14 96c2-22 16-32 34-32s32 10 34 32z" fill="#2f4b5a"/><path d="M31 34c0-12 8-19 17-19s18 7 18 19c-4-6-10-9-18-9s-13 3-17 9z" fill="#3b2a22"/></svg>',
-)}`;
-export const people = ['Ana Ruiz', 'Kenji Watanabe', 'Priya Natarajan', 'Tomás Ó Briain', 'Lena Fischer', 'Kwame Mensah', 'Sofia Rossi', 'Mei Lin', 'Yusuf Demir', 'Hana Kim'];
+/** Shared example data for the people stories (Avatar, AvatarGroup, Persona): made-up names, each with an illustrated portrait generated for this library (GPT Image 2.5; provenance in assets-src/library/people). */
+import anaRuiz from './media/people/anaRuiz.webp?url';
+import kenjiWatanabe from './media/people/kenjiWatanabe.webp?url';
+import priyaNatarajan from './media/people/priyaNatarajan.webp?url';
+import tomasOBriain from './media/people/tomasOBriain.webp?url';
+import lenaFischer from './media/people/lenaFischer.webp?url';
+import kwameMensah from './media/people/kwameMensah.webp?url';
+import sofiaRossi from './media/people/sofiaRossi.webp?url';
+import meiLin from './media/people/meiLin.webp?url';
+import yusufDemir from './media/people/yusufDemir.webp?url';
+import hanaKim from './media/people/hanaKim.webp?url';
+
+export const portraits: Record<string, string> = {
+  'Ana Ruiz': anaRuiz,
+  'Kenji Watanabe': kenjiWatanabe,
+  'Priya Natarajan': priyaNatarajan,
+  'Tomás Ó Briain': tomasOBriain,
+  'Lena Fischer': lenaFischer,
+  'Kwame Mensah': kwameMensah,
+  'Sofia Rossi': sofiaRossi,
+  'Mei Lin': meiLin,
+  'Yusuf Demir': yusufDemir,
+  'Hana Kim': hanaKim,
+};
+export const people = Object.keys(portraits);
+/** Ana Ruiz's portrait, used where a story shows one person. */
+export const portrait = anaRuiz;

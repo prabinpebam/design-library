@@ -1,5 +1,5 @@
 import { Persona } from '../fundamentals/Persona';
-import { portrait } from './people';
+import { portrait, portraits } from './people';
 import type { StoryFile } from './story';
 
 export default {
@@ -31,10 +31,10 @@ export default {
 <Persona name="Hana Kim" secondary="Speaking" activity="Speaking" />`,
       render: () => (
         <>
-          <Persona name="Kenji Watanabe" secondary="Busy · In a meeting until 15:00" presence="busy" />
+          <Persona name="Kenji Watanabe" secondary="Busy · In a meeting until 15:00" presence="busy" src={portraits['Kenji Watanabe']} />
           <Persona name="Contoso" kind="organisation" secondary="Verified organisation" status="verified" />
           <Persona name="Build agent" kind="bot" secondary="Runs every push" presence="available" />
-          <Persona name="Hana Kim" secondary="Speaking" activity="Speaking" />
+          <Persona name="Hana Kim" secondary="Speaking" activity="Speaking" src={portraits['Hana Kim']} />
         </>
       ),
     },
@@ -45,9 +45,9 @@ export default {
       arrangement: 'row',
       render: () => (
         <>
-          <Persona name="Priya Natarajan" secondary="Product manager" textPosition="below" size={64} />
+          <Persona name="Priya Natarajan" secondary="Product manager" textPosition="below" size={64} src={portraits['Priya Natarajan']} />
           <Persona name="Kwame Mensah" secondary="Engineer" textPosition="below" size={64} presence="away" />
-          <Persona name="Mei Lin" secondary="Data scientist" textPosition="below" size={64} src={portrait} />
+          <Persona name="Mei Lin" secondary="Data scientist" textPosition="below" size={64} src={portraits['Mei Lin']} />
         </>
       ),
     },
