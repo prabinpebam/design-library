@@ -12,14 +12,39 @@
       "propertyNames": { "pattern": "^[a-z][a-zA-Z0-9-]*$" },
       "additionalProperties": {
         "type": "object",
-        "required": ["src", "alt"],
+        "required": ["src"],
         "properties": {
           "src": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" },
-          "alt": { "type": "string", "description": "What the picture shows, for people who can't see it. Empty only for a decorative picture." }
+          "alt": { "type": "string", "description": "What the picture shows, for people who can't see it. Required unless the picture is decorative." },
+          "decorative": { "type": "boolean", "description": "The picture adds nothing the words beside it don't say: it is drawn with an empty alt and skipped by screen readers (DP3)." },
+          "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frame it is drawn in where the block doesn't fix one, as Image ratio (DP3)." },
+          "focal": {
+            "type": "object",
+            "description": "The point to keep in view when the frame crops, from 0 to 1 across and down, as Image focal (DP3, IP12).",
+            "required": ["x", "y"],
+            "properties": { "x": { "type": "number", "minimum": 0, "maximum": 1 }, "y": { "type": "number", "minimum": 0, "maximum": 1 } },
+            "additionalProperties": false
+          },
+          "treatment": {
+            "description": "How the picture is toned (DP3; drawn by the picture treatments, IP31): one value for always, or one at rest and one when its card or link is hovered or focused.",
+            "oneOf": [
+              { "$ref": "#/$defs/tone" },
+              {
+                "type": "object",
+                "properties": { "rest": { "$ref": "#/$defs/tone" }, "active": { "$ref": "#/$defs/tone" } },
+                "additionalProperties": false
+              }
+            ]
+          }
         },
+        "if": { "not": { "properties": { "decorative": { "const": true } }, "required": ["decorative"] } },
+        "then": { "required": ["alt"] },
         "additionalProperties": false
       }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "tone": { "enum": ["none", "greyscale", "duotone"] }
+  }
 }

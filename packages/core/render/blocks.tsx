@@ -336,7 +336,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
             description={c.description}
             meta={c.meta ? <Text as="span" variant="body-sm" tone="muted">{c.meta}</Text> : undefined}
             href={c.href}
-            media={c.picture ? <Image src={ctx.picture(c.picture).src} alt={ctx.picture(c.picture).alt} ratio="wide" /> : undefined}
+            media={c.picture ? <Image src={ctx.picture(c.picture).src} alt={ctx.picture(c.picture).alt} ratio={ctx.picture(c.picture).ratio ?? 'wide'} focal={ctx.picture(c.picture).focal} /> : undefined}
           />
         ))}
       </Grid>)}
@@ -426,7 +426,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
               </Quote>
             );
           case 'picture':
-            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio="wide" rounded />;
+            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} rounded />;
           case 'list':
             return <List key={n} variant="bulleted" items={item.items.map((t, m) => ({ id: String(m), content: t }))} />;
           case 'code':

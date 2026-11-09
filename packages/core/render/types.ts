@@ -214,9 +214,21 @@ export interface TemplateContent {
   record?: Record<string, unknown>;
 }
 
+/** A picture tone (DP3): drawn by the picture treatments (IP31). */
+export type PictureTone = 'none' | 'greyscale' | 'duotone';
+
 export interface TemplateAsset {
   src: string;
+  /** Empty when the picture is decorative. */
   alt: string;
+  /** The frame where the block doesn't fix one, as `Image` `ratio` (DP3). */
+  ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural';
+  /** The point to keep in view when the frame crops, 0 to 1, as `Image` `focal` (DP3). */
+  focal?: { x: number; y: number };
+  /** How it is toned, always or at rest and when active (DP3). */
+  treatment?: PictureTone | { rest?: PictureTone; active?: PictureTone };
+  /** Adds nothing the words don't say: drawn with an empty alt (DP3). */
+  decorative?: boolean;
 }
 
 /** What a block or layout renderer is given besides its data. */

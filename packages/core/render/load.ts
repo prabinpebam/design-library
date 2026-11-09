@@ -21,6 +21,11 @@ export function loadTemplate(
     else if (file.layout) content[file.layout] = file;
   }
   const declared = (assetsFile as { assets?: Record<string, TemplateAsset> })?.assets ?? {};
-  const assets = Object.fromEntries(Object.entries(declared).map(([id, a]) => [id, { src: String(assetUrls[`./${a.src}`] ?? ''), alt: a.alt }]));
+  const assets = Object.fromEntries(
+    Object.entries(declared).map(([id, a]) => [
+      id,
+      { ...a, src: String(assetUrls[`./${a.src}`] ?? ''), alt: a.decorative ? '' : (a.alt ?? '') },
+    ]),
+  );
   return { manifest: manifest as TemplateManifest, content, shared, assets, registry, stories };
 }

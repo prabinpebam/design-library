@@ -38,8 +38,9 @@ Every picture a template shows is a file in its `assets/` folder and an entry in
 2. **Ship WebP** (about quality 82); SVG for drawn marks. File names are lower-case kebab case (`assets/the-long-shore.webp`), the only form `assets.schema.json` accepts.
 3. **Trim transparent pictures** to their visible edge: space around a picture comes from the layout, never from empty pixels.
 4. **Write the alt from the finished picture:** what it shows or means in this place, in a sentence (`"The shop's lit window on a cobbled quay at dusk…"`), never the medium or the file ("image of", "hero.webp"). Use `""` only when the picture is decoration and the words beside it say everything.
-5. **Keep a set consistent:** one style across a template's pictures (the same light, palette and finish); example pictures in the shipped templates are stand-ins a real site replaces with its own.
-6. **Check:** `npx design-library-check-content --templates src/templates` (every id exists, every file is in `assets/`, every entry has `alt`); the visual probe's VR1, VR2 and VR6 rows in [step 8](8-review.md). How the library's own pictures were made: [Images](https://prabinpebam.github.io/design-library/docs/#images.md).
+5. **Describe how it's drawn in its entry** (all optional): `ratio` (`wide`, `photo`, `square`, `portrait`… as `Image`) for blocks that don't fix a frame; `focal` (`{ "x": 0.3, "y": 0.6 }`, 0 to 1) the point that stays in view when the frame crops; `treatment` (`none`, `greyscale`, `duotone`, or `{ "rest": "greyscale", "active": "none" }` for a picture that colours in on hover or focus); `decorative: true` for a picture the words beside it already say, which then needs no `alt`. Every other picture needs `alt`.
+6. **Keep a set consistent:** one style across a template's pictures (the same light, palette and finish); example pictures in the shipped templates are stand-ins a real site replaces with its own.
+7. **Check:** `npx design-library-check-content --templates src/templates` (every id exists, every file is in `assets/`, every entry has `alt` unless it's decorative); the visual probe's VR1, VR2 and VR6 rows in [step 8](8-review.md). How the library's own pictures were made: [Images](https://prabinpebam.github.io/design-library/docs/#images.md).
 
 ## Adapt a template as your own
 
