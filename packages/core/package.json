@@ -43,6 +43,7 @@
     "design-library-check-content": "./tools/check-content.mjs",
     "design-library-check": "./tools/check-project.mjs",
     "design-library-new-template": "./tools/new-template.mjs",
+    "design-library-review": "./tools/review.mjs",
     "design-library-template-tokens": "./tools/template-tokens.mjs"
   },
   "dependencies": {
@@ -61,7 +62,13 @@
     "ajv": "^8.20.0"
   },
   "peerDependencies": {
+    "playwright-core": ">=1.40.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "playwright-core": {
+      "optional": true
+    }
   }
 }

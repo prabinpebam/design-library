@@ -3,6 +3,23 @@
 Goal: no screen is called done until someone who didn't build it has scored it against every framework's checklist, with evidence, and every fail is fixed at its owner.
 > **Paths:** `AGENTS.md`, `guide/…`, `agent/…` and `probes/…` are inside the installed package (`node_modules/@design-library/core/`); the package exports each probe as `@design-library/core/probes/{name}.js`, matching this version. The frameworks are in the hosted docs; links below.
 
+## The light review: a site of words and pictures
+
+A small team shipping a mostly static site (pages of words, pictures and links, few states) can start with the light review and keep the full loop below for screens with forms, panels and working states.
+
+1. **Check:** `npx design-library-check`, `npx design-library-check-content --templates src/templates --src src`, `npx tsc --noEmit`, `npx vite build`.
+2. **Probe every page in one command** on your running site (`npm i -D playwright-core` once; it drives your installed Chrome or Edge):
+
+   ```sh
+   npx design-library-review http://localhost:5173/ http://localhost:5173/#/about
+   ```
+
+   It opens each address at 1000 and 320 px, light and dark, runs the static probes (spacing, layout, visual noise, clipping, scrolling, visual representation) and prints one line per failing row: address, width, scheme, row, count and the first finding. `--probes all` adds materials, UI states, chrome context and motion; `--widths`, `--schemes` and `--json` change what it runs and prints; `--strict` fails the run on any failing row.
+3. **Read the look rows** the probes can't measure (the hierarchy, the copy, the pictures) on each framework's part 2, ideally by someone who didn't build the page.
+4. **Fix at the owner** (step 5 of the loop below) and run the command again until it prints no fail.
+
+Move up to the full loop when a page gains a form, a panel or a state, or when the light review keeps finding the same row.
+
 ## Two roles, never the same session
 
 | Role | Does | Never |

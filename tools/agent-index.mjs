@@ -271,6 +271,7 @@ const consumerCommands = {
   'check:project': 'npx design-library-check',
   'template:new': 'npx design-library-new-template <id> --templates src/templates',
   'template:tokens': 'npx design-library-template-tokens --templates src/templates',
+  review: 'npx design-library-review <url>',
   typecheck: 'npx tsc --noEmit',
   build: 'npx vite build',
 };

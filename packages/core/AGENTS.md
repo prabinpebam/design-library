@@ -49,7 +49,7 @@ Search the index before writing anything: `Select-String -Path node_modules/@des
 3. **Never read primitives.** Read semantic roles (`--color-text`, `--space-stack-item`) or a part's own tokens; never `p.*`, and `spectrum.*` and `set.*` only for their declared purpose (charts, identity), never for meaning.
 4. **Never put markup in content.** Content is pure JSON: plain text, numbers, enums, ids and links. No HTML, Markdown, CSS, class names, colours or pixel values.
 5. **Never edit a generated file.** `tokens.colour.json`, `tokens.space-shape.json`, `css/tokens.css`, `tokens/generated/*`, a template's `tokens/tokens.css` (from its `tokens.json` by `npx design-library-template-tokens`), a template's generated `content.schema.json`, and everything in `agent/` are written by commands.
-6. **Never add a core component to solve one product's need.** Make a custom part inside your template; promotion to core is a separate, reviewed change.
+6. **Never add a core component to solve one product's need.** Make a custom part inside your template; promotion to core is a separate, reviewed change. A custom part composes core fundamentals (`Link`, `Heading`, `Image`, `Button`, `Text`), never raw `<a>`, `<h*>`, `<img>` or `<button>`, and custom parts stay at about a third of a page's elements ([the recipe](guide/recipe-brand-led-site.md)).
 7. **Never use colour alone for meaning, or a button as an on/off toggle.** Status reads `color.status.*` with an icon or words; binary settings use `Switch`.
 8. **Never hard-code words a person reads inside a component.** They come from content or props.
 9. **Never make a scroll region yourself.** No `overflow: auto` or `scroll` on any element, in CSS or inline: it draws the browser's bar beside the content. Every scroll region is a `ScrollArea`, placed where the region meets its surface's edge, with padding on the content inside. A `TextArea` scrolls its own text and already uses the library's bar.
@@ -105,6 +105,7 @@ When something doesn't look or behave as you need, take the first step that work
 | Customize tokens: presets, colour, type, space, shape, materials, motion | [guide/3-tokens.md](guide/3-tokens.md) | Ready |
 | Customize fundamentals and compounds through public seams | [guide/4-components.md](guide/4-components.md) | Ready |
 | Use a layout, or make one inside a template | [guide/5-layouts.md](guide/5-layouts.md) | Ready |
+| Build a brand-led site: core parts first, the seams for colour, type and frame, then custom parts that compose core, about a third of a page at most | [guide/recipe-brand-led-site.md](guide/recipe-brand-led-site.md) | Ready |
 | Use a template, then adapt one as your own (or start empty: `npx design-library-new-template {id}`, then prune) | [guide/6-templates.md](guide/6-templates.md) | Ready |
 | Apply the principles: the rules and decision procedure for each token category and component family | [guide/7-principles.md](guide/7-principles.md) (generated from `principles/principles.json`) | Ready |
 | Review a screen before calling it done: the adversarial loop, every framework's checklist and probe | [guide/8-review.md](guide/8-review.md) | Ready |
@@ -119,6 +120,7 @@ Steps are written in the order an agent usually needs them; each stands alone an
 | After you change | Run |
 | --- | --- |
 | Content JSON, a manifest or a template schema | `npx design-library-check-content --templates src/templates` (the folder holding your template folders; add `--index src/templates/index.ts` to check each is registered, `--content <folder>` for content outside templates that names a ``, `--src src` to warn about templates nothing renders) |
+| A page's look, before you call it done | `npx design-library-review <url>…` (the probes at 1000 and 320 px, light and dark; needs `playwright-core`; [the light review](guide/8-review.md#the-light-review-a-site-of-words-and-pictures)) |
 | A template's `tokens/tokens.json` | `npx design-library-template-tokens --templates src/templates` (writes `tokens.css`; `--check` only reads) |
 | TypeScript or TSX | `npx tsc --noEmit` |
 | Anything before you call it done | `npx vite build`, then open the screen in light, dark and more contrast, at 320 px and wide |

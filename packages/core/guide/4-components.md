@@ -54,7 +54,7 @@ The moment it needs its own markup with its own look, it's a **custom part** (st
 
 ### 6. A custom part inside a template
 
-When nothing in the core fits, add the smallest part in the lowest tier that can hold it, inside one template's folder:
+When nothing in the core fits (look the need up first in [the brand-led site recipe](recipe-brand-led-site.md#1-find-the-core-part-first)), add the smallest part in the lowest tier that can hold it, inside one template's folder. Inside it, compose core `Link`, `Heading`, `Image`, `Button` and `Text`; never draw a raw `<a>`, `<h*>`, `<img>` or `<button>`:
 
 | Tier | Make one when | Made from |
 | --- | --- | --- |
