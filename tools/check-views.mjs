@@ -38,7 +38,7 @@ const pendingSelectors = [/data-app='rev-comments'/, /data-app='rev-targets'/, /
 const pendingElements = new Map([['apps/library/src/revisions/RevisionPane.tsx', 8]]);
 
 /** Native elements a view may still use without styling them: they carry semantics only, and core's base styles them. */
-const semanticOnly = new Set(['code', 'kbd', 'small', 'strong', 'em', 'svg', 'path']);
+const semanticOnly = new Set(['code', 'kbd', 'small', 'strong', 'em', 'br', 'svg', 'path']);
 
 const walk = (dir) =>
   readdirSync(dir).flatMap((name) => {

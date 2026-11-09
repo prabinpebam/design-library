@@ -6,6 +6,7 @@
 import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react';
 import { fill } from './fill';
+import { richText } from './rich-text';
 import type { BlockRenderer, CoreBlock, RenderContext, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
 
 type Of<T extends CoreBlock['type']> = Extract<CoreBlock, { type: T }>;
@@ -302,8 +303,8 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       isStage(ctx.neighbours, i) ? 'stage' : 'feature',
       <Hero
         eyebrow={b.eyebrow}
-        title={b.title}
-        lead={b.lead}
+        title={richText(b.title)}
+        lead={richText(b.lead)}
         actions={actionButtons(b.actions)}
         note={b.note}
         picture={b.picture ? ctx.picture(b.picture) : undefined}
@@ -371,7 +372,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       {b.text}
     </EmptyState>
   ),
-  cta: (b, ctx, i) => frame(ctx, i, 'feature', <Hero level={2} layout="divided" title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} />),
+  cta: (b, ctx, i) => frame(ctx, i, 'feature', <Hero level={2} layout="divided" title={richText(b.title)} lead={richText(b.lead)} actions={actionButtons(b.actions)} note={b.note} />),
   gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />),
   breadcrumbs: (b, _ctx, i) => <Breadcrumbs key={i} items={b.items} />,
   byline: (b, ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} src={b.picture ? ctx.picture(b.picture).src : undefined} />,
@@ -405,13 +406,13 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
           case 'heading':
             return (
               <Heading key={n} level={2} size={3}>
-                {item.text}
+                {richText(item.text)}
               </Heading>
             );
           case 'text':
             return (
               <Text key={n} as="p">
-                {item.text}
+                {richText(item.text)}
               </Text>
             );
           case 'quote':

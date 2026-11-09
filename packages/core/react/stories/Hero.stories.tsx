@@ -9,6 +9,7 @@ import driftMp4 from './media/drift.mp4?url';
 import driftPoster from './media/drift-poster.jpg?url';
 import driftCaptions from './media/drift.en.vtt?url';
 import type { StoryFile } from './story';
+import { richText } from '../../render/rich-text';
 
 const go = () => undefined;
 
@@ -126,6 +127,21 @@ export default {
           lead="Routes, huts and the weather, in one place."
           actions={<Button label="Find a route" emphasis="primary" onClick={go} />}
           note="Updated every morning."
+        />
+      ),
+    },
+    {
+      title: 'Rich words from content',
+      description:
+        'A hero block’s title and lead take rich text in content (DP1): a list of strings and marked runs, no markup. The title takes emphasis, accent and break; the lead also takes strong, code and link. richText from @design-library/core/render draws them, the accent through Text tone="accent" (the accent display role at this size).',
+      code: `// content: { "type": "hero", "title": ["Books for ", { "text": "slow evenings", "mark": "accent" }],
+//            "lead": ["A small shop on the quay. ", { "text": "Open late", "mark": "strong" }, " on Fridays."] }
+import { richText } from '@design-library/core/render';
+<Hero title={richText(block.title)} lead={richText(block.lead)} />`,
+      render: () => (
+        <Hero
+          title={richText(['Books for ', { text: 'slow evenings', mark: 'accent' }])}
+          lead={richText(['A small shop on the quay. ', { text: 'Open late', mark: 'strong' }, ' on Fridays, ', { text: 'see the hours', mark: 'link', href: '#/hero' }, '.'])}
         />
       ),
     },

@@ -54,9 +54,18 @@ export interface SiteEmpty {
   links?: SiteLink[];
 }
 
+/** A marked run of rich text (DP1): emphasis, strong, accent, code and link carry words; break starts a new line. */
+export type RichRun =
+  | string
+  | { text: string; mark: 'emphasis' | 'strong' | 'accent' | 'code' }
+  | { text: string; mark: 'link'; href: string }
+  | { mark: 'break' };
+/** Rich inline text in content (DP1): a plain string, or a list of strings and marked runs. No markup. */
+export type RichText = string | RichRun[];
+
 export type ProseItem =
-  | { kind: 'heading'; text: string }
-  | { kind: 'text'; text: string }
+  | { kind: 'heading'; text: RichText }
+  | { kind: 'text'; text: RichText }
   | { kind: 'quote'; text: string; name?: string }
   | { kind: 'picture'; picture: string; caption: string }
   | { kind: 'list'; items: string[] }
@@ -69,8 +78,8 @@ export type CoreBlock =
   | {
       type: 'hero';
       eyebrow?: string;
-      title: string;
-      lead?: string;
+      title: RichText;
+      lead?: RichText;
       actions?: SiteAction[];
       note?: string;
       picture?: string;
@@ -91,8 +100,8 @@ export type CoreBlock =
   | { type: 'empty'; reason: 'first-use' | 'cleared' | 'no-results' | 'no-access' | 'done'; title: string; text: string; silhouette?: 'list' | 'tiles' | 'table'; links?: SiteLink[] }
   | {
       type: 'cta';
-      title: string;
-      lead: string;
+      title: RichText;
+      lead: RichText;
       actions: SiteAction[];
       note?: string;
       /** A closing invitation meant to stand on its own (a marketing or editorial page's last word), so the page frames it. Leave it out on task pages, where the action is one more step of the work (Q91). */

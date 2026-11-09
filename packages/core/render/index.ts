@@ -3,5 +3,6 @@ export { TemplateView, LAYOUTS, defaultHref, resolveLinks } from './TemplateView
 export type { TemplateViewProps } from './TemplateView';
 export { BLOCKS, actionButtons } from './blocks';
 export { fill } from './fill';
+export { RichText, richText, plainText } from './rich-text';
 export { loadTemplate } from './load';
 export type * from './types';

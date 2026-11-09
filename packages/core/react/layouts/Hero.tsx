@@ -16,13 +16,13 @@ export interface HeroPicture {
 
 interface HeroBase extends DataAttributes {
   /** The page's or section's title, set in the display size: the one display heading in the view. */
-  title: string;
+  title: ReactNode;
   /** `1` (default) when the hero opens the page; `2` when it opens a section of a longer page. */
   level?: 1 | 2;
   /** A short line above the title naming what it belongs to, e.g. "Design systems". */
   eyebrow?: string;
   /** One or two sentences under the title: what this is and why it matters. */
-  lead?: string;
+  lead?: ReactNode;
   /** One or two Buttons, the main one first: what most people came to do. */
   actions?: ReactNode;
   /** A quieter line after the actions: a condition or a status, e.g. "Free for teams of up to five." */

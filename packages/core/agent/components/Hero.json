@@ -19,7 +19,7 @@
       "props": [
         {
           "name": "title",
-          "type": "string",
+          "type": "ReactNode",
           "required": true,
           "description": "The page's or section's title, set in the display size: the one display heading in the view."
         },
@@ -36,7 +36,7 @@
         },
         {
           "name": "lead",
-          "type": "string",
+          "type": "ReactNode",
           "description": "One or two sentences under the title: what this is and why it matters."
         },
         {
