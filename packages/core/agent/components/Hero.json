@@ -118,7 +118,8 @@
     "--c-hero-stacked-words-gap",
     "--c-hero-trail-gap",
     "--c-hero-words-gap",
-    "--color-text-muted"
+    "--color-text-muted",
+    "--font-text"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/hero"
 }

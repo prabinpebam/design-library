@@ -31,6 +31,11 @@
     min-inline-size: 0;
   }
 
+  /* IP24: the optional label role, when a site sets one; otherwise the eyebrow keeps the text face. */
+  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] > [data-dl-part='heading'] > [data-dl-part='eyebrow'] {
+    font-family: var(--font-label, var(--font-text));
+  }
+
   [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] > [data-dl-part='heading'] {
     display: flex;
     flex-direction: column;

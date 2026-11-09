@@ -31,7 +31,8 @@
   }
 
   [data-dl='statistic'] [data-dl-part='figure'] {
-    font-family: var(--font-display);
+    /* IP24: the optional numeral role, when a site sets one; otherwise the display face. */
+    font-family: var(--font-numeral, var(--font-display));
     font-size: var(--c-statistic-value-size-m);
     font-weight: var(--type-heading-1-weight);
     line-height: var(--type-heading-1-leading);

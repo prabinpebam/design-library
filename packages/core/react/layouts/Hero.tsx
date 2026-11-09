@@ -88,7 +88,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
           <div data-dl-part="message">
             <div data-dl-part="heading">
               {eyebrow && (
-                <Text as="p" variant="body-sm" tone="muted">
+                <Text as="p" variant="body-sm" tone="muted" data-dl-part="eyebrow">
                   {eyebrow}
                 </Text>
               )}

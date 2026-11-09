@@ -61,6 +61,8 @@ if (query.get('face') === 'site')
       },
     ],
   });
+/** The optional label and numeral roles (IP24): `site.html?face=roles#/app/…` sets eyebrows in a monospace and figures in a grotesque. */
+if (query.get('face') === 'roles') void applyFonts({ roles: { label: 'jetbrains-mono', numeral: 'space-grotesk' } });
 const seed = query.get('seed');
 if (seed && /^#[0-9a-f]{6}$/i.test(seed))
   applyBrand({ colours: { 1: { seed, ...(query.get('pin') ? { pins: { '500': seed } } : {}) } }, contrast: query.get('guard') ? 'guard' : 'keep' });

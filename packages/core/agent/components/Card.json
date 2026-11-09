@@ -126,6 +126,7 @@
     "--duration-quick",
     "--easing-exit",
     "--easing-standard",
+    "--font-ui",
     "--layer-raised",
     "--size-focus-offset",
     "--size-focus-width",

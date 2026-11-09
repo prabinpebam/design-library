@@ -87,6 +87,11 @@
     color: var(--color-text-muted);
   }
 
+  /* IP24: the optional label role, when a site sets one; otherwise the eyebrow keeps the interface face. */
+  [data-dl='card'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='heading'] > [data-dl-part='eyebrow'] {
+    font-family: var(--font-label, var(--font-ui));
+  }
+
   [data-dl='card'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='description'] {
     margin: 0;
     color: var(--color-text-muted);

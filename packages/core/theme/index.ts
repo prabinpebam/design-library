@@ -21,7 +21,7 @@
 import { BRAND_SLOTS, HUE_STEPS, contrast, generate } from '../colour/index.mjs';
 import colourConfig from '../tokens/colour.config.json';
 import settingsList from '../tokens/settings.json';
-import { fontPresets, fontRoles, loadFace, resolveRoles, type FontFace, type FontRoleId } from '../fonts/loader';
+import { faceOf, fontPresets, fontRoles, loadFace, resolveRoles, type FontFace, type FontRoleId } from '../fonts/loader';
 
 export type BrandSlot = (typeof BRAND_SLOTS)[number];
 export interface BrandColour {
@@ -302,13 +302,21 @@ export interface SiteFace {
 export interface FontChoice {
   /** A font preset id from `fontPresets` (`@design-library/core/fonts`); the theme's default when left out. */
   preset?: string;
-  /** Face id per role (`display`, `text`, `ui`, `code`) over the preset's; `null` lets a role use the one it collapses to. A site face's id works too. */
-  roles?: Partial<Record<FontRoleId, string | null>>;
+  /**
+   * Face id per role (`display`, `text`, `ui`, `code`) over the preset's; `null` lets a role use the one it collapses to.
+   * A site face's id works too. Two optional roles (IP24) take a face only when named: `label` (eyebrows; otherwise
+   * they keep today's face) and `numeral` (a Statistic's figure; otherwise the display face).
+   */
+  roles?: Partial<Record<FontRoleId | OptionalFontRole, string | null>>;
   /** Variable-font axes per role, e.g. `{ display: { opsz: 72 } }`. */
   axes?: Partial<Record<FontRoleId, Record<string, number>>>;
   /** Typefaces the site supplies (IP23), for `roles` to name by id. Without it, only registry faces. */
   faces?: SiteFace[];
 }
+
+/** Font roles that only apply when a choice names a face for them (IP24); places that read them keep today's face otherwise. */
+export type OptionalFontRole = 'label' | 'numeral';
+const OPTIONAL_ROLES: OptionalFontRole[] = ['label', 'numeral'];
 
 const asFace = (s: SiteFace): FontFace => ({
   id: s.id,
@@ -333,8 +341,9 @@ export function fontVars(choice: FontChoice = {}): { vars: Record<string, string
   const site = choice.faces ?? [];
   const roles = { ...preset.roles, ...(choice.roles ?? {}) } as Record<FontRoleId, string | null>;
   const axes = { ...(preset.axes ?? {}), ...(choice.axes ?? {}) } as Partial<Record<FontRoleId, Record<string, number>>>;
-  const faces = resolveRoles(roles, site.map(asFace));
-  for (const [role, id] of Object.entries(roles)) if (id && !faces[role as FontRoleId]) throw new Error(`fontVars: no font face "${id}" for ${role}`);
+  const extra = site.map(asFace);
+  const faces = resolveRoles(roles, extra);
+  for (const [role, id] of Object.entries(roles)) if (id && fontRoles.some((r) => r.id === role) && !faces[role as FontRoleId]) throw new Error(`fontVars: no font face "${id}" for ${role}`);
   const source = (role: FontRoleId): FontRoleId => {
     if (role === 'code' || roles[role]) return role;
     const above = fontRoles.find((r) => r.id === role)?.collapsesTo;
@@ -349,7 +358,17 @@ export function fontVars(choice: FontChoice = {}): { vars: Record<string, string
     vars[role.variable] = stack;
     vars[`--axes-${role.id}`] = settings(axes[source(role.id)]);
   }
-  return { vars, faces: [...new Set(Object.values(faces).flatMap((f) => (f ? [f.id] : [])))] };
+  const used = Object.values(faces).flatMap((f) => (f ? [f.id] : []));
+  for (const role of OPTIONAL_ROLES) {
+    const id = choice.roles?.[role];
+    if (!id) continue;
+    const face = extra.find((f) => f.id === id) ?? faceOf(id);
+    if (!face) throw new Error(`fontVars: no font face "${id}" for ${role}`);
+    const own = site.find((s) => s.id === face.id);
+    vars[`--font-${role}`] = `'${face.family}', ${own?.fallback ? `'${fallbackName(own)}', ` : ''}${FALLBACK[face.classification]}`;
+    used.push(face.id);
+  }
+  return { vars, faces: [...new Set(used)] };
 }
 
 /** The `@font-face` rules for a choice's site faces (IP23), for a stylesheet with no script; empty without `faces`. */
