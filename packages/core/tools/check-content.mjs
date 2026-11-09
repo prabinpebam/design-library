@@ -15,9 +15,15 @@
  * ids and `/layout` links resolve; no string looks like markup, CSS or script; the core block registry
  * (packages/core/render/blocks.tsx) and the core block schema list the same types, as each template's registry and
  * its manifest do.
+ *
+ * Content outside templates (IP39, DP7): `--content <folder>` (repeatable) checks every .json file under it that names
+ * a `$schema` against that schema: a path relative to the file, a core schema's $id, or a template's content $id.
+ * Template-aware warnings (they don't fail the run during the Beta, Q105.3; `--strict` makes them fail): a part file
+ * under parts/fundamentals|compounds|layouts/ the manifest doesn't list, and, with `--src <site source>`, a template
+ * whose screens nothing outside it renders (no file imports the template, or none uses TemplateView).
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 
@@ -29,13 +35,23 @@ const arg = (name) => {
 };
 const templatesDir = resolve(root, arg('templates') ?? 'packages/templates');
 const indexFile = arg('index') ? resolve(root, arg('index')) : join(templatesDir, 'index.ts');
-if (!existsSync(templatesDir)) {
+const contentDirs = process.argv.flatMap((a, i) => (a === '--content' && process.argv[i + 1] ? [resolve(root, process.argv[i + 1])] : []));
+const strict = process.argv.includes('--strict');
+const srcDir = arg('src') ? resolve(root, arg('src')) : undefined;
+const walkCode = (d) =>
+  existsSync(d)
+    ? readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? (e.name === 'node_modules' || e.name.startsWith('.') ? [] : walkCode(join(d, e.name))) : /\.(tsx?|jsx?|mjs)$/.test(e.name) && !/\.stories\./.test(e.name) ? [join(d, e.name)] : []))
+    : [];
+const skipTemplates = !existsSync(templatesDir) && contentDirs.length > 0 && !arg('templates');
+if (!existsSync(templatesDir) && !skipTemplates) {
   console.error(`check:content: no templates folder at ${templatesDir}. Pass --templates <folder holding one folder per template>.`);
   process.exit(1);
 }
 const rel = (f) => relative(root, f).split('\\').join('/');
 const errors = [];
 const fail = (file, pointer, what, fix) => errors.push(`${rel(file)} · ${pointer || '/'} · ${what} · ${fix}`);
+const warnings = [];
+const warn = (file, pointer, what, fix) => warnings.push(`${rel(file)} · ${pointer || '/'} · ${what} · ${fix}`);
 const read = (file) => {
   try {
     return JSON.parse(readFileSync(file, 'utf8'));
@@ -101,8 +117,10 @@ const parity = (file, registered, schemaTypes, where) => {
 parity(join(core, 'render/blocks.tsx'), registryTypes(join(core, 'render/blocks.tsx')), coreBlocks, '@design-library/core/render/blocks.tsx');
 
 const indexSrc = existsSync(indexFile) ? readFileSync(indexFile, 'utf8') : null;
-const folders = readdirSync(templatesDir, { withFileTypes: true }).filter((d) => d.isDirectory() && existsSync(join(templatesDir, d.name, 'template.json'))).map((d) => d.name);
+const folders = skipTemplates ? [] : readdirSync(templatesDir, { withFileTypes: true }).filter((d) => d.isDirectory() && existsSync(join(templatesDir, d.name, 'template.json'))).map((d) => d.name);
 let files = 0;
+// The site's own code outside the templates folder (for --src): what renders the templates.
+const siteCode = srcDir ? walkCode(srcDir).filter((f) => !f.startsWith(templatesDir + sep)).map((f) => [f, readFileSync(f, 'utf8')]) : [];
 
 for (const id of folders) {
   const dir = join(templatesDir, id);
@@ -143,6 +161,17 @@ for (const id of folders) {
     }
   const registryFile = join(dir, 'registry.tsx');
   if (customBlocks.size || existsSync(registryFile)) parity(registryFile, existsSync(registryFile) ? registryTypes(registryFile) : [], [...customBlocks.keys()], `${id}/registry.tsx`);
+  // Parts the template ships but the manifest doesn't list (TP2): nothing documents, stories or places them.
+  const listed = new Set(['fundamentals', 'compounds', 'layouts'].flatMap((k) => (manifest.parts?.[k] ?? []).map((p) => p.source?.split('\\').join('/'))));
+  for (const kind of ['fundamentals', 'compounds', 'layouts']) {
+    const partsDir = join(dir, 'parts', kind);
+    if (!existsSync(partsDir)) continue;
+    for (const f of readdirSync(partsDir)) {
+      if (!/\.(tsx|jsx)$/.test(f) || /\.stories\.(tsx|jsx)$/.test(f)) continue;
+      const source = `parts/${kind}/${f}`;
+      if (!listed.has(source)) warn(manifestFile, `/parts/${kind}`, `${source} ships but isn't listed`, `add { "name": "${id}.${f.replace(/\.(tsx|jsx)$/, '')}", "source": "${source}" } to parts.${kind} with its stories, or delete the file if nothing uses it`);
+    }
+  }
 
   const layouts = manifest.layouts.filter((l) => !l.planned);
   // The grouped hierarchy (Q66): every screen in exactly one flow, every state on a screen, every file in its flow's folder.
@@ -265,10 +294,75 @@ for (const id of folders) {
       checkFile(file, regions);
     }
   } else if (sharedRegions.size) fail(manifestFile, '/shared', 'layouts have shared regions but there is no shared file', 'add "shared": "content/shared.json"');
+
+  // Screens nothing renders (TP2): with --src, a template no file outside it imports never shows its screens (often a
+  // copied template whose screens the site rebuilt as views). Per-screen routes are the site document's job (0.4).
+  if (srcDir) {
+    const usedBy = siteCode.filter(([, text]) => new RegExp(`['"][^'"]*templates/${id}(/index)?(\\.[jt]sx?)?['"]`).test(text));
+    const renders = siteCode.some(([, text]) => /\bTemplateView\b/.test(text));
+    if (!usedBy.length || !renders) warn(manifestFile, '/layouts', `nothing in ${rel(srcDir)} renders ${id}'s ${layouts.length} screens (${usedBy.length ? 'no TemplateView' : 'no file imports the template'})`, 'render them with TemplateView, or remove the screens your site never shows and keep the folder for its parts, content and pictures');
+  }
 }
+
+// Any folder of content files that name a `$schema` (DP7): a site's own content outside templates gets the same check.
+const metaSchema = /^https?:\/\/json-schema\.org\//;
+const coreIds = new Map(Object.values(schemas).map((s) => [s.$id, s.$id]));
+const walkJson = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? (e.name === 'node_modules' || e.name.startsWith('.') ? [] : walkJson(join(d, e.name))) : e.name.endsWith('.json') ? [join(d, e.name)] : []));
+for (const d of contentDirs) {
+  if (!existsSync(d)) {
+    fail(d, '', `content folder doesn't exist`, 'pass --content <a folder of JSON files>');
+    continue;
+  }
+  for (const file of walkJson(d)) {
+    let data;
+    try {
+      data = JSON.parse(readFileSync(file, 'utf8'));
+    } catch (e) {
+      fail(file, '/', `isn't valid JSON (${e.message})`, 'fix the syntax; content is pure JSON');
+      continue;
+    }
+    const ref = data && typeof data === 'object' && !Array.isArray(data) ? data.$schema : undefined;
+    if (typeof ref !== 'string' || metaSchema.test(ref)) continue;
+    let id = coreIds.get(ref.split('#')[0]) ?? (ajv.getSchema(ref.split('#')[0]) ? ref.split('#')[0] : undefined);
+    if (!id && !/^[a-z]+:/i.test(ref)) {
+      const target = resolve(file, '..', ref.split('#')[0]);
+      if (!existsSync(target)) {
+        fail(file, '/$schema', `names ${ref}, which doesn't exist`, 'point $schema at the schema file, relative to this file');
+        continue;
+      }
+      try {
+        const s = JSON.parse(readFileSync(target, 'utf8'));
+        id = s.$id ?? `file:///${target.split('\\').join('/')}`;
+        // Any draft: the keywords content schemas use are shared; the meta-schema address is not needed to validate.
+        const { $schema: _draft, ...body } = s;
+        if (!ajv.getSchema(id)) ajv.addSchema({ ...body, $id: id });
+      } catch (e) {
+        fail(target, '/', `isn't a valid schema (${e.message})`, 'fix the schema');
+        continue;
+      }
+    }
+    if (!id) {
+      warn(file, '/$schema', `names ${ref}, which this check can't read`, 'point $schema at a local schema file or a core schema $id');
+      continue;
+    }
+    files += 1;
+    const target = id + (ref.includes('#') ? ref.slice(ref.indexOf('#')) : '');
+    if (!ajv.getSchema(target)) {
+      fail(file, '/$schema', `names ${ref}, which has no such definition`, 'point $schema at the schema, or at one of its $defs with #/$defs/name');
+      continue;
+    }
+    // The file's own $schema line names the schema; it isn't content, so a closed schema needn't list it.
+    const { $schema: _ref, ...content } = data;
+    check(file, target, content);
+    lint(file, content);
+  }
+}
+
+if (warnings.length) console.warn(`check:content: ${warnings.length} warning${warnings.length === 1 ? '' : 's'}${strict ? '' : ' (not failing the run; --strict makes them fail)'}\n` + warnings.map((w) => `  ${w}`).join('\n'));
+if (strict && warnings.length) errors.push(...warnings.map((w) => `${w} (--strict)`));
 
 if (errors.length) {
   console.error(`check:content: ${errors.length} problem${errors.length === 1 ? '' : 's'}\n` + errors.map((e) => `  ${e}`).join('\n'));
   process.exit(1);
 }
-console.log(`check:content: ${folders.length} templates, ${files} content files, ${coreBlocks.length} core block types: all valid.`);
+console.log(`check:content: ${folders.length} templates${contentDirs.length ? `, ${contentDirs.length} content folder${contentDirs.length === 1 ? '' : 's'}` : ''}, ${files} content files, ${coreBlocks.length} core block types: all valid.`);

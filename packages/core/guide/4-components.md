@@ -96,7 +96,7 @@ A variant or slot two or more products need. It's a change to the library itself
 | Check | Proves |
 | --- | --- |
 | `npx tsc --noEmit` | Props and imports are right |
-| `npx design-library-check-content --templates src/templates` | Every part is namespaced, exists, has stories; block types, schema and registry agree |
+| `npx design-library-check-content --templates src/templates` | Every part is namespaced, exists, has stories; block types, schema and registry agree; a part file under `parts/` the manifest doesn't list is a warning |
 | Read the template's `tokens/tokens.css` (*library repository:* `npm run tokens`, `npm run tokens:check`) | The part's tokens read semantic roles only |
 | `npx design-library-check` in your project (*library repository:* `npm run check:parts`, `npm run check:views`) | Parts reached by child paths; no styled markup in views and bindings |
 | *Library repository:* `npm run check:materials`, `npm run check:motion`, `npm run check:layers` | No blur, literal motion or z-index outside tokens |

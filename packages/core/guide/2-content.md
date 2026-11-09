@@ -50,6 +50,7 @@ Pick the shape for each layout:
    Set `$schema` to the relative path of the template's `content.schema.json` so editors check as you type. Write curly apostrophes and quotes (’ “ ”) in words people read; the check doesn't catch straight ones.
 5. **Shared regions** (a site's header and footer) go once in `content/shared.json` with `"shared": true` in place of `"layout"`, never in each page.
 6. **Run `npx design-library-check-content --templates src/templates`** (library repository: `npm run check:content`) and fix every line it prints (`file · /json/pointer · what's wrong · how to fix`).
+7. **Content outside a template** (a site's own pages, talks or settings in JSON): give each file a `$schema` (a path relative to the file, or a core schema `$id`) and add `--content src/content` (repeat it for each folder). Every file under it that names a `$schema` is checked against it, with the same no-markup rule; files without one are skipped. Add `--src src` to also warn when a template's screens are never rendered (no file imports the template, or none uses `TemplateView`). Warnings don't fail the run during the Beta; `--strict` makes them fail.
 
 ## Write a template's content schema
 
@@ -106,6 +107,7 @@ A change old content no longer satisfies (a renamed key, a split block) raises `
 | Check | Proves |
 | --- | --- |
 | `npm run content:schemas` (*library repository*) | Application record schemas match `types.ts` (only when you changed a record type) |
-| `npx design-library-check-content --templates src/templates` (library repository: `npm run check:content`) | Every manifest, schema, content file, picture and link is valid; registry and schema agree; no markup in words |
+| `npx design-library-check-content --templates src/templates` (library repository: `npm run check:content`) | Every manifest, schema, content file, picture and link is valid; registry and schema agree; no markup in words; warns about part files the manifest doesn't list |
+| `npx design-library-check-content --templates src/templates --content src/content --src src` | Also: every JSON file under `src/content` that names a `$schema` is valid against it; warns about templates whose screens nothing renders |
 | `npx tsc --noEmit` | The registry and any record bindings compile |
 | Open `site.html#/app/{template}/{layout}` | The screen draws, in light, dark and more contrast |
