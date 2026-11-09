@@ -11,6 +11,9 @@
  *   npx design-library-check --all                   list every finding (by default each file shows 3 per rule)
  *   npx design-library-check --share                 also print library vs custom elements per view (proof metric)
  *   npx design-library-check --json                  machine-readable result
+ *   npx design-library-check --site content/site     the site document (site.json) to read; found under the
+ *                                                    source folder when left out (a template's own site/ is not the project's)
+ *   npx design-library-check --config <file>         the exceptions file (default design-library-check.json)
  *
  * Nothing fails the run by default during the Beta (Q105.3: new checks start as warnings); add --strict when you're ready.
  * Errors are rules the guide already states, now checked: styles in views, native <select>, selecting a
@@ -18,8 +21,16 @@
  * outside the material token, literal or "all" transitions, the private duration scale.
  * Warnings count what usually means a missing seam: core tokens set outside the
  * theme-settings allow-list, !important, primitive reads, raw sizes, a scaled root font size, global selectors, raw
- * interactive markup in custom parts, words written in code, unexplained clips. Each finding names a file, a line and
- * the fix.
+ * interactive markup in custom parts, words written in code, unexplained clips, and, when the project has a site
+ * document, page-specific code (a literal route compared in TSX, DP19). Each finding names a file, a line and the fix.
+ *
+ * Exceptions (DP19) are declared, never silent: design-library-check.json in the project folder.
+ *   {
+ *     "wordsInCode": { "allow": ["Harbour Books", "/^v\\d+/"], "files": ["src/dev/**"] },
+ *     "pageSpecificCode": { "files": ["src/router.tsx"] }
+ *   }
+ * An "allow" entry is the exact words or a /regular expression/; "files" are globs from the project folder (* and **).
+ * The summary counts what each exception allowed and names entries that allowed nothing, so the list stays honest.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve, sep } from 'node:path';
@@ -31,7 +42,7 @@ const opt = (/** @type {string} */ name, /** @type {string} */ fallback) => {
   const i = argv.indexOf(name);
   return i >= 0 && argv[i + 1] ? argv[i + 1] : fallback;
 };
-const flag = (/** @type {string} */ name) => argv.some((a) => a === name || a.startsWith(`=`));
+const flag = (/** @type {string} */ name) => argv.some((a) => a === name || a.startsWith(`${name}=`));
 const strict = argv.find((a) => a.startsWith('--strict'));
 const CWD = process.cwd();
 const SRC = resolve(CWD, opt('--src', 'src'));
@@ -62,6 +73,78 @@ function walk(/** @type {string} */ dir, /** @type {RegExp} */ ext) {
     else if (ext.test(name)) out.push(p);
   }
   return out;
+}
+
+// ---- Exceptions (DP19) ----
+const CONFIG = resolve(CWD, opt('--config', 'design-library-check.json'));
+/** @type {{ wordsInCode?: { allow?: string[]; files?: string[] }; pageSpecificCode?: { files?: string[] } }} */
+let config = {};
+if (existsSync(CONFIG)) {
+  try {
+    config = JSON.parse(readFileSync(CONFIG, 'utf8'));
+  } catch (e) {
+    console.error(`design-library-check: ${rel(CONFIG)} isn't valid JSON (${/** @type {Error} */ (e).message}).`);
+    process.exit(2);
+  }
+}
+const glob = (/** @type {string} */ g) =>
+  new RegExp(`^${g.replace(/[.+^${}()|[\]\\]/g, (c) => `\\${c}`).replace(/\*\*\/?/g, '\u0000').replace(/\*/g, '[^/]*').replace(/\?/g, '[^/]').replace(/\u0000/g, '.*')}$`);
+/** @type {Map<string, number>} */
+const used = new Map();
+const exception = (/** @type {string} */ key, /** @type {(entry: string) => boolean} */ test, /** @type {string[] | undefined} */ entries) => {
+  for (const entry of entries ?? []) {
+    const k = `${key} ${entry}`;
+    used.set(k, used.get(k) ?? 0);
+    if (test(entry)) {
+      used.set(k, (used.get(k) ?? 0) + 1);
+      return true;
+    }
+  }
+  return false;
+};
+for (const [key, entries] of [
+  ['wordsInCode.allow', config.wordsInCode?.allow],
+  ['wordsInCode.files', config.wordsInCode?.files],
+  ['pageSpecificCode.files', config.pageSpecificCode?.files],
+])
+  for (const entry of /** @type {string[] | undefined} */ (entries) ?? []) used.set(`${key} ${entry}`, 0);
+const fileAllowed = (/** @type {string} */ key, /** @type {string[] | undefined} */ globs, /** @type {string} */ file) =>
+  exception(`${key}.files`, (g) => glob(g).test(rel(file)), globs);
+const wordsAllowed = (/** @type {string} */ words, /** @type {string} */ file) =>
+  fileAllowed('wordsInCode', config.wordsInCode?.files, file) ||
+  exception('wordsInCode.allow', (a) => (/^\/.+\/[a-z]*$/.test(a) ? new RegExp(a.slice(1, a.lastIndexOf('/')), a.slice(a.lastIndexOf('/') + 1)).test(words) : a === words.trim()), config.wordsInCode?.allow);
+
+// ---- The site document (DP19): when the project has one, its routes are data ----
+const siteArg = opt('--site', '');
+/** @param {string} dir @param {number} depth @returns {string[]} */
+const findSites = (dir, depth) => {
+  if (depth < 0 || !existsSync(dir)) return [];
+  /** @type {string[]} */
+  const out = [];
+  for (const name of readdirSync(dir)) {
+    if (name === 'node_modules' || name === 'dist' || name.startsWith('.')) continue;
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) out.push(...findSites(p, depth - 1));
+    else if (name === 'site.json') {
+      try {
+        if ('siteVersion' in JSON.parse(readFileSync(p, 'utf8'))) out.push(dirname(p));
+      } catch {}
+    }
+  }
+  return out;
+};
+const sites = siteArg ? [resolve(CWD, siteArg)] : findSites(SRC, 6).filter((d) => !d.startsWith(TEMPLATES + sep));
+/** @type {Map<string, string>} route → the page document that declares it */
+const routes = new Map();
+for (const site of sites) {
+  const pages = join(site, 'pages');
+  if (existsSync(pages))
+    for (const name of readdirSync(pages).filter((n) => n.endsWith('.json'))) {
+      try {
+        const page = JSON.parse(readFileSync(join(pages, name), 'utf8'));
+        if (typeof page.route === 'string') routes.set(page.route, rel(join(pages, name)));
+      } catch {}
+    }
 }
 
 const templateIds = existsSync(TEMPLATES) ? readdirSync(TEMPLATES).filter((n) => statSync(join(TEMPLATES, n)).isDirectory()) : [];
@@ -101,10 +184,22 @@ for (const file of tsx) {
     add('error', 'scroll-region', file, lineAt(text, m.index ?? 0), `an inline scroll region (${m[0]}): wrap the region in ScrollArea (Never 9)`);
   // Words a person reads, written in code (Never 8): text between tags and literal label-like props.
   for (const m of text.matchAll(/>\s*([A-Z][a-z]+(?:[ ,'’][A-Za-z]+){1,})\s*</g))
-    add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `"${m[1]}" is written in code: put it in content JSON or a prop (Never 8)`);
+    if (!wordsAllowed(m[1], file)) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `"${m[1]}" is written in code: put it in content JSON or a prop (Never 8)`);
   for (const m of text.matchAll(/\b(label|title|alt|placeholder|hint|aria-label|description)\s*=\s*"([^"{}]*[A-Za-z]{2,}[^"{}]*)"/g))
-    if (/\s/.test(m[2]) || /^[A-Z]/.test(m[2])) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `${m[1]}="${m[2]}" is written in code: read it from content (Never 8)`);
+    if ((/\s/.test(m[2]) || /^[A-Z]/.test(m[2])) && !wordsAllowed(m[2], file)) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `${m[1]}="${m[2]}" is written in code: read it from content (Never 8)`);
 }
+// Page-specific code (DP19, DR35): with a site document, a route compared in code is a page the data can't describe.
+if (sites.length)
+  for (const file of tsx) {
+    const text = noComments(readFileSync(file, 'utf8')).replace(/(^|[^:])\/\/[^\n]*/g, '$1');
+    const ROUTE = /(?:[=!]==?\s*(['"`])(\/[^'"`\s]*)\1|(['"`])(\/[^'"`\s]*)\3\s*[=!]==?|\bcase\s+(['"`])(\/[^'"`\s]*)\5\s*:|\.startsWith\(\s*(['"`])(\/[^'"`\s]+)\7\s*\))/g;
+    for (const m of text.matchAll(ROUTE)) {
+      const route = m[2] ?? m[4] ?? m[6] ?? m[8];
+      if (fileAllowed('pageSpecificCode', config.pageSpecificCode?.files, file)) continue;
+      const page = routes.get(route);
+      add('warning', 'page-specific', file, lineAt(text, m.index ?? 0), `compares the route '${route}' in code${page ? ` (the page in ${page})` : ''}: say what differs in the page document (a block, a slot, a binding), so the site stays data; a router that must branch goes in pageSpecificCode.files`);
+    }
+  }
 for (const file of parts) {
   const text = readFileSync(file, 'utf8');
   const raw = [...text.matchAll(/<(a|button|img|h[1-6]|input|textarea)(?=[\s>/])/g)];
@@ -212,7 +307,7 @@ if (flag('--share') || flag('--json')) {
 const errors = findings.filter((f) => f.level === 'error');
 const warnings = findings.filter((f) => f.level === 'warning');
 if (flag('--json')) {
-  console.log(JSON.stringify({ errors: errors.length, warnings: warnings.length, findings, share }, null, 2));
+  console.log(JSON.stringify({ errors: errors.length, warnings: warnings.length, findings, share, sites: sites.map((d) => rel(d)), exceptions: Object.fromEntries(used) }, null, 2));
 } else {
   /** @type {Map<string, number>} */
   const shown = new Map();
@@ -229,6 +324,12 @@ if (flag('--json')) {
   }
   const byRule = Object.entries(findings.reduce((/** @type {Record<string, number>} */ a, f) => ((a[`${f.level} ${f.rule}`] = (a[`${f.level} ${f.rule}`] ?? 0) + 1), a), {}));
   console.log(`\ndesign-library-check: ${tsx.length} TSX and ${css.length} CSS files in ${rel(SRC) || '.'}; ${errors.length} errors, ${warnings.length} warnings${byRule.length ? ` (${byRule.map(([k, n]) => `${k} ${n}`).join(', ')})` : ''}.`);
+  if (sites.length) console.log(`Site document${sites.length > 1 ? 's' : ''}: ${sites.map((d) => rel(d) || '.').join(', ')} (${routes.size} page routes); page-specific code is checked.`);
+  if (used.size) {
+    const unused = [...used].filter(([, n]) => !n).map(([k]) => k.replace(' ', ' → '));
+    const allowed = [...used].reduce((a, [, n]) => a + n, 0);
+    console.log(`Exceptions in ${rel(CONFIG)}: ${allowed} findings allowed${unused.length ? `; never used (remove them): ${unused.join('; ')}` : ''}.`);
+  }
   if (findings.length && !strict) console.log('Nothing fails the run during the Beta unless you pass --strict (errors) or --strict=all (errors and warnings). Fix at the owner: theme, layout choice, props and slots, your custom part, then content.');
 }
 const failing = strict === '--strict=all' ? findings.length : strict ? errors.length : 0;
