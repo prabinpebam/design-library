@@ -1,7 +1,7 @@
 {
   "name": "@design-library/core",
   "private": true,
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.2",
   "license": "MIT",
   "type": "module",
   "description": "Design Library core: DTCG tokens, generated CSS, fundamentals, behaviour and schemas.",

@@ -12,7 +12,7 @@
  *   npx design-library-check --share                 also print library vs custom elements per view (proof metric)
  *   npx design-library-check --json                  machine-readable result
  *
- * Nothing fails the run by default in 0.3 (Q105.3: new checks start as warnings); add --strict when you're ready.
+ * Nothing fails the run by default during the Beta (Q105.3: new checks start as warnings); add --strict when you're ready.
  * Errors are rules the guide already states, now checked: styles in views, native <select>, selecting a
  * core component's data-dl name, descendant part selectors, raw scroll regions and scrollbar styling, backdrop blur
  * outside the material token, literal or "all" transitions, the private duration scale.
@@ -229,7 +229,7 @@ if (flag('--json')) {
   }
   const byRule = Object.entries(findings.reduce((/** @type {Record<string, number>} */ a, f) => ((a[`${f.level} ${f.rule}`] = (a[`${f.level} ${f.rule}`] ?? 0) + 1), a), {}));
   console.log(`\ndesign-library-check: ${tsx.length} TSX and ${css.length} CSS files in ${rel(SRC) || '.'}; ${errors.length} errors, ${warnings.length} warnings${byRule.length ? ` (${byRule.map(([k, n]) => `${k} ${n}`).join(', ')})` : ''}.`);
-  if (findings.length && !strict) console.log('Nothing fails the run in 0.3 unless you pass --strict (errors) or --strict=all (errors and warnings). Fix at the owner: theme, layout choice, props and slots, your custom part, then content.');
+  if (findings.length && !strict) console.log('Nothing fails the run during the Beta unless you pass --strict (errors) or --strict=all (errors and warnings). Fix at the owner: theme, layout choice, props and slots, your custom part, then content.');
 }
 const failing = strict === '--strict=all' ? findings.length : strict ? errors.length : 0;
 process.exit(failing ? 1 : 0);

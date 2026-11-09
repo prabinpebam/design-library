@@ -337,7 +337,7 @@ export function App() {
         <TitleBar
           title="Design Library"
           href="#/overview"
-          meta={`0.2.0-beta.1 · Beta, for early trials${previewing.length ? ` · previewing ${previewing.join(' and ')}` : ''}`}
+          meta={`0.2.0-beta.2 · Beta, for early trials${previewing.length ? ` · previewing ${previewing.join(' and ')}` : ''}`}
           actions={
             <>
               <SegmentedControl label="Colour scheme" iconOnly options={schemeOptions} value={dark ? 'dark' : 'light'} onChange={(v) => setDark(v === 'dark')} />

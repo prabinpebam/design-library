@@ -1,7 +1,7 @@
 {
   "name": "@design-library/templates",
   "private": true,
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.2",
   "license": "MIT",
   "type": "module",
   "description": "Templates (Q62, Q64): each folder is one template: a manifest, a content schema, content JSON per layout, pictures, and any custom parts in its own namespace. Rendered by @design-library/core/render.",
@@ -23,7 +23,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@design-library/core": "0.2.0-beta.1"
+    "@design-library/core": "0.2.0-beta.2"
   },
   "peerDependencies": {
     "react": "^19.0.0",
