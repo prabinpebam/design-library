@@ -26,6 +26,20 @@ export interface SiteHeaderProps extends DataAttributes {
   label?: string;
   /** One or two Buttons at the end, the main one last: "Contact sales", "Get tickets". They stay in a narrow window. */
   actions?: ReactNode;
+  /** Where the places sit on a wide bar (IP32): `start` (default, after the name), `center` (centred between the name and the end) or `end` (beside the actions). */
+  nav?: 'start' | 'center' | 'end';
+  /** The name's size (IP32): `normal` (default), `large` (a wordmark brand) or `mark` (only the mark shows; the name still names the home link). `mark` needs `mark`. */
+  wordmark?: 'normal' | 'large' | 'mark';
+  /** How the current place is marked (IP32): `fill` (default, a tint), `colour` (accent words) or `rule` (a full hairline around it; never a one-sided stripe). */
+  current?: 'fill' | 'colour' | 'rule';
+  /**
+   * The narrow form (IP32, below 48 rem): `wrap` (default) keeps `actions` on the bar and wraps them under the name
+   * when they don't fit; `row` keeps the bar to one row, moving `actions` into the menu under the places, with only
+   * `tools` and Menu beside the name.
+   */
+  narrow?: 'wrap' | 'row';
+  /** Small icon controls that stay on the bar at every width, before Menu (a scheme or search button). */
+  tools?: ReactNode;
 }
 
 /**
@@ -39,11 +53,13 @@ export interface SiteHeaderProps extends DataAttributes {
  * closes it, and Escape returns focus to the button.
  * @key Escape: closes the menu
  */
-export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, ...data }: SiteHeaderProps) {
+export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, nav, wordmark, current, narrow, tools, ...data }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const panelId = useId();
   const button = useRef<HTMLSpanElement>(null);
+  const markOnly = wordmark === 'mark' && !!mark;
+  const row = narrow === 'row' && links.length > 0;
 
   useEffect(() => {
     if (!open) return;
@@ -69,15 +85,15 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
   );
 
   return (
-    <div {...data} data-dl="site-header" data-open={open ? '' : undefined}>
+    <div {...data} data-dl="site-header" data-open={open ? '' : undefined} data-nav={nav && nav !== 'start' ? nav : undefined} data-wordmark={wordmark === 'large' ? 'large' : markOnly ? 'mark' : undefined} data-current={current && current !== 'fill' ? current : undefined} data-narrow={row ? 'row' : undefined}>
       <div data-dl-part="bar">
-        <a href={router ? router.href(href) : href} data-dl-part="name">
+        <a href={router ? router.href(href) : href} data-dl-part="name" aria-label={markOnly ? name : undefined}>
           {mark && (
             <span data-dl-part="mark" aria-hidden="true">
               {mark}
             </span>
           )}
-          {name}
+          {!markOnly && name}
         </a>
         {links.length > 0 && (
           <nav aria-label={label} data-dl-part="links">
@@ -85,7 +101,8 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
           </nav>
         )}
         <span data-dl-part="end">
-          {actions}
+          {actions && (row ? <span data-dl-part="actions">{actions}</span> : actions)}
+          {tools}
           {links.length > 0 && (
             <span ref={button} data-dl-part="menu">
               <Button label={open ? 'Close menu' : 'Menu'} icon={open ? 'close' : 'menu'} iconOnly emphasis="quiet" size="s" expanded={open} controls={panelId} onClick={() => setOpen((o) => !o)} />
@@ -97,6 +114,7 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
       <Reveal open={open}>
         <nav id={panelId} aria-label={label} data-dl-part="panel">
           {list}
+          {row && actions && <span data-dl-part="panel-actions">{actions}</span>}
         </nav>
       </Reveal>
     </div>

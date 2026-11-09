@@ -1,5 +1,6 @@
 import { Button } from '../fundamentals/Button';
 import { Icon } from '../fundamentals/Icon';
+import { ScreenPreview } from '../compounds/ScreenPreview';
 import { SiteHeader } from '../compounds/SiteHeader';
 import type { StoryFile } from './story';
 
@@ -28,6 +29,44 @@ export default {
       description: 'A one-page site: the name and an action, no places and so no Menu.',
       code: `<SiteHeader name="Asha Rao" href="/" actions={<Button label="Get in touch" size="s" />} />`,
       render: () => <SiteHeader name="Asha Rao" href="#/siteheader" actions={<Button label="Get in touch" size="s" />} />,
+    },
+    {
+      title: 'Places in the middle, a large wordmark',
+      description: 'nav="center" centres the places between the name and the actions (nav="end" beside the actions); wordmark="large" sets the name at heading 2 for a brand whose name is its logo.',
+      code: `<SiteHeader name="Northwind" href="/" links={links} nav="center" wordmark="large" actions={<Button label="Contact sales" emphasis="primary" size="s" />} />`,
+      render: () => <SiteHeader name="Northwind" href="#/siteheader" links={links} nav="center" wordmark="large" actions={<Button label="Contact sales" emphasis="primary" size="s" />} />,
+    },
+    {
+      title: 'Mark only, places at the end',
+      description: 'wordmark="mark" shows only the mark; the name still names the home link for screen readers. nav="end" sets the places beside the actions.',
+      code: `<SiteHeader name="Northwind" href="/" mark={<Icon name="organisation" size="lg" />} wordmark="mark" links={links} nav="end" />`,
+      render: () => <SiteHeader name="Northwind" href="#/siteheader" mark={<Icon name="organisation" size="lg" />} wordmark="mark" links={links} nav="end" actions={<Button label="Contact sales" emphasis="primary" size="s" />} />,
+    },
+    {
+      title: 'How the current place is marked',
+      description: 'current="fill" (default) tints it; current="colour" sets its words in the accent text role (4.5:1); current="rule" draws a full hairline around it (3:1). Never a stripe on one side.',
+      code: `<SiteHeader … current="colour" />
+<SiteHeader … current="rule" />`,
+      render: () => (
+        <>
+          <SiteHeader name="Northwind" href="#/siteheader" links={links} current="colour" />
+          <SiteHeader name="Northwind" href="#/siteheader" links={links} current="rule" />
+        </>
+      ),
+    },
+    {
+      title: 'One row in a narrow window',
+      description: 'Phone-sized, with places, a scheme button in tools and a Switch in actions. By default (left) the actions wrap under the name, so the header takes two rows. With narrow="row" (right) the bar stays one row of 64 px, name, tools and Menu, and the actions move into the menu under the places.',
+      arrangement: 'row',
+      code: `<SiteHeader name="Talks on design" href="/" links={links} narrow="row"
+  tools={<SchemeControl form="button" />}
+  actions={<Switch label="Fade between pages" … />} />`,
+      render: () => (
+        <>
+          <ScreenPreview src="site.html?demo=router#/" title="Narrow header, default: actions wrap" width="phone" caption="Default: two rows." />
+          <ScreenPreview src="site.html?demo=router&header=row#/" title="Narrow header, one row" width="phone" caption={'narrow="row": one row; open Menu for the Switch.'} />
+        </>
+      ),
     },
   ],
 } satisfies StoryFile;

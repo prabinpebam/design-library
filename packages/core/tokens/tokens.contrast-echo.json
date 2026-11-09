@@ -141,6 +141,16 @@
         "$description": "The thumb while hovered or dragged (echoed for contrast contexts)"
       }
     },
+    "site-header": {
+      "$extensions": {
+        "owner": "SiteHeader"
+      },
+      "current-rule": {
+        "$type": "color",
+        "$value": "{color.border-strong}",
+        "$description": "IP32: the full rule around the current place at current=\"rule\" (3:1 against the page); never a one-sided stripe (echoed for contrast contexts)"
+      }
+    },
     "skeleton": {
       "$extensions": {
         "owner": "Skeleton"

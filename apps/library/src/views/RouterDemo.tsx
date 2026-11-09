@@ -5,7 +5,7 @@
  * styles. Shown on the library's Routing page in a ScreenPreview.
  */
 import { useState } from 'react';
-import { Cluster, Image, Link, PageHeader, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/react';
+import { Cluster, Image, Link, PageHeader, SchemeControl, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/react';
 import { loadPicture, matchPath, Router, useRoute, type Route } from '@design-library/core/site';
 import hall from '../../../../packages/templates/conference/assets/main-hall.webp?url';
 
@@ -71,8 +71,21 @@ function View() {
 
 function Shell({ fade, onFade }: { fade: boolean; onFade: (next: boolean) => void }) {
   const { path } = useRoute();
+  // IP32: `?header=row` keeps the bar one row in a narrow window (the Switch moves into the menu); the scheme button stays.
+  const row = new URLSearchParams(window.location.search).get('header') === 'row';
   return (
-    <SiteLayout header={<SiteHeader name="Talks on design" href="/" links={pages.map((p) => ({ ...p, current: p.href === path }))} actions={<Switch label="Fade between pages" checked={fade} onChange={onFade} />} />}>
+    <SiteLayout
+      header={
+        <SiteHeader
+          name="Talks on design"
+          href="/"
+          links={pages.map((p) => ({ ...p, current: p.href === path }))}
+          narrow={row ? 'row' : undefined}
+          tools={<SchemeControl form="button" storageKey="design-library.router-demo.scheme" />}
+          actions={<Switch label="Fade between pages" checked={fade} onChange={onFade} />}
+        />
+      }
+    >
       <View />
     </SiteLayout>
   );

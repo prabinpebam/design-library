@@ -55,6 +55,31 @@
           "name": "actions",
           "type": "ReactNode",
           "description": "One or two Buttons at the end, the main one last: \"Contact sales\", \"Get tickets\". They stay in a narrow window."
+        },
+        {
+          "name": "nav",
+          "type": "'start' | 'center' | 'end'",
+          "description": "Where the places sit on a wide bar (IP32): `start` (default, after the name), `center` (centred between the name and the end) or `end` (beside the actions)."
+        },
+        {
+          "name": "wordmark",
+          "type": "'normal' | 'large' | 'mark'",
+          "description": "The name's size (IP32): `normal` (default), `large` (a wordmark brand) or `mark` (only the mark shows; the name still names the home link). `mark` needs `mark`."
+        },
+        {
+          "name": "current",
+          "type": "'fill' | 'colour' | 'rule'",
+          "description": "How the current place is marked (IP32): `fill` (default, a tint), `colour` (accent words) or `rule` (a full hairline around it; never a one-sided stripe)."
+        },
+        {
+          "name": "narrow",
+          "type": "'wrap' | 'row'",
+          "description": "The narrow form (IP32, below 48 rem): `wrap` (default) keeps `actions` on the bar and wraps them under the name when they don't fit; `row` keeps the bar to one row, moving `actions` into the menu under the places, with only `tools` and Menu beside the name."
+        },
+        {
+          "name": "tools",
+          "type": "ReactNode",
+          "description": "Small icon controls that stay on the bar at every width, before Menu (a scheme or search button)."
         }
       ]
     },
@@ -87,7 +112,9 @@
   ],
   "tokens": [
     "--border-hairline",
+    "--c-site-header-current-colour",
     "--c-site-header-current-fill",
+    "--c-site-header-current-rule",
     "--c-site-header-gap",
     "--c-site-header-height",
     "--c-site-header-hover-fill",
@@ -97,6 +124,7 @@
     "--c-site-header-link-size",
     "--c-site-header-mark-gap",
     "--c-site-header-name-size",
+    "--c-site-header-name-size-large",
     "--c-site-header-panel-padding",
     "--c-site-header-pressed-fill",
     "--c-site-header-row-gap",
@@ -106,6 +134,7 @@
     "--duration-change",
     "--easing-standard",
     "--size-focus-width",
+    "--type-heading-2-leading",
     "--weight-bold",
     "--weight-semibold"
   ],
