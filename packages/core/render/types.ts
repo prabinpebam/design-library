@@ -6,13 +6,22 @@
 import type { ReactNode } from 'react';
 import type { AgendaSlot, FooterLink, FooterSection, IconName, StoryFile } from '../react';
 
-export interface SiteAction {
+export type SiteAction = {
   label: string;
   /** The main action: one per part at most. */
   primary?: boolean;
-  /** What the page says when it's pressed, while it leads nowhere in an example. */
-  says: string;
-}
+} & (
+  | {
+      /** What the page says when it's pressed, while it leads nowhere in an example. */
+      says: string;
+      href?: undefined;
+    }
+  | {
+      /** Where it goes (DP2): "/layout" (resolved by TemplateView's hrefFor), "#id" or an address; drawn as a link that looks like a button. */
+      href: string;
+      says?: string;
+    }
+);
 
 /** A link in content: `/layout` of the same template, `https://…`, `mailto:…` or `#anchor`. */
 export interface SiteLink {

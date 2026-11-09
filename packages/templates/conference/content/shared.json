@@ -35,7 +35,7 @@
           {
             "label": "Get tickets",
             "primary": true,
-            "says": "Get tickets isn’t part of this example."
+            "href": "/tickets"
           }
         ]
       }

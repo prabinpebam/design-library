@@ -26,7 +26,7 @@ Pick the shape for each layout:
 ## Write content for a layout (regions of blocks)
 
 1. **Find the layout** in `agent/index.json` → `templates[].layouts[]`: its `content` path and its `regions` with the block types each `accepts` (`*` means any registered type).
-2. **Find each block's fields** in `index.json` → `blocks[]` (`type`, `fields`, which are required, and each field's shape; a list of objects shows its keys, `?` marking the optional ones). `text` is plain words, `asset` an id from `assets.json`, `href` a link, `icon` an icon name from `index.json` → `icons`, `actions` a list of `{ label, primary?, says }`.
+2. **Find each block's fields** in `index.json` → `blocks[]` (`type`, `fields`, which are required, and each field's shape; a list of objects shows its keys, `?` marking the optional ones). `text` is plain words, `asset` an id from `assets.json`, `href` a link, `icon` an icon name from `index.json` → `icons`, `actions` a list of `{ label, primary?, href }`: `href` is where it goes (`"/layout"` for a layout of this template, checked; `"#id"` for a heading on the page; or an address), drawn as a link that looks like a button. An example that leads nowhere yet uses `says` instead (what the page says when it's pressed).
 3. **Find the layout's settings** in `index.json` → `layouts.settings[]`: some layouts need them. `SiteLayout` requires `"settings": { "current": "{layout id}" }` (the header place shown as current); `width` and `state` are optional.
 4. **Write the file** at the layout's `content` path:
 

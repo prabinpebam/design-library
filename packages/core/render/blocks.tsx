@@ -15,7 +15,11 @@ export const actionButtons = (list: SiteAction[] | undefined, size?: 's') =>
   list?.length ? (
     <>
       {list.map((a) => (
-        <Button key={a.label} label={a.label} emphasis={a.primary ? 'primary' : 'default'} size={size} onClick={() => notify({ message: a.says })} />
+        a.href !== undefined ? (
+          <Button key={a.label} label={a.label} emphasis={a.primary ? 'primary' : 'default'} size={size} href={a.href} />
+        ) : (
+          <Button key={a.label} label={a.label} emphasis={a.primary ? 'primary' : 'default'} size={size} onClick={() => notify({ message: a.says })} />
+        )
       ))}
     </>
   ) : undefined;

@@ -18,11 +18,11 @@
           {
             "label": "Get tickets",
             "primary": true,
-            "says": "Get tickets isn’t part of this example."
+            "href": "/tickets"
           },
           {
             "label": "See the schedule",
-            "says": "See the schedule isn’t part of this example."
+            "href": "/schedule"
           }
         ],
         "note": "Early tickets until 31 January.",
@@ -148,11 +148,11 @@
           {
             "label": "Get tickets",
             "primary": true,
-            "says": "Get tickets isn’t part of this example."
+            "href": "/tickets"
           },
           {
             "label": "Ask about groups",
-            "says": "Ask about groups isn’t part of this example."
+            "href": "/group-booking"
           }
         ]
       }

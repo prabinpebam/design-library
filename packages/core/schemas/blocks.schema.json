@@ -146,9 +146,9 @@
     },
     "action": {
       "type": "object",
+      "description": "A button in a block. It goes somewhere (`href`: a layout as \"/layout\", an anchor as \"#id\", or an address) or, in an example that leads nowhere yet, says something when pressed (`says`). At least one; with both, it goes.",
       "required": [
-        "label",
-        "says"
+        "label"
       ],
       "properties": {
         "label": {
@@ -158,11 +158,28 @@
           "type": "boolean",
           "description": "The main action: one per part at most."
         },
+        "href": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where it goes: \"/layout\" for a layout of this template (checked), \"#id\" for a heading on the page, or an address. Drawn as a link that looks like a button."
+        },
         "says": {
           "$ref": "#/$defs/text",
           "description": "What the page says when the action is pressed, while it leads nowhere in an example: \"Quotes aren’t part of this example.\""
         }
       },
+      "anyOf": [
+        {
+          "required": [
+            "href"
+          ]
+        },
+        {
+          "required": [
+            "says"
+          ]
+        }
+      ],
       "additionalProperties": false
     },
     "actions": {
