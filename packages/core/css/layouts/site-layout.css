@@ -57,6 +57,11 @@
     padding-block: var(--c-site-layout-padding-start, var(--c-site-layout-padding-block)) var(--c-site-layout-padding-block);
   }
 
+  /* The last band's neighbour is the footer: a Frame there needs only the page level to it (FR6), the column's end space counted. */
+  [data-dl='site-layout'] > [data-dl-part='main'] > [data-dl-part='column'] > [data-dl='frame']:last-child {
+    --dl-frame-floor-end: max(0px, calc(var(--c-frame-space-min) - var(--c-site-layout-padding-block)));
+  }
+
   /* A flush opening (IP4): the first band meets the header, for an opening picture or tinted band. Also a theme setting. */
   [data-dl='site-layout'][data-opening='flush'] {
     --c-site-layout-padding-start: 0px;

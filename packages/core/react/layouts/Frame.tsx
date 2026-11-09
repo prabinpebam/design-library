@@ -33,6 +33,7 @@ export function Frame({ kind, mode = 'peek', ground = false, children, ...data }
   // A stage is sized to what's left of the window below where it starts (the header, the layout's first space and
   // anything above it, such as breadcrumbs), so its peek holds; measured, written straight to the style.
   const ref = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || kind !== 'stage') return;
@@ -46,9 +47,35 @@ export function Frame({ kind, mode = 'peek', ground = false, children, ...data }
       window.removeEventListener('resize', measure);
     };
   }, [kind]);
+  // A peek feature's space below gives way so the next band stays in view (K1): it needs its content's height, written
+  // only while that content fits above the peek (taller content can't leave a peek, so it keeps its full space).
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const content = contentRef.current;
+    if (!el || !content || kind !== 'feature' || mode !== 'peek') return;
+    const measure = () => {
+      const room = document.createElement('div');
+      room.style.cssText = 'position:absolute;visibility:hidden;block-size:calc(100svh - var(--dl-chrome-block, 0px) - var(--c-frame-peek))';
+      el.appendChild(room);
+      const limit = room.getBoundingClientRect().height;
+      room.remove();
+      const height = content.getBoundingClientRect().height;
+      if (height <= limit) el.style.setProperty('--dl-frame-content', `${height}px`);
+      else el.style.removeProperty('--dl-frame-content');
+    };
+    measure();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
+    observer?.observe(content);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+      el.style.removeProperty('--dl-frame-content');
+    };
+  }, [kind, mode]);
   return (
     <div {...data} ref={ref} data-dl="frame" data-frame={kind} data-frame-mode={mode} data-ground={ground ? '' : undefined}>
-      <div data-dl-part="content">{children}</div>
+      <div ref={contentRef} data-dl-part="content">{children}</div>
     </div>
   );
 }

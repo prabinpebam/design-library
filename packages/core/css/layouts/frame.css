@@ -33,7 +33,21 @@
   /* Fluid with the window (Utopia): the page level up to a 25 rem wide window, twice it from 80 rem, in between by the
      width; never more than 12 % of the window's height, so a tall phone doesn't get a wide screen's space. */
   [data-dl='frame'][data-frame='feature'] {
-    padding-block: clamp(var(--c-frame-space-min), min(12svh, calc(var(--c-frame-space-min) * 6 / 11 + 7.2727vw)), calc(2 * var(--c-frame-space-min)));
+    --dl-frame-space: clamp(var(--c-frame-space-min), min(12svh, calc(var(--c-frame-space-min) * 6 / 11 + 7.2727vw)), calc(2 * var(--c-frame-space-min)));
+    padding-block: var(--dl-frame-space);
+  }
+
+  /* Peek, a tall feature (K1): the space below gives way so at least c.frame.peek of the next band stays in view
+     under the sticky header. The space above keeps its size (FR7), and the space below never drops under what tops the
+     layout's band gap up to one and a half page levels (FR1), or, where the host says so (--dl-frame-floor-end: the
+     last band, whose neighbour is the footer), what tops the layout's end space up to the page level (FR6). Frame writes
+     its content's height (--dl-frame-content)
+     only while that content fits above the peek; before that, or for content taller than the window, nothing gives way. */
+  [data-dl='frame'][data-frame='feature'][data-frame-mode='peek'] {
+    padding-block-end: max(
+      var(--dl-frame-floor-end, max(0px, calc(1.5 * var(--c-frame-space-min) - var(--dl-frame-start, 0px)))),
+      min(var(--dl-frame-space), calc(100svh - var(--dl-chrome-block, 0px) - var(--c-frame-peek) - var(--dl-frame-content, 0px) - var(--dl-frame-space)))
+    );
   }
 
   /* Peek: about 70 % of the small viewport, and never so tall that less than c.frame.peek of the next band shows, the

@@ -295,7 +295,9 @@
         return r.top < cr.bottom && r.bottom > cr.top;
       });
       const inner = rr.width - px(rcs.paddingLeft) - px(rcs.paddingRight) - px(rcs.borderLeftWidth) - px(rcs.borderRightWidth);
-      const gap = px(rcs.columnGap) * (kids.length - 1);
+      // A subgrid row's `normal` gap is its parent grid's gap (what lays its cells out), not zero.
+      const columnGap = rcs.columnGap === 'normal' && rcs.gridTemplateColumns.startsWith('subgrid') ? getComputedStyle(row.parentElement).columnGap : rcs.columnGap;
+      const gap = px(columnGap) * (kids.length - 1);
       // In a subgrid row the tracks are shared with the rows around it (alignment within this context, Q98): a
       // sibling's column needs the widest content of that column across the rows, no more.
       const shared = rcs.gridTemplateColumns.startsWith('subgrid');
@@ -438,10 +440,14 @@
         }
         if (kind === 'feature' && fr.height < avail - 2) fail('FR14', { where: where(f), height: Math.round(fr.height), needs: Math.round(avail) });
       }
-      // FR15 peek: a feature leaves at least c.frame.peek of its neighbours in view (judged where its content alone would
-      // leave it: a frame can't shrink content taller than the window, only its own space).
+      // FR15 peek: a feature leaves at least c.frame.peek of its neighbours in view (judged where its content and the
+      // least space the other rules leave it would: FR7's page level above on a phone, and below whatever tops the
+      // space outside it up to FR1's one and a half page levels to the next band, or FR6's page level to the footer).
+      // A frame can't shrink content taller than the window, only its own space.
       const limit = vh - headH - peek;
-      if (mode === 'peek' && kind === 'feature' && fr.height > limit + 1 && cr.height <= limit) fail('FR15', { where: where(f), height: Math.round(fr.height), window: vh });
+      const outside = next ? rectOf(next).top - fr.bottom : footer ? doc(footer.getBoundingClientRect()).top - fr.bottom : Infinity;
+      const least = cr.height + (vw <= 400 ? page : 0) + Math.max(0, (next ? 1.5 * page : footer ? page : 0) - outside);
+      if (mode === 'peek' && kind === 'feature' && fr.height > limit + 1 && least <= limit) fail('FR15', { where: where(f), height: Math.round(fr.height), window: vh });
     }
 
     // FR11 edges: header, column and footer content share one start and end edge.
