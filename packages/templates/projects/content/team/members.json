@@ -46,19 +46,23 @@
         "items": [
           {
             "name": "Ama Mensah",
-            "role": "Admin"
+            "role": "Admin",
+            "picture": "amaMensah"
           },
           {
             "name": "Jonas Lind",
-            "role": "Member"
+            "role": "Member",
+            "picture": "jonasLind"
           },
           {
             "name": "Keiko Arai",
-            "role": "Member"
+            "role": "Member",
+            "picture": "keikoArai"
           },
           {
             "name": "Luis Ortega",
-            "role": "Viewer"
+            "role": "Viewer",
+            "picture": "luisOrtega"
           }
         ]
       },

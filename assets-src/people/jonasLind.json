@@ -1,0 +1,14 @@
+{
+  "id": "jonasLind",
+  "set": "SS8 People (one portrait per fictional person, shared by every template that shows them)",
+  "slot": "IS1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/library/people/reference.webp",
+  "size": "1024x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/<template>/assets/portrait-<id>.webp (each template that shows the person)",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 96 --density 2 --no-trim",
+  "alt": "",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: the portrait of a made-up person in a website template (a conference speaker, a blog author, a designer's about page), shown in a circle from 40 to 96 px, so it must read at small sizes and survive a circular crop.\nSubject: a man in his thirties with fair skin and Scandinavian features, an engineer.\nDetails: messy light-blond hair, a short blond beard, a grey hoodie, on a pale mint background.\nComposition: square, head and shoulders, facing the viewer or slightly turned, the head centred horizontally, the face in the centre third, the top of the head about 15% from the top edge, shoulders reaching the bottom edge, nothing important in the corners.\nStyle: flat illustrated portrait, simple flat colour shapes with soft gouache edges, no outlines, simplified stylised features (small dot eyes, a short curved mouth, a simple nose shape), clearly a drawing and not a real person, warm friendly expression, one plain flat pastel background colour, gentle light from the upper left with one soft shadow tone.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no photorealism, not a likeness of any real or famous person, nothing in the background."
+}

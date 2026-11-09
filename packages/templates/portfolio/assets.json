@@ -64,6 +64,10 @@
     "arrowSketches": {
       "src": "assets/arrow-sketches.webp",
       "alt": "Pencil sketches of arrows and sign shapes on paper, with cut-out arrow trials and a pencil on top."
+    },
+    "ashaRao": {
+      "src": "assets/portrait-asha-rao.webp",
+      "alt": ""
     }
   }
 }

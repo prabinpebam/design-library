@@ -46,15 +46,18 @@
         "items": [
           {
             "name": "Ama Mensah",
-            "role": "Owner"
+            "role": "Owner",
+            "picture": "amaMensah"
           },
           {
             "name": "Jonas Lind",
-            "role": "Editor"
+            "role": "Editor",
+            "picture": "jonasLind"
           },
           {
             "name": "Keiko Arai",
-            "role": "Viewer"
+            "role": "Viewer",
+            "picture": "keikoArai"
           }
         ]
       },

@@ -1,0 +1,21 @@
+{
+  "$schema": "../../core/schemas/assets.schema.json",
+  "assets": {
+    "amaMensah": {
+      "src": "assets/portrait-ama-mensah.webp",
+      "alt": ""
+    },
+    "jonasLind": {
+      "src": "assets/portrait-jonas-lind.webp",
+      "alt": ""
+    },
+    "keikoArai": {
+      "src": "assets/portrait-keiko-arai.webp",
+      "alt": ""
+    },
+    "luisOrtega": {
+      "src": "assets/portrait-luis-ortega.webp",
+      "alt": ""
+    }
+  }
+}

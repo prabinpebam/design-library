@@ -76,11 +76,11 @@ export type CoreBlock =
   | { type: 'cta'; title: string; lead: string; actions: SiteAction[]; note?: string }
   | { type: 'gallery'; heading?: string; label: string; layout?: 'standard' | 'quilted' | 'masonry'; items: string[] }
   | { type: 'breadcrumbs'; items: { label: string; href?: string }[] }
-  | { type: 'byline'; name: string; href: string; date: string; read: string }
-  | { type: 'person'; name: string; role: string; bio: string[]; portrait?: boolean }
+  | { type: 'byline'; name: string; href: string; date: string; read: string; picture?: string }
+  | { type: 'person'; name: string; role: string; bio: string[]; portrait?: boolean; picture?: string }
   | { type: 'prose'; items: ProseItem[] }
   | { type: 'posts'; heading?: string; items: { title: string; eyebrow?: string; description: string; meta: string; picture?: string; href: string }[]; page?: number; pages?: number; pagingLabel?: string; empty?: SiteEmpty }
-  | { type: 'people'; heading: string; intro?: string; items: { name: string; role: string; href?: string }[] }
+  | { type: 'people'; heading: string; intro?: string; items: { name: string; role: string; href?: string; picture?: string }[] }
   | { type: 'schedule'; heading?: string; daysLabel: string; days: { id: string; label: string; title: string; slots: AgendaSlot[] }[] }
   | { type: 'agenda'; heading: string; label: string; slots: AgendaSlot[]; empty?: SiteEmpty }
   | { type: 'tickets'; heading: string; intro?: string; currency: string; options: { value: string; label: string; price: number; description: string; meta?: string }[]; submit: string; sent: string; labels: { ticket: string; count: string; tickets: string; total: string; line: string } }

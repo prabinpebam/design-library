@@ -6,6 +6,12 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 **Contracts that carry their own version:** the content schemas (`schemas/*.json`, `$id …/1`), the colour config (`colour-config/2`, `CONTRACT` in `@design-library/core/colour`), and each template's `content.schema.json`. A release that changes one names it here with the migration.
 
+## Unreleased
+
+Nothing breaks.
+
+- **Blocks:** `people` items, `person` and `byline` take an optional `picture`, an asset id from the template's `assets.json`, drawn as the person's portrait (initials when there's none). `person`'s `portrait: true` still shows initials alone.
+
 ## 0.1.1 (2026-11-09)
 
 Fixes from the first separate-project install ([Handoff readiness](https://prabinpebam.github.io/design-library/docs/#handoff-readiness.md), F15.R6). Nothing breaks.

@@ -4,7 +4,7 @@
  * its own (namespaced) types in its registry; it never replaces these.
  */
 import { Fragment, useState, type ReactNode } from 'react';
-import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react';
+import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react';
 import { fill } from './fill';
 import type { BlockRenderer, CoreBlock, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
 
@@ -183,7 +183,7 @@ function SearchBlock({ block }: { block: Of<'search'> }) {
         <TextField label={block.label} type="search" icon="search" value={draft} onCommit={setDraft} action={{ label: block.button, onAction: (v) => (setDraft(v), setQuery(v)) }} />
         <Morph state={shown.length ? 'results' : 'none'}>
         {shown.length ? (
-          <Stack gap="group">
+          <Stack gap="item">
             <Text as="p" tone="muted">
               {fill(block.summary, { count: shown.length, query })}
             </Text>
@@ -213,10 +213,10 @@ function SettingsBlock({ block }: { block: Of<'settings'> }) {
   };
   return (
     <Section heading={block.heading} intro={block.intro}>
-      <Stack gap="section">
+      <>
         {block.groups.map((g) => (
           <Section key={g.heading} heading={g.heading} level={3} size={4} nested>
-            <Stack gap="group">
+            <Stack gap="item">
               {g.items.map((it) =>
                 it.kind === 'switch' ? (
                   <Switch key={it.id} label={it.label} description={it.description} checked={!!values[it.id]} onChange={set(it.id, it.label)} />
@@ -228,7 +228,7 @@ function SettingsBlock({ block }: { block: Of<'settings'> }) {
           </Section>
         ))}
         {linkList(block.links)}
-      </Stack>
+      </>
     </Section>
   );
 }
@@ -258,7 +258,12 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     );
   },
   'site-footer': (b, _ctx, i) => <Footer key={i} sectionsLabel={b.sectionsLabel} sections={b.sections} links={b.links} identity={b.identity} legal={b.legal} />,
-  hero: (b, ctx, i) => <Hero key={i} eyebrow={b.eyebrow} title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} picture={b.picture ? ctx.picture(b.picture) : undefined} layout={b.layout} />,
+  // Q88: a page's opening is its stage; a hero further down is a feature.
+  hero: (b, ctx, i) => (
+    <Frame key={i} kind={i === 0 ? 'stage' : 'feature'}>
+      <Hero eyebrow={b.eyebrow} title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} picture={b.picture ? ctx.picture(b.picture) : undefined} layout={b.layout} />
+    </Frame>
+  ),
   stats: (b, _ctx, i) => (
     <Section key={i} heading={b.heading} intro={b.intro}>
       <Grid max={4}>
@@ -287,9 +292,11 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     </Section>
   ),
   quote: (b, _ctx, i) => (
-    <Quote key={i} size="l" align="center" author={{ name: b.name, role: b.role }}>
-      {b.text}
-    </Quote>
+    <Frame key={i} kind="feature">
+      <Quote size="l" align="center" author={{ name: b.name, role: b.role }}>
+        {b.text}
+      </Quote>
+    </Frame>
   ),
   points: (b, _ctx, i) => (
     <Section key={i} heading={b.heading} intro={b.intro}>
@@ -307,7 +314,11 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       {b.text}
     </Alert>
   ),
-  status: (b, _ctx, i) => <Hero key={i} layout="stacked" eyebrow={b.eyebrow} title={b.title} lead={b.text} actions={linkList(b.links)} note={b.note} />,
+  status: (b, _ctx, i) => (
+    <Frame key={i} kind="stage">
+      <Hero layout="stacked" eyebrow={b.eyebrow} title={b.title} lead={b.text} actions={linkList(b.links)} note={b.note} />
+    </Frame>
+  ),
   search: (b, _ctx, i) => <SearchBlock key={i} block={b} />,
   settings: (b, _ctx, i) => <SettingsBlock key={i} block={b} />,
   empty: (b, _ctx, i) => (
@@ -315,24 +326,40 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       {b.text}
     </EmptyState>
   ),
-  cta: (b, _ctx, i) => <Hero key={i} level={2} layout="divided" title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} />,
+  cta: (b, _ctx, i) => (
+    <Frame key={i} kind="feature">
+      <Hero level={2} layout="divided" title={b.title} lead={b.lead} actions={actionButtons(b.actions)} note={b.note} />
+    </Frame>
+  ),
   gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />),
   breadcrumbs: (b, _ctx, i) => <Breadcrumbs key={i} items={b.items} />,
-  byline: (b, _ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} />,
-  person: (b, _ctx, i) => (
-    <Stack key={i} gap="group">
-      {b.portrait && <Avatar name={b.name} size={96} />}
+  byline: (b, ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} src={b.picture ? ctx.picture(b.picture).src : undefined} />,
+  person: (b, ctx, i) => (
+    <Stack key={i} gap="section">
+      {(b.portrait || b.picture) && <Avatar name={b.name} size={96} src={b.picture ? ctx.picture(b.picture).src : undefined} />}
       <Hero eyebrow={b.role} title={b.name} lead={b.bio[0]} layout="stacked" />
-      {b.bio.slice(1).map((t) => (
-        <Text key={t} as="p">
-          {t}
-        </Text>
-      ))}
+      {b.bio.length > 1 && (
+        <Stack gap="group">
+          {b.bio.slice(1).map((t) => (
+            <Text key={t} as="p">
+              {t}
+            </Text>
+          ))}
+        </Stack>
+      )}
     </Stack>
   ),
-  prose: (b, ctx, i) => (
-    <Stack key={i} gap="group">
-      {b.items.map((item, n) => {
+  prose: (b, ctx, i) => {
+    // Q85: a heading starts a run that reads as one group (its parts a group apart); runs sit a section apart, so each
+    // heading is twice as far from what's above it as from its own text.
+    const runs: (typeof b.items)[] = [];
+    for (const item of b.items) {
+      // A quote stands as its own run, a section's space from the text around it.
+      const last = runs[runs.length - 1];
+      if (item.kind === 'heading' || item.kind === 'quote' || !last || last[0]?.kind === 'quote') runs.push([]);
+      runs[runs.length - 1].push(item);
+    }
+    const draw = (item: (typeof b.items)[number], n: number) => {
         switch (item.kind) {
           case 'heading':
             return (
@@ -359,9 +386,18 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
           case 'code':
             return <CodeBlock key={n} label={item.label} code={item.code} />;
         }
-      })}
-    </Stack>
-  ),
+    };
+    if (runs.length < 2) return <Stack key={i} gap="group">{b.items.map(draw)}</Stack>;
+    return (
+      <Stack key={i} gap="section">
+        {runs.map((run, r) => (
+          <Stack key={r} gap="group">
+            {run.map((item, n) => draw(item, n))}
+          </Stack>
+        ))}
+      </Stack>
+    );
+  },
   posts: (b, ctx, i) => (
     <Section key={i} heading={b.heading}>
       {listOrEmpty(ctx.state, b.empty, <Stack gap="group">
@@ -382,11 +418,11 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       </Stack>)}
     </Section>
   ),
-  people: (b, _ctx, i) => (
+  people: (b, ctx, i) => (
     <Section key={i} heading={b.heading} intro={b.intro}>
       <Grid max={4}>
         {b.items.map((p) => (
-          <Persona key={p.name} name={p.href ? <Link href={p.href}>{p.name}</Link> : p.name} nameText={p.name} secondary={p.role} size={56} />
+          <Persona key={p.name} name={p.href ? <Link href={p.href}>{p.name}</Link> : p.name} nameText={p.name} secondary={p.role} size={56} src={p.picture ? ctx.picture(p.picture).src : undefined} />
         ))}
       </Grid>
     </Section>

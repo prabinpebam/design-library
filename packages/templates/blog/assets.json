@@ -28,6 +28,10 @@
     "twoFills": {
       "src": "assets/two-fills.webp",
       "alt": "Two painted rectangles, ink blue and sage green, side by side with a narrow, even gap between them."
+    },
+    "minaHaddad": {
+      "src": "assets/portrait-mina-haddad.webp",
+      "alt": ""
     }
   }
 }

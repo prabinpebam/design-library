@@ -781,7 +781,7 @@
       "additionalProperties": false
     },
     "byline": {
-      "description": "Who wrote it and when, under an article's title.",
+      "description": "Who wrote it and when, under an article's title; `picture` names the author's portrait in assets.json.",
       "type": "object",
       "required": [
         "type",
@@ -805,12 +805,15 @@
         },
         "read": {
           "$ref": "#/$defs/text"
+        },
+        "picture": {
+          "$ref": "#/$defs/asset"
         }
       },
       "additionalProperties": false
     },
     "person": {
-      "description": "A person, large: name, role and a few lines; `portrait` adds their picture (initials when there's none).",
+      "description": "A person, large: name, role and a few lines; `picture` names their portrait in assets.json, `portrait` alone shows their initials.",
       "type": "object",
       "required": [
         "type",
@@ -837,6 +840,9 @@
         },
         "portrait": {
           "type": "boolean"
+        },
+        "picture": {
+          "$ref": "#/$defs/asset"
         }
       },
       "additionalProperties": false
@@ -1094,7 +1100,7 @@
       }
     },
     "people": {
-      "description": "People as a grid of portraits with name and role.",
+      "description": "People as a grid of portraits with name and role; each item's `picture` names its portrait in assets.json (initials when there's none).",
       "type": "object",
       "required": [
         "type",
@@ -1128,6 +1134,9 @@
               },
               "href": {
                 "$ref": "#/$defs/href"
+              },
+              "picture": {
+                "$ref": "#/$defs/asset"
               }
             },
             "additionalProperties": false

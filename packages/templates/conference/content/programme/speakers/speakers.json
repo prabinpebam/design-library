@@ -22,12 +22,14 @@
           {
             "name": "Ama Mensah",
             "role": "Design lead, Kitewing",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "amaMensah"
           },
           {
             "name": "Jonas Lind",
             "role": "Engineer, Tidewater",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "jonasLind"
           }
         ]
       },
@@ -38,17 +40,20 @@
           {
             "name": "Keiko Arai",
             "role": "Researcher, City of Porto",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "keikoArai"
           },
           {
             "name": "Ravi Patel",
             "role": "Accessibility lead, Meadow",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "raviPatel"
           },
           {
             "name": "Lena Novak",
             "role": "Design systems, Kiln",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "lenaNovak"
           }
         ]
       }

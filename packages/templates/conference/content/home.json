@@ -64,42 +64,50 @@
           {
             "name": "Ama Mensah",
             "role": "Design lead, Kitewing",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "amaMensah"
           },
           {
             "name": "Mina Haddad",
             "role": "Design systems, Field Notes",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "minaHaddad"
           },
           {
             "name": "Luis Ortega",
             "role": "Accessibility engineer",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "luisOrtega"
           },
           {
             "name": "Sana Iqbal",
             "role": "Colour and type, Studio Iqbal",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "sanaIqbal"
           },
           {
             "name": "Tom Becker",
             "role": "Front-end lead, Northwind",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "tomBecker"
           },
           {
             "name": "Priya Raman",
             "role": "Researcher, Openfield",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "priyaRaman"
           },
           {
             "name": "Jonas Lind",
             "role": "Product designer",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "jonasLind"
           },
           {
             "name": "Keiko Arai",
             "role": "Motion designer",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "keikoArai"
           }
         ]
       },

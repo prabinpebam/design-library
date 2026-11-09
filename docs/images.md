@@ -47,6 +47,7 @@ Each set has one style block, pasted verbatim into every prompt in the set, and 
 | SS5 | Portfolio (a product designer's case studies) | Studio still life: matte paper, card and clay objects that stand for the project on a seamless pastel backdrop, soft top light, one small shadow, no screens with text | IA-P1 the wayfinding sign model |
 | SS6 | Chat (pictures the assistant drew on request) | Soft painterly digital illustration, the assistant's house style: gentle brush texture, luminous sky, simple forms; each picture follows its request | IA-T1 the tarn in the morning |
 | SS7 | Library examples | Natural landscape photographs for Carousel and Image stories, one per labelled scene; illustrated head-and-shoulders portraits for the people stories (abstract enough not to be real people, IL5) | IB1 Meadow |
+| SS8 | People (fictional people in the templates) | The library portrait style block, verbatim: flat illustrated head-and-shoulders portraits, soft gouache edges, simplified features, one flat pastel background; one face per person, shared by every template that shows them | IB8 Ana Ruiz (the library portrait reference) |
 
 ## Template pictures
 
@@ -154,8 +155,8 @@ These would help, but no content field or slot exists yet; each needs a public s
 
 | ID | Where | Why it helps | Seam needed | Gate |
 |---|---|---|---|---|
-| IS1 | Conference `speakers`, `speaker` | Recognising a speaker (IM1) | `picture` on speaker items, rendered as Persona | Fictional people get illustrated portraits (IL5), never photoreal faces |
-| IS2 | Blog `author`, article byline | Recognising the author | `picture` on the author block | As IS1 |
+| IS1 | Conference `speakers`, `speaker` | Recognising a speaker (IM1) | `picture` on speaker items, rendered as Persona | **Done (F15.I10)** |
+| IS2 | Blog `author`, article byline | Recognising the author | `picture` on the author block | **Done (F15.I10)** |
 | IS3 | Empty states (saved, search, my schedule) | Showing what will appear (IL1) | `illustration` on EmptyState (SC4, transparent) | AF11: test assumption VS4 on one empty state first |
 | IS4 | Not-found and error pages (blog, conference, chat) | Orienting after a wrong turn (IL1) | Same `illustration` seam | As IS3 |
 | IS5 | Conference `sponsors` wall | Sponsors are recognised by their marks | Logo pictures on SponsorWall items (fictional marks, SC4) | Logos may carry their own name (IM6) |
@@ -175,7 +176,8 @@ One style set per packet, each openable in the template's standalone site, small
 | IP5 = F15.I7 | Portfolio (SS5) | 16, **done** |
 | IP6 = F15.I8 | Chat (SS6); Design (IA-D1) and the library's chat view data (IB19–IB23) checked and deferred | 5, **done** |
 | IP7 = F15.I9 | Library scenes and portraits (SS7); the media poster (IB18) checked and kept | 17, **done** |
-| IP8 | Seams IS1–IS6, after the gates | — |
+| IP8a = F15.I10 | Seams IS1, IS2: the `picture` field on `people` items, `person` and `byline`; one portrait per fictional person (SS8), also on the portfolio about page and the Design and Projects team lists | 11, **done** |
+| IP8b | Seams IS3–IS6, after the gates | — |
 
 **IP1 as built (F15.I3):** IA-H1 generated from text at 1536×1024 `high` and kept as the set's reference (`assets-src/harbour/reference.webp`); IA-H2–H4 generated as edits with it as Image 1 ("style reference only"), so the brushwork, lamplight and palette match. Shipped as `shopfront`, `theLongShore`, `saltAndInk`, `smallBoats` (1200×800 WebP, 150–185 KB each at quality 82; the painterly texture is heavy, AVIF would be about half). The drawn `shelves.svg` is gone; the agent guide's example names `shopfront`. Alt written from the finished pictures. Prompts in `assets-src/harbour/*.json`.
 
@@ -190,6 +192,8 @@ One style set per packet, each openable in the template's standalone site, small
 **IP6 as built (F15.I8):** IA-T1 (the tarn in the morning) is the reference; IA-T2 is an *edit of IA-T1* that changes only the light, so the dusk picture is visibly the same view, as the conversation asks ("And one at dusk, please"). IA-T3–T5 are style-referenced edits; the birthday card leaves its upper half as open sky, as the reply says. Asset ids are unchanged, so no content file changed; the five drawn SVGs are gone. Shipped at the chat column's 480 px × 2 (960×640, square 960×960), 108–215 KB (the busy garden is the heaviest). **Deferred:** IA-D1, because the Design editor's canvas doesn't draw image fills yet (its manifest says so) and the template has no assets, so a picture there would never be seen; it needs a canvas seam first (now IS7). IB19–IB23: `apps/library/src/data/pictures.ts` is imported nowhere, so there is nothing to replace.
 
 **IP7 as built (F15.I9):** SS7 has two media, so it has two references, one per medium: IB1 (the morning hills, `assets-src/library/scenes/reference.webp`) for the six other landscape photographs, and IB8 (Ana Ruiz, `assets-src/library/people/reference.webp`) for the nine other illustrated portraits. Scenes are 1536×864 `high`, shipped 1440×810 WebP 78 (84–179 KB) in `packages/core/react/stories/media/scenes/` and imported with `?url` by `stories/scenes.ts`, labels and captions unchanged, alt rewritten from each finished picture; the Image story's credit now says "Generated for this library". Portraits are 1024² `high`, shipped 192×192 (3–5 KB) in `stories/media/people/`; `stories/people.ts` now maps each of the ten names to its own portrait (`portraits`), and the AvatarGroup, Avatar and Persona stories show each person's own face (Yusuf Demir and Mei Lin no longer borrow Ana's), with every fourth group member left on initials so the fallback still shows. They're flat illustrations with simplified features, clearly drawn, not likenesses (IL5); the name is the alt (Avatar and Persona label the person). **Kept:** IB18, because `drift-poster.jpg` is the first frame of the abstract `drift` video it introduces; a generated picture would show something the video doesn't.
+
+**IP8a as built (F15.I10):** the core blocks gained one optional field, `picture` (an asset id), on `people` items, `person` and `byline` (types, `blocks.schema.json`, renderer, agent index, core changelog); Persona and Avatar draw it, initials otherwise. **SS8 People** is one portrait per fictional person, drawn in the library portrait style (Image 1 = `assets-src/library/people/reference.webp`, flat illustration, not likenesses, IL5), because the same people recur across templates: Ama Mensah, Jonas Lind and Keiko Arai appear in Conference, Design and Projects, and Mina Haddad is both the blog's author and a speaker; each keeps one face everywhere. Eleven portraits (1024² `high`, shipped 192×192, 3–5 KB): ten speakers in Conference (home, speakers, speaker, session), Mina Haddad on the blog's author page and byline, Asha Rao on the portfolio about page, and the Design and Projects team lists (both templates gained `assets.json`). Alt is empty on purpose: the name sits beside every portrait. Prompts in `assets-src/people/`.
 
 Each packet replaces its placeholder SVGs, writes alt from the finished pictures, keeps `npm run check:content` and the build passing, and records the pictures here as done.
 

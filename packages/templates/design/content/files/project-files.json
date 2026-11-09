@@ -77,15 +77,18 @@
         "items": [
           {
             "name": "Ama Mensah",
-            "role": "Can edit"
+            "role": "Can edit",
+            "picture": "amaMensah"
           },
           {
             "name": "Jonas Lind",
-            "role": "Can edit"
+            "role": "Can edit",
+            "picture": "jonasLind"
           },
           {
             "name": "Keiko Arai",
-            "role": "Can view"
+            "role": "Can view",
+            "picture": "keikoArai"
           }
         ]
       }

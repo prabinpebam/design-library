@@ -32,7 +32,8 @@
         "bio": [
           "Ama leads design at Kitewing, where one small team builds the tools 400 people use every day.",
           "She opens the conference with a talk about interfaces that explain themselves, and sits on Thursday’s panel."
-        ]
+        ],
+        "picture": "amaMensah"
       },
       {
         "type": "agenda",
@@ -82,22 +83,26 @@
           {
             "name": "Mina Haddad",
             "role": "Design systems, Field Notes",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "minaHaddad"
           },
           {
             "name": "Luis Ortega",
             "role": "Accessibility engineer",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "luisOrtega"
           },
           {
             "name": "Sana Iqbal",
             "role": "Colour and type, Studio Iqbal",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "sanaIqbal"
           },
           {
             "name": "Tom Becker",
             "role": "Front-end lead, Northwind",
-            "href": "/speaker"
+            "href": "/speaker",
+            "picture": "tomBecker"
           }
         ]
       }
