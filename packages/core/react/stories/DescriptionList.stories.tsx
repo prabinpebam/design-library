@@ -5,11 +5,11 @@ import type { StoryFile } from './story';
 export default {
   component: 'DescriptionList',
   tier: 'compound',
-  summary: 'Term and details pairs, stacking on narrow screens.',
+  summary: 'Term and details pairs, in columns sized by their own content.',
   stories: [
     {
       title: 'Facts about a component',
-      description: 'Each term in its own column beside its details; below the small breakpoint the term sits above them.',
+      description: 'The terms share one column as wide as the longest term; the details take the rest, on a page or in a narrow panel.',
       code: `<DescriptionList items={[{ term: 'Uses', details: 'Text and Icon' }, …]} />`,
       render: () => (
         <DescriptionList

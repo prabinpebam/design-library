@@ -1,28 +1,24 @@
 /*
- * Tier 2 compound: DescriptionList. Each term in a column of its own beside its details; below breakpoint.sm the term
- * stacks above them.
+ * Tier 2 compound: DescriptionList. The list is the context where alignment matters (owner Q98), so it draws its own
+ * two columns and its rows share them (subgrid): the term column takes its longest term, up to term-width and never
+  * more than three fifths of the list; the details take the rest. No column comes from the page or the window: the same
+ * list fits a wide page and a narrow inspector, and nothing wraps while the row has room.
  */
 @layer compounds {
   [data-dl='description-list'] {
     display: grid;
-    gap: var(--c-description-list-gap);
+    grid-template-columns: fit-content(min(var(--c-description-list-term-width), 60%)) minmax(0, 1fr);
+    row-gap: var(--c-description-list-gap);
+    column-gap: var(--c-description-list-column-gap);
   }
 
   [data-dl='description-list'] > div {
     display: grid;
-    grid-template-columns: minmax(0, var(--c-description-list-term-width)) minmax(0, 1fr);
-    gap: var(--c-description-list-column-gap);
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
   }
 
   [data-dl='description-list'] dt {
     font-weight: var(--type-label-weight);
-  }
-
-  @media (max-width: 40rem) {
-    /* breakpoint.sm */
-    [data-dl='description-list'] > div {
-      grid-template-columns: minmax(0, 1fr);
-      gap: var(--c-description-list-stacked-gap);
-    }
   }
 }

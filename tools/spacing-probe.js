@@ -13,6 +13,8 @@
  *   SC7 edges     nothing scrolls sideways; content keeps the page margin from the window's edges
  *   SC8 margins   no component (data-dl) carries an outer block margin
  *   SC14 page     the same invariant at the page's top level: page content apart from header and footer ≥ its own gaps
+ *   SC16 columns  no short text wraps while the row it sits in has the room to hold it on one line (owner Q98: the
+ *                 columns come from this group's content); judged on the whole layout, chrome included
  *
  * Frames (owner Q94): outside, a `data-frame` element is one unit measured from its outer edge; inside, its content is
  * the root of a tree of its own, judged only against itself. The frame's room between the two is judged by FR rows.
@@ -75,7 +77,7 @@
 
   window.spacingProbe = function (rootSelector) {
     const root = document.querySelector(rootSelector ?? 'main, [data-dl-part="main"]') ?? document.body;
-    const rows = Object.fromEntries(['SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SC6', 'SC7', 'SC8', 'SC14', 'FR1', 'FR2', 'FR3', 'FR4', 'FR5', 'FR6', 'FR7', 'FR8', 'FR9', 'FR11', 'FR12', 'FR14', 'FR15', 'FR16', 'FR17'].map((id) => [id, { pass: true, findings: [] }]));
+    const rows = Object.fromEntries(['SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SC6', 'SC7', 'SC8', 'SC14', 'FR1', 'FR2', 'FR3', 'FR4', 'FR5', 'FR6', 'FR7', 'FR8', 'FR9', 'FR11', 'FR12', 'FR14', 'FR15', 'FR16', 'FR17', 'SC16'].map((id) => [id, { pass: true, findings: [] }]));
     const fail = (id, finding, severity = 'S2') => {
       rows[id].findings.push({ severity, ...finding });
       if (severity !== 'S4') rows[id].pass = false;
@@ -231,6 +233,7 @@
     }
 
     const frames = framing(fail);
+    columns(fail);
 
     return {
       rows: Object.fromEntries(Object.entries(rows).map(([id, r]) => [id, { pass: r.pass, findings: r.findings.slice(0, 12), count: r.findings.length }])),
@@ -239,6 +242,77 @@
       frames,
     };
   };
+
+  // SC16 (owner Q98): no text wraps while the row it sits in has the room to hold it on one line. A row is a grid or
+  // flex container laying cells side by side; its room is its content width less every cell's content and the gaps
+  // between cells. Room left over while a cell's short text breaks means the columns came from somewhere other than
+  // this group's content (a shared or fixed track). Judged on the whole layout, chrome included: inspectors and panels
+  // are where it shows. Running text held to the reading measure is skipped (it wraps on purpose).
+  function columns(fail) {
+    const scope = document.querySelector('[data-dl="site-layout"],[data-dl="app-layout"],[data-dl="chat-layout"],[data-dl="editor-layout"],[data-dl="library-layout"]') ?? document.body;
+    const contentWidth = (el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const rs = [...range.getClientRects()].filter((r) => r.width > 0);
+      if (!rs.length) return 0;
+      return Math.max(...rs.map((r) => r.right)) - Math.min(...rs.map((r) => r.left));
+    };
+    const seen = new Set();
+    for (const el of scope.querySelectorAll('*')) {
+      const text = [...el.childNodes].filter((n) => n.nodeType === 3 && n.textContent.trim()).map((n) => n.textContent.trim()).join(' ');
+      if (!text || text.length > 60 || !visible(el)) continue;
+      const lines = new Map();
+      for (const node of el.childNodes) {
+        if (node.nodeType !== 3 || !node.textContent.trim()) continue;
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        for (const r of range.getClientRects()) if (r.width > 0) lines.set(Math.round(r.top / 4), (lines.get(Math.round(r.top / 4)) ?? 0) + r.width);
+      }
+      if (lines.size < 2) continue;
+      // The cell: the ancestor (at most four up) whose parent lays its children side by side.
+      let cell = el;
+      let row = null;
+      let measured = false;
+      for (let i = 0; i < 5 && cell && cell !== scope; i++) {
+        if (getComputedStyle(cell).maxInlineSize !== 'none') { measured = true; break; }
+        const p = cell.parentElement;
+        if (!p) break;
+        const pcs = getComputedStyle(p);
+        const sideBySide = [...p.children].filter(visible).length > 1 && ((pcs.display.includes('flex') && !pcs.flexDirection.startsWith('column')) || (pcs.display.includes('grid') && pcs.gridTemplateColumns.trim().split(/\s+/).length > 1));
+        if (sideBySide) { row = p; break; }
+        cell = p;
+      }
+      if (!row || measured || seen.has(row)) continue;
+      // A set of like units (cards, tiles, fields in equal columns) shares its tracks on purpose: that's alignment
+      // within its own context, not a column imposed from elsewhere.
+      const tracks = getComputedStyle(row).gridTemplateColumns.split(/\s+/).map(px).filter((v) => v > 0);
+      if (tracks.length > 1 && Math.max(...tracks) - Math.min(...tracks) <= 1) continue;
+      const rr = row.getBoundingClientRect();
+      const rcs = getComputedStyle(row);
+      const cr = cell.getBoundingClientRect();
+      const kids = [...row.children].filter(visible).filter((k) => {
+        const r = k.getBoundingClientRect();
+        return r.top < cr.bottom && r.bottom > cr.top;
+      });
+      const inner = rr.width - px(rcs.paddingLeft) - px(rcs.paddingRight) - px(rcs.borderLeftWidth) - px(rcs.borderRightWidth);
+      const gap = px(rcs.columnGap) * (kids.length - 1);
+      // In a subgrid row the tracks are shared with the rows around it (alignment within this context, Q98): a
+      // sibling's column needs the widest content of that column across the rows, no more.
+      const shared = rcs.gridTemplateColumns.startsWith('subgrid');
+      const columnNeeds = (k) => {
+        const i = [...row.children].indexOf(k);
+        return Math.max(...[...row.parentElement.children].map((r) => (r.children[i] ? contentWidth(r.children[i]) : 0)));
+      };
+      const used = kids.reduce((sum, k) => sum + (k === cell ? contentWidth(cell) : shared ? columnNeeds(k) : Math.max(contentWidth(k), /^(INPUT|SELECT|TEXTAREA|IMG|SVG|CANVAS|VIDEO)$/.test(k.tagName) ? k.getBoundingClientRect().width : 0)), 0);
+      const room = inner - gap - used;
+      const widest = Math.max(...lines.values());
+      const needed = [...lines.values()].reduce((a, b) => a + b, 0) - widest + 8;
+      if (room >= needed) {
+        seen.add(row);
+        fail('SC16', { where: `${name(row)} › “${text.slice(0, 30)}”`, lines: lines.size, needed: Math.round(needed), room: Math.round(room) });
+      }
+    }
+  }
 
   // A token's value in CSS px, resolved by the browser (rem, calc and aliases included).
   function measure(prop, value) {

@@ -15,8 +15,9 @@ export interface DescriptionListProps extends DataAttributes {
 }
 
 /**
- * Term and details pairs, such as what a component uses and what uses it: the term in a column of its own beside its
- * details, stacking above them below breakpoint.sm.
+ * Term and details pairs, such as what a component uses and what uses it: the terms share one column as wide as the
+ * longest term (at most `c.description-list.term-width` and three fifths of the list), the details take the rest. The
+ * columns come from the list's own content, never the page or the window, so it fits a page and a narrow inspector.
  * Not for comparing several facts across rows (use DataTable) or for a list of equal items (use List).
  * @tier compound
  * @family content

@@ -322,7 +322,6 @@
   --c-description-list-gap: var(--space-stack-item);
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
-  --c-description-list-stacked-gap: var(--space-stack-item);
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-gap: var(--space-inline-pair);
   --c-button-size: var(--size-target);
@@ -1510,7 +1509,6 @@
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
   --c-description-list-gap: var(--space-stack-item);
-  --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
   --c-dialog-heading-gap: var(--space-stack-pair);
@@ -1781,7 +1779,6 @@
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
   --c-description-list-gap: var(--space-stack-item);
-  --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
   --c-dialog-heading-gap: var(--space-stack-pair);
@@ -2052,7 +2049,6 @@
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
   --c-description-list-gap: var(--space-stack-item);
-  --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
   --c-dialog-heading-gap: var(--space-stack-pair);
@@ -2323,7 +2319,6 @@
   --c-date-field-parts-gap: var(--space-inline-group);
   --c-description-list-column-gap: var(--space-inline-group);
   --c-description-list-gap: var(--space-stack-item);
-  --c-description-list-stacked-gap: var(--space-stack-item);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-gap: var(--space-stack-group);
   --c-dialog-heading-gap: var(--space-stack-pair);

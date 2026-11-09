@@ -574,11 +574,6 @@
         "$type": "dimension",
         "$value": "{space.stack-item}",
         "$description": "Between term and details pairs: items of one list, closer than the group around them (Q85) (echoed for space contexts)"
-      },
-      "stacked-gap": {
-        "$type": "dimension",
-        "$value": "{space.stack-item}",
-        "$description": "Between a term and its details when they stack below breakpoint.sm (echoed for space contexts)"
       }
     },
     "dialog": {

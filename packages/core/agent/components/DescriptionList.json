@@ -4,7 +4,7 @@
   "tier": "compound",
   "import": "@design-library/core/react",
   "file": "@design-library/core/react/compounds/DescriptionList.tsx",
-  "summary": "Term and details pairs, such as what a component uses and what uses it: the term in a column of its own beside its details, stacking above them below breakpoint.sm. Not for comparing several facts across rows (use DataTable) or for a list of equal items (use List).",
+  "summary": "Term and details pairs, such as what a component uses and what uses it: the terms share one column as wide as the longest term (at most `c.description-list.term-width` and three fifths of the list), the details take the rest. The columns come from the list's own content, never the page or the window, so it fits a page and a narrow inspector. Not for comparing several facts across rows (use DataTable) or for a list of equal items (use List).",
   "family": "content",
   "a11y": [
     "A native `dl`, each pair grouped in a `div` (valid HTML), so a screen reader announces term and details together."
@@ -51,7 +51,6 @@
   "tokens": [
     "--c-description-list-column-gap",
     "--c-description-list-gap",
-    "--c-description-list-stacked-gap",
     "--c-description-list-term-width",
     "--type-label-weight"
   ],
