@@ -25,6 +25,9 @@ export interface CanvasShape {
 export interface CanvasLook {
   /** A solid fill, `#rrggbb`; overrides `category`. */
   fill?: string;
+  /** A picture's address, drawn over the fill (an image fill); `imageFit` `cover` (the default) crops it to the shape, `contain` shows all of it, `tile` repeats it at its own size. */
+  image?: string;
+  imageFit?: 'cover' | 'contain' | 'tile';
   /** 0 to 1. */
   opacity?: number;
   /** Corners, in document units. */
@@ -79,6 +82,7 @@ export function Canvas({ label, shapes, selected, onSelect, zoom = 1, width, hei
         '--w': px(s.width, zoom),
         '--h': px(s.height, zoom),
         ...(l.fill && { '--doc-fill': l.fill }),
+        ...(l.image && { '--doc-image': `url("${encodeURI(l.image)}")`, '--doc-image-size': l.imageFit === 'tile' ? 'auto' : (l.imageFit ?? 'cover'), '--doc-image-repeat': l.imageFit === 'tile' ? 'repeat' : 'no-repeat' }),
         ...(l.opacity !== undefined && { '--doc-opacity': String(l.opacity) }),
         ...(l.radius !== undefined && { '--doc-radius': px(l.radius, zoom) }),
         ...(l.rotation && { '--doc-rotate': `${l.rotation}deg` }),

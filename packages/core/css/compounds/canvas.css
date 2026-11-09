@@ -116,6 +116,16 @@
     background-color: var(--doc-fill, var(--c-canvas-frame-fill));
   }
 
+  /* An image fill: the document's own picture over its fill colour, as the design says (not a library surface). */
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'],
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
+    background-image: var(--doc-image, none);
+    background-position: center;
+    background-repeat: var(--doc-image-repeat, no-repeat);
+    background-size: var(--doc-image-size, cover);
+  }
+
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
   [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
     box-shadow: inset 0 0 0 var(--doc-stroke-weight) var(--doc-stroke);

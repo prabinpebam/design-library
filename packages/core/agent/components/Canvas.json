@@ -135,6 +135,15 @@
           "description": "A solid fill, `#rrggbb`; overrides `category`."
         },
         {
+          "name": "image",
+          "type": "string",
+          "description": "A picture's address, drawn over the fill (an image fill); `imageFit` `cover` (the default) crops it to the shape, `contain` shows all of it, `tile` repeats it at its own size."
+        },
+        {
+          "name": "imageFit",
+          "type": "'cover' | 'contain' | 'tile'"
+        },
+        {
           "name": "opacity",
           "type": "number",
           "description": "0 to 1."

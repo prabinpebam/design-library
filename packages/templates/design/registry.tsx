@@ -9,7 +9,7 @@ import type { DesignAppSpec } from './types';
 export const registry: Template['registry'] = {
   layouts: {
     EditorLayout: ({ content, contentOf, ctx }) => (
-      <DesignApp view={(content.record ?? contentOf('editor')?.record) as unknown as DesignAppSpec} tab={content.settings?.tab as string | undefined} mode={content.settings?.mode as 'present' | 'comments' | undefined} editorHref={ctx.href('editor')} height="screen" />
+      <DesignApp view={(content.record ?? contentOf('editor')?.record) as unknown as DesignAppSpec} tab={content.settings?.tab as string | undefined} mode={content.settings?.mode as 'present' | 'comments' | undefined} editorHref={ctx.href('editor')} height="screen" picture={(id) => ctx.picture(id).src || undefined} />
     ),
   },
 };

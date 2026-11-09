@@ -11,6 +11,7 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 Nothing breaks.
 
 - **Blocks:** `people` items, `person` and `byline` take an optional `picture`, an asset id from the template's `assets.json`, drawn as the person's portrait (initials when there's none). `person`'s `portrait: true` still shows initials alone.
+- **Canvas:** `CanvasLook` takes an optional `image` (a picture's address, drawn over the fill) and `imageFit` (`cover`, `contain` or `tile`), so an editor can draw image fills.
 
 ## 0.1.1 (2026-11-09)
 

@@ -16,12 +16,16 @@ import type { DesignAppSpec, DesignShape, PropItem, ShapeProps } from './types';
 /** A layer's values: the defaults for all layers, then its kind's, then its own. */
 const propsOf = (view: DesignAppSpec, s: DesignShape): ShapeProps => ({ ...view.defaults.all, ...view.defaults[s.kind], ...s.props });
 const visible = (list: unknown) => ((list as PropItem[] | undefined) ?? []).filter((i) => i.visible !== false);
-/** What the canvas draws from the inspector's values: the top solid fill, opacity, corners, rotation, the top stroke. */
-const lookOf = (p: ShapeProps): CanvasLook => {
+/** What the canvas draws from the inspector's values: the top solid fill, the top fill's picture when it's an image fill, opacity, corners, rotation, the top stroke. */
+const fits = { fill: 'cover', crop: 'cover', fit: 'contain', tile: 'tile' } as const;
+const lookOf = (p: ShapeProps, picture?: (id: string) => string | undefined): CanvasLook => {
   const fillPaint = visible(p.fills).filter((f) => !f.type || f.type === 'solid').at(-1);
+  const top = visible(p.fills).at(-1);
+  const image = top?.type === 'image' && top.image ? picture?.(String(top.image)) : undefined;
   const stroke = visible(p.strokes)[0];
   return {
     fill: fillPaint ? String(fillPaint.colour) : undefined,
+    ...(image && { image, imageFit: fits[String(top?.fit) as keyof typeof fits] ?? 'cover' }),
     opacity: p.opacity !== undefined ? Number(p.opacity) / 100 : undefined,
     radius: p.radius !== undefined ? Number(p.radius) : undefined,
     rotation: Number(p.rotation) || undefined,
@@ -66,17 +70,18 @@ const update = (shapes: DesignShape[], id: string, change: Partial<DesignShape>,
 
 const wide = () => typeof window === 'undefined' || window.matchMedia('(min-width: 48rem)').matches;
 
-export function DesignApp({ view, tab, mode, editorHref = '', height = 'fill' }: { view: DesignAppSpec; tab?: string; mode?: 'present' | 'comments'; editorHref?: string; height?: 'fill' | 'screen' | 'lg' }) {
-  if (mode === 'present') return <DesignPresent view={view} toCanvas={(list) => toCanvasOf(view, list)} editorHref={editorHref} height={height} wide={wide} />;
-  return <DesignEditor view={view} tab={tab} comments={mode === 'comments'} height={height} />;
+export function DesignApp({ view, tab, mode, editorHref = '', height = 'fill', picture }: { view: DesignAppSpec; tab?: string; mode?: 'present' | 'comments'; editorHref?: string; height?: 'fill' | 'screen' | 'lg'; /** A picture's address by its asset id, for image fills. */ picture?: (id: string) => string | undefined }) {
+  if (mode === 'present') return <DesignPresent view={view} toCanvas={(list) => toCanvasOf(view, list, picture)} editorHref={editorHref} height={height} wide={wide} />;
+  return <DesignEditor view={view} tab={tab} comments={mode === 'comments'} height={height} picture={picture} />;
 }
 
-const toCanvasOf = (view: DesignAppSpec, list: DesignShape[]): CanvasShape[] => list.map(({ props: _props, children, ...rest }) => ({ ...rest, look: lookOf(propsOf(view, { ...rest, props: _props })), children: children && toCanvasOf(view, children) }));
+const toCanvasOf = (view: DesignAppSpec, list: DesignShape[], picture?: (id: string) => string | undefined): CanvasShape[] =>
+  list.map(({ props: _props, children, ...rest }) => ({ ...rest, look: lookOf(propsOf(view, { ...rest, props: _props }), picture), children: children && toCanvasOf(view, children, picture) }));
 
-function DesignEditor({ view, tab, comments, height }: { view: DesignAppSpec; tab?: string; comments: boolean; height: 'fill' | 'screen' | 'lg' }) {
+function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAppSpec; tab?: string; comments: boolean; height: 'fill' | 'screen' | 'lg'; picture?: (id: string) => string | undefined }) {
   const s = view.strings;
   const kinds = { frame: s.kindFrame, rectangle: s.kindRectangle, ellipse: s.kindEllipse, text: s.kindText };
-  const toCanvas = (list: DesignShape[]) => toCanvasOf(view, list);
+  const toCanvas = (list: DesignShape[]) => toCanvasOf(view, list, picture);
   const [shapes, setShapes] = useState(view.shapes);
   const [selected, setSelected] = useState<string | undefined>(view.selected);
   const [expanded, setExpanded] = useState(() => [parentOf(view.shapes, view.selected) ?? view.shapes[0].id]);

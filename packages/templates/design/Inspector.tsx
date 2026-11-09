@@ -55,7 +55,9 @@ export function cssOf(shape: DesignShape & { props: ShapeProps }): string {
     const paint = (f: PropItem) =>
       f.type === 'linear' || f.type === 'radial'
         ? `${f.type}-gradient(${f.type === 'linear' ? `${f.angle ?? 180}deg, ` : ''}${((f.stops as PropItem[]) ?? []).map((st) => `${st.colour} ${st.position}%`).join(', ')})`
-        : `${f.colour}`;
+        : f.type === 'image'
+          ? `url(${f.image}) center / ${f.fit === 'fit' ? 'contain' : f.fit === 'tile' ? 'auto repeat' : 'cover no-repeat'}`
+          : `${f.colour}`;
     lines.push(shape.kind === 'text' ? `color: ${paint(fills[0])};` : `background: ${fills.map(paint).reverse().join(', ')};`);
   }
   const strokes = items('strokes');

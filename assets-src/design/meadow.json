@@ -1,0 +1,14 @@
+{
+  "id": "meadow",
+  "set": "SS11 Design editor pictures (photographs a designer places in a frame)",
+  "slot": "IA-D1 option",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/design/reference.webp",
+  "size": "1536x960",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/design/assets/fill-meadow.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 640 --density 2 --fit cover --quality 76",
+  "alt": "(empty: decorative, the canvas names the layer)",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: a photograph a designer has placed as an image fill in a 320×200 hero frame of a mobile web page in a design tool, seen at up to 2× zoom, cropped to fill the frame.\nSubject: a coastal wildflower meadow above the sea.\nDetails: poppies, ox-eye daisies and grasses on a cliff-top meadow, the sea calm and blue beyond, a few soft clouds, bright midday daylight, a clear blue sky; not sunset, not dusk, no orange sky.\nComposition: 16:10 landscape, the subject in the centre third so a crop keeps it, eye level, uncluttered.\nStyle: natural editorial photograph by the sea, real lens and depth, soft natural colour grading, calm, no people's faces.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no recognisable landmarks."
+}

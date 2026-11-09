@@ -420,7 +420,7 @@
             "props": {
               "fills": [
                 {
-                  "type": "linear",
+                  "type": "image",
                   "colour": "#7c9a3d",
                   "opacity": 100,
                   "visible": true,
@@ -437,7 +437,7 @@
                       "colour": "#2f9e8f"
                     }
                   ],
-                  "image": "harbour",
+                  "image": "dusk",
                   "fit": "fill"
                 }
               ],

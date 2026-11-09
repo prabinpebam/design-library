@@ -12,6 +12,18 @@
     "keikoArai": {
       "src": "assets/portrait-keiko-arai.webp",
       "alt": ""
+    },
+    "dusk": {
+      "src": "assets/fill-dusk.webp",
+      "alt": ""
+    },
+    "harbour": {
+      "src": "assets/fill-harbour.webp",
+      "alt": ""
+    },
+    "meadow": {
+      "src": "assets/fill-meadow.webp",
+      "alt": ""
     }
   }
 }

@@ -421,7 +421,7 @@
           "Multiple selection, so Distribute says it isn’t part of the example.",
           "Variables and styles on a value (NumberField can show a variable; none are bound here).",
           "Auto layout re-arranging the canvas (the values are kept and shown in Dev mode’s CSS; the canvas keeps positions).",
-          "Gradients, images, effects and individual corners drawn on the canvas (the canvas draws the top solid fill, opacity, one radius, rotation and the first stroke)."
+          "Gradients, effects and individual corners drawn on the canvas (the canvas draws the top solid fill, an image fill when it is the top fill, opacity, one radius, rotation and the first stroke)."
         ],
         "regions": [
           {
