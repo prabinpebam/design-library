@@ -24,10 +24,16 @@
 
   /* A section's empty message is that section's content: it starts where the content would, right under the
      section's head (proximity, docs/spacing.md SC2): no block-start padding, the held height below it. A view's stays
-     centred in the view. */
+     centred in the view. Its parts sit closer than the section's own parts (a group apart), so the message reads as
+     one part of the section (SC3). */
   [data-dl='empty-state'][data-scope='section'] {
     justify-content: flex-start;
+    gap: var(--c-empty-state-actions-space-section);
     padding-block-start: 0;
+  }
+
+  [data-dl='empty-state'][data-scope='section'] > [data-dl-part='silhouette'] {
+    gap: var(--c-empty-state-silhouette-gap-section);
   }
 
   [data-dl='empty-state'][data-scope='component'] {

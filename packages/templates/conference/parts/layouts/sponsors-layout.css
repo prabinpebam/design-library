@@ -10,7 +10,8 @@
     box-sizing: border-box;
     inline-size: 100%;
     display: grid;
-    gap: var(--t-conference-sponsors-layout-column-gap);
+    /* One and a half times the page level: the intro's units sit a page level apart, so the regions sit further (SC3). */
+    gap: calc(1.5 * var(--t-conference-sponsors-layout-column-gap));
     grid-template-columns: minmax(0, var(--t-conference-sponsors-layout-intro-width)) minmax(0, 1fr);
     align-items: start;
   }

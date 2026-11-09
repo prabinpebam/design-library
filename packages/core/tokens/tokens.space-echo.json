@@ -52,8 +52,13 @@
       },
       "slot-gap": {
         "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Between one time slot and the next: the section level, wider than a slot's own parts sit apart at any width (spacing SC3) (echoed for space contexts)"
+      },
+      "stacked-time-gap": {
+        "$type": "dimension",
         "$value": "{space.stack-group}",
-        "$description": "Between one time slot and the next (echoed for space contexts)"
+        "$description": "Narrow, the time above its sessions: wider than the sessions sit apart, so the time heads them all (spacing SC3) (echoed for space contexts)"
       }
     },
     "alert": {
@@ -127,8 +132,8 @@
       },
       "gutter": {
         "$type": "dimension",
-        "$value": "{space.gutter}",
-        "$description": "Between the view and the details column (echoed for space contexts)"
+        "$value": "{space.stack-page}",
+        "$description": "Between the view and the details column, beside or wrapped under: the page level, drawn one and a half times this, wider than the view's or the details' own parts sit apart (spacing SC3) (echoed for space contexts)"
       },
       "head-gap": {
         "$type": "dimension",
@@ -635,6 +640,11 @@
         "$value": "{space.stack-group}",
         "$description": "Above the actions, and between the silhouette and the message (echoed for space contexts)"
       },
+      "actions-space-section": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "A section's empty message: above the actions and between the silhouette and the message, closer than the section's parts sit apart (spacing SC3) (echoed for space contexts)"
+      },
       "gap": {
         "$type": "dimension",
         "$value": "{space.stack-pair}",
@@ -659,6 +669,11 @@
         "$type": "dimension",
         "$value": "{space.stack-item}",
         "$description": "Between the silhouette's rows or tiles (echoed for space contexts)"
+      },
+      "silhouette-gap-section": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "A section's empty message: between the silhouette's rows or tiles, closer than the silhouette sits to the message (echoed for space contexts)"
       }
     },
     "example": {
@@ -830,6 +845,11 @@
         "$value": "{space.inline-item}",
         "$description": "Between the actions (echoed for space contexts)"
       },
+      "doing-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between the actions and the note under them: wider than the actions' own rows when they wrap, so the note reads as one more part (spacing SC3) (echoed for space contexts)"
+      },
       "gap": {
         "$type": "dimension",
         "$value": "{space.stack-section}",
@@ -844,6 +864,26 @@
         "$type": "dimension",
         "$value": "{space.stack-group}",
         "$description": "Between the heading block and the lead (Q85) (echoed for space contexts)"
+      },
+      "stacked-actions-row-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "Narrow (stacked): between rows of actions when they wrap (echoed for space contexts)"
+      },
+      "stacked-doing-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Narrow (stacked): between the actions and the note (echoed for space contexts)"
+      },
+      "stacked-message-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Narrow (stacked): between the heading block and the lead (echoed for space contexts)"
+      },
+      "stacked-words-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Narrow (stacked): between the message and what to do. A stacked hero sits a page level from the next unit, so its levels step down once to keep each wider than the one inside it (spacing SC3) (echoed for space contexts)"
       },
       "words-gap": {
         "$type": "dimension",

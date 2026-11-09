@@ -21,4 +21,11 @@
   [data-dl='description-list'] dt {
     font-weight: var(--type-label-weight);
   }
+
+  /* A long word with no break (an address, a key) breaks anywhere rather than push the page sideways (SC7). */
+  [data-dl='description-list'] dt,
+  [data-dl='description-list'] dd {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
 }

@@ -485,7 +485,7 @@ export const pages: Page[] = withDocs(withPrinciples([
     id: 'overview',
     section: 'start',
     title: 'Design Library',
-    summary: 'The library presenting itself: every token, component and layout rendered live from the code products use, in light, dark and more contrast. Work in progress; nothing is approved yet.',
+    summary: 'A design library for React apps and sites: every token, component, layout and template shown live from the code your product uses, in light, dark and more contrast. A Beta for early trials: try it in your own project.',
     blocks: [{ block: { type: 'overview' } }],
   },
   getStarted(),

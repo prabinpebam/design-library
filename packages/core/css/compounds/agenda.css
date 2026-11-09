@@ -114,7 +114,7 @@
   @container (max-width: 36rem) {
     [data-dl='agenda'] [data-dl-part='slot'] {
       grid-template-columns: minmax(0, 1fr);
-      gap: var(--c-agenda-session-gap);
+      gap: var(--c-agenda-stacked-time-gap);
     }
 
     [data-dl='agenda'] [data-dl-part='time'] {

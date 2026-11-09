@@ -83,6 +83,7 @@
   ],
   "tokens": [
     "--c-hero-actions-gap",
+    "--c-hero-doing-gap",
     "--c-hero-gap",
     "--c-hero-heading-gap",
     "--c-hero-lead-leading",
@@ -90,6 +91,10 @@
     "--c-hero-measure",
     "--c-hero-message-gap",
     "--c-hero-split-min",
+    "--c-hero-stacked-actions-row-gap",
+    "--c-hero-stacked-doing-gap",
+    "--c-hero-stacked-message-gap",
+    "--c-hero-stacked-words-gap",
     "--c-hero-words-gap",
     "--color-text-muted"
   ],

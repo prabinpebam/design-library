@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--c-hero-heading-gap);
+    gap: var(--c-hero-doing-gap);
   }
 
   [data-dl='hero'] [data-dl-part='actions'] {
@@ -60,6 +60,27 @@
 
   [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='picture'] {
     min-inline-size: 0;
+  }
+
+
+  /* Narrow (stacked): the hero sits a page level from the next unit, so each of its levels steps down once and every
+     level stays wider than the one inside it (spacing SC3). */
+  @container (max-width: 38rem) {
+    [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] {
+      gap: var(--c-hero-stacked-words-gap);
+    }
+
+    [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] {
+      gap: var(--c-hero-stacked-message-gap);
+    }
+
+    :is([data-dl='hero'] > [data-dl-part='body'], [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words']) > [data-dl-part='doing'] {
+      gap: var(--c-hero-stacked-doing-gap);
+    }
+
+    :is([data-dl='hero'] > [data-dl-part='body'], [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='words']) > [data-dl-part='doing'] > [data-dl-part='actions'] {
+      row-gap: var(--c-hero-stacked-actions-row-gap);
+    }
   }
 
   /* Split: words and picture in two equal columns, the words centred on the picture's height. */

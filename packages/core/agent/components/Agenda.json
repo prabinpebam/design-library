@@ -130,6 +130,7 @@
     "--c-agenda-session-padding",
     "--c-agenda-session-radius",
     "--c-agenda-slot-gap",
+    "--c-agenda-stacked-time-gap",
     "--c-agenda-time-width",
     "--c-agenda-title-size",
     "--color-focus",

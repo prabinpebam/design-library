@@ -37,12 +37,17 @@
   }
 
   /* Peek: about 70 % of the small viewport, and never so tall that less than c.frame.peek of the next band shows. Its
-     padding tops the layout's first space up to the page level, so content taller than the stage still keeps clear of
-     the header and the next band (FR1, FR6). */
+     padding tops the layout's first space up to the page level, so content taller than the stage keeps clear of the
+     header (FR6); below, it tops the layout's band gap up to one and a half page levels, so such content also stands
+     clear of the next band (FR1). */
   [data-dl='frame'][data-frame='stage'] {
     --dl-frame-above: var(--dl-frame-top, calc(var(--dl-chrome-block, 0px) + var(--dl-frame-start, 0px)));
     padding-block: max(0px, calc(var(--c-frame-space-min) - var(--dl-frame-start, 0px)));
     min-block-size: min(70svh, calc(100svh - var(--dl-frame-above) - var(--c-frame-peek)));
+  }
+
+  [data-dl='frame'][data-frame='stage']:not(:where([data-frame-mode='distraction-free'])) {
+    padding-block-end: max(0px, calc(1.5 * var(--c-frame-space-min) - var(--dl-frame-start, 0px)));
   }
 
   /* Distraction-free: exactly the window below where it starts, less the layout's own space under the column. */

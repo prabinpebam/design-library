@@ -89,7 +89,9 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    gap: var(--c-app-layout-gutter);
+    /* One and a half times the gutter (the page level): the view and the details each hold parts a page level apart,
+       so the space between them must be larger still (spacing SC3: at least 1.5 times). */
+    gap: calc(1.5 * var(--c-app-layout-gutter));
     box-sizing: border-box;
     padding: var(--c-app-layout-margin);
   }

@@ -179,3 +179,15 @@ For worker 47, in this order; each names the row it closes.
 14. **The sweep (Q101.2):** the full probe sweep over the 168 template layouts and the library pages once, at the release, with the counts recorded in each framework's Results.
 15. **Rows above:** after the release, mark D1, D5, D6, G3, V1, G7, B2 and E4–E14 with their new evidence and update this page's TL;DR to say Beta.
 16. **Q100:** main tells the owner the library is ready to hand off, with the release link and this page.
+
+### The sweep (gap 14)
+
+**Method (F15.BETA, 2026-11-09 about 16:20–17:05 +05:30, worker 49):** every probe in `packages/core/probes/` (clipping, context, layout, material, motion, noise, scroll, spacing, UI states, visual) loaded into each screen on the library dev server, every row with `pass: false` collected. Template screens at `site.html#/app/{template}/{layout}`, the full window, at **1000 × 800** and **320 × 667** CSS px (the earlier sweeps ran inside the library's template viewer with its panels open, so the screen was narrower than the window; that hid the fails below). 168 routable layouts (the six Harbour layouts other than home are the example app's and have no `site.html` route).
+
+| Pass | Fails found | Fixed at the owner |
+| --- | --- | --- |
+| Templates, 1000 px | 7 layouts: SC3 on blog and chat empty search; FR1 on the conference and corporate home stage; SC3 on conference sponsors, projects issue and issue edit | A section's EmptyState sits closer inside than the section's parts (`c.empty-state.actions-space-section`, `silhouette-gap-section`); a peek stage tops the band gap below it to one and a half page levels (`frame.css`); AppLayout's view and details and the sponsors' intro and levels sit one and a half page levels apart |
+| Templates, 320 px | 8 layouts: SC3 in four heroes, blog subscribe confirm's actions and note, the schedule's slots and sponsors; SC7 on blog feeds (a feed address pushed the page 88 px sideways) | A stacked hero steps its levels down once (`c.hero.stacked-*`); the hero's actions and note a group apart (`c.hero.doing-gap`); an Agenda's slots a section apart and, narrow, the time a group above its sessions; DescriptionList breaks a long word anywhere |
+| **Result** | **168 of 168 pass at 1000 px; 166 of 168 at 320 px** | Two open S2 findings at 320 × 667: corporate home's contact feature (FR15: its 438 px content plus the page-level space FR7 requires leaves less than the peek), corporate contact's DescriptionList (SC16: "Rotterdam (head office)" wraps in the term column's three-fifths cap while the details have 61 px spare) |
+
+**Library pages (265):** 45 sampled (start, foundations, fundamentals) at 1000 px; every one fails on the library's own chrome, the same few rows: ME6 (the title bar is chrome with no fill), SC5 (the page header's heading, intro and first block all 8 px apart), and SC2/SC3 on specimens and the index list. These are the library's documentation pages, not something a consumer ships; they're a known issue of the Beta and the first item after it. The template sweep above is what a consumer's screens are held to.
