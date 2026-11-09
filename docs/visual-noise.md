@@ -2,6 +2,8 @@
 
 How the Design library keeps a screen calm: every line, border, fill, shadow, icon, colour and word carries information nothing else on the screen carries (owner Q85.2, 2026-11-09). Like every UX framework here it has two parts: [the framework](#part-1-the-framework) to design with and [the checklist](#part-2-the-checklist) to judge with ([the two-part frameworks](spacing.md#the-two-part-frameworks)). It's inferred from the agentic-craft `visual-noise` skill, installed in `.github/skills/visual-noise/`, and sits beside [Spacing](spacing.md) (space groups first) and [Materials](materials.md) (what floats and how).
 
+> **TL;DR:** Every mark carries something nothing else carries: one boundary per group, members of an enclosed group bare, at most two enclosures deep, the cheapest cue that works (space, alignment, type, tone, border, shadow), state cues only while the state is active, no one-sided stripes. The probe counts enclosures, borders, strokes, fills and resting cues (VN1–VN6).
+
 ## Part 1: the framework
 
 ### Terms

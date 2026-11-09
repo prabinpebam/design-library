@@ -2,6 +2,8 @@
 
 **In the library:** [Loading](http://127.0.0.1:8766/#/loading), [Notifications](http://127.0.0.1:8766/#/notifications), [EmptyState](http://127.0.0.1:8766/#/emptystate), [Alert](http://127.0.0.1:8766/#/alert), [ErrorSummary](http://127.0.0.1:8766/#/errorsummary), and each control's own page (pending, saved and failed live).
 
+> **TL;DR:** Every change, wait, failure and empty place shows itself at the smallest scope it affects: a saving control stays focused and locked and confirms for at least 200 ms, a load shows a skeleton of its real shape, every error says what happened and offers a way on with the input kept, every empty place says why and what to do, and notifications sit in one pill at the bottom. The probe measures locks, skeletons, empty states, recovery, pills and progress names (US1–US6).
+
 How every change, wait, failure and empty place shows itself, in two parts like every UX framework here ([the two-part frameworks](spacing.md#the-two-part-frameworks)): [the framework](#part-1-the-framework) to build with and [the checklist](#part-2-the-checklist) to judge with. From the agentic-craft `ui-states` skill (the contract and its references, installed in `.github/skills/ui-states/`), owner Q25 (loading at every level) and Q34 (notifications auto-dismiss unless reading must be enforced); written in two parts for Q85.2 (2026-11-09).
 
 ## Grounding: what states promise

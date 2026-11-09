@@ -34,7 +34,8 @@
     "./package.json": "./package.json",
     "./CHANGELOG.md": "./CHANGELOG.md",
     "./guide/*": "./guide/*",
-    "./tools/*": "./tools/*"
+    "./tools/*": "./tools/*",
+    "./probes/*": "./probes/*"
   },
   "bin": {
     "design-library-check-content": "./tools/check-content.mjs"

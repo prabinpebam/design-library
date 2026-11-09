@@ -21,10 +21,12 @@ The first **Beta**: ready for early trials in separate projects (React 19 with V
 - **Frame** layout part and framing from the hierarchy (Q88–Q94): a frame is a unit outside and a root inside; standalone `hero` and `cta` blocks (`standalone: true`) are framed; the renderer passes `siblings`, `neighbours` and `region` to blocks.
 - **Compact chrome** (Q97): `data-density="compact"` on a chrome region's root gives small text and the shape's small radius; a new shape option, Mild.
 - **AppLayout `head`** slot; `ChatLayout` and `EditorLayout` mark their `main` landmark.
-- **Blocks:** `people` items, `person` and `byline` take an optional `picture`; a form block's fields take `answer` and `invalid` for its failed screen state, so the kept answers show and the fields at fault are marked.
-- **Canvas:** `CanvasLook` takes `image` and `imageFit` for image fills.
+- **Blocks:** `people` items, `person` and `byline` take an optional `picture`, an asset id from the template's `assets.json`, drawn as the person's portrait (initials when there's none; `person`'s `portrait: true` still shows initials alone). A form block's fields take `answer` and `invalid` for its failed screen state, so the kept answers show and the fields at fault are marked. Both are additive: existing content stays valid.
+- **Canvas:** `CanvasLook` takes an optional `image` (a picture's address, drawn over the fill) and `imageFit` (`cover`, `contain` or `tile`), so an editor can draw image fills.
+- **Probes ship in the package:** `@design-library/core/probes/{name}-probe.js` (spacing, layout, context, noise, material, motion, scroll, clipping, ui-states, visual), browser scripts that score each framework's checklist rows on a running screen.
+- **Guide:** step 8, review every screen with the adversarial loop (an evaluator who didn't build the screen runs the probes and the look rows; fix at the owner; repeat); "Your own pictures" in step 6; the package `AGENTS.md` names the loop and every probe.
 - **Notifications:** each pill carries `data-dismiss` (`auto` or `manual`).
-- **Frameworks, two parts each** (docs): spacing and framing, layout, density, visual noise, materials and elevation, motion, scrolling, clipping, UI states and visual representation, each with a browser probe in the library repository (`tools/*-probe.js`), and the adversarial loop that runs them.
+- **Frameworks, two parts each** (docs): spacing and framing, layout, density, visual noise, materials and elevation, motion, scrolling, clipping, UI states and visual representation, each with its probe, and [the adversarial loop](https://prabinpebam.github.io/design-library/docs/#adversarial-loop.md) that runs them.
 - **Pictures:** the templates' pictures generated from one reference per template, portraits for their people, sponsor marks.
 
 ### Fixed
@@ -36,14 +38,7 @@ The first **Beta**: ready for early trials in separate projects (React 19 with V
 
 ### Upgrading from 0.1.1
 
-Install both 0.2.0-beta.1 tarballs together, apply the three breaking notes above, then run your checks (`guide/1-install.md`, "Check it").
-
-## Unreleased (earlier notes, folded into 0.2.0-beta.1)
-
-Nothing breaks.
-
-- **Blocks:** `people` items, `person` and `byline` take an optional `picture`, an asset id from the template's `assets.json`, drawn as the person's portrait (initials when there's none). `person`'s `portrait: true` still shows initials alone.
-- **Canvas:** `CanvasLook` takes an optional `image` (a picture's address, drawn over the fill) and `imageFit` (`cover`, `contain` or `tile`), so an editor can draw image fills.
+Install both 0.2.0-beta.1 tarballs together, apply the three breaking notes above (nothing else breaks: every other change is additive), then run your checks (`guide/1-install.md`, "Check it") and review each screen with the loop (`guide/8-review.md`).
 
 ## 0.1.1 (2026-11-09)
 

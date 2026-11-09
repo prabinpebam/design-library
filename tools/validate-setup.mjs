@@ -44,8 +44,10 @@ const expectedSkills = [
   ...readdirSync(path.join(root, 'agentic-craft', 'skills')),
   ...readdirSync(path.join(root, 'agent-orchestration', 'skills')),
   'slate',
+  // Project-owned skill (Q84): picture generation and handling for the library and templates.
+  'image-prompting',
 ].sort();
-assert.equal(new Set(expectedSkills).size, 17, 'Skill names must not collide');
+assert.equal(new Set(expectedSkills).size, 18, 'Skill names must not collide');
 assert.deepEqual(skillNames, expectedSkills);
 const agentFiles = files(path.join(root, '.github', 'agents'));
 assert.equal(agentFiles.length, 3);
@@ -157,4 +159,4 @@ for (const folder of ['agentic-craft', 'agent-orchestration', 'slate']) {
   assert.ok(provenance.includes(json(path.join(root, folder, 'package.json')).version));
 }
 
-console.log('Design Library setup passed: 17 skills, 3 agents, canonical hooks, preserved guidance, 7 pages, 25 runtime files, clean ignored source clones, explicit product workspaces on the approved npm proxy.');
+console.log('Design Library setup passed: 18 skills, 3 agents, canonical hooks, preserved guidance, 7 pages, 25 runtime files, clean ignored source clones, explicit product workspaces on the approved npm proxy.');

@@ -2,6 +2,8 @@
 
 How a Design library page or app divides the window into regions and columns, and how it reflows from a wide window to 320 CSS px (owner Q85.2, 2026-11-09). Like every UX framework here it has two parts: [the framework](#part-1-the-framework) to build with and [the checklist](#part-2-the-checklist) to judge with ([the two-part frameworks](spacing.md#the-two-part-frameworks)). Layout is the outer end of [Spacing and layout rhythm](spacing.md): the same hierarchy tree decides the regions, their space, their frames and their columns.
 
+> **TL;DR:** Regions come from the page's hierarchy and a layout component: one main region, the widest and first on a narrow window, source order as reading order, widths from content (measure, column minimum), components that answer their container, one scroller per region. The probe checks reflow, measure, order, sticky headers, scroll traps, columns and regions at 1000 and 320 CSS px (LY1–LY8).
+
 ## Part 1: the framework
 
 ### Terms

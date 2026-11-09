@@ -2,6 +2,8 @@
 
 How every scroll region in the Design library scrolls, why the AI chat template missed it, and how to check it can't happen again (owner Q96, 2026-11-09). Like every UX framework here it has two parts: [the framework](#part-1-the-framework) to build with and [the checklist](#part-2-the-checklist) to judge with ([the two-part frameworks](spacing.md#the-two-part-frameworks)).
 
+> **TL;DR:** Every scroll region is a ScrollArea: the library's thin bar drawn over the content at the surface's edge, padding on the content inside, focus never cut, the wheel never trapped in the page. The static check finds raw scroll regions; the probe finds any element that scrolls outside a ScrollArea (SB1–SB7).
+
 ## What went wrong (Q96.1)
 
 **What the owner saw:** the AI chat template's sidebar and conversation drew the browser's own scrollbar (a grey bar that takes a column beside the content), not the library's thin overlay bar.

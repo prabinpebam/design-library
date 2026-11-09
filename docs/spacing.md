@@ -2,6 +2,8 @@
 
 How space groups things in everything the Design library draws, and how to judge that it does. Inferred from the agentic-craft `spacing` skill (its rules, roles and audit) and applied to this library's tokens, tiers and templates (owner Q85, 2026-11-09).
 
+> **TL;DR:** Map the page's hierarchy as a tree of groups first; then give each level one gap, smaller inside a group than around it at every node; frame only where isolation helps; size columns from each group's own content. The checklist (SC and FR rows) is measured by the spacing probe and judged by someone who didn't build the screen.
+
 Like every UX framework in this project, it comes in two parts ([the two-part frameworks](#the-two-part-frameworks)):
 
 1. **[The framework](#part-1-the-framework):** what an agent or a person applies while designing a view.
@@ -344,7 +346,7 @@ Every UX framework in this project has the same two parts: the framework to desi
 
 ## The adversarial loop
 
-Create with part 1, judge with part 2, by someone who didn't build it: the evaluator scores every row with its evidence (a measurement, a probe result or a screenshot), the builder fixes the failing rows at their owner (token, layout, compound, then content), and the loop repeats until no S1–S3 row fails.
+Create with part 1, judge with part 2, by someone who didn't build it: the evaluator scores every row with its evidence (a measurement, a probe result or a screenshot), the builder fixes the failing rows at their owner (token, layout, compound, then content), and the loop repeats until every framework's pass rule holds. The full procedure (roles, the exit rule per framework, every probe and how to run it, how it's wired into the agent guidance): [The adversarial loop](adversarial-loop.md).
 
 ## Sources
 

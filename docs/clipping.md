@@ -2,6 +2,8 @@
 
 **In the library:** [Clipping](http://127.0.0.1:8766/#/clipping) under Tokens, reading the same list the check reads.
 
+> **TL;DR:** Nothing is cut off by accident. A box clips only for a named reason on the list (a shape crop, a media crop, visually hidden text, truncation, an axis lock, a transient clip); any box that clips keeps at least a focus ring's reach of padding inside; text ends in an ellipsis only where its full text is one step away. The probe measures cut rings, shadows and text and truncation without a step (CL1–CL4).
+
 What gets cut off and what never does, in two parts like every UX framework here ([the two-part frameworks](spacing.md#the-two-part-frameworks)): [the framework](#part-1-the-framework) to build with and [the checklist](#part-2-the-checklist) to judge with. Owner Q24 (2026-11-07): *"We should have framework for what gets clipped what doesn't. We should avoid unintended clipping of shadows and borders which happens sometimes."* Written in two parts for Q85.2 (2026-11-09).
 
 ## Grounding: what clipping promises
