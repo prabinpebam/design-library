@@ -6,8 +6,8 @@
   "description": "Cold-walkthrough example (Q76): a page drawn from a template's content JSON with a custom preset, built by following only packages/core/AGENTS.md and its guide.",
   "scripts": { "dev": "vite --host 127.0.0.1 --port 8767 --strictPort", "build": "vite build" },
   "dependencies": {
-    "@design-library/core": "0.2.0-beta.2",
-    "@design-library/templates": "0.2.0-beta.2",
+    "@design-library/core": "0.3.0-beta.1",
+    "@design-library/templates": "0.3.0-beta.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },

@@ -6,7 +6,7 @@
 
 **Release:** [v0.3.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.3.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan](improvement-plan.md), [Stage: DesignUp improvements](definition-of-done.md#stage-designup-improvements) rows B3.1–B3.28.
 
-**State:** draft, written ahead of the release (worker 56, 2026-11-10). The proof, the install matrix and the IP32, IP33 and IP36 lines are filled in when the release is cut.
+**State:** draft, written ahead of the release (worker 56, 2026-11-10). The proof and the install matrix are filled in when the release is cut.
 
 ## The brief for your agent
 
@@ -22,7 +22,8 @@ Then run your type check and build. Install both together; templates needs the c
 ## 2. Nothing breaks
 
 Every change is an addition, an opt-in, or keeps today's default. Without the new props, `Router`, theme options and
-content fields, every page draws as it did. Two small fixes change what you may see: a `TextField` with
+content fields, every page draws as it did. Three small fixes change what you may see: on a phone, a tall feature in a peek `Frame` has less space under
+it, so the next band shows (wide windows unchanged); a `TextField` with
 `mode="form"` now follows its `value` while focused (so a Clear button empties it), and a `clearable` search field no
 longer shows the browser's own cancel mark beside the library's Clear. New checks only warn unless you pass `--strict`.
 Proof: a copy of a real site installed this version unchanged; it type-checked, built and rendered every route with
@@ -39,6 +40,9 @@ Components and props
 - `TableOfContents` (`layout` `list` or `row`, router-aware) and `letterItems(letters)`; `Section` `anchor`.
 - `Image` `treatment` (`'none'`, `'greyscale'`, `'duotone'`, or `{ rest, active }` for colour on hover or focus);
   `MediaPlayer` `posterTreatment`.
+- `SiteHeader` `nav`, `wordmark`, `current`, `tools` and `narrow="row"` (one 64 px row at 320 px); `Footer`
+  `arrangement` (`'columns'`, `'line'`, `'identity'`).
+- Fixed: a tall peek `Frame` feature on a phone leaves the next band in view (only there; wide windows unchanged).
 - `Text` and `Heading` `tone="accent"`; `Text` `variant="inherit"` for an accent span inside other text.
 
 Theme and tokens
@@ -100,7 +104,7 @@ Run `npx design-library-check --share` first and keep its output to compare afte
 10. Colour on hover: `ColorReveal` and the `colorSrc`/`colorReveal` props on `PhotoFrame`, `TalkGrid`, `PhotoTiles`
     and `Speakers` become `<Image treatment={{ rest: 'greyscale', active: 'none' }}>` or the picture entry's
     `"treatment"`; the video poster takes `posterTreatment`.
-11. Header, footer and K1/K2: (filled in at the release from IP32, IP33 and IP36).
+11. Header and footer: in `App.tsx`, pass the scheme button to `SiteHeader` as `tools` (or `<SchemeControl form="button">`), the status link as `actions`, and `narrow="row"`, so the 320 px header is one 64 px row; `wordmark`, `nav` and `current="colour"` or `"rule"` replace hand CSS for the nav place, wordmark size and current style (an orange one-sided tab stays out). The footer that passes the logo through `identity` can take `arrangement="identity"` to put the logo and its line beside the sections. A tall feature in a peek `Frame` on a phone now leaves the next band in view by itself (IP36): nothing to do.
 12. Data-driven steps, in this order (each one alone is fine):
     1. Give each JSON file in `web/src/content` a `$schema` (a hosted address above, or the package path under
        `node_modules`), and run `npx design-library-check-content --templates web/src/templates --content web/src/content --src web/src`.

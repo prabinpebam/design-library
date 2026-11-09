@@ -212,10 +212,10 @@ Recorded at the Beta call (owner Q103, 17:31); none blocks a trial.
 
 | # | Issue | Where | Severity |
 | --- | --- | --- | --- |
-| K1 | A feature taller than about two thirds of a 320 × 667 window can't leave the next band in view and also keep the page-level space FR7 requires | corporate home, the contact feature (FR15) | S2 |
-| K2 | DescriptionList's term column stops at three fifths, so a long term wraps while the details have room to spare | corporate contact at 320 px (SC16) | S2 |
+| K1 | A feature taller than about two thirds of a 320 × 667 window can't leave the next band in view and also keep the page-level space FR7 requires | corporate home, the contact feature (FR15) | S2, **fixed in 0.3.0-beta.1** (IP36, 93abe58): a peek Frame gives way below its content down to FR1/FR6, FR7 kept; corporate home at 320 × 667 passes FR15 (closing call to action 566 → 523 px) |
+| K2 | DescriptionList's term column stops at three fifths, so a long term wraps while the details have room to spare | corporate contact at 320 px (SC16) | S2, **closed in 0.3.0-beta.1** (IP36): a probe artefact; SC16 read a subgrid row's `normal` column gap as 0 (it is 16 px); with the gap counted the term has no room to stay on one line; DescriptionList unchanged |
 | K3 | The proof's footer heading restates its only link ("Café" over "Café") | Tidewater proof content (VN10) | N4, doesn't block the pass rule |
 | K5 | At 320 px SiteHeader takes two rows (the name, then the actions and Menu), 104 px tall instead of about 64 | SiteHeader narrow form | Decision pending |
 | K6 | The library's own documentation pages fail on their chrome: the title bar has no chrome fill (ME6), the page header's parts are all 8 px apart (SC5), and SC2/SC3 fail on specimens (45 of 45 sampled) | Library pages, not shipped to consumers | First after the Beta |
-| K8 | DescriptionList wraps a short details value ("Ama Mensah · Autosave", needs 78 px, 89 px room) at 320 px: same root as K2, the column split, not the content | design version-history at 320 px (SC16) | S2, fix with K2 in DescriptionList (component) |
+| K8 | DescriptionList wraps a short details value ("Ama Mensah · Autosave", needs 78 px, 89 px room) at 320 px: same root as K2, the column split, not the content | design version-history at 320 px (SC16) | S2, **closed in 0.3.0-beta.1** (IP36): the same probe artefact as K2; passes with the gap counted |
 | K7 | The release files were re-uploaded at 17:25 with the round-1 fixes, under the same version | v0.2.0-beta.1 assets | Note |
