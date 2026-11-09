@@ -55,4 +55,38 @@
     flex-wrap: wrap;
     gap: var(--c-footer-link-gap) var(--c-footer-meta-link-gap);
   }
+
+  /* Arrangements (IP33). line: the small print on one wrapping line, links first, the legal line last. */
+  [data-dl='footer'][data-arrangement='line'] > [data-dl-part='content'] > [data-dl-part='meta'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--c-footer-column-gap);
+  }
+
+  /* identity: the identity in its own column beside the sections, the small print under both; it stacks above the
+     sections when the footer is narrower than 40 rem, so nothing scrolls sideways at 320 px. */
+  [data-dl='footer'][data-arrangement='identity'] {
+    container-type: inline-size;
+  }
+
+  [data-dl='footer'][data-arrangement='identity'] > [data-dl-part='content'] {
+    display: grid;
+    grid-template-columns: minmax(0, var(--c-footer-identity-width)) minmax(0, 1fr);
+    gap: var(--c-footer-gap) var(--c-footer-column-gap);
+  }
+
+  [data-dl='footer'][data-arrangement='identity'] > [data-dl-part='content'] > [data-dl-part='identity'] {
+    min-inline-size: 0;
+  }
+
+  [data-dl='footer'][data-arrangement='identity'] > [data-dl-part='content'] > [data-dl-part='meta'] {
+    grid-column: 1 / -1;
+  }
+
+  @container (max-width: 40rem) {
+    [data-dl='footer'][data-arrangement='identity'] > [data-dl-part='content'] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 }

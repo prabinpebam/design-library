@@ -828,6 +828,7 @@
   --c-footer-link-gap: var(--space-stack-item);
   --c-footer-meta-gap: var(--space-stack-item);
   --c-footer-meta-link-gap: var(--space-inline-group);
+  --c-footer-identity-width: 18rem;
   --c-notifications-max-width: 35rem;
   --c-notifications-edge: var(--space-4);
   --c-notifications-gap: var(--space-stack-item);

@@ -33,6 +33,13 @@ export interface FooterProps extends DataAttributes {
   legal?: ReactNode;
   /** The sections' heading level, from the page's outline. Defaults to 2. */
   headingLevel?: 2 | 3;
+  /**
+   * How the parts are arranged (IP33): `columns` (default: sections side by side, then the small print), `line` (the
+   * small print on one wrapping line: links, identity and legal side by side, for a small site) or `identity` (the
+   * identity, such as a logo and a line, in its own column beside the sections, then the small print; it stacks above
+   * them in a narrow footer).
+   */
+  arrangement?: 'columns' | 'line' | 'identity';
 }
 
 /**
@@ -45,7 +52,7 @@ export interface FooterProps extends DataAttributes {
  * @a11y A `footer` placed outside `main` and `article`, so it is the page's contentinfo landmark. Each group of links
  * is a labelled navigation with a real list, so its links are counted; section headings keep the page's outline.
  */
-export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel = 'Support links', identity, legal, headingLevel = 2, ...data }: FooterProps) {
+export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel = 'Support links', identity, legal, headingLevel = 2, arrangement, ...data }: FooterProps) {
   const item = (l: FooterLink) => (
     <li key={l.href + l.label}>
       <Link href={l.href} external={l.external}>
@@ -53,10 +60,12 @@ export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel =
       </Link>
     </li>
   );
-  const hasMeta = !!(links?.length || identity || legal);
+  const led = arrangement === 'identity' && !!identity;
+  const hasMeta = !!(links?.length || (identity && !led) || legal);
   return (
-    <footer {...data} data-dl="footer">
+    <footer {...data} data-dl="footer" data-arrangement={arrangement && arrangement !== 'columns' ? arrangement : undefined}>
       <div data-dl-part="content">
+        {led && <div data-dl-part="identity">{identity}</div>}
         {!!sections?.length && (
           <nav aria-label={sectionsLabel} data-dl-part="sections">
             {sections.map((s) => (
@@ -76,7 +85,7 @@ export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel =
                 <ul data-dl-part="meta-links">{links.map(item)}</ul>
               </nav>
             )}
-            {identity && <Text variant="body-sm">{identity}</Text>}
+            {identity && !led && <Text variant="body-sm">{identity}</Text>}
             {legal && (
               <Text variant="body-sm" tone="muted">
                 {legal}

@@ -55,6 +55,11 @@
           "type": "2 | 3",
           "default": "2",
           "description": "The sections' heading level, from the page's outline. Defaults to 2."
+        },
+        {
+          "name": "arrangement",
+          "type": "'columns' | 'line' | 'identity'",
+          "description": "How the parts are arranged (IP33): `columns` (default: sections side by side, then the small print), `line` (the small print on one wrapping line: links, identity and legal side by side, for a small site) or `identity` (the identity, such as a logo and a line, in its own column beside the sections, then the small print; it stacks above them in a narrow footer)."
         }
       ]
     },
@@ -110,6 +115,7 @@
     "--c-footer-column-min",
     "--c-footer-gap",
     "--c-footer-heading-gap",
+    "--c-footer-identity-width",
     "--c-footer-link-gap",
     "--c-footer-meta-gap",
     "--c-footer-meta-link-gap",

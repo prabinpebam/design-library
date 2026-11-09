@@ -1,4 +1,8 @@
 import { Footer, type FooterSection } from '../compounds/Footer';
+import { Cluster } from '../fundamentals/Cluster';
+import { Icon } from '../fundamentals/Icon';
+import { Stack } from '../fundamentals/Stack';
+import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
 
 const sections: FooterSection[] = [
@@ -63,6 +67,40 @@ export default {
       description: 'A small site or a single service: the support links and the legal line, nothing else.',
       code: `<Footer links={smallPrint} legal="© 2026 Northwind." />`,
       render: () => <Footer links={smallPrint} legal="© 2026 Northwind." />,
+    },
+    {
+      title: 'On one line',
+      description: 'arrangement="line": the small print side by side on one wrapping line, the links, who runs the site, then the legal line. For a small site; at 320 px it wraps into lines and never scrolls sideways.',
+      code: `<Footer arrangement="line" links={smallPrint} identity="Made by the Northwind design team." legal="© 2026 Northwind." />`,
+      render: () => <Footer arrangement="line" links={smallPrint} identity="Made by the Northwind design team." legal="© 2026 Northwind." />,
+    },
+    {
+      title: 'Led by the identity',
+      description: 'arrangement="identity": the identity, a mark, the name and a line, in its own column beside the link sections, the small print under both. Below 40 rem of footer the identity stacks above the sections.',
+      code: `<Footer arrangement="identity" sections={sections} links={smallPrint} legal="© 2026 Northwind."
+  identity={<Stack gap="item"><Cluster gap="pair"><Icon name="organisation" size="lg" /><Text variant="lead" as="span">Northwind</Text></Cluster><Text variant="body-sm" tone="muted">Tools for teams who make things.</Text></Stack>} />`,
+      render: () => (
+        <Footer
+          arrangement="identity"
+          sectionsLabel="More from Northwind"
+          sections={sections}
+          links={smallPrint}
+          legal="© 2026 Northwind."
+          identity={
+            <Stack gap="item">
+              <Cluster gap="pair">
+                <Icon name="organisation" size="lg" />
+                <Text variant="lead" as="span">
+                  Northwind
+                </Text>
+              </Cluster>
+              <Text variant="body-sm" tone="muted">
+                Tools for teams who make things.
+              </Text>
+            </Stack>
+          }
+        />
+      ),
     },
   ],
 } satisfies StoryFile;
