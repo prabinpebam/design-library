@@ -106,29 +106,31 @@ export function ProjectsApp({ view, screen, state, at, height = 'fill' }: { view
 
   let body: ReactNode;
   let aside: ReactNode;
+  // The view's head leads everything in it (Q93): AppLayout's head slot, a section above the view's units.
+  let head: ReactNode;
   if (screen === 'board') {
     const sprint = issues.filter((i) => i.sprint);
-    body = (
-      <>
-        <Stack gap="pair">
-          <Heading level={1} size={2}>
-            {view.sprint.name}
-          </Heading>
-          <Text as="p" tone="muted">
-            {fill(w.pointsDone, { ends: view.sprint.ends, done: points(sprint.filter((i) => i.status === 'done')), total: points(sprint) })}
-          </Text>
-        </Stack>
-        <Board label={fill(w.sprintBoard, { sprint: view.sprint.name })} columns={columns} onMove={onMove} />
-      </>
+    head = (
+      <Stack gap="pair">
+        <Heading level={1} size={2}>
+          {view.sprint.name}
+        </Heading>
+        <Text as="p" tone="muted">
+          {fill(w.pointsDone, { ends: view.sprint.ends, done: points(sprint.filter((i) => i.status === 'done')), total: points(sprint) })}
+        </Text>
+      </Stack>
     );
+    body = <Board label={fill(w.sprintBoard, { sprint: view.sprint.name })} columns={columns} onMove={onMove} />;
   } else if (screen === 'backlog') {
     const sprint = issues.filter((i) => i.sprint);
     const later = issues.filter((i) => !i.sprint);
+    head = (
+      <Heading level={1} size={2}>
+        {w.backlog}
+      </Heading>
+    );
     body = (
       <>
-        <Heading level={1} size={2}>
-          {w.backlog}
-        </Heading>
         <Section heading={view.sprint.name} intro={fill(w.sprintIntro, { count: sprint.length, points: points(sprint), ends: view.sprint.ends.toLowerCase() })}>
           {table(fill(w.sprintIssues, { sprint: view.sprint.name }), sprint)}
         </Section>
@@ -155,15 +157,30 @@ export function ProjectsApp({ view, screen, state, at, height = 'fill' }: { view
       stopEditing();
       announce(fill(w.changesSaved, { key: issue.key }));
     };
+    head = editing ? (
+      <Heading level={1} size={2}>
+        {fill(w.editIssue, { key: issue.key })}
+      </Heading>
+    ) : (
+      <Stack gap="pair">
+        <Cluster gap="item" align="center">
+          <Badge tone={view.types[issue.type]}>{issue.type}</Badge>
+          <Text as="span" tone="muted">
+            {issue.key}
+          </Text>
+          <Button label={w.edit} icon="edit" emphasis="quiet" size="s" onClick={() => setEditing(true)} />
+        </Cluster>
+        <Heading level={1} size={2}>
+          {issue.title}
+        </Heading>
+      </Stack>
+    );
     body = (
       <>
-        {/* View ↔ edit in one box (Q65 TP4, C27): the title and description become their fields and back. */}
+        {/* View ↔ edit in one box (Q65 TP4, C27): the description becomes the issue's fields and back; the head above says which. */}
         <Morph state={editing ? 'edit' : 'view'}>
           {editing ? (
             <Stack gap="group">
-              <Heading level={1} size={2}>
-                {fill(w.editIssue, { key: issue.key })}
-              </Heading>
               <TextField label={w.title} value={form.title} error={titleError} onCommit={(title) => { setTitleError(undefined); change({ title }); }} />
               <Select label={w.type} value={form.type} onChange={(type) => change({ type: type as Issue['type'] })} options={Object.keys(view.types).map((t) => ({ value: t, label: t }))} />
               <TextArea label={w.description} hint={w.descriptionHint} value={form.description} onChange={(text) => change({ description: text })} rows={6} />
@@ -173,29 +190,15 @@ export function ProjectsApp({ view, screen, state, at, height = 'fill' }: { view
               </Cluster>
             </Stack>
           ) : (
-            <Stack gap="group">
-              <Stack gap="pair">
-                <Cluster gap="item" align="center">
-                  <Badge tone={view.types[issue.type]}>{issue.type}</Badge>
-                  <Text as="span" tone="muted">
-                    {issue.key}
+            <Section heading={w.description} size={4}>
+              <Stack gap="item">
+                {description.map((t) => (
+                  <Text key={t} as="p">
+                    {t}
                   </Text>
-                  <Button label={w.edit} icon="edit" emphasis="quiet" size="s" onClick={() => setEditing(true)} />
-                </Cluster>
-                <Heading level={1} size={2}>
-                  {issue.title}
-                </Heading>
+                ))}
               </Stack>
-              <Section heading={w.description} size={4}>
-                <Stack gap="item">
-                  {description.map((t) => (
-                    <Text key={t} as="p">
-                      {t}
-                    </Text>
-                  ))}
-                </Stack>
-              </Section>
-            </Stack>
+            </Section>
           )}
         </Morph>
         <Section heading={w.doneWhen} size={4} intro={fill(w.doneCount, { done: checklist.filter((c) => c.done).length, total: checklist.length })}>
@@ -268,6 +271,7 @@ export function ProjectsApp({ view, screen, state, at, height = 'fill' }: { view
         </>
       }
       aside={aside}
+      head={head}
     >
       {body}
     </AppLayout>

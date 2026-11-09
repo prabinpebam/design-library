@@ -278,6 +278,12 @@ The framework now starts from [the method](#the-method-hierarchy-first-then-spac
 - **Probe, measuring what the eye sees:** a boundary is a border or fill whether its padding is on itself or one level down (an outlined card); a heading is judged inside its own surface (a scroll region, an enclosure or a frame), not against the bar above it; a tree's rows keep one rhythm (depth by indent, spacing rule 4); a tab bar is its panel's head; legends, drawn shapes and visible boundaries count as atoms; an optical lift (`--dl-optical: lift`, Alert's first-line alignment) isn't a gap; surfaces may bleed to the window's edge (SC7 judges content).
 - **Sweep** (168 layouts, 1000 × 800): **4 fail a grouping row** (17 before): Design drafts (SC6), Projects backlog (SC5) and Projects issue and issue-edit (SC2, SC3). Next packet.
 
+### F15.SP-last: the last four (2026-11-09 about 12:00, Q85.4)
+
+- **AppLayout's head slot (core):** a view is head · content; the title is one of the view's units at the page level (`c.app-layout.head-gap` = `space.stack-page`), so each section's own head stays nearer its content than the title. Projects board, backlog and issue use it; the issue's Description is now a sibling section of Done when and Comments (the Morph swaps it with the fields; the head says "Edit").
+- **Probe:** SC6 counts only headings that head flow content (a card's or a statistic's title names an item); a heading's head is the outermost head part within two levels; a Persona counts as one visible unit.
+- **Sweep:** 167 of 168 pass every grouping row. Open: Projects issue-edit, where "Done when" sits 38 px under the edit form (the Morph's box looks to hold the view's height in the edit state; the fix belongs in Morph).
+
 ### Framing as built, F15.SP-frame2 (2026-11-09 about 10:55)
 
 - New core layout part **Frame** (`packages/core/react/layouts/Frame.tsx`, `css/layouts/frame.css`, tokens `c.frame.space-min` = `space.stack-page` and `c.frame.ground` = `color.bg-sunken`): `kind="feature"` pads the band `clamp(page level, 12svh, 2 × page level)` above and below; `kind="stage"` holds `min(70svh, 100svh − 7rem)` with the content centred and shrinks to its content under a 31 rem tall window; `ground` paints an edge-to-edge tone with `border-image` outset (no negative margin, no clip).

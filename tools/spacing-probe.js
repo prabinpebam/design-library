@@ -21,7 +21,7 @@
  */
 (function () {
   const SCALE = [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128];
-  const ATOM = 'h1,h2,h3,h4,h5,h6,p,img,picture,video,button,input,select,textarea,label,legend,dl,table,ul,ol,blockquote,figure,svg,[aria-hidden="true"],[data-frame],[data-dl="card"],[data-dl="statistic"],[data-dl="button"],[data-dl="avatar"]';
+  const ATOM = 'h1,h2,h3,h4,h5,h6,p,img,picture,video,button,input,select,textarea,label,legend,dl,table,ul,ol,blockquote,figure,svg,[aria-hidden="true"],[data-frame],[data-dl="card"],[data-dl="statistic"],[data-dl="button"],[data-dl="avatar"],[data-dl="persona"]';
   const HEAD_PART = new Set(['heading', 'head']);
   const px = (v) => parseFloat(v) || 0;
   const name = (el) => {
@@ -168,9 +168,9 @@
     for (const h of root.querySelectorAll('h1,h2,h3,h4,h5,h6')) {
       // An accordion's headings are its rows' triggers, separated by the accordion's own rules, not heads of flow.
       if (!visible(h) || h.closest('[data-dl="card"],[data-dl="statistic"],[data-dl="accordion"]')) continue;
+      // A heading's head is the outermost head part within two levels (eyebrow, heading and intro; a key and a title).
       let head = h;
-      if (HEAD_PART.has(h.parentElement?.getAttribute('data-dl-part') ?? '')) head = h.parentElement;
-      if (HEAD_PART.has(head.parentElement?.getAttribute('data-dl-part') ?? '')) head = head.parentElement;
+      for (let a = h.parentElement, i = 0; a && i < 2; a = a.parentElement, i++) if (HEAD_PART.has(a.getAttribute('data-dl-part') ?? '')) head = a;
       if (seen.has(head)) continue;
       seen.add(head);
       const r = head.getBoundingClientRect();
@@ -188,8 +188,9 @@
       if (above < 2 * below - 2) fail('SC2', { where: `${name(head)} “${h.textContent.trim().slice(0, 40)}”`, above, below });
     }
 
-    // SC6 levels: judged on a page with two or more headings (a page of one list has no hierarchy to show).
-    const headings = [...root.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(visible).length;
+    // SC6 levels: judged on a page with two or more headings that head flow content (a card's or a statistic's title names
+    // an item, not a level of the page; a page of one list has no hierarchy to show).
+    const headings = [...root.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter((h) => visible(h) && !h.closest('[data-dl="card"],[data-dl="statistic"]')).length;
     if (headings >= 2 && levels.size < 3) fail('SC6', { levels: [...levels].sort((a, b) => a - b), headings });
 
     // SC7 edges.

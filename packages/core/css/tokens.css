@@ -511,6 +511,7 @@
   --c-app-layout-sidebar-gap: var(--space-stack-group);
   --c-app-layout-header: var(--size-control-xl);
   --c-app-layout-header-gap: var(--space-inline-pair);
+  --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
   --c-app-layout-gutter: var(--space-gutter);
@@ -1442,6 +1443,7 @@
   --c-allocation-slider-legend-gap: var(--space-inline-group);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
+  --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
@@ -1712,6 +1714,7 @@
   --c-allocation-slider-legend-gap: var(--space-inline-group);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
+  --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
@@ -1982,6 +1985,7 @@
   --c-allocation-slider-legend-gap: var(--space-inline-group);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
+  --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
@@ -2252,6 +2256,7 @@
   --c-allocation-slider-legend-gap: var(--space-inline-group);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-gutter);
+  --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);

@@ -15,6 +15,8 @@ export interface AppLayoutProps extends DataAttributes {
   header?: ReactNode;
   /** The header's end: search, the main action, the account. */
   headerEnd?: ReactNode;
+  /** The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content. */
+  head?: ReactNode;
   /** The view: it scrolls on its own, with the page margin around it. */
   children: ReactNode;
   /** Names the view's region: the view's title. */
@@ -40,7 +42,7 @@ export interface AppLayoutProps extends DataAttributes {
  * to the toggle.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
@@ -74,7 +76,14 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
         <div data-dl-part="scroll" tabIndex={0}>
           <div data-dl-part="body">
             <main data-dl-part="view" aria-label={label}>
-              {children}
+              {head ? (
+                <>
+                  <div data-dl-part="head">{head}</div>
+                  <div data-dl-part="content">{children}</div>
+                </>
+              ) : (
+                children
+              )}
             </main>
             {aside && (
               <aside data-dl-part="aside" aria-label={asideLabel}>

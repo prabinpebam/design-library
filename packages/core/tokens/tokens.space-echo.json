@@ -130,6 +130,11 @@
         "$value": "{space.gutter}",
         "$description": "Between the view and the details column (echoed for space contexts)"
       },
+      "head-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-page}",
+        "$description": "Between the view's head (its title) and its content: one of the view's units, at the page level like the others, so the first section's own head (a section above its content) reads with that section, not with the title (Q93) (echoed for space contexts)"
+      },
       "header-gap": {
         "$type": "dimension",
         "$value": "{space.inline-pair}",

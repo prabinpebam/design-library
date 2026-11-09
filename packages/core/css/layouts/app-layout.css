@@ -100,6 +100,19 @@
     min-inline-size: 0;
   }
 
+  /* With a head, the view is head · content (Q93): the title is one of the view's units at the page level, so the first
+     section's head stays nearer its own content than the title. */
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='view']:has(> [data-dl-part='head']) {
+    gap: var(--c-app-layout-head-gap);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-app-layout-gap);
+    min-inline-size: 0;
+  }
+
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='aside'] {
     display: flex;
     flex-direction: column;
