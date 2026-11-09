@@ -140,6 +140,6 @@ From your project's root:
 | `npx tsc --noEmit` | Every import and prop is right |
 | `npx vite build` | It bundles |
 | `npx vite`, then open the address it prints | The screen renders; switch your system to dark and more contrast and look again, and narrow the window to 320 px |
-| Read your views against the package `AGENTS.md` "Never" rules | No styles in views (the library repository enforces this with `npm run check:views`, which isn't shipped) |
+| Read your views against the package `AGENTS.md` "Never" rules | `npx design-library-check`: no styles in views and the other Never rules, each finding with file, line and fix (nothing fails the run in 0.3 unless you pass `--strict`) |
 
 Next: [Step 2, content](2-content.md), to draw screens from JSON instead of JSX.

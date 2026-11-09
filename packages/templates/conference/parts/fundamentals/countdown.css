@@ -13,11 +13,11 @@
     color: var(--color-text);
   }
 
-  [data-dl='conference-countdown'] [data-dl-part='label'] {
+  [data-dl='conference-countdown'] > [data-dl-part='label'] {
     color: var(--color-text-muted);
   }
 
-  [data-dl='conference-countdown'] [data-dl-part='value'] {
+  [data-dl='conference-countdown'] > [data-dl-part='value'] {
     font-size: var(--t-conference-countdown-value-size);
     font-weight: var(--t-conference-countdown-value-weight);
     font-variant-numeric: tabular-nums;

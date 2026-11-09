@@ -16,12 +16,12 @@
     align-items: start;
   }
 
-  [data-dl='conference-sponsors-layout'] [data-dl-part='intro'] {
+  [data-dl='conference-sponsors-layout'] > [data-dl-part='intro'] {
     display: grid;
     gap: var(--t-conference-sponsors-layout-stack-gap);
   }
 
-  [data-dl='conference-sponsors-layout'] [data-dl-part='levels'] {
+  [data-dl='conference-sponsors-layout'] > [data-dl-part='levels'] {
     min-inline-size: 0;
   }
 

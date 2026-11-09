@@ -38,7 +38,8 @@
     "./probes/*": "./probes/*"
   },
   "bin": {
-    "design-library-check-content": "./tools/check-content.mjs"
+    "design-library-check-content": "./tools/check-content.mjs",
+    "design-library-check": "./tools/check-project.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",

@@ -96,5 +96,5 @@ Only when no core layout holds your screen's regions. It is a custom part ([Step
 | --- | --- |
 | `npx tsc --noEmit` | Regions and settings are the right props |
 | `npx design-library-check-content --templates src/templates` | Content fills only the regions its layout declares, with blocks each region accepts |
-| *Library repository:* `npm run check:views`, `npm run check:parts`, `npm run check:clipping`; in your project, read against the rules and open it at 320 px with keyboard focus | No styled wrappers in views; a custom layout reaches its parts by child paths; nothing clips focus |
+| `npx design-library-check` in your project, then open it at 320 px with keyboard focus (*library repository:* `npm run check:views`, `npm run check:parts`, `npm run check:clipping`) | No styled wrappers in views; a custom layout reaches its parts by child paths; nothing clips focus |
 | Open the screen at 320 px, 768 px and wide | Nothing scrolls sideways; panes collapse or float as the layout says |
