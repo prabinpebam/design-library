@@ -47,9 +47,9 @@
           "description": "The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`)."
         },
         {
-          "name": "focalPoint",
+          "name": "focal",
           "type": "{ x: number",
-          "description": "The point to keep in the frame when `cover` crops (IP12): `x` and `y` in percent from the start and top edges, e.g. `{ x: 30, y: 20 }` for a face up and to one side. The centre (50, 50) when left out."
+          "description": "The point to keep in the frame when `cover` crops (IP12): `x` and `y` from 0 to 1, across from the start edge and down from the top, e.g. `{ x: 0.3, y: 0.2 }` for a face up and to one side. The centre (0.5, 0.5) when left out. The same field as a picture entry's `focal` in `assets.json`."
         },
         {
           "name": "y",

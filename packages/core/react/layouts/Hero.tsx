@@ -10,8 +10,8 @@ export interface HeroPicture {
   alt: string;
   srcSet?: string;
   sizes?: string;
-  /** The point to keep in view when the frame crops (IP12), in percent from the start and top edges. */
-  focalPoint?: { x: number; y: number };
+  /** The point to keep in view when the frame crops (IP12): `x` and `y` from 0 to 1, as `Image` `focal`. */
+  focal?: { x: number; y: number };
 }
 
 interface HeroBase extends DataAttributes {
@@ -90,7 +90,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
         {arrangement === 'divided' && doing}
         {picture && (
           <div data-dl-part="picture">
-            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focalPoint={picture.focalPoint} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" />
+            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" />
           </div>
         )}
       </div>

@@ -40,13 +40,13 @@ export default {
     },
     {
       title: 'Focal point',
-      description: 'When cover crops, focalPoint keeps a point in view: x and y in percent from the start and top edges. The same tall crop of one picture, centred (default), held on its left part, then on its right part.',
-      code: `<Image ratio="portrait" focalPoint={{ x: 10, y: 50 }} … />`,
+      description: 'When cover crops, focal keeps a point in view: x and y from 0 to 1, across from the start edge and down from the top (the same field as a picture entry’s focal). The same tall crop of one picture, centred (default), held on its left part, then on its right part.',
+      code: `<Image ratio="portrait" focal={{ x: 0.1, y: 0.5 }} … />`,
       render: () => (
         <Grid max={3}>
           <Image ratio="portrait" src={scenes[1].src} alt={scenes[1].alt} />
-          <Image ratio="portrait" focalPoint={{ x: 10, y: 50 }} src={scenes[1].src} alt={scenes[1].alt} />
-          <Image ratio="portrait" focalPoint={{ x: 90, y: 50 }} src={scenes[1].src} alt={scenes[1].alt} />
+          <Image ratio="portrait" focal={{ x: 0.1, y: 0.5 }} src={scenes[1].src} alt={scenes[1].alt} />
+          <Image ratio="portrait" focal={{ x: 0.9, y: 0.5 }} src={scenes[1].src} alt={scenes[1].alt} />
         </Grid>
       ),
     },

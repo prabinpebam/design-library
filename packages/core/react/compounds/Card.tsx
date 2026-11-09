@@ -11,7 +11,7 @@ export interface CardProps extends DataAttributes {
   href?: string;
   /** A picture (an `img` or an Image) shown in the card's frame. Its alternative text is its own; a picture that only decorates has `alt=""`. */
   media?: ReactNode;
-  /** The frame's shape: `ultrawide` 21:9, `wide` 16:9, `photo` 3:2 (default), `classic` 4:3, `square` 1:1. The picture fills it; give an Image a `focalPoint` to choose what stays in view. */
+  /** The frame's shape: `ultrawide` 21:9, `wide` 16:9, `photo` 3:2 (default), `classic` 4:3, `square` 1:1. The picture fills it; give an Image a `focal` point to choose what stays in view. */
   ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square';
   /** One or two words above the title: the section or kind it belongs to. */
   eyebrow?: string;

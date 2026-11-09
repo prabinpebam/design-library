@@ -47,7 +47,7 @@
           "name": "ratio",
           "type": "'ultrawide' | 'wide' | 'photo' | 'classic' | 'square'",
           "default": "'photo'",
-          "description": "The frame's shape: `ultrawide` 21:9, `wide` 16:9, `photo` 3:2 (default), `classic` 4:3, `square` 1:1. The picture fills it; give an Image a `focalPoint` to choose what stays in view."
+          "description": "The frame's shape: `ultrawide` 21:9, `wide` 16:9, `photo` 3:2 (default), `classic` 4:3, `square` 1:1. The picture fills it; give an Image a `focal` point to choose what stays in view."
         },
         {
           "name": "eyebrow",
