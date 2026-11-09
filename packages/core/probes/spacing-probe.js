@@ -58,8 +58,11 @@
   };
 
   /** A stacking container: its visible in-flow children sit in rows, one under another. */
+  // A wrapper that steps aside (`display: contents`) draws no box: its children are its parent's rows.
+  const inFlow = (el) => [...el.children].flatMap((k) => (getComputedStyle(k).display === 'contents' ? inFlow(k) : [k]));
   function rowsOf(el) {
-    const kids = [...el.children].filter(visible);
+    if (getComputedStyle(el).display === 'contents') return null;
+    const kids = inFlow(el).filter(visible);
     if (kids.length < 2) return null;
     const rows = [];
     for (const k of kids) {
@@ -217,7 +220,7 @@
     const main = document.querySelector('main');
     const col = main?.querySelector(':scope > [data-dl-part="column"]') ?? main;
     if (col) {
-      const units = [...col.children].filter(visible).map((el) => el.getBoundingClientRect());
+      const units = inFlow(col).filter(visible).map((el) => el.getBoundingClientRect());
       const between = units.slice(1).map((r, n) => Math.round(r.top - units[n].bottom));
       const largest = Math.max(0, ...between);
       const bar = document.querySelector('[data-dl="site-layout"] > [data-dl-part="header"]')?.getBoundingClientRect();
@@ -358,7 +361,7 @@
     // FR17 the task first: with frames at the top of the page, the first band of the page's own content still shows.
     const column = document.querySelector('[data-dl="site-layout"] > [data-dl-part="main"] > [data-dl-part="column"]');
     if (column && vh >= 700) {
-      const bands = [...column.children].filter(visible);
+      const bands = inFlow(column).filter(visible);
       const lead = [];
       for (const b of bands) {
         if (b.hasAttribute('data-frame') || b.getAttribute('data-dl') === 'breadcrumbs') lead.push(b);

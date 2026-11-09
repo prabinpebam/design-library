@@ -238,7 +238,9 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
     const { route, how, scroll } = entry;
     const before = shown.current;
     shown.current = route;
-    const target = route.anchor ? document.getElementById(route.anchor) : null;
+    // A target that draws no box of its own (`display: contents`, a wrapper that steps aside) lands on its first child.
+    const named = route.anchor ? document.getElementById(route.anchor) : null;
+    const target = named && getComputedStyle(named).display === 'contents' ? ((named.firstElementChild as HTMLElement | null) ?? named) : named;
     if (!before) {
       if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
       return;

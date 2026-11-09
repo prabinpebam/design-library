@@ -7,7 +7,7 @@ import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { BlockRenderer, CoreBlock, RenderContext, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
+import type { Block, BlockRenderer, CoreBlock, RenderContext, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
 
 type Of<T extends CoreBlock['type']> = Extract<CoreBlock, { type: T }>;
 
@@ -280,6 +280,31 @@ function frame(ctx: RenderContext, i: number, kind: 'stage' | 'feature', body: R
     </Frame>
   );
 }
+/** Content blocks that sit in a column: what a slot takes (no page chrome, openings, closings or framed messages). */
+const CONTENT = ['prose', 'points', 'details', 'quote', 'stats', 'cards', 'gallery', 'people', 'questions', 'agenda', 'schedule', 'posts', 'person', 'byline', 'alert', 'empty', 'form', 'search', 'settings', 'tickets'];
+
+/**
+ * Named slots (DP11): where a block holds other blocks, and the core block types each accepts. A template's own
+ * (namespaced) block types are accepted in every slot. A block a slot doesn't accept is left out and reported.
+ */
+export const SLOTS: Record<string, readonly string[]> = {
+  'hero.media': ['gallery'],
+  'split.start': CONTENT,
+  'split.end': CONTENT,
+  'grid.items': CONTENT,
+};
+
+/** Renders a slot's blocks: the ones it accepts, through the registry. */
+function slot(ctx: RenderContext, name: string, blocks: Block[] | undefined): ReactNode {
+  const accepts = SLOTS[name] ?? [];
+  const taken = (blocks ?? []).filter((b) => {
+    const ok = b.type.includes('.') || accepts.includes(b.type);
+    if (!ok) ctx.problem?.(`${name} doesn’t take a “${b.type}” block (it takes ${accepts.join(', ')})`);
+    return ok;
+  });
+  return taken.length ? ctx.blocks(taken) : null;
+}
+
 /** The registry: one entry per core block type. */
 export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
   'site-header': (b, ctx, i) => {
@@ -312,7 +337,8 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
         actions={actionButtons(b.actions)}
         note={b.note}
         picture={b.picture ? ctx.picture(b.picture) : undefined}
-        layout={b.picture && isFramed(ctx, i) ? 'split' : b.layout}
+        media={!b.picture && b.media?.length ? slot(ctx, 'hero.media', b.media) : undefined}
+        layout={(b.picture || b.media?.length) && isFramed(ctx, i) ? 'split' : b.layout}
       />,
     ),
   stats: (b, _ctx, i) => (
@@ -480,6 +506,35 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     </Section>
   ),
   tickets: (b, _ctx, i) => <TicketsBlock key={i} block={b} />,
+  split: (b, ctx, i) => {
+    const columns = (
+      <Grid ratio={b.ratio} max={b.ratio ? undefined : 2} gap="section">
+        <Stack gap="section">{slot(ctx, 'split.start', b.start)}</Stack>
+        <Stack gap="section">{slot(ctx, 'split.end', b.end)}</Stack>
+      </Grid>
+    );
+    return b.heading ? (
+      <Section key={i} heading={b.heading} intro={b.intro}>
+        {columns}
+      </Section>
+    ) : (
+      <Fragment key={i}>{columns}</Fragment>
+    );
+  },
+  grid: (b, ctx, i) => {
+    const cells = (
+      <Grid max={b.max ?? 2} gap="section">
+        {slot(ctx, 'grid.items', b.items)}
+      </Grid>
+    );
+    return b.heading ? (
+      <Section key={i} heading={b.heading} intro={b.intro}>
+        {cells}
+      </Section>
+    ) : (
+      <Fragment key={i}>{cells}</Fragment>
+    );
+  },
   questions: (b, _ctx, i) => (
     <Section key={i} heading={b.heading}>
       <Accordion headingLevel={3} items={b.items.map((q) => ({ id: q.title, title: q.title, content: <Text as="p">{q.text}</Text> }))} />

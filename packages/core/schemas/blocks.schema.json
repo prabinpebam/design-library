@@ -481,6 +481,10 @@
         "standalone": {
           "description": "A statement meant to be read on its own (a brand opening): the page presents it framed. Leave it out on task and reference pages, whose title and intro sit with their content (Q91).",
           "type": "boolean"
+        },
+        "media": {
+          "description": "Slot hero.media (DP11): blocks in the picture's place when there's no picture. Takes gallery, or a template's own block.",
+          "$ref": "#/$defs/slot"
         }
       },
       "additionalProperties": false
@@ -1591,6 +1595,44 @@
             "additionalProperties": false
           }
         }
+      },
+      "additionalProperties": false
+    },
+    "slot": {
+      "description": "Blocks a block holds (DP11 named slots). Each is a block by its type; which types a slot takes is listed with the slot, and a template's own (namespaced) block types are taken in every slot.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string", "pattern": "^([a-z][a-z0-9-]*\\.)?[a-z][a-z0-9-]*$" }
+        }
+      }
+    },
+    "split": {
+      "description": "Two columns of blocks side by side, stacking when narrow: slots split.start and split.end. Each takes content blocks (prose, points, details, quote, stats, cards, gallery, people, questions, agenda, schedule, posts, person, byline, alert, empty, form, search, settings, tickets) or a template's own.",
+      "type": "object",
+      "required": ["type", "start", "end"],
+      "properties": {
+        "type": { "const": "split" },
+        "heading": { "$ref": "#/$defs/text" },
+        "intro": { "$ref": "#/$defs/text" },
+        "ratio": { "enum": ["2:1", "3:2", "1:2", "2:3", "aside"], "description": "The columns' shares (Grid ratio); equal without it." },
+        "start": { "$ref": "#/$defs/slot" },
+        "end": { "$ref": "#/$defs/slot" }
+      },
+      "additionalProperties": false
+    },
+    "grid": {
+      "description": "Blocks in equal columns: slot grid.items, taking the same content blocks as split.",
+      "type": "object",
+      "required": ["type", "items"],
+      "properties": {
+        "type": { "const": "grid" },
+        "heading": { "$ref": "#/$defs/text" },
+        "intro": { "$ref": "#/$defs/text" },
+        "max": { "enum": [2, 3, 4], "description": "The most columns; 2 by default." },
+        "items": { "$ref": "#/$defs/slot" }
       },
       "additionalProperties": false
     },

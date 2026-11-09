@@ -262,13 +262,14 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       ) : null;
     return render(block, at, i);
   }
-  function list(blocks: Block[] | undefined, base: RenderContext, region: string | undefined, where = 'sections'): ReactNode {
+  function list(blocks: Block[] | undefined, base: RenderContext, region: string | undefined, where = 'sections', within?: string): ReactNode {
     const items = blocks ?? [];
     const local: RenderContext = { ...base, siblings: items.length, neighbours: items, region };
     return items.map((b, i) => {
-      const path = `${where === 'sections' ? file : 'site'} ${where}[${region === 'main' ? kept[i] : i}]`;
+      const path = within ? `${within} › [${i}]` : `${where === 'sections' ? file : 'site'} ${where}[${region === 'main' ? kept[i] : i}]`;
       const anchor = typeof b.anchor === 'string' ? b.anchor : undefined;
-      const at = region === 'main' && i === firstAt ? { ...local, picture: (id: string) => (id === first && assets[id] ? { ...assets[id], priority: true } : local.picture(id)) } : local;
+      const own: RenderContext = { ...local, problem: (what) => problems.push({ where: path, what }), blocks: (inner) => list(inner, at, undefined, where, path) };
+      const at = region === 'main' && i === firstAt ? { ...own, picture: (id: string) => (id === first && assets[id] ? { ...assets[id], priority: true } : own.picture(id)) } : own;
       return (
         <SectionBoundary key={`${routeKey}-${where}-${i}`} path={path} development={development}>
           {anchor && <SectionAnchor id={anchor} />}

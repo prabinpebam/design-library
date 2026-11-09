@@ -25,6 +25,12 @@
     grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - 3 * var(--space-gutter)) / 4)), 1fr));
   }
 
+  /* Cells that are sections, each with its heading: rows (and stacked columns) a step wider than the space inside a
+     section and narrower than the page gap, so the sections read as one group (DP11 split, grid; spacing SC3). */
+  [data-dl='grid'][data-gap='section'] {
+    row-gap: var(--c-grid-section-gap);
+  }
+
   [data-dl='grid'] > * {
     min-inline-size: 0;
   }

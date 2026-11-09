@@ -57,6 +57,15 @@
     padding-block: var(--c-site-layout-padding-start, var(--c-site-layout-padding-block)) var(--c-site-layout-padding-block);
   }
 
+  /* Sections side by side (a split or grid of sections, DP11) on a phone-wide window: the columns stack, and stacked
+     sections are the page's own sections again, a page level apart. The wrapper steps aside (it groups only side by
+     side), so the space between them is the column's gap. */
+  @media (max-width: 40rem) {
+    [data-dl='site-layout'] > [data-dl-part='main'] > [data-dl-part='column'] > [data-dl='grid'][data-gap='section'] {
+      display: contents;
+    }
+  }
+
   /* The last band's neighbour is the footer: a Frame there needs only the page level to it (FR6), the column's end space counted. */
   [data-dl='site-layout'] > [data-dl-part='main'] > [data-dl-part='column'] > [data-dl='frame']:last-child {
     --dl-frame-floor-end: max(0px, calc(var(--c-frame-space-min) - var(--c-site-layout-padding-block)));

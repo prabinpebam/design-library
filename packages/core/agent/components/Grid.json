@@ -33,6 +33,12 @@
           "name": "ratio",
           "type": "'2:1' | '3:2' | '1:2' | '2:3' | 'aside'",
           "description": "Two uneven columns instead of equal ones (IP20): `2:1` and `3:2` give the start column the larger share, `1:2` and `2:3` the end column; `aside` keeps the start column at `--c-grid-aside` (a heading beside its content) and gives the end column the rest. Children alternate start, end, start, end. Below two columns' width (two `size.column-min` and a gutter) they stack in source order. Default: equal columns."
+        },
+        {
+          "name": "gap",
+          "type": "'group' | 'section'",
+          "default": "'group'",
+          "description": "The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap)."
         }
       ]
     }
@@ -40,6 +46,7 @@
   "uses": [],
   "tokens": [
     "--c-grid-aside",
+    "--c-grid-section-gap",
     "--size-column-min",
     "--space-gutter",
     "--space-stack-group"

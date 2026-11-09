@@ -13,6 +13,8 @@ export interface GridProps extends DataAttributes {
    * `size.column-min` and a gutter) they stack in source order. Default: equal columns.
    */
   ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside';
+  /** The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap). */
+  gap?: 'group' | 'section';
 }
 
 /**
@@ -27,9 +29,9 @@ export interface GridProps extends DataAttributes {
  * @a11y A plain `div` with no role: it arranges, it doesn't group for assistive technology. Reading order is the
  * source order, row by row.
  */
-export function Grid({ children, max, ratio, ...data }: GridProps) {
+export function Grid({ children, max, ratio, gap = 'group', ...data }: GridProps) {
   return (
-    <div {...data} data-dl="grid" data-max={ratio ? undefined : max} data-ratio={ratio}>
+    <div {...data} data-dl="grid" data-max={ratio ? undefined : max} data-ratio={ratio} data-gap={gap === 'section' ? 'section' : undefined}>
       {children}
     </div>
   );

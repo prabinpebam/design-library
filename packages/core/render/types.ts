@@ -95,6 +95,8 @@ export type CoreBlock =
       layout?: 'split' | 'stacked';
       /** A statement meant to be read on its own (a brand opening), so the page presents it framed. Leave it out on task and reference pages: their title and intro sit with their content (Q91). */
       standalone?: boolean;
+      /** Blocks in the picture's place (DP11 slot `hero.media`), when there's no `picture`. */
+      media?: Block[];
     }
   | { type: 'stats'; heading: string; intro?: string; items: { label: string; value: number | string; unit?: string; description?: string }[] }
   | { type: 'cards'; heading: string; intro?: string; max?: 2 | 3 | 4; items: { title: string; eyebrow?: string; description: string; picture?: string; meta?: string; href?: string }[]; empty?: SiteEmpty }
@@ -126,7 +128,11 @@ export type CoreBlock =
   | { type: 'schedule'; heading?: string; daysLabel: string; days: { id: string; label: string; title: string; slots: AgendaSlot[] }[] }
   | { type: 'agenda'; heading: string; label: string; slots: AgendaSlot[]; empty?: SiteEmpty }
   | { type: 'tickets'; heading: string; intro?: string; currency: string; options: { value: string; label: string; price: number; description: string; meta?: string }[]; submit: string; sent: string; labels: { ticket: string; count: string; tickets: string; total: string; line: string } }
-  | { type: 'questions'; heading: string; items: { title: string; text: string }[] };
+  | { type: 'questions'; heading: string; items: { title: string; text: string }[] }
+  /** Two columns of blocks side by side (DP11 slots `split.start` and `split.end`), stacking when narrow. */
+  | { type: 'split'; heading?: string; intro?: string; ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside'; start: Block[]; end: Block[] }
+  /** Blocks in equal columns (DP11 slot `grid.items`). */
+  | { type: 'grid'; heading?: string; intro?: string; max?: 2 | 3 | 4; items: Block[] };
 
 /** Any block: a core one, or a template's own (`{template}.{name}`). */
 export interface Block {
@@ -264,6 +270,8 @@ export interface RenderContext {
   neighbours?: Block[];
   /** The layout region being filled, for its top-level blocks only: framing applies in the page's `main` region, never in a side column or inside another block (Q89.2). */
   region?: string;
+  /** Told of a content problem the renderer finds (a block a slot doesn't accept); `SiteView` lists them in development. */
+  problem?: (what: string) => void;
 }
 
 export type BlockRenderer<B = Block> = (block: B, ctx: RenderContext, key: number) => ReactNode;
