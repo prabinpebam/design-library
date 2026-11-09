@@ -64,6 +64,26 @@
     color: var(--color-status-info-fg);
   }
 
+  /* IP22: a span that takes the size, face and weight of the text around it (an accent phrase inside a heading). */
+  [data-dl='text'][data-variant='inherit'] {
+    font: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    max-inline-size: none;
+  }
+
+  /* IP22: large text (heading 2 and larger, a statement) may take the accent display role at 3:1; everything inside
+     it, such as an accent span, reads the same ink. Elsewhere accent words take the accent text role at 4.5:1. */
+  [data-dl='heading']:is([data-size='jumbo'], [data-size='display'], [data-size='1'], [data-size='2']),
+  [data-dl='text'][data-variant='statement'] {
+    --dl-accent-ink: var(--color-text-accent-display);
+  }
+
+  [data-dl='text'][data-tone='accent'],
+  [data-dl='heading'][data-tone='accent'] {
+    color: var(--dl-accent-ink, var(--color-text-accent));
+  }
+
   /* A long word in a large heading wraps rather than pushing the page sideways at 320 px (WCAG 1.4.10), even where
      its container shrinks to fit it (anywhere, unlike break-word, lowers its min-content width). */
   [data-dl='heading'] {

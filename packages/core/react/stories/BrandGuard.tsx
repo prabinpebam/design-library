@@ -26,6 +26,8 @@ const columns = [
 const PAIRS = [
   { id: 'link', label: 'Link on the page' },
   { id: 'link on raised', label: 'Link on a raised surface' },
+  { id: 'accent text', label: 'Accent words on the page' },
+  { id: 'accent display', label: 'Accent display words on the page' },
   { id: 'on accent', label: 'Label on the accent fill' },
   { id: 'on accent hover', label: 'Label on the hover fill' },
   { id: 'on accent pressed', label: 'Label on the pressed fill' },

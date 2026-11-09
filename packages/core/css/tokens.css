@@ -1222,6 +1222,8 @@
   --color-text-disabled: light-dark(var(--p-base-400), var(--p-base-500));
   --color-text-on-accent: light-dark(var(--p-base-0), var(--p-base-950));
   --color-text-link: light-dark(var(--p-accent-600), var(--p-accent-300));
+  --color-text-accent: light-dark(var(--p-accent-600), var(--p-accent-300));
+  --color-text-accent-display: light-dark(var(--p-accent-500), var(--p-accent-400));
   --color-bg: light-dark(var(--p-base-25), var(--p-base-900));
   --color-bg-raised: light-dark(var(--p-base-0), var(--p-base-850));
   --color-bg-tint: light-dark(var(--p-base-100), var(--p-base-800));

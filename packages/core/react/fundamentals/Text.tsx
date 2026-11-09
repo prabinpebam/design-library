@@ -4,10 +4,10 @@ import type { DataAttributes } from '../types';
 export interface TextProps extends DataAttributes {
   /** The words. */
   children: ReactNode;
-  /** Composite text style. `lead` (IP11): body-scale prose a step up, for a paragraph that opens or sums up what follows. `statement`: one display-scale sentence that isn't a heading (a mission, facts read as a sentence), at most one per view. */
-  variant?: 'body' | 'body-sm' | 'caption' | 'lead' | 'statement';
-  /** Colour by meaning. A status tone needs words that carry the status too, never colour alone. */
-  tone?: 'default' | 'muted' | 'success' | 'danger' | 'warning' | 'info';
+  /** Composite text style. `lead` (IP11): body-scale prose a step up, for a paragraph that opens or sums up what follows. `statement`: one display-scale sentence that isn't a heading (a mission, facts read as a sentence), at most one per view. `inherit` (IP22): the size, face and weight of the text around it, for a span inside a heading or another text (an accent phrase); use it with `as="span"`. */
+  variant?: 'body' | 'body-sm' | 'caption' | 'lead' | 'statement' | 'inherit';
+  /** Colour by meaning. A status tone needs words that carry the status too, never colour alone. `accent` (IP22): brand-coloured words that aren't a link (an emphasised phrase), on the accent text role, or the accent display role inside a large heading or a statement; never the only carrier of meaning. */
+  tone?: 'default' | 'muted' | 'success' | 'danger' | 'warning' | 'info' | 'accent';
   /** `p` for a paragraph, `span` inside other text or controls. */
   as?: 'p' | 'span';
   /** Lets another element take its name from this text (`aria-labelledby`). */

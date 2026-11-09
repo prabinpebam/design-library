@@ -25,6 +25,16 @@
       "$value": "{p.accent.600}",
       "$description": "Links in running text"
     },
+    "text-accent": {
+      "$type": "color",
+      "$value": "{p.accent.600}",
+      "$description": "Brand-coloured words that are not links: an emphasised phrase in body or small text (IP22). 4.5:1 on the page and raised surfaces; never the only carrier of meaning"
+    },
+    "text-accent-display": {
+      "$type": "color",
+      "$value": "{p.accent.500}",
+      "$description": "Brand-coloured words in large text only, a heading at size 2 or larger or a statement (IP22): 3:1 on the page and raised surfaces (WCAG large text)"
+    },
     "bg": {
       "$type": "color",
       "$value": "{p.base.25}",

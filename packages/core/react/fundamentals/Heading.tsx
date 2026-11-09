@@ -10,6 +10,8 @@ export interface HeadingProps extends DataAttributes {
   size?: 1 | 2 | 3 | 4 | 'label' | 'display' | 'jumbo';
   /** Fragment identifier, so the heading can be linked to. */
   id?: string;
+  /** `accent` (IP22): the whole heading in the brand colour, on the accent display role at size 2 and larger (3:1, large text) and the accent text role below. For one phrase, wrap it in `<Text as="span" variant="inherit" tone="accent">` instead. Default: the text colour. */
+  tone?: 'default' | 'accent';
 }
 
 /**
@@ -19,11 +21,11 @@ export interface HeadingProps extends DataAttributes {
  * @family text
  * @a11y Renders `h1`-`h6` from `level`; the outline follows the page structure, never the visual size.
  */
-export function Heading({ children, level, size, id, ...data }: HeadingProps) {
+export function Heading({ children, level, size, id, tone, ...data }: HeadingProps) {
   const Element = `h${level}` as const;
   const visual = size ?? (Math.min(level, 4) as 1 | 2 | 3 | 4);
   return (
-    <Element {...data} id={id} data-dl="heading" data-size={visual}>
+    <Element {...data} id={id} data-dl="heading" data-size={visual} data-tone={tone === 'accent' ? tone : undefined}>
       {children}
     </Element>
   );

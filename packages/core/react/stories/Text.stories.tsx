@@ -1,4 +1,6 @@
 import { Text } from '../fundamentals/Text';
+import { Heading } from '../fundamentals/Heading';
+import { ContextMatrix } from '../compounds/ContextMatrix';
 import type { StoryFile } from './story';
 
 export default {
@@ -49,6 +51,64 @@ export default {
           <Text variant="lead">Three days of talks and workshops by the water, for people who make things.</Text>
           <Text variant="statement">Twelve years, forty cities and one question: how do we make things better?</Text>
         </>
+      ),
+    },
+    {
+      title: 'Accent words',
+      description:
+        'tone="accent" colours words that aren’t links in the brand colour (IP22). A phrase inside a heading or a statement is a span with variant="inherit", so it keeps the size around it. Large text (heading 2 and larger, a statement) reads the accent display role at 3:1; body text and smaller headings read the accent text role at 4.5:1. The words still say what matters: colour is never the only carrier. Shown in light, dark and more contrast.',
+      code: `<Heading level={2}>Make <Text as="span" variant="inherit" tone="accent">better things</Text>, together</Heading>
+<Heading level={3} tone="accent">Coming up next</Heading>
+<Text>Tickets for <Text as="span" variant="inherit" tone="accent">the spring meetup</Text> open on Monday.</Text>`,
+      render: () => (
+        <ContextMatrix
+          label="Accent words by context"
+          rowHeader="Where"
+          columns={[
+            { id: 'light', label: 'Light', scheme: 'light', contrast: 'standard' },
+            { id: 'dark', label: 'Dark', scheme: 'dark', contrast: 'standard' },
+            { id: 'more', label: 'Light, more contrast', scheme: 'light', contrast: 'more' },
+          ]}
+          rows={[
+            {
+              id: 'display',
+              label: 'A phrase in a large heading (accent display, 3:1)',
+              cells: Object.fromEntries(
+                ['light', 'dark', 'more'].map((c) => [
+                  c,
+                  <Heading level={2}>
+                    Make{' '}
+                    <Text as="span" variant="inherit" tone="accent">
+                      better things
+                    </Text>
+                    , together
+                  </Heading>,
+                ]),
+              ),
+            },
+            {
+              id: 'heading',
+              label: 'A small heading (accent text, 4.5:1)',
+              cells: Object.fromEntries(['light', 'dark', 'more'].map((c) => [c, <Heading level={3} tone="accent">Coming up next</Heading>])),
+            },
+            {
+              id: 'body',
+              label: 'A phrase in body text (accent text, 4.5:1)',
+              cells: Object.fromEntries(
+                ['light', 'dark', 'more'].map((c) => [
+                  c,
+                  <Text>
+                    Tickets for{' '}
+                    <Text as="span" variant="inherit" tone="accent">
+                      the spring meetup
+                    </Text>{' '}
+                    open on Monday.
+                  </Text>,
+                ]),
+              ),
+            },
+          ]}
+        />
       ),
     },
   ],

@@ -39,6 +39,11 @@
           "name": "id",
           "type": "string",
           "description": "Fragment identifier, so the heading can be linked to."
+        },
+        {
+          "name": "tone",
+          "type": "'default' | 'accent'",
+          "description": "`accent` (IP22): the whole heading in the brand colour, on the accent display role at size 2 and larger (3:1, large text) and the accent text role below. For one phrase, wrap it in `<Text as=\"span\" variant=\"inherit\" tone=\"accent\">` instead. Default: the text colour."
         }
       ]
     }
@@ -46,6 +51,8 @@
   "uses": [],
   "tokens": [
     "--axes-display",
+    "--color-text-accent",
+    "--color-text-accent-display",
     "--font-display",
     "--tracking-normal",
     "--tracking-tight",

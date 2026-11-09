@@ -305,6 +305,26 @@
       "fg": "color.focus",
       "bg": "color.bg-control",
       "min": 3
+    },
+    {
+      "fg": "color.text-accent",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-accent-display",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.text-accent",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-accent-display",
+      "bg": "color.bg-raised",
+      "min": 3
     }
   ]
 }

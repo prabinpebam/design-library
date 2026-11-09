@@ -50,7 +50,7 @@ export interface Brand {
   base?: BaseColours;
   /**
    * The contrast guard (IP21, opt-in). `'keep'` (default) writes the steps the theme names, whatever they measure;
-   * `'guard'` measures links (4.5:1 on the page and raised surfaces), text on the accent fill (4.5:1, for the fill and
+   * `'guard'` measures links and accent words (4.5:1 on the page and raised surfaces; 3:1 for accent display words), text on the accent fill (4.5:1, for the fill and
    * its hover and pressed steps) and the focus ring (3:1 on the page) in light and dark, and moves each failing one to
    * the nearest passing step: links and the ring away from the surface, the ink to the base end that reads best, then
    * the fill away from the ink. `brandVars` and `brandContrast` name each pair either way.
@@ -61,7 +61,7 @@ export interface Brand {
 /** One measured pair of a brand (IP21): which role, in which scheme, against what, and whether it passes. */
 export interface BrandPair {
   scheme: 'light' | 'dark';
-  /** `link`, `link on raised`, `on accent`, `on accent hover`, `on accent pressed` or `focus`. */
+  /** `link`, `link on raised`, `accent text`, `accent display`, `on accent`, `on accent hover`, `on accent pressed` or `focus`. */
   pair: string;
   /** The ramp step or base step each side reads, e.g. `accent 600` on `base 25`. */
   fg: string;
@@ -115,8 +115,8 @@ export function brandContrast(brand: Brand): BrandPair[] {
 // The steps each scheme's accent roles read (tokens.light.json, tokens.dark.json) and the surfaces they sit on. `away` is
 // the direction along HUE_STEPS (+1 darker, -1 lighter) that moves a colour away from the scheme's surfaces.
 const SCHEMES = {
-  light: { link: '600', focus: '500', fill: '500', ink: '0', away: 1, surfaces: ['25', '0'] },
-  dark: { link: '300', focus: '300', fill: '400', ink: '950', away: -1, surfaces: ['900', '850'] },
+  light: { link: '600', text: '600', display: '500', focus: '500', fill: '500', ink: '0', away: 1, surfaces: ['25', '0'] },
+  dark: { link: '300', text: '300', display: '400', focus: '300', fill: '400', ink: '950', away: -1, surfaces: ['900', '850'] },
 } as const;
 const fmt = (n: number) => `${Math.floor(n * 10) / 10}:1`;
 
@@ -144,13 +144,16 @@ function guardContrast(tree: Tree, accent: string, guard: boolean): { vars: Reco
     const k = SCHEMES[scheme];
     const surf = k.surfaces.map(baseHex);
     const worst = (hex: string) => Math.min(...surf.map((b) => contrast(hex, b)));
-    // Links: 4.5:1 on the page and the raised surface.
-    let link: string = k.link;
-    if (worst(acc(link)) < 4.5) {
-      const to = guard ? walk(link, k.away, (h) => worst(h) >= 4.5) : null;
-      note(scheme, 'link', `accent ${link}`, worst(acc(link)), 4.5, to ? `accent ${to}` : undefined, to ? worst(acc(to)) : undefined);
-      if (to) link = to;
-    }
+    // Links and accent words: 4.5:1 (3:1 for display words) on the page and the raised surface.
+    const onSurfaces = (what: string, start: string, needs: number) => {
+      if (worst(acc(start)) >= needs) return start;
+      const to = guard ? walk(start, k.away, (h) => worst(h) >= needs) : null;
+      note(scheme, what, `accent ${start}`, worst(acc(start)), needs, to ? `accent ${to}` : undefined, to ? worst(acc(to)) : undefined);
+      return to ?? start;
+    };
+    const link = onSurfaces('link', k.link, 4.5);
+    const text = onSurfaces('accent text', k.text, 4.5);
+    const display = onSurfaces('accent display', k.display, 3);
     // The focus ring: 3:1 on the page.
     let focus: string = k.focus;
     const onPage = (hex: string) => contrast(hex, surf[0]);
@@ -182,20 +185,24 @@ function guardContrast(tree: Tree, accent: string, guard: boolean): { vars: Reco
     };
     record('link', `accent ${link}`, acc(link), `base ${k.surfaces[0]}`, surf[0], 4.5);
     record('link on raised', `accent ${link}`, acc(link), `base ${k.surfaces[1]}`, surf[1], 4.5);
+    record('accent text', `accent ${text}`, acc(text), `base ${k.surfaces[0]}`, surf[0], 4.5);
+    record('accent display', `accent ${display}`, acc(display), `base ${k.surfaces[0]}`, surf[0], 3);
     record('on accent', `base ${ink}`, baseHex(ink), `accent ${fill}`, acc(fill), 4.5);
     record('on accent hover', `base ${ink}`, baseHex(ink), `accent ${hover}`, acc(hover), 4.5);
     record('on accent pressed', `base ${ink}`, baseHex(ink), `accent ${pressed}`, acc(pressed), 4.5);
     record('focus', `accent ${focus}`, acc(focus), `base ${k.surfaces[0]}`, surf[0], 3);
     if (guard) {
-      for (const [role, v] of Object.entries({ link, focus, fill, ink, hover, pressed })) (chosen[role] ??= { light: '', dark: '' })[scheme] = v;
+      for (const [role, v] of Object.entries({ link, text, display, focus, fill, ink, hover, pressed })) (chosen[role] ??= { light: '', dark: '' })[scheme] = v;
     }
   }
   const vars: Record<string, string> = {};
   if (guard) {
     const both = (r: string, ramp: 'accent' | 'base') => `light-dark(var(--p-${ramp}-${chosen[r].light}), var(--p-${ramp}-${chosen[r].dark}))`;
-    const defaults = { link: ['600', '300'], focus: ['500', '300'], fill: ['500', '400'], ink: ['0', '950'], hover: ['600', '300'], pressed: ['700', '200'] };
+    const defaults = { link: ['600', '300'], text: ['600', '300'], display: ['500', '400'], focus: ['500', '300'], fill: ['500', '400'], ink: ['0', '950'], hover: ['600', '300'], pressed: ['700', '200'] };
     const moved = (r: keyof typeof defaults) => chosen[r].light !== defaults[r][0] || chosen[r].dark !== defaults[r][1];
     if (moved('link')) vars['--color-text-link'] = both('link', 'accent');
+    if (moved('text')) vars['--color-text-accent'] = both('text', 'accent');
+    if (moved('display')) vars['--color-text-accent-display'] = both('display', 'accent');
     if (moved('focus')) vars['--color-focus'] = both('focus', 'accent');
     if (moved('fill')) vars['--color-accent'] = both('fill', 'accent');
     if (moved('ink')) vars['--color-text-on-accent'] = both('ink', 'base');
