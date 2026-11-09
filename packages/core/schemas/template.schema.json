@@ -127,6 +127,11 @@
               "renders": {
                 "type": "string",
                 "description": "The component that draws it: a core name or the template's namespaced part."
+              },
+              "example": {
+                "type": "object",
+                "description": "A sample block of this type, valid against its schema: what stories, previews and authoring tools start from. Optional; the content check validates it.",
+                "required": ["type"]
               }
             },
             "additionalProperties": false

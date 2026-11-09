@@ -268,6 +268,9 @@ commands['build'] = 'npm run build -w apps/library';
 // What a separate project runs (Q81): its own type check and build, and the content check shipped in core.
 const consumerCommands = {
   'check:content': 'npx design-library-check-content --templates src/templates',
+  'check:project': 'npx design-library-check',
+  'template:new': 'npx design-library-new-template <id> --templates src/templates',
+  'template:tokens': 'npx design-library-template-tokens --templates src/templates',
   typecheck: 'npx tsc --noEmit',
   build: 'npx vite build',
 };

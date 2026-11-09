@@ -48,7 +48,7 @@ Search the index before writing anything: `Select-String -Path node_modules/@des
 2. **Never fork a component.** Don't copy, wrap-and-replace, patch or restyle a core component, and never select `[data-dl='…']` in your CSS. Use the [seam ladder](#the-seam-ladder).
 3. **Never read primitives.** Read semantic roles (`--color-text`, `--space-stack-item`) or a part's own tokens; never `p.*`, and `spectrum.*` and `set.*` only for their declared purpose (charts, identity), never for meaning.
 4. **Never put markup in content.** Content is pure JSON: plain text, numbers, enums, ids and links. No HTML, Markdown, CSS, class names, colours or pixel values.
-5. **Never edit a generated file.** `tokens.colour.json`, `tokens.space-shape.json`, `css/tokens.css`, `tokens/generated/*`, a template's generated `content.schema.json`, and everything in `agent/` are written by commands.
+5. **Never edit a generated file.** `tokens.colour.json`, `tokens.space-shape.json`, `css/tokens.css`, `tokens/generated/*`, a template's `tokens/tokens.css` (from its `tokens.json` by `npx design-library-template-tokens`), a template's generated `content.schema.json`, and everything in `agent/` are written by commands.
 6. **Never add a core component to solve one product's need.** Make a custom part inside your template; promotion to core is a separate, reviewed change.
 7. **Never use colour alone for meaning, or a button as an on/off toggle.** Status reads `color.status.*` with an icon or words; binary settings use `Switch`.
 8. **Never hard-code words a person reads inside a component.** They come from content or props.
@@ -105,7 +105,7 @@ When something doesn't look or behave as you need, take the first step that work
 | Customize tokens: presets, colour, type, space, shape, materials, motion | [guide/3-tokens.md](guide/3-tokens.md) | Ready |
 | Customize fundamentals and compounds through public seams | [guide/4-components.md](guide/4-components.md) | Ready |
 | Use a layout, or make one inside a template | [guide/5-layouts.md](guide/5-layouts.md) | Ready |
-| Use a template, then adapt one as your own | [guide/6-templates.md](guide/6-templates.md) | Ready |
+| Use a template, then adapt one as your own (or start empty: `npx design-library-new-template {id}`, then prune) | [guide/6-templates.md](guide/6-templates.md) | Ready |
 | Apply the principles: the rules and decision procedure for each token category and component family | [guide/7-principles.md](guide/7-principles.md) (generated from `principles/principles.json`) | Ready |
 | Review a screen before calling it done: the adversarial loop, every framework's checklist and probe | [guide/8-review.md](guide/8-review.md) | Ready |
 | Decide how to show information: a visual (chart, icon, picture, illustration, media) or exact text | [Visual representation](https://prabinpebam.github.io/design-library/docs/#visual-representation.md): run the reasoning chain RC1–RC8 | Ready to follow; chart components and picture roles are planned (BP1–BP10), not built |
@@ -119,6 +119,7 @@ Steps are written in the order an agent usually needs them; each stands alone an
 | After you change | Run |
 | --- | --- |
 | Content JSON, a manifest or a template schema | `npx design-library-check-content --templates src/templates` (the folder holding your template folders; add `--index src/templates/index.ts` to check each is registered, `--content <folder>` for content outside templates that names a ``, `--src src` to warn about templates nothing renders) |
+| A template's `tokens/tokens.json` | `npx design-library-template-tokens --templates src/templates` (writes `tokens.css`; `--check` only reads) |
 | TypeScript or TSX | `npx tsc --noEmit` |
 | Anything before you call it done | `npx vite build`, then open the screen in light, dark and more contrast, at 320 px and wide |
 | A view, content or a custom part | `npx design-library-check` (add `--src` and `--templates` if your folders differ from `src/` and `src/templates/`). **Errors** are the [Never](#never) rules and [Rules agents miss](#rules-agents-miss), checked: `className`, `style` or an own stylesheet in a view; a native `<select>`; selecting a core component's `data-dl`; custom-part CSS reaching its parts by a descendant path instead of child paths (`> [data-dl-part=…]`); a raw scroll region or scrollbar styling; blur outside `var(--material-backdrop)`; a literal duration or curve, `transition: all`, the private duration scale. **Warnings** point at a missing seam: a core token set outside the theme settings, `!important`, a primitive read, raw sizes, a scaled root font size, a global selector, raw `<a>`, `<button>`, `<img>` or headings in a custom part (compose `Link`, `Button`, `Image`, `Heading`), words written in code, an unexplained clip. Each names file, line and fix. During the Beta nothing fails the run unless you pass `--strict` (errors) or `--strict=all` (both); `--share` prints each view's library and custom elements. On the screen, the evaluator runs every framework's probe from `probes/*.js` (`@design-library/core/probes/{name}`) in the browser ([guide/8-review.md](guide/8-review.md)) |

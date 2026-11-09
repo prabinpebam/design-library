@@ -29,6 +29,8 @@ All are in `@design-library/core/react`; props in `agent/components/{Name}.json`
 | A headed group of content | `Section heading=… intro=…` |
 | A scroll region inside a pane | `ScrollArea` (bleeds to the pane's edge, focus never clipped) |
 
+**Where layouts change:** every core component that changes with the window or its own container is listed with its width in the library's [Change points](https://prabinpebam.github.io/design-library/#/space) table (Space and size page). Window widths come from one set, `breakpoint.xs` 30 rem, `sm` 40, `md` 64 and `lg` 80; code reads the same set with `breakpointQuery` and `useBreakpoint`. A width of your own (a part tied to its container) says so in a comment right above it that starts with `tied to`.
+
 ## Use a layout in JSX
 
 ```tsx

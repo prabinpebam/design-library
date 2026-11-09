@@ -68,6 +68,7 @@ const parentOf = (shapes: DesignShape[], id?: string): string | undefined => {
 const update = (shapes: DesignShape[], id: string, change: Partial<DesignShape>, props?: ShapeProps): DesignShape[] =>
   shapes.map((s) => (s.id === id ? { ...s, ...change, ...(props && { props: { ...s.props, ...props } }) } : s.children ? { ...s, children: update(s.children, id, change, props) } : s));
 
+// tied to EditorLayout's 48rem container change point: panels sit beside the content from the same width
 const wide = () => typeof window === 'undefined' || window.matchMedia('(min-width: 48rem)').matches;
 
 export function DesignApp({ view, tab, mode, editorHref = '', height = 'fill', picture }: { view: DesignAppSpec; tab?: string; mode?: 'present' | 'comments'; editorHref?: string; height?: 'fill' | 'screen' | 'lg'; /** A picture's address by its asset id, for image fills. */ picture?: (id: string) => string | undefined }) {

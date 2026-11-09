@@ -200,6 +200,7 @@ export function ChatApp({ view, height, picture, open: opening }: ChatAppProps) 
     setOpenedOn(opening);
     setCurrent(opening ?? view.current);
   }
+  // tied to ChatLayout's 48rem container change point: panels sit beside the content from the same width
   const [sidebarOpen, setSidebarOpen] = useState(height === 'screen' && window.matchMedia('(min-width: 48rem)').matches);
   const [model, setModel] = useState(view.model);
   const [temporary, setTemporary] = useState(false);
@@ -252,6 +253,7 @@ export function ChatApp({ view, height, picture, open: opening }: ChatAppProps) 
   }, [thread]);
   useEffect(() => () => scheduled.current.forEach((id) => window.clearTimeout(id)), []);
 
+  // tied to ChatLayout's 48rem container change point: panels sit beside the content from the same width
   const narrow = () => !window.matchMedia('(min-width: 48rem)').matches;
   const open = (id: string) => {
     setCurrent(id);

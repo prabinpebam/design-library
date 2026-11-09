@@ -151,6 +151,10 @@ for (const id of folders) {
   for (const [type, b] of customBlocks) {
     if (!type.startsWith(`${id}.`)) fail(manifestFile, '/parts/blocks', `block type "${type}" isn't in the template's namespace`, `name it "${id}.…"`);
     if (!ajv.getSchema(`${schema.$id}${b.schema}`)) fail(manifestFile, '/parts/blocks', `block "${type}" points at ${b.schema}, which isn't in content.schema.json`, 'add the $defs entry');
+    else if (b.example) {
+      if (b.example.type !== type) fail(manifestFile, '/parts/blocks', `block "${type}"'s example has type "${b.example.type}"`, `set the example's type to "${type}"`);
+      check(manifestFile, `${schema.$id}${b.schema}`, b.example, `/parts/blocks/${type}/example`);
+    }
   }
   for (const kind of ['fundamentals', 'compounds', 'layouts'])
     for (const p of manifest.parts?.[kind] ?? []) {

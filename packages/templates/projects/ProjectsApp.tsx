@@ -37,6 +37,7 @@ import type { Issue, IssueDetail, ProjectRecord } from './types';
 
 export type ProjectsScreen = 'board' | 'backlog' | 'issue';
 
+// tied to AppLayout's 48rem container change point: panels sit beside the content from the same width
 const wide = () => typeof window === 'undefined' || window.matchMedia('(min-width: 48rem)').matches;
 const points = (list: Issue[]) => list.reduce((n, i) => n + i.points, 0);
 

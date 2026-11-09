@@ -43,7 +43,7 @@ Every picture a template shows is a file in its `assets/` folder and an entry in
 
 ## Adapt a template as your own
 
-Copy the nearest template into a new namespace and change it there. Never edit core, and never import another template's parts.
+Two ways in: **start empty** with `npx design-library-new-template {id}` (below, "Start a template from nothing"), the usual choice when your site's screens differ from every template's; or **copy the nearest template** into a new namespace and change it there, when most of its screens are ones you'll keep. Either way, finish with the prune step. Never edit core, and never import another template's parts.
 
 1. **Choose an id:** lower case, one word or kebab case, unique (`harbour`). It is the namespace of everything in the template.
 2. **Copy the folder** `node_modules/@design-library/templates/{nearest}/` to `src/templates/{id}/`.
@@ -68,12 +68,19 @@ Copy the nearest template into a new namespace and change it there. Never edit c
    - Content files live by group: `content/{home}.json`; `content/{section}/{layout}.json` for a flow of one or two screens; `content/{section}/{flow}/{layout}.json` for a flow of three or more. The check names the right path when one is wrong.
    - A state of a screen (a form's error, a list's empty state) is a layout with `stateOf` and a content file holding only `settings.state`.
 6. **Write the content** for each built layout and `content/shared.json` (Step 2).
-7. **Add custom parts** only where no core part fits (Step 4, step 6), each with tokens and stories.
-8. **Check and open:** run the checks below, then open the screen in your app.
+7. **Add custom parts** only where no core part fits (Step 4, step 6), each with tokens and stories. Their tokens live in `tokens/tokens.json`; `npx design-library-template-tokens --templates src/templates` writes `tokens/tokens.css` from it, so renaming a token is one edit and one command, never a hand-kept CSS file.
+8. **Prune** what your site won't show, before you build on it: every copied screen, its content file and its place in a flow; every part, block, token, picture and story it brought. Keep the grouping rule (3–5 items per group) with `planned` screens you will build, never with screens you won't. Then `npx design-library-check-content --templates src/templates --src src` lists what's still unlisted or unrendered (a part file the manifest doesn't name, a template nothing renders).
+9. **Check and open:** run the checks below, then open the screen in your app.
 
 ### Start a template from nothing
 
-Same as adapting, starting from an empty folder. The worked example is `node_modules/@design-library/templates/harbour/` (one built screen, six planned), shown by [`apps/example`](https://github.com/prabinpebam/design-library/tree/main/apps/example) in the library repository.
+```sh
+npx design-library-new-template harbour --title "Harbour Books" --part compounds/BookShelf
+```
+
+It writes `src/templates/harbour/` (`--templates` for another folder) with nothing copied from another template: the manifest below (a home and six planned screens in two sections, the smallest shape the grouping rule allows), the content schema, `content/home.json` and `content/shared.json`, an empty `assets.json`, `index.ts`, and `tokens/tokens.json` with its generated `tokens.css`. Each `--part fundamentals|compounds|layouts/{Name}` adds the part's TSX, CSS (reading only its own token), a stories file and a token; a fundamental or compound also gets a block type `{id}.{name}`, its schema in `content.schema.json`, an `example` in the manifest's `parts.blocks` and an entry in `registry.tsx`. The result passes the content check as it is. Then register it in `src/templates/index.ts`, prune and rename the planned screens (step 8 above), and write the home page.
+
+The files it writes, by hand: the same as adapting, starting from an empty folder. The worked example is `node_modules/@design-library/templates/harbour/` (one built screen, six planned), shown by [`apps/example`](https://github.com/prabinpebam/design-library/tree/main/apps/example) in the library repository.
 
 **`template.json`**, the smallest valid manifest (required: `id`, `version`, `title`, `summary`, `contentSchema`, `contentVersion`, `layouts`, `sections`):
 
@@ -147,6 +154,7 @@ export default loadTemplate(
 | Check | Proves |
 | --- | --- |
 | `npx design-library-check-content --templates src/templates --index src/templates/index.ts` | Manifest, grouping (3–5 per group), file locations, schema, content, pictures, links and parts are all valid; the template is registered |
+| `npx design-library-template-tokens --templates src/templates --check` | Every template token is named `t.{id}.{part}.{name}`, has a description and aliases a core semantic role; `tokens.css` is current (drop `--check` to write it) |
 | `npx tsc --noEmit` | The registry, bindings and parts compile |
 | `npx vite build`, then open each built screen | Every built screen renders, in light, dark and more contrast, at 320 px and wide |
 | Read custom parts and their `tokens/tokens.css` against Step 4's rules | Tokens read semantic roles only; no styles in bindings; parts by child paths |
