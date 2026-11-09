@@ -92,7 +92,7 @@ When something doesn't look or behave as you need, take the first step that work
 | 1 | A **prop or variant** the component already has | `<Button label="Delete page" emphasis="danger" size="l" />` (check `agent/components/Button.json`) |
 | 2 | A **slot**: pass another part as children or a `ReactNode` prop | A `Badge` into a `Card`'s `meta`, buttons into its `actions` |
 | 3 | A **context attribute** on an ancestor | `data-density="compact"` (app chrome: small text, tighter corners), `data-scheme="dark"`, `data-contrast="more"` |
-| 4 | The **theme**: a preset, your brand colours and fonts (`@design-library/core/theme`) | `applyBrand({ colours: { 1: { seed: '#1f6f8b' } } })`, `applyFonts({ preset: 'bookish' })`, `data-space="loose"` ([step 3](guide/3-tokens.md)) |
+| 4 | The **theme**: a preset, your brand colours and fonts (`@design-library/core/theme`), and **theme settings**: the component tokens on the published allow-list `tokens/settings.json` (each component's `settings` in `agent/components/{Name}.json`), set with `applySettings({...})` or `settingsCss({...}, selector)`, which refuse any other name. Every other `--c-*` token is private | `applyBrand({ colours: { 1: { seed: '#1f6f8b' } } })`, `applyFonts({ preset: 'bookish' })`, `data-space="loose"`, `applySettings({ '--c-site-layout-gap': 'var(--space-stack-section)', '--c-site-layout-padding-start': '0px' })` ([step 3](guide/3-tokens.md)) |
 | 5 | A **custom part inside your template** (fundamental, compound, layout or block type) with its own `t.{template}.*` tokens | `conference.SponsorWall` in `@design-library/templates/conference/parts/` |
 | 6 | A **core change**: a new variant or slot, reviewed on its own | Only when two or more products need it |
 
