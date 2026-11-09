@@ -72,7 +72,7 @@ Run it in light and dark, with every panel open, at rest.
 
 ## Results
 
-### F15.VN1: the noise framework and its sweep (2026-11-09 about 14:20, owner Q85.2)
+### F15.VN1: the noise framework and its sweep (2026-11-09 about 14:05, owner Q85.2)
 
 - **Sweep.** The 168 rendered template layouts in dark at 1000 CSS px with every panel open, and 21 of them (every template) in light: no VN row fails. The busiest views use one stroke value, three fills and one shadow (AI chat, Conference tickets, the Design tool editor).
 - **The probe was checked against planted noise** (a bordered button inside a bordered group, a 4 px stripe): both are caught.

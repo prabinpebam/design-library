@@ -25,11 +25,11 @@
     box-sizing: content-box;
   }
 
-  /* In its popover the panel is a floating surface (MT7, FR4): the floating material, frosted when the setting is on. */
+  /* In its popover the popup is the floating surface (MT7, FR4) and carries its material seam, so the popup paints it:
+     the floating material, frosted when the setting is on; the panel inside is bare (one surface, materials ME6). */
   [data-dl='colour-picker'] > [data-dl-part='popup'] > [data-dl-part='panel'] {
-    background-color: var(--material-floating-bg, var(--color-bg-raised));
-    -webkit-backdrop-filter: var(--material-backdrop);
-    backdrop-filter: var(--material-backdrop);
+    border: none;
+    background: none;
   }
 
   /* The area: white to the hue across, black to transparent up (drawn by the component). Saturation across, brightness up. */
@@ -197,7 +197,7 @@
     outline-offset: var(--size-focus-offset);
   }
 
-  /* The popover: the shared popup placement (usePopup) in the top layer; the panel inside draws the surface. */
+  /* The popover: the shared popup placement (usePopup) in the top layer; it draws the floating surface. */
   [data-dl='colour-picker'] > [data-dl-part='popup'] {
     position: fixed;
     z-index: var(--c-popup-layer);
@@ -206,9 +206,11 @@
     inset-inline-start: var(--popup-start, 0px);
     margin: 0;
     padding: 0;
-    border: none;
+    border: var(--border-hairline) solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: none;
+    background-color: var(--material-floating-bg, var(--color-bg-raised));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
     box-shadow: var(--c-popup-shadow);
     color: var(--color-text);
     overflow: visible;

@@ -27,6 +27,10 @@
 
 **A person can:** AU1 tell content from chrome on every page and template; AU2 see the level of a floating surface from its fill, edge and shadow; AU3 read every text role at 4.5:1 on every material in all four contexts; AU4 switch frosted on or off once and see every frosted surface follow, in every tab; AU5 get solid surfaces automatically when they ask the system for less transparency or more contrast; AU6 add or remove an effect add-on on chosen surfaces with the core unchanged underneath.
 
+## Part 1: the framework
+
+Like every UX framework here, materials and elevation come in two parts ([the two-part frameworks](spacing.md#the-two-part-frameworks), owner Q85): this part and the sections after it, through [Frosted](#frosted), are the framework to design with: what materials are for, the principles A1–A9, the ten roles, [one elevation ladder](#elevation-one-ladder), when to use which and the frosted rules. [Part 2](#part-2-the-checklist) is the checklist to judge with. The method starts from the same [hierarchy tree](spacing.md#the-method-hierarchy-first-then-space-and-frames-owner-q93): each region of the tree says which layer it's on (content, chrome that stays while content moves, something floating above, something that blocks), the layer picks the material, and the material sets the elevation (tone first, shadow only for what floats).
+
 ## What materials are for
 
 A material does three jobs, and only these:
@@ -208,6 +212,29 @@ The brief's [add-on contract](brief.md#optional-add-ons-and-integrations) asks f
 | AV4 | Text at 4.5:1 and identifying non-text at 3:1 on every material in four contexts, frosted floors included | `tokens:check` |
 | AV5 | No glass on glass; no frosted in the content layer | audit table (MAT2) |
 | AV6 | Add-on seams AS1–AS5 present and documented; core unchanged with no add-on | slot attributes on every material surface |
+
+## Part 2: the checklist
+
+Each row passes or fails on a measurement. **DOM** rows are measured by `tools/material-probe.js` at rest (and with each popup open, where a page has one); **static** rows by `npm run check:materials` (M1–M7) and `npm run check:layers`; **look** rows by an evaluator. A view passes when no row fails.
+
+| ID | Passes when | How | Severity |
+| --- | --- | --- | --- |
+| ME1 | A backdrop filter appears only on a surface marked chrome or floating (`data-material`), never in the content layer (A3) | DOM; static M1, M4 | S1 |
+| ME2 | No frosted surface sits inside another frosted surface (A5, AR7) | DOM; static M6 | S2 |
+| ME3 | Every shadow is a ladder value (`shadow.raised` or `shadow.overlay`), and only on a surface that floats; content and chrome cast none at rest (A2) | DOM | S2 |
+| ME4 | Every floating or modal surface carries `data-elevation` and its shadow (AS1 seam, AU2) | DOM | S2 |
+| ME5 | Every stacking `z-index` is a `layer.*` value | DOM; static `check:layers` | S2 |
+| ME6 | The element that carries `data-material` paints that material (the floating or chrome fill, frosted or its solid finish): one surface, one seam | DOM | S2 |
+| ME7 | Frosted tints keep every text role at 4.5:1 and identifying non-text at 3:1 over the worst backdrop (AR9) | static M7 | S1 |
+| ME8 | Switch frosted off, turn on more contrast, reduced transparency and forced colours: every frosted surface goes solid and nothing moves (AR1–AR6) | look, with each preference emulated | S1 |
+| ME9 | The evaluator can name each surface's layer from the tree (content, chrome, floating, modal) and its material matches the [When to use which](#when-to-use-which) table | look | S2 |
+
+```js
+// Playwright: await page.addScriptTag({ path: 'tools/material-probe.js' })
+window.materialProbe().rows; // { ME1: { pass, findings, count }, … }
+```
+
+**F15.ME1 sweep (2026-11-09 about 14:15, owner Q85.2):** the 168 rendered template layouts at 1000 CSS px with every panel open pass ME1–ME6. Found and fixed at the owner first: ColourPicker's popup carried the floating seam (`data-material`, `data-elevation`, the shadow) while the panel inside painted the frosted fill, so the seam named one element and the surface was another (ME1, ME6; an add-on targeting `[data-material="floating"]` would have painted a transparent box). The popup now paints the surface and the panel inside is bare; the Design tool's fill picker passes ME1–ME6 open. A canvas's document (a design's frames and their shadows) is the person's content and isn't judged.
 
 ## As built
 
