@@ -6,7 +6,7 @@
   "file": "@design-library/core/react/layouts/Hero.tsx",
   "summary": "A view's opening: an eyebrow, the title set large, a lead, the one or two main actions and, if it helps, a picture. For a landing page or the opening of a long page's section. Not for the head of an ordinary or documentation page (use PageHeader) or for a section's heading (use Section).",
   "a11y": [
-    "A `header` with the title as its heading at `level`; the eyebrow is plain text before it, in reading order. The picture follows the words in the source, so the reading order is the same in every arrangement. The actions are real Buttons or button-styled links; the note is plain text after them."
+    "A `header` with the title as its heading at `level`; the eyebrow is plain text before it, in reading order. The picture or media follows the words in the source, so the reading order is the same in every arrangement; the trail comes last. The actions are real Buttons or button-styled links; the note is plain text after them."
   ],
   "keys": [],
   "sealed": true,
@@ -48,6 +48,17 @@
           "name": "note",
           "type": "ReactNode",
           "description": "A quieter line after the actions: a condition or a status, e.g. \"Free for teams of up to five.\""
+        },
+        {
+          "name": "trail",
+          "type": "ReactNode",
+          "description": "What follows the opening inside it (IP19), across its width: a row of partner marks, key facts, a cue to what's below. A section level after the words and picture."
+        },
+        {
+          "name": "fit",
+          "type": "'content' | 'screen'",
+          "default": "'content'",
+          "description": "`content` (default): as tall as its parts. `screen`: fills the first screen, the window's height less the sticky header and the layout's first space, with the opening centred in it; taller content grows it."
         }
       ]
     },
@@ -105,6 +116,7 @@
     "--c-hero-stacked-doing-gap",
     "--c-hero-stacked-message-gap",
     "--c-hero-stacked-words-gap",
+    "--c-hero-trail-gap",
     "--c-hero-words-gap",
     "--color-text-muted"
   ],

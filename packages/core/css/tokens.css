@@ -800,6 +800,7 @@
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-rise: var(--space-2);
   --c-hero-gap: var(--space-stack-section);
+  --c-hero-trail-gap: var(--space-12);
   --c-hero-words-gap: var(--space-stack-section);
   --c-hero-message-gap: var(--space-stack-group);
   --c-hero-heading-gap: var(--space-stack-pair);

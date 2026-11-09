@@ -27,6 +27,10 @@ interface HeroBase extends DataAttributes {
   actions?: ReactNode;
   /** A quieter line after the actions: a condition or a status, e.g. "Free for teams of up to five." */
   note?: ReactNode;
+  /** What follows the opening inside it (IP19), across its width: a row of partner marks, key facts, a cue to what's below. A section level after the words and picture. */
+  trail?: ReactNode;
+  /** `content` (default): as tall as its parts. `screen`: fills the first screen, the window's height less the sticky header and the layout's first space, with the opening centred in it; taller content grows it. */
+  fit?: 'content' | 'screen';
 }
 
 export type HeroProps = HeroBase &
@@ -39,11 +43,18 @@ export type HeroProps = HeroBase &
         layout?: 'split' | 'stacked';
         /** A picture given room. Leave it out and the title carries the view. */
         picture?: HeroPicture;
+        /**
+         * Any media in the picture's place (IP19): a MediaPlayer, a Carousel, an ImageGrid, your own arrangement of
+         * pictures. It takes the picture's room and arrangement; give it its own words (alt text, a player's label).
+         * Use `picture` for one picture: it brings the frame, ratio and focal point.
+         */
+        media?: ReactNode;
       }
     | {
         /** `divided`: no picture; the words in one column and the actions with the note in the other, so what follows comes up close. */
         layout: 'divided';
         picture?: never;
+        media?: never;
       }
   );
 
@@ -53,11 +64,13 @@ export type HeroProps = HeroBase &
  * Not for the head of an ordinary or documentation page (use PageHeader) or for a section's heading (use Section).
  * @tier 3
  * @a11y A `header` with the title as its heading at `level`; the eyebrow is plain text before it, in reading order.
- * The picture follows the words in the source, so the reading order is the same in every arrangement. The actions are
+ * The picture or media follows the words in the source, so the reading order is the same in every arrangement; the trail
+ * comes last. The actions are
  * real Buttons or button-styled links; the note is plain text after them.
  */
-export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, layout, ...data }: HeroProps) {
-  const arrangement = layout ?? (picture ? 'split' : 'stacked');
+export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, media, trail, fit = 'content', layout, ...data }: HeroProps) {
+  const visual = !!picture || (media != null && media !== false);
+  const arrangement = layout ?? (visual ? 'split' : 'stacked');
   const doing = (actions || note) && (
     <div data-dl-part="doing">
       {actions && <div data-dl-part="actions">{actions}</div>}
@@ -69,7 +82,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
     </div>
   );
   return (
-    <header {...data} data-dl="hero" data-layout={arrangement} data-picture={picture ? '' : undefined}>
+    <header {...data} data-dl="hero" data-layout={arrangement} data-picture={visual ? '' : undefined} data-trail={trail ? '' : undefined} data-fit={fit === 'screen' ? 'screen' : undefined}>
       <div data-dl-part="body">
         <div data-dl-part="words">
           <div data-dl-part="message">
@@ -88,12 +101,14 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
           {arrangement !== 'divided' && doing}
         </div>
         {arrangement === 'divided' && doing}
+        {!picture && visual && <div data-dl-part="media">{media}</div>}
         {picture && (
           <div data-dl-part="picture">
             <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" />
           </div>
         )}
       </div>
+      {trail && <div data-dl-part="trail">{trail}</div>}
     </header>
   );
 }

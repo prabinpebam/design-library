@@ -58,8 +58,26 @@
     gap: var(--c-hero-actions-gap);
   }
 
-  [data-dl='hero'] > [data-dl-part='body'] > [data-dl-part='picture'] {
+  [data-dl='hero'] > [data-dl-part='body'] > :is([data-dl-part='picture'], [data-dl-part='media']) {
     min-inline-size: 0;
+  }
+
+  /* IP19: a trail after the opening (a row of logos, key facts, a cue to what's below), a section level from it. */
+  [data-dl='hero'][data-trail] {
+    display: grid;
+    gap: var(--c-hero-trail-gap);
+  }
+
+  [data-dl='hero'] > [data-dl-part='trail'] {
+    min-inline-size: 0;
+  }
+
+  /* IP19: fit to the first screen: the window's height less the sticky header and the layout's first space (Frame's
+     window rules, Q90), the opening centred in it; content taller than that grows it, never clips. */
+  [data-dl='hero'][data-fit='screen'] {
+    display: grid;
+    align-content: center;
+    min-block-size: calc(100svh - var(--dl-chrome-block, 0px) - var(--dl-frame-start, 0px));
   }
 
 
