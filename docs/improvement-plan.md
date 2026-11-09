@@ -1,12 +1,12 @@
 # Improvement plan from the DesignUp beta
 
-> **TL;DR:** The first real adoption, the DesignUp site (about 55 routes on 0.2.0-beta.1), confirms the library's model: sealed parts, tokens, context attributes, the seam ladder and exact agent contracts. Plain pages came out 65–88% library elements with no styles in views. Expressive pages left the library: Home is 19% library elements and the Editions index is 22%. We checked the report against both codebases. It holds, with five corrections: Card's `meta` already takes a `Badge`, `Hero` already has `eyebrow`, `lead` and `note`, the probes do ship, the reduced-motion fade was a documented choice, and the guide itself sends people to copy a demo template. We also found 18 issues of our own, among them a core `TextField` that hard-codes "Saved" and a Beta proof that never ran on the npm the guide promises. **Six themes:** (1) brand-safe theming (contrast, base colour, link decoration, own fonts); (2) an open page frame and opening (frame settings, `Hero` media, uneven `Grid`); (3) site plumbing (router-aware links, page transitions, scrolling, live text fields); (4) project-side checks that ship; (5) guidance that sends agents to core first; (6) a proof that behaves like a real brand-led project. **Proposed releases:** **0.2.0-beta.2**, quick wins with no breaking changes (14 packets); **0.3.0-beta.1**, the capabilities that keep a brand-led site inside the library (25 packets, with three changes that can break or shift existing projects noted); **later**, the "could" items. This page is a plan only: nothing here is built, and every build packet starts in strict design.
+> **TL;DR:** The first real adoption, the DesignUp site (about 55 routes on 0.2.0-beta.1), confirms the library's model: sealed parts, tokens, context attributes, the seam ladder and exact agent contracts. Plain pages came out 65–88% library elements with no styles in views. Expressive pages left the library: Home is 19% library elements and the Editions index is 22%. We checked the report against both codebases. It holds, with five corrections: Card's `meta` already takes a `Badge`, `Hero` already has `eyebrow`, `lead` and `note`, the probes do ship, the reduced-motion fade was a documented choice, and the guide itself sends people to copy a demo template. We also found 18 issues of our own, among them a core `TextField` that hard-codes "Saved" and a Beta proof that never ran on the npm the guide promises. **Six themes:** (1) brand-safe theming (contrast, base colour, link decoration, own fonts); (2) an open page frame and opening (frame settings, `Hero` media, uneven `Grid`); (3) site plumbing (router-aware links, page transitions, scrolling, live text fields); (4) project-side checks that ship; (5) guidance that sends agents to core first; (6) a proof that behaves like a real brand-led project. **Proposed releases:** **0.2.0-beta.2**, quick wins with no breaking changes (14 packets); **0.3.0-beta.1**, the capabilities that keep a brand-led site inside the library (25 packets, with three changes that can break or shift existing projects noted); **later**, the "could" items. **Data-driven sites (Q107)** are in [Part 3](#part-3-data-driven-sites-q107): foundations in 0.3.0-beta.1, the page and site documents, collections, router and renderer in 0.4.0-beta.1. Build started on 2026-11-10 (Q105); every build packet starts in strict design.
 
 **Owner, 2026-11-09 23:55 (verbatim, [DoD Q104](definition-of-done.md#owner-instructions)):** *"I've tried implementing this library in a real proejct and here's the report from that. E:\Projects\designup-project\designup\docs\research\design-library-beta-report.md This is the project. E:\Projects\designup-project\designup Use the learnings from this and create an extensive plan on how to improve the Design Library. No coding yet."*
 
 **Status:** strict design, planning only (F15.PLAN, worker 50). No code, token, component, package, template or tool changed; nothing was written in the DesignUp project. **Shaped by** `ground` (each workstream starts from a promise and what a person can do), `assumptions` (the risks in each workstream), `definition-of-done` (observable Definitions of Done), `design-system`, `visual-noise`, `ui-states` and `ui-copy`. Builds on [Handoff readiness](handoff-readiness.md) (Beta known issues K1–K7), [The adversarial loop](adversarial-loop.md), [Motion](motion.md), [Layout](layout.md), [Spacing](spacing.md) and the [brief](brief.md#design-constraints).
 
-**Stable IDs on this page:** findings **F01–F60** (the report's appendix, in its order) and **N01–N18** (our own), workstreams **W1–W13**, packets **IP1–IP44**, assumptions **IA**, validation changes **IV**, owner decisions **ID**.
+**Stable IDs on this page:** Part 3 (data-driven sites) has its own list. Findings **F01–F60** (the report's appendix, in its order) and **N01–N18** (our own), workstreams **W1–W13**, packets **IP1–IP44**, assumptions **IA**, validation changes **IV**, owner decisions **ID**.
 
 ## Part 1: what we learned
 
@@ -309,7 +309,7 @@ Each packet gives an openable result in about 15–60 minutes: a library page, a
 
 **Breaking-change notes:** IP21 changes the generated link and on-accent steps for bright brands (a visual change; the changelog lists the four test seeds and their before and after). IP26 may move a component's change point by up to one step. IP38 makes new failures in existing projects; ID8 decides whether they start as warnings. A `0.3.0` minor is right while the version is below 1.0.
 
-#### Later (0.4 or after)
+#### Later (0.5 or after; 0.4 is data-driven sites, Part 3)
 
 | Packet | Item | Findings |
 | --- | --- | --- |
@@ -377,3 +377,181 @@ Each has a working default we'll use if the owner doesn't say otherwise.
 | ID9 | A lead style and a statement size: two variants or one? | **Two:** lead is body-scale prose, statement is a display-scale sentence; neither duplicates an existing size |
 | ID10 | `Card` status: `Badge` in `meta`, or a new place near the title? | **`meta` first** (IP13); a `status` place only if the finder shows `meta`'s position fails a real layout |
 | ID11 | Ask the DesignUp project to re-run on 0.3.0-beta.1 and report? | **Yes,** with the same appendix shape (IV7) |
+
+## Part 3: data-driven sites (Q107)
+
+**Owner, 2026-11-10 01:52 (verbatim, [DoD Q107](definition-of-done.md#owner-instructions)):** *"Here's another input from the DesignUp site implementation, account for it in the Design library improvement. E:\Projects\designup-project\designup\docs\research\design-library-data-driven-requirement.md"*
+
+> **TL;DR:** DesignUp asks for sites that are **strictly data-driven**: every word, page and section order in JSON, and site code that only starts the app, loads data and calls the library (D1–D8, 45 changes: 22 must, 20 should, 3 could). It's a generic need (conference, marketing, docs, portfolio, shop and news sites all have it). The library already has the base: content schemas, 26 block types, `TemplateView`, namespaced template blocks and a content check that reports JSON paths. We checked the requirement against both codebases. It holds, with five corrections and answers to its eight open questions. The plan adds **workstream W14**, **packets DP1–DP24** and **owner decisions ID12–ID20**. Six existing packets change shape so nothing is built twice: IP27 (a core router, not just a link adapter), IP30 (named page transitions), IP12 and IP31 (props that mirror picture fields), IP19 (a block slot), IP22 (an accent mark) and the checks IP35–IP39. Small foundations go into **0.3.0-beta.1**; the page and site documents, collections, the router and the renderer make **0.4.0-beta.1, "Data-driven sites"**; migrations, conditions, locales and effects come later. Everything is additive: `TemplateView`, views and current content keep working.
+
+**Stable IDs:** findings **DR1–DR45** (the requirement's IDs in brackets), corrections **DC1–DC5**, workstream **W14**, packets **DP1–DP24**, acceptance steps **AT1–AT6**, decisions **ID12–ID20**.
+
+### Checked against the code
+
+| Requirement claim | Checked | Result |
+| --- | --- | --- |
+| 11 view files and 1 view part arrange pages by hand; `MorePage` renders 18 pages from one shape | `web/src/views/` (10 TSX files plus `more/parts/Enquiry.tsx` and `more/routes.ts`) | **Confirmed** |
+| `App.tsx` matches routes, builds titles, maps menu sections, runs transition, scroll and focus | `web/src/App.tsx:19–160` | **Confirmed** |
+| `lib/data.ts` derives speakers and copies the core `fill` helper | `web/src/lib/data.ts:21,44` | **Confirmed**; core already exports `fill` from `@design-library/core/render` (`render/index.ts`), so the copy is a docs gap |
+| No content file has a `$schema` | 0 of the files in `web/src/content/` | **Confirmed** |
+| The manifest lists 19 parts but only 2 block types | `registry.tsx`: `designup.countdown`, `designup.sponsor-wall` | **Confirmed** |
+| Home says "107 talks"; the collection has 93 | `content/home.json` (twice), `content/talks.json` `talks` (93) | **Confirmed**: nothing derives the number |
+| Accent phrases and "to confirm" fallbacks in views | 19 calls to `accentPhrase`, `accentTail`, "to confirm" or `'Home'` across `views/` | **Confirmed** |
+| `TemplateView` shows an alert for unknown types | `render/TemplateView.tsx:6,86` | **Confirmed** |
+| `text` is plain, backticks only | `schemas/blocks.schema.json` `$defs.text` and its description | **Confirmed** |
+| `action` requires `says` and can't navigate | `blocks.schema.json` `$defs.action`: `required: [label, says]` | **Confirmed** |
+
+**Corrections:**
+
+| ID | The requirement says | What we found |
+| --- | --- | --- |
+| DC1 | "Links accept only fixed `/layout` ids" | `href` also takes `https://…`, `mailto:…` and `#anchor`; what's missing is routes with parameters and other pages' anchors |
+| DC2 | Template CSS has 2 `!important` | 3 flags on 2 lines (`designup.css:496`, `:736`) |
+| DC3 | Open question: can the content envelope's `record` serve one page per item? | No. `record` is one application layout's data, checked against `$defs/record.{layout}` (`schemas/content.schema.json:20`); there are no collections or item routes |
+| DC4 | Open question: is `motion/zero-latency.json` the start of a motion catalogue? | No. It lists the 22 places that must never animate (Z1–Z22), read by the motion check and probe; an effects catalogue would be new (DP23) |
+| DC5 | Open question: is `BLOCKS` loaded in full? | Yes: one static map (`render/blocks.tsx:279`), and `loadTemplate` callers use eager `import.meta.glob` (`templates/harbour/index.ts`) |
+
+### Findings register: data-driven sites
+
+Root causes as in Part 1. "Action" names the packet; **(+IPn)** means an existing packet that changes shape for it.
+
+| ID | Need (requirement) | Priority | Root cause | Owning files (new files marked *new*) | Action |
+| --- | --- | --- | --- | --- | --- |
+| DR1 | Page document schema (PD1) | Must | Library | `schemas/page.schema.json` *new*, `schemas/content.schema.json`, `tools/check-content.mjs` | Build DP9 |
+| DR2 | Page metadata and title (PD2) | Must | Library | `schemas/page.schema.json`, `render/SiteView.tsx` *new* | Build DP9, DP15 |
+| DR3 | Site document (PD3) | Must | Library | `schemas/site.schema.json` *new* | Build DP8 |
+| DR4 | Frame settings per page (PD4) | Should | Library | `tokens/settings.json`, `schemas/page.schema.json` | Build DP9 on the theme settings (IP4) |
+| DR5 | Document versions and migrations (PD5) | Should | Library | `tools/migrate.mjs` *new*, `CHANGELOG.md` | Later DP20 |
+| DR6 | Every placeable part has a schema contract (REG1) | Must | Library + Docs | `schemas/blocks.schema.json`, `agent/index.json`, `tools/agent-index.mjs` | Build DP10 |
+| DR7 | Slots and nesting (REG2) | Must | Library | `render/types.ts` (`accepts`, `ctx.blocks`), `blocks.schema.json` | Build DP11 (+IP19, +IP20) |
+| DR8 | Lists bound to collections (REG3) | Must | Library | `blocks.schema.json`, `render/SiteView.tsx` | Build DP13 |
+| DR9 | Conditional sections (REG4) | Should | Library | `schemas/page.schema.json` | Later DP21 |
+| DR10 | Actions that navigate (REG5) | Must | Library | `blocks.schema.json` `$defs.action`, `render/blocks.tsx` `actionButtons` | Build DP2 (+IP8) |
+| DR11 | Searchable registry (REG6) | Should | Docs + Library | `tools/blocks.mjs` *new* (bin), the finder | Build DP10 (+IP16) |
+| DR12 | One render entry for any page (R1) | Must | Library | `render/SiteView.tsx` *new*, `render/index.ts` | Build DP15 |
+| DR13 | Failures contained and traceable (R2) | Must | Library | `render/SiteView.tsx`, `render/TemplateView.tsx` | Build DP15 |
+| DR14 | Loading and empty per section (R3) | Should | Library | `render/SiteView.tsx`, `Skeleton`, `EmptyState` | Build DP15 |
+| DR15 | The "to confirm" pattern (R4) | Must | Library | `blocks.schema.json` (an `unconfirmed` value form), `render/blocks.tsx`, the project check | Build DP4 |
+| DR16 | Template parts join the registry (TP1) | Must | Library | `schemas/template.schema.json` (`parts` with schema and example), `render/types.ts` | Build DP18 (+IP35) |
+| DR17 | Manifest matches what ships (TP2) | Should | Check | `tools/check-content.mjs` | Build DP7 (+IP39) |
+| DR18 | Parts style through tokens only (TP3) | Must | Check | `tools/check-project.mjs` | Done in DP6 (warnings in 0.3) |
+| DR19 | Parts extend a core block (TP4) | Could | Library | `schemas/template.schema.json` | Later DP22 |
+| DR20 | Rich inline text without markup (CM1) | Must | Library | `blocks.schema.json` `$defs.richText` *new*, `render/rich-text.tsx` *new*, `Text` tone `accent` | Build DP1 (+IP22) |
+| DR21 | Typed collections (CM2) | Must | Library | `schemas/collection.schema.json` *new*, `tools/check-content.mjs` | Build DP12 |
+| DR22 | References between collections (CM3) | Must | Library | `schemas/collection.schema.json`, `render/SiteView.tsx` | Build DP12 |
+| DR23 | Derived values and generated collections (CM4) | Should | Library | `schemas/site.schema.json` (`derive`), `tools/check-content.mjs` | Build DP14 |
+| DR24 | Media slots: ratio, focal point, treatment, decorative (CM5) | Must | Library | `schemas/assets.schema.json`, `render/blocks.tsx`, `Image` | Build DP3 (+IP12, +IP31) |
+| DR25 | Strings ready for localisation (CM6) | Should | Library | `render/fill.ts`, `schemas/site.schema.json` | Later DP24 |
+| DR26 | Named effects catalogue (BH1) | Should | Library | `motion/effects.json` *new*, `react/behaviour/` | Later DP23 (with IP44, IP41) |
+| DR27 | Reduced motion built in (BH2) | Must | Library | `react/behaviour/motion.ts` (done for `viewTransition` in IP3), each effect | Build DP17; every later effect declares its calm form |
+| DR28 | Page transitions as data (BH3) | Should | Library | `schemas/site.schema.json`, `layouts/SiteLayout.tsx` | Build DP17 (+IP30) |
+| DR29 | Routes from page documents (RT1) | Must | Library | `site/router.ts` *new*, `render/SiteView.tsx` | Build DP16 on the IP27 router |
+| DR30 | One route pattern per collection (RT2) | Must | Library | `site/router.ts`, `schemas/page.schema.json` | Build DP16 |
+| DR31 | Aliases, redirects, 404 page (RT3) | Should | Library | `schemas/site.schema.json`, `site/router.ts` | Build DP16 |
+| DR32 | Anchors, scroll, focus, announce (RT4) | Should | Library | `site/router.ts`, `Link` | Build in IP27 (+IP17, +IP28) |
+| DR33 | One project check command (V1) | Must | Check | `tools/check-project.mjs`, `tools/check-content.mjs` | DP6 now; DP19 adds site, pages and collections |
+| DR34 | No words in code (V2) | Must | Check | `tools/check-project.mjs` (`words-in-code`) | Done in DP6 (a warning in 0.3; exceptions list in DP19) |
+| DR35 | No page-specific code (V3) | Should | Check | `tools/check-project.mjs` | Build DP19 (a warning) |
+| DR36 | Token-only styling (V4) | Must | Check | `tools/check-project.mjs` (`raw-size`, `important`, `core-token`, `primitive`) | Done in DP6 |
+| DR37 | Story for every part (V5) | Should | Check + Library | `tools/check-content.mjs`, scaffold | Build DP18 (stub stories from the schema example) |
+| DR38 | Types from schemas (V6) | Should | Library | `tools/types.mjs` *new* (bin), library repository's record types | Build DP19 |
+| DR39 | Live preview of JSON edits (AP1) | Should | Library | `render/SiteView.tsx` (keeps scroll on data change) | Build DP20 |
+| DR40 | Errors at the JSON path in development (AP2) | Should | Library | `render/SiteView.tsx`, the check's error format | Build DP20 |
+| DR41 | Schema addresses for editors (AP3) | Should | Docs + Library | `schemas/*.json` `$id`, hosted `/schemas/{name}/{version}.json` | Build DP5 |
+| DR42 | Review view of unconfirmed content (AP4) | Could | Library | `render/SiteView.tsx` | Later, after DP4 |
+| DR43 | Code split by block type (PF1) | Should | Library | `render/blocks.tsx`, `render/load.ts` | Later DP24 |
+| DR44 | Image loading rules from data (PF2) | Should | Library | `render/SiteView.tsx`, `Image` | Build DP15 |
+| DR45 | Data loads per route (PF3) | Could | Library | `render/load.ts` | Later DP24 |
+
+### What stays out, checked
+
+The requirement's own list holds and matches Part 2's out-of-scope list: site content and collections; brand faces (the library ships the way to register them, IP23); specific compositions (the library ships the registry, slots and effects; the template ships the part); brand effects (they register into the catalogue from the template); source-specific build steps such as an archive importer (the library ships the generated-collection hook and the check, DP14). We add one: **the site's own routes and URLs** are data the site owns; the library ships the router that reads them. Nothing in W14 names DesignUp: every schema, block and example uses generic names, and the reference data in the acceptance test is a shipped template's.
+
+### W14 Data-driven sites
+
+- **Goal (promise → user-can):** the library promises that a team builds its product from the library's parts without forking. For sites, that becomes: **an editor, designer, agent or CMS can add a page, reorder sections, change words or add a collection item by editing JSON alone, and one command proves the site has no words or page logic in code.**
+- **Items:** DP1–DP24 below.
+- **Done when (0.4.0-beta.1):** the acceptance test AT1–AT6 passes on a reference site made from a shipped template with no site code beyond start-up (the `main.tsx`, a `site.json`, page documents and collections); each step is a JSON edit, recorded with screenshots and the check's output; existing `TemplateView` sites and hand-written views still type-check, build and render unchanged (the Q105.5 upgrade proof on a copy of DesignUp).
+- **Risks and assumptions:**
+  - **IA13:** one page schema can serve both template layouts and site pages. Test: write two harbour screens and one generic blog screen as page documents before DP15.
+  - **IA14:** a fixed operator set is enough for list bindings and conditions (filter, sort, limit; equals, in, has, before and after a date). Test: express DesignUp's six list uses in it on paper first (no DesignUp data in the library).
+  - **IA15:** a router in core stays small (no data fetching, no nested layouts). Budget: under 4 KB minified, measured from the build output.
+  - **IA16:** rich text as JSON stays writable by people. Test: an editor writes three headings with an accent mark from the guide alone.
+
+### Packets
+
+Each gives an openable result (a library page, a story, a schema with its check output, or a transcript). Strict design applies to every new visual; schemas and checks are shown through their output.
+
+#### Into 0.3.0-beta.1 (foundations, non-breaking)
+
+| Packet | What the owner opens | Findings | After | Overlap |
+| --- | --- | --- | --- | --- |
+| DP1 | Rich inline text: `richText` in `blocks.schema.json` (a string, or a list of strings and `{ text, mark }` with marks `emphasis`, `strong`, `accent`, `code`, `link` and `break`); each block field declares the marks it accepts; one `RichText` renderer; the accent mark reads `Text` tone `accent` | DR20 | IP22 | **IP22 gains** a `tone="accent"` on `Text` and `Heading` for inline spans |
+| DP2 | Actions that navigate: `action` takes `href` (a route, anchor or address) instead of `says`; the renderer draws a `Button` with `href` | DR10 | IP8 | **IP8** is the component half |
+| DP3 | Picture entries: `assets.schema.json` gains `ratio`, `focal` (`{ x, y }` from 0 to 1), `treatment` (`none`, `greyscale`, `duotone`; `rest` and `active`) and `decorative`; `alt` required unless decorative | DR24 | IP12, IP31 | **IP12 and IP31** name their props exactly as these fields |
+| DP4 | Unconfirmed values: any text field may be `{ "unconfirmed": "speaker" }`, shown with the phrase from shared strings in one style; the check counts them by file, and `--release` fails on any | DR15 | DP1 | — |
+| DP5 | Schema addresses: each schema served at a stable versioned address on the hosted site; the guide shows `$schema` for editors | DR41 | — | — |
+| DP6 | One project command `npx design-library-check` (errors: the stated rules; warnings: everything new) | DR18, DR33 (part), DR34, DR36 | — | **Is IP37 + IP38** (built, being tuned) |
+| DP7 | The content check takes any folder with `$schema` and checks manifest against shipped parts and rendered screens | DR17 | DP6 | **Is IP39** |
+
+**IP27 changes shape:** instead of only a link adapter, it becomes the **core router** (`@design-library/core/site`): hash or history mode, `useRoute`, `navigate`, fragment links that scroll to a heading without replacing the route, focus moved to the new page's heading and an announcement (DR32). `Link` reads it when present and works as today without it. Built once here, it carries DP16's routes from data in 0.4. **IP28** reads anchors from the same router. **IP30** becomes the router's page swap with a transition chosen by name (`'fade'` today; data in DP17). **IP17**'s scroll helper is what the router uses for anchors. **IP19**'s `Hero` `media` prop stays a `ReactNode` and its block gets a `media` slot (DP11). **IP35**'s scaffold writes each part's block schema and example (DP18 needs them).
+
+#### 0.4.0-beta.1: Data-driven sites
+
+| Packet | What the owner opens | Findings | After |
+| --- | --- | --- | --- |
+| DP8 | `site.schema.json`: navigation, header and footer content, global strings (not found, back home, scheme labels), title pattern, default frame settings, page transition, aliases | DR3 | DP1 |
+| DP9 | `page.schema.json` (ID12): id, route, metadata (title, description, social picture, canonical, hidden), layout, frame settings, ordered `sections` of blocks with optional `anchor` | DR1, DR2, DR4 | DP8 |
+| DP10 | Block registry: every core block has a schema, a one-line purpose and an example; `npx design-library-blocks "a list of people with photos"` lists matches, core first; the finder page reads it | DR6, DR11 | DP9 (+IP16) |
+| DP11 | Slots and nesting: named slots with accepted types (`hero.media`, `split.start` and `end`, `grid.items`) | DR7 | DP10, IP19, IP20 |
+| DP12 | Collections and references: `collection.schema.json` (id field, item schema), `{ "ref": "talks/…" }` resolved by the check and the renderer | DR21, DR22 | DP9 |
+| DP13 | List bindings: `{ "from": "talks", "where": …, "sort": …, "limit": 6 }` in list fields | DR8 | DP12 |
+| DP14 | Derived values (`count`, `group`, `distinct`) declared in the site document, evaluated at load; a generated-collection hook with provenance, rebuilt and checked by one command | DR23 | DP12 |
+| DP15 | `SiteView`: one entry renders site + page + collections with frame, header and footer; each section in its own error boundary (path-named in development, left out in production); skeleton and empty per section; the first picture eager and high priority | DR2, DR12, DR13, DR14, DR44 | DP9, DP12 |
+| DP16 | Routes from data on the IP27 router: page routes, `/talks/{id}`-style patterns bound to a collection, aliases, redirects and the 404 page | DR29, DR30, DR31 | DP15, IP27 |
+| DP17 | Page transitions as data on IP30, each with its reduced-motion form | DR27, DR28 | DP16, IP30 |
+| DP18 | Template parts as blocks: each part's schema and example in the manifest, placed from page documents; stub stories from the example; the scaffold writes them | DR16, DR37 | DP10, IP35 |
+| DP19 | The project check covers site, pages, collections, references and routes; no page-specific code (a warning); words-in-code exceptions list; `npx design-library-types` writes TypeScript types from the schemas | DR33, DR34, DR35, DR38 | DP15, DP16 |
+| DP20 | Development: JSON edits update the page in place keeping scroll; a check error shows as one notice with file, path and fix | DR39, DR40 | DP15 |
+
+**Breaking-change notes (0.4.0):** none planned. New entries (`@design-library/core/site`, `SiteView`, three schemas, two commands) are additions; `TemplateView`, `loadTemplate` and content files at `contentVersion` 1 keep working. The page schema starts at version 1 on its own `$id`.
+
+#### Later (0.5 or after)
+
+| Packet | Item | Findings |
+| --- | --- | --- |
+| DP21 | Conditional sections with a fixed operator set | DR9 |
+| DP22 | Template variants of core blocks | DR19 |
+| DP23 | Named effects catalogue (reveal on scroll, parallax, pointer response, stipple reveal), each with a reduced-motion form; templates register their own | DR26 (+IP41, +IP44) |
+| DP24 | Locales and plural formats; code split by block type; data per route; the unconfirmed-content review view; content migrations command | DR5, DR25, DR42, DR43, DR45 |
+
+### Acceptance test
+
+On a reference site made from a shipped template (generic data, never DesignUp's), every step is a JSON edit only and `npx design-library-check` stays at zero errors after each:
+
+| Step | Do | See |
+| --- | --- | --- |
+| AT1 | Add a page document with a route, a title and three sections | It opens at its address, with its title in the tab |
+| AT2 | Move one of Home's sections up | Home shows the new order |
+| AT3 | Change a headline, including an accent mark | The new words and accent show |
+| AT4 | Add an item to a collection with a reference to another collection's item | It gets its own page, shows in its list and on the referred item's page, and a derived count on Home goes up by one |
+| AT5 | Misspell a block type | The check fails with the file and JSON path; the page renders without that section |
+| AT6 | Run the words-in-code and page-specific-code checks | Zero errors |
+
+### Migration for a site like DesignUp (in each adoption brief)
+
+The 0.3 brief lists what a site can do with no library change and with 0.3's foundations: move hard-coded words to content (the check now lists each), give content files a `$schema` (DP5), turn copies into ids, prune the manifest (DP7 reports it), add stories, move raw sizes into tokens (the check counts them), write accent phrases as rich text (DP1), and make hero buttons navigate by data (DP2). The 0.4 brief adds, in order: the site document and routes (replace the route matcher and title rules in the app shell), parts as blocks, then pages one shape at a time (simple repeated pages first, the home page last), then delete the hand-written views and make the check a gate. Each step is optional and the site keeps working between steps.
+
+### Open owner decisions: data-driven sites
+
+| ID | Decision | Recommended default |
+| --- | --- | --- |
+| ID12 | Page document: extend the content envelope, or a new schema? | **A new `page` schema (version 1)** whose `sections` are the same blocks; a template layout's content file stays valid, and `TemplateView` keeps working |
+| ID13 | Router in core or a separate package? | **In core, as its own entry** (`@design-library/core/site`), optional: nothing imports it unless a site does |
+| ID14 | Which inline marks? | **emphasis, strong, accent, code, link, break**; each field declares which it accepts; no nesting beyond a link around marked text |
+| ID15 | Derived values at build time or run time? | **Declared derivations evaluate at load** (pure: count, group, distinct, no code); generated collections are **build time only** |
+| ID16 | Project checks in core or a tooling package? | **In core's `tools/`** with `bin` entries, as `design-library-check-content` already is |
+| ID17 | Content migrations | **Hand-written migration notes until 0.5**, then `npx design-library-migrate` (DP24) |
+| ID18 | Release placement | **Foundations in 0.3.0-beta.1, the data-driven site in 0.4.0-beta.1** |
+| ID19 | Reference site for the acceptance test | **A shipped template extended with one collection** (harbour's events), not a new template |
+| ID20 | Words-in-code: warning or error? | **Warning in 0.3 and 0.4** (Q105.3); an error only when a site opts in with `--strict` |
