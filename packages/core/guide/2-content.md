@@ -97,6 +97,50 @@ Every template has `content.schema.json` beside its manifest. Its `$id` must end
 
 Copy rules (sentence case, buttons a verb first in 3 words or fewer, errors that say how to fix): the `ui-copy` skill, or the words in the existing templates.
 
+## A data-driven site: site, page and collection documents (0.4)
+
+A site whose every page is JSON, with no view per page: one `SiteView` draws whatever page the address opens. Use it for a site of pages (a shop, an event, a studio); keep templates and `TemplateView` for an application's screens. Both read the same blocks. The reference site is `@design-library/templates/harbour/site/`.
+
+```text
+src/site/
+  site.json            title and its pattern, home, notFound, navigation, header and footer blocks, aliases, derive, strings
+  pages/{id}.json      one page: id, route, title, description, picture, ordered sections (blocks)
+  collections/{id}.json  a list a site repeats: the item schema and the items (books, talks, people, offices)
+```
+
+1. **`site.json`** (`schemas/site.schema.json`): `siteVersion`, `id`, `title`, `home` (a page id), `navigation` (`{ label, href }`, the header's places), `header` and `footer` blocks. A `site-header` here may leave out `places`; they come from `navigation`, with the current one marked.
+2. **A page** (`schemas/page.schema.json`): `pageVersion`, `id`, `route` (`/visit`), `title` and `sections`, each a block by its `type` with an optional `anchor` for `/visit#hours` links. To find the block for a need, run `npx design-library-blocks "opening hours and the address"`: core blocks first, each with its fields and an example in use. Blocks hold blocks in named slots: `split` (`start`, `end`), `grid` (`items`), `hero` (`media`).
+3. **A collection** (`schemas/collection.schema.json`): `collectionVersion`, `id`, `item` (the JSON schema each item meets) and `items`. Then, anywhere in a page:
+   - `{ "ref": "books/the-long-shore" }` is that item, `{ "ref": "books/the-long-shore", "field": "title" }` one value of it;
+   - a page with `"route": "/readings/:id", "collection": "readings"` is each item's own page, reading the item with `{ "item": "title" }`; a reference to such an item links to its page;
+   - in place of a hand-written list, `{ "from": "readings", "where": { "date": { "after": "today" } }, "sort": "date", "limit": 3 }` lists the items that match (`where` by field: equal, or one of `in`, `has`, `not`, `before`, `after`; `"today"` is the reader's date);
+   - `site.json` `derive` names a count, the distinct values or the groups of a collection (`"book-count": { "count": "books" }`), read anywhere with `{ "derived": "book-count" }`.
+4. **Old addresses** go in `site.json` `aliases` (`"/events/:id": "/readings/:id"`), never in code.
+5. **Render it**, once, in place of the app's routes:
+
+   ```tsx
+   import { SiteView, loadSite } from '@design-library/core/render';
+   import site from './site/site.json';
+   import assets from './site/assets.json';
+
+   const data = loadSite({
+     site,
+     pages: import.meta.glob('./site/pages/*.json', { eager: true, import: 'default' }),
+     collections: import.meta.glob('./site/collections/*.json', { eager: true, import: 'default' }),
+     assets,
+     // Keys as assets.json writes its src: ./assets/{file}.
+     assetUrls: Object.fromEntries(
+       Object.entries(import.meta.glob('./site/assets/*', { eager: true, query: '?url', import: 'default' })).map(([path, url]) => [path.replace('./site/', './'), url]),
+     ),
+   });
+
+   export const App = () => <SiteView site={data} />;
+   ```
+
+   In development a section that can't be drawn shows one notice naming its file and JSON path; in production it is left out. Edits to the JSON update the open page in place. Moving page by page: `pageFor(data, path)` says which addresses have a document, so the rest still go to the old views under the same `Router`.
+6. **Types for code that reads the JSON** (a build step, a custom part): `npx design-library-types` writes `site-types.ts` (an interface per collection, the page ids, routes and references). A collection written from another source gets `"generated": { "by": "scripts/{name}.mjs", "from": "data/{source}" }` and is rebuilt by `npx design-library-generate`.
+7. **Nothing page-specific in code:** no `path === '/talks'` and no words in TSX. `npx design-library-check` warns about both once the site has a `site.json`; the few words or files that must stay in code are listed in `design-library-check.json` (the commands are in [Check it](#check-it) below).
+
 ## Render it
 
 - **In the library and as a standalone site:** register the template (Step 6); every layout of the library's own templates opens at `https://prabinpebam.github.io/design-library/site.html#/app/{template}/{layout}`.
@@ -123,6 +167,7 @@ A change old content no longer satisfies (a renamed key, a split block) raises `
 | `npx design-library-check-content --templates src/templates` (library repository: `npm run check:content`) | Every manifest, schema, content file, picture and link is valid; registry and schema agree; no markup in words; warns about part files the manifest doesn't list |
 | `npx design-library-check-content --templates src/templates --release` | Also: no value is still unconfirmed (run it for the build you ship) |
 | `npx design-library-check-content --templates src/templates --site src/site` | Also (0.4): the site folder `loadSite` reads (`site.json`, `pages/`, `collections/`): every document and collection item against its schema; unique page ids, routes and item ids; references, item values and list bindings resolved as the page resolves them, then every block and slot checked by its type; every `/route#anchor` link opens a page and lands on a section anchor; aliases lead somewhere and hide no page; a note for a section whose list finds nothing and has no `empty`. A template's own `site/` folder is checked without the flag |
+| `npx design-library-types --check` and `npx design-library-generate --check` (0.4) | The site's generated types and generated collections are current with its JSON and their sources |
 | `npx design-library-check-content --templates src/templates --content src/content --src src` | Also: every JSON file under `src/content` that names a `$schema` is valid against it; warns about templates whose screens nothing renders |
 | `npx tsc --noEmit` | The registry and any record bindings compile |
 | Open `site.html#/app/{template}/{layout}` | The screen draws, in light, dark and more contrast |

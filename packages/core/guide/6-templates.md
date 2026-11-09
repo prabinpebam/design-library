@@ -140,6 +140,18 @@ export default loadTemplate(
 );
 ```
 
+## Your parts as blocks (0.4)
+
+A fundamental or compound of your own that content places is a **block type** in your template's namespace, so a page document or a content file places it like a core block. Run `npx design-library-blocks "<the need>"` first: a core block that fits wins.
+
+1. **Schema:** `$defs/{name}` in the template's `content.schema.json`, with `"type": { "const": "{id}.{name}" }` and a one-line `description` (the registry shows it).
+2. **Manifest:** an entry in `template.json` `parts.blocks`: `type`, `schema` (`#/$defs/{name}`), `renders` (the part, `{id}.{Part}`) and an `example`, a whole block that is valid against the schema and uses only pictures in `assets.json`.
+3. **Registry:** `registry.tsx` maps the type to the part, passing fields as props (pictures through `ctx`), and the template's `index.ts` passes the registry to `loadTemplate`.
+4. **Place it** from a page document as `{ "type": "{id}.{name}", … }`. A data-driven site gives `loadSite` the template's registry: `loadSite({ site, pages, collections, assets, assetUrls, registry: template.registry })`. A slot (`split.start`, `grid.items`, `hero.media`) takes namespaced types too.
+5. **See it in place:** `<SiteView site={partsSite(template)} />` (`@design-library/core/render`) opens one page per part with an `example`, placed through the registry with its pictures. A part with no stories file still gets a stub story from its example in the library.
+
+`npx design-library-new-template {id} --part compounds/{Name}` writes all four for a new part. The content check validates each `example` against its schema and the registry against the manifest; the worked example is the Conference template's `conference.countdown` and `conference.sponsor-wall`.
+
 ## Do and don't
 
 | Do | Don't |
