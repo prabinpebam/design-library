@@ -1,6 +1,6 @@
 # Handoff readiness
 
-> **TL;DR:** Can an AI agent in a **separate project** pick this library up and implement it with no hiccups? **Not yet.** At F15.R1 (2026-11-09 08:10 +05:30) 12 of 37 checks passed, 22 failed and 3 needed the owner; after F15.R2 (packaging) 22 passed. **The owner decided all three owner rows on 2026-11-09 07:57 (recommendations taken, MIT licence). After F15.R3–R4 (docs, theming, about 09:05): 33 pass, 3 decided and done or under way, 1 fails (B1, SiteHeader at 320 px).** After F15.R5 (about 09:20): B1 passes; nothing fails. The release, the push and the fresh-project proof follow. The library itself is self-contained (core and templates import nothing outside their own folders except React and the font packages), but everything around it assumes you work **inside this repository**: there is no way to get the packages out except copying folders, the guide's paths and checks are repository paths, theming needs this repository's token tools (and a checkout that isn't public), and 275 links point at `127.0.0.1`. Packets F15.R2 onwards fix each failing row; the owner rows stay as decisions with a recommendation. The last packet proves it with a fresh project outside this repository.
+> **TL;DR:** Can an AI agent in a **separate project** pick this library up and implement it with no hiccups? **Yes, for React 19 with Vite 8 (F15.R6, 2026-11-09 about 09:50 +05:30).** At F15.R1 12 of 37 checks passed, 22 failed and 3 needed the owner; the owner decided those three on 07:57 (recommendations taken, MIT licence), and F15.R2–R5 fixed every failing row: installable tarballs on a [GitHub release](https://github.com/prabinpebam/design-library/releases/tag/v0.1.1), a guide written for a separate project, a shipped content check, a theme API, hosted links, the SiteHeader fix. The proof: a fresh project outside this repository, following only the shipped guide, built a themed site from its own template; its two hiccups were fixed in 0.1.1, then it ran clean ([The proof](#the-proof-f15r6)). Other bundlers, server rendering and other frameworks are out of scope for 0.1 and stated as such.
 
 Owner's words, 2026-11-09 07:48 +05:30 ([DoD Q81](definition-of-done.md#owner-instructions)): *"Are we ready to hand off this library to an agent in a separate project for that project to implement this library? Make a checklist o qualify the above question objectively and go through each one to make sure everything is addressed and there won't be any hccups when the AI agent in the other project ries to implement this."*
 
@@ -101,4 +101,23 @@ Owner's words, 2026-11-09 07:48 +05:30 ([DoD Q81](definition-of-done.md#owner-in
 | F15.R3 | Docs: G2–G6, T2, V1; owner decisions L1, B3 (and B2) | Done for review (about 09:05) |
 | F15.R4 | Consumer theming: C1, C3, C4 (`@design-library/core/theme`) | Done for review (about 09:05) |
 | F15.R5 | B1; push to the public repository (`1a6ac55`), the v0.1.0 release (D2), redeploy | Done for review (about 09:25) |
-| F15.R6 | Proof: a fresh project outside this repository, following only the shipped guide | Next |
+| F15.R6 | Proof: a fresh project outside this repository, following only the shipped guide | Done for review (about 09:50): clean run on 0.1.1 |
+
+## The proof (F15.R6)
+
+**Setup:** an empty folder in the system temp directory (outside this repository and its workspaces; deleted afterwards), Node 26, packages from the approved proxy only (the library from the GitHub release). The agent read only what the package ships: `node_modules/@design-library/core/AGENTS.md`, `guide/1-install.md`, `3-tokens.md` and `6-templates.md`, and the index. **Built:** *Tidewater Café*: the guide's step 1 files (`vite.config.ts`, `tsconfig.json`, `index.html`, the `AGENTS.md` block), a theme in `src/look.ts` (`applyBrand` with two brand colours, `applyFonts({ preset: 'editorial' })`, its own space and shape presets through `registerPresetCategory`), and its own template `src/templates/tidewater/`, adapted from `harbour` by step 6 (namespace renamed, new content, `loadTemplate` from `@design-library/core/render`), rendered with `TemplateView`.
+
+| # | Hiccup | Cause | Fix | Release |
+| --- | --- | --- | --- | --- |
+| H1 | The second `npm install` failed: `Cannot read properties of null (reading 'edgesOut')` | npm 9.6.7 (this machine's default) mishandles tarball dependencies; npm 11 installs them | Guide step 1 asks for npm 10 or later and quotes the error | 0.1.1 |
+| H2 | `npx tsc --noEmit` failed: `TS7016: Could not find a declaration file for module '../colour/index.mjs'` | TypeScript doesn't read JavaScript inside `node_modules`; inside this repository the workspace link hid it | `colour/*.d.mts` declarations ship (`npm run colour:types`); `npm run pack` refuses stale ones | 0.1.1 |
+
+**Clean run on 0.1.1** (a second empty folder, npm 11.20.0):
+
+| Step | Result |
+| --- | --- |
+| `npm install <core 0.1.1 URL> <templates 0.1.1 URL> react@^19 react-dom@^19`, then the dev tools | Installed; the two library tarballs from `github.com`, every other package through the proxy |
+| `npx design-library-check-content --templates src/templates --index src/templates/index.ts` | `1 templates, 2 content files, 26 core block types: all valid.` |
+| `npx tsc --noEmit` | No errors |
+| `npx vite build` | Built |
+| `npx vite`, opened at 800 px and 320 px | The café's own words and picture; headings in Fraunces (the `editorial` preset); `--p-brand-1-500` = `#0f766e`; `data-space="loose"`, `data-shape="super-soft"`; no sideways scroll (310 px of 320) |

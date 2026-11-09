@@ -73,7 +73,7 @@ No token is printed, stored or committed: pushes use the owner's existing `gh` l
 | Library | [prabinpebam.github.io/design-library/](https://prabinpebam.github.io/design-library/), deep links such as [`#/motion`](https://prabinpebam.github.io/design-library/#/motion) and [`site.html#/app/projects/dashboard`](https://prabinpebam.github.io/design-library/site.html#/app/projects/dashboard) |
 | Docs | [prabinpebam.github.io/design-library/docs/](https://prabinpebam.github.io/design-library/docs/) |
 | Pages | Source `gh-pages` at `/`, HTTPS enforced; turned on by the first `gh-pages` push |
-| Releases | [v0.1.0](https://github.com/prabinpebam/design-library/releases/tag/v0.1.0) (2026-11-09, owner Q82): `design-library-core-0.1.0.tgz` and `design-library-templates-0.1.0.tgz` from `npm run pack`, how separate projects install the library ([Handoff readiness](handoff-readiness.md) D2). A new version: raise both `version`s together, add a `CHANGELOG.md` entry, commit and push, `npm run pack`, then `gh release create v<version> .packages/*.tgz` |
+| Releases | [v0.1.1](https://github.com/prabinpebam/design-library/releases/tag/v0.1.1) (current; fixes from the separate-project proof) and [v0.1.0](https://github.com/prabinpebam/design-library/releases/tag/v0.1.0) (2026-11-09, owner Q82): `design-library-core-0.1.0.tgz` and `design-library-templates-0.1.0.tgz` from `npm run pack`, how separate projects install the library ([Handoff readiness](handoff-readiness.md) D2). A new version: raise both `version`s together, add a `CHANGELOG.md` entry, commit and push, `npm run pack`, then `gh release create v<version> .packages/*.tgz` |
 
 **Redeploy** (from the workspace root, with the local servers' sources current):
 
