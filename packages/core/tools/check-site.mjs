@@ -79,6 +79,7 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
 
   const strict = new Ajv2020({ allErrors: true, strict: false });
   strict.addFormat('date', /^\d{4}-\d{2}-\d{2}$/);
+  strict.addFormat('date-time', /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/);
   for (const s of Object.values(schemas)) strict.addSchema(s);
   const report = (file, validate, base = '', skip = () => false) => {
     for (const e of validate.errors ?? []) {

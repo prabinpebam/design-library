@@ -350,6 +350,7 @@ const consumerCommands = {
   review: 'npx design-library-review <url>',
   blocks: 'npx design-library-blocks "<the need>"',
   'site:types': 'npx design-library-types',
+  'site:generate': 'npx design-library-generate',
   typecheck: 'npx tsc --noEmit',
   build: 'npx vite build',
 };

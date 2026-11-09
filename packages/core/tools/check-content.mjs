@@ -52,7 +52,7 @@ const walkCode = (d) =>
   existsSync(d)
     ? readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? (e.name === 'node_modules' || e.name.startsWith('.') ? [] : walkCode(join(d, e.name))) : /\.(tsx?|jsx?|mjs)$/.test(e.name) && !/\.stories\./.test(e.name) ? [join(d, e.name)] : []))
     : [];
-const skipTemplates = !existsSync(templatesDir) && contentDirs.length > 0 && !arg('templates');
+const skipTemplates = !existsSync(templatesDir) && (contentDirs.length > 0 || siteDirs.length > 0) && !arg('templates');
 if (!existsSync(templatesDir) && !skipTemplates) {
   console.error(`check:content: no templates folder at ${templatesDir}. Pass --templates <folder holding one folder per template>.`);
   process.exit(1);
