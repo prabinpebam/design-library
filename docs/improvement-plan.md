@@ -509,7 +509,7 @@ Each gives an openable result (a library page, a story, a schema with its check 
 | DP12 | Collections and references: `collection.schema.json` (id field, item schema), `{ "ref": "talks/…" }` resolved by the check and the renderer | DR21, DR22 | DP9 |
 | DP13 | List bindings: `{ "from": "talks", "where": …, "sort": …, "limit": 6 }` in list fields | DR8 | DP12 |
 | DP14 | Derived values (`count`, `group`, `distinct`) declared in the site document, evaluated at load; a generated-collection hook with provenance, rebuilt and checked by one command | DR23 | DP12 |
-| DP15 | `SiteView`: one entry renders site + page + collections with frame, header and footer; each section in its own error boundary (path-named in development, left out in production); skeleton and empty per section; the first picture eager and high priority | DR2, DR12, DR13, DR14, DR44 | DP9, DP12 |
+| DP15 | `SiteView`: one entry renders site + page + collections with frame, header and footer; each section in its own error boundary (path-named in development, left out in production); empty per section (skeletons per section moved to DP24: with the site JSON in the bundle no section waits, 2026-11-10); the first picture eager and high priority | DR2, DR12, DR13, DR14, DR44 | DP9, DP12 |
 | DP16 | Routes from data on the IP27 router: page routes, `/talks/{id}`-style patterns bound to a collection, aliases, redirects and the 404 page | DR29, DR30, DR31 | DP15, IP27 |
 | DP17 | Page transitions as data on IP30, each with its reduced-motion form | DR27, DR28 | DP16, IP30 |
 | DP18 | Template parts as blocks: each part's schema and example in the manifest, placed from page documents; stub stories from the example; the scaffold writes them | DR16, DR37 | DP10, IP35 |
@@ -525,7 +525,7 @@ Each gives an openable result (a library page, a story, a schema with its check 
 | DP21 | Conditional sections with a fixed operator set | DR9 |
 | DP22 | Template variants of core blocks | DR19 |
 | DP23 | Named effects catalogue (reveal on scroll, parallax, pointer response, stipple reveal), each with a reduced-motion form; templates register their own | DR26 (+IP41, +IP44) |
-| DP24 | Locales and plural formats; code split by block type; data per route; the unconfirmed-content review view; content migrations command | DR5, DR25, DR42, DR43, DR45 |
+| DP24 | Locales and plural formats; code split by block type; data per route, with a skeleton per section while a route's data loads (from DP15); the unconfirmed-content review view; content migrations command | DR5, DR25, DR42, DR43, DR45 |
 
 ### Acceptance test
 
