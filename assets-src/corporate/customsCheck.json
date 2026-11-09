@@ -1,0 +1,13 @@
+{
+  "id": "customsCheck",
+  "set": "SS2 Corporate",
+  "slot": "IA-K5",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/corporate/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/corporate/assets/customs-check.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A tablet resting on an opened crate of parcels and straw in a bonded warehouse.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: card picture for the 'Customs clearance' service.\nSubject: an inspector's tablet resting on an opened wooden crate in a bonded warehouse.\nDetails: packing straw, a few sealed boxes, soft light from high windows; the screen shows only abstract shapes.\nComposition: eye level, the subject in the centre third so a 16:9 crop from the centre keeps it, nothing important at the top or bottom edges.\nStyle: documentary photograph for a freight company's website; natural overcast daylight; muted blues and greys with container orange as the one warm accent; calm, clean and real, gentle film grain; people only small and seen from behind.\nConstraints: no text, no readable letters or numbers on containers, vehicles, signs or paper, no logos or brand names, no watermark, no frame or border, no recognisable faces."
+}

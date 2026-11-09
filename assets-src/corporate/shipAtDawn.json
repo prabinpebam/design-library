@@ -1,0 +1,13 @@
+{
+  "id": "shipAtDawn",
+  "set": "SS2 Corporate",
+  "slot": "IA-K1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/corporate/assets/ship-at-dawn.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A container ship being loaded at a quay at dawn, a crane lifting an orange container aboard.",
+  "prompt": "Use: hero picture for 'Freight that arrives when you said it would', shown at about 560 by 373 pixels.\nSubject: a large container ship being loaded at a quay at dawn, gantry cranes over it.\nDetails: stacks of plain containers in muted blue, grey and one row of orange; calm water; first light low on the horizon; a few dock workers far away.\nComposition: eye level, the subject in the centre third so a 16:9 crop from the centre keeps it, nothing important at the top or bottom edges.\nStyle: documentary photograph for a freight company's website; natural overcast daylight; muted blues and greys with container orange as the one warm accent; calm, clean and real, gentle film grain; people only small and seen from behind.\nConstraints: no text, no readable letters or numbers on containers, vehicles, signs or paper, no logos or brand names, no watermark, no frame or border, no recognisable faces."
+}

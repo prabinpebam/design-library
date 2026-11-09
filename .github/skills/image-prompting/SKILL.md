@@ -35,7 +35,7 @@ python $IMG edit -i reference.webp -p PROMPT -o RAW.png --size 1536x1024 --quali
 python $IMG alpha RAW.png                           # transparent / partial / opaque fractions
 ```
 
-Measured on this deployment (global skill, 1024²): `low` ≈ 17–30 s and ≈ $0.006, `high` ≈ 70–80 s and ≈ $0.05; a reference image adds ≈ 1,000 input tokens. Batch a set in one packet; draft every slot at `low`, then run the keepers at `high`. Don't edit the global skill or its script; when it fails, report the exact sanitized error.
+Measured on this deployment (global skill, 1024²): `low` ≈ 17–30 s and ≈ $0.006, `high` ≈ 70–80 s and ≈ $0.05; a reference image adds ≈ 1,000 input tokens. Batch a set in one packet, at most two requests at a time (five at once hit HTTP 429 on this deployment); draft every slot at `low`, then run the keepers at `high`. Don't edit the global skill or its script; when it fails, report the exact sanitized error.
 
 ## Prompt structure
 

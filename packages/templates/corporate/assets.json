@@ -1,25 +1,65 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
   "assets": {
-    "harbour": {
-      "src": "assets/harbour.svg",
-      "alt": "Blue hills by the sea under a pale sky and a low sun."
+    "shipAtDawn": {
+      "src": "assets/ship-at-dawn.webp",
+      "alt": "A container ship being loaded at a quay at dawn, a crane lifting an orange container aboard."
     },
-    "meadow": {
-      "src": "assets/meadow.svg",
-      "alt": "A green meadow rising to soft hills."
+    "shipAtSea": {
+      "src": "assets/ship-at-sea.webp",
+      "alt": "A container ship stacked with containers ploughing through a grey sea."
     },
-    "dusk": {
-      "src": "assets/dusk.svg",
-      "alt": "Violet hills at dusk with an orange horizon."
+    "airCargo": {
+      "src": "assets/air-cargo.webp",
+      "alt": "A wrapped pallet being lifted into the open nose of a freight aircraft on wet tarmac."
     },
-    "sand": {
-      "src": "assets/sand.svg",
-      "alt": "Golden dunes under a warm sky."
+    "depotDock": {
+      "src": "assets/depot-dock.webp",
+      "alt": "A delivery truck backed up to an open depot door, a small white van parked beside it."
     },
-    "frost": {
-      "src": "assets/frost.svg",
-      "alt": "White hills under a cold blue sky."
+    "customsCheck": {
+      "src": "assets/customs-check.webp",
+      "alt": "A tablet resting on an opened crate of parcels and straw in a bonded warehouse."
+    },
+    "oldWarehouse": {
+      "src": "assets/old-warehouse.webp",
+      "alt": "An old brick warehouse by the water with its loading doors open, a vintage flatbed truck and a modern van outside."
+    },
+    "warehouseAisle": {
+      "src": "assets/warehouse-aisle.webp",
+      "alt": "Two colleagues in hi-vis vests walking down a long warehouse aisle, one pulling a pallet jack."
+    },
+    "officeRotterdam": {
+      "src": "assets/office-rotterdam.webp",
+      "alt": "A glass and dark brick office beside a harbour basin, port cranes behind it."
+    },
+    "officeHamburg": {
+      "src": "assets/office-hamburg.webp",
+      "alt": "A red-brick office building beside a canal crossed by an iron footbridge."
+    },
+    "officeSingapore": {
+      "src": "assets/office-singapore.webp",
+      "alt": "A slim glass office tower above tropical trees, a container port in the distance."
+    },
+    "shipDeparting": {
+      "src": "assets/ship-departing.webp",
+      "alt": "A container ship leaving port at sunrise with a tugboat alongside."
+    },
+    "newOffice": {
+      "src": "assets/new-office.webp",
+      "alt": "Moving boxes on the desks of a bright new office, its windows looking out over trees to the city."
+    },
+    "homewareStock": {
+      "src": "assets/homeware-stock.webp",
+      "alt": "Warehouse racks full of boxed lamps and homeware, one lamp unboxed and lit on a pallet."
+    },
+    "flowerColdStore": {
+      "src": "assets/flower-cold-store.webp",
+      "alt": "Trolleys of boxed tulips and roses in a refrigerated store."
+    },
+    "spareParts": {
+      "src": "assets/spare-parts.webp",
+      "alt": "Shelf bins of gears, bearings and hoses, with a parcel box ready to pack beside them."
     }
   }
 }

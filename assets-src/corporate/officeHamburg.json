@@ -1,0 +1,13 @@
+{
+  "id": "officeHamburg",
+  "set": "SS2 Corporate",
+  "slot": "IA-K9",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/corporate/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/corporate/assets/office-hamburg.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A red-brick office building beside a canal crossed by an iron footbridge.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: card picture for the Hamburg office.\nSubject: a red-brick office building beside a narrow canal with an iron footbridge.\nDetails: tall arched windows, a moored barge, grey sky.\nComposition: eye level, the subject in the centre third so a 16:9 crop from the centre keeps it, nothing important at the top or bottom edges.\nStyle: documentary photograph for a freight company's website; natural overcast daylight; muted blues and greys with container orange as the one warm accent; calm, clean and real, gentle film grain; people only small and seen from behind.\nConstraints: no text, no readable letters or numbers on containers, vehicles, signs or paper, no logos or brand names, no watermark, no frame or border, no recognisable faces."
+}

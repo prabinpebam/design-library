@@ -26,7 +26,7 @@
             "description": "Weekly ocean slots and a shared warehouse in Rotterdam.",
             "meta": "6 min read",
             "href": "/story",
-            "picture": "sand"
+            "picture": "homewareStock"
           },
           {
             "eyebrow": "Agriculture",
@@ -34,7 +34,7 @@
             "description": "Cold-chain air freight from Nairobi.",
             "meta": "4 min read",
             "href": "/story",
-            "picture": "meadow"
+            "picture": "flowerColdStore"
           },
           {
             "eyebrow": "Industry",
@@ -42,7 +42,7 @@
             "description": "Next-flight-out for a turbine maker.",
             "meta": "5 min read",
             "href": "/story",
-            "picture": "frost"
+            "picture": "spareParts"
           }
         ]
       },

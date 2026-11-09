@@ -25,28 +25,28 @@
             "title": "Ocean freight",
             "description": "Full and shared containers between 140 ports, with customs at both ends.",
             "href": "/service",
-            "picture": "harbour"
+            "picture": "shipAtSea"
           },
           {
             "eyebrow": "Air",
             "title": "Air freight",
             "description": "Next-flight-out for urgent parts; consolidated air for the rest.",
             "href": "/service",
-            "picture": "frost"
+            "picture": "airCargo"
           },
           {
             "eyebrow": "Road",
             "title": "Road and last mile",
             "description": "Pallets and parcels across Europe, tracked to the door.",
             "href": "/service",
-            "picture": "sand"
+            "picture": "depotDock"
           },
           {
             "eyebrow": "Customs",
             "title": "Customs clearance",
             "description": "Declarations filed, duties paid, release confirmed.",
             "href": "/service",
-            "picture": "meadow"
+            "picture": "customsCheck"
           }
         ]
       },

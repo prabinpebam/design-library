@@ -25,7 +25,7 @@
           }
         ],
         "note": "Quotes within one working day.",
-        "picture": "harbour"
+        "picture": "shipAtDawn"
       },
       {
         "type": "stats",
@@ -61,19 +61,19 @@
             "eyebrow": "Sea",
             "title": "Ocean freight",
             "description": "Full and shared containers on weekly sailings, with customs handled at both ends.",
-            "picture": "harbour"
+            "picture": "shipAtSea"
           },
           {
             "eyebrow": "Air",
             "title": "Air freight",
             "description": "Next-flight-out for urgent parts, and consolidated cargo for steady volumes.",
-            "picture": "frost"
+            "picture": "airCargo"
           },
           {
             "eyebrow": "Road",
             "title": "Road and last mile",
             "description": "Pallets and parcels across the continent, with a two-hour delivery window.",
-            "picture": "meadow"
+            "picture": "depotDock"
           }
         ]
       },

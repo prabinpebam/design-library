@@ -26,7 +26,7 @@
         "title": "Containers between 140 ports, door to door",
         "lead": "Weekly sailings from Rotterdam, Hamburg and Singapore, with customs handled at both ends.",
         "layout": "split",
-        "picture": "harbour",
+        "picture": "shipAtSea",
         "actions": [
           {
             "label": "Get a quote",
