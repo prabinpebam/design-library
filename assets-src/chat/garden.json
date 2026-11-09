@@ -1,0 +1,13 @@
+{
+  "id": "garden",
+  "set": "SS6 Chat",
+  "slot": "IA-T5",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/chat/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/chat/assets/garden.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2",
+  "alt": "A sloping garden of three grassy terraces with stone walls, a bench and lavender, hills beyond.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: a square picture an assistant drew on request.\nSubject: a gently sloping garden with three green terraces stepping down a hill.\nDetails: low stone walls between the terraces, a few flowering shrubs, a bench on the middle terrace, soft afternoon light.\nComposition: the subject in the centre third, balanced and simple.\nStyle: soft painterly digital illustration, the chat assistant's house style: gentle visible brush texture, luminous sky, simple rounded forms, fresh natural colour.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

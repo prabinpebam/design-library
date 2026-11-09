@@ -1,0 +1,13 @@
+{
+  "id": "card",
+  "set": "SS6 Chat",
+  "slot": "IA-T4",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/chat/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/chat/assets/card.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2",
+  "alt": "Soft green hills under a wide pastel sky with a low pink sun, the upper half left open for words.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: a square birthday-card design an assistant drew when asked for 'a quiet design for a birthday card'.\nSubject: soft rolling hills under a large open sky with a low pink sun.\nDetails: pastel greens and lilac, the upper half left as calm open sky with room for words to be written later.\nComposition: hills in the lower third, sun just above them, the upper two thirds empty sky.\nStyle: soft painterly digital illustration, the chat assistant's house style: gentle visible brush texture, luminous sky, simple rounded forms, fresh natural colour.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

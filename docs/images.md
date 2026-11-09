@@ -159,6 +159,7 @@ These would help, but no content field or slot exists yet; each needs a public s
 | IS3 | Empty states (saved, search, my schedule) | Showing what will appear (IL1) | `illustration` on EmptyState (SC4, transparent) | AF11: test assumption VS4 on one empty state first |
 | IS4 | Not-found and error pages (blog, conference, chat) | Orienting after a wrong turn (IL1) | Same `illustration` seam | As IS3 |
 | IS5 | Conference `sponsors` wall | Sponsors are recognised by their marks | Logo pictures on SponsorWall items (fictional marks, SC4) | Logos may carry their own name (IM6) |
+| IS7 | Design `editor` image fills (IA-D1) | A picture placed in a frame is the point of an image fill | The canvas draws image fills, and the template gains `assets.json` | Canvas renderer work in the Design template |
 | IS6 | Chat `welcome`, `choose-style` | Showing what each style looks like before choosing | A picture per style option | Only if the choice is visual |
 
 ## Packets
@@ -172,7 +173,7 @@ One style set per packet, each openable in the template's standalone site, small
 | IP3 = F15.I5 | Conference (SS3) | 5, **done** |
 | IP4 = F15.I6 | Blog (SS4) | 7, **done** |
 | IP5 = F15.I7 | Portfolio (SS5) | 16, **done** |
-| IP6 | Chat (SS6) and Design (IA-D1), plus the library's chat view data (IB19–IB23) | 6 |
+| IP6 = F15.I8 | Chat (SS6); Design (IA-D1) and the library's chat view data (IB19–IB23) checked and deferred | 5, **done** |
 | IP7 | Library scenes, portraits and the media poster (SS7) | 18 |
 | IP8 | Seams IS1–IS6, after the gates | — |
 
@@ -185,6 +186,8 @@ One style set per packet, each openable in the template's standalone site, small
 **IP4 as built (F15.I6):** IA-B4 (the reservoir path) is the reference; the other six are edits from it. The model painted it as soft gouache with visible brushwork rather than strictly flat fields, and the set follows it. IA-B2 was regenerated once: the first ripples crossed, which contradicts the post ("Focus rings that never overlap"). Eleven uses across five content files; the drawn landscapes are gone. 91–187 KB each (the stepping stones at WebP 72).
 
 **IP5 as built (F15.I7):** IA-P1 (the paper model of the quay and its sign post, 2304×1296) is the reference; IA-P2–P16 are edits from it: matte paper and clay on a sage backdrop. The project gallery (IA-P13–P16) was missing from the audit and is now part of it. Thirteen picture fields and the five-item gallery rewired; the drawn landscapes are gone. The flat studio backdrop compresses well: 26–39 KB each, the wide hero 84 KB.
+
+**IP6 as built (F15.I8):** IA-T1 (the tarn in the morning) is the reference; IA-T2 is an *edit of IA-T1* that changes only the light, so the dusk picture is visibly the same view, as the conversation asks ("And one at dusk, please"). IA-T3–T5 are style-referenced edits; the birthday card leaves its upper half as open sky, as the reply says. Asset ids are unchanged, so no content file changed; the five drawn SVGs are gone. Shipped at the chat column's 480 px × 2 (960×640, square 960×960), 108–215 KB (the busy garden is the heaviest). **Deferred:** IA-D1, because the Design editor's canvas doesn't draw image fills yet (its manifest says so) and the template has no assets, so a picture there would never be seen; it needs a canvas seam first (now IS7). IB19–IB23: `apps/library/src/data/pictures.ts` is imported nowhere, so there is nothing to replace.
 
 Each packet replaces its placeholder SVGs, writes alt from the finished pictures, keeps `npm run check:content` and the build passing, and records the pictures here as done.
 

@@ -2,24 +2,24 @@
   "$schema": "../../core/schemas/assets.schema.json",
   "assets": {
     "tarnMorning": {
-      "src": "assets/tarn-morning.svg",
-      "alt": "A still tarn below green fells under a pale morning sky."
+      "src": "assets/tarn-morning.webp",
+      "alt": "A still tarn just after sunrise, mist lifting off the water below green, craggy fells, mossy boulders on the near shore."
     },
     "tarnDusk": {
-      "src": "assets/tarn-dusk.svg",
-      "alt": "The same fells in violet shadow, the sky orange at the horizon."
-    },
-    "garden": {
-      "src": "assets/garden.svg",
-      "alt": "A gently sloping garden with three green terraces."
+      "src": "assets/tarn-dusk.webp",
+      "alt": "The same tarn and fells at dusk, the sky orange at the horizon and violet above, its colours mirrored in the water."
     },
     "lisbon": {
-      "src": "assets/lisbon.svg",
-      "alt": "Warm terracotta hills under an apricot evening sky."
+      "src": "assets/lisbon.webp",
+      "alt": "Alfama’s terracotta roofs and white houses climbing to the castle walls, a church dome and the river beyond."
     },
     "card": {
-      "src": "assets/card.svg",
-      "alt": "Soft violet hills with a pink sun, drawn as a birthday card."
+      "src": "assets/card.webp",
+      "alt": "Soft green hills under a wide pastel sky with a low pink sun, the upper half left open for words."
+    },
+    "garden": {
+      "src": "assets/garden.webp",
+      "alt": "A sloping garden of three grassy terraces with stone walls, a bench and lavender, hills beyond."
     }
   }
 }

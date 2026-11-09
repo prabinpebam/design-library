@@ -1,0 +1,13 @@
+{
+  "id": "lisbon",
+  "set": "SS6 Chat",
+  "slot": "IA-T3",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/chat/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/chat/assets/lisbon.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2",
+  "alt": "Alfama’s terracotta roofs and white houses climbing to the castle walls, a church dome and the river beyond.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: a picture an assistant drew for a Lisbon itinerary card 'Alfama and the castle'.\nSubject: the old Alfama quarter's terracotta roofs climbing a hill to castle walls at the top.\nDetails: white and ochre houses, a church dome, the river glimpsed at one edge, morning light.\nComposition: the subject in the centre third, balanced and simple.\nStyle: soft painterly digital illustration, the chat assistant's house style: gentle visible brush texture, luminous sky, simple rounded forms, fresh natural colour.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "tarnMorning",
+  "set": "SS6 Chat",
+  "slot": "IA-T1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/chat/assets/tarn-morning.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2",
+  "alt": "A still tarn just after sunrise, mist lifting off the water below green, craggy fells, mossy boulders on the near shore.",
+  "prompt": "Use: a picture an assistant drew when asked 'Draw me the view from Easedale Tarn in the morning', shown in the chat at about 480 by 320 pixels.\nSubject: a still mountain tarn just after sunrise, below green fells with rocky crags.\nDetails: mist lifting off the water, the fells reflected, a few boulders at the near shore, pale gold light on the tops.\nComposition: the subject in the centre third, balanced and simple.\nStyle: soft painterly digital illustration, the chat assistant's house style: gentle visible brush texture, luminous sky, simple rounded forms, fresh natural colour.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

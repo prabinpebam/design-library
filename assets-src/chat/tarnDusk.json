@@ -1,0 +1,13 @@
+{
+  "id": "tarnDusk",
+  "set": "SS6 Chat",
+  "slot": "IA-T2",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit of tarnMorning (Image 1 = its raw PNG): only the time of day changed",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/chat/assets/tarn-dusk.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2",
+  "alt": "The same tarn and fells at dusk, the sky orange at the horizon and violet above, its colours mirrored in the water.",
+  "prompt": "Change only the time of day: make this the same view at dusk, the sun just set, the sky orange at the horizon fading to violet above, the fells in violet shadow, a first star, the tarn reflecting the orange sky; the mist gone. Keep the exact same composition, fells, crags, rocks, shoreline and painterly style.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people."
+}
