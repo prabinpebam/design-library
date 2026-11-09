@@ -68,8 +68,8 @@
 | Q58 | 11-08 10:55 | "We want some image generation generating state. - I've used a specific generating image state in this project, use that and have a few more variants. - https://github.com/prabinpebam/watai.git" | Read the generating-image state in the owner's watai repository (source read-only, not added to this workspace) and rebuild it here on this library's tokens as an image-generation loading state, plus a few more variants (for example progressive blur/reveal, shimmer, noise, progress), usable inside a chat message (Q57) and standalone; reduced motion respected; announced status | Image generation state page/story | F15.68a | **Done for review** (about 12:55, design): [ImageGeneration](http://127.0.0.1:8766/#/imagegeneration), rebuilt from watai's stipple generating state (read-only via `gh api`) on this library's tokens, with `aurora`, `reveal` (sharpening partial preview with a share) and `shimmer` variants, a failed state with Try again; standalone and inside ChatMessage; reduced motion holds it still; start, done and failure announced |
 | Q59 | 11-08 12:03 | "Dropdown, padding is bad, chevron alomost touching the right edge. Dropdown list should be custom, else it clashes in style." (screenshot: Field page, "Label beside the control", Time zone shows a native `<select>` with the browser's own list) | **Q59.1** No native `<select>` anywhere in the library app or core: every dropdown (including Field's "Label beside the control" Time zone and any other story or view) uses the custom Select whose list is built from ListItem (Q19); a check (static scan) finds zero `<select>` elements in core components and views. **Q59.2** The Select trigger's chevron sits inside the same end inset as the text start inset (token-driven, never touching the edge), in every size | [Field](http://127.0.0.1:8766/#/field) "Label beside the control"; [Select](http://127.0.0.1:8766/#/select) | F15.64a | **Done for review** (about 12:20, design): native selects 1 before, 0 after (scan of core and the library app); the Field story uses Select (new `orientation` prop); `check:views` fails on any native select; Select chevron end inset = start inset in every size (9/13/17 px, `c.field.padding-inline-*`), measured |
 | Q60 | 11-08 12:57 | "Therre should be gap between items else the active and hover touch" (screenshot: ConversationList "Grouped by when", the open row's tint and the hovered row's fill touch with no space between) | **Q60.1** ConversationList rows sit apart by the same token gap as the navigation list (Q13, about 4 px), so active, hover and focus fills never touch. **Q60.2** The rule is owned once, by the shared list/ListItem layout, and applies to every list of selectable rows with fills (ConversationList, Navigation, Select/Menu lists, ListDetail, sidebar in ChatLayout and the chat app view); scan them and fix any that touch | [ConversationList](http://127.0.0.1:8766/#/conversationlist), [ChatLayout](http://127.0.0.1:8766/#/chatlayout) | F15.69a | **Done for review** (about 13:03, design): ConversationList rows now sit `space.stack-row` apart (4 px, was 0); the one role every list of filled rows reads (Navigation, Select and menu popups, List select/action/grid rows, ListDetail, ConversationList; List's option gap moved from `stack-pair` to it). Measured 4 px between consecutive rows in each, including the ChatLayout sidebar and open Select and menu lists |
-| Q108 | 11-10 02:08 | "Create a proper DoD and make sure everything is covered from the notes from the DesignUp site." | A proper Definition of Done for the DesignUp improvement work, written with the definition-of-done skill: promises → user-can statements → observable rows, each with its evidence and a "Try it", per release (0.2.0-beta.2, 0.3.0-beta.1, later) and for the whole stage. A coverage matrix maps every item in both DesignUp notes to a DoD row or to a recorded out-of-scope decision with its reason, with zero unmapped. The notes are the beta report (F01–F60 and its recommendations, roadmap and sections 6–8), the data-driven requirement (D1–D8, all 45 changes, the acceptance test and open questions), the plan's own findings N01–N18 and Beta known issues K1–K7. It includes the Q105 rows (generic, non-breaking, adoption brief, upgrade proof on a DesignUp copy) and DesignUp's re-run (ID11) as the stage's final evidence. It lives in docs/definition-of-done.md as a stage section, linked from docs/improvement-plan.md | docs/definition-of-done.md stage section | F15.IMP | Recorded by main 02:08; worker 50, after the Q107 plan update |
-| Q107 | 11-10 01:52 | "Here's another input from the DesignUp site implementation, account for it in the Design library improvement. E:\Projects\designup-project\designup\docs\research\design-library-data-driven-requirement.md" | The data-driven requirement (D1–D8; 45 changes: 22 must, 20 should, 3 could) is folded into docs/improvement-plan.md. Each change is:<br>• checked against the DesignUp code (read-only) and the library source;<br>• mapped to existing IP packets where they overlap (routing IP27/IP30, checks IP37–IP39, content IP39, motion IP3);<br>• given a root cause, owning files and an action.<br>The plan gains new sliced packets (page/site document, part registry, renderer, collections and references, rich inline text, behaviour as data, routing as data, validation, authoring/preview), a release placement and open owner decisions with defaults. Q105's rules apply: generic for any site, never DesignUp-specific (validate against the requirement's "stays out" section); non-breaking for DesignUp; each release's adoption brief includes the data-driven migration steps. Building those packets follows the updated plan | docs/improvement-plan.md; later releases | F15.IMP | Recorded by main 01:52; worker 50 updates the plan first. **Plan updated for review** (worker 50, 2026-11-10 about 02:08): [Part 3: data-driven sites](http://127.0.0.1:8765/#improvement-plan.md): DR1–DR45 checked against both codebases (corrections DC1–DC5, the eight open questions answered), workstream W14, packets DP1–DP7 into 0.3.0-beta.1 and DP8–DP20 as 0.4.0-beta.1 "Data-driven sites", later DP21–DP24; IP27, IP30, IP12, IP31, IP19, IP22 and IP35–IP39 reshaped so nothing is built twice; acceptance test AT1–AT6; decisions ID12–ID20 with defaults |
+| Q108 | 11-10 02:08 | "Create a proper DoD and make sure everything is covered from the notes from the DesignUp site." | A proper Definition of Done for the DesignUp improvement work, written with the definition-of-done skill: promises → user-can statements → observable rows, each with its evidence and a "Try it", per release (0.2.0-beta.2, 0.3.0-beta.1, later) and for the whole stage. A coverage matrix maps every item in both DesignUp notes to a DoD row or to a recorded out-of-scope decision with its reason, with zero unmapped. The notes are the beta report (F01–F60 and its recommendations, roadmap and sections 6–8), the data-driven requirement (D1–D8, all 45 changes, the acceptance test and open questions), the plan's own findings N01–N18 and Beta known issues K1–K7. It includes the Q105 rows (generic, non-breaking, adoption brief, upgrade proof on a DesignUp copy) and DesignUp's re-run (ID11) as the stage's final evidence. It lives in docs/definition-of-done.md as a stage section, linked from docs/improvement-plan.md | docs/definition-of-done.md stage section | F15.IMP | Recorded by main 02:08; worker 50, after the Q107 plan update. **Delivered for review** (worker 50, 2026-11-10 about 02:13): [Stage: DesignUp improvements](#stage-designup-improvements): promises DUP1–DUP6, user-can U1–U12, rows B2.1–B2.15, B3.1–B3.28, B4.1–B4.15, BL.1–BL.9 and BS.1–BS.8 with evidence and Try it; coverage matrix of 258 items (231 to rows, 22 out of scope with reasons, 5 no action), 0 unmapped; linked from the improvement plan |
+| Q107 | 11-10 01:52 | "Here's another input from the DesignUp site implementation, account for it in the Design library improvement. E:\Projects\designup-project\designup\docs\research\design-library-data-driven-requirement.md" | The data-driven requirement (D1–D8; 45 changes: 22 must, 20 should, 3 could) is folded into docs/improvement-plan.md. Each change is:<br>• checked against the DesignUp code (read-only) and the library source;<br>• mapped to existing IP packets where they overlap (routing IP27/IP30, checks IP37–IP39, content IP39, motion IP3);<br>• given a root cause, owning files and an action.<br>The plan gains new sliced packets (page/site document, part registry, renderer, collections and references, rich inline text, behaviour as data, routing as data, validation, authoring/preview), a release placement and open owner decisions with defaults. Q105's rules apply: generic for any site, never DesignUp-specific (validate against the requirement's "stays out" section); non-breaking for DesignUp; each release's adoption brief includes the data-driven migration steps. Building those packets follows the updated plan | docs/improvement-plan.md; later releases | F15.IMP | Recorded by main 01:52; worker 50 updates the plan first. **Plan updated for review** (worker 50, 2026-11-10 about 02:08): [Part 3: data-driven sites](http://127.0.0.1:8765/#improvement-plan.md): DR1–DR45 checked against both codebases (corrections DC1–DC5, the nine open questions answered), workstream W14, packets DP1–DP7 into 0.3.0-beta.1 and DP8–DP20 as 0.4.0-beta.1 "Data-driven sites", later DP21–DP24; IP27, IP30, IP12, IP31, IP19, IP22 and IP35–IP39 reshaped so nothing is built twice; acceptance test AT1–AT6; decisions ID12–ID20 with defaults |
 | Q106 | 11-10 01:33 | "Keep the design library and the slate site running" | The library app (http://127.0.0.1:8766/) and the Slate site (http://127.0.0.1:8765/) stay up through all Q105 work and between prompts. Every worker verifies both at the start and after any restart, restarts a down one with the docs/setup.md commands (detached), and never stops them at the end of a packet | Workers 50–51 | F15.IMP | Recorded by main 01:33; steered to worker 51 |
 | Q105 | 11-10 01:27 | "Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site." | **Q105.1 Go:** build docs/improvement-plan.md, IP1–IP39 (0.2.0-beta.2, then 0.3.0-beta.1), using the recommended defaults for ID1–ID11, except as Q105.3 tightens ID8 and IP21. **Q105.2 Generic first:** every addition is a generic, documented capability:<br>• a prop, variant, token, slot, role or recipe any product could use;<br>• named for what it is, never for DesignUp;<br>• no DesignUp content, brand or one-off parts in core or templates;<br>• each item passes the ID6 bar and the plan's out-of-scope list.<br>**Q105.3 Non-breaking adoption:** existing DesignUp code keeps working on the new version without edits. Additions only. Any rename keeps a deprecated alias. Behaviour or visual changes are opt-in or default to today's result; IP21's contrast guard keeps the current output unless asked. New project checks (IP38) start as warnings. **Q105.4 Adoption brief:** each release ships a short, copy-paste "what changed and how to adopt" for an agent: install line, what's new, optional steps to adopt each improvement (DesignUp's workarounds it replaces), anything to watch, and how to verify. It sits in the package (UPGRADE) and in a Slate doc. **Q105.5 Proof:** before each release, a copy of DesignUp outside its folder (never writing in DesignUp itself) installs the new tarballs and still type-checks, builds and renders unchanged | Library 0.2.0-beta.2 and 0.3.0-beta.1; adoption briefs; upgrade proof | F15.IMP | Recorded by main 01:27; workers 50 (docs/checks/release) and 51 (components/tokens) |
 | Q104 | 11-09 23:55 | "I've tried implementing this library in a real proejct and here's the report from that. E:\Projects\designup-project\designup\docs\research\design-library-beta-report.md This is the project. E:\Projects\designup-project\designup Use the learnings from this and create an extensive plan on how to improve the Design Library. E:\Projects\designup-project\designup No coding yet." | A planning worker reads the full DesignUp beta report and inspects the DesignUp project (read-only: how the library was used, custom CSS/components, workarounds, gaps). It writes an extensive, grounded improvement plan as a Slate doc in this repo (registered in the manifest), covering:<br>• every report finding mapped to its root cause (library gap, docs/guidance gap, or self-inflicted) and to an owner area;<br>• prioritised workstreams with Definitions of Done and evidence;<br>• slicing into reviewable packets with an order and dependencies;<br>• what stays out of the library;<br>• open owner decisions.<br>No code, token, component or package changes, and no writes to the DesignUp project | Slate doc (plan) + DoD/work-plan pointers | F15.PLAN | Recorded by main 23:55; handed to worker 50. **Delivered for review** (worker 50, 2026-11-10 about 00:06): [Improvement plan from the DesignUp beta](http://127.0.0.1:8765/#improvement-plan.md): 60 report findings plus 18 of ours (N01–N18) with root cause, owning files, severity and action; report claims checked against both codebases (5 corrections); workstreams W1–W13 with Definitions of Done; packets IP1–IP44 for 0.2.0-beta.2, 0.3.0-beta.1 and later; validation changes IV1–IV8; owner decisions ID1–ID11 with defaults. No code; DesignUp read only |
@@ -408,3 +408,513 @@ These are named future checks, not implemented files or tests run on unapproved 
 **Against the promise:** Stage 0 and this draft make the project ready to reason, execute and document. P1/P3/P4 are not yet fulfilled as a usable adaptable component library or an AI-friendly framework. Core proof comes first; source extraction, provider swapping/coverage, add-on isolation/removal, licence completeness and effects-on contrast/performance then need their proposed evidence. Source review is not integration validation or licence clearance: UI Lighting's scoped fit, Liquid Glass's release licence/asset gate, restricted font/icon distribution and all budgets remain future checks. Component implementation waits for a separately approved bounded stage.
 
 Self-presentation and its known-good recovery are now specified, not built. Rapid review is the current operating agreement, with two distinct documentation deliveries; product approval and the longer three-round outcome remain unproven. No frame promotion or execution-mode escalation follows from these documentation checks.
+
+## Stage: DesignUp improvements
+
+> **TL;DR:** The Definition of Done for the work that comes out of the first real adoption (owner Q104, Q105, Q107, Q108): six promises, twelve things a person can do, and observable rows per release (0.2.0-beta.2, 0.3.0-beta.1, 0.4.0-beta.1 "Data-driven sites", later) plus rows for the stage as a whole. The plan behind it is the [improvement plan](improvement-plan.md). The coverage matrix below maps every item in both DesignUp notes, the plan's own findings and the Beta known issues to a row here or to a recorded out-of-scope decision, with **0 unmapped**. The stage's final evidence is DesignUp's own re-run (BS.8).
+
+**Owner, 2026-11-10 02:08 (verbatim, [Q108](#owner-instructions)):** *"Create a proper DoD and make sure everything is covered from the notes from the DesignUp site."*
+
+**Sources:** the DesignUp beta report (`docs/research/design-library-beta-report.md` in that project) and its data-driven requirement (`docs/research/design-library-data-driven-requirement.md`), both read-only; [Improvement plan](improvement-plan.md) Parts 1–3; [Handoff readiness](handoff-readiness.md#beta-known-issues). Results are recorded beside each row by whoever does the work; the "State" column starts at Planned, and rows already built say so.
+
+### Promises
+
+| # | Promise | Done when | Evidence |
+| --- | --- | --- | --- |
+| DUP1 | A brand-led site stays inside the library: its brand needs are met through public seams, not custom parts that redraw core | DesignUp's expressive pages reach a library share of at least half on the re-run, with no core-token override outside the allow-list | BS.8; the project check's `--share` and `core-token` counts |
+| DUP2 | Defaults are safe for any brand: text passes AA and motion stops when the person asks | The bright-brand set passes with the guard on; no page motion under reduce | B3.7, B2.3, B4.10 |
+| DUP3 | A project enforces the rules itself, by running one command | `npx design-library-check` runs in a project and its findings match a hand audit | B3.20, B3.21, B4.12 |
+| DUP4 | An agent gets it right from the guide: names that exist, core parts first | The names check passes; the next proof's share and workaround counts drop | B2.2, B3.27, B3.1, B3.2, BS.5 |
+| DUP5 | A site can be strictly data-driven (D1–D8) | AT1–AT6 pass on the reference site | B4.14 |
+| DUP6 | Upgrading never breaks a site, and each release says how to adopt it | The upgrade proof on a DesignUp copy shows no change; each release ships a brief | BS.2, BS.3, BS.4 |
+
+### What a person can do
+
+| # | A person can |
+| --- | --- |
+| U1 | Install both packages on the npm the guide names, behind a package proxy, first time |
+| U2 | Set the page frame, link look, canvas colour, tracking, fonts, header, footer and scheme from the theme, without overriding core |
+| U3 | Build common site needs (link buttons, tinted bands, uneven columns, media openings, lead text, crops and treatments) from core props and slots |
+| U4 | Pick any brand colour and get AA text |
+| U5 | Turn on reduced motion and have every page change, scroll and effect respect it, with no site code |
+| U6 | Search a list as they type, and send a form whose fields save together |
+| U7 | Follow in-page links, "on this page" lists and letter jumps under hash or history routing |
+| U8 | Run one command that lists every rule break with its file, line and fix |
+| U9 | Find the core part for a need before writing a custom one |
+| U10 | Start an empty template of their own |
+| U11 | Add a page, reorder sections, change words or add a collection item by editing JSON alone |
+| U12 | Upgrade by following one brief, with nothing breaking |
+
+### 0.2.0-beta.2: quick wins
+
+**Delivers:** U1, U2 (frame, links, canvas, tracking), U3 (link buttons, bands, lead text, crops), U5 (page changes), U6, U9 (guide names), U12.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| B2.1 | A person installs both packages on npm 10 or 11 behind a proxy, first time, with the steps in guide step 1 (U1); a stalled install names its recovery (H9) | Install-matrix transcript on npm 9.6.7, 10.8.2 and 11 from the release files, in the guide's order and from the lockfile ([Handoff readiness](handoff-readiness.md#install-matrix-ip1)); the guide's floor equals the lowest version that passed | Run `npm run install:matrix -- --from <release URL>`; read guide step 1 "What you need" | IP1 | Built (worker 50, 01:49) |
+| B2.2 | Every name the guide gives exists in the contracts (U9): no `Grid` `min`; the Checks table says the probes ship | `packages/core/AGENTS.md` Rules agents miss and Checks rows; `agent/components/Grid.json` props | Search AGENTS.md for "Grid"; compare with `agent/components/Grid.json` | IP2 | Built (worker 50, 01:49) |
+| B2.3 | With reduced motion set, a page change swaps in the same frame, with no site code (U5); `reducedMotion: 'fade'` keeps the old fade; nothing changes without reduce | Motion page story with reduce on; the motion probe across a route change; changelog line marks it the only default change | Set reduced motion in the OS, change page in the library: no fade | IP3 | Built (worker 51, 7e6662a) |
+| B2.4 | A team sets the page frame (width, reading, margin, gap, padding, padding-start) from the theme and opens a page flush under the header, with no core-token override (U2) | `tokens/settings.json`; `applySettings` refuses other names (`settingsErrors`); SiteLayout stories `opening="flush"`; seam ladder step 4 text | On the SiteLayout page, switch the flush opening story; call `applySettings` with an unknown name and read the error | IP4 | Built (worker 51, 7e6662a) |
+| B2.5 | A team turns link underlines off from the theme; links keep a non-colour cue on hover and focus and 3:1 against the text (U2, accessibility) | `--link-decoration` and `--link-decoration-hover` on the allow-list; Link story with decoration off; the default output unchanged | On the Link page, open the "No underline at rest" story; hover and tab to a link | IP5 | Built (worker 51, 7e6662a) |
+| B2.6 | A team sets a warm, cool or tinted neutral canvas with `applyBrand({ base })`, with no generator call and no primitive writes (U2) | Colour page base example; `applyBrand` without `base` gives identical output (diff of the written properties) | On the Colour page, choose a warm base and compare light and dark | IP6 | Built (worker 51, 7e6662a) |
+| B2.7 | Short capital labels take positive tracking from tokens (U2) | `tracking.wide` and `tracking.wider` in tokens and on the Typography page | Typography page, tracking specimens | IP7 | Built (worker 51, 7e6662a) |
+| B2.8 | A link that looks like a button is a real link (U3) | `Button` `href` renders `<a>` with the same focus ring and target size; Button page story | Button page, "As a link" story: tab to it, open it in a new tab | IP8 | Planned |
+| B2.9 | Links and buttons accept pointer-enter, pointer-leave, focus and blur handlers (U3) | `agent/components/Link.json` and `Button.json` list them; a story logs them | Link page story: hover and focus show the preview line | IP9 | Planned |
+| B2.10 | A section can be a tinted band from the elevation ladder (U3) | `Section` `tone`; Section page in light, dark and more contrast; noise probe passes | Section page, tone story | IP10 | Planned |
+| B2.11 | Editorial intros and statement lines use a lead style and one statement size (U3) | `Text` lead and `Heading` statement in the index; Typography page; no duplicate of an existing size (ID9) | Typography page, lead and statement specimens | IP11 | Planned |
+| B2.12 | Pictures crop at 21:9 and 4:3 around a focal point, on Image, Card and Hero, with props named as the picture fields (U3, DP3) | Image page stories per ratio and focal point; prop names equal `assets.schema.json` fields | Image page: move the focal point, see the crop follow | IP12 | Planned |
+| B2.13 | A card shows a status badge through its `meta` slot (U3) | Card page story "Status in meta"; finder entry | Card page, status story | IP13 | Planned |
+| B2.14 | A search field reports every keystroke; fields in a form save together with no per-field "Saved"; no core component holds a word a person reads (U6) | `TextField` `onChange`; form-mode story with one Save and one error summary; the words-in-code check finds 0 in core | TextField page: type in "Live search"; submit the form story | IP14 | Planned |
+| B2.15 | Release 0.2.0-beta.2 ships: changelog heading, version bump, `npm run pack`, install matrix, one probe sweep, upgrade proof, adoption brief, GitHub release, one push, Pages deploy, links answer 200 (U12); files are never re-uploaded under the same version (K7) | Release page with both tarballs; HEAD checks; `UPGRADE.md`; `docs/adopt-0.2.0-beta.2.md`; Handoff readiness entry | Open the release page and the adoption brief; install from it | Release | Planned |
+
+### 0.3.0-beta.1: brand-led sites and data foundations
+
+**Delivers:** U2 (fonts, header, footer, scheme), U3 (media openings, uneven columns, treatments), U4, U5 (scroll, page swap), U6 (filter), U7, U8, U9, U10, U11 (rich text, actions, picture fields, unconfirmed values, schema addresses), U12.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| B3.1 | An agent building a brand-led site follows a recipe: core parts to try first, the seams for frame, type and colour, a custom-part budget of about a third of a page, and a rule that custom parts compose core Link, Heading, Image and Button (U9) | Recipe page in the guide; the rule in AGENTS.md; in the next proof the share per page is reported (BS.5) | Read the recipe; build one landing page from it | IP15, IP34 | Planned |
+| B3.2 | An agent finds the core part for a need (opening, big number, quote, list of links, key–value facts, tinted band, status on a card, film in place) before writing a part (U9) | Finder page in the library covering at least those eight needs, each with what it can and can't do | Open the finder and look up "status on a card" | IP16 | Planned |
+| B3.3 | Scrolls the site makes glide on motion tokens, stop on any input and land at once under reduce (U5) | Scroll helper story; motion probe | Scroll helper story: start a glide, then scroll with the wheel | IP17 | Planned |
+| B3.4 | A small team runs a light review: the probes that matter for a static page, run by one command (U8) | Step 8 "Light review" section; one command prints every probe's rows | Run the command on a template page | IP18 | Planned |
+| B3.5 | An opening takes any media, a trail and a foot, and can fit the first screen (U3) | `Hero` `media`, `trail`, `foot`, fit option; three variants on the Hero page; layout and spacing probes pass at 320, 1000 and 1440 px | Hero page: the collage-style, video and plain variants | IP19 | Planned |
+| B3.6 | Columns can be uneven (2:1, 3:2, wide–narrow) and a heading can sit beside its content, stacking in a narrow container (U3) | `Grid` ratios and aside arrangement; three variants; SC16 passes | Grid page: resize the container below the stack point | IP20 | Planned |
+| B3.7 | Any brand colour can give AA link and on-accent text: the contrast guard, opt-in (Q105.3), moves to the nearest passing step and returns warnings naming each failing pair (U4) | `applyBrand` warnings; seeds `#fd6f02`, `#ffd400`, `#7ed957`, `#00b3ff` measured in light, dark and more contrast on the Colour page; without the option the output is unchanged | Colour page: enter `#ffd400`, switch the guard on, read the pairs | IP21 | Planned |
+| B3.8 | Brand-coloured small text and display words pass contrast through accent text (4.5:1) and accent display (3:1) roles; an inline accent span exists (`tone="accent"`) (U4) | Roles in tokens with measured pairs; Text page accent story | Text page, accent story in three contexts | IP22 | Planned |
+| B3.9 | A brand's own typefaces reach core headings and text through `applyFonts`, with optional label and numeral roles (U2) | A site-supplied face on the Typography page; layout shift on load under 0.05 (proposed budget) | Typography page: switch to the site-supplied face example | IP23, IP24 | Planned |
+| B3.10 | A person picks light, dark or system with a ready control that remembers the choice (U2) | Scheme control page in its SegmentedControl and Switch forms (ID3) | Pick dark, reload: it stays dark | IP25 | Planned |
+| B3.11 | Every core change point reads one published breakpoint set or a container query (U3) | A scan of core CSS: every window query uses the set; the change points table in the guide | Read the breakpoints table; resize the Sheet page | IP26 | Planned |
+| B3.12 | Under hash or history routing, an in-page link scrolls to its heading without replacing the route, the back button returns, focus lands on the heading and the change is announced; "on this page" and letter jumps exist (U7) | `@design-library/core/site` router stories; Tabs year strip checked at 320 px | Router story: press an "on this page" link, then Back | IP27, IP28 | Planned |
+| B3.13 | A list narrows as you type after a short delay and announces the count once (U6) | Filter-as-you-type pattern story; the announcement read by a screen reader check | Pattern story: type three letters | IP29 | Planned |
+| B3.14 | A page change keeps the old view until the new one is ready, then runs the transition chosen by name, or swaps at once under reduce (U5) | Router page-swap story with `fade` and `none` | Router story: change page with a slow picture | IP30 | Planned |
+| B3.15 | Pictures take treatments (greyscale, duotone, colour on hover or focus) by prop and by picture field (U3) | Image, Card media and MediaPlayer poster stories; none under more contrast unless contrast holds | Card page: hover and tab to a greyscale card | IP31 | Planned |
+| B3.16 | A brand tunes the header: nav place, wordmark size or mark only, current style (fill, colour or full rule); at 320 px it is one row of about 64 px (U2) | SiteHeader stories; spacing probe at 320 px | SiteHeader page at 320 px | IP32 | Planned |
+| B3.17 | A footer comes in three arrangements with no sideways scroll at 320 px (U2) | Footer stories at 320 and 1000 px | Footer page, three arrangements | IP33 | Planned |
+| B3.18 | A team starts an empty template in one command, with a token source, a token command, a block schema and example per part, and the guide's prune step (U10) | `npx design-library-new-template <id>` output passes the content check; renaming a token and running the command updates its CSS | Run the command in a scratch folder; open the result | IP35 | Planned |
+| B3.19 | A tall feature leaves the next band in view at 320 × 667 (K1) and a long term in a description list uses the free width (K2) | Spacing probe FR7 and SC16 at 320 px on the corporate templates | Corporate home and contact at 320 px | IP36 | Planned |
+| B3.20 | One command, `npx design-library-check`, lists every break of the stated rules as an error and every likely missing seam as a warning (core-token overrides, `!important`, primitive reads, raw sizes, root font size, global selectors, raw markup in parts, words in code), each with file, line and fix; warnings never fail in 0.3 (U8, Q105.3) | Run on a scratch copy of a real project: the counts match a hand audit; `--share` prints library vs custom per view | Run it in a scratch copy of the example app | IP37, IP38, DP6 | Planned |
+| B3.21 | The content check covers any folder with a `$schema`, and reports parts missing from the manifest, manifest screens nothing renders, and copied layouts a template doesn't use (U8, U10) | Check output on a template with a stray part and a planned-but-unused screen | Add a part file not in the manifest; run the check | IP39, DP7 | Planned |
+| B3.22 | Words with emphasis, strong, accent, code, links and breaks are written in JSON with no markup; a block field rejects marks it doesn't accept (U11) | `richText` in `blocks.schema.json`; `RichText` renderer story; check output on a wrong mark | Edit a template heading to add an accent mark | DP1 | Planned |
+| B3.23 | A button written in content goes to another page, an anchor or an address (U11) | `action.href` in the schema; a template screen whose hero button navigates | Press the hero button on that screen | DP2 | Planned |
+| B3.24 | A picture entry carries ratio, focal point, treatment and a decorative flag; alt is required unless decorative (U11) | `assets.schema.json`; check output on a picture without alt | Remove an alt in a template's assets.json; run the check | DP3 | Planned |
+| B3.25 | A value can be marked unconfirmed; it shows the site's phrase in one style; the check counts them and `--release` fails on any (U11) | Story and check output | Mark a speaker unconfirmed; run the check with and without `--release` | DP4 | Planned |
+| B3.26 | Every schema has a stable versioned address an editor can use in `$schema` (U11) | HEAD 200 on each address; the guide's example gives completion in an editor | Open a content file with `$schema` in an editor; mistype a field | DP5 | Planned |
+| B3.27 | A check proves every prop, token and command the guides name exists in the index (U9) | The names check in `npm run check`, failing on a planted wrong name | Plant a wrong prop name in a guide copy; run it | IV6 | Planned |
+| B3.28 | Release 0.3.0-beta.1 ships with the same steps as B2.15, and its brief lists the data-driven steps a site can take now (U12) | As B2.15; `docs/adopt-0.3.0-beta.1.md` "Data-driven steps" | Open the release and the brief | Release | Planned |
+
+### 0.4.0-beta.1: data-driven sites
+
+**Delivers:** U5 (transitions as data), U7 (routes from data), U8 (site-wide check), U9 (block search), U10 (parts as blocks), U11 in full (AT1–AT6), U12.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| B4.1 | A site document holds navigation, header and footer content, global strings, title pattern, default frame, page transition and aliases (U11) | `site.schema.json`; the reference site's `site.json` passes the check | Change a menu label in `site.json` | DP8 | Planned |
+| B4.2 | A page document holds id, route, metadata, layout, frame settings and ordered sections with anchors; title and description reach the document head (U11) | `page.schema.json`; the tab title follows the JSON; a missing title fails the check | Change a page title in JSON; read the tab | DP9 | Planned |
+| B4.3 | Every placeable block has a schema, a purpose line and an example, and a command finds blocks for a need, core first (U9) | `npx design-library-blocks "a list of people with photos"` output; the finder reads the registry | Run the command | DP10 | Planned |
+| B4.4 | A block holds other blocks in named slots that declare accepted types; a wrong type fails at its JSON path (U11) | Slot schemas; check output on a wrong nested type | Put a quote block in a hero media slot that doesn't accept it | DP11 | Planned |
+| B4.5 | Collections are typed, ids are unique, and references resolve; an unknown id fails at its path (U11) | `collection.schema.json`; check output on a duplicate id and a dangling reference | Duplicate an item id; run the check | DP12 | Planned |
+| B4.6 | A list field binds to a collection with filter, sort and limit (U11) | Reference site home: "the 6 newest" from a binding, no copies | Change `limit` to 3 | DP13 | Planned |
+| B4.7 | Counts and groups derive from collections at load; a generated collection rebuilds and is checked by one command (U11) | A derived count on the reference home rises when an item is added | Add an item; watch the count | DP14 | Planned |
+| B4.8 | One `SiteView` call renders any page; a broken section names its file and path in development and is left out in production; sections show skeleton and empty states from data; the first picture loads first (U11) | Reference site main view is one call; broken-section screenshots in both modes; build output and network order | Misspell a block type; open the page in dev and in a production build | DP15 | Planned |
+| B4.9 | Routes come from page documents, including one pattern per collection, aliases, redirects and a 404 page from JSON (U7, U11) | Router built from data; a link to an unknown route or id fails the check | Add a page document; open its route; open an old alias | DP16 | Planned |
+| B4.10 | The page transition is chosen by name in the site document, and every transition declares its reduced-motion form (U5) | Switch the name in `site.json`; motion probe with reduce on | Change `transition` in `site.json` | DP17 | Planned |
+| B4.11 | A template's parts are blocks with schema and example, placed from page documents; a part without a story gets a stub from its example (U10) | Template manifest `parts`; stub stories; check output | Place a template part from a page document | DP18 | Planned |
+| B4.12 | The project check covers site, pages, collections, references and routes; flags page-specific code (a warning) and words in code with a declared exceptions list; types are generated from the schemas (U8) | Check output on the reference site (0 errors); a hand-written one-page view raises the warning; `npx design-library-types` output type-checks | Add a one-page view; run the check | DP19 | Planned |
+| B4.13 | In development a JSON edit updates the page in place keeping scroll, and a check error shows as one notice with file, path and fix (U11) | Screen recording of a headline edit under one second; notice screenshot | Edit a headline with the dev server open | DP20 | Planned |
+| B4.14 | The acceptance test AT1–AT6 passes on the reference site, each step a JSON edit only with the check at 0 errors after each (U11) | Six screenshots and six check outputs in Handoff readiness | Repeat AT1–AT6 from the plan | AT1–AT6 | Planned |
+| B4.15 | Release 0.4.0-beta.1 "Data-driven sites" ships as B2.15, its brief giving the 0.4 migration order (U12) | As B2.15; `docs/adopt-0.4.0-beta.1.md` | Open the release and the brief | Release | Planned |
+
+### Later
+
+**Delivers:** the "could" items and the larger data features; each row gets a release when it is scheduled.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| BL.1 | An index previews the hovered or focused row while every row stays a link; an opening can hold its height while its words change (U3) | IndexList and Hero stories | IndexList preview story | IP40 | Planned |
+| BL.2 | The stipple field is a reusable mask or effect (U3) | Effect story; reduced-motion form | Effect story | IP41 | Planned |
+| BL.3 | Display axes apply through the display role, so a part can still set its width (U2) | Typography page; `font-stretch` survives in a part | Typography page | IP42 | Planned |
+| BL.4 | A canvas texture material is available, off by default; a story starter writes a stub story per part variant (U2, U10) | Materials page; generated stories | Materials page texture toggle | IP43 | Planned |
+| BL.5 | A fluid type and space scale grows with the window between bounds with a body-text floor and working zoom; parallax and pointer primitives are token-ranged and off under reduce (U3, U5) | Scale story at 320–2560 px with 200% zoom; motion probe | Zoom to 200% on the scale story | IP44 | Planned |
+| BL.6 | A section shows or hides by a declared condition from a fixed operator set (U11) | Schema and check output on an unknown operator | Toggle an item state | DP21 | Planned |
+| BL.7 | A template declares a variant of a core block with extra fields, reusing it (U10) | Variant schema and story | Place the variant from JSON | DP22 | Planned |
+| BL.8 | Effects are chosen by name in JSON from a catalogue, each with its reduced-motion form; templates register their own (U5, U11) | `motion/effects.json`; a band gains an effect by a JSON edit | Add an effect name to a section | DP23 | Planned |
+| BL.9 | A second locale renders from its own strings; unused blocks add no code; data loads per route; a review view shows unconfirmed values; one command migrates documents a version up (U11) | Build output per block; network per route; migration run on a one-version-old file | Switch locale on the reference site | DP24 | Planned |
+
+### The stage as a whole
+
+**Delivers:** the Q105 guarantees (generic, non-breaking, adoption brief, upgrade proof), the stronger proof (IV1–IV7), recorded decisions, and DesignUp's re-run as the final evidence.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| BS.1 | Generic (Q105.2): no DesignUp name, content, brand or one-off part in core or templates; each addition passes ID6 and both out-of-scope lists | `Select-String` for "designup" (case-insensitive) over `packages/` returns only adoption-brief and changelog lines; review of each new prop name | Search the packages for the site's name | Q105.2 | Planned |
+| BS.2 | Non-breaking (Q105.3): every change is an addition, opt-in, or a deprecation with its alias; the only default change is IP3's, under reduced motion only; new checks warn | Changelog has no "Breaking" heading for 0.2.0-beta.2, 0.3.0-beta.1 or 0.4.0-beta.1; the upgrade proof (BS.4) | Read each release's changelog | Q105.3 | Planned |
+| BS.3 | Each release ships a copy-paste adoption brief for an agent: install line, "nothing breaks" with the proof, what's new, optional steps each naming the workaround it replaces and its file, what to watch, how to verify, and the data-driven steps (Q105.4) | `packages/core/UPGRADE.md` and `docs/adopt-{version}.md` registered in the docs manifest | Paste the brief into an agent in a copy of a site | Q105.4 | Planned |
+| BS.4 | Before each release, a copy of DesignUp outside both repositories installs the new tarballs and type-checks, builds and renders every route with no new console errors and no visual change against the same copy on the previous version; the copy is deleted after (Q105.5) | Proof record in Handoff readiness: install, `tsc`, build, per-route screenshots or DOM metrics compared, console logs | Read the proof record for the release | Q105.5 | Planned |
+| BS.5 | The separate-project proof behaves like a real brand-led project: a brief and a mock-up in its own words, 6+ routes under hash routing, a bright seed, a self-hosted face, a search list, a form, an in-page anchor; it reports the library share and workaround counts per page and runs the motion probe across route changes (IV1, IV3–IV5, IV7) | Proof record with the share table and the workaround log in the shared gap-log shape | Read the proof record | IV1–IV7 | Planned |
+| BS.6 | Every owner decision (ID1–ID20) is recorded with its default or the owner's choice before the packet that depends on it | The decision tables in [the plan](improvement-plan.md#open-owner-decisions) and Part 3; the owner instructions rows | Read the decision tables | ID1–ID20 | Planned |
+| BS.7 | What stays in the consuming project stays there: no packet adds a brand face, palette, collage, pixel match, root scaling, site-specific effect, importer, route list or content to the library | Both out-of-scope lists; release reviews against them | Compare the release notes with the lists | Plan out of scope | Planned |
+| BS.8 | Final evidence: DesignUp re-runs on 0.3.0-beta.1 (and 0.4.0-beta.1) and reports, in the same appendix shape, a higher library share on its expressive pages, fewer workarounds and overrides, and every real gap closed or explained (ID11) | DesignUp's new report, written by DesignUp's team or agent; we never write in that project | Read the new report's share table and appendix | ID11 | Planned |
+
+### Coverage matrix
+
+Every item in the two DesignUp notes, the plan's own findings N01–N18 and the Beta known issues K1–K7, mapped to a row above, to a recorded out-of-scope decision with its reason, or to "no action" where the note itself says it isn't a gap.
+
+#### Beta report: the appendix F01–F60
+
+| Item | Gap | Maps to |
+| --- | --- | --- |
+| F01 | npm 9 and 10 crash on install | B2.1 |
+| F02 | Run something when a link is pointed at or focused | B2.9 |
+| F03 | Index that previews an item on hover | BL.1 |
+| F04 | One tinted band | B2.10 |
+| F05 | Facts read as a display sentence | B2.11 |
+| F06 | A statement size between heading 1 and display | B2.11 |
+| F07 | 21:9 and 4:3 photo frames | B2.12 |
+| F08 | Warm off-white canvas | B2.6 |
+| F09 | Header action that navigates | B2.8 |
+| F10 | A text link that plays the film in place | B3.2 (not a gap; the finder shows Reveal + MediaPlayer) |
+| F11 | Uneven columns and a heading column | B3.6 |
+| F12 | Enquiry fields reviewed and sent together | B2.14 |
+| F13 | In-page enquiry link under hash routes | B3.12 |
+| F14 | On-this-page and A to Z jumps | B3.12 |
+| F15 | Status badge on a card | B2.13 |
+| F16 | Grayscale talk tiles in colour on hover | B3.15 |
+| F17 | Search that narrows as you type | B2.14, B3.13 |
+| F18 | Grayscale video poster | B3.15 (not a gap; treatments cover it) |
+| F19 | Topics as an entry point | No action: not a gap: the archive has no sourced topics |
+| F20 | No underlines on links | B2.5 |
+| F21 | Year strip keeps its place on narrow screens | B3.12 (checked at 320 px) |
+| F22 | Stipple field as a reusable mask | BL.2 |
+| F23 | Faces outside the registry | B3.9 |
+| F24 | Heading width set per part | BL.3 |
+| F25 | Long body copy in sans | No action: not a gap: done with the text role |
+| F26 | Warm paper and the reference orange | B2.6 |
+| F27 | Paper grain | BL.4 |
+| F28 | Widely tracked labels | B2.7 |
+| F29 | Openings right under the header | B2.4 |
+| F30 | First label 40px under the header | B2.4 |
+| F31 | One breakpoint and a first screen that always fits | B3.11, BL.5 |
+| F32 | Browser zoom re-fits | Out of scope: root scaling is the project's choice; the check warns on it (generic part: B3.20, BL.5) |
+| F33 | Quote line breaks at every width | Out of scope: quote line breaks are content and container units |
+| F34 | The reference's 56px page margin | B2.4 |
+| F35 | Header nav position, wordmark and current style | B3.16 |
+| F36 | Status link and the theme control | B3.10 (not a gap; the scheme control saves the work) |
+| F37 | Text contrast of at least 4.5:1 | B3.7 |
+| F38 | Buttons with the reference's size and arrow | Out of scope: a pixel match; Button sizes and icons exist |
+| F39 | Photos in collage frames | Out of scope: collage frames are art direction; focal point covers the generic part (generic part: B2.12) |
+| F40 | The reference's footer layout | B3.17 |
+| F41 | Regenerating tokens after renaming | B3.18 |
+| F42 | The real logo in header, footer and favicon | No action: not a gap: header mark and footer identity slots |
+| F43 | Generated photos at new pixel sizes | No action: not a gap |
+| F44 | A deliberate dark inverse | B2.6 (not a gap; base replaces the stopgap) |
+| F45 | A page opening with media that fits the first screen | B3.5 |
+| F46 | Orange small text on paper | B3.8 |
+| F47 | Words that change in place without moving the page | BL.1 |
+| F48 | Smooth scrolls the site makes itself | B3.3 |
+| F49 | Page change that waits, then cross-fades | B3.14, B2.3 |
+| F50 | Custom parts duplicate core parts | B3.1, B3.2 |
+| F51 | Raw rem and px values and important flags | B3.20 |
+| F52 | Overrides of core page-frame tokens | B2.4, B3.20 |
+| F53 | Manifest is the renamed conference template | B3.18 |
+| F54 | loadTemplate unused, parts outside the manifest | B3.21 |
+| F55 | 16 of 19 parts without stories | B4.11, BL.4 |
+| F56 | Words written in code | B3.20 |
+| F57 | Guide and contracts disagree | B2.2, B3.27 |
+| F58 | Core components keep their own breakpoints | B3.11 |
+| F59 | Viewtransition runs under reduced motion | B2.3 |
+| F60 | Project-side checks not shipped | B3.20 |
+
+#### Beta report: the 43 recommendations
+
+| # | Recommendation | Maps to |
+| --- | --- | --- |
+| R1 | Install that works on the documented npm | B2.1 |
+| R2 | Empty template scaffold | B3.18 |
+| R3 | Keep the guide and the contracts in step | B2.2, B3.27 |
+| R4 | Brand-led site recipe | B3.1 |
+| R5 | "Check core first" finder | B3.2 |
+| R6 | A lighter review mode | B3.4 |
+| R7 | Button as a link | B2.8 |
+| R8 | Card status slot | B2.13 |
+| R9 | Uneven grid columns | B3.6 |
+| R10 | Section tone | B2.10 |
+| R11 | More image ratios and a focal point | B2.12 |
+| R12 | Lead and statement text | B2.11 |
+| R13 | Pointer and focus events on links and buttons | B2.9 |
+| R14 | Index list with a preview | BL.1 |
+| R15 | Header options | B3.16 |
+| R16 | Footer layouts | B3.17 |
+| R17 | Opening with any media | B3.5 |
+| R18 | Link-decoration token | B2.5 |
+| R19 | Contrast-safe brand colours | B3.7 |
+| R20 | Base colour seam | B2.6 |
+| R21 | Accent text roles | B3.8 |
+| R22 | Scheme control | B3.10 |
+| R23 | Surface texture | BL.4 |
+| R24 | Self-hosted faces | B3.9 |
+| R25 | Label and numeral roles | B3.9 |
+| R26 | Positive tracking | B2.7 |
+| R27 | Scoped display axes | BL.3 |
+| R28 | Page frame settings | B2.4 |
+| R29 | Shared breakpoints | B3.11 |
+| R30 | Fluid scale with a floor | BL.5 |
+| R31 | Steady opening | BL.1 |
+| R32 | Reduced motion in viewTransition | B2.3 |
+| R33 | Page transition in SiteLayout | B3.14 |
+| R34 | Scroll helper | B3.3 |
+| R35 | Parallax and pointer motion primitives | BL.5 |
+| R36 | Image treatments | B3.15 |
+| R37 | Reusable stipple effect | BL.2 |
+| R38 | Live field changes and batch forms | B2.14 |
+| R39 | Filter as you type | B3.13 |
+| R40 | Router-aware links and in-page navigation | B3.12 |
+| R41 | Template-aware content checks | B3.21 |
+| R42 | Story starter | BL.4, B4.11 |
+| R43 | Ship the project-side checks | B3.20 |
+
+#### Beta report: the top 10
+
+| # | Top recommendation | Maps to |
+| --- | --- | --- |
+| T1 | Ship the project-side checks | B3.20 |
+| T2 | Brand colours contrast-safe by default | B3.7 (opt-in by Q105.3: the default output stays) |
+| T3 | Link-decoration token | B2.5 |
+| T4 | Links aware of the router | B3.12 |
+| T5 | Open up the page frame | B2.4 |
+| T6 | Opening takes any media | B3.5 |
+| T7 | Uneven columns | B3.6 |
+| T8 | TextField live changes and batch form | B2.14 |
+| T9 | Sites register their own fonts | B3.9 |
+| T10 | Public base colour seam | B2.6 |
+
+#### Beta report: readiness by area
+
+| Area | Maps to |
+| --- | --- |
+| Setup and install | B2.1 |
+| Agent guidance and docs | B2.2, B3.1, B3.2, B3.27 |
+| Components and props | B2.8–B2.13 |
+| Slots and seams | B2.4, B3.16, B3.17 |
+| Tokens and theming | B2.5, B2.6, B3.7, B3.8, B3.10 |
+| Typography and fonts | B2.7, B3.9, BL.3 |
+| Layout, framing and spacing | B2.4, B3.5, B3.6, B3.11, BL.5 |
+| Motion and transitions | B2.3, B3.3, B3.14, BL.5 |
+| Imagery and effects | B2.12, B3.15, BL.2 |
+| Forms and search | B2.14, B3.13 |
+| Navigation, routing and anchors | B3.12 |
+| Accessibility defaults | B2.3, B2.5, B3.7, B3.8 |
+| Templates system | B3.18, B3.21, B4.11 |
+| Content model | B3.21–B3.26, B4.5 |
+| Checks and validators | B3.20, B3.21, B3.27 |
+
+#### Beta report: section 6, what should not go into the library
+
+| Item | Decision and reason |
+| --- | --- |
+| The exact faces | Out of scope: The library ships a way to register faces (B3.9), not these faces |
+| The collage, orange shapes and overprint blend | Out of scope: Art direction; the library ships a media slot (B3.5) and treatments (B3.15) |
+| Pixel-matching the mock-ups | Out of scope: A template's job through seams (B2.4, B3.16) |
+| A first screen that fits by scaling the root size | Out of scope: Breaks zoom and the text floor; the check warns (B3.20); a fluid scale with a floor later (BL.5) |
+| The paper colour and the orange | Out of scope: Palette; the library ships the base and brand seams (B2.6) |
+| No underlines by default | Out of scope: A brand choice; the token keeps underline as the default (B2.5) |
+| The theme control as an icon button | Out of scope: The site owner's choice; the scheme control offers both forms (B3.10) |
+| The depth-motion weights | Out of scope: Per-site tuning; primitives take ranges later (BL.5) |
+| The quote's line breaks and the year strip | Out of scope: Content and one site's navigation |
+| The orange tab on the active year row | Out of scope: A one-sided accent, which the brief forbids; the header's current style uses fill, colour or a full rule (B3.16) |
+
+#### Beta report: section 7, self-inflicted versus real gaps
+
+| Item | Maps to |
+| --- | --- |
+| Pages planned in the project's own vocabulary | B3.1, B3.2, BS.5 (share reported in the proof) |
+| The pixel match drove most custom work | B3.1 (budget), BS.8 |
+| Custom parts don't compose core parts | B3.1 (rule), B3.20 (raw-markup warning) |
+| Skipped stories, renamed demo, words in code | B3.18, B3.21, B3.20, BL.4 |
+| Bent the never rules (overrides, important, primitives, raw sizes) | B2.4, B3.20 |
+| Real gaps remain | Every real gap row in this matrix (F01–F60) |
+
+#### Beta report: section 8, the roadmap
+
+| Tier | Maps to |
+| --- | --- |
+| Quick wins | 0.2.0-beta.2 rows B2.1–B2.15; the same ten items |
+| Next release | 0.3.0-beta.1 rows B3.1–B3.28; the lighter review moved up from "later" (B3.4) |
+| Later | Later rows BL.1–BL.5; the story starter partly earlier through stub stories (B4.11) |
+
+#### Data-driven requirement: D1–D8
+
+| Statement | Maps to |
+| --- | --- |
+| D1 No user-facing words in code | B3.20, B4.12 |
+| D2 No page-specific code | B4.2, B4.8, B4.12 |
+| D3 Site code only bootstrap, routing setup and data loading | B4.8, B4.9, B4.12 |
+| D4 All styling from tokens and the template | B3.20 |
+| D5 Section and page changes are data-only | B4.2, B4.14 |
+| D6 Collections make pages | B4.5, B4.9 |
+| D7 Behaviour is chosen, not coded | B4.10, BL.8 |
+| D8 A validator proves D1 to D7 | B4.12, B4.14 |
+
+#### Data-driven requirement: the 45 changes
+
+| ID | Change | Plan | Maps to |
+| --- | --- | --- | --- |
+| PD1 | Page document schema | DR1 | B4.2 |
+| PD2 | Page metadata and SEO | DR2 | B4.2, B4.8 |
+| PD3 | Site document | DR3 | B4.1 |
+| PD4 | Frame settings per page | DR4 | B4.2 |
+| PD5 | Document versions and migrations | DR5 | BL.9 |
+| REG1 | Every placeable part has a schema contract | DR6 | B4.3 |
+| REG2 | Slots and nesting | DR7 | B4.4 |
+| REG3 | Lists bound to collections | DR8 | B4.6 |
+| REG4 | Conditional sections | DR9 | BL.6 |
+| REG5 | Actions that navigate | DR10 | B3.23 |
+| REG6 | The registry can be searched | DR11 | B4.3 |
+| R1 | One function renders any page | DR12 | B4.8 |
+| R2 | Failures contained and traceable | DR13 | B4.8 |
+| R3 | Loading and empty states per section | DR14 | B4.8 |
+| R4 | The "to confirm" pattern | DR15 | B3.25 |
+| TP1 | Template parts join the registry | DR16 | B4.11 |
+| TP2 | The manifest matches what ships | DR17 | B3.21 |
+| TP3 | Parts style through tokens only | DR18 | B3.20 |
+| TP4 | Parts can extend a core block | DR19 | BL.7 |
+| CM1 | Rich inline text without markup | DR20 | B3.22 |
+| CM2 | Typed collections | DR21 | B4.5 |
+| CM3 | References between collections | DR22 | B4.5 |
+| CM4 | Derived values and generated collections | DR23 | B4.7 |
+| CM5 | Media slots | DR24 | B3.24 |
+| CM6 | Strings ready for localisation | DR25 | BL.9 |
+| BH1 | A named effects catalogue | DR26 | BL.8 |
+| BH2 | Reduced motion is built in | DR27 | B2.3, B4.10 |
+| BH3 | Page transitions as data | DR28 | B4.10 |
+| RT1 | Routes come from page documents | DR29 | B4.9 |
+| RT2 | One route pattern per collection | DR30 | B4.9 |
+| RT3 | Aliases, redirects and a 404 page | DR31 | B4.9 |
+| RT4 | Anchors, scroll and focus | DR32 | B3.12 |
+| V1 | One project check command | DR33 | B3.20, B4.12 |
+| V2 | A "no words in code" check | DR34 | B3.20 |
+| V3 | A "no page-specific code" check | DR35 | B4.12 |
+| V4 | Token-only styling check | DR36 | B3.20 |
+| V5 | Story coverage for every part | DR37 | B4.11 |
+| V6 | Types generated from schemas | DR38 | B4.12 |
+| AP1 | Live preview of JSON edits | DR39 | B4.13 |
+| AP2 | Errors shown at the JSON path | DR40 | B4.13 |
+| AP3 | Schemas for editors | DR41 | B3.26 |
+| AP4 | A review view of unconfirmed content | DR42 | BL.9 |
+| PF1 | Code split by block type | DR43 | BL.9 |
+| PF2 | Image loading rules from data | DR44 | B4.8 |
+| PF3 | Data loads per route | DR45 | BL.9 |
+
+#### Data-driven requirement: the acceptance test
+
+| Step | Maps to |
+| --- | --- |
+| 1. Add a new page | B4.14 (AT1) |
+| 2. Reorder Home's sections | B4.14 (AT2) |
+| 3. Change a headline with an accent phrase | B4.14 (AT3) |
+| 4. Add a talk with a speaker reference; count rises | B4.14 (AT4) |
+| 5. Break a block type on purpose | B4.14 (AT5) |
+| 6. Run the words-in-code and page-specific-code checks | B4.14 (AT6) |
+
+#### Data-driven requirement: open questions
+
+| Question | Answer and row |
+| --- | --- |
+| Can the record form serve one page per item? | Answered: no (DC3); collections are new (B4.5) |
+| What does `zero-latency.json` hold? | Answered: the never-animate list (DC4); the catalogue is new (BL.8) |
+| Is `BLOCKS` loaded in full? | Answered: yes (DC5); code splitting later (BL.9) |
+| Routing in core or a separate package? | Decided by default: core, own entry (ID13, BS.6) |
+| Page document: extension or new schema? | Decided by default: new schema (ID12, BS.6) |
+| Which inline marks? | Decided by default (ID14, B3.22) |
+| Derived values at build or run time? | Decided by default (ID15, B4.7) |
+| Checks in core or a tooling package? | Decided by default: core `tools/` (ID16, B3.20) |
+| Plan for content migrations? | Decided by default (ID17, BL.9) |
+
+#### Data-driven requirement: what stays out
+
+| Item | Decision and reason |
+| --- | --- |
+| Site content: words, collections, pictures, page documents | Out of scope: Data the site owns; the library ships the schemas and check |
+| Brand fonts | Out of scope: The library ships the way to register faces (B3.9) |
+| Specific compositions | Out of scope: The library ships registry, slots and effects; the template ships the part |
+| Brand effects | Out of scope: Register into the catalogue from the template (BL.8) |
+| Source-specific build steps | Out of scope: The library ships the generated-collection hook and the check (B4.7) |
+
+#### Data-driven requirement: migration path
+
+| Step | Maps to |
+| --- | --- |
+| Now: Move hard-coded words to JSON | BS.3 (0.3 brief), B3.20 lists each |
+| Now: Give every content file a schema | BS.3, B3.26, B3.21 |
+| Now: Replace copies with ids | BS.3 (site data code now), B4.5 (references in 0.4) |
+| Now: Prune the template manifest | BS.3, B3.21 reports it |
+| Now: Add stories for parts without them | BS.3, B4.11 stubs, BL.4 |
+| Now: Move raw style values into tokens | BS.3, B3.20 counts them; B2.4 settings replace the frame overrides |
+| Now: Run the library content check on the template folder | BS.3, B3.21 |
+| After: Site document and routes | BS.3 (0.4 brief), B4.1, B4.9 |
+| After: Register the parts as blocks | BS.3, B4.11 |
+| After: Convert each view to a page document | BS.3, B4.2, B4.8 |
+| After: Replace duplicate parts with core | BS.3, B3.2 |
+| After: Move motion into named effects | BS.3, BL.8 |
+| After: Delete the views and turn on the checks as a gate | BS.3, B4.12 |
+
+#### The plan's own findings N01–N18
+
+| Item | Finding | Maps to |
+| --- | --- | --- |
+| N01 | Tarballs by URL fragile behind a proxy | B2.1, BS.6 (ID2) |
+| N02 | Adversarial loop heavy for a small site | B3.4 |
+| N03 | TextField hard-codes "Saved" | B2.14, B3.20 |
+| N04 | Seam ladder silent on core component tokens | B2.4 |
+| N05 | `generate()` with `base` undocumented | B2.6 |
+| N06 | Reduced motion keeps the cross-fade by design | B2.3 |
+| N07 | Beta proof ran on npm 11 | B2.1, BS.5 |
+| N08 | Beta proof never tried a bright brand | B3.7, BS.5 |
+| N09 | Custom parts draw raw markup | B3.1, B3.20 |
+| N10 | `Badge` in `Card` `meta` not found | B2.13, B3.2 |
+| N11 | Core `Hero` already has eyebrow, lead and note | B3.5 |
+| N12 | Probes ship but the guide said they don't | B2.2, B3.20 |
+| N13 | The guide says copy the nearest template | B3.18 |
+| N14 | No content collections or route parameters | B4.5, B4.9, B3.21 |
+| N15 | Root font-size overrides not caught | B3.20 |
+| N16 | Global selectors not caught | B3.20 |
+| N17 | The project's own notes drifted | Out of scope: the project's own documentation; the adoption briefs remind sites to keep local notes current (BS.3) |
+| N18 | The two-products bar for core changes | BS.6 (ID6) |
+
+#### Beta known issues K1–K7
+
+| Item | Issue | Maps to |
+| --- | --- | --- |
+| K1 | Tall feature at 320 × 667 vs FR7 | B3.19 |
+| K2 | DescriptionList term column at three fifths | B3.19 |
+| K3 | The proof's footer heading restates its link | Out: content of the Beta proof's scratch site, not shipped; the next proof's content (BS.5) avoids it |
+| K4 | (no such item: the Beta known-issues table skips K4) | Recorded: numbering gap, nothing to map |
+| K5 | SiteHeader takes two rows at 320 px | B3.16 |
+| K6 | The library's own documentation pages fail on their chrome | Out of this stage: the library app's own chrome, not shipped to consumers; tracked in Handoff readiness "Beta known issues" |
+| K7 | Release files re-uploaded under the same version | B2.15 |
+
+#### Totals
+
+| Source | Items |
+| --- | --- |
+| Beta report appendix (F01–F60) | 60 |
+| Beta report recommendations | 43 |
+| Beta report top 10 | 10 |
+| Beta report readiness areas | 15 |
+| Beta report section 6 | 10 |
+| Beta report section 7 | 6 |
+| Beta report section 8 (roadmap tiers) | 3 |
+| Data-driven D1–D8 | 8 |
+| Data-driven changes | 45 |
+| Data-driven acceptance steps | 6 |
+| Data-driven open questions | 9 |
+| Data-driven "stays out" | 5 |
+| Data-driven migration steps | 13 |
+| Plan findings N01–N18 | 18 |
+| Beta known issues K1–K7 | 7 |
+| **Total** | **258** |
+
+**Result:** 258 items: 231 mapped to a row, 22 recorded out of scope with a reason, 5 no action (the note says it isn't a gap, or no such item), **0 unmapped**. Every row ID used above exists in this section.
+
+### Against the promise
+
+Built so far: B2.1–B2.7 (install matrix and guide fixes; reduced-motion swap, theme settings, link decoration, base colour, tracking). Everything else is planned. The promise is furthest away on DUP5 (data-driven sites: nothing of 0.4 is built) and on DUP1, which only DesignUp's re-run can prove (BS.8). The riskiest assumptions to settle first are IA13 (one page schema for templates and sites) and IA9 (shared breakpoints in CSS); both have a cheap test in the plan. Every row that depends on DesignUp's team (BS.8) names them: we never write in that project.
