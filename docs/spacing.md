@@ -16,6 +16,24 @@ Like every UX framework in this project, it comes in two parts ([the two-part fr
 
 ## Part 1: the framework
 
+### Terms
+
+- **Page:** the whole thing a person sees at one address: the header (title bar), the page content and the footer.
+- **Page content:** the content of the page apart from the header and the footer; what this page is for.
+- **Group:** elements more related to one another than to anything around them. Groups nest: a page holds groups, a group holds groups, down to a **pair** that reads as one thing.
+- **Unit:** one child of a group, seen from that group. A frame (a stage, a feature) is one unit to its parent, however much space it holds inside.
+
+### The method: hierarchy first, then space and frames (owner Q93)
+
+Space isn't chosen per element or per special case. It falls out of the information hierarchy, worked out first (owner Q93: first principles, not hard-coded rules).
+
+1. **Map the hierarchy.** Write the page as a tree of groups: every element belongs to exactly one group, and a group's members are more related to one another than to anything outside it. Ask of each element: what does it belong with? What would a reader name as one thing? At the top, this brings out the page's own groups: the header and footer (which serve every page) and the page content (which serves this one). Inside the page content: its units (bands, sections), each unit's head and content, the groups in that content, their items, and the pairs. Nothing is placed by habit: a closing invitation is one of the page content's units, not part of the footer, because that's what it belongs with.
+2. **Give each group one gap, by its depth.** A group's children sit apart by that group's level; the deeper the group, the smaller the gap (the [rhythm](#the-rhythm-five-levels)). One invariant holds at every node: **the space between a group's children is smaller than the space between the group and its siblings** (proximity). A heading is its group's first member, so it sits nearer its own content than the content above. Where space alone can't show a boundary, a group may draw an enclosure instead; inside it, no gap exceeds its inset.
+3. **Frame only where isolation gains.** Decide for each unit whether the reader gains from seeing it alone ([Framing](#framing-presenting-one-piece-of-content), Q91); a frame changes how the unit is presented, never where it sits in the tree.
+4. **Build the tree, one wrapper per group.** Each group of the tree is one wrapper (a layout, a compound's part) that owns its children's gap and serves only its level; content names the tree (blocks and their order), never sizes.
+
+The principles below aren't extra rules; each is the method applied to a case that comes up often.
+
 ### Principles
 
 1. **Space groups first.** Proximity shows what belongs together; add an enclosure (a card, a border) only when space isn't enough, and one mechanism per boundary.
@@ -25,7 +43,7 @@ Like every UX framework in this project, it comes in two parts ([the two-part fr
 5. **The layout owns the space.** A parent sets the gap between its children and its own padding; components have no outer margin; nothing depends on a sibling's position.
 6. **Every value is a role token.** Components read a role (`space.stack-group`) or their own component token aliasing one, never a literal or a bare scale step. Density swaps the roles' values in one place; the ratios hold in every density.
 7. **Content says what it is, never how far apart.** Template content (JSON) names blocks and their order; it never carries a size or a gap. A view that needs a different rhythm gets it from its layout, block or a template token.
-8. **The page is a group too: title bar · page content · footer (owner Q92).** The page content's first unit sits at least as far from the title bar, and its last unit at least as far from the footer, as the largest gap between units inside the page content. Otherwise the last band (a closing invitation, a list's last row) reads as part of the footer and the first as part of the header. A frame counts as one whole unit: measure from its outer edge and ignore the space inside it (a frame's own space never pays for the page's edge). In SiteLayout the column's padding-block is the page level, the same as the gap between its bands.
+8. **The page content's edges come from the tree (owner Q92, Q93).** The page's top-level groups are the header, the page content and the footer, so the invariant applies there too: the page content's units sit no further from one another than the page content sits from the header and the footer. Otherwise its last unit (a closing invitation, a list's last row) reads as part of the footer and its first as part of the header. A frame is one unit: measure from its outer edge and ignore the space inside it. SiteLayout builds it with the column's padding-block at the page level, the same as the gap between its units; any other page layout gets it the same way, from the tree, not from a page-specific rule.
 
 ### The rhythm: five levels
 
@@ -35,7 +53,7 @@ Like every UX framework in this project, it comes in two parts ([the two-part fr
 | Item | Members of one group: a title and its intro, a card's heading and text, list rows | `space.stack-item` | 8 | 8 | 12 | 16 |
 | Group | Groups inside a section: cards in a grid, fields in a form, a hero's message and its lead | `space.stack-group` | 12 | 16 | 24 | 32 |
 | Section | A section's head to its content and between its parts; a hero's words to its actions | `space.stack-section` | 24 | 32 | 48 | 64 |
-| Page | Between the top-level parts of a page: the bands of a site, the sections of a library page | `space.stack-page` | 48 | 64 | 96 | 128 |
+| Page | The page content's units (a site's bands, a library page's sections), and the page content from the header and footer | `space.stack-page` | 48 | 64 | 96 | 128 |
 
 Values are CSS px at a 16 px root. The `stack-page` role is new in Q85 (it replaced a bare `space.16` on PageLayout and the section-level gap on SiteLayout); `space.24` and `space.32` were added to the scale for the loose and extra-loose page level. `tools/space-shape.mjs` checks, in every density, that sections sit at least twice the group space apart and pages at least twice the section space.
 
@@ -46,7 +64,7 @@ Inline space follows the same idea (`inline-pair` < `inline-item` < `inline-grou
 For every space, answer in order; the first answer that settles it wins.
 
 1. **Which relationship?** Inside a container's edge (inset), stacked (stack), side by side (inline), between columns (gutter), content to the window (page margin).
-2. **Which level?** Pair, item, group, section or page (table above). If two things are at different levels, they get different gaps, even when they're siblings in the content.
+2. **Which level?** Read it from the hierarchy tree ([the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93)): the depth of the group whose children this space separates (pair, item, group, section or page, table above). If two things are at different levels, they get different gaps, even when they're siblings in the content.
 3. **Check its neighbours.** Is it smaller than the gap around its group (at least 1.5 times, ideally 2)? Above a heading at least twice the space below? Inside an enclosure no more than the inset?
 4. **No level fits?** The structure has a level too many (flatten it, or group with a heading or an enclosure), or a part of a component needs a wrapper so its levels can differ (below). Never a literal or a nudge.
 
@@ -56,7 +74,7 @@ Each shape gives its levels a wrapper of their own, so one parent `gap` never ha
 
 | Shape | Structure | Gaps (normal) |
 | --- | --- | --- |
-| Site page (SiteLayout) | header · main column of bands · footer | bands `stack-page` 64; padding-block `stack-page` 64, so header → first band and last band → footer are never less than the bands' gap (principle 8) |
+| Site page (SiteLayout) | header · page content (a column of units) · footer | units `stack-page` 64; the column's padding-block `stack-page` 64, so the page content sits from the header and footer at least as far as its units sit from one another (principle 8) |
 | Library page (PageLayout) | page header · sections | sections `stack-page` 64 |
 | Section | **head** (heading, intro) · **content** (its parts) | head: heading → intro `stack-item` 8; head → content `stack-section` 32; between the content's parts `stack-group` 16, so the head leads them all |
 | Nested section | head · content, inside another section's content (one of its groups) | head: `stack-pair` 4; head → content `stack-item` 8; content's parts `stack-item` 8; sibling groups `stack-group` 16 apart in the outer content |
@@ -79,15 +97,16 @@ Density changes every role at once (the table above), so the five levels and the
 
 ### Never
 
-- One gap for two levels: a heading, its intro and its content all at the same distance; a hero's title, lead and buttons at one gap; page bands at the same distance as a section's parts.
-- A page's last band nearer the footer (or its first nearer the title bar) than the bands are to each other.
+- Space chosen element by element, or by a rule for one kind of page, before the hierarchy tree is written.
+- One gap for two levels: a heading, its intro and its content all at the same distance; a hero's title, lead and buttons at one gap; page content's units at the same distance as a section's parts.
+- The page content's last unit nearer the footer (or its first nearer the header) than its units are to each other.
 - A heading nearer the content above it than its own content.
 - A literal or a bare scale step in a component, a margin on a component, sibling-position selectors (`:first-child`, `+`, `* + *`) to make space.
 - Space in content JSON or in a view.
 
 ## Part 2: the checklist
 
-Each row passes or fails on a measurement. Rows marked **DOM** are measured by `tools/spacing-probe.js`; **static** rows by the named check; **look** rows by an evaluator reading the page. Severity follows the `spacing` skill: S1 broken, S2 misgrouped, S3 fragile, S4 polish. A view passes when no S1–S3 row fails.
+Each row passes or fails on a measurement. Rows marked **DOM** are measured by `tools/spacing-probe.js`; **static** rows by the named check; **look** rows by an evaluator reading the page. The evaluator starts the way the builder did: by writing the page's hierarchy tree (SC15); SC2–SC5 and SC14 are then the one proximity invariant measured at different nodes of that tree (a head, a group, an enclosure, the page's top level). Severity follows the `spacing` skill: S1 broken, S2 misgrouped, S3 fragile, S4 polish. A view passes when no S1–S3 row fails.
 
 | ID | Passes when | How | Severity |
 | --- | --- | --- | --- |
@@ -104,7 +123,8 @@ Each row passes or fails on a measurement. Rows marked **DOM** are measured by `
 | SC11 | Content JSON carries no size or gap | static: `npm run check:content` (schemas reject unknown fields) | S3 |
 | SC12 | Reading top to bottom, an evaluator can name each band, its heading and what belongs to it without relying on borders | look | S2 |
 | SC13 | Hover, focus, press, loading and validation move no box | look, or the motion and clipping probes | S1 |
-| SC14 | Page level (Q92): the space from the title bar to the page content's first unit, and from its last unit to the footer, is at least the largest gap between the page content's units; a frame is one unit measured from its outer edge | DOM | S2 |
+| SC14 | The invariant at the page's top level (principle 8; Q92, Q93): the page content sits from the header and from the footer at least as far as the largest gap between its own units; a frame is one unit, measured from its outer edge | DOM | S2 |
+| SC15 | The evaluator can write the page's hierarchy tree (header · page content · footer, then each unit, its head and content, groups, items, pairs) and every group in it is one wrapper whose gap serves only that level: no wrapper mixes two levels, no group is split across wrappers | look | S2 |
 
 ### How to run it
 
@@ -163,9 +183,13 @@ Fixed at the owners: Card's new **message** part (heading and description an ite
 
 Fixed at the owners: SiteLayout's padding-block is now the page level (`c.site-layout.padding-block` → `space.stack-page`), so the title bar → first unit and last unit → footer are never less than the bands' 64 px gap (principle 8, SC14; owner Q92: Conference home's closing invitation sat about 40 px above the footer). Section's content got its own part: head → content stays the section level, the content's parts sit a group apart, and a nested section (one group of the outer one) has its head an item above its rows, so settings pages read h2 → groups → rows instead of one equal 32 px. The probe adds SC14, judges SC3 against a group's sibling groups (not its own head), exempts an accordion's trigger headings from SC2 and judges SC6 only on pages with two or more headings. **17 of 168 layouts fail a grouping row** (29 before); SC14 passes on every page.
 
+### F15.SP-fp: restated from first principles (2026-11-09 about 11:45, owner Q93)
+
+The framework now starts from [the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93): map the page's information hierarchy as a tree of groups, then give each group one gap by its depth and frame only units that gain from isolation. The [terms](#terms) are exact: the *page* is the whole thing; *page content* is everything apart from the header and footer, and it comes out of the tree as one of the page's three top-level groups. Principle 8 and SC14 are now the proximity invariant applied at that top level, not a page-specific rule; SC15 (look) asks the evaluator to write the tree and match each group to one wrapper. The agent guide follows the same order (`principles.json` → `guide/7-principles.md`: "Hierarchy first"). No values changed.
+
 ## Framing: presenting one piece of content
 
-Grouping space (above) answers *what belongs together*. **Framing** answers a different question: *how one piece of content is presented so it stands on its own* (owner Q88, 2026-11-09). A quote, a statement, a statistic, a call to action, a showcase picture or a page's opening isn't just the next group in the flow: it gets a frame, its own room sized to the window and isolated from what's around it, so it's read without distraction and makes sense alone. Framing adds to the grouping rules; it never replaces them inside the frame.
+Grouping space (above) answers *what belongs together*. **Framing** answers a different question: *how one piece of content is presented so it stands on its own* (owner Q88, 2026-11-09). A quote, a statement, a statistic, a call to action, a showcase picture or a page's opening isn't just the next group in the flow: it gets a frame, its own room sized to the window and isolated from what's around it, so it's read without distraction and makes sense alone. Framing adds to the grouping rules; it never replaces them inside the frame. It is step 3 of [the method](#the-method-hierarchy-first-then-space-and-frames-owner-q93): the hierarchy tree names the units, and framing decides, unit by unit, whether one is presented alone; the unit's place in the tree doesn't change.
 
 Grounded in: Mark Boulton's *active* macro whitespace, space added around one element to draw the eye to it, versus the passive space that only gives breathing room ([A List Apart, "Whitespace"](https://alistapart.com/article/whitespace/)); Jan Tschichold's "whitespace is an active element, not a passive background" ([IxDF, Negative space](https://ixdf.org/literature/topics/negative-space)); common region: a background tone groups and separates a region, but overuse creates clutter ([NN/g, Common region](https://www.nngroup.com/articles/common-region/)); visual hierarchy by scale, contrast and grouping ([NN/g, Visual hierarchy](https://www.nngroup.com/articles/visual-hierarchy-ux-definition/)); the false floor: full-screen heroes and vast empty bands read as the end of the page unless the next content peeks in ([NN/g, Illusion of completeness](https://www.nngroup.com/articles/illusion-of-completeness/)); sizing to the window with `svh`/`dvh` units, which account for mobile toolbars ([web.dev, viewport units](https://web.dev/blog/viewport-units)); interpolating space between a small and a large screen instead of jumping at breakpoints ([Utopia, fluid scales](https://utopia.fyi/blog/designing-with-fluid-type-scales/)); and keeping a quotation short and set apart rather than a dumped block ([Butterick, Block quotations](https://practicaltypography.com/block-quotations.html)).
 

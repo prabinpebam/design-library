@@ -12,6 +12,7 @@
  *   SC6 levels    the page's stacking gaps form at least three distinct levels
  *   SC7 edges     nothing scrolls sideways; content keeps the page margin from the window's edges
  *   SC8 margins   no component (data-dl) carries an outer block margin
+ *   SC14 page     the same invariant at the page's top level: page content apart from header and footer ≥ its own gaps
  *
  * Returns { rows: { SC1: { pass, findings }, … }, levels, stacks } with distances in CSS px.
  */
@@ -182,9 +183,9 @@
       }
     }
 
-    // SC14 page level (Q92): title bar · page content · footer. The space from the title bar to the first unit and from
-    // the last unit to the footer is never smaller than the largest gap between the page content's units (a frame is
-    // one unit; space inside it is ignored).
+    // SC14 (Q92, Q93): the proximity invariant at the page's top level. The page's groups are header · page content ·
+    // footer, so the page content sits from the header and the footer at least as far as the largest gap between its
+    // own units (a frame is one unit; space inside it is ignored).
     const main = document.querySelector('main');
     const col = main?.querySelector(':scope > [data-dl-part="column"]') ?? main;
     if (col) {
