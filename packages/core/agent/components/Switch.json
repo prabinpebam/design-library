@@ -138,6 +138,9 @@
     "--type-label-compact-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/switch",
+  "usedBy": [
+    "SchemeControl"
+  ],
   "principles": [
     "ui-states"
   ]

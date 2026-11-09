@@ -291,6 +291,7 @@
     "MessageActions",
     "Notifications",
     "Pane",
+    "SchemeControl",
     "Sheet",
     "SiteHeader",
     "TagInput",

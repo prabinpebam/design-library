@@ -123,5 +123,8 @@
     "--type-label-size",
     "--type-label-weight"
   ],
-  "libraryPage": "https://prabinpebam.github.io/design-library/#/segmentedcontrol"
+  "libraryPage": "https://prabinpebam.github.io/design-library/#/segmentedcontrol",
+  "usedBy": [
+    "SchemeControl"
+  ]
 }

@@ -98,6 +98,10 @@ export { flip, boxOf, cancelFlip, durationOf, useSlidingIndicator } from './beha
 export type { FlipBox } from './behaviour/flip';
 export { usePresence, exitDuration } from './behaviour/presence';
 export { suspendMotion, viewTransition, prefersReducedMotion } from './behaviour/motion';
+export { useScheme, readScheme, applyScheme, resolveScheme } from './behaviour/scheme';
+export type { SchemeChoice, SchemeOptions } from './behaviour/scheme';
+export { SchemeControl } from './compounds/SchemeControl';
+export type { SchemeControlProps, SchemeControlWords } from './compounds/SchemeControl';
 export type { SharedName, ViewTransitionOptions } from './behaviour/motion';
 export { pictureTravel, travelPicture } from './behaviour/shared';
 export type { PictureBox } from './behaviour/shared';
@@ -250,6 +254,7 @@ export { default as selectStories } from './stories/Select.stories';
 export { default as checkboxStories } from './stories/Checkbox.stories';
 export { default as checkboxGroupStories } from './stories/CheckboxGroup.stories';
 export { default as segmentedControlStories } from './stories/SegmentedControl.stories';
+export { default as schemeControlStories } from './stories/SchemeControl.stories';
 export { default as alignmentPickerStories } from './stories/AlignmentPicker.stories';
 export { default as navigationStories } from './stories/Navigation.stories';
 export { default as badgeStories } from './stories/Badge.stories';

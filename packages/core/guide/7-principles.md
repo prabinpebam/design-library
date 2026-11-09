@@ -31,7 +31,7 @@ Goal: every decision you make with this library follows the frameworks behind it
 | A component in the `panels` family (FloatingBar, Pane, PropertyRow, PropertySection, Toolbar) | [Visual noise](#visual-noise) |
 | A component in the `people` family (Avatar, AvatarGroup, Persona) | [Showing information](#visual-representation) |
 | A component in the `pickers` family (Calendar, DateField, DatePicker, DateRangePicker, TimeField, ColourField, FileUpload, GradientEditor) | [States](#ui-states) |
-| A component in the `selection` family (AlignmentPicker, Checkbox, CheckboxGroup, Chip, ChipGroup, ListItem, RadioGroup, Select, Switch) | [States](#ui-states) |
+| A component in the `selection` family (AlignmentPicker, Checkbox, CheckboxGroup, Chip, ChipGroup, ListItem, RadioGroup, Select, Switch, SchemeControl) | [States](#ui-states) |
 | A component in the `text` family (Badge, Code, Heading, Icon, Link, List, Text) | [Words](#ui-copy) |
 | Anything | [How the library works](#library) and [The owner’s design rules](#constraints) |
 
