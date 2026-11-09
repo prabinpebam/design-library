@@ -158,7 +158,8 @@ const contrastOptions = [
   { value: 'more', label: 'More contrast', icon: 'contrast-more' },
 ] satisfies SegmentedControlOption[];
 
-const routeFromHash = () => window.location.hash.replace(/^#\/?/, '') || 'overview';
+// An in-page anchor after the route (`#/tableofcontents#toc-venue`, written by the core router in a story) isn't part of it.
+const routeFromHash = () => window.location.hash.replace(/^#\/?/, '').split('#')[0] || 'overview';
 const wide = '(min-width: 64rem)'; // breakpoint.md
 
 function useWide() {

@@ -26,7 +26,7 @@ Goal: every decision you make with this library follows the frameworks behind it
 | A component in the `inputs` family (ColourPicker, Field, NumberField, Rating, Slider, TextArea, TextField, AllocationSlider, InlineEdit, Mentions, TagInput) | [States](#ui-states) |
 | A component in the `layout` family (Morph, Reveal) | [Spacing](#spacing) |
 | A component in the `media` family (Flag, Image, Canvas) | [Showing information](#visual-representation) |
-| A component in the `navigation` family (Breadcrumbs, Footer, Navigation, PageHeader, Pagination, SiteHeader, Tabs, TitleBar, TreeView) | [Words](#ui-copy) |
+| A component in the `navigation` family (Breadcrumbs, Footer, Navigation, PageHeader, Pagination, SiteHeader, TableOfContents, Tabs, TitleBar, TreeView) | [Words](#ui-copy) |
 | A component in the `overlays` family (Dialog, Notifications, Sheet) | [Elevation and layering](#elevation) |
 | A component in the `panels` family (FloatingBar, Pane, PropertyRow, PropertySection, Toolbar) | [Visual noise](#visual-noise) |
 | A component in the `people` family (Avatar, AvatarGroup, Persona) | [Showing information](#visual-representation) |

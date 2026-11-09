@@ -1,0 +1,76 @@
+/*
+ * Tier 2 compound: TableOfContents (IP28, F14). Links to the parts of a page: a list (one per line) or a row (wrapping,
+ * for a short line of sections or a letter jump). No enclosure: space and the label group the entries. Entries are the
+ * muted text colour; the part being read is the text colour with an underline (aria-current="location"), so the cue
+ * is a line and contrast, never colour alone, and no entry changes size as the reading moves. A letter with no names is the disabled text colour and not a link.
+ */
+@layer compounds {
+  [data-dl='table-of-contents'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-item);
+    min-inline-size: 0;
+  }
+
+  [data-dl='table-of-contents'] > [data-dl-part='label'] {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-weight: var(--weight-medium);
+  }
+
+  [data-dl='table-of-contents'] > [data-dl-part='items'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-row);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='table-of-contents'][data-layout='row'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-inline-group);
+    row-gap: var(--space-stack-item);
+  }
+
+  [data-dl='table-of-contents'][data-layout='row'] > [data-dl-part='items'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--space-inline-item);
+    row-gap: var(--space-stack-row);
+  }
+
+  [data-dl='table-of-contents'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='link'],
+  [data-dl='table-of-contents'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='inert'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--size-target-min);
+    min-inline-size: var(--size-target-min);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  [data-dl='table-of-contents'][data-layout='list'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='link'] {
+    justify-content: start;
+  }
+
+  [data-dl='table-of-contents'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='link']:hover {
+    color: var(--color-text);
+  }
+
+  [data-dl='table-of-contents'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='link'][aria-current='location'] {
+    color: var(--color-text);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-thick);
+    text-underline-offset: 0.25em;
+  }
+
+  [data-dl='table-of-contents'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='inert'] {
+    color: var(--color-text-disabled);
+  }
+}
