@@ -4,7 +4,9 @@ Goal: a whole product's screens from a template: first by using one as it is, wi
 
 ## The templates
 
-`packages/core/agent/index.json` → `templates[]` lists each with its layouts, regions, accepted blocks and standalone address. Open any at `http://127.0.0.1:8766/site.html#/app/{template}/{layout}`.
+`agent/index.json` → `templates[]` lists each with its layouts, regions, accepted blocks and standalone address. Open any at `https://prabinpebam.github.io/design-library/site.html#/app/{template}/{layout}`. Their files are in `node_modules/@design-library/templates/{template}/`.
+
+> **Your templates live in your project**, one folder each under `src/templates/{id}/`, with `src/templates/index.ts` listing them. Never edit a template inside `node_modules`: copy it into your project first.
 
 | Template | Kind | Shape | Start from it for |
 | --- | --- | --- | --- |
@@ -19,20 +21,21 @@ Goal: a whole product's screens from a template: first by using one as it is, wi
 
 ## Use a template as it is
 
-1. **Pick the template** by the table above and open its screens in the library (Templates section) or as standalone sites.
-2. **Change only content:** edit the JSON in `packages/templates/{template}/content/` (Step 2). Words, links, pictures (add files to `assets/` and ids to `assets.json`, with alt text), which blocks each page shows.
-3. **Theme it** with tokens (Step 3): templates take the library's colour, type, icons, space, shape and material, and follow presets live.
-4. **Render it** in the library, as the standalone site, or inside your app with `TemplateView` (Step 2, "Render it").
-5. **Check:** `npm run check:content`, then open each screen you changed in light, dark and more contrast.
+1. **Pick the template** by the table above and open its screens in the hosted library (Templates section) or as standalone sites.
+2. **Render it unchanged** to see it in your app: `import corporate from '@design-library/templates/corporate'` and `<TemplateView template={corporate} layout="home" />` (Step 2, "Render it").
+3. **To change its words, copy it** into `src/templates/{template}/` (the whole folder) and change only content there: the JSON in `content/` (Step 2). Words, links, pictures (add files to `assets/` and ids to `assets.json`, with alt text), which blocks each page shows.
+4. **Theme it** (Step 3): templates take the library's colour, type, icons, space, shape and material, and follow presets live.
+5. **Render your copy** with `TemplateView` (import it from `./templates/{template}`), fixing its `index.ts` as in "Start a template from nothing" below (`loadTemplate` from `@design-library/core/render`).
+6. **Check:** `npx design-library-check-content --templates src/templates`, then open each screen you changed in light, dark and more contrast.
 
-Using a template this way changes the shared copy in this repository. To keep the original, adapt it instead.
+A copy that keeps the library's id stays a copy of that template; to make it yours, adapt it as below.
 
 ## Adapt a template as your own
 
 Copy the nearest template into a new namespace and change it there. Never edit core, and never import another template's parts.
 
 1. **Choose an id:** lower case, one word or kebab case, unique (`harbour`). It is the namespace of everything in the template.
-2. **Copy the folder** `packages/templates/{nearest}/` to `packages/templates/{id}/`.
+2. **Copy the folder** `node_modules/@design-library/templates/{nearest}/` to `src/templates/{id}/`.
 3. **Rename the namespace everywhere** in the new folder:
 
    | Where | Change |
@@ -42,10 +45,11 @@ Copy the nearest template into a new namespace and change it there. Never edit c
    | Every content file | `"template": "{id}"` |
    | Custom parts (if any) | Manifest `parts` names `{id}.{Name}`, block types `{id}.{name}`; `data-dl="{id}-{part}"` in TSX and CSS; tokens `t.{id}.*` in `tokens/tokens.json` and `--t-{id}-*` in CSS; story `component: '{id}.{Name}'` |
    | `registry.tsx` | Block type keys and layout names to the new namespace |
-   | `types.ts` (application templates) | Rename the record types if you like; add `{id}: { {layout}: 'Type' }` to `records` in `tools/content-schemas.mjs` and run `npm run content:schemas` |
+   | `types.ts` (application templates) | Rename the record types if you like; keep `$defs/record.{layout}` in `content.schema.json` in step with them (Step 2) |
+   | `index.ts` | `import { loadTemplate } from '@design-library/core/render';` in place of `'../load'` |
 
    Then search the folder for the old id; nothing should remain.
-4. **Register it** in `packages/templates/index.ts`: `import harbour from './harbour';` and add it to `templates` (the library lists them in that order). Your own app can then import just this one: `import harbour from '@design-library/templates/harbour'`.
+4. **Register it** in `src/templates/index.ts`: `import harbour from './harbour';` and add it to an exported `templates` list. Your app renders it with `import harbour from './templates/harbour'`.
 5. **Reshape the screens:** in `template.json`, keep, remove or add `layouts` (one per screen: `id`, `title`, `component`, `content`, `regions`), and group them:
    - `home`: the first screen, its content at `content/{home}.json`. It is also listed in one flow (usually the first section's), where it isn't counted.
    - `sections[]`: `{ id, title, summary, flows: [{ id, title, summary, screens: [layout ids] }] }`. Every screen sits in exactly one flow.
@@ -54,17 +58,17 @@ Copy the nearest template into a new namespace and change it there. Never edit c
    - A state of a screen (a form's error, a list's empty state) is a layout with `stateOf` and a content file holding only `settings.state`.
 6. **Write the content** for each built layout and `content/shared.json` (Step 2).
 7. **Add custom parts** only where no core part fits (Step 4, step 6), each with tokens and stories.
-8. **Check and open:** run the checks below, then open `site.html#/app/{id}/{home}`.
+8. **Check and open:** run the checks below, then open the screen in your app.
 
 ### Start a template from nothing
 
-Same as adapting, starting from an empty folder. The worked example is `packages/templates/harbour/` (one built screen, six planned), shown by the app `apps/example/`.
+Same as adapting, starting from an empty folder. The worked example is `node_modules/@design-library/templates/harbour/` (one built screen, six planned), shown by [`apps/example`](https://github.com/prabinpebam/design-library/tree/main/apps/example) in the library repository.
 
 **`template.json`**, the smallest valid manifest (required: `id`, `version`, `title`, `summary`, `contentSchema`, `contentVersion`, `layouts`, `sections`):
 
 ```json
 {
-  "$schema": "../../core/schemas/template.schema.json",
+  "$schema": "../../../node_modules/@design-library/core/schemas/template.schema.json",
   "id": "harbour",
   "version": "0.1.0",
   "title": "Harbour Books",
@@ -98,13 +102,13 @@ Same as adapting, starting from an empty folder. The worked example is `packages
 }
 ```
 
-Then `content.schema.json` (Step 2), `content/home.json` and `content/shared.json` (Step 2), `assets.json` (`{ "$schema": "../../core/schemas/assets.schema.json", "assets": {} }`, pictures in `assets/`) and `index.ts`:
+Then `content.schema.json` (Step 2), `content/home.json` and `content/shared.json` (Step 2), `assets.json` (`{ "$schema": "../../../node_modules/@design-library/core/schemas/assets.schema.json", "assets": {} }`, pictures in `assets/`) and `index.ts`:
 
 ```ts
 import type { StoryFile } from '@design-library/core/react';
 import manifest from './template.json';
 import assets from './assets.json';
-import { loadTemplate } from '../load';
+import { loadTemplate } from '@design-library/core/render';
 // import { registry } from './registry';   only with custom blocks, a bound layout or custom parts
 
 export default loadTemplate(
@@ -131,9 +135,9 @@ export default loadTemplate(
 
 | Check | Proves |
 | --- | --- |
-| `npm run check:content` | Manifest, grouping (3–5 per group), file locations, schema, content, pictures, links and parts are all valid; the template is registered |
-| `npm run tokens`, `npm run tokens:check` | The template's own tokens (if any) alias semantic roles |
-| `npm run typecheck` | The registry, bindings and parts compile |
-| `npm run check:views`, `npm run check:parts` | No styles in bindings; parts by child paths |
-| `npm run agent:index` | The index lists the template and its parts |
-| `npm run build -w apps/library`, then open `site.html#/app/{id}/{layout}` | Every built screen renders, in light, dark and more contrast, at 320 px and wide |
+| `npx design-library-check-content --templates src/templates --index src/templates/index.ts` | Manifest, grouping (3–5 per group), file locations, schema, content, pictures, links and parts are all valid; the template is registered |
+| `npx tsc --noEmit` | The registry, bindings and parts compile |
+| `npx vite build`, then open each built screen | Every built screen renders, in light, dark and more contrast, at 320 px and wide |
+| Read custom parts and their `tokens/tokens.css` against Step 4's rules | Tokens read semantic roles only; no styles in bindings; parts by child paths |
+
+In the library repository, its templates live in `packages/templates/`, are listed in `packages/templates/index.ts`, and use `npm run check:content`, `npm run tokens`, `npm run tokens:check`, `npm run typecheck`, `npm run check:views`, `npm run check:parts`, `npm run agent:index` and `npm run build -w apps/library` (then open `site.html#/app/{id}/{layout}`).

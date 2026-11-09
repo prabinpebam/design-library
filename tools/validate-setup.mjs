@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -85,9 +85,14 @@ if (existsSync(path.join(root, '.git'))) {
 // Foundation execution (owner, 2026-11-06 20:28) adds product workspaces; they must stay an explicit list that never
 // sweeps in the upstream checkouts. `packages/templates` joined on 2026-11-08 (owner Q64, approved by main 19:58).
 const rootPackage = JSON.parse(text(path.join(root, 'package.json')));
-assert.deepEqual(rootPackage.workspaces, ['packages/core', 'packages/catalogue', 'packages/templates', 'apps/library'], 'Workspaces must be the explicit product list');
+// `apps/example` joined on 2026-11-09 (Q76 cold walkthrough, the guide's worked example).
+assert.deepEqual(rootPackage.workspaces, ['packages/core', 'packages/catalogue', 'packages/templates', 'apps/library', 'apps/example'], 'Workspaces must be the explicit product list');
 assert.ok(rootPackage.workspaces.every((w) => !/[*?]/.test(w) && !/^(agentic-craft|agent-orchestration|slate|loushing)\b/.test(w)), 'No workspace globs or upstream checkouts');
-assert.match(text(path.join(root, '.npmrc')), /^registry=https:\/\/packagefeedproxy\.microsoft\.io\/npm\/$/m, 'npm must use the approved proxy');
+// Since 2026-11-09 (owner, DoD Q82, handoff readiness B3) the proxy lives in this machine's npm config, not the public
+// repository, and the lockfile records registry.npmjs.org (npm swaps it for the configured registry).
+assert.ok(!existsSync(path.join(root, '.npmrc')), 'No project .npmrc: the proxy is set in the user npm config');
+assert.equal(execSync('npm config get registry', { cwd: root, encoding: 'utf8' }).trim(), 'https://packagefeedproxy.microsoft.io/npm/', 'npm must use the approved proxy (user config)');
+assert.doesNotMatch(text(path.join(root, 'package-lock.json')), /pkgs\.visualstudio\.com|packagefeedproxy\.microsoft\.io/, 'Lockfile tarball URLs on registry.npmjs.org (node ./tools/lockfile-hosts.mjs)');
 for (const workspaceFile of ['pnpm-workspace.yaml', 'lerna.json']) {
   assert.ok(!existsSync(path.join(root, workspaceFile)), `Unexpected product package workspace: ${workspaceFile}`);
 }
@@ -116,9 +121,12 @@ assert.deepEqual(checkRuntimeHost(host, path.join(root, 'slate'), root), []);
 assert.equal(json(path.join(host, '.slate-runtime.json')).files.length, 25);
 const manifest = json(path.join(host, 'docs-manifest.json'));
 assert.equal(manifest.version, 2);
-assert.deepEqual(manifest.entries.map((entry) => entry.path), [
-  'landing.html', 'brief.md', 'definition-of-done.md', 'foundation.md', 'work-plan.md',   'setup.md', 'component-coverage.md', 'component-catalogue.md',
-]);
+// The core pages are always there and nothing is listed twice; pages added since (how-it-works, hosting, handoff
+// readiness…) are checked by the loop below like every other entry.
+const paths = manifest.entries.map((entry) => entry.path);
+for (const required of ['landing.html', 'brief.md', 'definition-of-done.md', 'foundation.md', 'work-plan.md', 'setup.md', 'component-coverage.md', 'component-catalogue.md'])
+  assert.ok(paths.includes(required), `Docs manifest lists ${required}`);
+assert.equal(new Set(paths).size, paths.length, 'No docs page listed twice');
 for (const entry of manifest.entries) {
   assert.equal(entry.type, 'page');
   assert.ok(!entry.path.startsWith('../') && !path.isAbsolute(entry.path), 'Docs pages must stay inside the host');

@@ -1,6 +1,18 @@
 # Design Library: guide for agents using it
 
-You're building a website or app with this library. This file tells you where everything is, the rules you must never break, and the steps for each task. It is for **using** the library; changing the library itself follows the repository root's `AGENTS.md`.
+You're building a website or app with this library. This file tells you where everything is, the rules you must never break, and the steps for each task. It is for **using** the library; changing the library itself follows the root `AGENTS.md` of [the library repository](https://github.com/prabinpebam/design-library).
+
+**Version 0.1.0** (this guide matches `package.json` beside it; what changed between versions is in `CHANGELOG.md`). MIT licence. Supported: React 19 in the browser, bundled by Vite 8 ([step 1, "Supported"](guide/1-install.md#supported)).
+
+**Where you are:** in your project this package is `node_modules/@design-library/core/`; every path below (`agent/index.json`, `guide/…`, `schemas/…`) is relative to it, and the index writes the same files as `@design-library/core/…`. Inside the library repository it is `packages/core/`.
+
+**First, once per project:** add this to your project's own `AGENTS.md` (or your agent's instructions file), so every agent session finds this guide:
+
+```markdown
+## UI: Design Library
+This project's UI uses @design-library/core. Before any UI work, read node_modules/@design-library/core/AGENTS.md
+and follow it: its Never rules, the seam ladder, and the task steps in its guide/ folder.
+```
 
 ## What it is
 
@@ -8,7 +20,7 @@ A token-driven, data-driven UI library. Four tiers sit on tokens, and screens ar
 
 | Tier | What it is | You use it by |
 | --- | --- | --- |
-| **Tokens** | Every design decision as data (colour, type, space, shape, motion, materials), generated into CSS custom properties | Choosing a preset or editing a config file, then `npm run tokens` |
+| **Tokens** | Every design decision as data (colour, type, space, shape, motion, materials), generated into CSS custom properties | Choosing presets, and your brand colours and fonts with `@design-library/core/theme` (new token values are made in the library repository) |
 | **Fundamentals** | Universal building blocks: text, buttons, fields, lists, Stack, Cluster, Grid… | Importing from `@design-library/core/react` and passing props |
 | **Compounds** | Arrangements of fundamentals for a need: Card, Dialog, Toolbar, Navigation… | The same import; content through props and slots |
 | **Layouts** | A screen or section with named regions: SiteLayout, AppLayout, ChatLayout, EditorLayout… | The same import, or by name in a template manifest |
@@ -23,10 +35,11 @@ Components are **sealed**: no `className` or `style` props. Their look comes onl
 | Any exact name: a component and its props, a block type and its fields, a layout and its required settings, a template and its layouts, a token and its CSS variable, a preset, an icon, a schema, a command | `agent/index.json` (generated from source; never hand-edited) |
 | One component's full contract: every prop with its type, default and comment, accessibility, keys, the tokens it reads, what it's built from | `agent/components/{Name}.json` (template parts: `{template}.{Name}.json`) |
 | The content schemas | `schemas/` (`template.schema.json`, `content.schema.json`, `blocks.schema.json`, `assets.schema.json`) and each template's `content.schema.json` |
-| How a part looks in every context | The library app (optional): `npm run dev`, then `http://127.0.0.1:8766/`; each component's `libraryPage` in the index |
-| Working examples | `packages/templates/*`: eight templates, all content as JSON; `apps/example/` with `packages/templates/harbour/`, the smallest app and template built by following this guide |
+| How a part looks in every context | [The hosted library](https://prabinpebam.github.io/design-library/): each component's `libraryPage` in the index |
+| How the library works, for people | [How the library works](https://prabinpebam.github.io/design-library/docs/#how-it-works.md) and the rest of the [technical docs](https://prabinpebam.github.io/design-library/docs/) |
+| Working examples | `@design-library/templates`: eight templates, all content as JSON (`node_modules/@design-library/templates/*/`); [`apps/example`](https://github.com/prabinpebam/design-library/tree/main/apps/example) in the library repository with the `harbour` template, the smallest app built by following this guide |
 
-Search the index before writing anything: `Select-String -Path packages/core/agent/index.json -Pattern '"name": "Card"'` (PowerShell) or `grep -n '"name": "Card"' packages/core/agent/index.json`.
+Search the index before writing anything: `Select-String -Path node_modules/@design-library/core/agent/index.json -Pattern '"name": "Card"'` (PowerShell) or `grep -n '"name": "Card"' node_modules/@design-library/core/agent/index.json`.
 
 ## Never
 
@@ -48,8 +61,8 @@ When something doesn't look or behave as you need, take the first step that work
 | 1 | A **prop or variant** the component already has | `<Button label="Delete page" emphasis="danger" size="l" />` (check `agent/components/Button.json`) |
 | 2 | A **slot**: pass another part as children or a `ReactNode` prop | A `Badge` into a `Card`'s `meta`, buttons into its `actions` |
 | 3 | A **context attribute** on an ancestor | `data-density="compact"`, `data-scheme="dark"`, `data-contrast="more"` |
-| 4 | The **theme**: a preset, or a token config file, then `npm run tokens` | Brand colours in `colour.config.json`; space and shape in `space-shape.config.json` |
-| 5 | A **custom part inside your template** (fundamental, compound, layout or block type) with its own `t.{template}.*` tokens | `conference.SponsorWall` in `packages/templates/conference/parts/` |
+| 4 | The **theme**: a preset, your brand colours and fonts (`@design-library/core/theme`) | `applyBrand({ colours: { 1: { seed: '#1f6f8b' } } })`, `applyFonts({ preset: 'bookish' })`, `data-space="loose"` ([step 3](guide/3-tokens.md)) |
+| 5 | A **custom part inside your template** (fundamental, compound, layout or block type) with its own `t.{template}.*` tokens | `conference.SponsorWall` in `@design-library/templates/conference/parts/` |
 | 6 | A **core change**: a new variant or slot, reviewed on its own | Only when two or more products need it |
 
 ## Tasks
@@ -63,13 +76,22 @@ When something doesn't look or behave as you need, take the first step that work
 | Use a layout, or make one inside a template | [guide/5-layouts.md](guide/5-layouts.md) | Ready |
 | Use a template, then adapt one as your own | [guide/6-templates.md](guide/6-templates.md) | Ready |
 | Apply the principles: the rules and decision procedure for each token category and component family | [guide/7-principles.md](guide/7-principles.md) (generated from `principles/principles.json`) | Ready |
-| Decide how to show information: a visual (chart, icon, picture, illustration, media) or exact text | [docs/visual-representation.md](../../docs/visual-representation.md): run the reasoning chain RC1–RC8 | Ready to follow; chart components and picture roles are planned (BP1–BP10), not built |
+| Decide how to show information: a visual (chart, icon, picture, illustration, media) or exact text | [Visual representation](https://prabinpebam.github.io/design-library/docs/#visual-representation.md): run the reasoning chain RC1–RC8 | Ready to follow; chart components and picture roles are planned (BP1–BP10), not built |
 
 Steps are written in the order an agent usually needs them; each stands alone and ends with its checks.
 
 ## Checks
 
-Run from the repository root. Each one exits non-zero and names the file and the fix.
+**In your project.** Each one exits non-zero and names the file and the fix.
+
+| After you change | Run |
+| --- | --- |
+| Content JSON, a manifest or a template schema | `npx design-library-check-content --templates src/templates` (the folder holding your template folders; add `--index src/templates/index.ts` to check each is registered) |
+| TypeScript or TSX | `npx tsc --noEmit` |
+| Anything before you call it done | `npx vite build`, then open the screen in light, dark and more contrast, at 320 px and wide |
+| A view, content or a custom part | Read it against the [Never](#never) rules: no `className`, `style` or CSS in views; custom-part CSS reaches its children by child paths and reads only semantic roles or its own tokens. The library repository enforces these with `check:views`, `check:parts`, `check:materials` and `check:motion`; they aren't shipped |
+
+**In the library repository** (changing the library itself), from its root:
 
 | After you change | Run |
 | --- | --- |

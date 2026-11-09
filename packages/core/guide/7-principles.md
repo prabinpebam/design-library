@@ -4,6 +4,8 @@
 
 Goal: every decision you make with this library follows the frameworks behind it. Each framework below has its rules (never break them), a decision procedure (ask in order; the first answer that fits decides) and the checks that catch a miss. The same frameworks are shown to people, in short, at the bottom of the library pages.
 
+> **Checks:** the `npm run …` checks named below are the library repository's. In your project, run their equivalents from `AGENTS.md` "Checks" (`npx design-library-check-content`, `npx tsc --noEmit`, `npx vite build`) and read your work against the rules; a theme change in your project uses `@design-library/core/theme` ([Step 3](3-tokens.md)), not the token configs.
+
 ## Which framework governs what
 
 | You are choosing | Read |

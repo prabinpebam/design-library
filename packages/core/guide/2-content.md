@@ -1,6 +1,8 @@
 # Step 2: write a content schema and its content (JSON)
 
 Goal: screens drawn from pure JSON. Content is checked against a schema before anything renders, and a mistake fails with the file, the JSON pointer and the fix.
+> **Paths:** `agent/…`, `schemas/…` and `guide/…` are inside the installed package (`node_modules/@design-library/core/`); your templates live in your project, here `src/templates/{id}/`. Commands marked *library repository* run only there.
+
 
 ## How it fits together
 
@@ -19,11 +21,11 @@ Pick the shape for each layout:
 | Shape | Use when | Content holds | Schema comes from |
 | --- | --- | --- | --- |
 | **Regions of blocks** | A document: a site page, an article, a form, a status page | `"regions": { "main": [ { "type": "hero", … } ] }` | The core block set (`blocks.schema.json`), plus the template's own block types |
-| **A record** | An application: a chat's threads, a board's issues, an editor's document | `"record": { … }` typed for that layout | The template's `types.ts`, turned into schema by `npm run content:schemas` |
+| **A record** | An application: a chat's threads, a board's issues, an editor's document | `"record": { … }` typed for that layout | `$defs/record.{layout}` in the template's `content.schema.json` (in the library repository generated from `types.ts` by `npm run content:schemas`) |
 
 ## Write content for a layout (regions of blocks)
 
-1. **Find the layout** in `packages/core/agent/index.json` → `templates[].layouts[]`: its `content` path and its `regions` with the block types each `accepts` (`*` means any registered type).
+1. **Find the layout** in `agent/index.json` → `templates[].layouts[]`: its `content` path and its `regions` with the block types each `accepts` (`*` means any registered type).
 2. **Find each block's fields** in `index.json` → `blocks[]` (`type`, `fields`, which are required, and each field's shape; a list of objects shows its keys, `?` marking the optional ones). `text` is plain words, `asset` an id from `assets.json`, `href` a link, `icon` an icon name from `index.json` → `icons`, `actions` a list of `{ label, primary?, says }`.
 3. **Find the layout's settings** in `index.json` → `layouts.settings[]`: some layouts need them. `SiteLayout` requires `"settings": { "current": "{layout id}" }` (the header place shown as current); `width` and `state` are optional.
 4. **Write the file** at the layout's `content` path:
@@ -47,7 +49,7 @@ Pick the shape for each layout:
 
    Set `$schema` to the relative path of the template's `content.schema.json` so editors check as you type. Write curly apostrophes and quotes (’ “ ”) in words people read; the check doesn't catch straight ones.
 5. **Shared regions** (a site's header and footer) go once in `content/shared.json` with `"shared": true` in place of `"layout"`, never in each page.
-6. **Run `npm run check:content`** and fix every line it prints (`file · /json/pointer · what's wrong · how to fix`).
+6. **Run `npx design-library-check-content --templates src/templates`** (library repository: `npm run check:content`) and fix every line it prints (`file · /json/pointer · what's wrong · how to fix`).
 
 ## Write a template's content schema
 
@@ -66,9 +68,9 @@ Every template has `content.schema.json` beside its manifest. Its `$id` must end
 
 **Using only core blocks?** Stop here: `$defs` stays empty.
 
-**A block type of your own** (only when no core block fits; see [Step 4](4-components.md)): add a `$defs` entry with `"type": { "const": "{template}.{name}" }`, `required`, `"additionalProperties": false` and plain-data properties; list it in the manifest's `parts.blocks` as `{ "type": "harbour.opening-hours", "schema": "#/$defs/openingHours", "renders": "harbour.OpeningHours" }`; map it in the template's `registry.tsx` `BLOCKS`. The check fails if the schema, the manifest and the registry disagree. Worked example: `packages/templates/conference` (`conference.countdown`, `conference.sponsor-wall`).
+**A block type of your own** (only when no core block fits; see [Step 4](4-components.md)): add a `$defs` entry with `"type": { "const": "{template}.{name}" }`, `required`, `"additionalProperties": false` and plain-data properties; list it in the manifest's `parts.blocks` as `{ "type": "harbour.opening-hours", "schema": "#/$defs/openingHours", "renders": "harbour.OpeningHours" }`; map it in the template's `registry.tsx` `BLOCKS`. The check fails if the schema, the manifest and the registry disagree. Worked example: `node_modules/@design-library/templates/conference/` (`conference.countdown`, `conference.sponsor-wall`).
 
-**An application record:** write the record's TypeScript type in `packages/templates/{template}/types.ts`, add `{template}: { {layout}: 'YourType' }` to the `records` map at the top of `tools/content-schemas.mjs`, then run `npm run content:schemas`. It writes `$defs/record.{layout}` (or `record.shared`) into the schema. Never hand-edit a generated schema. Worked examples: `chat`, `design`, `projects`.
+**An application record:** write the record's TypeScript type in the template's `types.ts`, and its JSON Schema as `$defs/record.{layout}` (or `record.shared`) in `content.schema.json`, keeping the two in step: same properties, `required` and `"additionalProperties": false`. (In the library repository the schema is generated: add `{template}: { {layout}: 'YourType' }` to `records` in `tools/content-schemas.mjs` and run `npm run content:schemas`; never hand-edit a generated one there.) Worked examples: `chat`, `design`, `projects`.
 
 ## Rules for content
 
@@ -83,7 +85,7 @@ Copy rules (sentence case, buttons a verb first in 3 words or fewer, errors that
 
 ## Render it
 
-- **In the library and as a standalone site:** register the template (Step 6); every layout opens at `http://127.0.0.1:8766/site.html#/app/{template}/{layout}`.
+- **In the library and as a standalone site:** register the template (Step 6); every layout of the library's own templates opens at `https://prabinpebam.github.io/design-library/site.html#/app/{template}/{layout}`.
 - **In your own app:**
 
   ```tsx
@@ -93,7 +95,7 @@ Copy rules (sentence case, buttons a verb first in 3 words or fewer, errors that
   export const Home = () => <TemplateView template={harbour} layout="home" hrefFor={(_t, layout) => `#/${layout}`} />;
   ```
 
-  Import the one template you render (`@design-library/templates/{id}`), not the package's list of all of them, which bundles every template. `hrefFor` turns a `/layout` link in content into your app's address. Working app: `apps/example/`.
+  Import the one template you render (`@design-library/templates/{id}`), not the package's list of all of them, which bundles every template. `hrefFor` turns a `/layout` link in content into your app's address. Working app: [`apps/example`](https://github.com/prabinpebam/design-library/tree/main/apps/example) in the library repository.
 
 ## Change the shape later
 
@@ -103,7 +105,7 @@ A change old content no longer satisfies (a renamed key, a split block) raises `
 
 | Check | Proves |
 | --- | --- |
-| `npm run content:schemas` | Application record schemas match `types.ts` (only when you changed a record type) |
-| `npm run check:content` | Every manifest, schema, content file, picture and link is valid; registry and schema agree; no markup in words |
-| `npm run typecheck` | The registry and any record bindings compile (covers `packages/templates`) |
+| `npm run content:schemas` (*library repository*) | Application record schemas match `types.ts` (only when you changed a record type) |
+| `npx design-library-check-content --templates src/templates` (library repository: `npm run check:content`) | Every manifest, schema, content file, picture and link is valid; registry and schema agree; no markup in words |
+| `npx tsc --noEmit` | The registry and any record bindings compile |
 | Open `site.html#/app/{template}/{layout}` | The screen draws, in light, dark and more contrast |

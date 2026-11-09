@@ -2,13 +2,31 @@
   "name": "@design-library/templates",
   "private": true,
   "version": "0.1.0",
+  "license": "MIT",
   "type": "module",
   "description": "Templates (Q62, Q64): each folder is one template: a manifest, a content schema, content JSON per layout, pictures, and any custom parts in its own namespace. Rendered by @design-library/core/render.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prabinpebam/design-library.git",
+    "directory": "packages/templates"
+  },
+  "homepage": "https://prabinpebam.github.io/design-library/",
+  "bugs": {
+    "url": "https://github.com/prabinpebam/design-library/issues"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
   "exports": {
     ".": "./index.ts",
-    "./*": "./*/index.ts"
+    "./*": "./*/index.ts",
+    "./package.json": "./package.json"
   },
   "dependencies": {
     "@design-library/core": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

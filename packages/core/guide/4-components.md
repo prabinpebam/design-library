@@ -1,6 +1,8 @@
 # Step 4: customize fundamentals and compounds through public seams
 
 Goal: a component that fits your product, reached through a seam the library offers, so it keeps working in every theme, context and library update. **Never a fork.**
+> **Paths:** `agent/…`, `schemas/…` and `guide/…` are inside the installed package (`node_modules/@design-library/core/`); your templates live in your project, here `src/templates/{id}/`. Commands marked *library repository* run only there.
+
 
 ## Why no forks
 
@@ -12,7 +14,7 @@ Take the first step that works. Each step lists how to find out whether it's eno
 
 ### 1. A prop or variant
 
-Read `packages/core/agent/components/{Name}.json`: `props` (every prop, its type, default and comment) and `types` (what each union means, such as `ButtonSize`). Most needs are already a prop: `emphasis`, `size`, `tone`, `variant`, `layout`, `density`, `hideLabel`, `headingLevel`.
+Read `agent/components/{Name}.json`: `props` (every prop, its type, default and comment) and `types` (what each union means, such as `ButtonSize`). Most needs are already a prop: `emphasis`, `size`, `tone`, `variant`, `layout`, `density`, `hideLabel`, `headingLevel`.
 
 ```tsx
 <Button label="Delete page" emphasis="danger" size="l" />
@@ -60,7 +62,7 @@ When nothing in the core fits, add the smallest part in the lowest tier that can
 | Compound | An arrangement for one product's need (a sponsor wall, an opening-hours table) | Core fundamentals and tokens; never another compound (take one as a slot) |
 | Layout | A screen or section with named regions | Compounds, fundamentals, tokens; never another layout |
 
-Steps (worked example: `packages/templates/conference/parts/`):
+Steps (worked example: `node_modules/@design-library/templates/conference/parts/`):
 
 1. **Source** `parts/{fundamentals|compounds|layouts}/{Name}.tsx`:
    - Props interface `{Name}Props extends DataAttributes`, every prop typed and commented; words a person reads come in as props.
@@ -69,7 +71,7 @@ Steps (worked example: `packages/templates/conference/parts/`):
    - Native elements first (a `button` is a `button`), 44 px targets, a visible focus ring from the core focus tokens, reduced motion honoured.
    - Import only from `@design-library/core/react` (and `/render` for a layout binding) and from parts of a lower tier in the same template.
 2. **CSS** `parts/{tier}/{name}.css`: everything inside `@layer templates { … }`, selectors start with your own `[data-dl='{template}-{part}']` and reach inner pieces by child paths (`> [data-dl-part='…']`), values only from semantic roles and your `--t-{template}-{part}-*` tokens.
-3. **Tokens** in the template's `tokens/tokens.json` under `t.{template}.{part}`, each aliasing a semantic role ([Step 3](3-tokens.md)).
+3. **Tokens** in the template's `tokens/tokens.css`, as `--t-{template}-{part}-*` custom properties inside `@layer templates { :root { … } }`, each `var(--a-semantic-role)` ([Step 3](3-tokens.md)); import it from the template's `registry.tsx` with the parts' CSS. (In the library repository they're written as `tokens.json` under `t.{template}.{part}` and `npm run tokens` generates the CSS.)
 4. **Stories** `parts/{tier}/{Name}.stories.tsx`: a `StoryFile` with `component: '{template}.{Name}'`, `tier`, `summary` and one story per variant and state, in real words.
 5. **Register** it in the manifest's `parts` (`{ "name": "{template}.{Name}", "source": "parts/…/{Name}.tsx" }`), import its CSS in the template's `registry.tsx`, and, if content uses it, add a block type ([Step 2](2-content.md)).
 6. **Run the checks** below; the library then lists it on the template's "Own parts" page.
@@ -84,7 +86,7 @@ A variant or slot two or more products need. It's a change to the library itself
 | --- | --- |
 | Look up the prop in `agent/components/{Name}.json` first | Guess a prop, or reach for CSS because you didn't look |
 | Pass parts into slots | Pass styled markup into a slot |
-| Name custom parts `{template}.{Name}`, markup `{template}-{part}`, tokens `t.{template}.{part}.*` | Put a custom part in `packages/core`, or use another template's parts |
+| Name custom parts `{template}.{Name}`, markup `{template}-{part}`, tokens `t.{template}.{part}.*` | Put a custom part in the core package, or use another template's parts |
 | Style only your own part's markup, in `@layer templates` | Select `[data-dl='button']` or any core markup; use `!important`; set global styles |
 | Keep 44 px targets, focus rings, keyboard patterns and WCAG 2.2 AA in light, dark and more contrast | Ship a part that only looks right in light |
 | Use `Morph` (content changing in one box) and `Reveal` (opening in place) for motion | Animate with your own transitions or literal durations |
@@ -93,10 +95,10 @@ A variant or slot two or more products need. It's a change to the library itself
 
 | Check | Proves |
 | --- | --- |
-| `npm run typecheck` | Props and imports are right |
-| `npm run check:content` | Every part is namespaced, exists, has stories; block types, schema and registry agree |
-| `npm run tokens`, `npm run tokens:check` | The part's tokens alias semantic roles only |
-| `npm run check:parts`, `npm run check:views` | Parts reached by child paths; no styled markup in views and bindings |
-| `npm run check:materials`, `npm run check:motion`, `npm run check:layers` | No blur, literal motion or z-index outside tokens |
-| `npm run agent:index` | The part appears in `agent/index.json` with its own `agent/components/{template}.{Name}.json` |
+| `npx tsc --noEmit` | Props and imports are right |
+| `npx design-library-check-content --templates src/templates` | Every part is namespaced, exists, has stories; block types, schema and registry agree |
+| Read the template's `tokens/tokens.css` (*library repository:* `npm run tokens`, `npm run tokens:check`) | The part's tokens read semantic roles only |
+| *Library repository:* `npm run check:parts`, `npm run check:views`; in your project, read against the rules above | Parts reached by child paths; no styled markup in views and bindings |
+| *Library repository:* `npm run check:materials`, `npm run check:motion`, `npm run check:layers` | No blur, literal motion or z-index outside tokens |
+| *Library repository:* `npm run agent:index` | The part appears in `agent/index.json` with its own `agent/components/{template}.{Name}.json` |
 | Open the template's "Own parts" page in the library | Each story, in light, dark and more contrast |

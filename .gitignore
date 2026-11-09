@@ -23,3 +23,6 @@ apps/example/dist/
 
 # A local probe page, not product
 apps/library/public/zz-sync-probe.html
+
+# Installable tarballs for separate projects (tools/pack.mjs)
+/.packages/

@@ -32,7 +32,7 @@
 
 ## What is published
 
-**The `main` branch (source):** `AGENTS.md`, `package.json`, `package-lock.json`, `.npmrc` (registry address only), `.github` (agents, hooks, installed skills), `apps`, `packages`, `tools` and `docs`.
+**The `main` branch (source):** `AGENTS.md`, `package.json`, `package-lock.json` (tarball URLs on `registry.npmjs.org`; no `.npmrc`, the proxy is this machine's user config, [Handoff readiness](handoff-readiness.md) B3), `LICENSE` (MIT), `.github` (agents, hooks, installed skills), `apps`, `packages`, `tools` and `docs`.
 
 **The `gh-pages` branch (site):** only the built library and the `docs` host, plus `.nojekyll`.
 
@@ -59,16 +59,16 @@ No token is printed, stored or committed: pushes use the owner's existing `gh` l
 
 ## Licences
 
-- The project's own files have **no licence file**: public, but all rights reserved until the owner chooses one. Nothing is added here without the owner.
+- The project's own files are **MIT** (owner, 2026-11-09 07:57, [DoD Q82](definition-of-done.md#owner-instructions)): `LICENSE` at the root and in each package (`"license": "MIT"`), copyright Prabin Pebam.
 - Installed skills and agents in `.github` come from the owner's `agentic-craft` and `agent-orchestration` (both MIT, copyright Prabin Pebam).
-- `docs/shell` is Slate's runtime. Slate's own repository is public with no licence ([its licensing review](https://github.com/prabinpebam/slate/blob/main/LICENSING-REVIEW.md), finding 1, still open); its vendored libraries ship their licence texts beside them.
+- `docs/shell` is Slate's runtime. Slate's own repository is public with **no licence** (GitHub reports none, checked 2026-11-09 08:40), so the MIT licence of this repository does **not** cover `docs/shell`: it stays all rights reserved by its author (the same owner) until Slate picks a licence ([its licensing review](https://github.com/prabinpebam/slate/blob/main/LICENSING-REVIEW.md), finding 1, still open); its vendored libraries ship their licence texts beside them.
 - Fonts and icon sets are installed packages with their licences recorded in the [brief](brief.md) (OFL, MIT, Apache-2.0); the build bundles only what the library imports.
 
 ## Repository
 
 | Field | Value (deployed 2026-11-09, F15.H3) |
 | --- | --- |
-| Repository | [prabinpebam/design-library](https://github.com/prabinpebam/design-library), public, no licence (all rights reserved until the owner picks one) |
+| Repository | [prabinpebam/design-library](https://github.com/prabinpebam/design-library), public, MIT (since 2026-11-09, Q82; `docs/shell` excepted, see Licences) |
 | Branches | `main` (source); `gh-pages` (the built site, one commit, replaced on every deploy) |
 | Library | [prabinpebam.github.io/design-library/](https://prabinpebam.github.io/design-library/), deep links such as [`#/motion`](https://prabinpebam.github.io/design-library/#/motion) and [`site.html#/app/projects/dashboard`](https://prabinpebam.github.io/design-library/site.html#/app/projects/dashboard) |
 | Docs | [prabinpebam.github.io/design-library/docs/](https://prabinpebam.github.io/design-library/docs/) |

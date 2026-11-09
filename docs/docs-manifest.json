@@ -21,6 +21,7 @@
     { "path": "design-tool-audit.md", "title": "Design tool audit", "order": 9, "icon": "rule", "type": "page", "status": "draft", "updated": "2026-11-08" },
     { "path": "materials.md", "title": "Materials and backgrounds", "order": 10, "icon": "layers", "type": "page", "status": "draft", "updated": "2026-11-08" },
     { "path": "visual-representation.md", "title": "Visual representation", "order": 10.5, "icon": "insights", "type": "page", "status": "draft", "updated": "2026-11-09" },
-    { "path": "consumer-audit.md", "title": "Consumer guide audit", "order": 11, "icon": "rule", "type": "page", "status": "draft", "updated": "2026-11-09" }
+    { "path": "consumer-audit.md", "title": "Consumer guide audit", "order": 11, "icon": "rule", "type": "page", "status": "draft", "updated": "2026-11-09" },
+    { "path": "handoff-readiness.md", "title": "Handoff readiness", "order": 11.5, "icon": "checklist", "type": "page", "status": "draft", "updated": "2026-11-09" }
   ]
 }

@@ -4,64 +4,61 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 ## Before you start
 
-- **What you get:** TypeScript and TSX source plus CSS, not a built bundle. The packages are private workspaces (`@design-library/core`, `@design-library/templates`), not published to a registry.
-- **What you need:** Node 20.19 or later (Vite 8's floor; the library is developed on Node 26), React 19, and a bundler that compiles TSX from a workspace package and imports JSON and CSS. Vite 8 with `@vitejs/plugin-react` is what the library itself uses and what this guide assumes.
-- **Package sources:** install public packages only from the registry in the repository's `.npmrc` (the approved npm proxy). Never switch registries to get past a failure.
+- **What you get:** two packages, `@design-library/core` and `@design-library/templates` (optional), as TypeScript and TSX source plus CSS, not a built bundle: your Vite build compiles them. They aren't on a package registry; each version is two tarballs attached to a [GitHub release](https://github.com/prabinpebam/design-library/releases). MIT licence.
+- **What you need:** Node 20.19 or later (Vite 8's floor), React 19, Vite 8 with `@vitejs/plugin-react`, TypeScript.
+- **Package sources:** install public packages from the registry your project is configured for. If your organisation requires a proxy or private feed, use it; never switch registries to get past a failure.
 
-## Choose how your app lives
+## Supported
 
-| Way | When | Status |
-| --- | --- | --- |
-| **A. An app inside this repository** (`apps/{your-app}`) | You can work in this repository. Every check runs on your app as-is. | Supported; what the library app does |
-| **B. A separate repository linking the packages** (`"@design-library/core": "file:../design-library/packages/core"`) | Your product has its own repository. | Possible, not yet proven: the content and token checks only look inside this repository, so you run them here |
+| Stack | Status |
+| --- | --- |
+| React 19 in the browser, bundled by **Vite 8** (`@vitejs/plugin-react`), TypeScript with `moduleResolution: "Bundler"` | Supported and proven (this repository's apps, and a separate project in [Handoff readiness](https://prabinpebam.github.io/design-library/docs/#handoff-readiness.md)) |
+| Other bundlers (webpack, Next.js with `transpilePackages`, Parcel, Rspack) | Not supported in 0.1: `@design-library/templates` loads content with `import.meta.glob`, and `@design-library/core/react` also exports the component stories, whose media use Vite's `?url` imports |
+| Server rendering (Next.js, Remix, Vite SSR) | Not proven: modules guard browser globals, but nothing has been rendered on a server |
+| Other frameworks (Vue, Svelte, Angular, plain HTML) | Not supported: the components are React. The CSS (`css/index.css`) and tokens work anywhere, but the markup contract is the React components' |
+| React 18 or earlier | Not supported (`peerDependencies` `react` `^19.0.0`) |
 
-The rest of this step shows **A**. For **B**, do the same in your repository and add the linked folder to your bundler's allowed files (Vite: `server.fs.allow`).
+## Steps (a separate project)
 
-## Steps
+1. **Start a Vite + React + TypeScript app** if you don't have one (any folder; nothing from the library repository is needed). Your `package.json` needs `"type": "module"` and these scripts: `"dev": "vite"`, `"build": "vite build"`.
 
-1. **Create the app folder** `apps/{your-app}/` with `package.json`:
+2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.1.0), with React and the build tools:
 
-   ```json
-   {
-     "name": "@your-org/your-app",
-     "private": true,
-     "version": "0.1.0",
-     "type": "module",
-     "scripts": { "dev": "vite --host 127.0.0.1", "build": "vite build" },
-     "dependencies": {
-       "@design-library/core": "0.1.0",
-       "@design-library/templates": "0.1.0",
-       "react": "^19.3.1",
-       "react-dom": "^19.3.1"
-     },
-     "devDependencies": {
-       "@types/react": "^19.3.0",
-       "@types/react-dom": "^19.3.0",
-       "@vitejs/plugin-react": "^6.1.2",
-       "typescript": "~6.0.3",
-       "vite": "^8.3.5"
-     }
-   }
+   ```sh
+   npm install https://github.com/prabinpebam/design-library/releases/download/v0.1.0/design-library-core-0.1.0.tgz https://github.com/prabinpebam/design-library/releases/download/v0.1.0/design-library-templates-0.1.0.tgz react@^19 react-dom@^19
+   npm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19
    ```
 
-   Leave out `@design-library/templates` if you won't render templates.
+   Leave out the templates tarball if you won't render templates. Always install the two together, from the same release: templates depends on the core of the same version. Without access to GitHub releases, build the same tarballs from a clone of [the library repository](https://github.com/prabinpebam/design-library): `npm run pack` there writes them to `.packages/` (no install needed), then install those files by path.
 
-2. **Register the workspace** by adding `"apps/{your-app}"` to `workspaces` in the root `package.json`. Name it exactly: never a glob such as `apps/*` (it would sweep in folders that aren't packages). Then run `npm install` from the root.
-
-3. **Add `vite.config.ts`**, allowing the repository root so Vite can read the packages:
+3. **Add `vite.config.ts`:**
 
    ```ts
    import { defineConfig } from 'vite';
    import react from '@vitejs/plugin-react';
-   import { fileURLToPath } from 'node:url';
 
-   const root = fileURLToPath(new URL('../..', import.meta.url));
-   export default defineConfig({ plugins: [react()], server: { fs: { allow: [root] } } });
+   export default defineConfig({ plugins: [react()] });
    ```
 
-4. **Add `tsconfig.json`** (the same settings as `apps/library/tsconfig.json`): `"jsx": "react-jsx"`, `"moduleResolution": "Bundler"`, `"module": "ESNext"`, `"target": "ES2022"`, `"lib": ["ES2022", "DOM", "DOM.Iterable"]`, `"resolveJsonModule": true`, `"allowJs": true`, `"isolatedModules": true`, `"skipLibCheck": true`, `"strict": true`, `"noEmit": true`, `"types": ["vite/client"]`, `"include": ["src"]`.
+4. **Add `tsconfig.json`:**
 
-5. **Add `index.html`** with `lang`, a title and one root element:
+   ```json
+   {
+     "compilerOptions": {
+       "target": "ES2022", "module": "ESNext", "moduleResolution": "Bundler", "jsx": "react-jsx",
+       "lib": ["ES2022", "DOM", "DOM.Iterable"], "types": ["vite/client"],
+       "resolveJsonModule": true, "allowJs": true, "isolatedModules": true, "skipLibCheck": true,
+       "strict": true, "noEmit": true
+     },
+     "include": ["src"]
+   }
+   ```
+
+   The packages are source, so your type check reads them with these settings. Don't add stricter flags the library isn't written for (`exactOptionalPropertyTypes`, `noUncheckedIndexedAccess`, `noPropertyAccessFromIndexSignature`, `verbatimModuleSyntax`).
+
+5. **Point your agents here:** add the block from the package's `AGENTS.md` ("First, once per project") to your project's own `AGENTS.md`.
+
+6. **Add `index.html`** with `lang`, a title and one root element:
 
    ```html
    <!doctype html>
@@ -71,7 +68,7 @@ The rest of this step shows **A**. For **B**, do the same in your repository and
    </html>
    ```
 
-6. **Import the CSS once, at the entry, before anything else renders.** It holds every token, the cascade layers and every component's styles:
+7. **Import the CSS once, at the entry, before anything else renders.** It holds every token, the cascade layers and every component's styles:
 
    ```tsx
    // src/main.tsx
@@ -83,7 +80,7 @@ The rest of this step shows **A**. For **B**, do the same in your repository and
    createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>);
    ```
 
-7. **Build the screen from layouts and components**, with no styles of your own:
+8. **Build the screen from layouts and components**, with no styles of your own:
 
    ```tsx
    // src/App.tsx
@@ -106,19 +103,23 @@ The rest of this step shows **A**. For **B**, do the same in your repository and
    }
    ```
 
-   Find each component's props in `packages/core/agent/components/{Name}.json` before you use it.
+   Find each component's props in `node_modules/@design-library/core/agent/components/{Name}.json` before you use it.
 
-8. **Place app-wide hosts once at the root:** `<Notifications />` if anything calls `notify()`. Popovers, tooltips and dialogs use the browser's top layer and need no host.
+9. **Place app-wide hosts once at the root:** `<Notifications />` if anything calls `notify()`. Popovers, tooltips and dialogs use the browser's top layer and need no host.
 
-9. **Optional: load the theme's fonts.** Without this, the system fonts are used. The faces load from the installed `@fontsource-variable` packages; nothing comes from another site:
+10. **Optional: load the theme's fonts.** Without this, the system fonts are used. The faces load from the installed `@fontsource-variable` packages; nothing comes from another site:
 
    ```ts
-   import { fontPresets, loadFace } from '@design-library/core/fonts';
-   const theme = fontPresets.find((p) => p.default)!;
-   for (const face of Object.values(theme.roles)) if (face) void loadFace(face);
+   import { applyFonts } from '@design-library/core/theme';
+   void applyFonts(); // the theme's font preset; pass { preset: 'bookish' } for another (Step 3)
    ```
 
-10. **Let contexts follow the person.** By default the CSS follows the system's light or dark, more contrast and reduced motion. To offer a choice, set attributes on `<html>` (or any subtree): `data-scheme="light|dark"`, `data-contrast="standard|more"`, `data-motion="reduce"`. Wrap a scheme change in `suspendMotion(() => …)` from `@design-library/core/react` so colours change in one frame.
+11. **Let contexts follow the person.** By default the CSS follows the system's light or dark, more contrast and reduced motion. To offer a choice, set attributes on `<html>` (or any subtree): `data-scheme="light|dark"`, `data-contrast="standard|more"`, `data-motion="reduce"`. Wrap a scheme change in `suspendMotion(() => …)` from `@design-library/core/react` so colours change in one frame.
+
+
+## Inside the library repository
+
+To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.1.0"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
 
 ## Do and don't
 
@@ -131,13 +132,13 @@ The rest of this step shows **A**. For **B**, do the same in your repository and
 
 ## Check it
 
-From the repository root:
+From your project's root:
 
 | Check | Proves |
 | --- | --- |
-| `npx tsc -p apps/{your-app} --noEmit` | Every import and prop is right |
-| `npm run build -w apps/{your-app}` | It bundles |
-| `npm run check:views` | The library's own views have no styles (it reads `apps/library`, `packages/core/render` and the templates; apply the same rules to yours) |
-| `npm run dev -w apps/{your-app}`, then open the address it prints | The screen renders; switch your system to dark and more contrast and look again |
+| `npx tsc --noEmit` | Every import and prop is right |
+| `npx vite build` | It bundles |
+| `npx vite`, then open the address it prints | The screen renders; switch your system to dark and more contrast and look again, and narrow the window to 320 px |
+| Read your views against the package `AGENTS.md` "Never" rules | No styles in views (the library repository enforces this with `npm run check:views`, which isn't shipped) |
 
 Next: [Step 2, content](2-content.md), to draw screens from JSON instead of JSX.

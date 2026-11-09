@@ -98,8 +98,20 @@
     display: none;
   }
 
-  /* Narrow: the places move behind Menu and open as a list under the bar, one row each. */
+  /* Narrow: the places move behind Menu and open as a list under the bar, one row each. When the name and the
+     actions still don't fit (a long name with an action at 320 px), the actions wrap under the name, at the end,
+     so the header never scrolls sideways. */
   @container (max-width: 48rem) {
+    [data-dl='site-header'] > [data-dl-part='bar'] {
+      flex-wrap: wrap;
+      row-gap: var(--c-site-header-gap);
+    }
+
+    [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='end'] {
+      flex: 1 0 auto;
+      justify-content: flex-end;
+    }
+
     [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'] {
       display: none;
     }

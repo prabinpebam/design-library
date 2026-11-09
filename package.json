@@ -2,6 +2,7 @@
   "name": "design-library",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "workspaces": [
     "packages/core",
@@ -27,7 +28,8 @@
     "check:content": "node ./tools/check-content.mjs",
     "content:schemas": "node ./tools/content-schemas.mjs",
     "agent:index": "node ./tools/agent-index.mjs",
-    "agent:index:check": "node ./tools/agent-index.mjs --check"
+    "agent:index:check": "node ./tools/agent-index.mjs --check",
+    "pack": "node ./tools/pack.mjs"
   },
   "devDependencies": {
     "@fluentui/svg-icons": "^1.1.345",
