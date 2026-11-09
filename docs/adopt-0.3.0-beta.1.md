@@ -6,8 +6,6 @@
 
 **Release:** [v0.3.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.3.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan](improvement-plan.md), [Stage: DesignUp improvements](definition-of-done.md#stage-designup-improvements) rows B3.1–B3.28.
 
-**State:** draft, written ahead of the release (worker 56, 2026-11-10). The proof and the install matrix are filled in when the release is cut.
-
 ## The brief for your agent
 
 ````markdown
@@ -26,8 +24,8 @@ content fields, every page draws as it did. Three small fixes change what you ma
 it, so the next band shows (wide windows unchanged); a `TextField` with
 `mode="form"` now follows its `value` while focused (so a Clear button empties it), and a `clearable` search field no
 longer shows the browser's own cancel mark beside the library's Clear. New checks only warn unless you pass `--strict`.
-Proof: a copy of a real site installed this version unchanged; it type-checked, built and rendered every route with
-no new console errors and no visual change (record on the page linked above).
+Proof: a copy of a real site (226 routes) installed this version unchanged; it type-checked, built and rendered every
+route with no new console errors and no visual change, in light, dark and at 320 px (record on the page linked above).
 
 ## 3. What's new
 
@@ -136,7 +134,20 @@ Run `npx design-library-check --share` first and keep its output to compare afte
 
 ## Proof: nothing breaks
 
-Filled in at the release (Q105.5): two copies of DesignUp's `web/` folder outside both repositories, one on 0.2.0-beta.2 and one on 0.3.0-beta.1; type check, build, every route's DOM and console compared; both deleted afterwards.
+Run 2026-11-10 about 04:15–04:45 +05:30 by worker 56 (Q105.5). Two copies of the DesignUp site's `web/` folder were made in the system temp folder, outside both repositories (no `node_modules`, `dist` or review files); nothing was written in the DesignUp project. Both had only their two library dependencies changed: one to the 0.2.0-beta.2 release files, the other to the 0.3.0-beta.1 tarballs uploaded to the release (packed from a clean worktree at the release commit). Both were deleted afterwards.
+
+| Step | 0.2.0-beta.2 copy | 0.3.0-beta.1 copy |
+| --- | --- | --- |
+| `npm install` (npm 11, through the proxy) | Pass | Pass; `@design-library/core` and `templates` at 0.3.0-beta.1 |
+| `npx tsc --noEmit` | Pass | Pass, no edits to the site |
+| `npx vite build` | Pass | Pass |
+| Routes found by following every `#/` link from Home | 226 | 226 |
+| DOM compared per route (position and size of every element, colour, background, font size and family, underline, opacity), production builds, reduced motion | — | **226 of 226 identical** at 1280 × 800 light, 1280 × 800 dark and 320 × 667 light |
+| Console errors | 0 | 0 |
+
+A dry run of the same comparison, the 0.2.0-beta.2 copy against itself, also gave 226 of 226, so the comparison is stable.
+
+**Result:** the site installs 0.3.0-beta.1, type-checks, builds and renders every route unchanged in light, dark and on a phone, with no new console errors and no edits. **Install matrix** on the 0.3.0-beta.1 tarballs: npm 10.9.9 and 11.21.1 pass (libraries, dev tools, from the lockfile).
 
 ## What's in it, by plan packet
 
