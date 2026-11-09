@@ -29,6 +29,8 @@
   --tracking-display: -0.025em;
   --tracking-tight: -0.01em;
   --tracking-normal: 0em;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
   --type-jumbo-size: var(--text-jumbo);
   --type-jumbo-leading: var(--leading-display);
   --type-jumbo-weight: var(--weight-bold);
@@ -133,6 +135,8 @@
   --radius-pill: 999px;
   --border-hairline: 1px;
   --border-thick: 2px;
+  --link-decoration: underline;
+  --link-decoration-hover: underline;
   --shadow-raised: 0px 1px 3px 0px var(--color-shadow);
   --shadow-overlay: 0px 8px 24px 0px var(--color-shadow);
   --duration-instant: 0ms;

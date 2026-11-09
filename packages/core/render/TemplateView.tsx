@@ -16,7 +16,7 @@ export const defaultHref = (template: string, layout: string) => `#/app/${templa
 /** Core layout components a content file may name. */
 export const LAYOUTS: Record<string, LayoutBinding> = {
   SiteLayout: ({ content, region }) => (
-    <SiteLayout width={content.settings?.width as 'wide' | 'reading' | undefined} header={region('header')} footer={region('footer')}>
+    <SiteLayout width={content.settings?.width as 'wide' | 'reading' | undefined} opening={content.settings?.opening as 'spaced' | 'flush' | undefined} header={region('header')} footer={region('footer')}>
       {region('main')}
     </SiteLayout>
   ),

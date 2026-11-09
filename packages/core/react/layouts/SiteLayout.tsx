@@ -12,6 +12,8 @@ export interface SiteLayoutProps extends DataAttributes {
   width?: 'wide' | 'reading';
   /** The skip link's words: "Skip to content" (default). */
   skipLabel?: string;
+  /** `spaced` (default): the page's space above the first band; `flush`: the first band meets the header, for an opening picture or tinted band. */
+  opening?: 'spaced' | 'flush';
 }
 
 /**
@@ -19,12 +21,14 @@ export interface SiteLayoutProps extends DataAttributes {
  * the setting is on, with its hairline only while content is under it), the page's parts in one centred
  * column spaced as sections, and the footer across the full width. The window scrolls; the margins hold at every width.
  * Not for an app with its own panes (ChatLayout, ListDetail) or for documentation with a side navigation (LibraryLayout).
+ * Frame settings (ID4): the column's width, margin, gap and the space above the first band are theme settings, set with
+ * `applySettings` from `@design-library/core/theme` (the allow-list is `tokens/settings.json`).
  * @tier 3
  * @a11y A skip link first, to the `main` landmark; the header slot sits in a `banner` (`header`) landmark and the
  * Footer brings its own `contentinfo`. The column's parts keep their own headings; give the page one level-1 heading
  * (usually the Hero's).
  */
-export function SiteLayout({ header, children, footer, width = 'wide', skipLabel = 'Skip to content', ...data }: SiteLayoutProps) {
+export function SiteLayout({ header, children, footer, width = 'wide', skipLabel = 'Skip to content', opening = 'spaced', ...data }: SiteLayoutProps) {
   const mainId = useId();
   // The header's hairline shows only while content is under it (materials AD2): one boolean, set on change only.
   const [under, setUnder] = useState(false);
@@ -58,7 +62,7 @@ export function SiteLayout({ header, children, footer, width = 'wide', skipLabel
     };
   }, []);
   return (
-    <div {...data} ref={root} data-dl="site-layout" data-width={width}>
+    <div {...data} ref={root} data-dl="site-layout" data-width={width} data-opening={opening === 'flush' ? 'flush' : undefined}>
       <a href={`#${mainId}`} data-dl-skip="">
         {skipLabel}
       </a>

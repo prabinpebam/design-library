@@ -77,22 +77,35 @@ function cornersOf(el: HTMLElement): string {
  * Names exist only for the transition's life, so two changes never collide.
  *
  * - Where the View Transitions API is missing, `update` simply runs (MA3: no travel, nothing breaks).
- * - Reduced motion: no names are set, so the views only cross-fade (`duration.shared` is 0 there; the pair fades on
- *   `duration.change`, motion.css).
+ * - Reduced motion (ID1, IP3): the views swap in the same frame, with no transition at all. Pass
+ *   `reducedMotion: 'fade'` to keep the earlier behaviour: no names, so the views only cross-fade on `duration.change`.
  * - A second change while one plays skips the first to its end and starts from there (never two at once).
  * - Corners (Q75): a named element keeps the corners it is seen with all the way: its group clips to them and eases
  *   from the old radius to the new, so nothing rounds or squares off when the live page returns.
  * - Timings come from the tokens through motion.css (`::view-transition-*`), and the overlay lets pointer events
  *   through to the page underneath (MA6, not yet checked in every engine).
  */
-export function viewTransition(update: () => void, options: { from?: () => SharedName[]; to?: () => SharedName[] } = {}): Promise<void> {
+export type ViewTransitionOptions = {
+  from?: () => SharedName[];
+  to?: () => SharedName[];
+  /** Under reduced motion: `swap` (default) changes the view in the same frame; `fade` cross-fades it with nothing travelling. */
+  reducedMotion?: 'swap' | 'fade';
+};
+
+/** Whether the person asked for reduced motion, by their system setting or the root's `data-motion="reduce"`. */
+export function prefersReducedMotion(): boolean {
+  return matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduce';
+}
+
+export function viewTransition(update: () => void, options: ViewTransitionOptions = {}): Promise<void> {
   const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void>; finished: Promise<void>; skipTransition: () => void } };
-  if (typeof doc.startViewTransition !== 'function' || document.hidden) {
+  const reduce = prefersReducedMotion();
+  if (typeof doc.startViewTransition !== 'function' || document.hidden || (reduce && options.reducedMotion !== 'fade')) {
+    running?.skipTransition();
     update();
     return Promise.resolve();
   }
   running?.skipTransition();
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduce';
   const named: HTMLElement[] = [];
   // Each name's corners before and after the change (Q75), so its group can round them all the way.
   const corners = new Map<string, { from?: string; to?: string }>();

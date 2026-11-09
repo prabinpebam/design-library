@@ -20,7 +20,8 @@ export interface LinkProps extends DataAttributes {
  * Not for performing an action on this page (use Button).
  * @tier fundamental
  * @family text
- * @a11y Native `a[href]`; underlined so it is never colour alone; `aria-current="page"` when current.
+ * @a11y Native `a[href]`; underlined so it is never colour alone (`link.decoration`; a theme that turns the rest line off
+ * keeps it on hover and keyboard focus, and owes 3:1 between link and text colour); `aria-current="page"` when current.
  * @key Enter: follows the link
  */
 export function Link({ href, children, current = false, external = false, newTab = false, ...data }: LinkProps) {

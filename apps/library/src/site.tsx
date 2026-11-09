@@ -12,12 +12,32 @@ import '@design-library/core/css/index.css';
 // Q70: the library's global token choices (colour, type, icons, space, shape) apply here too and follow live.
 import './data/presets';
 import { FloatingBar, Notifications, SegmentedControl, suspendMotion, Text } from '@design-library/core/react';
+import { applyBrand, applySettings, type BaseColours } from '@design-library/core/theme';
+import { themeBrand } from './data/brand';
 import { AppearanceContext, type Contrast, type Scheme } from './data/contexts';
 import { layoutOf, statesOf } from './data/templates';
 import { layoutScreens } from './views/templates';
 import { PresetSettings } from './inspectors/presets';
 
 const routeOf = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, '')).replace(/^app\//, '');
+
+/**
+ * Frame settings shown on SiteLayout's library page (IP4): `site.html?frame=flush#/app/…` draws a template's screen
+ * with theme settings applied, through the same `applySettings` a project calls.
+ */
+const FRAMES: Record<string, Record<string, string>> = {
+  flush: { '--c-site-layout-padding-start': '0px' },
+  tight: { '--c-site-layout-gap': 'var(--space-stack-section)', '--c-site-layout-padding-block': 'var(--space-stack-section)', '--c-site-layout-width': '60rem' },
+};
+const frame = new URLSearchParams(window.location.search).get('frame');
+if (frame && FRAMES[frame]) applySettings(FRAMES[frame]);
+
+/** A brand's own base on the Colour page (IP6): `site.html?base=paper#/app/…` draws a screen on a warm paper canvas. */
+const BASES: Record<string, BaseColours> = {
+  paper: { temperature: 'warm', pins: { '25': '#f7f4ef', '900': '#1b1916', '950': '#121110' } },
+};
+const base = new URLSearchParams(window.location.search).get('base');
+if (base && BASES[base]) applyBrand({ ...themeBrand, base: BASES[base] });
 /** The screen a route shows: a state's route names its screen's. */
 const screenOf = (route: string) => {
   const shown = layoutOf(route);

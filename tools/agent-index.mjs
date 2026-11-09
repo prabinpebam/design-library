@@ -51,6 +51,8 @@ const semantic = tokenNames
     return { name: n, var: cssVar(n), ...(m.type ? { type: m.type } : {}), light, ...(dark !== undefined && dark !== light ? { dark } : {}), ...(m.description ? { description: m.description } : {}) };
   });
 const componentTokens = {};
+// Theme settings (ID4): the component tokens a project may set, per component (tokens/settings.json).
+const themeSettings = Object.fromEntries(Object.entries(json(join(core, 'tokens/settings.json'))).filter(([k]) => !k.startsWith('$')));
 for (const n of tokenNames.filter((t) => t.startsWith('c.'))) (componentTokens[n.split('.')[1]] ??= []).push(cssVar(n));
 const families = (prefix) => [...new Set(tokenNames.filter((n) => n.startsWith(prefix)).map((n) => n.split('.').slice(0, 2).join('.')))];
 
@@ -144,6 +146,14 @@ const components = sources.map(({ file, tier, name, template }) => {
     ...(Object.keys(aliases).length ? { types: aliases } : {}),
     uses: [...new Set(uses)].sort(),
     tokens: tokensRead(source, css, slug, layout),
+    ...(!template && themeSettings[name]
+      ? {
+          settings: Object.entries(themeSettings[name]).map(([v, description]) => {
+            const token = tokenNames.find((n) => cssVar(n) === v);
+            return { var: v, ...(token ? { default: resolved.light[token] } : {}), description };
+          }),
+        }
+      : {}),
     ...(!template && storied.has(name) ? { libraryPage: `${LIBRARY}#/${name.toLowerCase()}` } : {}),
   };
 });

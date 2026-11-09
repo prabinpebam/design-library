@@ -7,12 +7,17 @@
  *
  *   import { applyBrand, applyFonts } from '@design-library/core/theme';
  *   applyBrand({ colours: { 1: { name: 'Harbour', seed: '#1f6f8b' } }, accent: 1 });
+ *   applyBrand({ colours: { 1: { seed: '#1f6f8b' } }, base: { temperature: 'warm', pins: { 25: '#f7f4ef', 900: '#1b1916', 950: '#121110' } } }); // a paper canvas
  *   void applyFonts({ preset: 'editorial' });
  *
  * Or, for a stylesheet with no script: `brandCss(brand)` returns the same declarations as CSS text.
+ *
+ * Theme settings (ID4): `applySettings` / `settingsCss` set the component tokens on the published allow-list
+ * (`tokens/settings.json`, e.g. SiteLayout's frame) and refuse every other name.
  */
 import { BRAND_SLOTS, generate } from '../colour/index.mjs';
 import colourConfig from '../tokens/colour.config.json';
+import settingsList from '../tokens/settings.json';
 import { fontPresets, fontRoles, loadFace, resolveRoles, type FontFace, type FontRoleId } from '../fonts/loader';
 
 export type BrandSlot = (typeof BRAND_SLOTS)[number];
@@ -24,11 +29,22 @@ export interface BrandColour {
   /** Exact hex for chosen ramp steps, e.g. `{ "500": "#1f6f8b" }`. */
   pins?: Record<string, string>;
 }
+/** The base colours: black, white and the greys between, for text, surfaces and outlines (IP6). */
+export interface BaseColours {
+  /** `neutral`, `warm` (a paper canvas) or `cool` greys; the theme's when left out. */
+  temperature?: 'neutral' | 'warm' | 'cool';
+  /** A faint tint toward a colour (`colour`, `#rrggbb`) or a brand slot (`from`, 1–4 or `accent`), strength 0–0.04. */
+  tint?: { colour?: string; from?: number | 'accent'; strength?: number };
+  /** Exact hex for chosen steps ("0" the lightest, "25" the page canvas, "950" the darkest ink), e.g. `{ "25": "#f7f4ef" }`. Pin the dark end (900, 950) too when you pin a tinted light end, so the dark scheme stays near black. */
+  pins?: Record<string, string>;
+}
 export interface Brand {
   /** Up to four brand colours, by slot "1"–"4". */
   colours: Partial<Record<BrandSlot, BrandColour>>;
   /** The slot the accent (links, focus, primary buttons, selection) is built from; 1 when left out. */
   accent?: number;
+  /** The base colours (canvas, text, greys) when the brand needs its own, e.g. a warm paper; the theme's when left out. */
+  base?: BaseColours;
 }
 
 type Tree = { p: Record<string, Record<string, { $value: unknown }>>; color: { brand: Record<string, { $value: unknown }> } };
@@ -39,7 +55,8 @@ const cssVar = (path: string) => `var(--${path.replace(/\./g, '-')})`;
 /** The custom properties a brand sets, and the generator's errors (nothing to set while there are any). */
 export function brandVars(brand: Brand): { vars: Record<string, string>; errors: string[] } {
   const config = colourConfig as unknown as Record<string, unknown>;
-  const { tree, errors } = generate({ ...config, brand: { accent: 1, ...brand } }) as { tree: Tree | null; errors: string[] };
+  const { base, ...rest } = brand;
+  const { tree, errors } = generate({ ...config, ...(base ? { base } : {}), brand: { accent: 1, ...rest } }) as { tree: Tree | null; errors: string[] };
   if (!tree || errors.length) return { vars: {}, errors: errors.length ? errors : ['The colour generator returned nothing.'] };
   const vars: Record<string, string> = {};
   for (const g of Object.keys(tree.p).filter((k) => /^brand-\d$/.test(k) || k === 'accent'))
@@ -49,6 +66,11 @@ export function brandVars(brand: Brand): { vars: Record<string, string>; errors:
       vars[`--p-${g}-${step}`] = a ? cssVar(a) : hexOf(t.$value);
     }
   vars['--p-alpha-accent-14'] = hexOf(tree.p.alpha['accent-14'].$value);
+  // A brand's own base (IP6) writes the base ramp and the layers made from its ink; without one, the theme's stay.
+  if (base) {
+    for (const [step, t] of Object.entries(tree.p.base)) if (!step.startsWith('$')) vars[`--p-base-${step}`] = hexOf(t.$value);
+    for (const [k, t] of Object.entries(tree.p.alpha)) if (k.startsWith('base-')) vars[`--p-alpha-${k}`] = hexOf(t.$value);
+  }
   for (const [k, t] of Object.entries(tree.color.brand)) if (!k.startsWith('$')) vars[`--color-brand-${k}`] = cssVar(aliasOf(t.$value) ?? '');
   return { vars, errors: [] };
 }
@@ -75,6 +97,44 @@ export function applyBrand(brand: Brand | null, target: HTMLElement = document.d
   return [];
 }
 
+/**
+ * Theme settings (ID4, IP4): the component tokens a project may set, from the published allow-list
+ * (`tokens/settings.json`, per component). Every other `--c-*` token stays private.
+ *
+ *   applySettings({ '--c-site-layout-gap': 'var(--space-stack-section)', '--c-site-layout-padding-start': '0px' });
+ */
+export const themeSettings = Object.fromEntries(Object.entries(settingsList).filter(([k]) => !k.startsWith('$'))) as Record<string, Record<string, string>>;
+const allowed = new Set(Object.values(themeSettings).flatMap((s) => Object.keys(s)));
+
+/** The names in a set of settings that aren't on the allow-list, each with what to do instead. */
+export function settingsErrors(settings: Record<string, string>): string[] {
+  return Object.keys(settings)
+    .filter((name) => !allowed.has(name))
+    .map((name) => `"${name}" isn't a theme setting; use one of ${[...allowed].join(', ')}, or a prop, slot or your template's own tokens`);
+}
+
+/** Settings as CSS text, for a stylesheet loaded after `css/index.css`. Throws on a name off the allow-list. */
+export function settingsCss(settings: Record<string, string>, selector = ':root'): string {
+  const errors = settingsErrors(settings);
+  if (errors.length) throw new Error(`settingsCss: ${errors.join('; ')}`);
+  return `${selector} {\n${Object.entries(settings)
+    .map(([k, v]) => `  ${k}: ${v};`)
+    .join('\n')}\n}\n`;
+}
+
+const appliedSettings = new WeakMap<HTMLElement, string[]>();
+/** Sets theme settings on an element (the document by default); `null` returns to the defaults. Returns the errors; nothing is set while there are any. */
+export function applySettings(settings: Record<string, string> | null, target: HTMLElement = document.documentElement): string[] {
+  for (const name of appliedSettings.get(target) ?? []) target.style.removeProperty(name);
+  appliedSettings.delete(target);
+  if (!settings) return [];
+  const errors = settingsErrors(settings);
+  if (errors.length) return errors;
+  for (const [k, v] of Object.entries(settings)) target.style.setProperty(k, v);
+  appliedSettings.set(target, Object.keys(settings));
+  return [];
+}
+
 const FALLBACK: Record<FontFace['classification'], string> = {
   sans: "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
   serif: "Georgia, 'Times New Roman', serif",

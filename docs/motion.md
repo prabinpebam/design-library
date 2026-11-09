@@ -310,7 +310,7 @@ The implementation (Q65.4) builds these; the tiers follow [Tiers](foundation.md#
 | **P4** | `Reveal` | 1 | S3 | `<Reveal open={bool}>`: one mechanism everywhere, grid rows `0fr` ↔ `1fr` (*revised F15.83*, MD7: `interpolate-size` is not in every engine and a second path would be a redundant variant); closed content `inert` |
 | **P5** | `usePresence` | 0 (behaviour) | S4 for elements React mounts and unmounts | Keeps an element mounted through its exit; `data-presence="enter" \| "exit"`; native popovers and dialogs use `@starting-style` and `allow-discrete` instead, no script |
 | **P6** | `flip()` and `useFlip` | 0 | S5 | Pure module: record rects, apply inverse transforms with Web Animations, cancel and restart from the current rect, capped by T13 |
-| **P7** | `viewTransition(update, { types })` and `shareName(el, name)` | 0 | S6 | Feature-detects the View Transitions API; falls back to running the update with S7; reduced motion: cross-fade only; skips if one is running; names assigned only for the transition's life (no collisions) |
+| **P7** | `viewTransition(update, { types })` and `shareName(el, name)` | 0 | S6 | Feature-detects the View Transitions API; falls back to running the update with S7; reduced motion: swaps in the same frame (ID1; `reducedMotion: 'fade'` keeps a cross-fade only); skips if one is running; names assigned only for the transition's life (no collisions) |
 | **P8** | `check:motion` | Tooling | Enforcement | See below |
 
 Components never import P5–P7 to invent new effects: each catalogue row (C1–C28) names the primitive it uses.

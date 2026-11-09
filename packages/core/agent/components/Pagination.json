@@ -141,6 +141,8 @@
     "--color-text-muted",
     "--duration-change",
     "--easing-standard",
+    "--link-decoration",
+    "--link-decoration-hover",
     "--size-focus-offset",
     "--size-focus-width",
     "--space-inline-pair",

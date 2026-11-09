@@ -90,7 +90,8 @@
 
   /*
    * Shared element (Q65 P7, C10): viewTransition() in behaviour/motion.ts. Named elements travel over the shared role;
-   * everything else cross-fades over change. Reduced motion: no names are set and shared is 0, so it only fades. The
+   * everything else cross-fades over change. Reduced motion (ID1): viewTransition() swaps in the same frame and starts
+   * no transition; with `reducedMotion: 'fade'` no names are set and shared is 0, so it only fades. The
    * overlay never takes the pointer (MA6): a click during the change reaches the page.
    */
   ::view-transition {

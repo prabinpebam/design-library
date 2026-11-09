@@ -7,7 +7,7 @@
   "summary": "Navigates to a URL or route. Not for performing an action on this page (use Button).",
   "family": "text",
   "a11y": [
-    "Native `a[href]`; underlined so it is never colour alone; `aria-current=\"page\"` when current."
+    "Native `a[href]`; underlined so it is never colour alone (`link.decoration`; a theme that turns the rest line off keeps it on hover and keyboard focus, and owes 3:1 between link and text colour); `aria-current=\"page\"` when current."
   ],
   "keys": [
     {
@@ -64,7 +64,21 @@
     "--border-thick",
     "--color-text",
     "--color-text-link",
+    "--link-decoration",
+    "--link-decoration-hover",
     "--space-inline-pair"
+  ],
+  "settings": [
+    {
+      "var": "--link-decoration",
+      "default": "underline",
+      "description": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus."
+    },
+    {
+      "var": "--link-decoration-hover",
+      "default": "underline",
+      "description": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/link",
   "usedBy": [

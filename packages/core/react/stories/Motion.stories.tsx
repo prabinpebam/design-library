@@ -15,7 +15,7 @@ const walks = [
 ];
 
 /** A card opens to its detail: its picture and title travel to their new place while everything else cross-fades. */
-function CardToDetail() {
+function CardToDetail({ reducedMotion }: { reducedMotion?: 'swap' | 'fade' } = {}) {
   const id = useId();
   const [open, setOpen] = useState<number | null>(null);
   const parts = (key: string): SharedName[] => {
@@ -34,7 +34,7 @@ function CardToDetail() {
         // The button that was pressed is gone: focus goes to the matching one in the new view.
         document.querySelector<HTMLElement>(`[data-demo-card="${id}-${next}"] button`)?.focus();
       },
-      { from: () => parts(from), to: () => parts(next) },
+      { from: () => parts(from), to: () => parts(next), reducedMotion },
     );
   };
   if (open !== null) {
@@ -78,12 +78,23 @@ export default {
     {
       title: 'A card opens to its detail',
       description:
-        'Press Open: the card’s picture and title travel to their place in the detail over 400 ms (duration.shared) while the rest cross-fades over 200 ms; Back reverses it. Only those two are named, and only for the change. Reduced motion, or a browser without view transitions: the views only cross-fade, or swap.',
+        'Press Open: the card’s picture and title travel to their place in the detail over 400 ms (duration.shared) while the rest cross-fades over 200 ms; Back reverses it. Only those two are named, and only for the change. Turn on Reduced motion in the title bar and press Open again: the detail replaces the cards in the same frame, with nothing travelling and no fade. A browser without view transitions swaps the same way.',
       code: `viewTransition(() => flushSync(() => setOpen(i)), {
   from: () => [[cardPicture, 'picture'], [cardTitle, 'title']],
   to: () => [[detailPicture, 'picture'], [detailTitle, 'title']],
 })`,
       render: () => <CardToDetail />,
+    },
+    {
+      title: 'A fade kept under reduced motion',
+      description:
+        'For a change that reads better with a short fade even when motion is reduced, pass reducedMotion: ‘fade’. With Reduced motion on, nothing travels and the views cross-fade over 200 ms (duration.change); with it off, this behaves like the story above.',
+      code: `viewTransition(() => flushSync(() => setOpen(i)), {
+  from: () => [[cardPicture, 'picture'], [cardTitle, 'title']],
+  to: () => [[detailPicture, 'picture'], [detailTitle, 'title']],
+  reducedMotion: 'fade',
+})`,
+      render: () => <CardToDetail reducedMotion="fade" />,
     },
   ],
 } satisfies StoryFile;

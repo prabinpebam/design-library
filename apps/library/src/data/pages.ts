@@ -9,7 +9,7 @@ import { countsOf, placeOf, statesOf, templates, type Template, type TemplateLay
 import { templateOf } from '@design-library/templates';
 import { docsHref, docsSource } from './site-links';
 import corePackage from '../../../../packages/core/package.json';
-import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories,  conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, linkStories, navigationStories, segmentedControlStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories, type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/react';
+import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories,  conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, themeStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, linkStories, navigationStories, segmentedControlStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories, type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/react';
 
 export type Block =
   /** Literal colour ramps shown once: primitives narrowed by `only`, the spectrum, or the custom sets. */
@@ -527,6 +527,12 @@ export const pages: Page[] = withDocs(withPrinciples([
         block: { type: 'palette', group: 'p', only: ['base'] },
       },
       {
+        heading: 'A brand’s own base',
+        minor: true,
+        intro: 'From code, a project gives the base its own temperature, tint or pinned steps with applyBrand’s base, for a canvas the brand owns (a warm paper, a cool studio grey). Left out, the theme’s greys stay.',
+        block: { type: 'stories', file: themeStories },
+      },
+      {
         heading: 'Base colour roles',
         minor: true,
         intro: 'Each cell shows the ink a role reads in that context and, for text and outlines, its contrast on the page canvas: text needs 4.5:1, outlines and the focus ring 3:1.',
@@ -584,7 +590,7 @@ export const pages: Page[] = withDocs(withPrinciples([
       { heading: 'Sizes', minor: true, intro: 'Open-ended names: xs to xxxxl, then jumbo at the top.', block: { type: 'token-rows', group: 'text' } },
       { heading: 'Line height', minor: true, block: { type: 'token-rows', group: 'leading' } },
       { heading: 'Weight', minor: true, block: { type: 'token-rows', group: 'weight' } },
-      { heading: 'Tracking', minor: true, block: { type: 'token-rows', group: 'tracking' } },
+      { heading: 'Tracking', minor: true, intro: 'Display, tight and normal close or keep the gaps; wide and wider open them, only for a few words set small or in capitals (an eyebrow, a tag, a mark), never for running text. A custom part reads these roles instead of a raw em value.', block: { type: 'token-rows', group: 'tracking' } },
       { heading: 'Roles and axes', minor: true, block: { type: 'token-rows', group: 'font' } },
     ],
   },
@@ -673,7 +679,7 @@ export const pages: Page[] = withDocs(withPrinciples([
       },
       {
         heading: 'Shared element',
-        intro: 'When the same thing is on both sides of a change of view (a card and its detail), it travels instead of disappearing and reappearing; everything else cross-fades. viewTransition() names only those elements, only for the change.',
+        intro: 'When the same thing is on both sides of a change of view (a card and its detail), it travels instead of disappearing and reappearing; everything else cross-fades. viewTransition() names only those elements, only for the change. With reduced motion the view swaps at once, unless the call asks to keep a fade.',
         block: { type: 'stories', file: motionStories },
       },
     ],

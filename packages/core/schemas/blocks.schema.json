@@ -149,6 +149,13 @@
           ],
           "description": "The main column: wide (default) or a reading column."
         },
+        "opening": {
+          "enum": [
+            "spaced",
+            "flush"
+          ],
+          "description": "Spaced (default): the page's space above the first band; flush: the first band meets the header, for an opening picture or tinted band."
+        },
         "state": {
           "enum": [
             "failed",
