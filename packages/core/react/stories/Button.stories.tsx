@@ -382,5 +382,21 @@ export default {
       code: `<Button label="Notes" icon="comment" iconOnly emphasis="quiet" size="s" expanded={open} controls="notes-pane" onClick={toggle} />`,
       render: () => <Disclosure />,
     },
+    {
+      title: 'Goes somewhere',
+      description:
+        'href makes the button a link (a[href]) with the button’s look and focus ring, for the one destination that is the main call to action, such as a hero’s or a header’s. Enter follows it; the browser’s link menu and new-tab keys work. Everywhere else a destination is a Link. onClick runs as it’s followed (a router may call preventDefault). Unavailable keeps it focusable and stops it going.',
+      arrangement: 'row',
+      code: `<Button href="#/get-started" emphasis="primary" label="Get started" />
+<Button href="#/colour" label="See the colours" icon="chevron-end" />
+<Button href="#/link" label="Buy tickets" unavailable="Tickets go on sale in March" />`,
+      render: () => (
+        <>
+          <Button href="#/get-started" emphasis="primary" label="Get started" />
+          <Button href="#/colour" label="See the colours" icon="chevron-end" />
+          <Button href="#/link" label="Buy tickets" unavailable="Tickets go on sale in March" />
+        </>
+      ),
+    },
   ],
 } satisfies StoryFile;

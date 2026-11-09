@@ -67,4 +67,41 @@
       gap: var(--space-stack-item);
     }
   }
+
+  /* IP10: a toned section is one band: its fill is its only boundary (no border, no shadow), its space inside it. */
+  [data-dl='section'][data-tone] {
+    padding: var(--c-section-tone-inset-block) var(--c-section-tone-inset-inline);
+    border-radius: var(--c-section-tone-radius);
+    background-color: var(--dl-section-tone);
+  }
+
+  [data-dl='section'][data-tone='sunken'] {
+    --dl-section-tone: var(--c-section-tone-sunken);
+  }
+
+  [data-dl='section'][data-tone='raised'] {
+    --dl-section-tone: var(--c-section-tone-raised);
+  }
+
+  [data-dl='section'][data-tone='tint'] {
+    --dl-section-tone: var(--c-section-tone-tint);
+  }
+
+  /* Bleeding: the fill runs to the window's edges as a band across the page; the parts keep the column's edges. */
+  [data-dl='section'][data-tone][data-bleed] {
+    padding-inline: 0;
+    border-radius: 0;
+    background-color: transparent;
+    border-image: linear-gradient(var(--dl-section-tone), var(--dl-section-tone)) fill 0 / 0 / 0 100vmax;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='section'][data-tone] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+
+    [data-dl='section'][data-tone][data-bleed] {
+      outline: none;
+    }
+  }
 }

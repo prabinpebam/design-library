@@ -52,6 +52,26 @@
           "type": "boolean",
           "default": "false",
           "description": "Opens in a new browser tab (`target=\"_blank\"`, `rel=\"noopener\"`): shows the new-tab icon with a spoken twin. For something the person keeps beside this page, like a standalone preview."
+        },
+        {
+          "name": "onPointerEnter",
+          "type": "(event: PointerEvent<HTMLAnchorElement>) => void",
+          "description": "The pointer arrives over it (IP9), e.g. to preview the place it goes."
+        },
+        {
+          "name": "onPointerLeave",
+          "type": "(event: PointerEvent<HTMLAnchorElement>) => void",
+          "description": "The pointer leaves it (IP9)."
+        },
+        {
+          "name": "onFocus",
+          "type": "(event: FocusEvent<HTMLAnchorElement>) => void",
+          "description": "It takes focus (IP9): pair with `onPointerEnter` so a keyboard reaches the same preview."
+        },
+        {
+          "name": "onBlur",
+          "type": "(event: FocusEvent<HTMLAnchorElement>) => void",
+          "description": "It loses focus (IP9)."
         }
       ]
     }

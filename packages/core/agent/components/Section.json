@@ -51,6 +51,17 @@
           "description": "A section inside another section's content: its parts sit closer, so it reads as one group of the outer section."
         },
         {
+          "name": "tone",
+          "type": "'sunken' | 'raised' | 'tint'",
+          "description": "A band with its own fill, from the elevation ladder (IP10): `sunken` (quiet, below the page), `raised` (a step above it, no shadow) or `tint` (one clear neutral step). The fill is the section's only boundary; its parts sit inside it. Left out, the section sits on the page with no fill. Never inside a card or another toned section."
+        },
+        {
+          "name": "bleed",
+          "type": "boolean",
+          "default": "false",
+          "description": "With `tone`: the fill runs to the window's edges as a band across the page, the parts keeping the column's edges. For a section directly in a SiteLayout column."
+        },
+        {
           "name": "children",
           "type": "ReactNode"
         },
@@ -71,6 +82,7 @@
     "Heading"
   ],
   "tokens": [
+    "--border-hairline",
     "--c-section-content-gap",
     "--c-section-gap",
     "--c-section-head-gap",
@@ -81,6 +93,12 @@
     "--c-section-nested-content-gap",
     "--c-section-nested-gap",
     "--c-section-nested-head-gap",
+    "--c-section-tone-inset-block",
+    "--c-section-tone-inset-inline",
+    "--c-section-tone-radius",
+    "--c-section-tone-raised",
+    "--c-section-tone-sunken",
+    "--c-section-tone-tint",
     "--color-accent",
     "--leading-tight",
     "--space-stack-item",

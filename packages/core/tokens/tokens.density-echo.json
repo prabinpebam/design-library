@@ -356,6 +356,16 @@
         "$description": "surface=\"sunken\": the region's corners (echoed for density contexts)"
       }
     },
+    "section": {
+      "$extensions": {
+        "owner": "Section"
+      },
+      "tone-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "A contained toned section's corners; a bleeding one is square, edge to edge of the window (echoed for density contexts)"
+      }
+    },
     "segmented-control": {
       "$extensions": {
         "owner": "SegmentedControl"

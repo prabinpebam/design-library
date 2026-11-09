@@ -1,9 +1,36 @@
+import { useState } from 'react';
 import { Link } from '../fundamentals/Link';
+import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
 import { WithSettings } from './WithSettings';
 
 const noLine = { '--link-decoration': 'none' };
+
+const places = [
+  { href: '#/colour', name: 'Colour', about: 'Brand, base and status colours, and who may use each.' },
+  { href: '#/type', name: 'Typography', about: 'Faces, the type ramp and tracking.' },
+  { href: '#/motion', name: 'Motion and timing', about: 'The roles every change reads, and what holds with reduced motion.' },
+];
+
+/** Point or tab to a link and the line under the list says what it holds: the pointer and focus handlers (IP9). */
+function PreviewOnPoint() {
+  const [shown, setShown] = useState<number | null>(null);
+  return (
+    <Stack gap="item">
+      <Stack gap="pair">
+        {places.map((p, i) => (
+          <Link key={p.href} href={p.href} onPointerEnter={() => setShown(i)} onPointerLeave={() => setShown(null)} onFocus={() => setShown(i)} onBlur={() => setShown(null)}>
+            {p.name}
+          </Link>
+        ))}
+      </Stack>
+      <Text variant="body-sm" tone="muted">
+        {shown === null ? 'Point at a page or reach it with Tab to see what it holds.' : places[shown].about}
+      </Text>
+    </Stack>
+  );
+}
 
 export default {
   component: 'Link',
@@ -53,6 +80,15 @@ export default {
           </Text>
         </WithSettings>
       ),
+    },
+    {
+      title: 'Preview on point and focus',
+      description:
+        'onPointerEnter, onPointerLeave, onFocus and onBlur run on the link itself, so a list can preview where each one goes with no wrapper listening for events. Pair pointer with focus, so a keyboard reaches the same preview.',
+      code: `<Link href="#/colour" onPointerEnter={() => show(0)} onPointerLeave={hide} onFocus={() => show(0)} onBlur={hide}>
+  Colour
+</Link>`,
+      render: () => <PreviewOnPoint />,
     },
   ],
 } satisfies StoryFile;

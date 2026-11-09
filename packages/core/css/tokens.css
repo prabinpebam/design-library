@@ -657,6 +657,12 @@
   --c-section-index-size: 6rem;
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-gap: var(--space-stack-item);
+  --c-section-tone-sunken: var(--color-bg-sunken);
+  --c-section-tone-raised: var(--color-bg-raised);
+  --c-section-tone-tint: var(--color-bg-tint);
+  --c-section-tone-inset-block: var(--space-stack-section);
+  --c-section-tone-inset-inline: var(--space-stack-section);
+  --c-section-tone-radius: var(--radius-lg);
   --c-badge-size: var(--size-target-min);
   --c-badge-size-s: var(--size-icon-md);
   --c-badge-padding-inline: var(--space-inset-sm);
@@ -1652,6 +1658,8 @@
   --c-section-nested-content-gap: var(--space-stack-item);
   --c-section-nested-gap: var(--space-stack-item);
   --c-section-nested-head-gap: var(--space-stack-pair);
+  --c-section-tone-inset-block: var(--space-stack-section);
+  --c-section-tone-inset-inline: var(--space-stack-section);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -1930,6 +1938,8 @@
   --c-section-nested-content-gap: var(--space-stack-item);
   --c-section-nested-gap: var(--space-stack-item);
   --c-section-nested-head-gap: var(--space-stack-pair);
+  --c-section-tone-inset-block: var(--space-stack-section);
+  --c-section-tone-inset-inline: var(--space-stack-section);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2208,6 +2218,8 @@
   --c-section-nested-content-gap: var(--space-stack-item);
   --c-section-nested-gap: var(--space-stack-item);
   --c-section-nested-head-gap: var(--space-stack-pair);
+  --c-section-tone-inset-block: var(--space-stack-section);
+  --c-section-tone-inset-inline: var(--space-stack-section);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2486,6 +2498,8 @@
   --c-section-nested-content-gap: var(--space-stack-item);
   --c-section-nested-gap: var(--space-stack-item);
   --c-section-nested-head-gap: var(--space-stack-pair);
+  --c-section-tone-inset-block: var(--space-stack-section);
+  --c-section-tone-inset-inline: var(--space-stack-section);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2580,6 +2594,7 @@
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
+  --c-section-tone-radius: var(--radius-lg);
   --c-segmented-control-radius: var(--radius-md);
   --c-sheet-radius: var(--radius-lg);
   --c-site-header-link-radius: var(--radius-md);
@@ -2644,6 +2659,7 @@
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
+  --c-section-tone-radius: var(--radius-lg);
   --c-segmented-control-radius: var(--radius-md);
   --c-sheet-radius: var(--radius-lg);
   --c-site-header-link-radius: var(--radius-md);
@@ -2708,6 +2724,7 @@
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
+  --c-section-tone-radius: var(--radius-lg);
   --c-segmented-control-radius: var(--radius-md);
   --c-sheet-radius: var(--radius-lg);
   --c-site-header-link-radius: var(--radius-md);
@@ -2772,6 +2789,7 @@
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
+  --c-section-tone-radius: var(--radius-lg);
   --c-segmented-control-radius: var(--radius-md);
   --c-sheet-radius: var(--radius-lg);
   --c-site-header-link-radius: var(--radius-md);
@@ -2836,6 +2854,7 @@
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
+  --c-section-tone-radius: var(--radius-lg);
   --c-segmented-control-radius: var(--radius-md);
   --c-sheet-radius: var(--radius-lg);
   --c-site-header-link-radius: var(--radius-md);
@@ -2893,6 +2912,7 @@
   --c-radio-group-tile-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-surface-radius: var(--radius-md);
+  --c-section-tone-radius: var(--radius-lg);
   --c-segmented-control-radius: var(--radius-md);
   --c-sheet-radius: var(--radius-lg);
   --c-site-header-link-radius: var(--radius-md);

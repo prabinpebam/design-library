@@ -57,6 +57,12 @@
       scale var(--duration-change) var(--easing-standard);
   }
 
+  /* IP8: a Button with href is a link that looks like a button: the same box, no underline. */
+  a[data-dl='button'] {
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+
   [data-dl='button'][data-size='xs'] {
     min-block-size: var(--c-button-size-xs);
     min-inline-size: var(--c-button-size-xs);

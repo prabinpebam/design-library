@@ -18,6 +18,26 @@ export default {
       ),
     },
     {
+      title: 'Toned',
+      description:
+        'tone gives a section its own fill from the elevation ladder: sunken, raised or tint. The fill is its only boundary, so its parts sit inside it with no border or shadow. With bleed, in a SiteLayout column, the fill runs to the window’s edges as a band across the page while the parts keep the column’s edges.',
+      code: `<Section heading="Plan a visit" tone="sunken">…</Section>
+<Section heading="Plan a visit" tone="tint" bleed>…</Section>`,
+      render: () => (
+        <>
+          <Section heading="Sunken" size={4} intro="A quiet band below the page." tone="sunken">
+            <Text tone="muted">Opening hours, the address and how to get there.</Text>
+          </Section>
+          <Section heading="Raised" size={4} intro="A step above the page, with no shadow." tone="raised">
+            <Text tone="muted">Opening hours, the address and how to get there.</Text>
+          </Section>
+          <Section heading="Tint" size={4} intro="One clear neutral step from the page." tone="tint">
+            <Text tone="muted">Opening hours, the address and how to get there.</Text>
+          </Section>
+        </>
+      ),
+    },
+    {
       title: 'Nested',
       description: 'A group inside another section’s content: one level down, its parts sit closer.',
       code: `<Section heading="Inline" level={3} size={4} nested>…</Section>`,

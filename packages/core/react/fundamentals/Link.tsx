@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { FocusEvent, PointerEvent, ReactNode } from 'react';
 import { Icon } from './Icon';
 import type { DataAttributes } from '../types';
 
@@ -13,6 +13,14 @@ export interface LinkProps extends DataAttributes {
   external?: boolean;
   /** Opens in a new browser tab (`target="_blank"`, `rel="noopener"`): shows the new-tab icon with a spoken twin. For something the person keeps beside this page, like a standalone preview. */
   newTab?: boolean;
+  /** The pointer arrives over it (IP9), e.g. to preview the place it goes. */
+  onPointerEnter?: (event: PointerEvent<HTMLAnchorElement>) => void;
+  /** The pointer leaves it (IP9). */
+  onPointerLeave?: (event: PointerEvent<HTMLAnchorElement>) => void;
+  /** It takes focus (IP9): pair with `onPointerEnter` so a keyboard reaches the same preview. */
+  onFocus?: (event: FocusEvent<HTMLAnchorElement>) => void;
+  /** It loses focus (IP9). */
+  onBlur?: (event: FocusEvent<HTMLAnchorElement>) => void;
 }
 
 /**

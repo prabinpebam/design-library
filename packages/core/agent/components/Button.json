@@ -4,10 +4,10 @@
   "tier": "fundamental",
   "import": "@design-library/core/react",
   "file": "@design-library/core/react/fundamentals/Button.tsx",
-  "summary": "Triggers an action. One component for text, icon and text, and icon-only buttons, at seven sizes, with two ways to show an operation in progress (three: inside, ring, fill). Not for navigation (use Link), on/off settings (use Switch), a menu of actions (use MenuButton) or one exclusive choice (use SegmentedControl).",
+  "summary": "Triggers an action. One component for text, icon and text, and icon-only buttons, at seven sizes, with two ways to show an operation in progress (three: inside, ring, fill). Not for navigation (use Link; `href` only for a destination that is the main call to action), on/off settings (use Switch), a menu of actions (use MenuButton) or one exclusive choice (use SegmentedControl).",
   "family": "buttons",
   "a11y": [
-    "Native `button`. Targets: 44 px and up from `normal`; `s` (36 px) and `xs` (24 px, the WCAG 2.5.8 minimum) are dense sizes for dense surfaces (O41). In progress keeps the same focused element, locked with `aria-disabled` and `aria-busy`, never `disabled`, and its present-tense label is the accessible name; the ring variant's arc is decorative (`aria-hidden`) and meets 3:1. The fill variant is a hidden `progressbar` with `aria-valuenow`, read as the button's description; its filled copy of the label is `aria-hidden`, and the label reaches 4.5:1 over both parts. Unavailable stays focusable with `aria-disabled` and its reason as the description. Icon-only buttons are named by `label`, which also shows as their hint (a Tooltip, hidden from assistive technology because it repeats the name; an unavailable button's hint is its reason, already its description). No native `title`, so there's one hint. A disclosure sets `aria-expanded` and `aria-controls`, and shows open as a selected tint. Every label, pending and done alike, shares one box, so the width never changes."
+    "Native `button`. Targets: 44 px and up from `normal`; `s` (36 px) and `xs` (24 px, the WCAG 2.5.8 minimum) are dense sizes for dense surfaces (O41). In progress keeps the same focused element, locked with `aria-disabled` and `aria-busy`, never `disabled`, and its present-tense label is the accessible name; the ring variant's arc is decorative (`aria-hidden`) and meets 3:1. The fill variant is a hidden `progressbar` with `aria-valuenow`, read as the button's description; its filled copy of the label is `aria-hidden`, and the label reaches 4.5:1 over both parts. Unavailable stays focusable with `aria-disabled` and its reason as the description. Icon-only buttons are named by `label`, which also shows as their hint (a Tooltip, hidden from assistive technology because it repeats the name; an unavailable button's hint is its reason, already its description). No native `title`, so there's one hint. A disclosure sets `aria-expanded` and `aria-controls`, and shows open as a selected tint. Every label, pending and done alike, shares one box, so the width never changes. With `href` it is a native `a[href]` (Enter follows it) with the same look and focus ring; unavailable keeps it focusable with `aria-disabled`, its reason as the description, and stops it going."
   ],
   "keys": [
     {
@@ -99,6 +99,26 @@
           "name": "controls",
           "type": "string",
           "description": "For a disclosure: the id of the region it opens."
+        },
+        {
+          "name": "onPointerEnter",
+          "type": "(event: PointerEvent<HTMLElement>) => void",
+          "description": "The pointer arrives over it (IP9), e.g. to preview what it opens. Runs beside the button's own hint handling."
+        },
+        {
+          "name": "onPointerLeave",
+          "type": "(event: PointerEvent<HTMLElement>) => void",
+          "description": "The pointer leaves it (IP9)."
+        },
+        {
+          "name": "onFocus",
+          "type": "(event: FocusEvent<HTMLElement>) => void",
+          "description": "It takes focus (IP9)."
+        },
+        {
+          "name": "onBlur",
+          "type": "(event: FocusEvent<HTMLElement>) => void",
+          "description": "It loses focus (IP9)."
         }
       ]
     },
@@ -152,12 +172,29 @@
           "description": "The failure, for the scope the button acts on (its section's message bar). The button itself returns to rest."
         }
       ]
+    },
+    {
+      "interface": "LinkButton",
+      "extends": "ButtonBase",
+      "props": [
+        {
+          "name": "href",
+          "type": "string",
+          "required": true,
+          "description": "Goes somewhere (IP8): the button is a link (`a[href]`) that looks like a button, for the few places a destination is the main call to action (a hero's \"Get tickets\", a header's \"Sign up\"). Everywhere else a destination is a Link. No progress, commit or disclosure: `type`, `progress`, `value`, `expanded` and `controls` don't apply."
+        },
+        {
+          "name": "onClick",
+          "type": "(event: MouseEvent<HTMLAnchorElement>) => void",
+          "description": "Runs as it's followed, e.g. a router taking over: call `event.preventDefault()` to stop the browser's own navigation."
+        }
+      ]
     }
   ],
   "types": {
     "ButtonSize": "'xs' | 's' | 'normal' | 'm' | 'l' | 'xl' | 'xxl'",
     "ButtonProgress": "'inside' | 'ring' | 'fill'",
-    "ButtonProps": "ActionButton | CommitButton"
+    "ButtonProps": "ActionButton | CommitButton | LinkButton"
   },
   "uses": [
     "Icon",

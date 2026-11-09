@@ -15,6 +15,14 @@ export interface SectionProps extends DataAttributes {
   index?: number;
   /** A section inside another section's content: its parts sit closer, so it reads as one group of the outer section. */
   nested?: boolean;
+  /**
+   * A band with its own fill, from the elevation ladder (IP10): `sunken` (quiet, below the page), `raised` (a step
+   * above it, no shadow) or `tint` (one clear neutral step). The fill is the section's only boundary; its parts sit
+   * inside it. Left out, the section sits on the page with no fill. Never inside a card or another toned section.
+   */
+  tone?: 'sunken' | 'raised' | 'tint';
+  /** With `tone`: the fill runs to the window's edges as a band across the page, the parts keeping the column's edges. For a section directly in a SiteLayout column. */
+  bleed?: boolean;
   children?: ReactNode;
   /** `data-*` attributes for the heading, for tooling such as revision anchors. */
   headingData?: DataAttributes;
@@ -30,7 +38,7 @@ export interface SectionProps extends DataAttributes {
  * @a11y Renders `section`, named by its heading through `aria-labelledby` when it has one. The heading level follows
  * the outline, never the visual size. An index numeral is decorative.
  */
-export function Section({ heading, level = 2, size, intro, index, nested = false, children, headingData, introData, ...data }: SectionProps) {
+export function Section({ heading, level = 2, size, intro, index, nested = false, tone, bleed = false, children, headingData, introData, ...data }: SectionProps) {
   const id = useId();
   const head = (heading || intro) && (
     <div data-dl-part="head">
@@ -53,7 +61,7 @@ export function Section({ heading, level = 2, size, intro, index, nested = false
     </>
   );
   return (
-    <section {...data} data-dl="section" data-nested={nested ? '' : undefined} data-indexed={index != null ? '' : undefined} aria-labelledby={heading ? id : undefined}>
+    <section {...data} data-dl="section" data-nested={nested ? '' : undefined} data-indexed={index != null ? '' : undefined} data-tone={tone} data-bleed={tone && bleed ? '' : undefined} aria-labelledby={heading ? id : undefined}>
       {index != null ? (
         <>
           <p data-dl-part="index" aria-hidden="true">

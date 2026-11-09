@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type FocusEvent, type MouseEvent, type PointerEvent, type ReactNode, type RefObject } from 'react';
 import { useCommit } from '../behaviour/commit';
 import { Icon } from './Icon';
 import { Progress } from './Progress';
@@ -43,9 +43,18 @@ interface ButtonBase extends DataAttributes {
   expanded?: boolean;
   /** For a disclosure: the id of the region it opens. */
   controls?: string;
+  /** The pointer arrives over it (IP9), e.g. to preview what it opens. Runs beside the button's own hint handling. */
+  onPointerEnter?: (event: PointerEvent<HTMLElement>) => void;
+  /** The pointer leaves it (IP9). */
+  onPointerLeave?: (event: PointerEvent<HTMLElement>) => void;
+  /** It takes focus (IP9). */
+  onFocus?: (event: FocusEvent<HTMLElement>) => void;
+  /** It loses focus (IP9). */
+  onBlur?: (event: FocusEvent<HTMLElement>) => void;
 }
 
 interface ActionButton extends ButtonBase {
+  href?: never;
   /** An action with no saved result to confirm (open, close, cancel, retry, export). */
   onClick?: () => void;
   /** The action it started is still running elsewhere (an export, a sync): shows in progress and ignores presses until false. */
@@ -58,6 +67,7 @@ interface ActionButton extends ButtonBase {
 }
 
 interface CommitButton extends ButtonBase {
+  href?: never;
   onClick?: never;
   busy?: never;
   /** Saves something: the button shows pending, then confirmed, on itself. Reject the promise when it fails. */
@@ -70,7 +80,23 @@ interface CommitButton extends ButtonBase {
   onError?: (error: unknown) => void;
 }
 
-export type ButtonProps = ActionButton | CommitButton;
+interface LinkButton extends ButtonBase {
+  /**
+   * Goes somewhere (IP8): the button is a link (`a[href]`) that looks like a button, for the few places a destination
+   * is the main call to action (a hero's "Get tickets", a header's "Sign up"). Everywhere else a destination is a Link.
+   * No progress, commit or disclosure: `type`, `progress`, `value`, `expanded` and `controls` don't apply.
+   */
+  href: string;
+  /** Runs as it's followed, e.g. a router taking over: call `event.preventDefault()` to stop the browser's own navigation. */
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  busy?: never;
+  pendingLabel?: never;
+  onCommit?: never;
+  doneLabel?: never;
+  onError?: never;
+}
+
+export type ButtonProps = ActionButton | CommitButton | LinkButton;
 
 const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' };
 
@@ -86,7 +112,7 @@ function fillBlocker(emphasis: string, iconOnly: boolean, value: number | undefi
 }
 
 /** Whether the button is narrower than the fill's minimum, read from the token so the theme owns it. */
-function useNarrow(ref: RefObject<HTMLButtonElement | null>, watch: boolean) {
+function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
   const [narrow, setNarrow] = useState(false);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -107,8 +133,9 @@ function useNarrow(ref: RefObject<HTMLButtonElement | null>, watch: boolean) {
 
 /**
  * Triggers an action. One component for text, icon and text, and icon-only buttons, at seven sizes, with two ways to
- * show an operation in progress (three: inside, ring, fill). Not for navigation (use Link), on/off settings (use Switch), a menu of actions (use
- * MenuButton) or one exclusive choice (use SegmentedControl).
+ * show an operation in progress (three: inside, ring, fill). Not for navigation (use Link; `href` only for a destination
+ * that is the main call to action), on/off settings (use Switch), a menu of actions (use MenuButton) or one exclusive
+ * choice (use SegmentedControl).
  * @tier fundamental
  * @family buttons
  * @a11y Native `button`. Targets: 44 px and up from `normal`; `s` (36 px) and `xs` (24 px, the WCAG 2.5.8 minimum) are
@@ -118,16 +145,17 @@ function useNarrow(ref: RefObject<HTMLButtonElement | null>, watch: boolean) {
  * button's description; its filled copy of the label is `aria-hidden`, and the label reaches 4.5:1 over both parts. Unavailable stays focusable with `aria-disabled` and its reason as the
  * description. Icon-only buttons are named by `label`, which also shows as their hint (a Tooltip, hidden from assistive technology because it repeats the name; an unavailable button's hint is its reason, already its description). No native `title`, so there's one hint. A disclosure sets
  * `aria-expanded` and `aria-controls`, and shows open as a selected tint. Every label, pending and done alike, shares
- * one box, so the width never changes.
+ * one box, so the width never changes. With `href` it is a native `a[href]` (Enter follows it) with the same look and
+ * focus ring; unavailable keeps it focusable with `aria-disabled`, its reason as the description, and stops it going.
  * @key Enter: activates
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, ...data } = props;
+  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
   const valueId = useId();
-  const self = useRef<HTMLButtonElement>(null);
+  const self = useRef<HTMLElement>(null);
   const pending = phase === 'on' || busy;
   const shown = pending ? 'on' : phase === 'done' ? 'done' : 'rest';
   const mark = (name: IconName) => <Icon name={name} size={iconSize[size]} />;
@@ -155,9 +183,54 @@ export function Button(props: ButtonProps) {
   const hintText = iconOnly && unavailable ? `${name}: ${unavailable}` : unavailable ?? (iconOnly ? name : '');
   const hint = useHint(self, hintText, { enabled: tooltip && !!hintText });
 
+  // The caller's pointer and focus handlers run beside the hint's own (IP9).
+  const both = <E,>(own: ((e: E) => void) | undefined, theirs: ((e: E) => void) | undefined) => (own || theirs ? (e: E) => (own?.(e), theirs?.(e)) : undefined);
+  const events = {
+    onPointerEnter: both(hint.tip ? hint.handlers.onPointerEnter : undefined, onPointerEnter),
+    onPointerLeave: both(hint.tip ? hint.handlers.onPointerLeave : undefined, onPointerLeave),
+    onPointerDown: hint.tip ? hint.handlers.onPointerDown : undefined,
+    onFocus: both(hint.tip ? hint.handlers.onFocus : undefined, onFocus),
+    onBlur: both<FocusEvent<HTMLElement>>(hint.tip ? hint.handlers.onBlur : undefined, onBlur),
+  };
+
+  if (href !== undefined) {
+    const follow = (e: MouseEvent<HTMLAnchorElement>) => {
+      if (unavailable) return e.preventDefault();
+      (onClick as ((event: MouseEvent<HTMLAnchorElement>) => void) | undefined)?.(e);
+    };
+    return (
+      <a
+        {...data}
+        ref={self as RefObject<HTMLAnchorElement>}
+        href={href}
+        data-dl="button"
+        data-emphasis={emphasis}
+        data-icon-only={iconOnly ? '' : undefined}
+        data-size={size}
+        data-unavailable={unavailable ? '' : undefined}
+        aria-disabled={unavailable ? true : undefined}
+        aria-label={iconOnly ? label : undefined}
+        aria-describedby={unavailable ? reasonId : undefined}
+        onClick={follow}
+        {...events}
+      >
+        <span data-dl-part="layer" data-shown="">
+          {icon && mark(icon)}
+          {!iconOnly && <span>{label}</span>}
+        </span>
+        {unavailable && (
+          <span id={reasonId} data-dl-part="reason" hidden>
+            {unavailable}
+          </span>
+        )}
+        {hint.tip}
+      </a>
+    );
+  }
+
   const activate = async () => {
     if (pending || unavailable) return;
-    if (!onCommit) return onClick?.();
+    if (!onCommit) return (onClick as (() => void) | undefined)?.();
     const result = await run(onCommit);
     if (!result.ok && 'error' in result) onError?.(result.error);
   };
@@ -165,7 +238,7 @@ export function Button(props: ButtonProps) {
   return (
     <button
       {...data}
-      ref={self}
+      ref={self as RefObject<HTMLButtonElement>}
       type={type}
       data-dl="button"
       data-emphasis={emphasis}
@@ -184,7 +257,7 @@ export function Button(props: ButtonProps) {
       aria-controls={controls}
       style={filling ? ({ '--button-fill': `${percent}%` } as CSSProperties) : undefined}
       onClick={activate}
-      {...(hint.tip ? hint.handlers : {})}
+      {...events}
     >
       {layers.map(([id, layerMark, text]) => (
         <span key={id} data-dl-part="layer" data-shown={id === shown ? '' : undefined}>

@@ -1424,6 +1424,16 @@
         "$type": "dimension",
         "$value": "{space.stack-pair}",
         "$description": "Inside a nested section's head: between its heading and its intro (echoed for space contexts)"
+      },
+      "tone-inset-block": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "A toned section's space above and below its parts, inside the fill (echoed for space contexts)"
+      },
+      "tone-inset-inline": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "A contained toned section's space at its sides, inside the fill: never less than the gap between its parts (spacing SC4); a bleeding one keeps the column's edges (echoed for space contexts)"
       }
     },
     "segmented-control": {
