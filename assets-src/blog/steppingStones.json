@@ -1,0 +1,13 @@
+{
+  "id": "steppingStones",
+  "set": "SS4 Blog",
+  "slot": "IA-B1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/blog/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/blog/assets/stepping-stones.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A path of flat stepping stones across a sunny lawn, an even strip of grass between each stone.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: picture for the post 'One gap for every list of rows', about even spacing.\nSubject: a garden path of flat stepping stones laid in neat rows with exactly the same gap between every stone.\nDetails: short grass in the gaps, seen from slightly above.\nComposition: the subject in the centre third so a 16:9 crop from the centre keeps it, lots of quiet space around it.\nStyle: editorial gouache illustration for a designer's personal blog; flat colour fields with soft painted edges, no outlines; palette of ink blue, sage green, warm sand and one coral accent; gentle daylight from the upper left; simple shapes, calm and spacious.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

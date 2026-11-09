@@ -1,0 +1,13 @@
+{
+  "id": "twoFills",
+  "set": "SS4 Blog",
+  "slot": "IA-B7",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/blog/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/blog/assets/two-fills.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "Two painted rectangles, ink blue and sage green, side by side with a narrow, even gap between them.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: figure in a design article, captioned 'Two fills, four pixels apart.'\nSubject: two flat coloured rectangles, ink blue and sage green, side by side with a narrow, perfectly even gap between them.\nDetails: painted on warm sand paper, crisp straight edges, nothing else.\nComposition: the two rectangles fill the middle half of the picture, centred, the gap vertical and in the exact centre.\nStyle: editorial gouache illustration for a designer's personal blog; flat colour fields with soft painted edges, no outlines; palette of ink blue, sage green, warm sand and one coral accent; gentle daylight from the upper left; simple shapes, calm and spacious.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

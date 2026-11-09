@@ -1,25 +1,33 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
   "assets": {
-    "harbour": {
-      "src": "assets/harbour.svg",
-      "alt": "Blue hills by the sea under a pale sky and a low sun."
+    "steppingStones": {
+      "src": "assets/stepping-stones.webp",
+      "alt": "A path of flat stepping stones across a sunny lawn, an even strip of grass between each stone."
     },
-    "meadow": {
-      "src": "assets/meadow.svg",
-      "alt": "A green meadow rising to soft hills."
+    "ripples": {
+      "src": "assets/ripples.webp",
+      "alt": "Three sets of ripples on a still pond, each spreading apart from the others, a pink water lily at the edge."
     },
-    "dusk": {
-      "src": "assets/dusk.svg",
-      "alt": "Violet hills at dusk with an orange horizon."
+    "deskByWindow": {
+      "src": "assets/desk-by-window.webp",
+      "alt": "A desk by a window with an open sketchbook, a small round clock and a cup of tea, green hills outside."
     },
-    "sand": {
-      "src": "assets/sand.svg",
-      "alt": "Golden dunes under a warm sky."
+    "reservoirPath": {
+      "src": "assets/reservoir-path.webp",
+      "alt": "A walker on a footpath curving round a still reservoir, hills reflected in the water and a stone dam at the far end."
     },
-    "frost": {
-      "src": "assets/frost.svg",
-      "alt": "White hills under a cold blue sky."
+    "turningSky": {
+      "src": "assets/turning-sky.webp",
+      "alt": "Clouds building over a sunny hillside with a lone tree, a dark band of rain coming in from one side."
+    },
+    "dayPack": {
+      "src": "assets/day-pack.webp",
+      "alt": "A small day pack on a stone bench with a bottle, a folded jacket, a map, an apple and a first-aid pouch laid out beside it."
+    },
+    "twoFills": {
+      "src": "assets/two-fills.webp",
+      "alt": "Two painted rectangles, ink blue and sage green, side by side with a narrow, even gap between them."
     }
   }
 }

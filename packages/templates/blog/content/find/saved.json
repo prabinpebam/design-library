@@ -18,7 +18,7 @@
             "description": "Seven hours, one flask, no signal.",
             "meta": "12 February 2027 · 7 min",
             "href": "/article",
-            "picture": "meadow"
+            "picture": "reservoirPath"
           },
           {
             "eyebrow": "Weather",
@@ -26,7 +26,7 @@
             "description": "What the clouds said an hour before the rain.",
             "meta": "30 January 2027 · 5 min",
             "href": "/article",
-            "picture": "dusk"
+            "picture": "turningSky"
           }
         ],
         "empty": {

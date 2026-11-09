@@ -169,7 +169,7 @@ One style set per packet, each openable in the template's standalone site, small
 | IP1 = F15.I3 | Harbour (SS1): the reference, then IA-H1–H4; the `cards` items gain `picture` | 4, **done** (below) |
 | IP2 = F15.I4 | Corporate (SS2) | 15, **done** |
 | IP3 = F15.I5 | Conference (SS3) | 5, **done** |
-| IP4 | Blog (SS4) | 7 |
+| IP4 = F15.I6 | Blog (SS4) | 7, **done** |
 | IP5 | Portfolio (SS5) | 12 |
 | IP6 | Chat (SS6) and Design (IA-D1), plus the library's chat view data (IB19–IB23) | 6 |
 | IP7 | Library scenes, portraits and the media poster (SS7) | 18 |
@@ -180,6 +180,8 @@ One style set per packet, each openable in the template's standalone site, small
 **IP2 as built (F15.I4):** IA-K1 (the ship loaded at dawn) is the reference; IA-K2–K15 are edits from it, so every picture shares the overcast-to-dawn light, the muted blue-grey palette and the orange accent. IA-K6 is the wide hero (2304×1296, WebP 72 to stay near 350 KB); the rest 1200×800, 90–175 KB. 21 picture uses across ten content files now name 15 pictures by subject (`shipAtDawn`, `officeHamburg`, …); the five drawn landscapes are gone. Generating five at once hit the deployment's rate limit (HTTP 429), so batches run two at a time.
 
 **IP3 as built (F15.I5):** IA-C1 (the main hall before the first talk) is the reference; the venue and three places to stay are edits from it, in the same warm late-afternoon light. Six uses across four content files; the drawn landscapes are gone. 86–182 KB each (the tiled hotel front at WebP 74).
+
+**IP4 as built (F15.I6):** IA-B4 (the reservoir path) is the reference; the other six are edits from it. The model painted it as soft gouache with visible brushwork rather than strictly flat fields, and the set follows it. IA-B2 was regenerated once: the first ripples crossed, which contradicts the post ("Focus rings that never overlap"). Eleven uses across five content files; the drawn landscapes are gone. 91–187 KB each (the stepping stones at WebP 72).
 
 Each packet replaces its placeholder SVGs, writes alt from the finished pictures, keeps `npm run check:content` and the build passing, and records the pictures here as done.
 

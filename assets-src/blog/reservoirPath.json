@@ -1,0 +1,13 @@
+{
+  "id": "reservoirPath",
+  "set": "SS4 Blog",
+  "slot": "IA-B4",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/blog/assets/reservoir-path.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A walker on a footpath curving round a still reservoir, hills reflected in the water and a stone dam at the far end.",
+  "prompt": "Use: picture for the blog post 'The long way round the reservoir', shown at about 600 by 400 pixels.\nSubject: a footpath curving round a still reservoir under rounded hills.\nDetails: a small figure far away walking with a stick, a stone dam wall at one end, reflections of the hills in the water.\nComposition: the subject in the centre third so a 16:9 crop from the centre keeps it, lots of quiet space around it.\nStyle: editorial gouache illustration for a designer's personal blog; flat colour fields with soft painted edges, no outlines; palette of ink blue, sage green, warm sand and one coral accent; gentle daylight from the upper left; simple shapes, calm and spacious.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

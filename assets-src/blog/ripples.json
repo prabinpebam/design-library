@@ -1,0 +1,13 @@
+{
+  "id": "ripples",
+  "set": "SS4 Blog",
+  "slot": "IA-B2",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/blog/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/blog/assets/ripples.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "Three sets of ripples on a still pond, each spreading apart from the others, a pink water lily at the edge.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: picture for the post 'Focus rings that never overlap'.\nSubject: three separate sets of circular ripples on still water, spaced well apart so the outermost rings of each set stop short of the others and never touch or cross.\nDetails: seen from directly above, calm reflections of sky, a lily pad at one edge.\nComposition: the subject in the centre third so a 16:9 crop from the centre keeps it, lots of quiet space around it.\nStyle: editorial gouache illustration for a designer's personal blog; flat colour fields with soft painted edges, no outlines; palette of ink blue, sage green, warm sand and one coral accent; gentle daylight from the upper left; simple shapes, calm and spacious.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}

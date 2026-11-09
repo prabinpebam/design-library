@@ -1,0 +1,13 @@
+{
+  "id": "dayPack",
+  "set": "SS4 Blog",
+  "slot": "IA-B6",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/blog/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/blog/assets/day-pack.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A small day pack on a stone bench with a bottle, a folded jacket, a map, an apple and a first-aid pouch laid out beside it.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: picture for the post 'A pack that weighs less than lunch'.\nSubject: a small day pack with its few things laid out neatly beside it on a wooden bench.\nDetails: a water bottle, a folded jacket, a map folded small, an apple, a tiny first-aid pouch.\nComposition: the subject in the centre third so a 16:9 crop from the centre keeps it, lots of quiet space around it.\nStyle: editorial gouache illustration for a designer's personal blog; flat colour fields with soft painted edges, no outlines; palette of ink blue, sage green, warm sand and one coral accent; gentle daylight from the upper left; simple shapes, calm and spacious.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border, no people's faces."
+}
