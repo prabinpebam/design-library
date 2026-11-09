@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { flushSync } from 'react-dom';
 import { announce } from '../react/behaviour/announce';
 import { cssMs } from '../react/behaviour/anchor';
-import { prefersReducedMotion, viewTransition } from '../react/behaviour/motion';
+import { viewTransition } from '../react/behaviour/motion';
+import { glide } from '../react/behaviour/glide';
 import { RouterContext, useRouter, type Route, type RouterApi } from '../react/behaviour/router';
 
 export type { Route, RouterApi } from '../react/behaviour/router';
@@ -247,10 +248,10 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
       onChange?.(route);
       return;
     }
-    const glide: ScrollBehavior = newPage || prefersReducedMotion() ? 'instant' : 'smooth';
-    if (how === 'pop' && scroll !== undefined && !target) window.scrollTo({ top: scroll, behavior: 'instant' });
-    else if (target) target.scrollIntoView({ block: 'start', behavior: glide });
-    else window.scrollTo({ top: 0, behavior: glide });
+    // A new page lands at once; an anchor on the same page glides (IP17), stopping if the person scrolls.
+    const behavior = newPage ? 'instant' : 'auto';
+    if (how === 'pop' && scroll !== undefined && !target) glide(scroll, { behavior: 'instant' });
+    else glide(target ?? 0, { behavior });
     if (target) focusQuietly(target);
     else if (newPage && focus !== false) {
       const heading = document.querySelector<HTMLElement>(focus) ?? document.querySelector<HTMLElement>('main');
