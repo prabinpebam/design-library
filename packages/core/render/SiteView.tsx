@@ -31,6 +31,42 @@ export interface SiteViewProps {
 
 const isDevelopment = () => Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
 
+/**
+ * Where an old or extra address goes (DP16): the site's `aliases`, matched exactly or as a pattern whose `:name`
+ * parts carry over (`"/events/:id": "/readings/:id"`); an `https://` target leaves the site.
+ */
+export function aliasFor(doc: SiteDocument, path: string): string | undefined {
+  const aliases = doc.aliases ?? {};
+  if (aliases[path]) return aliases[path];
+  for (const [from, to] of Object.entries(aliases)) {
+    if (!from.includes(':')) continue;
+    const params = matchPath(from, path);
+    if (params) return to.replace(/:([a-zA-Z][a-zA-Z0-9]*)/g, (_, name: string) => encodeURIComponent(params[name] ?? ''));
+  }
+  return undefined;
+}
+
+/** The first picture a page's sections show, in reading order: a block's `picture`, or the first of a gallery's `items`. */
+function firstPicture(blocks: unknown): string | undefined {
+  if (Array.isArray(blocks)) {
+    for (const b of blocks) {
+      const found = firstPicture(b);
+      if (found) return found;
+    }
+    return undefined;
+  }
+  if (!blocks || typeof blocks !== 'object') return undefined;
+  const b = blocks as Record<string, unknown>;
+  if (typeof b.picture === 'string') return b.picture;
+  if (b.type === 'gallery' && Array.isArray(b.items) && typeof b.items[0] === 'string') return b.items[0];
+  for (const [key, value] of Object.entries(b)) {
+    if (key === 'picture' || typeof value !== 'object') continue;
+    const found = firstPicture(value);
+    if (found) return found;
+  }
+  return undefined;
+}
+
 /** A page a path opens, and on an item's page the item it shows. */
 export interface PageMatch {
   page: PageDocument;
@@ -132,10 +168,9 @@ class SectionBoundary extends Component<BoundaryProps, { error: Error | null }> 
 /** Renders the page at the current route of a data-driven site. Wraps itself in a `Router` unless one encloses it. */
 export function SiteView({ site, mode = 'hash', base, development }: SiteViewProps) {
   const router = useRouter();
-  const aliases = site.site.aliases;
   if (!router)
     return (
-      <Router mode={mode} base={base} transition={(to, from) => (aliases?.[from.path] === to.path ? 'none' : (site.site.transition ?? 'none'))}>
+      <Router mode={mode} base={base} transition={(to, from) => (aliasFor(site.site, from.path) === to.path ? 'none' : (matchPage(site, to.path)?.page.transition ?? site.site.transition ?? 'none'))}>
         <SiteView site={site} development={development} />
       </Router>
     );
@@ -146,16 +181,17 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
   const router = useRouter()!;
   const { site: doc, assets, registry } = site;
   const path = router.route.path;
-  const moved = doc.aliases?.[path];
+  const moved = aliasFor(doc, path);
   // An alias opens its route in place of itself, so Back skips it (after this commit, outside React's rendering).
   useEffect(() => {
     if (!moved) return;
     const query = router.route.query.toString();
     const to = `${moved}${query ? `?${query}` : ''}${router.route.anchor ? `#${router.route.anchor}` : ''}`;
-    const timer = window.setTimeout(() => router.navigate(to, { replace: true }), 0);
+    // An address outside the site (`https://`) leaves it, replacing this entry.
+    const timer = window.setTimeout(() => (/^https:\/\//.test(moved) ? window.location.replace(moved) : router.navigate(to, { replace: true })), 0);
     return () => window.clearTimeout(timer);
   }, [moved, router]);
-  const routeKey = moved ?? path;
+  const routeKey = moved && moved.startsWith('/') ? moved : path;
   const match = matchPage(site, routeKey);
   const missing = !match;
   const notFoundPage = doc.notFound ? site.pages.find((p) => p.id === doc.notFound) : undefined;
@@ -194,6 +230,9 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
   const custom = registry?.blocks ?? {};
   const file = missing && !notFoundPage ? 'site' : `page “${page.id}”`;
 
+  // The page's first picture (DR44) loads at once, ahead of the rest: in the first section that shows one.
+  const firstAt = sections.findIndex((s) => firstPicture(s) !== undefined);
+  const first = firstAt < 0 ? undefined : firstPicture(sections[firstAt]);
   const ctx: RenderContext = {
     template: doc.id ?? 'site',
     layout: page.id,
@@ -218,10 +257,11 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
     return items.map((b, i) => {
       const path = `${where === 'sections' ? file : 'site'} ${where}[${i}]`;
       const anchor = typeof b.anchor === 'string' ? b.anchor : undefined;
+      const at = region === 'main' && i === firstAt ? { ...local, picture: (id: string) => (id === first && assets[id] ? { ...assets[id], priority: true } : local.picture(id)) } : local;
       return (
         <SectionBoundary key={`${routeKey}-${where}-${i}`} path={path} development={development}>
           {anchor && <SectionAnchor id={anchor} />}
-          {one(b, i, local, path)}
+          {one(b, i, at, path)}
         </SectionBoundary>
       );
     });

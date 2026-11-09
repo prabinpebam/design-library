@@ -23,6 +23,7 @@
     "current": { "type": "string", "pattern": "^[a-z0-9-]*$", "description": "Which navigation place this page belongs to, by the place's route without its slash (`readings`); defaults to the first part of the page's route." },
     "layout": { "type": "string", "description": "A core layout (`SiteLayout`) or one the site registers; defaults to the site's." },
     "settings": { "type": "object", "description": "The layout's options for this page, over the site's (SiteLayout: `width`, `opening`)." },
+    "transition": { "enum": ["none", "fade"], "description": "How this page replaces the one before it, over the site's `transition` (DP17). Reduced motion always swaps at once." },
     "sections": {
       "type": "array",
       "description": "The page's sections in order, top to bottom. Reordering them is reordering the page.",

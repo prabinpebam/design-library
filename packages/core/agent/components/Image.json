@@ -94,6 +94,12 @@
           "description": "`lazy` (default) loads it when it nears the window; `eager` for the first picture a page shows."
         },
         {
+          "name": "priority",
+          "type": "boolean",
+          "default": "false",
+          "description": "The picture the page is waiting for (its largest, first in view): loads at once, ahead of other pictures (`fetchpriority=\"high\"`). One per page at most."
+        },
+        {
           "name": "treatment",
           "type": "PictureTreatment",
           "description": "A treatment (IP31), named as a picture entry's `treatment` in `assets.json` (DP3): `'greyscale'`, `'duotone'` (grey multiplied over `--c-image-duotone`, the accent by default) or `'none'`; or `{ rest, active }`, where `active` shows while the picture, or the link, button or card around it, is hovered or focused (`{ rest: 'greyscale', active: 'none' }`: grey until pointed at). More contrast and forced colours always show the picture as it is."

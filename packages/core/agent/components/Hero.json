@@ -114,6 +114,11 @@
           "name": "y",
           "type": "number }",
           "required": true
+        },
+        {
+          "name": "priority",
+          "type": "boolean",
+          "description": "The page's first and largest picture: loads ahead of the rest (`Image` `priority`)."
         }
       ]
     }

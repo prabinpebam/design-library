@@ -6,7 +6,7 @@ export { fill } from './fill';
 export { RichText, richText, plainText } from './rich-text';
 export { loadTemplate, loadSite } from './load';
 export type { SiteFiles } from './load';
-export { SiteView, matchPage, pageFor, titleFor } from './SiteView';
+export { SiteView, aliasFor, matchPage, pageFor, titleFor } from './SiteView';
 export type { SiteViewProps, PageMatch } from './SiteView';
 export { resolveData, findItem, itemPage, itemRoute, isRef, isItemValue, isBinding, meets } from './collections';
 export type { ResolveDataOptions, Binding } from './collections';

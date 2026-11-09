@@ -237,6 +237,8 @@ export interface TemplateAsset {
   treatment?: PictureTone | { rest?: PictureTone; active?: PictureTone };
   /** Adds nothing the words don't say: drawn with an empty alt (DP3). */
   decorative?: boolean;
+  /** Set by the renderer on the page's first picture (DR44): it loads at once, ahead of the rest (`Image` `priority`). */
+  priority?: boolean;
 }
 
 /** What a block or layout renderer is given besides its data. */
@@ -313,7 +315,7 @@ export interface SiteDocument {
   footer?: Block[];
   layout?: { component?: string; settings?: Record<string, unknown> };
   transition?: 'none' | 'fade';
-  /** Old or extra addresses → the route each opens. */
+  /** Old or extra addresses → the route each opens (`:name` parts carry over), or an `https://` address. */
   aliases?: Record<string, string>;
   strings?: {
     notFound?: { title: string; text: string; home: string };
@@ -361,6 +363,8 @@ export interface PageDocument {
   current?: string;
   layout?: string;
   settings?: Record<string, unknown>;
+  /** How this page replaces the one before it (over the site's `transition`). */
+  transition?: 'none' | 'fade';
   sections: PageSection[];
 }
 

@@ -38,9 +38,9 @@
     "transition": { "enum": ["none", "fade"], "default": "none", "description": "How one page replaces another (Router `transition`, IP30). Reduced motion always swaps at once." },
     "aliases": {
       "type": "object",
-      "description": "Old or extra addresses and the route each opens, such as { \"/home\": \"/\" }; the address is replaced, so Back skips it.",
-      "propertyNames": { "$ref": "#/$defs/route" },
-      "additionalProperties": { "$ref": "#/$defs/route" }
+      "description": "Old or extra addresses and where each goes (DP16), such as { \"/home\": \"/\" }. A `:name` part matches any one part and carries over (\"/events/:id\": \"/readings/:id\"); an `https://` target leaves the site. The address is replaced, so Back skips it.",
+      "propertyNames": { "$ref": "#/$defs/pattern" },
+      "additionalProperties": { "anyOf": [{ "$ref": "#/$defs/pattern" }, { "type": "string", "pattern": "^https://\\S+$" }] }
     },
     "strings": {
       "type": "object",
@@ -84,6 +84,7 @@
   "$defs": {
     "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
     "route": { "type": "string", "pattern": "^/([a-z0-9-]+(/[a-z0-9-]+)*)?$", "description": "A site address: `/`, or lowercase parts after a slash." },
+    "pattern": { "type": "string", "pattern": "^/(([a-z0-9-]+|:[a-zA-Z][a-zA-Z0-9]*)(/([a-z0-9-]+|:[a-zA-Z][a-zA-Z0-9]*))*)?$", "description": "A site address whose parts may be `:name` (any one part)." },
     "layout": {
       "type": "object",
       "properties": {

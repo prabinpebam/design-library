@@ -12,6 +12,8 @@ export interface HeroPicture {
   sizes?: string;
   /** The point to keep in view when the frame crops (IP12): `x` and `y` from 0 to 1, as `Image` `focal`. */
   focal?: { x: number; y: number };
+  /** The page's first and largest picture: loads ahead of the rest (`Image` `priority`). */
+  priority?: boolean;
 }
 
 interface HeroBase extends DataAttributes {
@@ -104,7 +106,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
         {!picture && visual && <div data-dl-part="media">{media}</div>}
         {picture && (
           <div data-dl-part="picture">
-            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" />
+            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" priority={picture.priority} />
           </div>
         )}
       </div>

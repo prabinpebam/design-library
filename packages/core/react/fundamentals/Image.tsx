@@ -28,6 +28,8 @@ export interface ImageProps extends DataAttributes {
   rounded?: boolean;
   /** `lazy` (default) loads it when it nears the window; `eager` for the first picture a page shows. */
   loading?: 'lazy' | 'eager';
+  /** The picture the page is waiting for (its largest, first in view): loads at once, ahead of other pictures (`fetchpriority="high"`). One per page at most. */
+  priority?: boolean;
   /**
    * A treatment (IP31), named as a picture entry's `treatment` in `assets.json` (DP3): `'greyscale'`, `'duotone'` (grey
    * multiplied over `--c-image-duotone`, the accent by default) or `'none'`; or `{ rest, active }`, where `active` shows
@@ -66,6 +68,7 @@ export function Image({
   credit,
   rounded = true,
   loading = 'lazy',
+  priority = false,
   treatment,
   ...data
 }: ImageProps) {
@@ -103,7 +106,8 @@ export function Image({
           alt={alt}
           width={width}
           height={height}
-          loading={loading}
+          loading={priority ? 'eager' : loading}
+          fetchPriority={priority ? 'high' : undefined}
           decoding="async"
           onLoad={() => setState('loaded')}
           onError={() => setState('failed')}

@@ -28,7 +28,7 @@
   ],
   "layout": { "component": "SiteLayout", "settings": { "width": "wide" } },
   "transition": "fade",
-  "aliases": { "/home": "/", "/events": "/readings" },
+  "aliases": { "/home": "/", "/events": "/readings", "/events/:id": "/readings/:id" },
   "strings": {
     "notFound": { "title": "This page isn’t on our shelves", "text": "The address may be old or mistyped.", "home": "Back to the shop" }
   }
