@@ -39,6 +39,49 @@
         "item": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
       },
       "additionalProperties": false
-    }
+    },
+    "binding": {
+      "type": "object",
+      "description": "A list from a collection (DP13), in place of a hand-written list (a block's `items`), or as one entry of it (its items take that place). Fields are dotted paths that follow references.",
+      "required": ["from"],
+      "properties": {
+        "from": { "$ref": "#/$defs/id", "description": "The collection." },
+        "where": {
+          "type": "object",
+          "description": "Conditions every item meets, by field. A plain value is equality (a reference field compares by item id); else one test: in, has (a list field holds it), not, before, after (ISO dates; \"today\" is the reader's date). A value may be { \"item\": … } on an item's page.",
+          "additionalProperties": {
+            "anyOf": [
+              { "type": ["string", "number", "boolean"] },
+              { "$ref": "#/$defs/item" },
+              {
+                "type": "object",
+                "minProperties": 1,
+                "maxProperties": 1,
+                "properties": {
+                  "in": { "type": "array" },
+                  "has": {},
+                  "not": {},
+                  "before": { "type": "string" },
+                  "after": { "type": "string" }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "sort": {
+          "description": "A field, or several, to sort by; `-` first for descending.",
+          "oneOf": [{ "$ref": "#/$defs/sortField" }, { "type": "array", "items": { "$ref": "#/$defs/sortField" }, "minItems": 1 }]
+        },
+        "limit": { "type": "integer", "minimum": 1 },
+        "select": {
+          "type": "object",
+          "description": "The fields the block needs, each from an item path: { \"title\": \"name\", \"meta\": \"book.title\" }. Without it, the whole item (with `href` when the collection has item pages).",
+          "additionalProperties": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sortField": { "type": "string", "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
   }
 }

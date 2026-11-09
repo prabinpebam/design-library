@@ -23,6 +23,12 @@
       "heading": "The book",
       "max": 3,
       "items": [{ "item": "book" }]
+    },
+    {
+      "type": "cards",
+      "heading": "More readings",
+      "max": 3,
+      "items": { "from": "readings", "where": { "id": { "not": { "item": "id" } }, "date": { "after": "today" } }, "sort": "date" }
     }
   ]
 }

@@ -19,6 +19,13 @@
     },
     {
       "type": "cards",
+      "heading": "Next reading",
+      "intro": "First Thursday of the month, by the front window.",
+      "max": 3,
+      "items": { "from": "readings", "where": { "date": { "after": "today" } }, "sort": "date", "limit": 1 }
+    },
+    {
+      "type": "cards",
       "anchor": "new",
       "heading": "New this week",
       "intro": "Three books our staff couldn’t put down.",

@@ -17,7 +17,7 @@
       "anchor": "coming-up",
       "heading": "Coming up",
       "max": 3,
-      "items": [{ "ref": "readings/the-long-shore" }, { "ref": "readings/salt-and-ink" }, { "ref": "readings/small-boats" }]
+      "items": { "from": "readings", "where": { "date": { "after": "today" } }, "sort": "date" }
     },
     {
       "type": "questions",

@@ -5,10 +5,11 @@
   "title": "Readings",
   "item": {
     "type": "object",
-    "required": ["id", "title", "eyebrow", "meta", "description", "picture", "book"],
+    "required": ["id", "title", "date", "eyebrow", "meta", "description", "picture", "book"],
     "properties": {
       "id": { "type": "string" },
       "title": { "type": "string", "description": "What the evening is called (usually the book's title)." },
+      "date": { "type": "string", "format": "date", "description": "The day, as YYYY-MM-DD: lists sort and filter by it." },
       "eyebrow": { "type": "string", "description": "The kind of reading." },
       "meta": { "type": "string", "description": "When: the day and the time." },
       "description": { "type": "string", "description": "What happens, in one sentence." },
@@ -18,8 +19,8 @@
     "additionalProperties": false
   },
   "items": [
-    { "id": "the-long-shore", "title": "The Long Shore", "eyebrow": "Novel", "meta": "Thursday 4 March, 19:00", "description": "The author reads the keeper’s last three letters and answers questions.", "picture": "theLongShore", "book": { "ref": "books/the-long-shore" } },
-    { "id": "salt-and-ink", "title": "Salt and Ink", "eyebrow": "Essays", "meta": "Thursday 1 April, 19:00", "description": "An evening of maps: the essayist brings the harbour charts behind the book.", "picture": "saltAndInk", "book": { "ref": "books/salt-and-ink" } },
-    { "id": "small-boats", "title": "Small Boats", "eyebrow": "Children", "meta": "Thursday 6 May, 16:00", "description": "An afternoon reading for children, with paper boats to fold and take home.", "picture": "smallBoats", "book": { "ref": "books/small-boats" } }
+    { "id": "the-long-shore", "title": "The Long Shore", "date": "2027-03-04", "eyebrow": "Novel", "meta": "Thursday 4 March, 19:00", "description": "The author reads the keeper’s last three letters and answers questions.", "picture": "theLongShore", "book": { "ref": "books/the-long-shore" } },
+    { "id": "salt-and-ink", "title": "Salt and Ink", "date": "2027-04-01", "eyebrow": "Essays", "meta": "Thursday 1 April, 19:00", "description": "An evening of maps: the essayist brings the harbour charts behind the book.", "picture": "saltAndInk", "book": { "ref": "books/salt-and-ink" } },
+    { "id": "small-boats", "title": "Small Boats", "date": "2027-05-06", "eyebrow": "Children", "meta": "Thursday 6 May, 16:00", "description": "An afternoon reading for children, with paper boats to fold and take home.", "picture": "smallBoats", "book": { "ref": "books/small-boats" } }
   ]
 }
