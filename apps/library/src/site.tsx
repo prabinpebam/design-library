@@ -38,6 +38,14 @@ const BASES: Record<string, BaseColours> = {
 };
 const base = new URLSearchParams(window.location.search).get('base');
 if (base && BASES[base]) applyBrand({ ...themeBrand, base: BASES[base] });
+/**
+ * The contrast guard on the Colour page (IP21): `site.html?seed=%23ffd400&pin=1&guard=1#/app/…` draws a screen with a
+ * bright accent (pinned at step 500 with `pin`), with or without `contrast: 'guard'`.
+ */
+const query = new URLSearchParams(window.location.search);
+const seed = query.get('seed');
+if (seed && /^#[0-9a-f]{6}$/i.test(seed))
+  applyBrand({ colours: { 1: { seed, ...(query.get('pin') ? { pins: { '500': seed } } : {}) } }, contrast: query.get('guard') ? 'guard' : 'keep' });
 /** The screen a route shows: a state's route names its screen's. */
 const screenOf = (route: string) => {
   const shown = layoutOf(route);
