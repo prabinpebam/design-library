@@ -5,7 +5,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
 ## Before you start
 
 - **What you get:** two packages, `@design-library/core` and `@design-library/templates` (optional), as TypeScript and TSX source plus CSS, not a built bundle: your Vite build compiles them. They aren't on a package registry; each version is two tarballs attached to a [GitHub release](https://github.com/prabinpebam/design-library/releases). MIT licence.
-- **What you need:** Node 20.19 or later (Vite 8's floor), React 19, Vite 8 with `@vitejs/plugin-react`, TypeScript.
+- **What you need:** Node 20.19 or later (Vite 8's floor) with **npm 10 or later** (npm 9 fails on these tarball installs with `Cannot read properties of null (reading 'edgesOut')`; `npm -v` tells you, and Node 20.19+ ships npm 10), React 19, Vite 8 with `@vitejs/plugin-react`, TypeScript.
 - **Package sources:** install public packages from the registry your project is configured for. If your organisation requires a proxy or private feed, use it; never switch registries to get past a failure.
 
 ## Supported
@@ -22,10 +22,10 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 1. **Start a Vite + React + TypeScript app** if you don't have one (any folder; nothing from the library repository is needed). Your `package.json` needs `"type": "module"` and these scripts: `"dev": "vite"`, `"build": "vite build"`.
 
-2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.1.0), with React and the build tools:
+2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.1.1), with React and the build tools:
 
    ```sh
-   npm install https://github.com/prabinpebam/design-library/releases/download/v0.1.0/design-library-core-0.1.0.tgz https://github.com/prabinpebam/design-library/releases/download/v0.1.0/design-library-templates-0.1.0.tgz react@^19 react-dom@^19
+   npm install https://github.com/prabinpebam/design-library/releases/download/v0.1.1/design-library-core-0.1.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.1.1/design-library-templates-0.1.1.tgz react@^19 react-dom@^19
    npm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19
    ```
 
@@ -119,7 +119,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 ## Inside the library repository
 
-To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.1.0"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
+To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.1.1"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
 
 ## Do and don't
 

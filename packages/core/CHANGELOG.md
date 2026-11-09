@@ -6,6 +6,13 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 **Contracts that carry their own version:** the content schemas (`schemas/*.json`, `$id …/1`), the colour config (`colour-config/2`, `CONTRACT` in `@design-library/core/colour`), and each template's `content.schema.json`. A release that changes one names it here with the migration.
 
+## 0.1.1 (2026-11-09)
+
+Fixes from the first separate-project install ([Handoff readiness](https://prabinpebam.github.io/design-library/docs/#handoff-readiness.md), F15.R6). Nothing breaks.
+
+- **Types:** `@design-library/core/colour` ships declarations (`colour/*.d.mts`), so a consumer's `tsc` reads it, and `@design-library/core/theme` with it, from `node_modules`.
+- **Guide:** needs npm 10 or later (npm 9 fails on tarball installs).
+
 ## 0.1.0 (2026-11-09)
 
 First version handed to separate projects.

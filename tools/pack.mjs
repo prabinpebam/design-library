@@ -4,7 +4,8 @@
 // The packages stay "private" so they can't be published by accident; npm pack doesn't need them public.
 // Refuses to pack when the shipped agent index is stale, so the docs inside the tarball match the code.
 import { execSync } from 'node:child_process';
-import { mkdirSync, readFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -13,6 +14,19 @@ const out = join(root, '.packages');
 const run = (cmd, args, cwd) => execSync([cmd, ...args.map((a) => JSON.stringify(a))].join(' '), { cwd, encoding: 'utf8' });
 
 run('node', ['./tools/agent-index.mjs', '--check'], root);
+// The colour module is JavaScript; its declarations (`colour/*.d.mts`) let a consumer's type check read it from
+// node_modules (handoff readiness, proof hiccup H2). Refuse to pack when they're stale.
+{
+  const tmp = mkdtempSync(join(tmpdir(), 'dl-colour-types-'));
+  try {
+    run('npx', ['tsc', 'packages/core/colour/index.mjs', '--allowJs', '--declaration', '--emitDeclarationOnly', '--skipLibCheck', '--target', 'ES2022', '--module', 'ESNext', '--moduleResolution', 'Bundler', '--outDir', tmp], root);
+    for (const f of readdirSync(tmp))
+      if (readFileSync(join(tmp, f), 'utf8') !== readFileSync(join(root, 'packages/core/colour', f), 'utf8'))
+        throw new Error(`packages/core/colour/${f} is stale. Run: npm run colour:types`);
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+}
 mkdirSync(out, { recursive: true });
 const core = JSON.parse(readFileSync(join(root, 'packages/core/package.json'), 'utf8')).version;
 const templates = JSON.parse(readFileSync(join(root, 'packages/templates/package.json'), 'utf8'));
