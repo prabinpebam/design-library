@@ -284,6 +284,12 @@ The framework now starts from [the method](#the-method-hierarchy-first-then-spac
 - **Probe:** SC6 counts only headings that head flow content (a card's or a statistic's title names an item); a heading's head is the outermost head part within two levels; a Persona counts as one visible unit.
 - **Sweep:** 167 of 168 pass every grouping row. Open: Projects issue-edit, where "Done when" sits 38 px under the edit form (the Morph's box looks to hold the view's height in the edit state; the fix belongs in Morph).
 
+### F15.SP-morph: the last grouping fail was a held height (2026-11-09 about 12:15, Q85.4)
+
+- **Cause:** Morph eases its height with a Web Animation. In a hidden document (a background tab, the agent's own browser) the timeline doesn't advance, so the ease stayed on its first frame: the box held the previous state's height (issue's 160 px view in the 463 px edit form, or the reverse), and a later change started from that held height. A person returning to the tab would have seen a change replay that they made long before.
+- **Fix in Morph (core):** a change while the document is hidden takes its new height at once and cancels any held ease; visible changes still ease (`--duration-move`), reduced motion still snaps. No page or template changed.
+- **Sweep** (168 template layouts, 1000 × 800, switching between them by hash as a person would): **168 of 168 pass every grouping and framing row.** Projects issue ↔ issue-edit measured both ways: the box is 232 px and 463 px, 64 px to "Done when" (the page level), no animation left running. Chat's reply-failed state is measured once its own change has settled (at 220 ms its leaving "New chat" layer is still drawn; by 1 s it has gone). Harbour's six layouts other than home aren't built yet (the site says "Template not found"), so they aren't counted.
+
 ### Framing as built, F15.SP-frame2 (2026-11-09 about 10:55)
 
 - New core layout part **Frame** (`packages/core/react/layouts/Frame.tsx`, `css/layouts/frame.css`, tokens `c.frame.space-min` = `space.stack-page` and `c.frame.ground` = `color.bg-sunken`): `kind="feature"` pads the band `clamp(page level, 12svh, 2 × page level)` above and below; `kind="stage"` holds `min(70svh, 100svh − 7rem)` with the content centred and shrinks to its content under a 31 rem tall window; `ground` paints an edge-to-edge tone with `border-image` outset (no negative margin, no clip).

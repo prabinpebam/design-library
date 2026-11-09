@@ -57,6 +57,11 @@
           "description": "The header's end: search, the main action, the account."
         },
         {
+          "name": "head",
+          "type": "ReactNode",
+          "description": "The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content."
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": true,
@@ -103,6 +108,7 @@
     "--c-app-layout-column",
     "--c-app-layout-gap",
     "--c-app-layout-gutter",
+    "--c-app-layout-head-gap",
     "--c-app-layout-header",
     "--c-app-layout-header-gap",
     "--c-app-layout-height-lg",

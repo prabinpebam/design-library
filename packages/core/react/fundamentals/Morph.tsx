@@ -39,7 +39,8 @@ const FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]), select
  * @a11y The leaving content is `inert` and `aria-hidden` from its first frame (M13). If focus was inside it, focus moves
  * first to the new content's `[data-morph-focus]` element, else its first focusable element, else the new content
  * itself. The new state is announced by its owner through the status region, never by the fade. First render never
- * animates (Z19). Reduced motion: the height snaps; the content still cross-fades.
+ * animates (Z19). Reduced motion, or a change while the document is hidden: the height snaps; the content still
+ * cross-fades.
  */
 export function Morph({ state, size = 'layout', motion = 'fade', children, ...data }: MorphProps) {
   const root = useRef<HTMLDivElement>(null);
@@ -76,7 +77,11 @@ export function Morph({ state, size = 'layout', motion = 'fade', children, ...da
     const running = el.getAnimations().some((a) => a.id === 'dl-morph');
     const from = running ? after : (old?.getBoundingClientRect().height ?? before);
     const to = (layer?.getBoundingClientRect().height ?? after);
-    if (size === 'layout' && move && from && Math.abs(from - to) > 0.5) {
+    // A hidden document's timeline doesn't advance: the ease would hold the old height until the page is shown, then
+    // replay a change nobody saw. The box takes its new height at once.
+    const hidden = document.visibilityState === 'hidden';
+    if (hidden) for (const a of el.getAnimations()) if (a.id === 'dl-morph') a.cancel();
+    if (size === 'layout' && move && from && !hidden && Math.abs(from - to) > 0.5) {
       const easing = getComputedStyle(el).getPropertyValue('--easing-standard').trim() || 'ease-out';
       for (const a of el.getAnimations()) if (a.id === 'dl-morph') a.cancel();
       el.animate([{ blockSize: `${from}px`, overflow: 'clip' }, { blockSize: `${to}px`, overflow: 'clip' }], { duration: move, easing, id: 'dl-morph' });

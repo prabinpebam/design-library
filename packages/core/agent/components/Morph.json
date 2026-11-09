@@ -7,7 +7,7 @@
   "summary": "One box whose content changes state in place (Q65 P3, strategy S2, \"fake the content\"): the box stays, the old content fades out quickly on top while the new one fades in under it, and the height eases between them. Nothing blinks out and back: a dialog's form becomes its result, a card's skeleton becomes its content, a thinking row becomes the answer. A quick change of mind reverses from where it is (the leaving content comes back). Not for a value that changes within one control (its own transition), something opening in place (Reveal), or something arriving from nowhere (presence).",
   "family": "layout",
   "a11y": [
-    "The leaving content is `inert` and `aria-hidden` from its first frame (M13). If focus was inside it, focus moves first to the new content's `[data-morph-focus]` element, else its first focusable element, else the new content itself. The new state is announced by its owner through the status region, never by the fade. First render never animates (Z19). Reduced motion: the height snaps; the content still cross-fades."
+    "The leaving content is `inert` and `aria-hidden` from its first frame (M13). If focus was inside it, focus moves first to the new content's `[data-morph-focus]` element, else its first focusable element, else the new content itself. The new state is announced by its owner through the status region, never by the fade. First render never animates (Z19). Reduced motion, or a change while the document is hidden: the height snaps; the content still cross-fades."
   ],
   "keys": [],
   "sealed": true,
