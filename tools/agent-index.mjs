@@ -84,6 +84,7 @@ function defaultsOf(source, name) {
   return new Map([...d.matchAll(/(\w+)\s*=\s*('[^']*'|\d+|true|false)/g)].map((m) => [m[1], m[2]]));
 }
 function propsOf(source, name) {
+  source = source.replace(/\r\n/g, '\n');
   const defaults = defaultsOf(source, name);
   const groups = [];
   for (const m of source.matchAll(/interface (\w+)(?: extends ([^{]+))?\s*\{([\s\S]*?)\n\}/g)) {
@@ -97,7 +98,43 @@ function propsOf(source, name) {
     }
     if (props.length) groups.push({ interface: m[1], ...(m[2] ? { extends: m[2].trim().replace(/\s+/g, ' ') } : {}), props });
   }
-  const rank = (g) => (g.interface === `${name}Props` ? 0 : g.interface === `${name}Base` ? 1 : /DataAttributes/.test(g.extends ?? '') ? 2 : 3);
+  // Props declared in a union of object types (`export type HeroProps = HeroBase & ({ picture?… } | { layout: 'divided' … })`):
+  // each arm's members, a name in several arms listed once with its types joined.
+  const start = new RegExp(`export type ${name}Props(?:<[^>]*>)?\\s*=`).exec(source);
+  let body = '';
+  if (start) {
+    // The declaration ends at its first `;` outside brackets.
+    let depth = 0;
+    for (let i = start.index + start[0].length; i < source.length; i++) {
+      const ch = source[i];
+      if ('({['.includes(ch)) depth++;
+      else if (')}]'.includes(ch)) depth--;
+      else if (ch === ';' && depth === 0) {
+        body = source.slice(start.index + start[0].length, i);
+        break;
+      }
+    }
+  }
+  if (body && body.includes('{')) {
+    const props = [];
+    for (const p of body.matchAll(/(?:\/\*\*([\s\S]*?)\*\/\s*)?(\w+)(\?)?:\s*([^;]+);/g)) {
+      const type = p[4].trim().replace(/\s+/g, ' ');
+      if (type === 'never') continue;
+      const seen = props.find((x) => x.name === p[2]);
+      if (seen) {
+        if (!seen.type.split(' | ').includes(type)) seen.type = `${seen.type} | ${type}`;
+        if (p[3]) delete seen.required;
+        continue;
+      }
+      const d = defaults.get(p[2]);
+      props.push({ name: p[2], type, ...(p[3] ? {} : { required: true }), ...(d ? { default: d } : {}), ...(p[1] ? { description: clean(p[1]) } : {}) });
+    }
+    // A name that some arm leaves out isn't required.
+    const arms = (body.match(/\|\s*\{/g) ?? []).length || 1;
+    for (const p of props) if (arms > 1 && p.required && (body.match(new RegExp(`\\b${p.name}\\??:`, 'g')) ?? []).length < arms) delete p.required;
+    if (props.length) groups.push({ interface: `${name}Props`, variants: true, props });
+  }
+  const rank = (g) => (g.variants ? 1.5 : g.interface === `${name}Props` ? 0 : g.interface === `${name}Base` ? 1 : /DataAttributes/.test(g.extends ?? '') ? 2 : 3);
   return groups.sort((a, b) => rank(a) - rank(b));
 }
 function tokensRead(source, css, slug, layout) {

@@ -247,6 +247,15 @@
       "type": "page",
       "status": "draft",
       "updated": "2026-11-10"
+    },
+    {
+      "path": "adopt-0.3.0-beta.1.md",
+      "title": "Adopt 0.3.0-beta.1",
+      "order": 11.8,
+      "icon": "upgrade",
+      "type": "page",
+      "status": "draft",
+      "updated": "2026-11-10"
     }
   ]
 }

@@ -63,6 +63,27 @@
       ]
     },
     {
+      "interface": "HeroProps",
+      "variants": true,
+      "props": [
+        {
+          "name": "layout",
+          "type": "'split' | 'stacked' | 'divided'",
+          "description": "`split` (default with a picture): words and picture side by side, stacking when the room is narrow. `stacked` (default without one): the words, then the picture below and wide, or the words alone."
+        },
+        {
+          "name": "picture",
+          "type": "HeroPicture",
+          "description": "A picture given room. Leave it out and the title carries the view."
+        },
+        {
+          "name": "media",
+          "type": "ReactNode",
+          "description": "Any media in the picture's place (IP19): a MediaPlayer, a Carousel, an ImageGrid, your own arrangement of pictures. It takes the picture's room and arrangement; give it its own words (alt text, a player's label). Use `picture` for one picture: it brings the frame, ratio and focal point."
+        }
+      ]
+    },
+    {
       "interface": "HeroPicture",
       "props": [
         {
