@@ -30,6 +30,8 @@
     gap: var(--c-editor-layout-bar-gap);
     min-block-size: var(--c-editor-layout-bar);
     padding-inline: var(--c-editor-layout-inset);
+    /* The layout clips (axis lock), so the bar keeps a focus ring's reach above and below its controls (docs/clipping.md, CL1). */
+    padding-block: calc(var(--size-focus-width) + var(--size-focus-offset));
     border-block-end: var(--border-hairline) solid var(--color-border);
   }
 
@@ -120,6 +122,8 @@
     min-block-size: var(--c-editor-layout-bar);
     min-inline-size: 0;
     padding-inline: var(--c-editor-layout-inset);
+    /* Without a bar above, a panel's head meets the layout's clipping edge: keep a focus ring's reach (CL1). */
+    padding-block: calc(var(--size-focus-width) + var(--size-focus-offset));
   }
 
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='panel-head'] > [data-dl-part='head-content'] {

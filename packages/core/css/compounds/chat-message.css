@@ -103,10 +103,10 @@
     min-inline-size: 0;
   }
 
+  /* A sent file isn't a link here, so nothing would show a cut name in full: the name wraps, breaking a long word
+     anywhere, rather than truncating (docs/clipping.md, CL4). */
   [data-dl='chat-message'] [data-dl-part='file-words'] > * {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
   [data-dl='chat-message'] > [data-dl-part='actions'] {

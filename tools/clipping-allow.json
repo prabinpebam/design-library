@@ -308,12 +308,6 @@
       "reason": "ChatMessage: who said it, read by assistive technology; the bubble's side and style show it"
     },
     {
-      "file": "packages/core/css/compounds/chat-message.css",
-      "selector": "[data-dl='chat-message'] [data-dl-part='file-words'] > *",
-      "kind": "text truncation",
-      "reason": "ChatMessage: an attached file's name and kind truncate on one line; the file opens with its full name"
-    },
-    {
       "file": "packages/core/css/compounds/composer.css",
       "selector": "[data-dl='composer'] [data-dl-part='file-words'] > *",
       "kind": "text truncation",

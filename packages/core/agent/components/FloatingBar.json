@@ -48,7 +48,9 @@
     "--c-floating-bar-offset",
     "--c-floating-bar-padding",
     "--c-floating-bar-radius",
-    "--c-floating-bar-shadow"
+    "--c-floating-bar-shadow",
+    "--size-focus-offset",
+    "--size-focus-width"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/floatingbar",
   "principles": [

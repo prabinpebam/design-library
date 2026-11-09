@@ -150,6 +150,7 @@
     "--color-text",
     "--duration-quick",
     "--easing-standard",
+    "--size-focus-offset",
     "--size-focus-width"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/editorlayout"

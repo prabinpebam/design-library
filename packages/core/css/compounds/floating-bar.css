@@ -37,8 +37,10 @@
     border-radius: var(--c-floating-bar-radius);
   }
 
+  /* The scroll box clips, so its content keeps at least a focus ring's reach on every side (docs/clipping.md, CL1):
+     in compact density the bar's padding (2 px) is smaller than the ring (4 px). */
   [data-dl='floating-bar'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
-    padding: var(--c-floating-bar-padding);
+    padding: max(var(--c-floating-bar-padding), calc(var(--size-focus-width) + var(--size-focus-offset)));
   }
 
   @media (forced-colors: active) {

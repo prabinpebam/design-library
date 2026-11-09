@@ -86,6 +86,7 @@
     "--c-example-row-gap",
     "--c-example-toggle-fg",
     "--c-example-toggle-height",
+    "--space-8",
     "--space-stack-group"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/example"

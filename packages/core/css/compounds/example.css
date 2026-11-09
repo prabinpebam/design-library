@@ -30,6 +30,12 @@
     min-inline-size: 0;
   }
 
+  /* A preview showing a floating surface keeps the overlay shadow's reach below it (8 px down, 24 px blur), since the
+     preview scrolls and so clips (docs/clipping.md, CL2). */
+  [data-dl='example'] > [data-dl-part='canvas'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='preview']:has([data-elevation='3'], [data-elevation='4']) {
+    padding-block-end: max(var(--c-example-inset), var(--space-8));
+  }
+
   [data-dl='example'] [data-dl-part='preview'] > [data-dl-part='content'] {
     display: flex;
     flex-direction: column;
