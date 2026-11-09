@@ -1,0 +1,14 @@
+{
+  "id": "keptSessions",
+  "set": "SS9 Spot illustrations (library style, transparent)",
+  "slot": "IS3 (VS4 test)",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate (the set's reference)",
+  "size": "1024x1024",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/core/react/stories/media/spot/kept-sessions.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 160 --density 2",
+  "alt": "(decorative: the empty state's title and words say it)",
+  "prompt": "Use: a small spot illustration above an empty state's title, shown at most 200 px wide, that shows what will appear in this place once the person adds something.\nSubject: a conference day plan: a paper card holding three short session cards stacked in time order down a thin timeline, the middle one marked with a small coral bookmark ribbon.\nDetails: each session card is a soft rounded rectangle with two blank bars instead of words and a small dot for its room, a tiny round clock at the top of the timeline.\nComposition: one isolated object group in the centre, seen slightly from above, filling about 80% of the width, nothing touching the edges.\nStyle: flat illustration, simple flat colour shapes with soft gouache edges, no outlines, a calm pastel palette (soft indigo, sage, warm sand, one coral accent), gentle light from the upper left with one soft shadow tone on the objects themselves.\nConstraints: isolated objects on a fully transparent background; no backdrop, no ground, no cast shadow on the ground, no checkerboard, no frame; no text, no letters or numbers, no logos, no watermark, no people."
+}

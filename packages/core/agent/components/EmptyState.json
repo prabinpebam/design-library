@@ -57,6 +57,21 @@
           "description": "A faint, still outline of the content to come (decorative, hidden from screen readers); never on `no-access`."
         },
         {
+          "name": "illustration",
+          "type": "{ src: string",
+          "description": "**Under test (VS4, AF11): only the EmptyState review story uses it; no template does until the check passes.** A small decorative spot illustration of what will appear, in the silhouette's place (it replaces the silhouette), at its own CSS size (`width` × `height`) and never wider than the silhouette; hidden from screen readers."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "height",
+          "type": "number }",
+          "required": true
+        },
+        {
           "name": "announce",
           "type": "boolean",
           "default": "false",

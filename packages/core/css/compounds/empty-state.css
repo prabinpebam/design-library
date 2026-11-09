@@ -52,6 +52,12 @@
     inline-size: min(100%, var(--c-empty-state-silhouette-width));
   }
 
+  [data-dl='empty-state'] [data-dl-part='illustration'] {
+    display: block;
+    max-inline-size: min(100%, var(--c-empty-state-silhouette-width));
+    block-size: auto;
+  }
+
   [data-dl='empty-state'] [data-dl-part='shape'] {
     display: block;
     block-size: var(--c-empty-state-silhouette-row);

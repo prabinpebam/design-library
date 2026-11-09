@@ -395,7 +395,7 @@ Run these at RC6. Each is a known way a visual says something the data doesn't (
 | VS1 | Agents can classify a reader's task (RC1) reliably from a view's purpose. | Wrong task → wrong chart or a chart where a number would do. | Run RC on 3 templates' views; compare choices with a human pass. |
 | VS2 | One chart component per task family (not one per chart type) is enough for the templates. | Too few → views fork styles; too many → redundant variants. | Map every chart need in the templates to the CH table before building. |
 | VS3 | The 8-colour category set covers real products' category counts. | More than 8 → colour reuse confuses. | Count categories in template data; enforce "Other" grouping. |
-| VS4 | An empty-state illustration lowers the copy needed. | Illustrations add noise without reducing words. | A/B one empty state with and without, count words needed. |
+| VS4 | An empty-state illustration lowers the copy needed. | Illustrations add noise without reducing words. | A/B one empty state with and without, count words needed. **Built for review (F15.I11):** the conference's empty "My schedule" as A (silhouette, 25 words), B (illustration, 12 words) and C (illustration, 25 words) in the [EmptyState](http://127.0.0.1:8766/#/emptystate) story "Under test"; undecided |
 
 ## Decisions (working, revisable on review)
 

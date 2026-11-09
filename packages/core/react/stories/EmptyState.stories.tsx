@@ -6,6 +6,7 @@ import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
 import { TextField } from '../fundamentals/TextField';
 import type { StoryFile } from './story';
+import keptSessions from './media/spot/kept-sessions.webp?url';
 
 const projects = ['Atlas redesign', 'Budget review 2026', 'Onboarding emails', 'Quarterly report'];
 
@@ -88,5 +89,33 @@ export default {
         </>
       ),
     },
-  ],
+    {
+      title: 'Under test: an illustration instead of words (VS4)',
+      description:
+        'Assumption VS4: a small illustration of what will appear lets an empty state say less. The conference’s empty “My schedule”, three ways, left to right. A, today: the silhouette and 25 words. B: an illustration of a kept day plan and 12 words; the picture carries “by time, with their rooms”. C: the same illustration with all 25 words. If B reads as clear as A, the illustration earns a slot (BP9); if it only decorates C, it doesn’t. Nothing ships to a template until this is decided.',
+      code: `<EmptyState reason="first-use" title="No sessions kept yet" illustration={{ src: keptSessions, width: 160, height: 177 }} actions={<Link href="/schedule">Open the schedule</Link>}>Sessions you keep show here.</EmptyState>`,
+      arrangement: 'row',
+      render: () => (
+        <>
+          <Stack gap="item">
+            <Text>A · today · 25 words</Text>
+            <EmptyState reason="first-use" title="No sessions kept yet" silhouette="list" actions={<Link href="#/emptystate">Open the schedule</Link>}>
+              Keep the sessions you want to see from the schedule; they show here by time, with their rooms.
+            </EmptyState>
+          </Stack>
+          <Stack gap="item">
+            <Text>B · illustration · 12 words</Text>
+            <EmptyState reason="first-use" title="No sessions kept yet" illustration={{ src: keptSessions, width: 160, height: 177 }} actions={<Link href="#/emptystate">Open the schedule</Link>}>
+              Sessions you keep show here.
+            </EmptyState>
+          </Stack>
+          <Stack gap="item">
+            <Text>C · illustration · 25 words</Text>
+            <EmptyState reason="first-use" title="No sessions kept yet" illustration={{ src: keptSessions, width: 160, height: 177 }} actions={<Link href="#/emptystate">Open the schedule</Link>}>
+              Keep the sessions you want to see from the schedule; they show here by time, with their rooms.
+            </EmptyState>
+          </Stack>
+        </>
+      ),
+    },  ],
 } satisfies StoryFile;

@@ -24,6 +24,12 @@ export interface EmptyStateProps extends DataAttributes {
   actions?: ReactNode;
   /** A faint, still outline of the content to come (decorative, hidden from screen readers); never on `no-access`. */
   silhouette?: 'list' | 'tiles' | 'table';
+  /**
+   * **Under test (VS4, AF11): only the EmptyState review story uses it; no template does until the check passes.** A small
+   * decorative spot illustration of what will appear, in the silhouette's place (it replaces the silhouette), at its own
+   * CSS size (`width` × `height`) and never wider than the silhouette; hidden from screen readers.
+   */
+  illustration?: { src: string; width: number; height: number };
   /** Says the title through the polite announcer when it appears: only when the person caused it (a search, a filter, clearing). */
   announce?: boolean;
 }
@@ -42,7 +48,7 @@ const rows = { list: 3, tiles: 3, table: 4 } as const;
  * the person caused; a view that opens empty is read in order instead. After the last item is removed, move focus to
  * the action or the title.
  */
-export function EmptyState({ reason, scope = 'section', title, headingLevel, children, actions, silhouette, announce = false, ...data }: EmptyStateProps) {
+export function EmptyState({ reason, scope = 'section', title, headingLevel, children, actions, silhouette, illustration, announce = false, ...data }: EmptyStateProps) {
   const level = headingLevel ?? (scope === 'view' ? 2 : 3);
   const spoken = typeof title === 'string' ? title : '';
 
@@ -52,7 +58,10 @@ export function EmptyState({ reason, scope = 'section', title, headingLevel, chi
 
   return (
     <div {...data} data-dl="empty-state" data-reason={reason} data-scope={scope}>
-      {silhouette && reason !== 'no-access' && scope !== 'component' && (
+      {illustration && reason !== 'no-access' && scope !== 'component' && (
+        <img data-dl-part="illustration" src={illustration.src} width={illustration.width} height={illustration.height} alt="" aria-hidden="true" />
+      )}
+      {!illustration && silhouette && reason !== 'no-access' && scope !== 'component' && (
         <div data-dl-part="silhouette" data-shape={silhouette} aria-hidden="true">
           {Array.from({ length: rows[silhouette] }, (_, i) => (
             <span key={i} data-dl-part="shape" />
