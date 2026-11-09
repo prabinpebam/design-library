@@ -1,25 +1,25 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
   "assets": {
-    "harbour": {
-      "src": "assets/harbour.svg",
-      "alt": "Blue hills by the sea under a pale sky and a low sun."
+    "mainHall": {
+      "src": "assets/main-hall.webp",
+      "alt": "The main hall just before the first talk: a lit stage with a blank screen, rows of people seated, the river and a suspension bridge through tall windows."
     },
-    "meadow": {
-      "src": "assets/meadow.svg",
-      "alt": "A green meadow rising to soft hills."
+    "congressCentre": {
+      "src": "assets/congress-centre.webp",
+      "alt": "A long limestone congress building with a deep entrance canopy, a sunny plaza with palm trees and a yellow tram in front."
     },
-    "dusk": {
-      "src": "assets/dusk.svg",
-      "alt": "Violet hills at dusk with an orange horizon."
+    "riversideHotel": {
+      "src": "assets/riverside-hotel.webp",
+      "alt": "A white hotel front with blue-and-white tiles and iron balconies, café tables outside and the river and bridge beyond."
     },
-    "sand": {
-      "src": "assets/sand.svg",
-      "alt": "Golden dunes under a warm sky."
+    "alfamaRooms": {
+      "src": "assets/alfama-rooms.webp",
+      "alt": "A narrow terracotta guesthouse on a steep cobbled lane, geraniums on its balconies and washing on a line."
     },
-    "frost": {
-      "src": "assets/frost.svg",
-      "alt": "White hills under a cold blue sky."
+    "hostelBelem": {
+      "src": "assets/hostel-belem.webp",
+      "alt": "A whitewashed hostel courtyard with a lemon tree, its blue door open onto a room of wooden bunk beds."
     }
   }
 }

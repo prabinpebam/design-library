@@ -1,0 +1,13 @@
+{
+  "id": "hostelBelem",
+  "set": "SS3 Conference",
+  "slot": "IA-C5",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/conference/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/conference/assets/hostel-belem.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A whitewashed hostel courtyard with a lemon tree, its blue door open onto a room of wooden bunk beds.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: card picture for 'Hostel Belém', a friendly hostel.\nSubject: a bright hostel courtyard with a lemon tree, a doorway open onto a tidy room of wooden bunk beds.\nDetails: whitewashed walls, blue doors, a bench and backpacks by the door.\nComposition: eye level, the subject in the centre third so a 16:9 crop from the centre keeps it, nothing important at the top or bottom edges.\nStyle: editorial architectural photograph for a design conference's website; warm late-afternoon Lisbon light; terracotta, limestone white and river blue; clean lines and calm; people small and unidentifiable, seen from behind or far away.\nConstraints: no text, no readable letters or numbers on signs, screens or buildings, no logos or brand names, no watermark, no frame or border, no recognisable faces."
+}

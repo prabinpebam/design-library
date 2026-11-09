@@ -1,0 +1,13 @@
+{
+  "id": "congressCentre",
+  "set": "SS3 Conference",
+  "slot": "IA-C2",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = assets-src/conference/reference.webp",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/conference/assets/congress-centre.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "A long limestone congress building with a deep entrance canopy, a sunny plaza with palm trees and a yellow tram in front.",
+  "prompt": "Image 1 is a style reference only: copy its medium, palette, light, colour grading and level of detail. Do not copy its subject or composition.\nUse: hero picture for the venue page 'Lisbon Congress Centre'.\nSubject: a modern limestone congress building by a wide river, a broad plaza in front.\nDetails: long horizontal lines, a deep shaded entrance canopy, a few people crossing the plaza, a tram line and palm trees.\nComposition: eye level, the subject in the centre third so a 16:9 crop from the centre keeps it, nothing important at the top or bottom edges.\nStyle: editorial architectural photograph for a design conference's website; warm late-afternoon Lisbon light; terracotta, limestone white and river blue; clean lines and calm; people small and unidentifiable, seen from behind or far away.\nConstraints: no text, no readable letters or numbers on signs, screens or buildings, no logos or brand names, no watermark, no frame or border, no recognisable faces."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "mainHall",
+  "set": "SS3 Conference",
+  "slot": "IA-C1",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "quality": "high",
+  "date": "2026-11-09",
+  "shipped": "packages/templates/conference/assets/main-hall.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "The main hall just before the first talk: a lit stage with a blank screen, rows of people seated, the river and a suspension bridge through tall windows.",
+  "prompt": "Use: hero picture for 'Two days on the craft of interfaces', shown at about 560 by 373 pixels.\nSubject: a bright modern conference hall just before the first talk, a low stage with a large blank screen glowing softly, rows of seats filling with people seen from behind.\nDetails: tall windows on one side letting in warm light, pale wood and limestone walls, a lectern on the stage.\nComposition: eye level, the subject in the centre third so a 16:9 crop from the centre keeps it, nothing important at the top or bottom edges.\nStyle: editorial architectural photograph for a design conference's website; warm late-afternoon Lisbon light; terracotta, limestone white and river blue; clean lines and calm; people small and unidentifiable, seen from behind or far away.\nConstraints: no text, no readable letters or numbers on signs, screens or buildings, no logos or brand names, no watermark, no frame or border, no recognisable faces."
+}

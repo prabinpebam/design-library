@@ -23,17 +23,17 @@
           {
             "title": "Riverside Hotel",
             "description": "€120 a night, five minutes’ walk. Code INTERFACE27.",
-            "picture": "harbour"
+            "picture": "riversideHotel"
           },
           {
             "title": "Alfama Rooms",
             "description": "€90 a night, 15 minutes by tram.",
-            "picture": "sand"
+            "picture": "alfamaRooms"
           },
           {
             "title": "Hostel Belém",
             "description": "€35 a night in a shared room.",
-            "picture": "meadow"
+            "picture": "hostelBelem"
           }
         ]
       }
