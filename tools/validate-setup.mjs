@@ -75,7 +75,13 @@ assert.equal(orchestrationSection(guidance), guidance, 'Orchestration updates mu
 assert.deepEqual(factsCheck(guidance), { missing: [], extra: [] });
 assert.doesNotMatch(guidance, /<path|<source folder>|<…>/);
 assert.ok(!existsSync(path.join(root, '.github', 'copilot-instructions.md')), 'Avoid duplicate always-on root guidance');
-assert.ok(!existsSync(path.join(root, '.git')), 'Root Git initialization was not required');
+// Since 2026-11-09 (owner, DoD Q80) the root is a Git repository; the upstream checkouts and review data are never
+// tracked, and nothing is a gitlink (submodule or nested repository).
+if (existsSync(path.join(root, '.git'))) {
+  const tracked = execFileSync('git', ['ls-files', '-s'], { cwd: root, encoding: 'utf8' }).split('\n').filter(Boolean);
+  assert.ok(!tracked.some((l) => l.startsWith('160000 ')), 'No gitlinks in the root repository');
+  assert.ok(!tracked.some((l) => /\t(agentic-craft|agent-orchestration|slate|\.design-library|\.slate)\//.test(l)), 'Upstream checkouts and review data are never tracked');
+}
 // Foundation execution (owner, 2026-11-06 20:28) adds product workspaces; they must stay an explicit list that never
 // sweeps in the upstream checkouts. `packages/templates` joined on 2026-11-08 (owner Q64, approved by main 19:58).
 const rootPackage = JSON.parse(text(path.join(root, 'package.json')));

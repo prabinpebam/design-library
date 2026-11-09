@@ -51,7 +51,7 @@
 
 The build runs here, not in GitHub Actions: the lockfile resolves through `packagefeedproxy.microsoft.io`, which a hosted runner can't be assumed to reach, and `npm run tokens` reads the ignored `agentic-craft` checkout. So:
 
-1. `node .\tools\publish-site.mjs` builds the library (`base: './'`), copies it and the `docs` host into `.publish/`, rewrites `local` to `hosted` addresses in the docs copy, checks every pair links both ways, and writes `.nojekyll`.
+1. `node .\tools\publish-site.mjs` builds the library (`base: './'`), copies it and the `docs` host into `.publish/`, rewrites `local` to `hosted` addresses in the published copy (docs pages, and sample content built into the library), checks every pair links both ways, and writes `.nojekyll`.
 2. `node .\tools\publish-site.mjs --push` commits `.publish/` as a single commit and force-pushes it to `gh-pages` (the deploy branch only; `main` is never forced).
 3. Pages serves `gh-pages` at `/`.
 
@@ -66,6 +66,22 @@ No token is printed, stored or committed: pushes use the owner's existing `gh` l
 
 ## Repository
 
-- **Name:** `prabinpebam/design-library` (checked free on 2026-11-09), public.
-- **Pages:** source `gh-pages`, path `/`.
-- Recorded here and in the [setup guide](setup.md) after the first deploy, with the redeploy command.
+| Field | Value (deployed 2026-11-09, F15.H3) |
+| --- | --- |
+| Repository | [prabinpebam/design-library](https://github.com/prabinpebam/design-library), public, no licence (all rights reserved until the owner picks one) |
+| Branches | `main` (source); `gh-pages` (the built site, one commit, replaced on every deploy) |
+| Library | [prabinpebam.github.io/design-library/](https://prabinpebam.github.io/design-library/), deep links such as [`#/motion`](https://prabinpebam.github.io/design-library/#/motion) and [`site.html#/app/projects/dashboard`](https://prabinpebam.github.io/design-library/site.html#/app/projects/dashboard) |
+| Docs | [prabinpebam.github.io/design-library/docs/](https://prabinpebam.github.io/design-library/docs/) |
+| Pages | Source `gh-pages` at `/`, HTTPS enforced; turned on by the first `gh-pages` push |
+
+**Redeploy** (from the workspace root, with the local servers' sources current):
+
+```powershell
+git add -A; git commit -m "…"; git push            # the source, when it changed
+node .\tools\publish-site.mjs --push               # build, assemble .publish\, force-push gh-pages
+gh api repos/prabinpebam/design-library/pages/builds/latest --jq .status   # "built" after about a minute
+```
+
+**Before the first push** the 963 tracked files were checked: no Git links or nested repositories, no upstream checkout, review data, build output or file over 1 MB. No secret scanner is installed, so a pattern scan ran over every tracked file (GitHub, AWS, Slack, Google and OpenAI tokens, private keys, npm auth, password/secret/key assignments, Azure keys and SAS signatures, JWTs): **0 hits**. Also seen and accepted: example addresses (`example.com`, `contoso.com`), the npm proxy and Microsoft package feed hostnames in `.npmrc` and `package-lock.json` (addresses, not credentials), local session-folder paths in two work-plan lines and the chat links in `AGENTS.md`.
+
+**Verified live** (2026-11-09 about 07:32): the library root, `#/motion`, a template site and the docs reader at `#motion.md` open; the Motion header links to `…/docs/#motion.md` and the doc's "In the library" line to `…/#/motion`; no `127.0.0.1` address is left outside the vendored runtime; the Revisions button is absent.

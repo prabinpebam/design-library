@@ -16,7 +16,8 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const links = JSON.parse(readFileSync(join(root, 'tools/site-links.json'), 'utf8'));
 const out = join(root, '.publish');
 const args = new Set(process.argv.slice(2));
-const run = (cmd, argv, opts = {}) => execFileSync(cmd, argv, { cwd: root, stdio: 'inherit', shell: process.platform === 'win32', ...opts });
+const run = (cmd, argv, opts = {}) => execFileSync(cmd, argv, { cwd: root, stdio: 'inherit', ...opts });
+const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 // Every pair links both ways: the library side comes from withDocs() in pages.ts; the doc must link back to the page.
 const missing = Object.entries(links.pairs).filter(([page, doc]) => {
@@ -34,7 +35,7 @@ const hosted = (text) =>
   text.split(links.local.docs).join(links.hosted.docs).split(links.local.library).join(links.hosted.library);
 const walk = (dir) => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
 
-run('npm', ['run', 'build', '-w', 'apps/library']);
+run(npm, ['run', 'build', '-w', 'apps/library'], { shell: process.platform === 'win32' });
 
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
@@ -45,7 +46,7 @@ cpSync(join(root, 'docs'), join(out, 'docs'), { recursive: true });
 let rewritten = 0;
 for (const file of walk(out)) {
   const rel = relative(out, file).split('\\').join('/');
-  if (rel.startsWith('docs/shell/') || !/\.(md|html)$/.test(rel)) continue;
+  if (rel.startsWith('docs/shell/') || !/\.(md|html|js|json)$/.test(rel)) continue;
   const text = readFileSync(file, 'utf8');
   const next = hosted(text);
   if (next !== text) {
