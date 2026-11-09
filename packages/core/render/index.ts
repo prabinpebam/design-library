@@ -8,7 +8,7 @@ export { loadTemplate, loadSite, partsSite, partRoute } from './load';
 export type { SiteFiles } from './load';
 export { SiteView, aliasFor, matchPage, pageFor, titleFor } from './SiteView';
 export type { SiteViewProps, PageMatch } from './SiteView';
-export { resolveData, findItem, itemPage, itemRoute, isRef, isItemValue, isBinding, meets } from './collections';
+export { resolveData, deriveValues, findItem, itemPage, itemRoute, isRef, isItemValue, isBinding, isDerived, meets } from './collections';
 export type { ResolveDataOptions, Binding } from './collections';
 export { resolveUnconfirmed, findUnconfirmed, isUnconfirmed } from './unconfirmed';
 export type * from './types';

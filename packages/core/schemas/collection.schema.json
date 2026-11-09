@@ -16,6 +16,17 @@
       "type": "array",
       "description": "The items, in their default order.",
       "items": { "type": "object" }
+    },
+    "generated": {
+      "type": "object",
+      "description": "Provenance, when a command wrote this collection from another source (DP14) rather than a person: what wrote it, from what and when. A generated collection is rebuilt, not edited by hand; the content check still validates its items.",
+      "required": ["by", "from"],
+      "properties": {
+        "by": { "type": "string", "minLength": 1, "description": "The command or script that writes it." },
+        "from": { "type": "string", "minLength": 1, "description": "Its source: a file, a folder or an address." },
+        "at": { "type": "string", "format": "date-time", "description": "When it was last written." }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,
@@ -82,6 +93,15 @@
       },
       "additionalProperties": false
     },
-    "sortField": { "type": "string", "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
+    "sortField": { "type": "string", "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" },
+    "derived": {
+      "type": "object",
+      "description": "A value the site document derives from its collections (DP14, site.schema.json `derive`), by name: { \"derived\": \"book-count\" }. Allowed wherever content takes a value; it is worked out when the site loads.",
+      "required": ["derived"],
+      "properties": {
+        "derived": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    }
   }
 }

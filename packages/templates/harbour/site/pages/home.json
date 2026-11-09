@@ -33,6 +33,15 @@
       "items": [{ "ref": "books/the-long-shore" }, { "ref": "books/salt-and-ink" }, { "ref": "books/small-boats" }]
     },
     {
+      "type": "stats",
+      "heading": "On our shelves",
+      "items": [
+        { "label": "Books on the front table", "value": { "derived": "book-count" } },
+        { "label": "Shelves they come from", "value": { "derived": "shelf-count" } },
+        { "label": "Readings to come", "value": { "derived": "readings-ahead" } }
+      ]
+    },
+    {
       "type": "points",
       "heading": "Why people come back",
       "items": ["Every book on the front table is read by someone who works here.", "We order any book in print within two days.", "Readings on the first Thursday of every month."]

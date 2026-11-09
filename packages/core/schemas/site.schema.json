@@ -42,6 +42,12 @@
       "propertyNames": { "$ref": "#/$defs/pattern" },
       "additionalProperties": { "anyOf": [{ "$ref": "#/$defs/pattern" }, { "type": "string", "pattern": "^https://\\S+$" }] }
     },
+    "derive": {
+      "type": "object",
+      "description": "Values worked out from the collections when the site loads (DP14), by name; content reads one with { \"derived\": \"book-count\" }. Each is one of: `count` (how many items, or with `field` how many distinct values of it: a number), `distinct` (the distinct values of `field`, sorted: a list) or `group` (one { \"value\", \"count\" } per distinct value of `field`, sorted by value: a list). Each may narrow the items with `where`, as a list binding's (collection.schema.json `$defs.binding`). Adding an item updates every value that counts it.",
+      "propertyNames": { "$ref": "#/$defs/id" },
+      "additionalProperties": { "$ref": "#/$defs/derivation" }
+    },
     "strings": {
       "type": "object",
       "description": "Words the renderer needs that no one page holds.",
@@ -91,6 +97,23 @@
         "component": { "type": "string", "default": "SiteLayout", "description": "A core layout (`SiteLayout`) or one the site registers." },
         "settings": { "type": "object", "description": "The layout component's options; for SiteLayout `width` (`wide`, `reading`) and `opening` (`spaced`, `flush`)." }
       },
+      "additionalProperties": false
+    },
+    "derivation": {
+      "type": "object",
+      "description": "One derived value (`derive`): exactly one of `count`, `distinct` or `group`, naming the collection.",
+      "properties": {
+        "count": { "$ref": "#/$defs/id", "description": "How many items of this collection (with `field`, how many distinct values of it)." },
+        "distinct": { "$ref": "#/$defs/id", "description": "The distinct values of `field` across this collection's items, sorted." },
+        "group": { "$ref": "#/$defs/id", "description": "One { \"value\", \"count\" } per distinct value of `field`, sorted by value." },
+        "field": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$", "description": "A dotted item path that follows references; a list field counts each of its values." },
+        "where": { "$ref": "https://design-library.local/core/collection/1#/$defs/binding/properties/where" }
+      },
+      "oneOf": [
+        { "required": ["count"], "not": { "anyOf": [{ "required": ["distinct"] }, { "required": ["group"] }] } },
+        { "required": ["distinct", "field"], "not": { "anyOf": [{ "required": ["count"] }, { "required": ["group"] }] } },
+        { "required": ["group", "field"], "not": { "anyOf": [{ "required": ["count"] }, { "required": ["distinct"] }] } }
+      ],
       "additionalProperties": false
     },
     "block": {

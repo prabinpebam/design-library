@@ -3,7 +3,7 @@
  * `{ "item": … }` values anywhere in site and page content, and gives an item the address of its own page. Pure: no
  * React, no state, so the content check and a build step can call the same functions.
  */
-import type { CollectionDocument, PageDocument, Site } from './types';
+import type { CollectionDocument, Derivation, DerivedValue, PageDocument, Site } from './types';
 
 type Item = Record<string, unknown>;
 
@@ -34,6 +34,8 @@ export interface Binding {
 
 /** A list binding: `{ "from": "talks", … }` (only the binding's own keys). */
 export const isBinding = (v: unknown): v is Binding => isObject(v) && typeof v.from === 'string' && only(v, 'from', 'where', 'sort', 'limit', 'select');
+/** A derived value: `{ "derived": "book-count" }` (DP14). */
+export const isDerived = (v: unknown): v is DerivedValue => isObject(v) && typeof v.derived === 'string' && only(v, 'derived');
 
 const dateOf = (v: unknown, today: string) => (v === 'today' ? today : String(v));
 
@@ -93,7 +95,7 @@ export interface ResolveDataOptions {
  * references resolved and, when its collection has an item page, `href` set to that page (unless the item has one).
  * A dotted `field` or `item` path follows references along the way. What isn't found is left out (`undefined`).
  */
-export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections'>, options: ResolveDataOptions = {}): T {
+export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections'> & Partial<Pick<Site, 'derived'>>, options: ResolveDataOptions = {}): T {
   const seen = new Set<string>();
   // Where in the value the walk is, for the JSON path a problem is reported at.
   const trail: (string | number)[] = [];
@@ -140,6 +142,11 @@ export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections
     if (isRef(v)) return v.field ? path(refItem(v.ref), v.field, `“${v.ref}”`) : refItem(v.ref);
     if (isItemValue(v)) return options.item ? path(options.item, v.item, `the ${options.collection ?? ''} item`.replace('  ', ' ')) : undefined;
     if (isBinding(v)) return bind(v);
+    if (isDerived(v)) {
+      if (site.derived && v.derived in site.derived) return site.derived[v.derived];
+      options.missing?.(`“${v.derived}” isn’t a value the site derives`, here());
+      return undefined;
+    }
     if (Array.isArray(v)) return v.flatMap((x, i) => inside(i, () => (isBinding(x) ? (bind(x) as unknown[]) : [walk(x)]))).filter((x) => x !== undefined);
     if (isObject(v)) return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, inside(k, () => walk(x))]).filter(([, x]) => x !== undefined));
     return v;
@@ -179,4 +186,37 @@ export function resolveData<T>(value: T, site: Pick<Site, 'pages' | 'collections
     });
   }
   return walk(value) as T;
+}
+
+/**
+ * Works out a site document's `derive` values from its collections (DP14): `count` (a number), `distinct` (sorted
+ * values) and `group` (`{ value, count }` per value, sorted by value), each over the items that meet `where`. A dotted
+ * `field` follows references; a list field counts each of its values; a reference counts as its item's id. Pure, so
+ * `loadSite`, the content check and a build step give the same values.
+ */
+export function deriveValues(
+  derive: Record<string, Derivation> | undefined,
+  site: Pick<Site, 'pages' | 'collections'>,
+  options: Pick<ResolveDataOptions, 'missing' | 'today'> = {},
+): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [name, d] of Object.entries(derive ?? {})) {
+    const from = 'count' in d ? d.count : 'distinct' in d ? d.distinct : d.group;
+    const items = resolveData({ from, where: d.where } as Binding, site, { ...options, missing: (what) => options.missing?.(what, `derive.${name}`) }) as unknown as Item[];
+    const values = (item: Item): unknown[] => {
+      let at: unknown = item;
+      for (const part of (d.field ?? '').split('.')) at = isObject(at) ? at[part] : undefined;
+      const list = Array.isArray(at) ? at : [at];
+      return list.map((v) => (isObject(v) && 'id' in v ? v.id : v)).filter((v) => v !== undefined && v !== null && v !== '');
+    };
+    if ('count' in d && !d.field) {
+      out[name] = items.length;
+      continue;
+    }
+    const counts = new Map<string, number>();
+    for (const item of items) for (const v of new Set(values(item).map(String))) counts.set(v, (counts.get(v) ?? 0) + 1);
+    const sorted = [...counts.keys()].sort(compare);
+    out[name] = 'count' in d ? sorted.length : 'distinct' in d ? sorted : sorted.map((value) => ({ value, count: counts.get(value)! }));
+  }
+  return out;
 }

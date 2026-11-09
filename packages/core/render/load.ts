@@ -5,6 +5,7 @@
  * separate project makes its own templates the same way (Q81).
  */
 import type { CollectionDocument, PageDocument, Site, SiteDocument, Template, TemplateAsset, TemplateContent, TemplateManifest } from './types';
+import { deriveValues } from './collections';
 
 export function loadTemplate(
   manifest: unknown,
@@ -55,7 +56,11 @@ export interface SiteFiles {
 export function loadSite(files: SiteFiles): Site {
   const list = (v: Record<string, unknown> | unknown[] | undefined) => (Array.isArray(v) ? v : Object.values(v ?? {}));
   const collections = Object.fromEntries((list(files.collections) as CollectionDocument[]).map((c) => [c.id, c]));
-  return { site: files.site as SiteDocument, pages: list(files.pages) as PageDocument[], collections, assets: resolveAssets(files.assets, files.assetUrls ?? {}), registry: files.registry };
+  const site = files.site as SiteDocument;
+  const pages = list(files.pages) as PageDocument[];
+  // Derived values (DP14) are worked out once here; what they can't find, the content check reports.
+  const derived = site.derive ? deriveValues(site.derive, { pages, collections }) : undefined;
+  return { site, pages, collections, derived, assets: resolveAssets(files.assets, files.assetUrls ?? {}), registry: files.registry };
 }
 
 /** The route `partsSite` gives a block type: `conference.sponsor-wall` → `/conference/sponsor-wall`. */

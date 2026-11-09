@@ -29,6 +29,11 @@
   "layout": { "component": "SiteLayout", "settings": { "width": "wide" } },
   "transition": "fade",
   "aliases": { "/home": "/", "/events": "/readings", "/events/:id": "/readings/:id" },
+  "derive": {
+    "book-count": { "count": "books" },
+    "shelf-count": { "count": "books", "field": "eyebrow" },
+    "readings-ahead": { "count": "readings", "where": { "date": { "after": "today" } } }
+  },
   "strings": {
     "notFound": { "title": "This page isn’t on our shelves", "text": "The address may be old or mistyped.", "home": "Back to the shop" }
   }

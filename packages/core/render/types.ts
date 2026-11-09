@@ -337,6 +337,8 @@ export interface SiteDocument {
   transition?: 'none' | 'fade';
   /** Old or extra addresses → the route each opens (`:name` parts carry over), or an `https://` address. */
   aliases?: Record<string, string>;
+  /** Values worked out from the collections when the site loads (DP14), read in content as `{ "derived": name }`. */
+  derive?: Record<string, Derivation>;
   strings?: {
     notFound?: { title: string; text: string; home: string };
     unconfirmed?: Record<string, string>;
@@ -353,6 +355,15 @@ export type ItemValue = { item: string };
 /** A reference to a collection's item, or one value of it (collection.schema.json `$defs.ref`). */
 export type ItemRef = { ref: string; field?: string };
 
+/**
+ * One derived value (site.schema.json `$defs.derivation`, DP14): exactly one of `count`, `distinct` or `group`, naming
+ * a collection; `field` is a dotted item path (needed by `distinct` and `group`); `where` as a list binding's.
+ */
+export type Derivation = ({ count: string } | { distinct: string; field: string } | { group: string; field: string }) & { field?: string; where?: Record<string, unknown> };
+
+/** A derived value in content: `{ "derived": "book-count" }` (collection.schema.json `$defs.derived`). */
+export type DerivedValue = { derived: string };
+
 /** A collection, as collection.schema.json (version 1) defines it (DP12). */
 export interface CollectionDocument {
   collectionVersion: 1;
@@ -363,6 +374,8 @@ export interface CollectionDocument {
   /** The JSON schema every item meets. */
   item?: Record<string, unknown>;
   items: Record<string, unknown>[];
+  /** Provenance when a command wrote it (DP14): what wrote it, from what and when. */
+  generated?: { by: string; from: string; at?: string };
 }
 
 /** One page, as page.schema.json (version 1) defines it (DP9). */
@@ -394,6 +407,8 @@ export interface Site {
   pages: PageDocument[];
   /** Collections by id (DP12). */
   collections: Record<string, CollectionDocument>;
+  /** The site document's `derive` values, worked out by `loadSite` (DP14). */
+  derived?: Record<string, unknown>;
   assets: Record<string, TemplateAsset>;
   registry?: Template['registry'];
 }
