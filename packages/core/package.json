@@ -44,7 +44,8 @@
     "design-library-check": "./tools/check-project.mjs",
     "design-library-new-template": "./tools/new-template.mjs",
     "design-library-review": "./tools/review.mjs",
-    "design-library-template-tokens": "./tools/template-tokens.mjs"
+    "design-library-template-tokens": "./tools/template-tokens.mjs",
+      "design-library-types": "./tools/types.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
