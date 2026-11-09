@@ -28,6 +28,29 @@ export default {
       ),
     },
     {
+      title: 'Wider and squarer frames',
+      description: 'Ultrawide 21:9 for a band across a page, classic 4:3 for a calmer photo. Same picture, so the crop shows.',
+      code: `<Image ratio="ultrawide" … />  <Image ratio="classic" … />`,
+      render: () => (
+        <Grid max={2}>
+          <Image ratio="ultrawide" src={scenes[1].src} alt={scenes[1].alt} />
+          <Image ratio="classic" src={scenes[1].src} alt={scenes[1].alt} />
+        </Grid>
+      ),
+    },
+    {
+      title: 'Focal point',
+      description: 'When cover crops, focalPoint keeps a point in view: x and y in percent from the start and top edges. The same tall crop of one picture, centred (default), held on its left part, then on its right part.',
+      code: `<Image ratio="portrait" focalPoint={{ x: 10, y: 50 }} … />`,
+      render: () => (
+        <Grid max={3}>
+          <Image ratio="portrait" src={scenes[1].src} alt={scenes[1].alt} />
+          <Image ratio="portrait" focalPoint={{ x: 10, y: 50 }} src={scenes[1].src} alt={scenes[1].alt} />
+          <Image ratio="portrait" focalPoint={{ x: 90, y: 50 }} src={scenes[1].src} alt={scenes[1].alt} />
+        </Grid>
+      ),
+    },
+    {
       title: 'Shown whole',
       description: 'With fit set to contain, the whole picture shows inside the frame, on the frame’s soft fill.',
       code: `<Image ratio="square" fit="contain" src={…} alt="…" />`,

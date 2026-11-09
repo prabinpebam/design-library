@@ -90,6 +90,8 @@ function propsOf(source, name) {
     const props = [];
     for (const p of m[3].matchAll(/(?:\/\*\*([\s\S]*?)\*\/\s*)?(\w+)(\?)?:\s*([^;]+);/g)) {
       if (p[4].trim() === 'never') continue;
+      // A member of an inline object type (`swatch?: { value; onChange }`) isn't a prop of its own: the first wins.
+      if (props.some((x) => x.name === p[2])) continue;
       const d = defaults.get(p[2]);
       props.push({ name: p[2], type: p[4].trim().replace(/\s+/g, ' '), ...(p[3] ? {} : { required: true }), ...(d ? { default: d } : {}), ...(p[1] ? { description: clean(p[1]) } : {}) });
     }

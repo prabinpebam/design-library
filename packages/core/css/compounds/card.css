@@ -34,7 +34,9 @@
     --image-radius: 0;
   }
 
+  [data-dl='card'] > [data-dl-part='media'][data-ratio='ultrawide'] { aspect-ratio: 21 / 9; }
   [data-dl='card'] > [data-dl-part='media'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+  [data-dl='card'] > [data-dl-part='media'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
   [data-dl='card'] > [data-dl-part='media'][data-ratio='square'] { aspect-ratio: 1; }
 
   [data-dl='card'][data-variant='plain'] > [data-dl-part='media'] {

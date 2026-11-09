@@ -78,6 +78,16 @@
           "description": "A noun phrase naming the choice, with no colon: \"Current revision\"."
         },
         {
+          "name": "mode",
+          "type": "'commit' | 'form'",
+          "description": "`commit` (default): the choice applies and saves at once, with saving, saved and failed states. `form` (IP14): one field of a form saved together with one Save button: `onChange` just reports the choice; no state or \"Saved\" shows on the field."
+        },
+        {
+          "name": "savedText",
+          "type": "string",
+          "description": "Announced once a choice is saved: \"Saved\" (IP14)."
+        },
+        {
           "name": "options",
           "type": "SelectOption[]",
           "required": true

@@ -16,6 +16,8 @@ export interface NumberFieldProps extends DataAttributes {
   value: number | 'mixed' | 'auto';
   /** Stores a new number: after typing (Enter or leaving), a scrub, a stepper press, or a pause in arrow keys. Return a promise for a save; reject it when it fails. */
   onCommit: (next: number) => unknown;
+  /** `commit` (default): each new number saves on its own, with saving and failed states. `form` (IP14): one field of a form saved together with one Save button: `onCommit` just reports the number; no state shows on the field. */
+  mode?: 'commit' | 'form';
   min?: number;
   max?: number;
   /** One arrow press, one stepper press, one pixel of scrubbing. Shift: ×10, Alt: ×0.1. */
@@ -131,7 +133,7 @@ export function parseNumberInput(text: string, current: number, unit?: string): 
  * @key Escape: puts back the stored value; while scrubbing, cancels the drag
  * @key Drag the label, glyph or icon sideways: changes the value with the pointer hidden (Shift: ten, Alt: a tenth)
  */
-export function NumberField({ label, value, onCommit, min, max, step = 1, precision, unit, glyph, icon, steppers = false, size = 'normal', hideLabel = false, disabled = false, error, auto, units, onUnitChange, presets, variable, ...data }: NumberFieldProps) {
+export function NumberField({ label, value, onCommit, mode = 'commit', min, max, step = 1, precision, unit, glyph, icon, steppers = false, size = 'normal', hideLabel = false, disabled = false, error, auto, units, onUnitChange, presets, variable, ...data }: NumberFieldProps) {
   // One decimal finer than the step by default, so Alt (×0.1) can reach between steps; trailing zeros aren't shown.
   const places = precision ?? decimals(step) + 1;
   const clamp = (n: number) => {
@@ -165,6 +167,7 @@ export function NumberField({ label, value, onCommit, min, max, step = 1, precis
   const save = (n: number) => {
     window.clearTimeout(pause.current);
     if (n === value) return;
+    if (mode === 'form') return void onCommit(n);
     void run(() => onCommit(n));
   };
 

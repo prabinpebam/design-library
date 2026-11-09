@@ -72,6 +72,16 @@
         {
           "name": "sizes",
           "type": "string"
+        },
+        {
+          "name": "focalPoint",
+          "type": "{ x: number",
+          "description": "The point to keep in view when the frame crops (IP12), in percent from the start and top edges."
+        },
+        {
+          "name": "y",
+          "type": "number }",
+          "required": true
         }
       ]
     }

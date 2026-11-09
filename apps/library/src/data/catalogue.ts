@@ -88,6 +88,8 @@ function propsOf(source: string, defaults: Map<string, string>): PropGroup[] {
     const props: PropDoc[] = [];
     for (const p of m[2].matchAll(/(?:\/\*\*([\s\S]*?)\*\/\s*)?(\w+)(\?)?:\s*([^;]+);/g)) {
       if (p[4].trim() === 'never') continue;
+      // A member of an inline object type (`swatch?: { value; onChange }`) isn't a prop of its own: the first wins.
+      if (props.some((x) => x.name === p[2])) continue;
       props.push({ name: p[2], type: p[4].trim().replace(/\s+/g, ' '), optional: !!p[3], default: defaults.get(p[2]), description: clean(p[1] ?? '') });
     }
     if (props.length) groups.push({ name: m[1], props });

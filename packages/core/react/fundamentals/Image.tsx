@@ -11,8 +11,10 @@ export interface ImageProps extends DataAttributes {
   srcSet?: string;
   /** How wide the picture is drawn at each window width (`sizes`), so the browser picks the right file. */
   sizes?: string;
-  /** The frame's shape: `wide` 16:9, `photo` 3:2, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`). */
-  ratio?: 'wide' | 'photo' | 'square' | 'portrait' | 'natural';
+  /** The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`). */
+  ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural';
+  /** The point to keep in the frame when `cover` crops (IP12): `x` and `y` in percent from the start and top edges, e.g. `{ x: 30, y: 20 }` for a face up and to one side. The centre (50, 50) when left out. */
+  focalPoint?: { x: number; y: number };
   /** `cover` fills the frame and crops the edges (default); `contain` shows the whole picture inside the frame. */
   fit?: 'cover' | 'contain';
   /** The picture's own width and height in pixels: they reserve its space before it loads, so nothing below it jumps. */
@@ -45,6 +47,7 @@ export function Image({
   sizes,
   ratio = 'photo',
   fit = 'cover',
+  focalPoint,
   width,
   height,
   caption,
@@ -62,7 +65,14 @@ export function Image({
   }, [src]);
 
   const frame = (attrs: DataAttributes) => (
-    <span {...attrs} data-dl="image" style={width && height ? ({ '--image-ratio': `${width} / ${height}` } as CSSProperties) : undefined} data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined}>
+    <span
+      {...attrs}
+      data-dl="image"
+      style={
+        width && height || focalPoint
+          ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focalPoint ? { '--image-focus': `${focalPoint.x}% ${focalPoint.y}%` } : {}) } as CSSProperties)
+          : undefined
+      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined}>
       {state === 'failed' ? (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
           <Icon name="image" size="lg" />

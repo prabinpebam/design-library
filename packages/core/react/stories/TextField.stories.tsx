@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import type { ButtonSize } from '../fundamentals/Button';
+import { Button, type ButtonSize } from '../fundamentals/Button';
+import { List } from '../fundamentals/List';
+import { Cluster } from '../fundamentals/Cluster';
 import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
@@ -82,6 +84,61 @@ const sizes: [ButtonSize, string][] = [
   ['xl', 'xl · 64 px'],
   ['xxl', 'xxl · 80 px'],
 ];
+
+const walks = ['Morning over the hills', 'The desert in the last hour of light', 'The ridge at night', 'Low tide at the lagoon', 'First snow on the hills', 'Harvest time in the valley'];
+
+/** IP14: onChange runs on every keystroke, so a list narrows as the person types; nothing is saved. */
+function LiveFilter() {
+  const [query, setQuery] = useState('');
+  const shown = walks.filter((w) => w.toLowerCase().includes(query.trim().toLowerCase()));
+  return (
+    <Stack gap="item">
+      <TextField label="Find a walk" type="search" icon="search" mode="form" value={query} onChange={setQuery} placeholder="hills" clearable />
+      <Text variant="body-sm" tone="muted">
+        {shown.length === walks.length ? `${walks.length} walks` : `${shown.length} of ${walks.length} walks`}
+      </Text>
+      <List items={shown.map((w) => ({ id: w, content: w }))} />
+    </Stack>
+  );
+}
+
+/** IP14: fields in a form save together with one button; no field saves or says "Saved" on its own. */
+function InForm() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [tried, setTried] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const emailError = tried && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? 'Enter an email address with a domain, like ada@example.com.' : undefined;
+  const nameError = tried && !name.trim() ? 'Enter your name.' : undefined;
+  return (
+    <form
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        setTried(true);
+        setSent(false);
+        if (!name.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return;
+        setSending(true);
+        window.setTimeout(() => {
+          setSending(false);
+          setSent(true);
+        }, 800);
+      }}
+    >
+      <Stack gap="group">
+        <TextField label="Your name" name="name" mode="form" value={name} onChange={setName} error={nameError} />
+        <TextField label="Email" name="email" type="email" mode="form" value={email} onChange={setEmail} error={emailError} />
+        <Stack gap="item">
+          <Cluster>
+            <Button type="submit" emphasis="primary" label="Send enquiry" busy={sending} pendingLabel="Sending…" />
+          </Cluster>
+          {sent && <Text tone="success">Sent. We’ll answer within two working days.</Text>}
+        </Stack>
+      </Stack>
+    </form>
+  );
+}
 
 export default {
   component: 'TextField',
@@ -255,6 +312,22 @@ export default {
           </Text>
         </Stack>
       ),
+    },
+    {
+      title: 'Live as you type',
+      description: 'onChange runs on every keystroke, so a list narrows while the person types; with mode="form" nothing is saved and nothing announces. The count under the field says how many are left.',
+      code: `<TextField label="Find a walk" type="search" icon="search" mode="form" value={query} onChange={setQuery} clearable />`,
+      render: () => <LiveFilter />,
+    },
+    {
+      title: 'In a form',
+      description: 'mode="form": the fields save together with one Send button. No field saves on blur or says “Saved”; Enter submits the form; errors show on their fields when the form is sent, and the answers stay.',
+      code: `<form onSubmit={send}>
+  <TextField label="Your name" name="name" mode="form" value={name} onChange={setName} error={nameError} />
+  <TextField label="Email" name="email" type="email" mode="form" value={email} onChange={setEmail} error={emailError} />
+  <Button type="submit" emphasis="primary" label="Send enquiry" busy={sending} pendingLabel="Sending…" />
+</form>`,
+      render: () => <InForm />,
     },
   ],
 } satisfies StoryFile;

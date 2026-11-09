@@ -14,10 +14,23 @@ import type { DataAttributes } from '../types';
 export interface TextFieldProps extends DataAttributes {
   /** A noun phrase naming what goes in, with no colon: "Project name". */
   label: string;
-  /** The stored value. */
+  /** The stored value (`commit`), or the form's current value (`form`). */
   value: string;
-  /** Stores the new value when the person leaves the field or presses Enter. Return a promise for a save; reject it when the save fails. */
-  onCommit: (next: string) => unknown;
+  /**
+   * `commit` (default): saved on its own when the person leaves the field or presses Enter, with pending, saved and
+   * failed states on the field. `form` (IP14): one field of a form saved together with one Save button: nothing saves
+   * on blur or Enter, no state or "Saved" shows on the field, and Enter submits the form; the form owns the value
+   * (`onChange`) and its errors (`error`, and an ErrorSummary).
+   */
+  mode?: 'commit' | 'form';
+  /** Stores the new value when the person leaves the field or presses Enter (`commit` mode, where it's needed). Return a promise for a save; reject it when the save fails. */
+  onCommit?: (next: string) => unknown;
+  /** Runs on every change while the person types (IP14), e.g. to narrow a list as they type. In `form` mode, store it and pass it back as `value`. */
+  onChange?: (next: string) => void;
+  /** The input's `name`, for a form that reads its fields by name. */
+  name?: string;
+  /** The words the field shows and says, over the English defaults (IP14): its saved announcement, a failed save's buttons, Clear, Show and Hide, a removable chip's button and a code's length. */
+  words?: TextFieldWords;
   /** One short sentence: the format, why it's asked, or what happens. */
   hint?: string;
   /** An example value, never the label or an instruction. */
@@ -68,6 +81,25 @@ export interface TextFieldProps extends DataAttributes {
   hideLabel?: boolean;
 }
 
+/** The words a TextField shows and says (IP14). Each defaults to the English shown. */
+export interface TextFieldWords {
+  /** Announced once a save is stored: "Saved". */
+  saved?: string;
+  /** A failed save's buttons: "Retry" and "Revert". */
+  retry?: string;
+  revert?: string;
+  /** The Clear button's name: "Clear {label}". */
+  clear?: string;
+  /** The password field's button: "Show" and "Hide". */
+  show?: string;
+  hide?: string;
+  /** A chip's remove button: "Remove {chip}". */
+  removeChip?: string;
+  /** Said after a code's length: "digits" for a numeric code, else "characters". */
+  digits?: string;
+  characters?: string;
+}
+
 export interface TextFieldPrefixMenu {
   /** Names the choice for assistive technology, e.g. "Country code". */
   label: string;
@@ -107,10 +139,13 @@ const actionSize: Record<ButtonSize, ButtonSize> = { xs: 'xs', s: 'xs', normal: 
  * the field invalid and offers Retry and Revert. A validation `error` marks it invalid with the message below. Read-only
  * stays focusable. Clear and Show are named buttons after the input in the tab order. Targets: 44 px and up from
  * `normal`; `xs` and `s` are dense exceptions.
- * @key Enter: saves the value now
- * @key Escape: puts back the stored value
+ * In `mode="form"` (IP14) it is one field of a form: no save of its own, no states or "Saved" on the field, Enter
+ * submits the form. Every word it shows or says can be given in `words`.
+ * @key Enter: saves the value now (in a form: submits the form)
+ * @key Escape: puts back the stored value (not in a form)
  */
-export function TextField({ label, value, onCommit, hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, ...data }: TextFieldProps) {
+export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, ...data }: TextFieldProps) {
+  const form = mode === 'form';
   const { phase, run, reset } = useCommit('--duration-confirm-read');
   const [draft, setDraft] = useState(value);
   const [stored, setStored] = useState(value);
@@ -143,7 +178,7 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
   }, [shortcut]);
 
   const commitValue = (next: string) => {
-    if (pending || next === stored) return;
+    if (form || !onCommit || pending || next === stored) return;
     void run(() => onCommit(next), () => setStored(next));
   };
   const commit = () => commitValue(draft);
@@ -161,16 +196,19 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
 
   const clear = () => {
     setDraft('');
+    onChange?.('');
     input.current?.focus();
     commitValue('');
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
+      // In a form, Enter submits the form as usual; the field saves nothing itself.
+      if (form) return void action?.onAction(draft);
       event.preventDefault();
       commit();
       action?.onAction(draft);
-    } else if (event.key === 'Escape' && draft !== stored) {
+    } else if (event.key === 'Escape' && !form && draft !== stored) {
       event.preventDefault();
       revert();
     } else if (event.key === 'Backspace' && chip && event.currentTarget.selectionStart === 0 && event.currentTarget.selectionEnd === 0) {
@@ -187,6 +225,7 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
     <input
       ref={input}
       id={control.id}
+      name={name}
       type={type === 'password' && shown ? 'text' : code ? (masked ? 'password' : 'text') : type}
       value={draft}
       placeholder={code ? undefined : placeholder}
@@ -203,6 +242,7 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
       onChange={(event) => {
         const next = code ? event.target.value.replace(keyboard === 'numeric' ? /\D/g : /[\s-]/g, '').slice(0, length) : event.target.value;
         setDraft(next);
+        onChange?.(next);
         // A complete code saves at once: there's nothing more to type.
         if (code && next.length === length) commitValue(next);
       }}
@@ -241,7 +281,7 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
       ))}
       {field(control)}
       <span id={`${id}-length`} data-dl-part="announce">
-        {length} {keyboard === 'numeric' ? 'digits' : 'characters'}
+        {length} {keyboard === 'numeric' ? (words.digits ?? 'digits') : (words.characters ?? 'characters')}
       </span>
       {trailing}
     </span>
@@ -256,7 +296,7 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
       {chip && (
         <span data-dl-part="chip" id={`${id}-chip`}>
           <span>{chip.label}</span>
-          {editable && <Button size="xs" emphasis="quiet" icon="close" iconOnly label={`Remove ${chip.label}`} onClick={() => { chip.onRemove(); input.current?.focus(); }} />}
+          {editable && <Button size="xs" emphasis="quiet" icon="close" iconOnly label={words.removeChip ?? `Remove ${chip.label}`} onClick={() => { chip.onRemove(); input.current?.focus(); }} />}
         </span>
       )}
       {prefix && (
@@ -275,8 +315,8 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
           {shortcut}
         </kbd>
       )}
-      {editable && clearable && draft !== '' && !pending && <Button size={actionSize[size]} emphasis="quiet" icon="close" iconOnly label={`Clear ${label}`} onClick={clear} />}
-      {editable && type === 'password' && <Button size={actionSize[size]} emphasis="quiet" label={shown ? 'Hide' : 'Show'} onClick={() => setShown(!shown)} />}
+      {editable && clearable && draft !== '' && !pending && <Button size={actionSize[size]} emphasis="quiet" icon="close" iconOnly label={words.clear ?? `Clear ${label}`} onClick={clear} />}
+      {editable && type === 'password' && <Button size={actionSize[size]} emphasis="quiet" label={shown ? (words.hide ?? 'Hide') : (words.show ?? 'Show')} onClick={() => setShown(!shown)} />}
       {trailing}
     </span>
   );
@@ -284,15 +324,15 @@ export function TextField({ label, value, onCommit, hint, placeholder, type = 't
   // A failed save: what happened, what was kept, and the way out. Announced as it appears.
   const failure = (
     <span data-dl-part="failure" id={`${id}-failure`} role="status">
-      {phase === 'done' && <span data-dl-part="announce">Saved</span>}
+      {phase === 'done' && <span data-dl-part="announce">{words.saved ?? 'Saved'}</span>}
       {failed && (
         <>
           <Text as="span" variant="body-sm" tone="danger">
             {failedText ?? `Couldn’t save “${label}”. Your text is still here.`}
           </Text>
           <span data-dl-part="actions">
-            <Button label="Retry" onClick={retry} />
-            <Button label="Revert" emphasis="quiet" onClick={revert} />
+            <Button label={words.retry ?? 'Retry'} onClick={retry} />
+            <Button label={words.revert ?? 'Revert'} emphasis="quiet" onClick={revert} />
           </span>
         </>
       )}

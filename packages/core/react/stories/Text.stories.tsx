@@ -38,5 +38,18 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Lead and statement',
+      description:
+        'Two needs, two styles (ID9). Lead is body-scale prose a step up (20 px, the text face) for a paragraph that opens or sums up what follows. Statement is one display-scale sentence that isn’t a heading (48 px, between heading 1 and display), for a mission or facts read as a sentence; at most one per view, and the page still has its own heading.',
+      code: `<Text variant="lead">Three days of talks and workshops by the water, for people who make things.</Text>
+<Text variant="statement">Twelve years, forty cities and one question: how do we make things better?</Text>`,
+      render: () => (
+        <>
+          <Text variant="lead">Three days of talks and workshops by the water, for people who make things.</Text>
+          <Text variant="statement">Twelve years, forty cities and one question: how do we make things better?</Text>
+        </>
+      ),
+    },
   ],
 } satisfies StoryFile;

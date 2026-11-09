@@ -26,9 +26,9 @@
         },
         {
           "name": "variant",
-          "type": "'body' | 'body-sm' | 'caption'",
+          "type": "'body' | 'body-sm' | 'caption' | 'lead' | 'statement'",
           "default": "'body'",
-          "description": "Composite text style."
+          "description": "Composite text style. `lead` (IP11): body-scale prose a step up, for a paragraph that opens or sums up what follows. `statement`: one display-scale sentence that isn't a heading (a mission, facts read as a sentence), at most one per view."
         },
         {
           "name": "tone",
@@ -51,12 +51,14 @@
   ],
   "uses": [],
   "tokens": [
+    "--axes-display",
     "--axes-text",
     "--color-status-danger-fg",
     "--color-status-info-fg",
     "--color-status-success-fg",
     "--color-status-warning-fg",
     "--color-text-muted",
+    "--font-display",
     "--font-text",
     "--size-measure",
     "--type-body-leading",
@@ -65,7 +67,14 @@
     "--type-body-sm-size",
     "--type-body-weight",
     "--type-caption-leading",
-    "--type-caption-size"
+    "--type-caption-size",
+    "--type-lead-leading",
+    "--type-lead-size",
+    "--type-lead-weight",
+    "--type-statement-leading",
+    "--type-statement-size",
+    "--type-statement-tracking",
+    "--type-statement-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/text",
   "usedBy": [

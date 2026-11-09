@@ -42,6 +42,13 @@
   --type-body-size: var(--text-m);
   --type-body-leading: var(--leading-normal);
   --type-body-weight: var(--weight-regular);
+  --type-lead-size: var(--text-l);
+  --type-lead-leading: var(--leading-normal);
+  --type-lead-weight: var(--weight-regular);
+  --type-statement-size: 3rem;
+  --type-statement-leading: var(--leading-tight);
+  --type-statement-weight: var(--weight-medium);
+  --type-statement-tracking: var(--tracking-tight);
   --type-body-sm-size: var(--text-s);
   --type-body-sm-leading: var(--leading-normal);
   --type-body-sm-weight: var(--weight-regular);

@@ -42,9 +42,19 @@
         },
         {
           "name": "ratio",
-          "type": "'wide' | 'photo' | 'square' | 'portrait' | 'natural'",
+          "type": "'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural'",
           "default": "'photo'",
-          "description": "The frame's shape: `wide` 16:9, `photo` 3:2, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`)."
+          "description": "The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`)."
+        },
+        {
+          "name": "focalPoint",
+          "type": "{ x: number",
+          "description": "The point to keep in the frame when `cover` crops (IP12): `x` and `y` in percent from the start and top edges, e.g. `{ x: 30, y: 20 }` for a face up and to one side. The centre (50, 50) when left out."
+        },
+        {
+          "name": "y",
+          "type": "number }",
+          "required": true
         },
         {
           "name": "fit",

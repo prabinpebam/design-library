@@ -62,6 +62,12 @@
           "description": "Stores a new number: after typing (Enter or leaving), a scrub, a stepper press, or a pause in arrow keys. Return a promise for a save; reject it when it fails."
         },
         {
+          "name": "mode",
+          "type": "'commit' | 'form'",
+          "default": "'commit'",
+          "description": "`commit` (default): each new number saves on its own, with saving and failed states. `form` (IP14): one field of a form saved together with one Save button: `onCommit` just reports the number; no state shows on the field."
+        },
+        {
           "name": "min",
           "type": "number"
         },
@@ -132,10 +138,6 @@
           "name": "onAuto",
           "type": "() => unknown",
           "required": true
-        },
-        {
-          "name": "label",
-          "type": "string }"
         },
         {
           "name": "variable",

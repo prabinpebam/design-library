@@ -24,6 +24,26 @@
     line-height: var(--type-caption-leading);
   }
 
+  /* IP11 (ID9): lead is body-scale prose a step up, in the text face; statement is one display-scale sentence. */
+  [data-dl='text'][data-variant='lead'] {
+    font-family: var(--font-text);
+    font-variation-settings: var(--axes-text);
+    font-size: var(--type-lead-size);
+    line-height: var(--type-lead-leading);
+    font-weight: var(--type-lead-weight);
+  }
+
+  [data-dl='text'][data-variant='statement'] {
+    font-family: var(--font-display);
+    font-variation-settings: var(--axes-display);
+    font-size: var(--type-statement-size);
+    line-height: var(--type-statement-leading);
+    font-weight: var(--type-statement-weight);
+    letter-spacing: var(--type-statement-tracking);
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
   [data-dl='text'][data-tone='muted'] {
     color: var(--color-text-muted);
   }

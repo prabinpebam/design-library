@@ -13,7 +13,9 @@
     background-color: var(--color-bg-sunken);
   }
 
+  [data-dl='image'][data-ratio='ultrawide'] { aspect-ratio: 21 / 9; }
   [data-dl='image'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+  [data-dl='image'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
   [data-dl='image'][data-ratio='square'] { aspect-ratio: 1; }
   [data-dl='image'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
   /* Natural: the shape from width and height when given, so the frame is right before the picture arrives. */
@@ -30,6 +32,8 @@
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
+    /* IP12: the focal point stays in the frame when cover crops; the centre by default. */
+    object-position: var(--image-focus, 50% 50%);
     opacity: 1;
     transition: opacity var(--duration-change) var(--easing-standard);
   }

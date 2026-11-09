@@ -103,6 +103,19 @@ export default {
       ),
     },
     {
+      title: 'Status in the meta line',
+      description:
+        'A status is a Badge in meta, beside the date: no new prop. The badge says the status in words with its tone, so it never rests on colour; the title stays the card’s name.',
+      code: `<Card href="…" media={…} title="Spring walks" meta={<Cluster><Badge tone="success">Booking open</Badge>12 Apr</Cluster>} />`,
+      render: () => (
+        <Grid max={3}>
+          <Card href="#/card" media={picture(0)} title="Spring walks in the hills" meta={<Cluster gap="pair"><Badge tone="success">Booking open</Badge>12 Apr</Cluster>} headingLevel={3} />
+          <Card href="#/card" media={picture(1)} title="Desert evenings" meta={<Cluster gap="pair"><Badge tone="info">Coming up</Badge>3 Jun</Cluster>} headingLevel={3} />
+          <Card href="#/card" media={picture(2)} title="The ridge at night" meta={<Cluster gap="pair"><Badge>Ended</Badge>21 Jan</Cluster>} headingLevel={3} />
+        </Grid>
+      ),
+    },
+    {
       title: 'Picture beside the words',
       description: 'A lead item: the picture and the words share the width. Narrow the window and they stack.',
       code: `<Card layout="beside" href="/trips/harvest" media={…} eyebrow="Featured" title="Harvest time in the valley" description="…" meta="Sep · 3 days" />`,

@@ -7,16 +7,16 @@
   "summary": "One line of text saved on its own when the person leaves the field (blur-commit), at seven sizes, with an optional leading icon, fixed prefix or suffix text, a Clear button, a character count and a hidden-text (password) form. Not for values that must be valid or saved together with others (put those in a form with a Save button), or for long text that autosaves while typing.",
   "family": "inputs",
   "a11y": [
-    "A native `input` named by its visible `label` (with \"(optional)\" when marked), the prefix and suffix joined to the name; the hint, count, error and any failure are linked with `aria-describedby`. Pending takes the commit colour and a spinner in the trailing slot; the same focused input stays, read-only with `aria-disabled` and `aria-busy`, so focus never moves. Confirmed shows a tick and announces \"Saved\" politely. A failure keeps the person's text, marks the field invalid and offers Retry and Revert. A validation `error` marks it invalid with the message below. Read-only stays focusable. Clear and Show are named buttons after the input in the tab order. Targets: 44 px and up from `normal`; `xs` and `s` are dense exceptions."
+    "A native `input` named by its visible `label` (with \"(optional)\" when marked), the prefix and suffix joined to the name; the hint, count, error and any failure are linked with `aria-describedby`. Pending takes the commit colour and a spinner in the trailing slot; the same focused input stays, read-only with `aria-disabled` and `aria-busy`, so focus never moves. Confirmed shows a tick and announces \"Saved\" politely. A failure keeps the person's text, marks the field invalid and offers Retry and Revert. A validation `error` marks it invalid with the message below. Read-only stays focusable. Clear and Show are named buttons after the input in the tab order. Targets: 44 px and up from `normal`; `xs` and `s` are dense exceptions. In `mode=\"form\"` (IP14) it is one field of a form: no save of its own, no states or \"Saved\" on the field, Enter submits the form. Every word it shows or says can be given in `words`."
   ],
   "keys": [
     {
       "keys": "Enter",
-      "action": "saves the value now"
+      "action": "saves the value now (in a form: submits the form)"
     },
     {
       "keys": "Escape",
-      "action": "puts back the stored value"
+      "action": "puts back the stored value (not in a form)"
     }
   ],
   "sealed": true,
@@ -37,13 +37,32 @@
           "name": "value",
           "type": "string",
           "required": true,
-          "description": "The stored value."
+          "description": "The stored value (`commit`), or the form's current value (`form`)."
+        },
+        {
+          "name": "mode",
+          "type": "'commit' | 'form'",
+          "description": "`commit` (default): saved on its own when the person leaves the field or presses Enter, with pending, saved and failed states on the field. `form` (IP14): one field of a form saved together with one Save button: nothing saves on blur or Enter, no state or \"Saved\" shows on the field, and Enter submits the form; the form owns the value (`onChange`) and its errors (`error`, and an ErrorSummary)."
         },
         {
           "name": "onCommit",
           "type": "(next: string) => unknown",
-          "required": true,
-          "description": "Stores the new value when the person leaves the field or presses Enter. Return a promise for a save; reject it when the save fails."
+          "description": "Stores the new value when the person leaves the field or presses Enter (`commit` mode, where it's needed). Return a promise for a save; reject it when the save fails."
+        },
+        {
+          "name": "onChange",
+          "type": "(next: string) => void",
+          "description": "Runs on every change while the person types (IP14), e.g. to narrow a list as they type. In `form` mode, store it and pass it back as `value`."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "The input's `name`, for a form that reads its fields by name."
+        },
+        {
+          "name": "words",
+          "type": "TextFieldWords",
+          "description": "The words the field shows and says, over the English defaults (IP14): its saved announcement, a failed save's buttons, Clear, Show and Hide, a removable chip's button and a code's length."
         },
         {
           "name": "hint",
@@ -58,13 +77,11 @@
         {
           "name": "type",
           "type": "'text' | 'email' | 'url' | 'tel' | 'search' | 'password' | 'code'",
-          "default": "'text'",
           "description": "The kind of text, for the keyboard and autofill. `password` hides the text and adds a Show button; `code` is a one-time code drawn as one cell per character (`length`)."
         },
         {
           "name": "size",
           "type": "ButtonSize",
-          "default": "'normal'",
           "description": "The Button size scale: the box is xs 24, s 36, normal 44 (default), m 48, l 56, xl 64 or xxl 80 px high. The label and hint keep their size."
         },
         {
@@ -85,7 +102,6 @@
         {
           "name": "clearable",
           "type": "boolean",
-          "default": "false",
           "description": "Adds a Clear button while there's text; clearing saves the empty value like any other change."
         },
         {
@@ -96,19 +112,16 @@
         {
           "name": "optional",
           "type": "boolean",
-          "default": "false",
           "description": "Marks the label \"(optional)\". Fields are required by default, so only optional ones are marked."
         },
         {
           "name": "readOnly",
           "type": "boolean",
-          "default": "false",
           "description": "Shows the value without letting it change, e.g. an ID; still focusable and copyable."
         },
         {
           "name": "disabled",
           "type": "boolean",
-          "default": "false",
           "description": "The value can't change here and needn't be read. Prefer `readOnly`, or say why in the hint."
         },
         {
@@ -154,7 +167,6 @@
         {
           "name": "length",
           "type": "number",
-          "default": "6",
           "description": "With `type=\"code\"`: how many characters the code has (4 to 8). The field saves as soon as the code is complete."
         },
         {
@@ -165,7 +177,6 @@
         {
           "name": "masked",
           "type": "boolean",
-          "default": "false",
           "description": "With `type=\"code\"`: draws each typed character as a dot, for a PIN someone nearby shouldn't read. Off for one-time codes, which expire."
         },
         {
@@ -174,15 +185,56 @@
           "description": "A colour swatch at the start of the box that opens the ColourPicker in a popover (as ColourField does), for a hex value."
         },
         {
-          "name": "onChange",
-          "type": "(hex: string) => void }",
-          "required": true
-        },
-        {
           "name": "hideLabel",
           "type": "boolean",
-          "default": "false",
           "description": "Hides the visible label where the row already says what it is (an inspector). It still names the field."
+        }
+      ]
+    },
+    {
+      "interface": "TextFieldWords",
+      "props": [
+        {
+          "name": "saved",
+          "type": "string",
+          "description": "Announced once a save is stored: \"Saved\"."
+        },
+        {
+          "name": "retry",
+          "type": "string",
+          "description": "A failed save's buttons: \"Retry\" and \"Revert\"."
+        },
+        {
+          "name": "revert",
+          "type": "string"
+        },
+        {
+          "name": "clear",
+          "type": "string",
+          "description": "The Clear button's name: \"Clear {label}\"."
+        },
+        {
+          "name": "show",
+          "type": "string",
+          "description": "The password field's button: \"Show\" and \"Hide\"."
+        },
+        {
+          "name": "hide",
+          "type": "string"
+        },
+        {
+          "name": "removeChip",
+          "type": "string",
+          "description": "A chip's remove button: \"Remove {chip}\"."
+        },
+        {
+          "name": "digits",
+          "type": "string",
+          "description": "Said after a code's length: \"digits\" for a numeric code, else \"characters\"."
+        },
+        {
+          "name": "characters",
+          "type": "string"
         }
       ]
     },
@@ -206,11 +258,6 @@
           "type": "{ value: string",
           "required": true,
           "description": "Each choice: `label` in the open list (\"India +91\"), `short` on the button (\"+91\"), and `flag`, the country's flag drawn before both (an SVG, the same on every system; without it the code alone shows)."
-        },
-        {
-          "name": "label",
-          "type": "string",
-          "required": true
         },
         {
           "name": "short",

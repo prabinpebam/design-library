@@ -52,6 +52,10 @@ export type SelectProps = SelectBase & (SelectOne | SelectSeveral);
 interface SelectBase extends DataAttributes {
   /** A noun phrase naming the choice, with no colon: "Current revision". */
   label: string;
+  /** `commit` (default): the choice applies and saves at once, with saving, saved and failed states. `form` (IP14): one field of a form saved together with one Save button: `onChange` just reports the choice; no state or "Saved" shows on the field. */
+  mode?: 'commit' | 'form';
+  /** Announced once a choice is saved: "Saved" (IP14). */
+  savedText?: string;
   options: SelectOption[];
   /** The Button size scale: the box is xs 24, s 36, normal 44 (default), m 48, l 56, xl 64 or xxl 80 px high. The label,
    * hint and list keep their size. */
@@ -130,7 +134,7 @@ const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: '
  * an `input[role=combobox]` with `aria-autocomplete="list"`, and the number of matches announced politely.
  */
 export function Select(props: SelectProps) {
-  const { label, value, options, onChange, multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, ...data } = props;
+  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, ...data } = props;
   const id = useId();
   const { phase, run, reset } = useCommit('--duration-confirm-min');
   const [open, setOpen] = useState(false);
@@ -182,6 +186,8 @@ export function Select(props: SelectProps) {
     setOpen(true);
   };
   const save = (next: string[]) => {
+    // In a form the choice is only reported; the form saves it with the rest.
+    if (mode === 'form') return void (multiple ? (onChange as (n: string[]) => unknown)(next) : (onChange as (n: string) => unknown)(next[0] ?? ''));
     setAttempt(next);
     void run(() => (multiple ? (onChange as (n: string[]) => unknown)(next) : (onChange as (n: string) => unknown)(next[0] ?? '')));
   };
@@ -290,7 +296,7 @@ export function Select(props: SelectProps) {
   // A failed change: what happened, what was kept, and the way out. Announced as it appears.
   const failure = (
     <span data-dl-part="failure" id={`${id}-failure`} role="status">
-      {phase === 'done' && <span data-dl-part="announce">Saved</span>}
+      {phase === 'done' && <span data-dl-part="announce">{savedText}</span>}
       {failed && (
         <>
           <Text as="span" variant="body-sm" tone="danger">
