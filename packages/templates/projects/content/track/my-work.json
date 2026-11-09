@@ -1,0 +1,70 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "my-work",
+  "contentVersion": 1,
+  "settings": {
+    "current": "my-work"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "posts",
+        "heading": "Assigned to you",
+        "items": [
+          {
+            "eyebrow": "KW-151 · Story · To do",
+            "title": "Remember the last trip filter",
+            "description": "3 points · Sprint 14",
+            "meta": "Updated today",
+            "href": "/issue"
+          },
+          {
+            "eyebrow": "KW-148 · Bug · In progress",
+            "title": "Dates shift by a day in Lisbon",
+            "description": "2 points · Sprint 14",
+            "meta": "Updated yesterday",
+            "href": "/issue"
+          }
+        ],
+        "empty": {
+          "reason": "done",
+          "title": "Nothing assigned to you",
+          "text": "Pick something from the backlog, or enjoy the quiet.",
+          "silhouette": "list",
+          "links": [
+            {
+              "label": "Open the backlog",
+              "href": "/backlog"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

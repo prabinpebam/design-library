@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "chat",
+  "layout": "settings-general",
+  "contentVersion": 1,
+  "settings": {
+    "current": "settings-general",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "General",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Appearance",
+            "items": [
+              {
+                "id": "theme",
+                "label": "Theme",
+                "kind": "choice",
+                "options": [
+                  "System",
+                  "Light",
+                  "Dark"
+                ],
+                "value": "System"
+              },
+              {
+                "id": "language",
+                "label": "Language",
+                "kind": "choice",
+                "options": [
+                  "Auto-detect",
+                  "English",
+                  "Português"
+                ],
+                "value": "Auto-detect"
+              }
+            ]
+          },
+          {
+            "heading": "Chats",
+            "items": [
+              {
+                "id": "enter",
+                "label": "Enter sends; Shift and Enter add a line",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "code",
+                "label": "Always show code when reading files",
+                "kind": "switch",
+                "on": false
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Personalisation",
+            "href": "/settings-personalisation"
+          },
+          {
+            "label": "Data controls",
+            "href": "/settings-data"
+          }
+        ]
+      }
+    ]
+  }
+}

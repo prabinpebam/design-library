@@ -1,0 +1,34 @@
+{
+  "color": {
+    "text-muted": {
+      "$type": "color",
+      "$value": "{color.text}",
+      "$description": "More contrast: secondary text as strong as body text"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{p.standard.border-strong}",
+      "$description": "More contrast: every outline at control strength (the theme's standard border-strong, 3:1 or more; read from the primitive because color.border-strong itself rises to text strength in this context)"
+    },
+    "border-strong": {
+      "$type": "color",
+      "$value": "{color.text}",
+      "$description": "More contrast: control outlines at text strength"
+    },
+    "border-group": {
+      "$type": "color",
+      "$value": "{p.standard.border-strong}",
+      "$description": "More contrast: a group drawn by its fill gains an outline at control strength (3:1), the theme's standard border-strong"
+    },
+    "border-control": {
+      "$type": "color",
+      "$value": "{color.text}",
+      "$description": "More contrast: outlines of filled controls at text strength, as border-strong"
+    },
+    "bg-control": {
+      "$type": "color",
+      "$value": "{color.bg-raised}",
+      "$description": "More contrast: controls sit on the raised surface; the strong outline marks them"
+    }
+  }
+}

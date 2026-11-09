@@ -1,0 +1,191 @@
+/*
+ * Tier 2 compound: ImageGeneration (Q58). The finished picture's own frame, reserved from the start: a moving field
+ * (the veil) with one status pill on it, then the picture fading in under the veil as the veil fades out, so nothing
+ * moves. The frame is the one enclosure (its fill and corners); the pill is the only mark on the field.
+ */
+@layer compounds {
+  [data-dl='image-generation'] {
+    inline-size: 100%;
+    max-inline-size: var(--c-image-generation-max);
+    margin: 0;
+  }
+
+  [data-dl='image-generation'] > [data-dl-part='frame'] {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--c-image-generation-radius);
+    background-color: var(--c-image-generation-field);
+    aspect-ratio: 1;
+  }
+
+  [data-dl='image-generation'][data-ratio='wide'] > [data-dl-part='frame'] { aspect-ratio: 16 / 9; }
+  [data-dl='image-generation'][data-ratio='photo'] > [data-dl-part='frame'] { aspect-ratio: 3 / 2; }
+  [data-dl='image-generation'][data-ratio='portrait'] > [data-dl-part='frame'] { aspect-ratio: 4 / 5; }
+
+  [data-dl='image-generation'] [data-dl-part='picture'] {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  [data-dl='image-generation'] [data-dl-part='veil'] {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    place-items: center;
+    padding: var(--space-inset-md);
+    transition: opacity var(--c-image-generation-fade) var(--easing-standard);
+  }
+
+  [data-dl='image-generation'][data-state='done'] [data-dl-part='veil'] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-dl='image-generation'] :is([data-dl-part='stipple'], [data-dl-part='partial']) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  /* Canvas colours come from tokens through its own colour and background, read back when it paints. */
+  [data-dl='image-generation'] [data-dl-part='stipple'] {
+    background-color: var(--c-image-generation-field);
+    color: var(--c-image-generation-dot);
+  }
+
+  /* Reveal: the partial preview, sharpening from the token blur to none as --dl-reveal goes from 0 to 1. It reaches
+     past the frame by the blur so the soft edge is clipped, never a dark halo. */
+  [data-dl='image-generation'] [data-dl-part='partial'] {
+    inset: calc(-1 * var(--c-image-generation-reveal-blur));
+    inline-size: calc(100% + 2 * var(--c-image-generation-reveal-blur));
+    block-size: calc(100% + 2 * var(--c-image-generation-reveal-blur));
+    max-inline-size: none;
+    object-fit: cover;
+    filter: blur(calc(var(--c-image-generation-reveal-blur) * (1 - var(--dl-reveal, 0))));
+    transition: filter var(--c-image-generation-fade) var(--easing-standard);
+  }
+
+  /* Aurora: the AI colours (color.ai.*, purpose: the AI processing state) panning, a soft light sweeping across. */
+  [data-dl='image-generation'][data-variant='aurora'] [data-dl-part='veil'] {
+    background: linear-gradient(115deg, var(--c-image-generation-field) 0%, var(--color-ai-1) 30%, var(--color-ai-3) 55%, var(--c-image-generation-field) 100%);
+    background-size: 220% 220%;
+    animation: dl-image-gen-pan calc(2 * var(--c-image-generation-pan)) var(--easing-standard) infinite;
+  }
+
+  [data-dl='image-generation'][data-variant='aurora'] [data-dl-part='veil']::before,
+  [data-dl='image-generation'][data-variant='shimmer'] [data-dl-part='veil']::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 35%, var(--c-image-generation-highlight) 50%, transparent 65%);
+    opacity: 0.5;
+    transform: translateX(-100%);
+    animation: dl-image-gen-sweep var(--c-image-generation-sweep) var(--easing-standard) infinite;
+  }
+
+  /* Shimmer: the quiet wait (downloading a finished picture), a few passes then still, as a skeleton. */
+  [data-dl='image-generation'][data-variant='shimmer'] [data-dl-part='veil']::before {
+    animation-iteration-count: var(--count-shimmer-passes);
+  }
+
+  [data-dl='image-generation']:not([data-state='generating']) [data-dl-part='veil'],
+  [data-dl='image-generation']:not([data-state='generating']) [data-dl-part='veil']::before {
+    animation: none;
+  }
+
+  @keyframes dl-image-gen-pan {
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes dl-image-gen-sweep {
+    60%,
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* The status pill: the arc or icon, the words and the share; the bar or Retry under them. */
+  [data-dl='image-generation'] [data-dl-part='status'] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--c-image-generation-status-gap);
+    max-inline-size: 100%;
+    padding-block: var(--c-image-generation-status-padding-block);
+    padding-inline: var(--c-image-generation-status-padding-inline);
+    border-radius: var(--radius-pill);
+    background-color: var(--material-floating-bg, var(--c-image-generation-status-fill));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-image-generation-status-shadow);
+    color: var(--color-text);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    text-align: center;
+  }
+
+  [data-dl='image-generation'][data-state='failed'] [data-dl-part='status'],
+  [data-dl='image-generation'] [data-dl-part='status']:has([data-dl-part='bar']) {
+    border-radius: var(--c-image-generation-radius);
+  }
+
+  /* With a bar, the pill is as wide as the bar and its insets, and never wider than the frame. */
+  [data-dl='image-generation'] [data-dl-part='status']:has([data-dl-part='bar']) {
+    box-sizing: border-box;
+    inline-size: calc(var(--c-image-generation-bar-width) + 2 * var(--c-image-generation-status-padding-inline));
+    min-inline-size: 0;
+  }
+
+  [data-dl='image-generation'] [data-dl-part='line'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-image-generation-status-gap);
+  }
+
+  [data-dl='image-generation'][data-state='failed'] [data-dl-part='line'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='image-generation'] [data-dl-part='value'] {
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='image-generation'] [data-dl-part='bar'] {
+    display: block;
+    align-self: stretch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='image-generation'] [data-dl-part='veil'],
+    [data-dl='image-generation'] [data-dl-part='veil']::before {
+      animation: none;
+    }
+
+    [data-dl='image-generation'] [data-dl-part='veil']::before {
+      opacity: 0;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='image-generation'] [data-dl-part='veil'],
+  [data-motion='reduce'] [data-dl='image-generation'] [data-dl-part='veil']::before {
+    animation: none;
+  }
+
+  [data-motion='reduce'] [data-dl='image-generation'] [data-dl-part='veil']::before {
+    opacity: 0;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='image-generation'] [data-dl-part='status'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

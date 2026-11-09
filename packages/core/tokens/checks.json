@@ -1,0 +1,310 @@
+{
+  "$comment": "Contrast pairs (WCAG 2.2: 4.5 text, 3 non-text). check-tokens.mjs holds them in light and dark; tools/colour.mjs holds them in light and dark at standard and more contrast, plus each brand on-colour pair.",
+  "contrast": [
+    {
+      "fg": "color.text",
+      "bg": "color.bg-tint",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-muted",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-link",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.border-strong",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.focus",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.accent",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-muted",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-link",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.border-strong",
+      "bg": "color.bg-raised",
+      "min": 3
+    },
+    {
+      "fg": "color.focus",
+      "bg": "color.bg-raised",
+      "min": 3
+    },
+    {
+      "fg": "color.accent",
+      "bg": "color.bg-raised",
+      "min": 3
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-muted",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-link",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.border-strong",
+      "bg": "color.bg-sunken",
+      "min": 3
+    },
+    {
+      "fg": "color.focus",
+      "bg": "color.bg-sunken",
+      "min": 3
+    },
+    {
+      "fg": "color.accent",
+      "bg": "color.bg-sunken",
+      "min": 3
+    },
+    {
+      "fg": "color.text-on-accent",
+      "bg": "color.accent",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-on-accent",
+      "bg": "color.accent-hover",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-on-accent",
+      "bg": "color.accent-pressed",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.accent-subtle",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.info.fg",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.info.fg",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.info.fg",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.info.fg",
+      "bg": "color.status.info.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.status.info.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.info.border",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.status.info.on-fill",
+      "bg": "color.status.info.fill",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.success.fg",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.success.fg",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.success.fg",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.success.fg",
+      "bg": "color.status.success.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.status.success.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.success.border",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.status.success.on-fill",
+      "bg": "color.status.success.fill",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.warning.fg",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.warning.fg",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.warning.fg",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.warning.fg",
+      "bg": "color.status.warning.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.status.warning.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.warning.border",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.status.warning.on-fill",
+      "bg": "color.status.warning.fill",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.danger.fg",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.danger.fg",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.danger.fg",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.danger.fg",
+      "bg": "color.status.danger.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.status.danger.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.danger.border",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.status.danger.on-fill",
+      "bg": "color.status.danger.fill",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.neutral.fg",
+      "bg": "color.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.neutral.fg",
+      "bg": "color.bg-raised",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.neutral.fg",
+      "bg": "color.bg-sunken",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.neutral.fg",
+      "bg": "color.status.neutral.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.status.neutral.bg",
+      "min": 4.5
+    },
+    {
+      "fg": "color.status.neutral.border",
+      "bg": "color.bg",
+      "min": 3
+    },
+    {
+      "fg": "color.status.neutral.on-fill",
+      "bg": "color.status.neutral.fill",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text",
+      "bg": "color.bg-control",
+      "min": 4.5
+    },
+    {
+      "fg": "color.text-muted",
+      "bg": "color.bg-control",
+      "min": 4.5
+    },
+    {
+      "fg": "color.focus",
+      "bg": "color.bg-control",
+      "min": 3
+    }
+  ]
+}

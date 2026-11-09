@@ -1,0 +1,40 @@
+/*
+ * Tier 2 compound: ErrorSummary (F15.56, catalogue Feedback "Error summary"; GOV.UK error summary pattern). Alert's
+ * error tone in the section placement, holding one link per error. The wrapper takes focus when it appears, so it
+ * shows the focus ring round the alert's own corners even when focus was moved by script.
+ */
+@layer compounds {
+  [data-dl='error-summary'] {
+    display: block;
+    inline-size: 100%;
+    border-radius: var(--c-alert-radius);
+  }
+
+  [data-dl='error-summary']:focus {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='error-summary'] [data-dl-part='list'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-alert-content-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The links take the error's colour, underlined as every link is, so they read as this message's way out. */
+  [data-dl='error-summary'] [data-dl-part='list'] [data-dl='link'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='error-summary']:focus {
+      outline-color: Highlight;
+    }
+
+    [data-dl='error-summary'] [data-dl-part='list'] [data-dl='link'] {
+      color: LinkText;
+    }
+  }
+}

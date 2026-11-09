@@ -1,0 +1,49 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "about-event",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "About",
+        "title": "Two days about interfaces that work",
+        "lead": "Interface Days brings 900 designers and engineers to Lisbon each March.",
+        "layout": "split",
+        "picture": "dusk"
+      },
+      {
+        "type": "points",
+        "heading": "What to expect",
+        "items": [
+          "24 talks in one track, so nobody misses anything",
+          "Eight half-day workshops on Friday",
+          "Captions and sign language on every talk"
+        ]
+      },
+      {
+        "type": "stats",
+        "heading": "Last year",
+        "items": [
+          {
+            "label": "People",
+            "value": 880
+          },
+          {
+            "label": "Countries",
+            "value": 41
+          },
+          {
+            "label": "Would come again",
+            "value": 94,
+            "unit": "%"
+          }
+        ]
+      }
+    ]
+  }
+}

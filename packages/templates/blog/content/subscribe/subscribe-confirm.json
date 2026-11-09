@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "subscribe-confirm",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading",
+    "state": "done"
+  }
+}

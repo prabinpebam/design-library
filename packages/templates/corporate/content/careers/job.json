@@ -1,0 +1,70 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "job",
+  "contentVersion": 1,
+  "settings": {
+    "current": "careers"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Careers",
+            "href": "/careers"
+          },
+          {
+            "label": "Customs specialist"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Rotterdam · Full time",
+        "title": "Customs specialist",
+        "lead": "Clear 4,000 containers a month through Dutch customs, with a team of nine.",
+        "layout": "stacked",
+        "actions": [
+          {
+            "label": "Apply",
+            "primary": true,
+            "says": "Use the Apply link below."
+          }
+        ]
+      },
+      {
+        "type": "details",
+        "heading": "The job",
+        "items": [
+          {
+            "term": "You’ll",
+            "details": "File declarations, solve holds and teach planners what customs needs."
+          },
+          {
+            "term": "You have",
+            "details": "Three years in customs and a Dutch customs licence."
+          },
+          {
+            "term": "We offer",
+            "details": "€4,200 to €5,100 a month, 30 days off, a train pass."
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Sound like you?",
+        "lead": "Applying takes about ten minutes.",
+        "actions": [
+          {
+            "label": "Apply now",
+            "primary": true,
+            "says": "Open Application from the footer of this example."
+          }
+        ],
+        "note": "Closes 28 February 2027."
+      }
+    ]
+  }
+}

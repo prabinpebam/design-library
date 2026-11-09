@@ -1,0 +1,73 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "invite",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Invite people",
+        "intro": "They get an email and join when they accept.",
+        "fields": [
+          {
+            "id": "emails",
+            "label": "Email addresses",
+            "kind": "text",
+            "hint": "Separate them with commas."
+          },
+          {
+            "id": "role",
+            "label": "Role",
+            "kind": "choice",
+            "options": [
+              "Member",
+              "Viewer",
+              "Admin"
+            ]
+          }
+        ],
+        "submit": "Send invitations",
+        "sent": "Invitations sent.",
+        "links": [
+          {
+            "label": "Back to members",
+            "href": "/members"
+          }
+        ]
+      }
+    ]
+  }
+}

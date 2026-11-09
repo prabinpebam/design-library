@@ -1,0 +1,77 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "sign-up",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Create an account",
+        "intro": "Free to start. Your chats are private unless you share them.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "password",
+            "label": "Password",
+            "kind": "password",
+            "hint": "At least 12 characters."
+          }
+        ],
+        "submit": "Create account",
+        "sent": "Account created.",
+        "links": [
+          {
+            "label": "Already have an account? Sign in",
+            "href": "/sign-in"
+          },
+          {
+            "label": "Next: welcome",
+            "href": "/welcome"
+          }
+        ]
+      }
+    ]
+  }
+}

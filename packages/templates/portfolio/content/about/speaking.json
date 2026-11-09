@@ -1,0 +1,41 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "speaking",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Talks",
+        "title": "Talks I’ve given",
+        "lead": "Recordings where there are any.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "items": [
+          {
+            "eyebrow": "Interface Days 2026",
+            "title": "Designing for the week before payday",
+            "description": "What forty shift workers taught a bank.",
+            "meta": "32 min · recording",
+            "href": "/speaking",
+            "picture": "harbour"
+          },
+          {
+            "eyebrow": "Porto Design Week 2025",
+            "title": "Twenty minutes to two",
+            "description": "Rebuilding a city permit with its clerks.",
+            "meta": "25 min · slides",
+            "href": "/speaking",
+            "picture": "frost"
+          }
+        ]
+      }
+    ]
+  }
+}

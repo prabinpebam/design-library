@@ -1,0 +1,147 @@
+/*
+ * Tier 2 compound: ChatMessage (F15.65, Q57). A person's message is a bubble at the end of the line (one tinted fill,
+ * no outline: one enclosure); an assistant's reply is full width with no enclosure, so long rich content reads as a
+ * document. Space between blocks comes from the content's gap; attachments, content and actions are one group.
+ */
+@layer compounds {
+  [data-dl='chat-message'] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-chat-message-part-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  [data-dl='chat-message'][data-from='person'] {
+    align-items: flex-end;
+  }
+
+  [data-dl='chat-message'] > [data-dl-part='author'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='chat-message'] > [data-dl-part='content'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-chat-message-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='chat-message'][data-from='person'] > [data-dl-part='content'] {
+    max-inline-size: var(--c-chat-message-bubble-max);
+    padding-block: var(--c-chat-message-bubble-padding-block);
+    padding-inline: var(--c-chat-message-bubble-padding-inline);
+    border-radius: var(--c-chat-message-bubble-radius);
+    background-color: var(--c-chat-message-bubble-fill);
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='chat-message'] > [data-dl-part='attachments'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-inline-item);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='chat-message'][data-from='person'] > [data-dl-part='attachments'] {
+    justify-content: flex-end;
+  }
+
+  [data-dl='chat-message'] [data-dl-part='thumb'] {
+    inline-size: var(--c-chat-message-thumb);
+  }
+
+  /* A file: its type icon, then the name over the type, in one outlined tile (it sits on the page, not in the bubble). */
+  [data-dl='chat-message'] [data-dl-part='file'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-item);
+    max-inline-size: var(--c-chat-message-file-max);
+    padding: var(--space-inset-sm);
+    border: var(--border-hairline) solid var(--color-border);
+    border-radius: var(--c-chat-message-bubble-radius);
+  }
+
+  [data-dl='chat-message'] [data-dl-part='file-icon'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--size-control-md);
+    block-size: var(--size-control-md);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='chat-message'] [data-dl-part='file-words'] {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  [data-dl='chat-message'] [data-dl-part='file-words'] > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-dl='chat-message'] > [data-dl-part='actions'] {
+    display: flex;
+  }
+
+  /* A person's actions are a transient cue: kept in place (nothing moves), shown on hover and while focus is inside. */
+  @media (hover: hover) {
+    [data-dl='chat-message'][data-from='person'] > [data-dl-part='actions'] {
+      opacity: 0;
+      transition: opacity var(--duration-change) var(--easing-standard);
+    }
+
+    [data-dl='chat-message'][data-from='person']:is(:hover, :focus-within) > [data-dl-part='actions'] {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='chat-message'][data-from='person'] > [data-dl-part='content'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+
+  /* ChatMessage streaming (F15.67): a soft caret after the last words while the reply arrives. */
+  [data-dl='chat-message'][data-streaming] > [data-dl-part='content'] > :last-child::after {
+    content: '';
+    display: inline-block;
+    inline-size: var(--size-indicator);
+    block-size: var(--size-indicator);
+    margin-inline-start: var(--space-inline-pair);
+    border-radius: var(--radius-full);
+    background-color: currentColor;
+    vertical-align: middle;
+    animation: dl-stream-caret var(--duration-indicator-min) var(--easing-standard) infinite alternate;
+  }
+
+  @keyframes dl-stream-caret {
+    to {
+      opacity: 0.3;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='chat-message'][data-streaming] > [data-dl-part='content'] > :last-child::after {
+      animation: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='chat-message'][data-streaming] > [data-dl-part='content'] > :last-child::after {
+    animation: none;
+  }
+}

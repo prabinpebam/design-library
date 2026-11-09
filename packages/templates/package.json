@@ -1,0 +1,14 @@
+{
+  "name": "@design-library/templates",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Templates (Q62, Q64): each folder is one template: a manifest, a content schema, content JSON per layout, pictures, and any custom parts in its own namespace. Rendered by @design-library/core/render.",
+  "exports": {
+    ".": "./index.ts",
+    "./*": "./*/index.ts"
+  },
+  "dependencies": {
+    "@design-library/core": "0.1.0"
+  }
+}

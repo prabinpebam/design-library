@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "order-confirmed",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading",
+    "state": "done"
+  }
+}

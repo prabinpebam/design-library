@@ -1,0 +1,106 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "speaker",
+  "contentVersion": 1,
+  "settings": {
+    "current": "speaker"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Event",
+            "href": "/home"
+          },
+          {
+            "label": "Speakers",
+            "href": "/home"
+          },
+          {
+            "label": "Ama Mensah"
+          }
+        ]
+      },
+      {
+        "type": "person",
+        "portrait": true,
+        "name": "Ama Mensah",
+        "role": "Design lead, Kitewing",
+        "bio": [
+          "Ama leads design at Kitewing, where one small team builds the tools 400 people use every day.",
+          "She opens the conference with a talk about interfaces that explain themselves, and sits on Thursday’s panel."
+        ]
+      },
+      {
+        "type": "agenda",
+        "heading": "Ama’s sessions",
+        "label": "Ama Mensah’s sessions",
+        "slots": [
+          {
+            "id": "k1",
+            "start": "Thu 09:30",
+            "end": "10:15",
+            "dateTime": "2027-03-11T09:30",
+            "sessions": [
+              {
+                "id": "k1",
+                "title": "Interfaces that explain themselves",
+                "kind": "Keynote",
+                "place": "Main hall",
+                "description": "Why the best help is the interface itself, and how to tell when it isn’t."
+              }
+            ]
+          },
+          {
+            "id": "p1",
+            "start": "Thu 11:30",
+            "end": "12:15",
+            "dateTime": "2027-03-11T11:30",
+            "sessions": [
+              {
+                "id": "p1",
+                "title": "What research can’t tell you",
+                "kind": "Panel",
+                "place": "Room 2",
+                "people": [
+                  "Priya Raman",
+                  "Jonas Lind",
+                  "Ama Mensah"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "people",
+        "heading": "Also speaking",
+        "items": [
+          {
+            "name": "Mina Haddad",
+            "role": "Design systems, Field Notes",
+            "href": "/speaker"
+          },
+          {
+            "name": "Luis Ortega",
+            "role": "Accessibility engineer",
+            "href": "/speaker"
+          },
+          {
+            "name": "Sana Iqbal",
+            "role": "Colour and type, Studio Iqbal",
+            "href": "/speaker"
+          },
+          {
+            "name": "Tom Becker",
+            "role": "Front-end lead, Northwind",
+            "href": "/speaker"
+          }
+        ]
+      }
+    ]
+  }
+}

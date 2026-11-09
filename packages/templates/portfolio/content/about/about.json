@@ -1,0 +1,59 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "about",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "person",
+        "name": "Asha Rao",
+        "role": "Designer, Lisbon",
+        "bio": [
+          "I design signs, maps and books that help people find their way.",
+          "Before going independent I spent six years at a transport design studio, drawing maps for three city metros."
+        ]
+      },
+      {
+        "type": "points",
+        "heading": "What I do",
+        "items": [
+          "Wayfinding systems for public buildings and outdoor sites.",
+          "Maps, printed and on screens.",
+          "Books and guides that people carry with them."
+        ]
+      },
+      {
+        "type": "form",
+        "heading": "Get in touch",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "message",
+            "label": "About the project",
+            "kind": "long",
+            "hint": "The place, who uses it and when you need it."
+          }
+        ],
+        "submit": "Send",
+        "sent": "Sent. I reply within a week.",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}."
+      }
+    ]
+  }
+}

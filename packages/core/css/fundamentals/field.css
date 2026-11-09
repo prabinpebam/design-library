@@ -1,0 +1,288 @@
+/*
+ * Tier 1 fundamental: Field. The anatomy every input shares: label (or legend), control, then one messages area with
+ * the hint, one message line and a soft count. Space comes from the field's gap; the label and messages keep their
+ * size whatever the control's size, so a form's rhythm holds.
+ */
+@layer fundamentals {
+  [data-dl='field'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-field-gap);
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  /* A fieldset's legend sits outside its grid, so it carries the gap below it as its own padding. */
+  fieldset[data-dl='field'] > legend[data-dl-part='label'],
+  fieldset[data-dl='field'] > [data-dl-part='label-row'] {
+    padding: 0 0 var(--c-field-gap);
+  }
+
+  [data-dl='field'] > [data-dl-part='label'],
+  [data-dl='field'] > [data-dl-part='label-row'] > [data-dl-part='label'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+    color: var(--color-text);
+  }
+
+  [data-dl='field'][data-heading] > [data-dl-part='label'],
+  [data-dl='field'][data-heading] > [data-dl-part='label'] h1,
+  [data-dl='field'][data-heading] > [data-dl-part='label-row'] > [data-dl-part='label'],
+  [data-dl='field'][data-heading] > [data-dl-part='label-row'] > [data-dl-part='label'] h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-variation-settings: var(--axes-display);
+    font-size: var(--type-heading-2-size);
+    line-height: var(--type-heading-2-leading);
+    font-weight: var(--type-heading-2-weight);
+  }
+
+  [data-dl='field'] > [data-dl-part='label'] [data-dl-part='necessity'],
+  [data-dl='field'] > [data-dl-part='label-row'] [data-dl-part='necessity'] {
+    font-weight: var(--type-body-weight);
+    color: var(--color-text-muted);
+  }
+
+  /* A label hidden where the row already says what the field is (an inspector); it still names the control. */
+  [data-dl='field'] > [data-dl-part='label'][data-hidden] {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Q72: inside a compact density context (a design tool's inspector, PropertySection density="compact"), labels take
+     the compact label role: smaller than the group's title, regular weight, one line. The full words stay the field's
+     accessible name. */
+  [data-density='compact'] [data-dl='field'] > [data-dl-part='label']:not([data-hidden]),
+  [data-density='compact'] [data-dl='field'] > [data-dl-part='label-row'] > [data-dl-part='label'] {
+    overflow: hidden;
+    font-size: var(--type-label-compact-size);
+    line-height: var(--type-label-compact-leading);
+    font-weight: var(--type-label-compact-weight);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  [data-dl='field'] > [data-dl-part='label-row'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='field'] > [data-dl-part='control'] {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  /* A native input inside a Field gets the field box at normal size, so any control can join a form now. Never a native select: use Select (Q59). */
+  [data-dl='field'] > [data-dl-part='control'] > :is(input:not([type='checkbox'], [type='radio'], [type='range'], [type='color'])) {
+    min-block-size: var(--c-field-size);
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+    font: inherit;
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='field'] > [data-dl-part='control'] > :is(input):focus-visible {
+    outline: var(--c-field-ring-width) solid var(--c-field-ring-color);
+    outline-offset: calc(-1 * var(--c-field-ring-width));
+  }
+
+  /*
+   * Q55 ring layer: the one focus ring every text-entry box shares (TextField, TextArea, NumberField, Select, TagInput,
+   * OTP cells, InlineEdit, TimeField, DateField, the date pickers). A control opts in by marking its box `data-dl-ring`.
+   * The ring is the box's ::after, laid exactly over the border box and painted inward, so it covers the box's own
+   * outline: no offset, no geometry change and nothing drawn outside the box, so a dense stack, an attached group or a
+   * table cell never overlaps. It paints a background through a ring mask, so a state can give it a gradient or animate
+   * it through `--dl-ring-paint` (AI processing, Q56); it defaults to the focus colour.
+   */
+  [data-dl-ring] {
+    position: relative;
+    isolation: isolate;
+  }
+
+  [data-dl-ring]::after {
+    content: '';
+    position: absolute;
+    inset: calc(-1 * var(--c-field-border-width));
+    z-index: var(--c-field-ring-layer);
+    padding: var(--c-field-ring-width);
+    border-radius: inherit;
+    background: var(--dl-ring-paint, var(--c-field-ring-color));
+    mask:
+      linear-gradient(var(--c-field-ring-color) 0 0) content-box exclude,
+      linear-gradient(var(--c-field-ring-color) 0 0);
+    opacity: 0;
+    pointer-events: none;
+    /* Q65 Z12: the ring leaves over quick ... */
+    transition: opacity var(--duration-quick) var(--easing-exit);
+  }
+
+  /* ... and arrives in the next frame: where focus is must be known at once. */
+  [data-dl-ring]:is(:focus-visible, [data-active], :has(:is(input, textarea, [role='spinbutton']):focus-visible))::after {
+    opacity: 1;
+    transition: none;
+  }
+
+  /* A box that takes focus itself (Select's trigger, InlineEdit's read view) shows the ring layer, not the page outline. */
+  [data-dl-ring]:focus-visible {
+    outline: none;
+  }
+
+  /*
+   * Q56 AI processing: the same ring layer painted with the AI gradient (color.ai.*, a purpose-declared set, never
+   * status) turning once per `duration.ai-turn`. It shows whether or not the box has focus; focus keeps the gradient
+   * (the box is still plainly the one in use). Reduced motion holds the gradient still. The words beside the box and an
+   * announcement carry the state too, so it never rests on colour or motion.
+   */
+  @property --dl-ring-turn {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  [data-dl-ring][data-ring='ai']::after {
+    --dl-ring-paint: conic-gradient(from var(--dl-ring-turn), var(--color-ai-1), var(--color-ai-2), var(--color-ai-3), var(--color-ai-4), var(--color-ai-1));
+    opacity: 1;
+    animation: dl-ring-turn var(--duration-ai-turn) var(--easing-linear) infinite;
+  }
+
+  @keyframes dl-ring-turn {
+    to {
+      --dl-ring-turn: 1turn;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl-ring][data-ring='ai']::after {
+      animation: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl-ring][data-ring='ai']::after {
+    animation: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl-ring]::after {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+  }
+
+  [data-dl='field'] > [data-dl-part='control'] > input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='field'][data-invalid] > [data-dl-part='control'] > :is(input) {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='field'] > [data-dl-part='control'] > :is(input)[readonly] {
+    border-color: var(--c-field-readonly-border);
+  }
+
+  [data-dl='field'] > [data-dl-part='control'] > :is(input):disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-disabled);
+  }
+
+  /* Messages: the hint, with the count at its end, then the one message line. Rows are placed, not named, so an absent\r\n     line leaves no empty row and no gap behind it. */
+  [data-dl='field'] > [data-dl-part='messages'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 var(--space-inline-item);
+  }
+
+  /*
+   * The message line opens in place (Q65 C3, Reveal). The space above it sits inside what grows, so nothing jumps as it
+   * arrives or leaves: under the hint, the pair space; alone, the field's own gap (the messages area gives that gap back).
+   */
+  [data-dl='field'] > [data-dl-part='messages'] > [data-dl='reveal'] {
+    grid-column: 1 / -1;
+  }
+
+  [data-dl='field'] > [data-dl-part='messages']:has(> :is([data-dl-part='hint'], [data-dl-part='count'])) > [data-dl='reveal'] [data-dl-part='message'] {
+    padding-block-start: var(--space-stack-pair);
+  }
+
+  [data-dl='field'] > [data-dl-part='messages']:has(> [data-dl='reveal']:only-child) {
+    margin-block-start: calc(-1 * var(--c-field-gap));
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] > [data-dl='reveal']:only-child [data-dl-part='message'] {
+    padding-block-start: var(--c-field-gap);
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] > [data-dl-part='hint'] {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] > [data-dl-part='count'] {
+    grid-column: 2;
+    grid-row: 1;
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] [data-dl-part='message'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] [data-dl-part='message'][data-message='error'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] [data-dl-part='message'][data-message='warning'] {
+    color: var(--color-status-warning-fg);
+  }
+
+  [data-dl='field'] > [data-dl-part='messages'] [data-dl-part='message'][data-message='success'] {
+    color: var(--color-status-success-fg);
+  }
+
+  /* Beside: the label takes a third, centred on a normal-size control's first line; the messages sit under the control. */
+  [data-dl='field'][data-orientation='horizontal'] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: var(--space-inline-group);
+    max-inline-size: none;
+  }
+
+  [data-dl='field'][data-orientation='horizontal'] > :is([data-dl-part='label'], [data-dl-part='label-row']) {
+    grid-column: 1;
+    align-self: center;
+  }
+
+  [data-dl='field'][data-orientation='horizontal'] > :is([data-dl-part='control'], [data-dl-part='messages']) {
+    grid-column: 2;
+  }
+
+  [data-dl='field'][data-disabled] > :is([data-dl-part='label'], [data-dl-part='label-row'], [data-dl-part='messages']),
+  [data-dl='field'][data-disabled] > :is([data-dl-part='label'], [data-dl-part='label-row']) [data-dl-part='necessity'] {
+    color: var(--color-text-disabled);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='field'] > [data-dl-part='messages'] [data-dl-part='message'] {
+      color: CanvasText;
+    }
+  }
+}

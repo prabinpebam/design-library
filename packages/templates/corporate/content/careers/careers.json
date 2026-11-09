@@ -1,0 +1,75 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "careers",
+  "contentVersion": 1,
+  "settings": {
+    "current": "careers"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Careers",
+        "title": "Keep the world’s goods moving",
+        "lead": "Steady work, real responsibility early, and a team that answers the phone.",
+        "actions": [
+          {
+            "label": "See open roles",
+            "primary": true,
+            "says": "See open roles isn’t part of this example."
+          }
+        ],
+        "picture": "sand"
+      },
+      {
+        "type": "cards",
+        "heading": "Open roles",
+        "intro": "12 roles in 6 cities. Pick one to read the details and apply.",
+        "max": 2,
+        "items": [
+          {
+            "title": "Freight planner",
+            "eyebrow": "Operations",
+            "description": "Plan sea and road routes for a set of customers.",
+            "meta": "Rotterdam · Full time"
+          },
+          {
+            "title": "Customs specialist",
+            "eyebrow": "Compliance",
+            "description": "Prepare declarations and keep shipments clear at the border.",
+            "meta": "Hamburg · Full time"
+          },
+          {
+            "title": "Front-end engineer",
+            "eyebrow": "Technology",
+            "description": "Build the tracking screens customers check every morning.",
+            "meta": "Remote, Europe · Full time"
+          },
+          {
+            "title": "Warehouse team lead",
+            "eyebrow": "Operations",
+            "description": "Run a shift of twelve in a cross-dock warehouse.",
+            "meta": "Antwerp · Shifts"
+          }
+        ]
+      },
+      {
+        "type": "points",
+        "heading": "What you get",
+        "items": [
+          "30 days of holiday, plus public holidays.",
+          "A pension we add 8% to.",
+          "Paid training and a language course.",
+          "A bike or a public-transport pass."
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "I started on the night shift and now run the Rotterdam desk. People here notice good work.",
+        "name": "Joris Bakker",
+        "role": "Planning lead, Rotterdam"
+      }
+    ]
+  }
+}

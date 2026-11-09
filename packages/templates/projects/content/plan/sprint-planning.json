@@ -1,0 +1,75 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "sprint-planning",
+  "contentVersion": 1,
+  "settings": {
+    "current": "backlog"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Plan Sprint 15",
+        "title": "16 to 27 November",
+        "lead": "Team capacity: 21 points.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "In the sprint · 19 of 21 points",
+        "items": [
+          {
+            "term": "KW-151",
+            "details": "Remember the last trip filter · 3 points"
+          },
+          {
+            "term": "KW-155",
+            "details": "Offline trip cards · 8 points"
+          },
+          {
+            "term": "KW-157",
+            "details": "Share a trip by link · 8 points"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Ready?",
+        "lead": "Starting the sprint moves these to the board.",
+        "actions": [
+          {
+            "label": "Start Sprint 15",
+            "primary": true,
+            "says": "Starting a sprint isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

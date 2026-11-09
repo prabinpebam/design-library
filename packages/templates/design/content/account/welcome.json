@@ -1,0 +1,82 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "welcome",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Welcome. What do you design?",
+        "intro": "We’ll suggest templates to start from.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "About your work",
+            "items": [
+              {
+                "id": "role",
+                "label": "Your role",
+                "kind": "choice",
+                "options": [
+                  "Designer",
+                  "Developer",
+                  "Product manager",
+                  "Student"
+                ],
+                "value": "Designer"
+              },
+              {
+                "id": "what",
+                "label": "Mostly",
+                "kind": "choice",
+                "options": [
+                  "Apps",
+                  "Websites",
+                  "Brands",
+                  "Slides"
+                ],
+                "value": "Apps"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Next: set up a team",
+            "href": "/team-setup"
+          }
+        ]
+      }
+    ]
+  }
+}

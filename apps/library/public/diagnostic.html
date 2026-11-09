@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Design Library diagnostic page</title>
+</head>
+<body>
+<h1>Design Library diagnostic page</h1>
+<p>This page has no styles, scripts or fonts, so it opens even when the library app or its tokens are broken.</p>
+<h2>If the library app is blank or shows an error</h2>
+<ol>
+<li>Reload the <a href="/">library app</a>. The development server shows build errors in the page and in its terminal.</li>
+<li>Rebuild the tokens from the workspace root with <code>npm run tokens</code>, then check them with <code>npm run tokens:check</code>.</li>
+<li>Type-check the app with <code>npm run typecheck</code>.</li>
+<li>Restore the last reviewed slice from <code>.design-library/snapshots/&lt;slice&gt;/</code> if a rejected change broke it.</li>
+</ol>
+<h2>Where things are</h2>
+<ul>
+<li>Intent, decisions and the review ledger: <a href="http://127.0.0.1:8765/#foundation.md">foundation plan in Slate</a>.</li>
+<li>Token source: <code>packages/core/tokens/</code>. Generated CSS: <code>packages/core/css/tokens.css</code>.</li>
+<li>Library app source: <code>apps/library/src/</code>.</li>
+<li>Server lifecycle and recovery: the setup guide in Slate, section “Library app server”.</li>
+</ul>
+<p>There is no approved known-good build yet (phase α). After the first approval, a frozen frame will be served separately.</p>
+</body>
+</html>

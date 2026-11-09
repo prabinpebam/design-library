@@ -1,0 +1,49 @@
+/*
+ * Tier 2 compound: PropertyRow (Q68). A design tool inspector's row: the fields in one or two equal columns, then an
+ * action column held on every row so fields line up down the panel. No enclosure: the fields draw their own boxes.
+ */
+@layer compounds {
+  [data-dl='property-row'] {
+    display: grid;
+    /* The action column is held at one compact button's width on every row so fields line up; a row with two actions
+       (a fill's visibility and Remove) widens only its own. */
+    grid-template-columns: minmax(0, 1fr) minmax(var(--c-property-row-action), auto);
+    gap: var(--c-property-row-gap);
+    align-items: center;
+    min-inline-size: 0;
+  }
+
+  [data-dl='property-row'] > [data-dl-part='fields'] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--c-property-row-gap);
+    align-items: center;
+    min-inline-size: 0;
+  }
+
+  [data-dl='property-row'][data-columns='1'] > [data-dl-part='fields'] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-dl='property-row'][data-columns='3'] > [data-dl-part='fields'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* A leading field and its modifier (a colour and its opacity): the first takes two thirds, as Figma's fill rows. */
+  [data-dl='property-row'][data-lead] > [data-dl-part='fields'] {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+
+  [data-dl='property-row'] > [data-dl-part='fields'] > [data-dl-part='cell'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+  }
+
+  [data-dl='property-row'] > [data-dl-part='action'] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-property-row-gap);
+  }
+}

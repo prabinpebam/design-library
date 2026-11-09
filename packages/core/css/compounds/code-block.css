@@ -1,0 +1,38 @@
+/*
+ * Tier 2 compound: CodeBlock. The source scrolls in its own region on a sunken tone; the copy action sits at its top
+ * end, outside the scroll, with room kept so it never covers code.
+ */
+@layer compounds {
+  [data-dl='code-block'] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-code-block-gap);
+  }
+
+  /* The well: the sunken tone and the rounded corners, which crop the code scrolling inside it. Its end keeps room for
+     the copy action, so code never scrolls under it. */
+  [data-dl='code-block'] > [data-dl-part='well'] {
+    padding-inline-end: calc(var(--c-code-block-action-room) + var(--c-code-block-action-inset));
+    border-radius: var(--c-code-block-radius);
+    background-color: var(--c-code-block-bg);
+    overflow: clip;
+  }
+
+  /* Padding on the content, inside the scroll box. */
+  [data-dl='code-block'] pre {
+    padding: var(--c-code-block-inset);
+  }
+
+  /* wrap: long lines break inside a narrow panel instead of scrolling sideways (Q68 DT28). */
+  [data-dl='code-block'][data-wrap] > [data-dl-part='well'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='code-block'] > [data-dl-part='action'] {
+    position: absolute;
+    inset-block-start: var(--c-code-block-action-inset);
+    inset-inline-end: var(--c-code-block-action-inset);
+  }
+}

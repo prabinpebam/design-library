@@ -1,0 +1,3151 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "design",
+  "layout": "editor",
+  "contentVersion": 1,
+  "record": {
+    "file": "Sign-in flow",
+    "project": "Kitewing app",
+    "pages": [
+      {
+        "id": "flows",
+        "label": "Flows"
+      },
+      {
+        "id": "components",
+        "label": "Components"
+      },
+      {
+        "id": "archive",
+        "label": "Archive"
+      }
+    ],
+    "page": "flows",
+    "people": [
+      {
+        "name": "Ama Mensah",
+        "presence": "available"
+      },
+      {
+        "name": "Jonas Lind",
+        "presence": "available"
+      },
+      {
+        "name": "Keiko Arai",
+        "presence": "away"
+      }
+    ],
+    "tools": [
+      {
+        "value": "move",
+        "label": "Move",
+        "icon": "pointer"
+      },
+      {
+        "value": "hand",
+        "label": "Hand",
+        "icon": "hand"
+      },
+      {
+        "value": "frame",
+        "label": "Frame",
+        "icon": "frame"
+      },
+      {
+        "value": "rectangle",
+        "label": "Rectangle",
+        "icon": "rectangle"
+      },
+      {
+        "value": "ellipse",
+        "label": "Ellipse",
+        "icon": "ellipse"
+      },
+      {
+        "value": "text",
+        "label": "Text",
+        "icon": "text"
+      },
+      {
+        "value": "comment",
+        "label": "Comment",
+        "icon": "comment"
+      }
+    ],
+    "zooms": [
+      0.5,
+      0.75,
+      1,
+      1.5
+    ],
+    "width": 1088,
+    "height": 640,
+    "selected": "button",
+    "fills": [
+      "Colour 1",
+      "Colour 2",
+      "Colour 3",
+      "Colour 4",
+      "Colour 5",
+      "Colour 6",
+      "Colour 7",
+      "Colour 8"
+    ],
+    "present": {
+      "frames": [
+        "signin",
+        "home",
+        "settings"
+      ],
+      "strings": {
+        "frames": "Frames",
+        "hotspots": "Hotspots",
+        "back": "Back to the editor",
+        "previous": "Previous frame",
+        "next": "Next frame",
+        "restart": "Restart",
+        "position": "{frame}, {n} of {count}",
+        "stage": "{frame}, presented",
+        "goesTo": "Goes to {frame}",
+        "noHotspots": "Nothing in this frame leads anywhere yet. Add an interaction in the editor’s Prototype tab.",
+        "nothingHere": "That part doesn’t lead anywhere. Try a hotspot from the list."
+      }
+    },
+    "comments": {
+      "me": "Ama Mensah",
+      "threads": [
+        {
+          "id": "c1",
+          "layer": "button",
+          "author": "Jonas Lind",
+          "time": "2 hours ago",
+          "text": "Can the button say what happens next? “Sign in” reads fine, but it sits very close to the password field.",
+          "replies": [
+            {
+              "author": "Ama Mensah",
+              "time": "1 hour ago",
+              "text": "Moving it down by one step of the spacing scale."
+            }
+          ]
+        },
+        {
+          "id": "c2",
+          "layer": "hero",
+          "author": "Keiko Arai",
+          "time": "Yesterday",
+          "text": "This picture needs alt text before handoff: “A kite over the bay at dusk”.",
+          "replies": []
+        },
+        {
+          "id": "c3",
+          "layer": "row2",
+          "author": "Jonas Lind",
+          "time": "Monday",
+          "text": "Theme should be a Switch, not a pair of buttons.",
+          "replies": [
+            {
+              "author": "Ama Mensah",
+              "time": "Monday",
+              "text": "Changed to a Switch."
+            }
+          ],
+          "resolved": true
+        }
+      ],
+      "strings": {
+        "heading": "Comments",
+        "showResolved": "Show resolved",
+        "onLayer": "On {layer}",
+        "reply": "Reply",
+        "replyLabel": "Your reply",
+        "now": "Just now",
+        "resolve": "Resolve",
+        "reopen": "Reopen",
+        "resolved": "Resolved: {layer}",
+        "none": "No open comments on this page. Turn on Show resolved to read the closed ones."
+      }
+    },
+    "shapes": [
+      {
+        "id": "signin",
+        "label": "Sign in",
+        "kind": "frame",
+        "x": 0,
+        "y": 0,
+        "width": 320,
+        "height": 560,
+        "children": [
+          {
+            "id": "logo",
+            "label": "Logo",
+            "kind": "ellipse",
+            "x": 136,
+            "y": 48,
+            "width": 48,
+            "height": 48,
+            "category": 1,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#4f6bed",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "title",
+            "label": "Welcome back",
+            "kind": "text",
+            "x": 32,
+            "y": 128,
+            "width": 256,
+            "height": 32,
+            "text": "Welcome back",
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#1e1e1e",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "fontSize": 24,
+              "weight": "700",
+              "lineHeight": 125
+            }
+          },
+          {
+            "id": "lead",
+            "label": "Lead",
+            "kind": "text",
+            "x": 32,
+            "y": 168,
+            "width": 256,
+            "height": 48,
+            "text": "Sign in to see your trips.",
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#1e1e1e",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "email",
+            "label": "Email field",
+            "kind": "rectangle",
+            "x": 32,
+            "y": 240,
+            "width": 256,
+            "height": 44,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#eef0f3",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "strokes": [
+                {
+                  "colour": "#c7ccd4",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "password",
+            "label": "Password field",
+            "kind": "rectangle",
+            "x": 32,
+            "y": 300,
+            "width": 256,
+            "height": 44,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#eef0f3",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "strokes": [
+                {
+                  "colour": "#c7ccd4",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "button",
+            "label": "Sign in button",
+            "kind": "rectangle",
+            "x": 32,
+            "y": 376,
+            "width": 256,
+            "height": 44,
+            "category": 3,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#1f6feb",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "instance": true,
+              "swap": "primary",
+              "variantState": "default",
+              "variantSize": "normal",
+              "variantIcon": false,
+              "variantLabel": "Sign in",
+              "effects": [
+                {
+                  "type": "drop",
+                  "x": 0,
+                  "y": 2,
+                  "blur": 6,
+                  "spread": 0,
+                  "colour": "#1f6feb40",
+                  "visible": true
+                }
+              ],
+              "exports": [
+                {
+                  "scale": "2x",
+                  "format": "png",
+                  "suffix": "@2x"
+                }
+              ],
+              "interactions": [
+                {
+                  "trigger": "click",
+                  "delay": 800,
+                  "action": "navigate",
+                  "destination": "home",
+                  "url": "https://",
+                  "animation": "smart",
+                  "easing": "ease-out",
+                  "duration": 300
+                }
+              ]
+            }
+          },
+          {
+            "id": "forgot",
+            "label": "Forgot password",
+            "kind": "text",
+            "x": 32,
+            "y": 440,
+            "width": 256,
+            "height": 24,
+            "text": "Forgot your password?",
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#1f6feb",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "decoration": "underline"
+            }
+          }
+        ],
+        "props": {
+          "fills": [
+            {
+              "type": "solid",
+              "colour": "#ffffff",
+              "opacity": 100,
+              "visible": true
+            }
+          ],
+          "layout": "vertical",
+          "align": "start:start",
+          "gap": 16,
+          "padTop": 48,
+          "padRight": 32,
+          "padBottom": 48,
+          "padLeft": 32,
+          "flowStart": true,
+          "flowName": "Sign in",
+          "grids": [
+            {
+              "type": "columns",
+              "size": 8,
+              "count": 4,
+              "gutter": 16,
+              "margin": 32,
+              "colour": "#ff000019",
+              "visible": false
+            }
+          ]
+        }
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "kind": "frame",
+        "x": 384,
+        "y": 0,
+        "width": 320,
+        "height": 560,
+        "children": [
+          {
+            "id": "hero",
+            "label": "Hero picture",
+            "kind": "rectangle",
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 200,
+            "category": 5,
+            "props": {
+              "fills": [
+                {
+                  "type": "linear",
+                  "colour": "#7c9a3d",
+                  "opacity": 100,
+                  "visible": true,
+                  "angle": 160,
+                  "stops": [
+                    {
+                      "id": "a",
+                      "position": 0,
+                      "colour": "#7c9a3d"
+                    },
+                    {
+                      "id": "b",
+                      "position": 100,
+                      "colour": "#2f9e8f"
+                    }
+                  ],
+                  "image": "harbour",
+                  "fit": "fill"
+                }
+              ],
+              "radius": 0
+            }
+          },
+          {
+            "id": "greeting",
+            "label": "Greeting",
+            "kind": "text",
+            "x": 24,
+            "y": 224,
+            "width": 272,
+            "height": 32,
+            "text": "Good morning, Ama",
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#1e1e1e",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "fontSize": 24,
+              "weight": "700",
+              "lineHeight": 125
+            }
+          },
+          {
+            "id": "card1",
+            "label": "Trip card",
+            "kind": "rectangle",
+            "x": 24,
+            "y": 280,
+            "width": 272,
+            "height": 96,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#eef0f3",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "radius": 12,
+              "effects": [
+                {
+                  "type": "drop",
+                  "x": 0,
+                  "y": 4,
+                  "blur": 12,
+                  "spread": 0,
+                  "colour": "#0000001f",
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "card2",
+            "label": "Trip card 2",
+            "kind": "rectangle",
+            "x": 24,
+            "y": 392,
+            "width": 272,
+            "height": 96,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#eef0f3",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "radius": 12,
+              "effects": [
+                {
+                  "type": "drop",
+                  "x": 0,
+                  "y": 4,
+                  "blur": 12,
+                  "spread": 0,
+                  "colour": "#0000001f",
+                  "visible": true
+                }
+              ]
+            }
+          }
+        ],
+        "props": {
+          "fills": [
+            {
+              "type": "solid",
+              "colour": "#ffffff",
+              "opacity": 100,
+              "visible": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "settings",
+        "label": "Settings",
+        "kind": "frame",
+        "x": 768,
+        "y": 0,
+        "width": 320,
+        "height": 560,
+        "children": [
+          {
+            "id": "stitle",
+            "label": "Settings title",
+            "kind": "text",
+            "x": 24,
+            "y": 48,
+            "width": 272,
+            "height": 32,
+            "text": "Settings",
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#1e1e1e",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "fontSize": 24,
+              "weight": "700",
+              "lineHeight": 125
+            }
+          },
+          {
+            "id": "row1",
+            "label": "Notifications row",
+            "kind": "rectangle",
+            "x": 24,
+            "y": 104,
+            "width": 272,
+            "height": 48,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#eef0f3",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "row2",
+            "label": "Theme row",
+            "kind": "rectangle",
+            "x": 24,
+            "y": 160,
+            "width": 272,
+            "height": 48,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#eef0f3",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "avatar",
+            "label": "Avatar",
+            "kind": "ellipse",
+            "x": 24,
+            "y": 240,
+            "width": 64,
+            "height": 64,
+            "category": 6,
+            "props": {
+              "fills": [
+                {
+                  "type": "solid",
+                  "colour": "#a855f7",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "strokes": [
+                {
+                  "colour": "#ffffff",
+                  "opacity": 100,
+                  "visible": true
+                }
+              ],
+              "strokeWeight": 2
+            }
+          }
+        ],
+        "props": {
+          "fills": [
+            {
+              "type": "solid",
+              "colour": "#ffffff",
+              "opacity": 100,
+              "visible": true
+            }
+          ]
+        }
+      }
+    ],
+    "strings": {
+      "kindFrame": "Frame",
+      "kindRectangle": "Rectangle",
+      "kindEllipse": "Ellipse",
+      "kindText": "Text",
+      "tool": "Tool",
+      "zoom": "Zoom",
+      "zoomValue": "{percent} %",
+      "zoomTo": "Zoom to {percent} %",
+      "working": "Working on this file",
+      "share": "Share",
+      "viewOptions": "View options",
+      "propertyLabels": "Property labels",
+      "showLayer": "Show {name}",
+      "lockLayer": "Lock {name}",
+      "notInExample": "{label} isn’t part of this example.",
+      "sharing": "Sharing",
+      "pages": "Pages",
+      "layers": "Layers",
+      "position": "Position",
+      "xPosition": "X position",
+      "yPosition": "Y position",
+      "size": "Size",
+      "width": "Width",
+      "height": "Height",
+      "fill": "Fill",
+      "surface": "Surface",
+      "text": "Text",
+      "empty": "Select a layer to see and change its properties.",
+      "canvas": "{file}, {page}",
+      "inspector": "Properties",
+      "noColours": "No colours in this layer yet."
+    },
+    "inspector": [
+      {
+        "id": "design",
+        "label": "Design",
+        "sections": [
+          {
+            "id": "alignment",
+            "heading": "Alignment",
+            "rows": [
+              [
+                {
+                  "key": "align",
+                  "kind": "align",
+                  "label": "Align",
+                  "options": [
+                    {
+                      "value": "left",
+                      "label": "Align left",
+                      "icon": "align-left"
+                    },
+                    {
+                      "value": "h-center",
+                      "label": "Align horizontal centres",
+                      "icon": "align-h-center"
+                    },
+                    {
+                      "value": "right",
+                      "label": "Align right",
+                      "icon": "align-right"
+                    },
+                    {
+                      "value": "top",
+                      "label": "Align top",
+                      "icon": "align-top"
+                    },
+                    {
+                      "value": "v-center",
+                      "label": "Align vertical centres",
+                      "icon": "align-v-center"
+                    },
+                    {
+                      "value": "bottom",
+                      "label": "Align bottom",
+                      "icon": "align-bottom"
+                    },
+                    {
+                      "value": "distribute-h",
+                      "label": "Distribute horizontal spacing",
+                      "icon": "distribute-h"
+                    },
+                    {
+                      "value": "distribute-v",
+                      "label": "Distribute vertical spacing",
+                      "icon": "distribute-v"
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          {
+            "id": "position",
+            "heading": "Position",
+            "rows": [
+              [
+                {
+                  "key": "x",
+                  "kind": "number",
+                  "label": "X position",
+                  "glyph": "X",
+                  "unit": "px"
+                },
+                {
+                  "key": "y",
+                  "kind": "number",
+                  "label": "Y position",
+                  "glyph": "Y",
+                  "unit": "px"
+                }
+              ],
+              [
+                {
+                  "key": "rotation",
+                  "kind": "number",
+                  "label": "Rotation",
+                  "icon": "rotate",
+                  "unit": "°",
+                  "min": -180,
+                  "max": 180
+                }
+              ]
+            ]
+          },
+          {
+            "id": "constraints",
+            "heading": "Constraints",
+            "rows": [
+              [
+                {
+                  "key": "constraintH",
+                  "icon": "constraint-h",
+                  "kind": "select",
+                  "label": "Horizontal",
+                  "options": [
+                    {
+                      "value": "left",
+                      "label": "Left"
+                    },
+                    {
+                      "value": "right",
+                      "label": "Right"
+                    },
+                    {
+                      "value": "left-right",
+                      "label": "Left and right"
+                    },
+                    {
+                      "value": "center",
+                      "label": "Centre"
+                    },
+                    {
+                      "value": "scale",
+                      "label": "Scale"
+                    }
+                  ]
+                },
+                {
+                  "key": "constraintV",
+                  "icon": "constraint-v",
+                  "kind": "select",
+                  "label": "Vertical",
+                  "options": [
+                    {
+                      "value": "top",
+                      "label": "Top"
+                    },
+                    {
+                      "value": "bottom",
+                      "label": "Bottom"
+                    },
+                    {
+                      "value": "top-bottom",
+                      "label": "Top and bottom"
+                    },
+                    {
+                      "value": "center",
+                      "label": "Centre"
+                    },
+                    {
+                      "value": "scale",
+                      "label": "Scale"
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          {
+            "id": "layout",
+            "heading": "Layout",
+            "rows": [
+              [
+                {
+                  "key": "layout",
+                  "kind": "segmented",
+                  "label": "Auto layout",
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "No auto layout",
+                      "icon": "frame"
+                    },
+                    {
+                      "value": "vertical",
+                      "label": "Vertical",
+                      "icon": "arrow-down"
+                    },
+                    {
+                      "value": "horizontal",
+                      "label": "Horizontal",
+                      "icon": "arrow-end"
+                    },
+                    {
+                      "value": "wrap",
+                      "label": "Wrap",
+                      "icon": "wrap"
+                    }
+                  ],
+                  "iconOnly": true
+                }
+              ],
+              [
+                {
+                  "key": "width",
+                  "kind": "number",
+                  "label": "Width",
+                  "glyph": "W",
+                  "unit": "px",
+                  "min": 1
+                },
+                {
+                  "key": "height",
+                  "kind": "number",
+                  "label": "Height",
+                  "glyph": "H",
+                  "unit": "px",
+                  "min": 1
+                }
+              ],
+              [
+                {
+                  "key": "sizeW",
+                  "icon": "size-width",
+                  "kind": "select",
+                  "label": "Width sizing",
+                  "options": [
+                    {
+                      "value": "fixed",
+                      "label": "Fixed"
+                    },
+                    {
+                      "value": "hug",
+                      "label": "Hug"
+                    },
+                    {
+                      "value": "fill",
+                      "label": "Fill"
+                    }
+                  ]
+                },
+                {
+                  "key": "sizeH",
+                  "icon": "size-height",
+                  "kind": "select",
+                  "label": "Height sizing",
+                  "options": [
+                    {
+                      "value": "fixed",
+                      "label": "Fixed"
+                    },
+                    {
+                      "value": "hug",
+                      "label": "Hug"
+                    },
+                    {
+                      "value": "fill",
+                      "label": "Fill"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "minW",
+                  "kind": "number",
+                  "label": "Minimum width",
+                  "glyph": "≥W",
+                  "unit": "px",
+                  "min": 0
+                },
+                {
+                  "key": "maxW",
+                  "kind": "number",
+                  "label": "Maximum width",
+                  "glyph": "≤W",
+                  "unit": "px",
+                  "min": 0
+                }
+              ],
+              [
+                {
+                  "key": "minH",
+                  "kind": "number",
+                  "label": "Minimum height",
+                  "glyph": "≥H",
+                  "unit": "px",
+                  "min": 0
+                },
+                {
+                  "key": "maxH",
+                  "kind": "number",
+                  "label": "Maximum height",
+                  "glyph": "≤H",
+                  "unit": "px",
+                  "min": 0
+                }
+              ],
+              [
+                {
+                  "key": "align",
+                  "kind": "alignment",
+                  "label": "Alignment",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "wrap"
+                    ]
+                  }
+                },
+                {
+                  "key": "spacing",
+                  "kind": "column",
+                  "label": "Spacing",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "wrap"
+                    ]
+                  },
+                  "fields": [
+                    {
+                      "key": "gap",
+                      "kind": "number",
+                      "label": "Gap between items",
+                      "icon": "distribute-h",
+                      "unit": "px",
+                      "min": 0
+                    },
+                    {
+                      "key": "padLeft",
+                      "kind": "number",
+                      "unit": "px",
+                      "min": 0,
+                      "label": "Horizontal padding",
+                      "glyph": "↔",
+                      "also": [
+                        "padRight"
+                      ],
+                      "when": {
+                        "key": "padSides",
+                        "is": [
+                          false
+                        ]
+                      }
+                    },
+                    {
+                      "key": "padTop",
+                      "kind": "number",
+                      "unit": "px",
+                      "min": 0,
+                      "label": "Vertical padding",
+                      "glyph": "↕",
+                      "also": [
+                        "padBottom"
+                      ],
+                      "when": {
+                        "key": "padSides",
+                        "is": [
+                          false
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "padSides",
+                  "kind": "switch",
+                  "label": "Individual padding",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "wrap"
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "padTop",
+                  "kind": "number",
+                  "label": "Top padding",
+                  "glyph": "↑",
+                  "unit": "px",
+                  "min": 0,
+                  "when": [
+                    {
+                      "key": "layout",
+                      "is": [
+                        "vertical",
+                        "horizontal",
+                        "wrap"
+                      ]
+                    },
+                    {
+                      "key": "padSides",
+                      "is": [
+                        true
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "key": "padRight",
+                  "kind": "number",
+                  "label": "Right padding",
+                  "glyph": "→",
+                  "unit": "px",
+                  "min": 0,
+                  "when": [
+                    {
+                      "key": "layout",
+                      "is": [
+                        "vertical",
+                        "horizontal",
+                        "wrap"
+                      ]
+                    },
+                    {
+                      "key": "padSides",
+                      "is": [
+                        true
+                      ]
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "padBottom",
+                  "kind": "number",
+                  "label": "Bottom padding",
+                  "glyph": "↓",
+                  "unit": "px",
+                  "min": 0,
+                  "when": [
+                    {
+                      "key": "layout",
+                      "is": [
+                        "vertical",
+                        "horizontal",
+                        "wrap"
+                      ]
+                    },
+                    {
+                      "key": "padSides",
+                      "is": [
+                        true
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "key": "padLeft",
+                  "kind": "number",
+                  "label": "Left padding",
+                  "glyph": "←",
+                  "unit": "px",
+                  "min": 0,
+                  "when": [
+                    {
+                      "key": "layout",
+                      "is": [
+                        "vertical",
+                        "horizontal",
+                        "wrap"
+                      ]
+                    },
+                    {
+                      "key": "padSides",
+                      "is": [
+                        true
+                      ]
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "clip",
+                  "kind": "switch",
+                  "label": "Clip content",
+                  "when": {
+                    "key": "clipAllowed",
+                    "is": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "key": "absolute",
+                  "kind": "switch",
+                  "label": "Ignore auto layout",
+                  "when": {
+                    "key": "inLayout",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ]
+            ]
+          },
+          {
+            "id": "appearance",
+            "heading": "Appearance",
+            "rows": [
+              [
+                {
+                  "key": "blend",
+                  "icon": "blend",
+                  "kind": "select",
+                  "label": "Blend mode",
+                  "options": [
+                    {
+                      "value": "pass-through",
+                      "label": "Pass through"
+                    },
+                    {
+                      "value": "normal",
+                      "label": "Normal"
+                    },
+                    {
+                      "value": "darken",
+                      "label": "Darken"
+                    },
+                    {
+                      "value": "multiply",
+                      "label": "Multiply"
+                    },
+                    {
+                      "value": "color-burn",
+                      "label": "Colour burn"
+                    },
+                    {
+                      "value": "lighten",
+                      "label": "Lighten"
+                    },
+                    {
+                      "value": "screen",
+                      "label": "Screen"
+                    },
+                    {
+                      "value": "color-dodge",
+                      "label": "Colour dodge"
+                    },
+                    {
+                      "value": "overlay",
+                      "label": "Overlay"
+                    },
+                    {
+                      "value": "soft-light",
+                      "label": "Soft light"
+                    },
+                    {
+                      "value": "hard-light",
+                      "label": "Hard light"
+                    },
+                    {
+                      "value": "difference",
+                      "label": "Difference"
+                    },
+                    {
+                      "value": "exclusion",
+                      "label": "Exclusion"
+                    },
+                    {
+                      "value": "hue",
+                      "label": "Hue"
+                    },
+                    {
+                      "value": "saturation",
+                      "label": "Saturation"
+                    },
+                    {
+                      "value": "color",
+                      "label": "Colour"
+                    },
+                    {
+                      "value": "luminosity",
+                      "label": "Luminosity"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "opacity",
+                  "kind": "slider",
+                  "label": "Opacity",
+                  "min": 0,
+                  "max": 100,
+                  "unit": "%"
+                }
+              ],
+              [
+                {
+                  "key": "visible",
+                  "kind": "switch",
+                  "label": "Show in the document"
+                }
+              ],
+              [
+                {
+                  "key": "radius",
+                  "kind": "number",
+                  "label": "Corner radius",
+                  "icon": "corners",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "corners",
+                    "is": [
+                      false
+                    ]
+                  }
+                },
+                {
+                  "key": "corners",
+                  "kind": "switch",
+                  "label": "Individual corners",
+                  "when": {
+                    "key": "hasCorners",
+                    "is": [
+                      true
+                    ]
+                  },
+                  "at": "action"
+                }
+              ],
+              [
+                {
+                  "key": "radiusTL",
+                  "kind": "number",
+                  "label": "Top left radius",
+                  "glyph": "◜",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "corners",
+                    "is": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "key": "radiusTR",
+                  "kind": "number",
+                  "label": "Top right radius",
+                  "glyph": "◝",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "corners",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "radiusBL",
+                  "kind": "number",
+                  "label": "Bottom left radius",
+                  "glyph": "◟",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "corners",
+                    "is": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "key": "radiusBR",
+                  "kind": "number",
+                  "label": "Bottom right radius",
+                  "glyph": "◞",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "corners",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "smoothing",
+                  "kind": "slider",
+                  "label": "Corner smoothing",
+                  "min": 0,
+                  "max": 100,
+                  "unit": "%",
+                  "when": {
+                    "key": "hasCorners",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ]
+            ]
+          },
+          {
+            "id": "typography",
+            "heading": "Typography",
+            "kinds": [
+              "text"
+            ],
+            "rows": [
+              [
+                {
+                  "key": "text",
+                  "kind": "text",
+                  "label": "Words"
+                }
+              ],
+              [
+                {
+                  "key": "font",
+                  "kind": "select",
+                  "label": "Font",
+                  "options": [
+                    {
+                      "value": "Inter",
+                      "label": "Inter"
+                    },
+                    {
+                      "value": "Roboto",
+                      "label": "Roboto"
+                    },
+                    {
+                      "value": "Source Sans 3",
+                      "label": "Source Sans 3"
+                    },
+                    {
+                      "value": "IBM Plex Sans",
+                      "label": "IBM Plex Sans"
+                    },
+                    {
+                      "value": "Merriweather",
+                      "label": "Merriweather"
+                    },
+                    {
+                      "value": "JetBrains Mono",
+                      "label": "JetBrains Mono"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "weight",
+                  "kind": "select",
+                  "label": "Weight",
+                  "options": [
+                    {
+                      "value": "300",
+                      "label": "Light"
+                    },
+                    {
+                      "value": "400",
+                      "label": "Regular"
+                    },
+                    {
+                      "value": "500",
+                      "label": "Medium"
+                    },
+                    {
+                      "value": "600",
+                      "label": "Semibold"
+                    },
+                    {
+                      "value": "700",
+                      "label": "Bold"
+                    }
+                  ]
+                },
+                {
+                  "key": "fontSize",
+                  "kind": "number",
+                  "label": "Font size",
+                  "glyph": "Aa",
+                  "unit": "px",
+                  "min": 1
+                }
+              ],
+              [
+                {
+                  "key": "lineHeight",
+                  "kind": "number",
+                  "label": "Line height",
+                  "glyph": "↕",
+                  "unit": "%",
+                  "min": 50
+                },
+                {
+                  "key": "letterSpacing",
+                  "kind": "number",
+                  "label": "Letter spacing",
+                  "glyph": "↔",
+                  "unit": "%",
+                  "step": 0.5
+                }
+              ],
+              [
+                {
+                  "key": "textAlign",
+                  "kind": "segmented",
+                  "label": "Horizontal alignment",
+                  "options": [
+                    {
+                      "value": "left",
+                      "label": "Align left",
+                      "icon": "text-start"
+                    },
+                    {
+                      "value": "center",
+                      "label": "Align centre",
+                      "icon": "text-center"
+                    },
+                    {
+                      "value": "right",
+                      "label": "Align right",
+                      "icon": "text-end"
+                    },
+                    {
+                      "value": "justify",
+                      "label": "Justify",
+                      "icon": "text-justify"
+                    }
+                  ],
+                  "iconOnly": true
+                },
+                {
+                  "key": "textAlignV",
+                  "kind": "segmented",
+                  "label": "Vertical alignment",
+                  "options": [
+                    {
+                      "value": "top",
+                      "label": "Top",
+                      "icon": "align-top"
+                    },
+                    {
+                      "value": "middle",
+                      "label": "Middle",
+                      "icon": "align-v-center"
+                    },
+                    {
+                      "value": "bottom",
+                      "label": "Bottom",
+                      "icon": "align-bottom"
+                    }
+                  ],
+                  "iconOnly": true
+                }
+              ],
+              [
+                {
+                  "key": "decoration",
+                  "kind": "segmented",
+                  "label": "Decoration",
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "None"
+                    },
+                    {
+                      "value": "underline",
+                      "label": "Underline"
+                    },
+                    {
+                      "value": "line-through",
+                      "label": "Strikethrough"
+                    }
+                  ]
+                },
+                {
+                  "key": "case",
+                  "kind": "select",
+                  "label": "Case",
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "As typed"
+                    },
+                    {
+                      "value": "uppercase",
+                      "label": "Upper case"
+                    },
+                    {
+                      "value": "lowercase",
+                      "label": "Lower case"
+                    },
+                    {
+                      "value": "capitalize",
+                      "label": "Title case"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "resizing",
+                  "kind": "select",
+                  "label": "Resizing",
+                  "options": [
+                    {
+                      "value": "width",
+                      "label": "Auto width"
+                    },
+                    {
+                      "value": "height",
+                      "label": "Auto height"
+                    },
+                    {
+                      "value": "fixed",
+                      "label": "Fixed size"
+                    },
+                    {
+                      "value": "truncate",
+                      "label": "Truncate"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "truncate",
+                  "kind": "switch",
+                  "label": "Truncate text"
+                },
+                {
+                  "key": "maxLines",
+                  "kind": "number",
+                  "label": "Maximum lines",
+                  "glyph": "≡",
+                  "min": 1,
+                  "when": {
+                    "key": "truncate",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ]
+            ]
+          },
+          {
+            "id": "fill",
+            "heading": "Fill",
+            "list": {
+              "key": "fills",
+              "add": "Add fill",
+              "item": "Fill {n}",
+              "remove": "Remove",
+              "visible": "visible",
+              "show": "Show",
+              "rows": [
+                [
+                  {
+                    "key": "colour",
+                    "kind": "colour",
+                    "label": "Colour",
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "solid"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "opacity",
+                    "kind": "number",
+                    "label": "Opacity",
+                    "glyph": "%",
+                    "min": 0,
+                    "max": 100,
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "solid"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "type",
+                    "kind": "select",
+                    "label": "Type",
+                    "options": [
+                      {
+                        "value": "solid",
+                        "label": "Solid"
+                      },
+                      {
+                        "value": "linear",
+                        "label": "Linear gradient"
+                      },
+                      {
+                        "value": "radial",
+                        "label": "Radial gradient"
+                      },
+                      {
+                        "value": "image",
+                        "label": "Image"
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "key": "stops",
+                    "kind": "gradient",
+                    "label": "Gradient",
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "linear",
+                        "radial"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "angle",
+                    "kind": "number",
+                    "label": "Angle",
+                    "icon": "rotate",
+                    "unit": "°",
+                    "min": 0,
+                    "max": 360,
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "linear"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "image",
+                    "kind": "select",
+                    "label": "Picture",
+                    "options": [
+                      {
+                        "value": "harbour",
+                        "label": "Harbour"
+                      },
+                      {
+                        "value": "meadow",
+                        "label": "Meadow"
+                      },
+                      {
+                        "value": "dusk",
+                        "label": "Dusk"
+                      }
+                    ],
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "image"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "fit",
+                    "kind": "select",
+                    "label": "Fit",
+                    "options": [
+                      {
+                        "value": "fill",
+                        "label": "Fill"
+                      },
+                      {
+                        "value": "fit",
+                        "label": "Fit"
+                      },
+                      {
+                        "value": "crop",
+                        "label": "Crop"
+                      },
+                      {
+                        "value": "tile",
+                        "label": "Tile"
+                      }
+                    ],
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "image"
+                      ]
+                    }
+                  }
+                ]
+              ],
+              "template": {
+                "type": "solid",
+                "colour": "#d9d9d9",
+                "opacity": 100,
+                "visible": true,
+                "angle": 180,
+                "stops": [
+                  {
+                    "id": "a",
+                    "position": 0,
+                    "colour": "#4f6bed"
+                  },
+                  {
+                    "id": "b",
+                    "position": 100,
+                    "colour": "#2f9e8f"
+                  }
+                ],
+                "image": "harbour",
+                "fit": "fill"
+              }
+            }
+          },
+          {
+            "id": "stroke",
+            "heading": "Stroke",
+            "rows": [
+              [
+                {
+                  "key": "strokePosition",
+                  "kind": "select",
+                  "label": "Position",
+                  "options": [
+                    {
+                      "value": "inside",
+                      "label": "Inside"
+                    },
+                    {
+                      "value": "center",
+                      "label": "Centre"
+                    },
+                    {
+                      "value": "outside",
+                      "label": "Outside"
+                    }
+                  ],
+                  "icon": "stroke-position",
+                  "wide": true
+                },
+                {
+                  "key": "strokeWeight",
+                  "kind": "number",
+                  "label": "Weight",
+                  "glyph": "≡",
+                  "unit": "px",
+                  "min": 0
+                },
+                {
+                  "key": "strokeSides",
+                  "kind": "menu",
+                  "label": "Sides",
+                  "options": [
+                    {
+                      "value": "all",
+                      "label": "All"
+                    },
+                    {
+                      "value": "top",
+                      "label": "Top"
+                    },
+                    {
+                      "value": "bottom",
+                      "label": "Bottom"
+                    },
+                    {
+                      "value": "left",
+                      "label": "Left"
+                    },
+                    {
+                      "value": "right",
+                      "label": "Right"
+                    },
+                    {
+                      "value": "custom",
+                      "label": "Custom"
+                    }
+                  ],
+                  "at": "action",
+                  "icon": "sides"
+                }
+              ],
+              [
+                {
+                  "key": "strokeTop",
+                  "kind": "number",
+                  "label": "Top weight",
+                  "glyph": "↑",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "strokeSides",
+                    "is": [
+                      "custom"
+                    ]
+                  }
+                },
+                {
+                  "key": "strokeRight",
+                  "kind": "number",
+                  "label": "Right weight",
+                  "glyph": "→",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "strokeSides",
+                    "is": [
+                      "custom"
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "strokeBottom",
+                  "kind": "number",
+                  "label": "Bottom weight",
+                  "glyph": "↓",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "strokeSides",
+                    "is": [
+                      "custom"
+                    ]
+                  }
+                },
+                {
+                  "key": "strokeLeft",
+                  "kind": "number",
+                  "label": "Left weight",
+                  "glyph": "←",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "strokeSides",
+                    "is": [
+                      "custom"
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "strokeStyle",
+                  "kind": "segmented",
+                  "label": "Style",
+                  "options": [
+                    {
+                      "value": "solid",
+                      "label": "Solid"
+                    },
+                    {
+                      "value": "dash",
+                      "label": "Dash"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "dash",
+                  "kind": "number",
+                  "label": "Dash",
+                  "glyph": "–",
+                  "unit": "px",
+                  "min": 1,
+                  "when": {
+                    "key": "strokeStyle",
+                    "is": [
+                      "dash"
+                    ]
+                  }
+                },
+                {
+                  "key": "dashGap",
+                  "kind": "number",
+                  "label": "Gap",
+                  "glyph": "·",
+                  "unit": "px",
+                  "min": 0,
+                  "when": {
+                    "key": "strokeStyle",
+                    "is": [
+                      "dash"
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "cap",
+                  "kind": "select",
+                  "label": "End points",
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "None"
+                    },
+                    {
+                      "value": "round",
+                      "label": "Round"
+                    },
+                    {
+                      "value": "square",
+                      "label": "Square"
+                    },
+                    {
+                      "value": "arrow",
+                      "label": "Line arrow"
+                    },
+                    {
+                      "value": "triangle",
+                      "label": "Triangle arrow"
+                    }
+                  ]
+                },
+                {
+                  "key": "join",
+                  "kind": "select",
+                  "label": "Join",
+                  "options": [
+                    {
+                      "value": "miter",
+                      "label": "Miter"
+                    },
+                    {
+                      "value": "round",
+                      "label": "Round"
+                    },
+                    {
+                      "value": "bevel",
+                      "label": "Bevel"
+                    }
+                  ]
+                }
+              ]
+            ],
+            "list": {
+              "key": "strokes",
+              "add": "Add stroke",
+              "item": "Stroke {n}",
+              "remove": "Remove",
+              "visible": "visible",
+              "show": "Show",
+              "rows": [
+                [
+                  {
+                    "key": "colour",
+                    "kind": "colour",
+                    "label": "Colour"
+                  },
+                  {
+                    "key": "opacity",
+                    "kind": "number",
+                    "label": "Opacity",
+                    "glyph": "%",
+                    "min": 0,
+                    "max": 100
+                  }
+                ]
+              ],
+              "template": {
+                "colour": "#1e1e1e",
+                "opacity": 100,
+                "visible": true
+              }
+            },
+            "listFirst": true
+          },
+          {
+            "id": "effects",
+            "heading": "Effects",
+            "list": {
+              "key": "effects",
+              "add": "Add effect",
+              "item": "Effect {n}",
+              "remove": "Remove",
+              "visible": "visible",
+              "show": "Show",
+              "rows": [
+                [
+                  {
+                    "key": "type",
+                    "kind": "select",
+                    "label": "Type",
+                    "options": [
+                      {
+                        "value": "drop",
+                        "label": "Drop shadow"
+                      },
+                      {
+                        "value": "inner",
+                        "label": "Inner shadow"
+                      },
+                      {
+                        "value": "layer-blur",
+                        "label": "Layer blur"
+                      },
+                      {
+                        "value": "background-blur",
+                        "label": "Background blur"
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "key": "x",
+                    "kind": "number",
+                    "label": "X offset",
+                    "glyph": "X",
+                    "unit": "px",
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "drop",
+                        "inner"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "y",
+                    "kind": "number",
+                    "label": "Y offset",
+                    "glyph": "Y",
+                    "unit": "px",
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "drop",
+                        "inner"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "blur",
+                    "kind": "number",
+                    "label": "Blur",
+                    "glyph": "B",
+                    "unit": "px",
+                    "min": 0
+                  },
+                  {
+                    "key": "spread",
+                    "kind": "number",
+                    "label": "Spread",
+                    "glyph": "S",
+                    "unit": "px",
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "drop",
+                        "inner"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "colour",
+                    "kind": "colour",
+                    "label": "Colour",
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "drop",
+                        "inner"
+                      ]
+                    }
+                  }
+                ]
+              ],
+              "template": {
+                "type": "drop",
+                "x": 0,
+                "y": 4,
+                "blur": 8,
+                "spread": 0,
+                "colour": "#00000040",
+                "visible": true
+              }
+            }
+          },
+          {
+            "id": "guides",
+            "heading": "Layout guides",
+            "kinds": [
+              "frame"
+            ],
+            "list": {
+              "key": "grids",
+              "add": "Add layout guide",
+              "item": "Guide {n}",
+              "remove": "Remove",
+              "visible": "visible",
+              "show": "Show",
+              "rows": [
+                [
+                  {
+                    "key": "type",
+                    "kind": "select",
+                    "label": "Type",
+                    "options": [
+                      {
+                        "value": "grid",
+                        "label": "Grid"
+                      },
+                      {
+                        "value": "columns",
+                        "label": "Columns"
+                      },
+                      {
+                        "value": "rows",
+                        "label": "Rows"
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "key": "size",
+                    "kind": "number",
+                    "label": "Size",
+                    "glyph": "#",
+                    "unit": "px",
+                    "min": 1,
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "grid"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "count",
+                    "kind": "number",
+                    "label": "Count",
+                    "glyph": "#",
+                    "min": 1,
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "columns",
+                        "rows"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "gutter",
+                    "kind": "number",
+                    "label": "Gutter",
+                    "glyph": "⇹",
+                    "unit": "px",
+                    "min": 0,
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "columns",
+                        "rows"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "margin",
+                    "kind": "number",
+                    "label": "Margin",
+                    "glyph": "⇤",
+                    "unit": "px",
+                    "min": 0,
+                    "when": {
+                      "key": "type",
+                      "is": [
+                        "columns",
+                        "rows"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "colour",
+                    "kind": "colour",
+                    "label": "Colour"
+                  }
+                ]
+              ],
+              "template": {
+                "type": "columns",
+                "size": 8,
+                "count": 4,
+                "gutter": 16,
+                "margin": 24,
+                "colour": "#ff000019",
+                "visible": true
+              }
+            }
+          },
+          {
+            "id": "selection-colours",
+            "heading": "Selection colours",
+            "kinds": [
+              "frame"
+            ],
+            "colours": true
+          },
+          {
+            "id": "instance",
+            "heading": "Instance",
+            "when": {
+              "key": "instance",
+              "is": [
+                true
+              ]
+            },
+            "rows": [
+              [
+                {
+                  "key": "swap",
+                  "kind": "select",
+                  "label": "Swap instance",
+                  "options": [
+                    {
+                      "value": "primary",
+                      "label": "Button, primary"
+                    },
+                    {
+                      "value": "default",
+                      "label": "Button, default"
+                    },
+                    {
+                      "value": "quiet",
+                      "label": "Button, quiet"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "variantState",
+                  "kind": "select",
+                  "label": "State",
+                  "options": [
+                    {
+                      "value": "default",
+                      "label": "Default"
+                    },
+                    {
+                      "value": "hover",
+                      "label": "Hover"
+                    },
+                    {
+                      "value": "pressed",
+                      "label": "Pressed"
+                    },
+                    {
+                      "value": "disabled",
+                      "label": "Disabled"
+                    }
+                  ]
+                },
+                {
+                  "key": "variantSize",
+                  "kind": "select",
+                  "label": "Size",
+                  "options": [
+                    {
+                      "value": "s",
+                      "label": "Small"
+                    },
+                    {
+                      "value": "normal",
+                      "label": "Normal"
+                    },
+                    {
+                      "value": "l",
+                      "label": "Large"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "variantIcon",
+                  "kind": "switch",
+                  "label": "Leading icon"
+                },
+                {
+                  "key": "variantLabel",
+                  "kind": "text",
+                  "label": "Label"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "export",
+            "heading": "Export",
+            "list": {
+              "key": "exports",
+              "add": "Add export setting",
+              "item": "Export {n}",
+              "remove": "Remove",
+              "rows": [
+                [
+                  {
+                    "key": "scale",
+                    "kind": "select",
+                    "label": "Scale",
+                    "options": [
+                      {
+                        "value": "0.5x",
+                        "label": "0.5×"
+                      },
+                      {
+                        "value": "1x",
+                        "label": "1×"
+                      },
+                      {
+                        "value": "2x",
+                        "label": "2×"
+                      },
+                      {
+                        "value": "3x",
+                        "label": "3×"
+                      },
+                      {
+                        "value": "4x",
+                        "label": "4×"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "suffix",
+                    "kind": "text",
+                    "label": "Suffix",
+                    "placeholder": "Suffix"
+                  },
+                  {
+                    "key": "format",
+                    "kind": "select",
+                    "label": "Format",
+                    "options": [
+                      {
+                        "value": "png",
+                        "label": "PNG"
+                      },
+                      {
+                        "value": "jpg",
+                        "label": "JPG"
+                      },
+                      {
+                        "value": "svg",
+                        "label": "SVG"
+                      },
+                      {
+                        "value": "pdf",
+                        "label": "PDF"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              "template": {
+                "scale": "1x",
+                "format": "png",
+                "suffix": ""
+              }
+            },
+            "action": {
+              "label": "Export {name}",
+              "says": "Exporting isn’t part of this example."
+            }
+          }
+        ]
+      },
+      {
+        "id": "prototype",
+        "label": "Prototype",
+        "sections": [
+          {
+            "id": "flow",
+            "heading": "Flow starting point",
+            "kinds": [
+              "frame"
+            ],
+            "rows": [
+              [
+                {
+                  "key": "flowStart",
+                  "kind": "switch",
+                  "label": "Starting point"
+                }
+              ],
+              [
+                {
+                  "key": "flowName",
+                  "kind": "text",
+                  "label": "Flow name",
+                  "when": {
+                    "key": "flowStart",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ]
+            ]
+          },
+          {
+            "id": "interactions",
+            "heading": "Interactions",
+            "list": {
+              "key": "interactions",
+              "add": "Add interaction",
+              "item": "Interaction {n}",
+              "remove": "Remove",
+              "rows": [
+                [
+                  {
+                    "key": "trigger",
+                    "kind": "select",
+                    "label": "Trigger",
+                    "options": [
+                      {
+                        "value": "click",
+                        "label": "On click"
+                      },
+                      {
+                        "value": "drag",
+                        "label": "On drag"
+                      },
+                      {
+                        "value": "hover",
+                        "label": "While hovering"
+                      },
+                      {
+                        "value": "press",
+                        "label": "While pressing"
+                      },
+                      {
+                        "value": "key",
+                        "label": "Key or gamepad"
+                      },
+                      {
+                        "value": "enter",
+                        "label": "Mouse enter"
+                      },
+                      {
+                        "value": "leave",
+                        "label": "Mouse leave"
+                      },
+                      {
+                        "value": "delay",
+                        "label": "After delay"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "delay",
+                    "kind": "number",
+                    "label": "Delay",
+                    "glyph": "⏱",
+                    "unit": "ms",
+                    "min": 0,
+                    "when": {
+                      "key": "trigger",
+                      "is": [
+                        "delay"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "action",
+                    "kind": "select",
+                    "label": "Action",
+                    "options": [
+                      {
+                        "value": "navigate",
+                        "label": "Navigate to"
+                      },
+                      {
+                        "value": "change",
+                        "label": "Change to"
+                      },
+                      {
+                        "value": "overlay",
+                        "label": "Open overlay"
+                      },
+                      {
+                        "value": "swap",
+                        "label": "Swap overlay"
+                      },
+                      {
+                        "value": "close",
+                        "label": "Close overlay"
+                      },
+                      {
+                        "value": "back",
+                        "label": "Back"
+                      },
+                      {
+                        "value": "scroll",
+                        "label": "Scroll to"
+                      },
+                      {
+                        "value": "link",
+                        "label": "Open link"
+                      },
+                      {
+                        "value": "variable",
+                        "label": "Set variable"
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    "key": "destination",
+                    "kind": "select",
+                    "label": "Destination",
+                    "options": [
+                      {
+                        "value": "signin",
+                        "label": "Sign in"
+                      },
+                      {
+                        "value": "home",
+                        "label": "Home"
+                      },
+                      {
+                        "value": "settings",
+                        "label": "Settings"
+                      }
+                    ],
+                    "when": {
+                      "key": "action",
+                      "is": [
+                        "navigate",
+                        "overlay",
+                        "swap",
+                        "scroll"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "url",
+                    "kind": "text",
+                    "label": "Link",
+                    "when": {
+                      "key": "action",
+                      "is": [
+                        "link"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "animation",
+                    "kind": "select",
+                    "label": "Animation",
+                    "options": [
+                      {
+                        "value": "instant",
+                        "label": "Instant"
+                      },
+                      {
+                        "value": "dissolve",
+                        "label": "Dissolve"
+                      },
+                      {
+                        "value": "smart",
+                        "label": "Smart animate"
+                      },
+                      {
+                        "value": "move-in",
+                        "label": "Move in"
+                      },
+                      {
+                        "value": "move-out",
+                        "label": "Move out"
+                      },
+                      {
+                        "value": "push",
+                        "label": "Push"
+                      },
+                      {
+                        "value": "slide-in",
+                        "label": "Slide in"
+                      },
+                      {
+                        "value": "slide-out",
+                        "label": "Slide out"
+                      }
+                    ],
+                    "when": {
+                      "key": "action",
+                      "is": [
+                        "navigate",
+                        "change",
+                        "overlay",
+                        "swap",
+                        "back"
+                      ]
+                    }
+                  }
+                ],
+                [
+                  {
+                    "key": "easing",
+                    "kind": "select",
+                    "label": "Easing",
+                    "options": [
+                      {
+                        "value": "ease-out",
+                        "label": "Ease out"
+                      },
+                      {
+                        "value": "ease-in",
+                        "label": "Ease in"
+                      },
+                      {
+                        "value": "ease-in-out",
+                        "label": "Ease in and out"
+                      },
+                      {
+                        "value": "linear",
+                        "label": "Linear"
+                      },
+                      {
+                        "value": "gentle",
+                        "label": "Gentle"
+                      },
+                      {
+                        "value": "quick",
+                        "label": "Quick"
+                      },
+                      {
+                        "value": "bouncy",
+                        "label": "Bouncy"
+                      }
+                    ],
+                    "when": {
+                      "key": "animation",
+                      "is": [
+                        "dissolve",
+                        "smart",
+                        "move-in",
+                        "move-out",
+                        "push",
+                        "slide-in",
+                        "slide-out"
+                      ]
+                    }
+                  },
+                  {
+                    "key": "duration",
+                    "kind": "number",
+                    "label": "Duration",
+                    "glyph": "⏱",
+                    "unit": "ms",
+                    "min": 1,
+                    "when": {
+                      "key": "animation",
+                      "is": [
+                        "dissolve",
+                        "smart",
+                        "move-in",
+                        "move-out",
+                        "push",
+                        "slide-in",
+                        "slide-out"
+                      ]
+                    }
+                  }
+                ]
+              ],
+              "template": {
+                "trigger": "click",
+                "delay": 800,
+                "action": "navigate",
+                "destination": "home",
+                "url": "https://",
+                "animation": "instant",
+                "easing": "ease-out",
+                "duration": 300
+              },
+              "summary": "{trigger} → {action}"
+            }
+          },
+          {
+            "id": "scroll",
+            "heading": "Scroll behaviour",
+            "rows": [
+              [
+                {
+                  "key": "overflow",
+                  "kind": "select",
+                  "label": "Overflow",
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "No scrolling"
+                    },
+                    {
+                      "value": "horizontal",
+                      "label": "Horizontal"
+                    },
+                    {
+                      "value": "vertical",
+                      "label": "Vertical"
+                    },
+                    {
+                      "value": "both",
+                      "label": "Both directions"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "scrollPosition",
+                  "kind": "select",
+                  "label": "Position",
+                  "options": [
+                    {
+                      "value": "scroll",
+                      "label": "Scroll with parent"
+                    },
+                    {
+                      "value": "fixed",
+                      "label": "Fixed"
+                    },
+                    {
+                      "value": "sticky",
+                      "label": "Sticky"
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          {
+            "id": "settings",
+            "heading": "Prototype settings",
+            "kinds": [
+              "frame"
+            ],
+            "rows": [
+              [
+                {
+                  "key": "device",
+                  "kind": "select",
+                  "label": "Device",
+                  "options": [
+                    {
+                      "value": "none",
+                      "label": "None"
+                    },
+                    {
+                      "value": "phone",
+                      "label": "Phone, 393 × 852"
+                    },
+                    {
+                      "value": "android",
+                      "label": "Android, 412 × 915"
+                    },
+                    {
+                      "value": "tablet",
+                      "label": "Tablet, 834 × 1194"
+                    },
+                    {
+                      "value": "desktop",
+                      "label": "Desktop, 1440 × 1024"
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "protoBg",
+                  "kind": "colour",
+                  "label": "Background"
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "dev",
+        "label": "Dev mode",
+        "sections": [
+          {
+            "id": "measure",
+            "heading": "Layer",
+            "facts": [
+              {
+                "label": "Width",
+                "key": "width",
+                "unit": " px"
+              },
+              {
+                "label": "Height",
+                "key": "height",
+                "unit": " px"
+              },
+              {
+                "label": "X",
+                "key": "x",
+                "unit": " px"
+              },
+              {
+                "label": "Y",
+                "key": "y",
+                "unit": " px"
+              },
+              {
+                "label": "Rotation",
+                "key": "rotation",
+                "unit": "°"
+              },
+              {
+                "label": "Opacity",
+                "key": "opacity",
+                "unit": " %"
+              }
+            ]
+          },
+          {
+            "id": "type-facts",
+            "heading": "Typography",
+            "kinds": [
+              "text"
+            ],
+            "facts": [
+              {
+                "label": "Font",
+                "key": "font"
+              },
+              {
+                "label": "Weight",
+                "key": "weight"
+              },
+              {
+                "label": "Size",
+                "key": "fontSize",
+                "unit": " px"
+              },
+              {
+                "label": "Line height",
+                "key": "lineHeight",
+                "unit": " %"
+              },
+              {
+                "label": "Letter spacing",
+                "key": "letterSpacing",
+                "unit": " %"
+              }
+            ]
+          },
+          {
+            "id": "code",
+            "heading": "Code",
+            "code": "CSS"
+          },
+          {
+            "id": "dev-colours",
+            "heading": "Colours",
+            "colours": true
+          },
+          {
+            "id": "dev-export",
+            "heading": "Export",
+            "list": {
+              "key": "exports",
+              "add": "Add export setting",
+              "item": "Export {n}",
+              "remove": "Remove",
+              "rows": [
+                [
+                  {
+                    "key": "scale",
+                    "kind": "select",
+                    "label": "Scale",
+                    "options": [
+                      {
+                        "value": "0.5x",
+                        "label": "0.5×"
+                      },
+                      {
+                        "value": "1x",
+                        "label": "1×"
+                      },
+                      {
+                        "value": "2x",
+                        "label": "2×"
+                      },
+                      {
+                        "value": "3x",
+                        "label": "3×"
+                      },
+                      {
+                        "value": "4x",
+                        "label": "4×"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "suffix",
+                    "kind": "text",
+                    "label": "Suffix",
+                    "placeholder": "Suffix"
+                  },
+                  {
+                    "key": "format",
+                    "kind": "select",
+                    "label": "Format",
+                    "options": [
+                      {
+                        "value": "png",
+                        "label": "PNG"
+                      },
+                      {
+                        "value": "jpg",
+                        "label": "JPG"
+                      },
+                      {
+                        "value": "svg",
+                        "label": "SVG"
+                      },
+                      {
+                        "value": "pdf",
+                        "label": "PDF"
+                      }
+                    ]
+                  }
+                ]
+              ],
+              "template": {
+                "scale": "1x",
+                "format": "png",
+                "suffix": ""
+              }
+            },
+            "action": {
+              "label": "Export {name}",
+              "says": "Exporting isn’t part of this example."
+            }
+          }
+        ]
+      }
+    ],
+    "defaults": {
+      "all": {
+        "visible": true,
+        "opacity": 100,
+        "blend": "pass-through",
+        "rotation": 0,
+        "constraintH": "left",
+        "constraintV": "top",
+        "sizeW": "fixed",
+        "sizeH": "fixed",
+        "minW": 0,
+        "maxW": 0,
+        "minH": 0,
+        "maxH": 0,
+        "layout": "none",
+        "align": "start:start",
+        "gap": 0,
+        "padTop": 0,
+        "padRight": 0,
+        "padBottom": 0,
+        "padLeft": 0,
+        "inLayout": true,
+        "absolute": false,
+        "clipAllowed": false,
+        "hasCorners": false,
+        "fills": [],
+        "strokes": [],
+        "strokePosition": "inside",
+        "strokeWeight": 1,
+        "strokeSides": "all",
+        "strokeTop": 1,
+        "strokeRight": 1,
+        "strokeBottom": 1,
+        "strokeLeft": 1,
+        "strokeStyle": "solid",
+        "dash": 4,
+        "dashGap": 4,
+        "cap": "none",
+        "join": "miter",
+        "effects": [],
+        "exports": [],
+        "interactions": [],
+        "overflow": "none",
+        "scrollPosition": "scroll",
+        "instance": false,
+        "padSides": false
+      },
+      "frame": {
+        "inLayout": false,
+        "clipAllowed": true,
+        "clip": true,
+        "hasCorners": true,
+        "radius": 0,
+        "corners": false,
+        "radiusTL": 0,
+        "radiusTR": 0,
+        "radiusBR": 0,
+        "radiusBL": 0,
+        "smoothing": 0,
+        "grids": [],
+        "flowStart": false,
+        "flowName": "",
+        "device": "phone",
+        "protoBg": "#1e1e1e"
+      },
+      "rectangle": {
+        "hasCorners": true,
+        "radius": 8,
+        "corners": false,
+        "radiusTL": 8,
+        "radiusTR": 8,
+        "radiusBR": 8,
+        "radiusBL": 8,
+        "smoothing": 0
+      },
+      "ellipse": {},
+      "text": {
+        "font": "Inter",
+        "weight": "400",
+        "fontSize": 16,
+        "lineHeight": 150,
+        "letterSpacing": 0,
+        "textAlign": "left",
+        "textAlignV": "top",
+        "decoration": "none",
+        "case": "none",
+        "resizing": "height",
+        "truncate": false,
+        "maxLines": 2
+      }
+    }
+  }
+}

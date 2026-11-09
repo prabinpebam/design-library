@@ -1,0 +1,128 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "corporate",
+  "layout": "home",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Shipping and logistics",
+        "title": "Freight that arrives when you said it would",
+        "lead": "Sea, air and road freight for manufacturers moving goods across 40 countries, tracked door to door.",
+        "actions": [
+          {
+            "label": "Get a quote",
+            "primary": true,
+            "says": "Quotes aren’t part of this example."
+          },
+          {
+            "label": "Track a shipment",
+            "says": "Track a shipment isn’t part of this example."
+          }
+        ],
+        "note": "Quotes within one working day.",
+        "picture": "harbour"
+      },
+      {
+        "type": "stats",
+        "heading": "Last year in numbers",
+        "items": [
+          {
+            "label": "Shipments delivered",
+            "value": 182000
+          },
+          {
+            "label": "Arrived on time",
+            "value": "97.4",
+            "unit": "%"
+          },
+          {
+            "label": "Countries served",
+            "value": 40
+          },
+          {
+            "label": "Average quote time",
+            "value": 6,
+            "unit": "hours"
+          }
+        ]
+      },
+      {
+        "type": "cards",
+        "heading": "What we do",
+        "intro": "One partner from the factory gate to the customer’s door.",
+        "max": 3,
+        "items": [
+          {
+            "eyebrow": "Sea",
+            "title": "Ocean freight",
+            "description": "Full and shared containers on weekly sailings, with customs handled at both ends.",
+            "picture": "harbour"
+          },
+          {
+            "eyebrow": "Air",
+            "title": "Air freight",
+            "description": "Next-flight-out for urgent parts, and consolidated cargo for steady volumes.",
+            "picture": "frost"
+          },
+          {
+            "eyebrow": "Road",
+            "title": "Road and last mile",
+            "description": "Pallets and parcels across the continent, with a two-hour delivery window.",
+            "picture": "meadow"
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "We moved our whole supply chain to Northwind in a quarter. Late deliveries went from weekly to rare.",
+        "name": "Priya Natarajan",
+        "role": "Head of operations, Example Tools"
+      },
+      {
+        "type": "cards",
+        "heading": "Industries",
+        "max": 4,
+        "items": [
+          {
+            "title": "Automotive",
+            "description": "Parts in sequence for assembly lines."
+          },
+          {
+            "title": "Retail",
+            "description": "Seasonal peaks without the scramble."
+          },
+          {
+            "title": "Healthcare",
+            "description": "Temperature-controlled and audited."
+          },
+          {
+            "title": "Energy",
+            "description": "Heavy and oversized loads, permitted."
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Tell us what you’re moving",
+        "lead": "Send the route and the volume; a planner replies with a price and a schedule.",
+        "actions": [
+          {
+            "label": "Get a quote",
+            "primary": true,
+            "says": "Quotes aren’t part of this example."
+          },
+          {
+            "label": "Talk to sales",
+            "says": "Talk to sales isn’t part of this example."
+          }
+        ],
+        "note": "No commitment until you book."
+      }
+    ]
+  }
+}

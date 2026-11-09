@@ -1,0 +1,91 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "service",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Services",
+            "href": "/services"
+          },
+          {
+            "label": "Ocean freight"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Ocean freight",
+        "title": "Containers between 140 ports, door to door",
+        "lead": "Weekly sailings from Rotterdam, Hamburg and Singapore, with customs handled at both ends.",
+        "layout": "split",
+        "picture": "harbour",
+        "actions": [
+          {
+            "label": "Get a quote",
+            "primary": true,
+            "says": "Quotes aren’t part of this example."
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "heading": "Last year at sea",
+        "items": [
+          {
+            "label": "Containers moved",
+            "value": 48200
+          },
+          {
+            "label": "On time",
+            "value": 96,
+            "unit": "%"
+          },
+          {
+            "label": "Ports served",
+            "value": 140
+          }
+        ]
+      },
+      {
+        "type": "details",
+        "heading": "What’s included",
+        "items": [
+          {
+            "term": "Booking",
+            "details": "Space on the next suitable sailing, confirmed within a day."
+          },
+          {
+            "term": "Customs",
+            "details": "Export and import declarations, duties paid on your behalf."
+          },
+          {
+            "term": "Tracking",
+            "details": "Every milestone in your account, from pick-up to delivery."
+          }
+        ]
+      },
+      {
+        "type": "questions",
+        "heading": "Questions",
+        "items": [
+          {
+            "title": "Full or shared container?",
+            "text": "Full from about 15 cubic metres; below that, shared is cheaper."
+          },
+          {
+            "title": "Can you insure the goods?",
+            "text": "Yes, cargo insurance up to the invoice value plus 10 %."
+          }
+        ]
+      }
+    ]
+  }
+}

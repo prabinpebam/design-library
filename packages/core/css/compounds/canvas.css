@@ -1,0 +1,218 @@
+/*
+ * Tier 2 compound: Canvas (F15.74, Q61/Q62; catalogue Media "Design canvas"). The working surface is the sunken tone
+ * and scrolls both ways, edge to edge. Frames are the page surface with no border of their own (the tone against the
+ * canvas draws them); their names sit above them, small and muted. Shapes have no stroke; a rectangle or ellipse fills
+ * with a category colour (decorative document content, Q44) or the raised surface. The selection is the only accent:
+ * an outline, four handles and the size under it, shown only while selected. A document is positioned in its own
+ * coordinates, so it does not mirror in right-to-left (physical left/top on purpose).
+ */
+@layer compounds {
+  [data-dl='canvas'] {
+    position: relative;
+    overflow: auto;
+    inline-size: 100%;
+    block-size: 100%;
+    min-block-size: 0;
+    background-color: var(--c-canvas-fill);
+    outline: none;
+  }
+
+  [data-dl='canvas'][data-size='md'] {
+    block-size: var(--c-canvas-height-md);
+  }
+
+  [data-dl='canvas']:focus-visible {
+    box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
+  }
+
+  [data-dl='canvas'] [data-dl-part='document'] {
+    position: relative;
+    box-sizing: content-box;
+    inline-size: var(--w);
+    block-size: var(--h);
+    padding: var(--c-canvas-margin);
+  }
+
+  [data-dl='canvas'] [data-dl-part='place'] {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    inline-size: var(--w);
+    block-size: var(--h);
+  }
+
+  [data-dl='canvas'] [data-dl-part='document'] > [data-dl-part='place'] {
+    left: calc(var(--x) + var(--c-canvas-margin));
+    top: calc(var(--y) + var(--c-canvas-margin));
+  }
+
+  [data-dl='canvas'] [data-dl-part='inside'] {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  [data-dl='canvas'] [data-dl-part='inside'] > [data-dl-part='place'] > * {
+    pointer-events: auto;
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'] {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    text-align: start;
+    cursor: default;
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
+    background-color: var(--c-canvas-frame-fill);
+    box-shadow: var(--c-canvas-frame-shadow);
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
+    background-color: var(--canvas-category, var(--c-canvas-shape-fill));
+    border-radius: var(--c-canvas-shape-radius);
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
+    border-radius: var(--radius-full);
+  }
+
+  /* The document's own look (CanvasShape.look): set as data on the place, read here; absent values leave the defaults. */
+  [data-dl='canvas'] [data-dl-part='place'] {
+    opacity: var(--doc-opacity);
+    rotate: var(--doc-rotate);
+  }
+
+  [data-dl='canvas'] [data-dl-part='place'][data-hidden] > [data-dl-part='shape'],
+  [data-dl='canvas'] [data-dl-part='place'][data-hidden] > [data-dl-part='inside'] {
+    visibility: hidden;
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'] {
+    border-radius: var(--doc-radius, var(--c-canvas-shape-radius));
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
+    border-radius: var(--doc-radius, var(--radius-none));
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'],
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
+    background-color: var(--doc-fill, var(--canvas-category, var(--c-canvas-shape-fill)));
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='frame'] {
+    background-color: var(--doc-fill, var(--c-canvas-frame-fill));
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='rectangle'],
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='ellipse'] {
+    box-shadow: inset 0 0 0 var(--doc-stroke-weight) var(--doc-stroke);
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape'][data-kind='text'] {
+    color: var(--doc-fill, var(--color-text));
+  }
+
+  [data-dl='canvas'] [data-category='1'] { --canvas-category: var(--color-category-1); }
+  [data-dl='canvas'] [data-category='2'] { --canvas-category: var(--color-category-2); }
+  [data-dl='canvas'] [data-category='3'] { --canvas-category: var(--color-category-3); }
+  [data-dl='canvas'] [data-category='4'] { --canvas-category: var(--color-category-4); }
+  [data-dl='canvas'] [data-category='5'] { --canvas-category: var(--color-category-5); }
+  [data-dl='canvas'] [data-category='6'] { --canvas-category: var(--color-category-6); }
+  [data-dl='canvas'] [data-category='7'] { --canvas-category: var(--color-category-7); }
+  [data-dl='canvas'] [data-category='8'] { --canvas-category: var(--color-category-8); }
+
+  [data-dl='canvas'] [data-dl-part='text'] {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    overflow: hidden;
+  }
+
+  [data-dl='canvas'] [data-dl-part='shape']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-width);
+  }
+
+  @media (hover: hover) {
+    [data-dl='canvas'] [data-dl-part='shape'][aria-pressed='false']:hover {
+      outline: var(--border-hairline) solid var(--c-canvas-selection);
+    }
+  }
+
+  [data-dl='canvas'] [data-dl-part='name'] {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    max-inline-size: 100%;
+    margin: 0;
+    padding: 0 0 var(--c-canvas-name-gap);
+    border: 0;
+    background: none;
+    color: var(--color-text-muted);
+    font: inherit;
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
+  }
+
+  [data-dl='canvas'] [data-dl-part='selection'] {
+    position: absolute;
+    inset: 0;
+    outline: var(--border-thick) solid var(--c-canvas-selection);
+    pointer-events: none;
+  }
+
+  [data-dl='canvas'] [data-dl-part='handle'] {
+    position: absolute;
+    inline-size: var(--c-canvas-handle);
+    block-size: var(--c-canvas-handle);
+    border: var(--border-hairline) solid var(--c-canvas-selection);
+    background-color: var(--color-bg);
+    translate: -50% -50%;
+  }
+
+  [data-dl='canvas'] [data-dl-part='handle'][data-at^='start'] { top: 0; }
+  [data-dl='canvas'] [data-dl-part='handle'][data-at^='end'] { top: 100%; }
+  [data-dl='canvas'] [data-dl-part='handle'][data-at$='-start'] { left: 0; }
+  [data-dl='canvas'] [data-dl-part='handle'][data-at$='-end'] { left: 100%; }
+
+  [data-dl='canvas'] [data-dl-part='size'] {
+    position: absolute;
+    top: calc(100% + var(--c-canvas-name-gap) + var(--c-canvas-handle) / 2);
+    left: 50%;
+    translate: -50% 0;
+    padding-inline: var(--c-canvas-size-padding);
+    border-radius: var(--radius-sm);
+    background-color: var(--c-canvas-selection);
+    color: var(--color-text-on-accent);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='canvas'] [data-dl-part='shape'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+
+    [data-dl='canvas'] [data-dl-part='selection'] {
+      outline-color: Highlight;
+    }
+  }
+}

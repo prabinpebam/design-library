@@ -1,0 +1,101 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "share",
+  "contentVersion": 1,
+  "settings": {
+    "current": "editor",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Share “Sign-in flow”",
+        "intro": "People you invite get an email with a link.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email addresses",
+            "kind": "text",
+            "hint": "Separate them with commas."
+          },
+          {
+            "id": "role",
+            "label": "They can",
+            "kind": "choice",
+            "options": [
+              "View",
+              "Edit"
+            ]
+          }
+        ],
+        "submit": "Invite",
+        "sent": "Invited.",
+        "links": [
+          {
+            "label": "Export instead",
+            "href": "/export"
+          }
+        ]
+      },
+      {
+        "type": "settings",
+        "heading": "Link",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Anyone with the link",
+            "items": [
+              {
+                "id": "link",
+                "label": "Can",
+                "kind": "choice",
+                "options": [
+                  "Not open it",
+                  "View",
+                  "Edit"
+                ],
+                "value": "View"
+              },
+              {
+                "id": "prototype",
+                "label": "Open as a prototype",
+                "kind": "switch",
+                "on": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

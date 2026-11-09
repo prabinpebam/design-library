@@ -1,0 +1,100 @@
+/*
+ * Tier 2 compound: InlineEdit (F15.41, catalogue Inputs: Inline edit). Text that becomes a TextField in place. The read
+ * view takes the field's own height, inline padding, border width (transparent) and type size from c.field, so the text
+ * sits exactly where the field's text will: pressing it moves nothing. The pencil is a transient cue (hover and focus)
+ * in space that is always kept; after a save the same space holds the tick for the confirm beat.
+ */
+@layer compounds {
+  [data-dl='inline-edit'] {
+    display: grid;
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+    min-inline-size: 0;
+    color: var(--color-text);
+  }
+
+  [data-dl='inline-edit'][data-size='xxl'] {
+    font-weight: var(--type-heading-3-weight);
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='read'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--c-field-size);
+    min-inline-size: 0;
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid transparent;
+    border-radius: var(--c-field-radius);
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    text-align: start;
+    /* Q65 C27: the hover fill eases in around the text, which never moves. */
+    transition: background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='inline-edit'][data-size='l'] [data-dl-part='read'] {
+    min-block-size: var(--c-field-size-l);
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='inline-edit'][data-size='xxl'] [data-dl-part='read'] {
+    min-block-size: var(--c-field-size-xxl);
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-3-size);
+    line-height: var(--type-heading-3-leading);
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='text'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='read'][data-empty] [data-dl-part='text'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='mark'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--color-text-muted);
+    visibility: hidden;
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='mark'][data-saved] {
+    color: var(--color-status-success-fg);
+    visibility: visible;
+  }
+
+  [data-dl='inline-edit'] button[data-dl-part='read'] {
+    cursor: text;
+  }
+
+  @media (hover: hover) {
+    [data-dl='inline-edit'] button[data-dl-part='read']:hover {
+      background-color: var(--state-hover);
+    }
+
+    [data-dl='inline-edit'] button[data-dl-part='read']:hover [data-dl-part='mark'] {
+      visibility: visible;
+    }
+  }
+
+  [data-dl='inline-edit'] button[data-dl-part='read']:focus-visible [data-dl-part='mark'] {
+    visibility: visible;
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='edit'] {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  [data-dl='inline-edit'] [data-dl-part='edit'] > [data-dl='text-field'] {
+    max-inline-size: none;
+  }
+}

@@ -1,0 +1,99 @@
+/*
+ * Tier 2 compound: Quote (F15.39, Q53.3; atiya Voices and Recommendations). No enclosure of its own: a Card holds a
+ * recommendation, a Carousel slide holds a voice. The words in the reader's own quotation marks, then who and where.
+ * The size sets the type; the attribution sits one group-gap below the words, so words and author read as one quote.
+ */
+@layer compounds {
+  [data-dl='quote'] {
+    display: grid;
+    align-content: start;
+    gap: var(--c-quote-gap);
+    min-inline-size: 0;
+    margin: 0;
+    color: var(--color-text);
+    position: relative;
+  }
+
+  /* Q65 C13: the skeleton that was there stays over the arrived quote for a moment, in the same grid, and fades out. */
+  [data-dl='quote'] > [data-dl-part='placeholder'] {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: start;
+    justify-items: inherit;
+    gap: var(--c-quote-gap);
+    background-color: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-quick) var(--easing-exit);
+  }
+
+  @starting-style {
+    [data-dl='quote'] > [data-dl-part='placeholder'] {
+      opacity: 1;
+    }
+  }
+
+  [data-dl='quote'][data-align='center'] {
+    justify-items: center;
+    text-align: center;
+  }
+
+  [data-dl='quote'] [data-dl-part='text'] {
+    display: grid;
+    gap: var(--c-quote-paragraph-gap);
+    min-inline-size: 0;
+    margin: 0;
+    font-family: var(--font-text);
+    font-size: var(--c-quote-text-size-m);
+    font-weight: var(--type-body-weight);
+    line-height: var(--type-body-leading);
+    quotes: auto;
+    overflow-wrap: break-word;
+  }
+
+  [data-dl='quote'][data-align='center'] [data-dl-part='text'] {
+    inline-size: 100%;
+    max-inline-size: var(--c-quote-measure);
+  }
+
+  [data-dl='quote'] [data-dl-part='text'] > p {
+    margin: 0;
+  }
+
+  [data-dl='quote'] [data-dl-part='text'] > p:first-child::before { content: open-quote; }
+  [data-dl='quote'] [data-dl-part='text'] > p:last-child::after { content: close-quote; }
+
+  [data-dl='quote'][data-size='s'] [data-dl-part='text'] {
+    font-size: var(--c-quote-text-size-s);
+  }
+
+  [data-dl='quote'][data-size='l'] [data-dl-part='text'] {
+    font-family: var(--font-display);
+    font-size: var(--c-quote-text-size-l);
+    font-weight: var(--type-heading-3-weight);
+    line-height: var(--type-heading-2-leading);
+  }
+
+  [data-dl='quote'] [data-dl-part='attribution'] {
+    display: grid;
+    justify-items: start;
+    gap: var(--c-quote-attribution-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='quote'][data-align='center'] [data-dl-part='attribution'] {
+    justify-items: center;
+  }
+
+  [data-dl='quote'] [data-dl-part='source'] {
+    font-size: var(--type-body-sm-size);
+    font-style: normal;
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='quote'] [data-dl-part='text'] [data-dl='skeleton'] {
+    inline-size: 100%;
+  }
+}

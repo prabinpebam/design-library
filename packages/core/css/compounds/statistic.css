@@ -1,0 +1,101 @@
+/*
+ * Tier 2 compound: Statistic (F15.34, Q53.3; atiya StatTiles). No enclosure of its own: put it in a Card for a tile.
+ * The label, then the figure in the display face with lined-up digits, its unit smaller, a trend line and the change.
+ * The change carries its direction in an icon and in words; its colour says good or bad news only when that's known.
+ */
+@layer compounds {
+  [data-dl='statistic'] {
+    display: grid;
+    align-content: start;
+    gap: var(--c-statistic-gap);
+    min-inline-size: 0;
+    color: var(--color-text);
+  }
+
+  [data-dl='statistic'] > p {
+    margin: 0;
+  }
+
+  [data-dl='statistic'] [data-dl-part='label'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='statistic'] [data-dl-part='value'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--c-statistic-unit-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='statistic'] [data-dl-part='figure'] {
+    font-family: var(--font-display);
+    font-size: var(--c-statistic-value-size-m);
+    font-weight: var(--type-heading-1-weight);
+    line-height: var(--type-heading-1-leading);
+    font-variant-numeric: tabular-nums lining-nums;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='statistic'][data-size='l'] [data-dl-part='figure'] {
+    font-size: var(--c-statistic-value-size-l);
+    line-height: var(--type-display-leading);
+    letter-spacing: var(--type-display-tracking);
+  }
+
+  [data-dl='statistic'] [data-dl-part='unit'] {
+    font-size: var(--type-body-size);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='statistic'] [data-dl-part='value'] [data-dl='skeleton'] {
+    inline-size: 100%;
+  }
+
+  [data-dl='statistic'] [data-dl-part='trend'] {
+    display: block;
+    inline-size: 100%;
+    block-size: var(--c-statistic-trend-height);
+    overflow: visible;
+  }
+
+  [data-dl='statistic'] [data-dl-part='trend'] polyline {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--c-statistic-trend-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  [data-dl='statistic'] [data-dl-part='change'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-statistic-change-gap);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='statistic'] [data-dl-part='delta'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-statistic-change-gap);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='statistic'] [data-tone='neutral'] { color: var(--color-text-muted); }
+  [data-dl='statistic'] [data-tone='good'] { color: var(--color-status-success-fg); }
+  [data-dl='statistic'] [data-tone='bad'] { color: var(--color-status-danger-fg); }
+
+  [data-dl='statistic'] [data-dl-part='period'],
+  [data-dl='statistic'] [data-dl-part='description'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='statistic'] [data-dl-part='description'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+}

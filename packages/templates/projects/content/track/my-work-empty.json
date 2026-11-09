@@ -1,0 +1,10 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "my-work-empty",
+  "contentVersion": 1,
+  "settings": {
+    "current": "my-work",
+    "state": "empty"
+  }
+}

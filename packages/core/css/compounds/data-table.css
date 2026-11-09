@@ -1,0 +1,53 @@
+/*
+ * Tier 2 compound: DataTable. One outlined region that scrolls sideways on its own; rows by hairlines; the header row
+ * set apart by tone. Cell content rules (named escapes): code in a row header reads at text strength, code in a data
+ * cell may break anywhere so a long type never forces the region wider.
+ */
+@layer compounds {
+  /* The outline's rounded corners crop what scrolls inside; the ScrollArea's content keeps rings inside its cells. */
+  [data-dl='data-table'] {
+    overflow: clip;
+    border: var(--c-data-table-outline-width) solid var(--c-data-table-outline);
+    border-radius: var(--c-data-table-radius);
+  }
+
+  [data-dl='data-table'] table {
+    min-inline-size: 100%;
+    border-collapse: collapse;
+  }
+
+  [data-dl='data-table'] th,
+  [data-dl='data-table'] td {
+    padding-block: var(--c-data-table-cell-block);
+    padding-inline: var(--c-data-table-cell-inline);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  [data-dl='data-table'] thead th {
+    background-color: var(--c-data-table-head-bg);
+    color: var(--c-data-table-head-fg);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='data-table'] tbody tr {
+    border-block-start: var(--c-data-table-outline-width) solid var(--c-data-table-divider);
+  }
+
+  [data-dl='data-table'] tbody [data-stacked] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-data-table-stack-gap);
+    font-weight: var(--type-body-weight);
+  }
+
+  [data-dl='data-table'] tbody th code {
+    color: var(--color-text);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='data-table'] td code {
+    overflow-wrap: anywhere;
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "not-found",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Error 404",
+        "title": "This issue doesn’t exist",
+        "text": "It may have been deleted or moved to another project.",
+        "links": [
+          {
+            "label": "Back to the board",
+            "href": "/board"
+          },
+          {
+            "label": "Search issues",
+            "href": "/issue-search"
+          }
+        ]
+      }
+    ]
+  }
+}

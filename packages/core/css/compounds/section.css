@@ -1,0 +1,43 @@
+/*
+ * Tier 2 compound: Section. Heading, intro and content spaced as one group; nested sections sit closer.
+ * An indexed section puts its numeral in its own column, stacking above the body below breakpoint.sm.
+ */
+@layer compounds {
+  [data-dl='section'],
+  [data-dl='section'] > [data-dl-part='body'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-section-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='section'][data-nested],
+  [data-dl='section'][data-nested] > [data-dl-part='body'] {
+    gap: var(--c-section-nested-gap);
+  }
+
+  [data-dl='section'] [data-dl-part='intro'] {
+    max-inline-size: var(--c-section-intro-measure);
+  }
+
+  [data-dl='section'][data-indexed] {
+    display: grid;
+    grid-template-columns: var(--c-section-index-column) minmax(0, 1fr);
+    gap: var(--c-section-index-gap);
+  }
+
+  [data-dl='section'] > [data-dl-part='index'] {
+    font-size: var(--c-section-index-size);
+    line-height: var(--leading-tight);
+    font-weight: var(--weight-bold);
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 40rem) {
+    /* breakpoint.sm */
+    [data-dl='section'][data-indexed] {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-stack-item);
+    }
+  }
+}

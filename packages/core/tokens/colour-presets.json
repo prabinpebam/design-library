@@ -1,0 +1,60 @@
+{
+  "$comment": "Brand presets (owner, F7d): starting points for the four numbered brand colours, spread across hue and mood. Each is data: a name, its mood, and a brand block in the colour-config/2 shape (colours by slot, accent). tools/colour.mjs --check applies each over colour.config.json and holds every contrast pair in light and dark at standard and more contrast, so choosing one never breaks contrast. Order is the menu's order.",
+  "contract": "colour-presets/1",
+  "presets": [
+    {
+      "id": "ocean",
+      "name": "Ocean",
+      "mood": "Calm and trustworthy: deep teal with sky and a coral spark.",
+      "brand": { "colours": { "1": { "name": "Deep teal", "seed": "#0e7490" }, "2": { "name": "Sky", "seed": "#38bdf8" }, "3": { "name": "Coral", "seed": "#f97316" } }, "accent": 1 }
+    },
+    {
+      "id": "forest",
+      "name": "Forest",
+      "mood": "Grounded and natural: pine green, ochre and stone.",
+      "brand": { "colours": { "1": { "name": "Pine", "seed": "#166534" }, "2": { "name": "Ochre", "seed": "#a16207" }, "3": { "name": "Stone", "seed": "#78716c" } }, "accent": 1 }
+    },
+    {
+      "id": "sunset",
+      "name": "Sunset",
+      "mood": "Warm and energetic: amber leads the brand, rose carries the actions.",
+      "brand": { "colours": { "1": { "name": "Amber", "seed": "#f59e0b" }, "2": { "name": "Rose", "seed": "#e11d48" }, "3": { "name": "Ember", "seed": "#7c2d12" } }, "accent": 2 }
+    },
+    {
+      "id": "berry",
+      "name": "Berry",
+      "mood": "Bold and playful: raspberry and grape.",
+      "brand": { "colours": { "1": { "name": "Raspberry", "seed": "#be185d" }, "2": { "name": "Grape", "seed": "#7c3aed" } }, "accent": 1 }
+    },
+    {
+      "id": "citrus",
+      "name": "Citrus",
+      "mood": "Fresh and bright: lemon and lime as identity, teal for actions they're too light to carry.",
+      "brand": { "colours": { "1": { "name": "Lemon", "seed": "#facc15" }, "2": { "name": "Lime", "seed": "#84cc16" }, "3": { "name": "Teal", "seed": "#0f766e" } }, "accent": 3 }
+    },
+    {
+      "id": "graphite",
+      "name": "Graphite",
+      "mood": "Quiet and professional: one slate blue-grey, nothing else.",
+      "brand": { "colours": { "1": { "name": "Slate", "seed": "#475569" } }, "accent": 1 }
+    },
+    {
+      "id": "electric",
+      "name": "Electric",
+      "mood": "Vivid and digital: all four colours, violet first.",
+      "brand": { "colours": { "1": { "name": "Violet", "seed": "#7c3aed" }, "2": { "name": "Cyan", "seed": "#06b6d4" }, "3": { "name": "Hot pink", "seed": "#ec4899" }, "4": { "name": "Acid lime", "seed": "#a3e635" } }, "accent": 1 }
+    },
+    {
+      "id": "royal",
+      "name": "Royal",
+      "mood": "Classic and confident: navy with a gold accent mark.",
+      "brand": { "colours": { "1": { "name": "Navy", "seed": "#1e3a8a" }, "2": { "name": "Gold", "seed": "#ca8a04" } }, "accent": 1 }
+    },
+    {
+      "id": "terracotta",
+      "name": "Terracotta",
+      "mood": "Earthy and handmade: fired clay, olive and sand.",
+      "brand": { "colours": { "1": { "name": "Clay", "seed": "#c2410c" }, "2": { "name": "Olive", "seed": "#65a30d" }, "3": { "name": "Sand", "seed": "#d6b98c" } }, "accent": 1 }
+    }
+  ]
+}

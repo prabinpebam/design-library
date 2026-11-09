@@ -1,0 +1,133 @@
+/*
+ * Tier 1 fundamental: Rating (F15.12). A row of the component's own stars: empty ones outlined in strong border ink,
+ * filled ones solid accent, a fraction filled by cropping the solid star from the reading-start edge. Steps are
+ * invisible radios laid over each star (whole, or start and end halves). Geometry never changes with state.
+ */
+@layer fundamentals {
+  [data-dl='rating'] {
+    --rating-star: var(--c-rating-star);
+
+    display: grid;
+    justify-items: start;
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='rating'][data-size='s'] {
+    --rating-star: var(--c-rating-star-s);
+  }
+
+  [data-dl='rating'][data-size='l'] {
+    --rating-star: var(--c-rating-star-l);
+  }
+
+  [data-dl='rating'] > [data-dl-part='label'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='rating'] > [data-dl-part='row'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='rating'] [data-dl-part='stars'] {
+    display: inline-flex;
+    gap: var(--c-rating-gap);
+  }
+
+  [data-dl='rating'] [data-dl-part='star'] {
+    position: relative;
+    display: inline-flex;
+    inline-size: var(--rating-star);
+    block-size: var(--rating-star);
+  }
+
+  [data-dl='rating'] svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  [data-dl='rating'] [data-dl-part='star-empty'] path {
+    fill: none;
+    stroke: var(--color-border-strong);
+    stroke-width: var(--c-rating-stroke);
+    stroke-linejoin: round;
+  }
+
+  /* The solid star, cropped to the filled fraction from the reading-start edge; mirrored in right-to-left text. */
+  [data-dl='rating'] [data-dl-part='star-full'] {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc((1 - var(--fill)) * 100%) 0 0);
+    color: var(--color-accent);
+  }
+
+  [data-dl='rating'] [data-dl-part='star-full']:dir(rtl) {
+    clip-path: inset(0 0 0 calc((1 - var(--fill)) * 100%));
+  }
+
+  [data-dl='rating'] [data-dl-part='star-full'] path {
+    fill: currentColor;
+    stroke: currentColor;
+    stroke-width: var(--c-rating-stroke);
+    stroke-linejoin: round;
+  }
+
+  /* A hover preview is lighter than a chosen value, so the two never read the same. */
+  [data-dl='rating'][data-preview] [data-dl-part='star-full'] {
+    color: var(--color-accent-hover);
+  }
+
+  /* Steps: invisible radios over the star, each half or the whole; the hit area reaches into the gap between stars. */
+  [data-dl='rating'] [data-dl-part='step'] {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(var(--c-rating-gap) / -2);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  [data-dl='rating'] [data-dl-part='step'][data-half='start'] {
+    inset-inline-end: 50%;
+  }
+
+  [data-dl='rating'] [data-dl-part='step'][data-half='end'] {
+    inset-inline-start: 50%;
+  }
+
+  [data-dl='rating'] [data-dl-part='step']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='rating'] > [data-dl-part='row'] > [data-dl-part='value'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='rating'][data-disabled] :is([data-dl-part='step'], [data-dl-part='stars']) {
+    cursor: not-allowed;
+  }
+
+  [data-dl='rating'][data-disabled] [data-dl-part='star-full'] {
+    color: var(--color-text-disabled);
+  }
+
+  [data-dl='rating'][data-disabled] :is([data-dl-part='label'], [data-dl-part='value']) {
+    color: var(--color-text-disabled);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='rating'] [data-dl-part='star-empty'] path {
+      stroke: CanvasText;
+    }
+
+    [data-dl='rating'] [data-dl-part='star-full'] {
+      color: Highlight;
+    }
+  }
+}

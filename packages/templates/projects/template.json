@@ -1,0 +1,1044 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "projects",
+  "version": "1.0.0",
+  "title": "Project management",
+  "summary": "Work tracked like Jira or Trello: a board, a backlog and an issue.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "home": "board",
+  "sections": [
+    {
+      "id": "plan",
+      "title": "Plan and report",
+      "summary": "Plan the work, and see how it’s going.",
+      "flows": [
+        {
+          "id": "board",
+          "title": "Run the board",
+          "summary": "Move work across the columns.",
+          "screens": [
+            "board"
+          ]
+        },
+        {
+          "id": "backlog",
+          "title": "Groom the backlog",
+          "summary": "Order the backlog and plan a sprint from it.",
+          "screens": [
+            "backlog",
+            "sprint-planning"
+          ]
+        },
+        {
+          "id": "roadmap",
+          "title": "Shape the roadmap",
+          "summary": "Place larger work on a timeline.",
+          "screens": [
+            "roadmap"
+          ]
+        },
+        {
+          "id": "reports",
+          "title": "Read the reports",
+          "summary": "Progress at a glance and over the sprint.",
+          "screens": [
+            "dashboard",
+            "burndown"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "track",
+      "title": "Track",
+      "summary": "Doing and finding the work.",
+      "flows": [
+        {
+          "id": "issue",
+          "title": "Work an issue",
+          "summary": "Read an issue in full and change it.",
+          "screens": [
+            "issue"
+          ]
+        },
+        {
+          "id": "create",
+          "title": "Report an issue",
+          "summary": "Write up a new issue.",
+          "screens": [
+            "create-issue"
+          ]
+        },
+        {
+          "id": "mine",
+          "title": "Do my work",
+          "summary": "What is assigned to me.",
+          "screens": [
+            "my-work"
+          ]
+        },
+        {
+          "id": "search",
+          "title": "Find issues",
+          "summary": "Search and filter every issue.",
+          "screens": [
+            "issue-search"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "team",
+      "title": "Team and help",
+      "summary": "Who's on the team, what's for you, and pages you can't reach.",
+      "flows": [
+        {
+          "id": "members",
+          "title": "Manage people",
+          "summary": "See who is in the project and invite more.",
+          "screens": [
+            "members",
+            "invite"
+          ]
+        },
+        {
+          "id": "inbox",
+          "title": "Catch up",
+          "summary": "Mentions, assignments and changes.",
+          "screens": [
+            "inbox"
+          ]
+        },
+        {
+          "id": "errors",
+          "title": "Recover from an error",
+          "summary": "Know what happened and the way back.",
+          "screens": [
+            "no-access",
+            "not-found"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "admin",
+      "title": "Set-up",
+      "summary": "Signing in and setting up a project.",
+      "flows": [
+        {
+          "id": "sign-in",
+          "title": "Sign in",
+          "summary": "Sign in, then create the first project.",
+          "screens": [
+            "sign-in",
+            "create-project"
+          ]
+        },
+        {
+          "id": "project",
+          "title": "Set up the project",
+          "summary": "Name, people and the workflow’s statuses.",
+          "screens": [
+            "project-settings",
+            "workflow-settings"
+          ]
+        },
+        {
+          "id": "archive",
+          "title": "Archive a project",
+          "summary": "Close a finished project so it leaves every board, while keeping its history.",
+          "screens": [
+            "archive-project"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "board",
+      "title": "Board",
+      "component": "AppLayout",
+      "content": "content/board.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "main"
+        }
+      ],
+      "docs": {
+        "summary": "This sprint’s issues as cards in columns by status, moved by dragging or a menu.",
+        "narrow": "The sidebar starts closed and floats over the board when opened; the columns scroll sideways inside the board.",
+        "try": [
+          "Drag a card to In review: the column shows the accent outline only while you drag.",
+          "Use a card’s Move menu (the three dots) to move it without dragging.",
+          "Move a card to Done and watch the points done change; then open Backlog: its status changed there too.",
+          "Search the board for “trip”.",
+          "Open “Trip cards on the home screen” for the issue page."
+        ],
+        "notBuilt": [
+          "Filters by person and type.",
+          "Swimlanes.",
+          "Creating and editing cards on the board.",
+          "Reports and project settings."
+        ],
+        "regions": [
+          {
+            "region": "Sidebar",
+            "holds": "The project, then Board and Backlog",
+            "uses": "AppLayout, Persona, Navigation"
+          },
+          {
+            "region": "Header",
+            "holds": "Where you are, search this board, Create issue, your avatar",
+            "uses": "Breadcrumbs, TextField (search), Button, Avatar"
+          },
+          {
+            "region": "Sprint",
+            "holds": "Its name, when it ends and points done",
+            "uses": "Heading, Text"
+          },
+          {
+            "region": "Board",
+            "holds": "Four columns; each card’s key, title, type, points and assignee; In progress against its limit",
+            "uses": "Board (new), Badge, Avatar, MenuButton"
+          }
+        ]
+      }
+    },
+    {
+      "id": "backlog",
+      "title": "Backlog",
+      "component": "AppLayout",
+      "content": "content/plan/backlog.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "main"
+        }
+      ],
+      "docs": {
+        "summary": "This sprint’s issues, then everything not planned yet, as tables.",
+        "narrow": "The sidebar floats when opened; each table row stacks its cells under its key.",
+        "notBuilt": [
+          "Dragging issues between the sprint and the backlog.",
+          "Sorting and selecting rows.",
+          "Starting a sprint."
+        ],
+        "regions": [
+          {
+            "region": "Sidebar and header",
+            "holds": "As on the board, Backlog current",
+            "uses": "AppLayout, Navigation, Breadcrumbs"
+          },
+          {
+            "region": "Sprint",
+            "holds": "Issue and point counts, then each issue’s key, summary, type, status, assignee and points",
+            "uses": "Section, DataTable, Badge, Persona, Link"
+          },
+          {
+            "region": "Backlog",
+            "holds": "The issues not planned yet",
+            "uses": "Section, DataTable"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sprint-planning",
+      "title": "Plan a sprint",
+      "component": "SiteLayout",
+      "content": "content/plan/sprint-planning.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Choose what goes into the next sprint against capacity.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the sprint’s issues, start",
+            "uses": "Hero, DescriptionList, Button"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "roadmap",
+      "title": "Roadmap",
+      "component": "SiteLayout",
+      "content": "content/plan/roadmap.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Larger work by quarter, with progress.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, one list per quarter",
+            "uses": "Hero, DescriptionList"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "issue",
+      "title": "Issue",
+      "component": "AppLayout",
+      "content": "content/track/issue.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "main"
+        }
+      ],
+      "docs": {
+        "summary": "One issue: its description, checklist and comments, with its fields beside them.",
+        "narrow": "The details move under the comments; the sidebar floats when opened.",
+        "try": [
+          "Change the status to Done, then open the board: the card moved.",
+          "Tick a checklist item: the count follows.",
+          "Write a comment and press Comment.",
+          "Press Edit beside the key: the title and description become a form in the same box (Editing)."
+        ],
+        "notBuilt": [
+          "Attachments, links to other issues, history."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "Project, Backlog, the issue’s key",
+            "uses": "Breadcrumbs"
+          },
+          {
+            "region": "Title",
+            "holds": "Type, key and title",
+            "uses": "Badge, Text, Heading"
+          },
+          {
+            "region": "Description",
+            "holds": "What and why",
+            "uses": "Section, Text"
+          },
+          {
+            "region": "Done when",
+            "holds": "A checklist with its count",
+            "uses": "Section, CheckboxGroup, Checkbox"
+          },
+          {
+            "region": "Comments",
+            "holds": "Two comments and a box to add one",
+            "uses": "Section, Persona, Text, TextArea, Button"
+          },
+          {
+            "region": "Details",
+            "holds": "Status and assignee to change; points, sprint, reporter, created",
+            "uses": "Select, DescriptionList, Persona"
+          }
+        ]
+      }
+    },
+    {
+      "id": "issue-edit",
+      "title": "Editing",
+      "stateOf": "issue",
+      "component": "AppLayout",
+      "content": "content/track/issue-edit.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "main"
+        }
+      ],
+      "docs": {
+        "summary": "The issue with its title, type and description open for editing in place (Q65 TP4): the same box becomes the form and back, through Morph.",
+        "narrow": "As the issue: the details move under the comments.",
+        "try": [
+          "On Issue, press Edit: the title and description become fields in the same box, with focus in Title.",
+          "Change the title and press Save changes: the box becomes the issue again with the new title, focus on Edit.",
+          "Press Edit, then Cancel: nothing changes; empty the title and press Save changes: it says what to enter."
+        ],
+        "notBuilt": [
+          "Saving to a service (the change stays in this page).",
+          "Editing the checklist or the details here; status and assignee change beside the issue."
+        ],
+        "regions": [
+          {
+            "region": "Title and description",
+            "holds": "Title, type and description fields, Save changes and Cancel",
+            "uses": "Morph, Heading, TextField, Select, TextArea, Button"
+          }
+        ]
+      }
+    },
+    {
+      "id": "create-issue",
+      "title": "New issue",
+      "component": "SiteLayout",
+      "content": "content/track/create-issue.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Write up a new issue.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The issue form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "create-issue-error",
+      "title": "Missing answers",
+      "stateOf": "create-issue",
+      "component": "SiteLayout",
+      "content": "content/track/create-issue-error.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A missing title named; the rest kept."
+      }
+    },
+    {
+      "id": "my-work",
+      "title": "My work",
+      "component": "SiteLayout",
+      "content": "content/track/my-work.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What’s assigned to me, newest first.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "A list of issues",
+            "uses": "Card (row)"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "my-work-empty",
+      "title": "Nothing assigned",
+      "stateOf": "my-work",
+      "component": "SiteLayout",
+      "content": "content/track/my-work-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Nothing assigned: why, and where to find work."
+      }
+    },
+    {
+      "id": "issue-search",
+      "title": "Search results",
+      "component": "SiteLayout",
+      "content": "content/track/issue-search.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Search issues; the list narrows as the words change.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Search",
+            "uses": "Search block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "issue-search-empty",
+      "title": "Nothing found",
+      "stateOf": "issue-search",
+      "component": "SiteLayout",
+      "content": "content/track/issue-search-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Nothing found, with a way to report one."
+      }
+    },
+    {
+      "id": "dashboard",
+      "title": "Dashboard",
+      "component": "SiteLayout",
+      "content": "content/plan/dashboard.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The sprint’s health in three numbers.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, figures, the way to burndown",
+            "uses": "Hero, Statistic, Button"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "burndown",
+      "title": "Burndown",
+      "component": "SiteLayout",
+      "content": "content/plan/burndown.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Points left by day, and what that means.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, the days",
+            "uses": "Breadcrumbs, Hero, DescriptionList"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "members",
+      "title": "Members",
+      "component": "SiteLayout",
+      "content": "content/team/members.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Who’s in the project and their roles.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, people, invite",
+            "uses": "Hero, Persona, Button"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "invite",
+      "title": "Invite people",
+      "component": "SiteLayout",
+      "content": "content/team/invite.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Invite people with a role.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The invite form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "inbox",
+      "title": "Inbox",
+      "component": "SiteLayout",
+      "content": "content/team/inbox.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What needs your attention.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, notifications",
+            "uses": "Hero, Card (row)"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-in",
+      "title": "Sign in",
+      "component": "SiteLayout",
+      "content": "content/admin/sign-in.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sign in.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The sign-in form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "create-project",
+      "title": "Create a project",
+      "component": "SiteLayout",
+      "content": "content/admin/create-project.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "First run: name the project and how the team works.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The project form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "project-settings",
+      "title": "Project settings",
+      "component": "SiteLayout",
+      "content": "content/admin/project-settings.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Name, key and lead.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The settings form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "archive-project",
+      "title": "Archive a project",
+      "component": "SiteLayout",
+      "content": "content/admin/archive-project.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Confirm by typing the project’s name; the form becomes what was archived and how to bring it back.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The form, then what happens next in its place",
+            "uses": "Form block, Morph"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "workflow-settings",
+      "title": "Workflow",
+      "component": "SiteLayout",
+      "content": "content/admin/workflow-settings.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Statuses and their rules.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Settings",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "no-access",
+      "title": "No access",
+      "component": "SiteLayout",
+      "content": "content/team/no-access.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "No access: why, and who can help.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "not-found",
+      "title": "Not found",
+      "component": "SiteLayout",
+      "content": "content/team/not-found.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Not found, with the board and search.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ]
+}

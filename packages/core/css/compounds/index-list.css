@@ -1,0 +1,16 @@
+/*
+ * Tier 2 compound: IndexList. Entries in as many columns as fit, each a link and its one line.
+ */
+@layer compounds {
+  [data-dl='index-list'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--c-index-list-column-min)), 1fr));
+    gap: var(--c-index-list-row-gap) var(--c-index-list-column-gap);
+  }
+
+  [data-dl='index-list'] > li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-index-list-item-gap);
+  }
+}

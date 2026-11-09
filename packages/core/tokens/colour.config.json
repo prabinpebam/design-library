@@ -1,0 +1,48 @@
+{
+  "$schema": "./colour-config.schema.json",
+  "$comment": "The theme's colour decisions (contract colour-config/1, docs/foundation.md#colour-model). tools/colour.mjs generates tokens.colour.json from this file; never edit that file by hand. Pins hold v0's hand-tuned colours so the default theme did not restyle; unpinned steps follow the pinned tone curve.",
+  "contract": "colour-config/2",
+  "brand": {
+    "$comment": "Up to four brand colours in numbered slots 1-4 (owner, F7d: numbered, not primary/secondary/tertiary). At least one slot is defined; any other may be left undefined. accent names the slot that actions, links, focus and selection read; 1 by default.",
+    "colours": {
+      "1": {
+        "name": "Indigo",
+        "seed": "#4f5bd5",
+        "pins": { "100": "#e6e8ff", "200": "#c9cdff", "300": "#a5adff", "400": "#8590ff", "500": "#4f5bd5", "600": "#3f49b8", "700": "#333c99", "900": "#232850" }
+      }
+    },
+    "accent": 1
+  },
+  "base": {
+    "$comment": "Base colours: black, white and the greys between. The model's default temperature is neutral; this library's own theme is cool because v0's hand-tuned greys measure cool (OKLCH hue 286, chroma up to 0.019), pinned so nothing restyled.",
+    "temperature": "cool",
+    "pins": { "0": "#ffffff", "25": "#fafafb", "50": "#f4f4f6", "100": "#e9e9ed", "200": "#d6d6dd", "300": "#b4b4bf", "400": "#8e8e9b", "500": "#6c6c78", "600": "#55555f", "700": "#3f3f48", "800": "#2a2a31", "850": "#212127", "900": "#18181c", "950": "#111114" }
+  },
+  "functional": {
+    "info": { "seed": "#0b62c4", "pins": { "100": "#e5f0ff", "400": "#7ab8ff", "700": "#0b62c4", "900": "#0d2440" } },
+    "success": { "seed": "#2e7d32", "pins": { "100": "#e8f5e9", "400": "#7bd88f", "700": "#2e7d32", "900": "#13301a" } },
+    "warning": { "seed": "#8a5300", "pins": { "100": "#fff4d6", "400": "#ffc857", "800": "#8a5300", "900": "#3a2a05" } },
+    "danger": { "seed": "#c62828", "pins": { "100": "#fdecea", "400": "#ff8a80", "600": "#c62828", "900": "#3d1414" } }
+  },
+  "spectrum": { "hues": 12, "start": 25, "chroma": 0.17 },
+  "sets": [
+    {
+      "name": "category",
+      "roles": "category",
+      "purpose": "Category identity in data and labels: chart series, category badges, shares of a whole. Read through color.category.1-8 only. Never status (use color.status.*), never an action, focus or selection colour, never the only cue (words or a legend always name the category).",
+      "colours": { "blue": "#0080f7", "orange": "#d36d00", "teal": "#00968a", "magenta": "#cb31a5", "green": "#2f9d00", "violet": "#8a53ed", "olive": "#ab8700", "red": "#de2441" }
+    },
+    {
+      "name": "ai",
+      "roles": "ai",
+      "purpose": "The AI processing state only (Q56): gradient stops for the ring of a prompt box or composer while a model works, and the aurora field of an image being generated (Q58), read through color.ai.1-4. Never status (use color.status.*), never focus, selection or an action colour, never the only cue (words and an announcement always say it's working).",
+      "colours": { "blue": "#2f7cf6", "violet": "#8a53ed", "magenta": "#cb31a5", "orange": "#d9570d" }
+    },
+    {
+      "name": "pastel",
+      "demo": true,
+      "purpose": "Soft fills behind illustrations and empty-state art. Never text, never status, never a control.",
+      "generate": { "lightness": 0.9, "chroma": 0.06, "hues": [25, 85, 145, 205, 265, 325] }
+    }
+  ]
+}

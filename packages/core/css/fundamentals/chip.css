@@ -1,0 +1,227 @@
+/*
+ * Tier 1 fundamentals: Chip and ChipGroup. A chip has one boundary, a hairline that identifies it as something you can
+ * change; a filter that's on adds the accent tint and a check. Hover and press tint only while active.
+ */
+@layer fundamentals {
+  [data-dl='chip'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-chip-gap);
+    max-inline-size: 100%;
+    block-size: var(--c-chip-size);
+    padding-inline: var(--c-chip-padding-inline);
+    border: var(--border-hairline) solid var(--color-border-control);
+    border-radius: var(--c-chip-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    /* Q65 M5: a standalone control's fill, edge and text interpolate at the default. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      border-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='chip'][data-size='s'] {
+    block-size: var(--c-chip-size-s);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='chip'][data-size='l'] {
+    block-size: var(--c-chip-size-l);
+  }
+
+  /* With a Remove button, the end padding is the button's own space (a square filling the chip's inside: 22 px at s,
+   * within the 24 px target spacing exception because chips sit 8 px apart); with an avatar, the start sits close to it. */
+  [data-dl='chip']:has(> [data-dl-part='remove']) {
+    padding-inline-end: 0;
+  }
+
+  [data-dl='chip']:has(> [data-dl-part='avatar']) {
+    padding-inline-start: var(--c-chip-gap);
+  }
+
+  [data-dl='chip'] > [data-dl-part='words'] {
+    overflow: hidden;
+    min-inline-size: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-dl='chip'] > button[data-dl-part='words'] {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  [data-dl='chip'] > [data-dl-part='avatar'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--c-chip-media);
+    block-size: var(--c-chip-media);
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent-subtle);
+    font-size: var(--type-caption-size);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='chip'] > [data-dl-part='avatar'] > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  [data-dl='chip'] > [data-dl-part='remove'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    /* Q65 M5: a standalone control's fill, edge and text interpolate at the default. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      border-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='chip'] > [data-dl-part='remove']:focus-visible,
+  [data-dl='chip'] > button[data-dl-part='words']:focus-visible,
+  button[data-dl='chip']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* A filter chip and the "+n" chip are one button. */
+  button[data-dl='chip'] {
+    cursor: pointer;
+  }
+
+  [data-dl='chip'][data-selected] {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+  }
+
+  [data-dl='chip'][data-invalid] {
+    border-color: var(--color-status-danger-border);
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='chip'][data-disabled] {
+    border-color: var(--color-text-disabled);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* Filled (Q47): an input chip inside a bordered field draws a tonal fill and no outline, so the field's border is the
+   * only enclosure. The outline stays as a transparent border, so size and the focus ring never move. */
+  [data-dl='chip'][data-appearance='filled'] {
+    border-color: transparent;
+    background-color: var(--color-status-neutral-bg);
+  }
+
+  [data-dl='chip'][data-appearance='filled'][data-invalid] {
+    background-color: var(--color-status-danger-bg);
+  }
+
+  [data-dl='chip'][data-appearance='filled'][data-disabled] {
+    background-color: var(--color-bg-sunken);
+  }
+
+  @media (hover: hover) {
+    button[data-dl='chip']:not([data-disabled]):hover,
+    [data-dl='chip'] > [data-dl-part='remove']:hover {
+      background-color: var(--state-hover);
+    }
+
+    /* Q71: an unselected chip keeps its control fill; the hover layer sits over it. */
+    button[data-dl='chip']:not([data-disabled], [data-selected]):hover {
+      background-color: var(--color-bg-control);
+      background-image: linear-gradient(var(--state-hover), var(--state-hover));
+    }
+
+    button[data-dl='chip'][data-selected]:hover {
+      background-color: var(--color-accent-subtle);
+    }
+
+    [data-dl='chip'] > button[data-dl-part='words']:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button[data-dl='chip']:not([data-disabled]):active,
+  [data-dl='chip'] > [data-dl-part='remove']:active {
+    background-color: var(--state-pressed);
+  }
+
+  button[data-dl='chip']:not([data-disabled], [data-selected]):active {
+    background-color: var(--color-bg-control);
+    background-image: linear-gradient(var(--state-pressed), var(--state-pressed));
+  }
+
+  /* ChipGroup: label, description, chips that wrap, then one message. */
+  [data-dl='chip-group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-chip-group-stack);
+  }
+
+  [data-dl='chip-group'] > [data-dl-part='label'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='chip-group'] > :is([data-dl-part='description'], [data-dl-part='empty']) {
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='chip-group'] > [data-dl-part='chips'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-chip-group-gap);
+  }
+
+  [data-dl='chip-group'] > [data-dl-part='chips'] > [data-dl-part='item'] {
+    display: inline-flex;
+    max-inline-size: 100%;
+  }
+
+  [data-dl='chip-group'] > [data-dl-part='error'] {
+    color: var(--color-status-danger-fg);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='chip-group'] > [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='chip'][data-selected] {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

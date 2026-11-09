@@ -1,0 +1,97 @@
+/*
+ * Tier 2 compound: FileUpload (F15.59, catalogue Pickers "File input", "Drop zone", "File list with progress").
+ * The drop area rests as one sunken surface (its only boundary) and, only while files are over it, takes a full
+ * accent outline and tint: a transient cue, never a one-sided stripe. Files sit apart by space alone, each with its
+ * own progress bar and state in words.
+ */
+@layer compounds {
+  [data-dl='file-upload'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-file-upload-gap);
+    inline-size: 100%;
+  }
+
+  [data-dl='file-upload'] [data-dl-part='zone'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-file-upload-zone-gap);
+    min-block-size: var(--c-file-upload-zone-min-block);
+    padding: var(--c-file-upload-zone-padding);
+    border-radius: var(--c-file-upload-zone-radius);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-muted);
+    outline: var(--border-thick) solid transparent;
+    outline-offset: calc(-1 * var(--border-thick));
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      outline-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='file-upload'] [data-dl-part='zone'][data-over] {
+    background-color: var(--color-accent-subtle);
+    outline-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  [data-dl='file-upload'] [data-dl-part='list'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-file-upload-list-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='file-upload'] [data-dl-part='item'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-file-upload-item-gap);
+  }
+
+  [data-dl='file-upload'] [data-dl-part='type'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='file-upload'] [data-dl-part='main'] {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--c-file-upload-item-line-gap);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='file-upload'] [data-dl-part='state'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-file-upload-item-line-gap);
+  }
+
+  [data-dl='file-upload'] [data-status='done'] [data-dl-part='state'] { color: var(--color-status-success-fg); }
+  [data-dl='file-upload'] [data-status='failed'] [data-dl-part='state'] { color: var(--color-status-danger-fg); }
+
+  [data-dl='file-upload'] [data-dl-part='actions'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-file-upload-item-gap);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='file-upload'] [data-dl-part='zone'] {
+      outline-color: CanvasText;
+      outline-style: dashed;
+      outline-width: var(--border-hairline);
+    }
+
+    [data-dl='file-upload'] [data-dl-part='zone'][data-over] {
+      outline-color: Highlight;
+      outline-style: solid;
+      outline-width: var(--border-thick);
+    }
+  }
+}

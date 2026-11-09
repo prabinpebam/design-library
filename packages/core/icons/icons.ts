@@ -1,0 +1,103 @@
+/**
+ * Icons as data (tier 0): semantic names mapped to SVG path data on a 24-unit grid, drawn as strokes.
+ * This is a small project-drawn placeholder set so no third-party asset or licence is involved yet; the reference
+ * provider (O13: Fluent regular) replaces it through the same names once its licence and coverage are approved.
+ */
+export interface IconData {
+  /** Path data on a 0 0 24 24 grid. */
+  d: string;
+  /** Mirrors in right-to-left contexts because it points along the reading direction. */
+  flipInRtl?: boolean;
+  /** Path data drawn as a solid area, for a glyph whose meaning is a filled shape (more contrast). */
+  fill?: string;
+}
+
+export const icons = {
+  check: { d: 'M5 12.5l4.5 4.5L19 7.5' },
+  close: { d: 'M6 6l12 12M18 6L6 18' },
+  'chevron-start': { d: 'M15 5l-7 7 7 7', flipInRtl: true },
+  'chevron-end': { d: 'M9 5l7 7-7 7', flipInRtl: true },
+  'chevron-down': { d: 'M5 9l7 7 7-7' },
+  external: { d: 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5', flipInRtl: true },
+  info: { d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v6M12 7.5v.5' },
+  success: { d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM8 12.5l3 3 5-6' },
+  warning: { d: 'M12 3.5l9.5 16.5h-19zM12 10v4.5M12 17.5v.5' },
+  error: { d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM9 9l6 6M15 9l-6 6' },
+  plus: { d: 'M12 5v14M5 12h14' },
+  minus: { d: 'M5 12h14' },
+  search: { d: 'M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13zM20 20l-4.8-4.8' },
+  menu: { d: 'M4 7h16M4 12h16M4 17h16' },
+  'scheme-light': { d: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4' },
+  'scheme-dark': { d: 'M19.5 14.5A8 8 0 1 1 9.5 4.5a6.5 6.5 0 0 0 10 10z' },
+  'contrast-standard': { d: 'M12 20.5a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17zM12 3.5v17' },
+  'contrast-more': { d: 'M12 20.5a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17z', fill: 'M12 3.5a8.5 8.5 0 0 1 0 17z' },
+  settings: { d: 'M10.26 5.01L10.55 2.81L13.45 2.81L13.74 5.01L15.71 5.83L17.47 4.48L19.52 6.53L18.17 8.29L18.99 10.26L21.19 10.55L21.19 13.45L18.99 13.74L18.17 15.71L19.52 17.47L17.47 19.52L15.71 18.17L13.74 18.99L13.45 21.19L10.55 21.19L10.26 18.99L8.29 18.17L6.53 19.52L4.48 17.47L5.83 15.71L5.01 13.74L2.81 13.45L2.81 10.55L5.01 10.26L5.83 8.29L4.48 6.53L6.53 4.48L8.29 5.83zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' },
+  comment: { d: 'M5 4.5h14a1 1 0 0 1 1 1v9.5a1 1 0 0 1-1 1h-7.5L7 19.5V16H5a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1zM8 8.5h8M8 12h5' },
+  'thumb-up': { d: 'M7 10v10H4.5a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zM7 10l4-7a2 2 0 0 1 2.5 2.2L13 9h5.5a2 2 0 0 1 2 2.3l-1.2 7A2 2 0 0 1 17.3 20H7' },
+  'thumb-down': { d: 'M7 14V4H4.5a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5zM7 14l4 7a2 2 0 0 0 2.5-2.2L13 15h5.5a2 2 0 0 0 2-2.3l-1.2-7A2 2 0 0 0 17.3 4H7' },
+  retry: { d: 'M20 12a8 8 0 1 1-2.34-5.66M20 3.5V8h-4.5' },
+  speaker: { d: 'M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11' },
+  branch: { d: 'M6 4v16M6 8a6 6 0 0 0 6 6h6M15 11l3 3-3 3', flipInRtl: true },
+  copy: { d: 'M9 9h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zM5 15H4.5a.5.5 0 0 1-.5-.5V4.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5V5' },
+  person: { d: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4.5 20.5c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5' },
+  people: { d: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.3a3.5 3.5 0 0 1 0 6.4M18 14.3c2.1.7 3.5 2.6 3.5 5.7' },
+  organisation: { d: 'M5 21V4.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5V21M15 9h3.5a.5.5 0 0 1 .5.5V21M3 21h18M8.5 8h3M8.5 12h3M8.5 16h3' },
+  bot: { d: 'M6 9h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zM12 9V5.5M12 4v.5M9.5 13.5v1M14.5 13.5v1M2.5 13v3M21.5 13v3' },
+  pause: { d: 'M8.5 5v14M15.5 5v14' },
+  play: { d: 'M7 4.8v14.4a.5.5 0 0 0 .76.43l11.5-7.2a.5.5 0 0 0 0-.86L7.76 4.37A.5.5 0 0 0 7 4.8z', flipInRtl: false },
+  more: { d: 'M6 12h0M12 12h0M18 12h0', fill: 'M4.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM10.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM16.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0z' },
+  'trend-up': { d: 'M3.5 17l6-6 4 4 7-7M15 8h5.5v5.5', flipInRtl: true },
+  'trend-down': { d: 'M3.5 7l6 6 4-4 7 7M15 16h5.5v-5.5', flipInRtl: true },
+  'trend-flat': { d: 'M3.5 12h16M16 8.5l3.5 3.5-3.5 3.5', flipInRtl: true },
+  image: { d: 'M5 4.5h14a.5.5 0 0 1 .5.5v14a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5zM4.5 16l4.5-4.5 4 4 2.5-2.5 4 4M15 9h0', flipInRtl: false },
+  edit: { d: 'M4.5 19.5l1-4.25L15.75 5a2.12 2.12 0 0 1 3 3L8.75 18.25zM14 6.75l3.25 3.25', flipInRtl: false },
+  file: { d: 'M13.5 3.5H7A1.5 1.5 0 0 0 5.5 5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8.5zM13.5 3.5v5h5' },
+  pointer: { d: 'M6 3.5l12.5 7.5-5.75 1.5L10 18.5z', flipInRtl: false },
+  hand: { d: 'M8 13.5V7a1.5 1.5 0 0 1 3 0v4.5M11 11V5.5a1.5 1.5 0 0 1 3 0V11M14 11V7a1.5 1.5 0 0 1 3 0v7c0 3.6-2.4 6.5-6 6.5-2.4 0-3.8-1.2-5-3l-2-3.3a1.5 1.5 0 0 1 2.5-1.6L8 14' },
+  frame: { d: 'M8 3.5v17M16 3.5v17M3.5 8h17M3.5 16h17' },
+  rectangle: { d: 'M4.5 6.5h15v11h-15z' },
+  ellipse: { d: 'M12 18.5c4.4 0 8-2.9 8-6.5s-3.6-6.5-8-6.5-8 2.9-8 6.5 3.6 6.5 8 6.5z' },
+  text: { d: 'M5 6.5v-2h14v2M12 4.5v15M9 19.5h6' },
+  layers: { d: 'M12 4l8.5 4.5L12 13 3.5 8.5zM3.5 12.5L12 17l8.5-4.5M3.5 16.5L12 21l8.5-4.5' },
+  properties: { d: 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4' },
+  board: { d: 'M4.5 4.5h4v15h-4zM10 4.5h4v10h-4zM15.5 4.5h4v7h-4z' },
+  list: { d: 'M9 6h11M9 12h11M9 18h11M4.5 6h0M4.5 12h0M4.5 18h0', flipInRtl: true },
+  grid: { d: 'M4.5 4.5h6v6h-6zM13.5 4.5h6v6h-6zM4.5 13.5h6v6h-6zM13.5 13.5h6v6h-6z' },
+  upload: { d: 'M12 15.5V4.5M7.5 9L12 4.5 16.5 9M4.5 15v3.5A1.5 1.5 0 0 0 6 20h12a1.5 1.5 0 0 0 1.5-1.5V15' },
+  mic: { d: 'M12 3.5a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0v-5a3 3 0 0 1 3-3zM5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v3' },
+  'arrow-up': { d: 'M12 19.5v-15M5.5 11L12 4.5 18.5 11' },
+  stop: { d: 'M7.5 6.5h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z', fill: 'M7.5 6.5h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z' },
+  globe: { d: 'M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM3.5 12h17M12 3.5c2.3 2.3 3.5 5.2 3.5 8.5s-1.2 6.2-3.5 8.5c-2.3-2.3-3.5-5.2-3.5-8.5s1.2-6.2 3.5-8.5z' },
+  // Design-tool icons (F15.T2, Q66): alignment on a canvas is physical (left, right), so those never mirror.
+  'align-left': { d: 'M4.5 4v16M8 7.5h9v3H8zM8 13.5h6v3H8z' },
+  'align-h-center': { d: 'M12 4v16M7 7.5h10v3H7zM9 13.5h6v3H9z' },
+  'align-right': { d: 'M19.5 4v16M7 7.5h9v3H7zM10 13.5h6v3h-6z' },
+  'align-top': { d: 'M4 4.5h16M7.5 8h3v9h-3zM13.5 8h3v6h-3z' },
+  'align-v-center': { d: 'M4 12h16M7.5 7h3v10h-3zM13.5 9h3v6h-3z' },
+  'align-bottom': { d: 'M4 19.5h16M7.5 7h3v9h-3zM13.5 10h3v6h-3z' },
+  'distribute-h': { d: 'M4.5 4v16M19.5 4v16M10.5 8h3v8h-3z' },
+  'distribute-v': { d: 'M4 4.5h16M4 19.5h16M8 10.5h8v3H8z' },
+  'text-start': { d: 'M4.5 6h15M4.5 10h10M4.5 14h15M4.5 18h10', flipInRtl: true },
+  'text-center': { d: 'M4.5 6h15M7 10h10M4.5 14h15M7 18h10' },
+  'text-end': { d: 'M4.5 6h15M9.5 10h10M4.5 14h15M9.5 18h10', flipInRtl: true },
+  'text-justify': { d: 'M4.5 6h15M4.5 10h15M4.5 14h15M4.5 18h15' },
+  eye: { d: 'M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12zM12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z' },
+  'eye-off': { d: 'M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12zM12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM4 4l16 16' },
+  'arrow-down': { d: 'M12 4.5v15M5.5 13l6.5 6.5 6.5-6.5' },
+  'arrow-end': { d: 'M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5', flipInRtl: true },
+  wrap: { d: 'M4.5 7h11a3.5 3.5 0 0 1 0 7H8M10.5 11.5L8 14l2.5 2.5', flipInRtl: true },
+  corners: { d: 'M4.5 9.5V6A1.5 1.5 0 0 1 6 4.5h3.5M14.5 4.5H18A1.5 1.5 0 0 1 19.5 6v3.5M19.5 14.5V18a1.5 1.5 0 0 1-1.5 1.5h-3.5M9.5 19.5H6A1.5 1.5 0 0 1 4.5 18v-3.5' },
+  sides: { d: 'M7 4.5h10M7 19.5h10M4.5 7v10M19.5 7v10' },
+  link: { d: 'M10 14l4-4M8.5 11l-1.7 1.7a3 3 0 0 0 4.24 4.24l1.71-1.69M15.5 13l1.7-1.7a3 3 0 0 0-4.24-4.24L11.25 8.75' },
+  rotate: { d: 'M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4h-4' },
+  code: { d: 'M8.5 7l-5 5 5 5M15.5 7l5 5-5 5' },
+  component: { d: 'M12 3.5l3.5 3.5-3.5 3.5L8.5 7zM12 13.5l3.5 3.5-3.5 3.5-3.5-3.5zM7 8.5l3.5 3.5L7 15.5 3.5 12zM17 8.5l3.5 3.5-3.5 3.5-3.5-3.5z' },
+  'constraint-h': { d: 'M4.5 4.5h15v15h-15zM4.5 12h5M14.5 12h5M10 10h4v4h-4z' },
+  'constraint-v': { d: 'M4.5 4.5h15v15h-15zM12 4.5v5M12 14.5v5M10 10h4v4h-4z' },
+  'size-width': { d: 'M4.5 7v10M19.5 7v10M7.5 12h9M10 9.5L7.5 12l2.5 2.5M14 9.5l2.5 2.5-2.5 2.5' },
+  'size-height': { d: 'M7 4.5h10M7 19.5h10M12 7.5v9M9.5 10L12 7.5l2.5 2.5M9.5 14l2.5 2.5 2.5-2.5' },
+  'stroke-position': { d: 'M4.5 4.5h15v15h-15zM8 8h8v8H8z' },
+  blend: { d: 'M9.5 15.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM14.5 19.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z' },
+} satisfies Record<string, IconData>;
+
+export type IconName = keyof typeof icons;

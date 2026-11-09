@@ -1,0 +1,76 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "version-history",
+  "contentVersion": 1,
+  "settings": {
+    "current": "editor",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Version history",
+        "title": "Sign-in flow",
+        "lead": "Every save is kept; name the ones that matter.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Versions",
+        "items": [
+          {
+            "term": "Today 14:02",
+            "details": "Ama Mensah · Current version"
+          },
+          {
+            "term": "Today 11:40",
+            "details": "Jonas Lind · “Button states”"
+          },
+          {
+            "term": "Yesterday",
+            "details": "Ama Mensah · Autosave"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Go back to a version",
+        "lead": "Restoring makes a new version; nothing is lost.",
+        "actions": [
+          {
+            "label": "Restore “Button states”",
+            "primary": true,
+            "says": "Restoring isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

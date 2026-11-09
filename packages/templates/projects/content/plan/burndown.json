@@ -1,0 +1,79 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "burndown",
+  "contentVersion": 1,
+  "settings": {
+    "current": "dashboard"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          },
+          {
+            "label": "Burndown"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Burndown",
+        "title": "Sprint 14: 13 points left, 4 days to go",
+        "lead": "At this pace the sprint ends with 5 points unfinished.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Points left by day",
+        "items": [
+          {
+            "term": "Monday",
+            "details": "17"
+          },
+          {
+            "term": "Tuesday",
+            "details": "17"
+          },
+          {
+            "term": "Wednesday",
+            "details": "15"
+          },
+          {
+            "term": "Thursday",
+            "details": "13"
+          }
+        ]
+      }
+    ]
+  }
+}

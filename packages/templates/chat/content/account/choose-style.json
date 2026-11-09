@@ -1,0 +1,86 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "choose-style",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "How should it reply?",
+        "intro": "Step 2 of 2. Change these at any time.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Style",
+            "items": [
+              {
+                "id": "tone",
+                "label": "Tone",
+                "kind": "choice",
+                "options": [
+                  "Friendly",
+                  "Straight to the point",
+                  "Thorough"
+                ],
+                "value": "Friendly"
+              },
+              {
+                "id": "length",
+                "label": "Length",
+                "kind": "choice",
+                "options": [
+                  "Short",
+                  "As needed",
+                  "Detailed"
+                ],
+                "value": "As needed"
+              },
+              {
+                "id": "follow",
+                "label": "Suggest follow-up questions",
+                "kind": "switch",
+                "on": true
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Start chatting",
+            "href": "/chat"
+          }
+        ]
+      }
+    ]
+  }
+}

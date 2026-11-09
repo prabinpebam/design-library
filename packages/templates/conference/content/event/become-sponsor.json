@@ -1,0 +1,78 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "become-sponsor",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sponsors"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Sponsor",
+        "title": "Meet 900 people who build interfaces",
+        "lead": "Three levels, from a logo to a workshop of your own.",
+        "layout": "stacked"
+      },
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Ask for the sponsorship pack",
+        "fields": [
+          {
+            "id": "company",
+            "label": "Company",
+            "kind": "text"
+          },
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "level",
+            "label": "Level you’re thinking of",
+            "kind": "choice",
+            "options": [
+              "Gold",
+              "Silver",
+              "Community",
+              "Not sure yet"
+            ]
+          }
+        ],
+        "submit": "Send me the pack",
+        "sent": "Sent. The next screen says what happens.",
+        "links": [
+          {
+            "label": "See this year’s sponsors",
+            "href": "/sponsors"
+          }
+        ],
+        "outcome": {
+          "eyebrow": "Request sent",
+          "title": "The pack is on its way",
+          "text": "Marta, who looks after sponsors, will email it today and offer a call.",
+          "links": [
+            {
+              "label": "See this year’s sponsors",
+              "href": "/sponsors"
+            },
+            {
+              "label": "Back to the event",
+              "href": "/home"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "work",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Work",
+        "title": "Everything I’ve made since 2019",
+        "lead": "Products, identities and a few experiments.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Projects",
+        "max": 3,
+        "items": [
+          {
+            "eyebrow": "Product · 2026",
+            "title": "Tidewater banking app",
+            "description": "Moving money for people paid by the hour.",
+            "href": "/project",
+            "picture": "harbour"
+          },
+          {
+            "eyebrow": "Identity · 2025",
+            "title": "Meadow Grocers",
+            "description": "A neighbourhood shop that grew to nine.",
+            "href": "/project",
+            "picture": "meadow"
+          },
+          {
+            "eyebrow": "Service · 2024",
+            "title": "City parking permits",
+            "description": "Twenty minutes to two.",
+            "href": "/project",
+            "picture": "frost"
+          },
+          {
+            "eyebrow": "Experiment · 2024",
+            "title": "Type that breathes",
+            "description": "Variable fonts that follow your reading speed.",
+            "href": "/project",
+            "picture": "dusk"
+          },
+          {
+            "eyebrow": "Product · 2023",
+            "title": "Kiln pottery booking",
+            "description": "Studios full on weekday mornings.",
+            "href": "/project",
+            "picture": "sand"
+          }
+        ]
+      }
+    ]
+  }
+}

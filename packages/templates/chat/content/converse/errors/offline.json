@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "chat",
+  "layout": "offline",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Offline",
+        "title": "You’re not connected",
+        "text": "Your message is kept and sends when you’re back online.",
+        "links": [
+          {
+            "label": "Try again",
+            "href": "/chat"
+          }
+        ]
+      }
+    ]
+  }
+}

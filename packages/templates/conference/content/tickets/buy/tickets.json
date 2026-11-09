@@ -1,0 +1,79 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "tickets",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "title": "Tickets",
+        "lead": "Every ticket includes lunch, coffee and the Thursday evening party. Prices include VAT.",
+        "layout": "stacked"
+      },
+      {
+        "type": "tickets",
+        "heading": "Choose a ticket",
+        "currency": "EUR",
+        "options": [
+          {
+            "value": "both",
+            "label": "Two days",
+            "price": 390,
+            "description": "Both days, talks and one workshop.",
+            "meta": "Most chosen"
+          },
+          {
+            "value": "thu",
+            "label": "Thursday only",
+            "price": 240,
+            "description": "The talks and the panel."
+          },
+          {
+            "value": "fri",
+            "label": "Friday only",
+            "price": 220,
+            "description": "One half-day workshop and the closing keynote."
+          },
+          {
+            "value": "student",
+            "label": "Student",
+            "price": 120,
+            "description": "Both days. Bring your student card."
+          }
+        ],
+        "submit": "Continue to payment",
+        "sent": "Your tickets are held for 15 minutes. Payment isn’t part of this example.",
+        "labels": {
+          "ticket": "Ticket",
+          "count": "How many",
+          "tickets": "Tickets",
+          "total": "Total",
+          "line": "{count} × {ticket}"
+        }
+      },
+      {
+        "type": "questions",
+        "heading": "Questions",
+        "items": [
+          {
+            "title": "Can I change the name on a ticket?",
+            "text": "Yes, until 1 March, from the link in your confirmation email."
+          },
+          {
+            "title": "Is the venue step-free?",
+            "text": "Yes. Every room has step-free access, a hearing loop and live captions."
+          },
+          {
+            "title": "Do you have group prices?",
+            "text": "Groups of five or more get 10% off. Ask us before you buy."
+          }
+        ]
+      }
+    ]
+  }
+}

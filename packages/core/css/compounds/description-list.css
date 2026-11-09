@@ -1,0 +1,28 @@
+/*
+ * Tier 2 compound: DescriptionList. Each term in a column of its own beside its details; below breakpoint.sm the term
+ * stacks above them.
+ */
+@layer compounds {
+  [data-dl='description-list'] {
+    display: grid;
+    gap: var(--c-description-list-gap);
+  }
+
+  [data-dl='description-list'] > div {
+    display: grid;
+    grid-template-columns: minmax(0, var(--c-description-list-term-width)) minmax(0, 1fr);
+    gap: var(--c-description-list-column-gap);
+  }
+
+  [data-dl='description-list'] dt {
+    font-weight: var(--type-label-weight);
+  }
+
+  @media (max-width: 40rem) {
+    /* breakpoint.sm */
+    [data-dl='description-list'] > div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--c-description-list-stacked-gap);
+    }
+  }
+}

@@ -1,0 +1,130 @@
+/*
+ * Tier 2 compound: GradientEditor (F15.10d). A bar painted with the gradient; stops are swatch pins over it with a
+ * full outline (never one side); the selected stop has a strong ring. The selected stop's colour, position and the
+ * tools sit in rows under the bar. Geometry never changes with state: only outline style and colour.
+ */
+@layer compounds {
+  [data-dl='gradient-editor'] {
+    display: grid;
+    gap: var(--c-gradient-editor-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='gradient-editor'] > [data-dl-part='label'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  /* The bar's box includes room above and below the paint for the pins, which stand a little taller than it. */
+  [data-dl='gradient-editor'] > [data-dl-part='bar'] {
+    position: relative;
+    block-size: calc(var(--c-gradient-editor-bar) + 2 * var(--c-gradient-editor-overhang));
+    touch-action: none;
+    cursor: copy;
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='paint'] {
+    position: absolute;
+    inset-block: var(--c-gradient-editor-overhang);
+    inset-inline: 0;
+    border: var(--border-hairline) solid var(--color-border-strong);
+    border-radius: var(--c-gradient-editor-radius);
+    background-image: var(--gradient);
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='paint']:dir(rtl) {
+    scale: -1 1;
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='stop'] {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(var(--at) * 100% - var(--c-gradient-editor-stop) / 2);
+    inline-size: var(--c-gradient-editor-stop);
+    border: var(--border-thick) solid var(--color-bg);
+    border-radius: var(--radius-sm);
+    outline: var(--border-hairline) solid var(--color-border-strong);
+    background-color: var(--stop);
+    cursor: grab;
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='stop']::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc((var(--c-gradient-editor-stop) - var(--size-target-min)) / 2);
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='stop'][data-active] {
+    outline: var(--border-thick) solid var(--color-text);
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='stop']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* Dragged off the bar: the stop shows it will go when released. */
+  [data-dl='gradient-editor'] [data-dl-part='stop'][data-removing] {
+    outline-style: dashed;
+    background-color: var(--color-bg);
+  }
+
+  [data-dl='gradient-editor'] > [data-dl-part='selected'],
+  [data-dl='gradient-editor'] > [data-dl-part='tools'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='which'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+
+  /* The stop's colour: the ColourPicker's swatch fills it and opens the picker. Only this swatch, not the picker's own. */
+  [data-dl='gradient-editor'] [data-dl-part='selected'] > [data-dl-part='swatch'] {
+    position: relative;
+    inline-size: var(--c-gradient-editor-swatch);
+    block-size: var(--c-gradient-editor-swatch);
+    border: var(--border-hairline) solid var(--color-border-strong);
+    border-radius: var(--c-gradient-editor-radius);
+    background-color: var(--stop);
+  }
+
+  [data-dl='gradient-editor'] [data-dl-part='position'] {
+    inline-size: var(--c-gradient-editor-input);
+  }
+
+  [data-dl='gradient-editor'] > [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='gradient-editor'][data-disabled] > [data-dl-part='bar'],
+  [data-dl='gradient-editor'][data-disabled] [data-dl-part='stop'] {
+    cursor: not-allowed;
+  }
+
+  [data-dl='gradient-editor'][data-disabled] > [data-dl-part='label'] {
+    color: var(--color-text-disabled);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='gradient-editor'] [data-dl-part='stop'] {
+      forced-color-adjust: none;
+      outline-color: CanvasText;
+      border-color: Canvas;
+    }
+
+    [data-dl='gradient-editor'] [data-dl-part='stop'][data-active] {
+      outline-color: Highlight;
+    }
+  }
+}

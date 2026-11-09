@@ -1,0 +1,109 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "article",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Articles",
+            "href": "/index"
+          },
+          {
+            "label": "Design systems",
+            "href": "/index"
+          },
+          {
+            "label": "One gap for every list of rows"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Design systems",
+        "title": "One gap for every list of rows",
+        "lead": "Why filled rows need space between them, and how one token keeps it everywhere.",
+        "layout": "stacked"
+      },
+      {
+        "type": "byline",
+        "name": "Mina Haddad",
+        "href": "/author",
+        "date": "8 November 2026",
+        "read": "5 min read"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "text",
+            "text": "When a list marks the current row with a tint and the row under the pointer with a fill, the two touch. The eye reads one long block, not two rows."
+          },
+          {
+            "kind": "heading",
+            "text": "Space is the cheapest cue"
+          },
+          {
+            "kind": "text",
+            "text": "A divider would separate them, but it adds a line to every row at rest. A few pixels of space do the same job and draw nothing."
+          },
+          {
+            "kind": "picture",
+            "picture": "meadow",
+            "caption": "Two fills, four pixels apart."
+          },
+          {
+            "kind": "quote",
+            "text": "There should be a gap between items, else the active and hover touch.",
+            "name": "A reviewer"
+          },
+          {
+            "kind": "heading",
+            "text": "One role, read everywhere"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Name the role once: the space between rows that carry their own fill.",
+              "Let every list of such rows read it.",
+              "Change it once and every list follows."
+            ]
+          },
+          {
+            "kind": "code",
+            "label": "tokens.json",
+            "code": "\"stack-row\": { \"$type\": \"dimension\", \"$value\": \"{space.1}\" }"
+          }
+        ]
+      },
+      {
+        "type": "cards",
+        "heading": "Read next",
+        "max": 2,
+        "items": [
+          {
+            "eyebrow": "Accessibility",
+            "title": "Focus rings that never overlap",
+            "description": "Drawing the ring inside the box so tight layouts stay tidy.",
+            "meta": "2 November 2026 · 7 min read",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Process",
+            "title": "Review something every hour",
+            "description": "Small packets, open links and never waiting for a verdict.",
+            "meta": "28 October 2026 · 4 min read",
+            "href": "/article"
+          }
+        ]
+      }
+    ]
+  }
+}

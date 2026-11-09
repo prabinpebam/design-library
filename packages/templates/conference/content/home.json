@@ -1,0 +1,151 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "conference",
+  "layout": "home",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "11–12 March 2027 · Lisbon",
+        "title": "Two days on the craft of interfaces",
+        "lead": "Talks, workshops and long lunches with the people who build design systems, accessible products and the tools behind them.",
+        "actions": [
+          {
+            "label": "Get tickets",
+            "primary": true,
+            "says": "Get tickets isn’t part of this example."
+          },
+          {
+            "label": "See the schedule",
+            "says": "See the schedule isn’t part of this example."
+          }
+        ],
+        "note": "Early tickets until 31 January.",
+        "picture": "dusk"
+      },
+      {
+        "type": "conference.countdown",
+        "label": "Doors open in",
+        "until": "2027-03-11T09:00:00+00:00",
+        "passed": "The conference has started: see today’s schedule."
+      },
+      {
+        "type": "stats",
+        "heading": "This year",
+        "items": [
+          {
+            "label": "Days",
+            "value": 2
+          },
+          {
+            "label": "Talks",
+            "value": 24
+          },
+          {
+            "label": "Workshops",
+            "value": 6
+          },
+          {
+            "label": "People",
+            "value": 900,
+            "description": "In one venue by the river."
+          }
+        ]
+      },
+      {
+        "type": "people",
+        "heading": "Speakers",
+        "intro": "Eight of the 30 people on stage this year.",
+        "items": [
+          {
+            "name": "Ama Mensah",
+            "role": "Design lead, Kitewing",
+            "href": "/speaker"
+          },
+          {
+            "name": "Mina Haddad",
+            "role": "Design systems, Field Notes",
+            "href": "/speaker"
+          },
+          {
+            "name": "Luis Ortega",
+            "role": "Accessibility engineer",
+            "href": "/speaker"
+          },
+          {
+            "name": "Sana Iqbal",
+            "role": "Colour and type, Studio Iqbal",
+            "href": "/speaker"
+          },
+          {
+            "name": "Tom Becker",
+            "role": "Front-end lead, Northwind",
+            "href": "/speaker"
+          },
+          {
+            "name": "Priya Raman",
+            "role": "Researcher, Openfield",
+            "href": "/speaker"
+          },
+          {
+            "name": "Jonas Lind",
+            "role": "Product designer",
+            "href": "/speaker"
+          },
+          {
+            "name": "Keiko Arai",
+            "role": "Motion designer",
+            "href": "/speaker"
+          }
+        ]
+      },
+      {
+        "type": "cards",
+        "heading": "Three tracks",
+        "items": [
+          {
+            "eyebrow": "Main hall",
+            "title": "Systems",
+            "description": "Tokens, components and the teams that keep them alive."
+          },
+          {
+            "eyebrow": "Room 2",
+            "title": "Access",
+            "description": "Building for everyone, tested with the people who use it."
+          },
+          {
+            "eyebrow": "Studio",
+            "title": "Hands on",
+            "description": "Small workshops with a laptop and a real problem."
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "The only conference where I took more notes in the hallway than in the talks.",
+        "name": "Ines Duarte",
+        "role": "Came in 2026"
+      },
+      {
+        "type": "cta",
+        "title": "Early tickets end 31 January",
+        "lead": "Two days, lunches and the evening party included.",
+        "actions": [
+          {
+            "label": "Get tickets",
+            "primary": true,
+            "says": "Get tickets isn’t part of this example."
+          },
+          {
+            "label": "Ask about groups",
+            "says": "Ask about groups isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

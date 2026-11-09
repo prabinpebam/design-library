@@ -1,0 +1,39 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "uses",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Tools",
+        "title": "What I work with",
+        "lead": "For the curious; none of it is sponsored.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Every day",
+        "items": [
+          {
+            "term": "Design",
+            "details": "A design tool with a shared library"
+          },
+          {
+            "term": "Prototypes",
+            "details": "Code, in the browser"
+          },
+          {
+            "term": "Research",
+            "details": "A notebook and a voice recorder"
+          }
+        ]
+      }
+    ]
+  }
+}

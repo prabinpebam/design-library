@@ -1,0 +1,101 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "account-settings",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Account",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          }
+        ],
+        "submit": "Save",
+        "sent": "Saved."
+      },
+      {
+        "type": "settings",
+        "heading": "Preferences",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Editor",
+            "items": [
+              {
+                "id": "nudge",
+                "label": "Big nudge of 10 pixels with Shift",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "snap",
+                "label": "Snap to pixel grid",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "theme",
+                "label": "Theme",
+                "kind": "choice",
+                "options": [
+                  "System",
+                  "Light",
+                  "Dark"
+                ],
+                "value": "System"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Team and plan",
+            "href": "/team-plan"
+          }
+        ]
+      }
+    ]
+  }
+}

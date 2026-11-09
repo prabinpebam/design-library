@@ -1,0 +1,76 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "file-search",
+  "contentVersion": 1,
+  "settings": {
+    "current": "file-search"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "search",
+        "heading": "Search files",
+        "label": "Search files",
+        "button": "Search",
+        "query": "sign",
+        "summary": "{count} files match “{query}”",
+        "results": [
+          {
+            "eyebrow": "Kitewing app",
+            "title": "Sign-in flow",
+            "description": "Edited 2 hours ago by Ama Mensah",
+            "href": "/editor"
+          },
+          {
+            "eyebrow": "Kitewing app",
+            "title": "Trip cards",
+            "description": "Edited yesterday by Jonas Lind",
+            "href": "/editor"
+          },
+          {
+            "eyebrow": "Brand",
+            "title": "Icons 2027",
+            "description": "Edited last week by Keiko Arai",
+            "href": "/editor"
+          }
+        ],
+        "none": {
+          "title": "No files match “{query}”",
+          "text": "Search looks at file names and the text inside frames.",
+          "links": [
+            {
+              "label": "See recent files",
+              "href": "/files"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

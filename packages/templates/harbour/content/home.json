@@ -1,0 +1,20 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "harbour",
+  "layout": "home",
+  "contentVersion": 1,
+  "settings": { "current": "home" },
+  "regions": {
+    "main": [
+      { "type": "hero", "eyebrow": "Open every day by the water", "title": "Books for slow evenings", "lead": "A small shop on the quay, with a reading chair by every window.",
+        "actions": [{ "label": "See new books", "primary": true, "says": "New books open here once that page is built." }], "picture": "shelves" },
+      { "type": "cards", "heading": "New this week", "intro": "Three books our staff couldn’t put down.", "max": 3,
+        "items": [
+          { "title": "The Long Shore", "eyebrow": "Novel", "description": "A lighthouse keeper’s last winter, told in letters." },
+          { "title": "Salt and Ink", "eyebrow": "Essays", "description": "Twelve short pieces on harbours, maps and the people who draw them." },
+          { "title": "Small Boats", "eyebrow": "Children", "description": "A picture book about a rowing boat that wants to see the sea." }
+        ] },
+      { "type": "points", "heading": "Why people come back", "items": ["Every book on the front table is read by someone who works here.", "We order any book in print within two days.", "Readings on the first Thursday of every month."] }
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "account-settings",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sign-in",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Account settings",
+        "intro": "Your details, as invoices and the shipment tracker show them.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "company",
+            "label": "Company",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Work email address",
+            "kind": "email"
+          },
+          {
+            "id": "phone",
+            "label": "Phone number",
+            "kind": "tel",
+            "optional": true
+          },
+          {
+            "id": "language",
+            "label": "Language",
+            "kind": "choice",
+            "options": [
+              "English",
+              "Nederlands",
+              "Deutsch"
+            ]
+          }
+        ],
+        "submit": "Save changes",
+        "sent": "Changes saved.",
+        "links": [
+          {
+            "label": "Notifications",
+            "href": "/notification-settings"
+          },
+          {
+            "label": "Change password",
+            "href": "/forgot-password"
+          }
+        ]
+      }
+    ]
+  }
+}

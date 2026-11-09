@@ -1,0 +1,207 @@
+/*
+ * Tier 3 layout: EditorLayout (F15.74, Q61/Q62). A bar across the top, then a panel, the working area and a panel in a
+ * row. Panels are the page surface and the working area is set apart by its own tone (a Canvas is sunken), so no
+ * borders are drawn between them; the bar is set apart from the body by one hairline. Child combinators only, so a part\n * name inside a panel (a Tabs panel) is never styled as the layout's. Each panel scrolls on its own (ScrollArea),
+ * edge to edge, with its padding on the content inside. Narrow (below 48 rem of its own width, a container query): an
+ * open panel floats over the working area from its own edge with the overlay shadow.
+ */
+@layer layouts {
+  [data-dl='editor-layout'] {
+    position: relative;
+    isolation: isolate;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    min-inline-size: 0;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  [data-dl='editor-layout'][data-height='fill'] { block-size: 100%; }
+  [data-dl='editor-layout'][data-height='screen'] { block-size: 100dvh; }
+  [data-dl='editor-layout'][data-height='lg'] { block-size: var(--c-editor-layout-height-lg); }
+
+  [data-dl='editor-layout'] > [data-dl-part='bar'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-editor-layout-bar-gap);
+    min-block-size: var(--c-editor-layout-bar);
+    padding-inline: var(--c-editor-layout-inset);
+    border-block-end: var(--border-hairline) solid var(--color-border);
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='bar'] > [data-dl-part='toggle'] {
+    display: inline-flex;
+    flex: none;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='bar'] > [data-dl-part='bar-content'] {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-inline-size: 0;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='bar'] > [data-dl-part='bar-content'] > * {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-block-size: 0;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] {
+    /* The panel holds a ScrollArea that fills it: the library's overlay bar at the panel's edge, never a native one,
+       and never sideways (Q26, Q68). */
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    position: relative;
+    flex: none;
+    /* Q68 DT6: a resizable panel's dragged width (set by the layout), held between the tokens' least and most. */
+    inline-size: var(--dl-panel-size, var(--c-editor-layout-panel));
+    min-inline-size: min(var(--c-editor-layout-panel-min), var(--c-editor-layout-panel));
+    max-inline-size: var(--c-editor-layout-panel-max);
+    min-block-size: 0;
+    background-color: var(--color-bg);
+  }
+
+  /* The resize handle: a hit strip centred on the panel's inner edge. Nothing is drawn at rest; a line shows only while it
+     is hovered, focused or dragged (a transient cue), so the panels stay set apart by tone alone. */
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize'] {
+    position: absolute;
+    inset-block: 0;
+    z-index: var(--c-editor-layout-layer);
+    inline-size: var(--c-editor-layout-resize);
+    cursor: col-resize;
+    touch-action: none;
+    outline: none;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] > [data-dl-part='resize'] { inset-inline-end: calc(var(--c-editor-layout-resize) / -2); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] > [data-dl-part='resize'] { inset-inline-start: calc(var(--c-editor-layout-resize) / -2); }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize']::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(50% - var(--size-focus-width) / 2);
+    inline-size: var(--size-focus-width);
+    background-color: var(--c-editor-layout-resize-line);
+    opacity: 0;
+    transition: opacity var(--duration-quick) var(--easing-standard);
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize']:is(:hover, :focus-visible, [data-dragging])::after {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize']::after {
+      transition: none;
+    }
+  }
+
+  /* A panel's own header (no bar, Q68): above the scroll region, never scrolled away; set apart by space alone. */
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel']:has(> [data-dl-part='panel-head']) {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='panel-head'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-editor-layout-bar-gap);
+    min-block-size: var(--c-editor-layout-bar);
+    min-inline-size: 0;
+    padding-inline: var(--c-editor-layout-inset);
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='panel-head'] > [data-dl-part='head-content'] {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='panel-head'] > [data-dl-part='toggle'] {
+    display: inline-flex;
+    flex: none;
+  }
+
+  /* No bar: a closed panel's toggle floats at the working area's top corner (an open one sits in its panel's head). */
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='corner'] {
+    position: absolute;
+    inset-block-start: var(--c-editor-layout-tools-offset);
+    display: inline-flex;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='corner'][data-side='start'] { inset-inline-start: var(--c-editor-layout-tools-offset); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='corner'][data-side='end'] { inset-inline-end: var(--c-editor-layout-tools-offset); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][hidden] {
+    display: none;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='panel-content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-editor-layout-panel-gap);
+    min-inline-size: 0;
+    padding: var(--c-editor-layout-inset);
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  /* Q68: the tools float over the working area, centred at its bottom (Figma UI3's toolbar). The wrapper only places
+     the FloatingBar; it lets the pointer through to the canvas around the bar. */
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='tools'] {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: var(--c-editor-layout-tools-offset);
+    z-index: var(--c-editor-layout-tools-layer);
+    display: flex;
+    justify-content: center;
+    padding-inline: var(--c-editor-layout-tools-offset);
+    pointer-events: none;
+  }
+
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='tools'] > * {
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    pointer-events: auto;
+  }
+
+  @container (max-width: 48rem) {
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] {
+      position: absolute;
+      inset-block: 0;
+      z-index: var(--c-editor-layout-layer);
+      min-inline-size: 0;
+      max-inline-size: calc(100% - var(--c-editor-layout-bar));
+      box-shadow: var(--c-editor-layout-overlay-shadow);
+    }
+
+    /* Floating panels keep their width; they don't resize. */
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize'] {
+      display: none;
+    }
+
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { inset-inline-start: 0; }
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { inset-inline-end: 0; }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

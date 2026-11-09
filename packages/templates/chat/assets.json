@@ -1,0 +1,25 @@
+{
+  "$schema": "../../core/schemas/assets.schema.json",
+  "assets": {
+    "tarnMorning": {
+      "src": "assets/tarn-morning.svg",
+      "alt": "A still tarn below green fells under a pale morning sky."
+    },
+    "tarnDusk": {
+      "src": "assets/tarn-dusk.svg",
+      "alt": "The same fells in violet shadow, the sky orange at the horizon."
+    },
+    "garden": {
+      "src": "assets/garden.svg",
+      "alt": "A gently sloping garden with three green terraces."
+    },
+    "lisbon": {
+      "src": "assets/lisbon.svg",
+      "alt": "Warm terracotta hills under an apricot evening sky."
+    },
+    "card": {
+      "src": "assets/card.svg",
+      "alt": "Soft violet hills with a pink sun, drawn as a birthday card."
+    }
+  }
+}

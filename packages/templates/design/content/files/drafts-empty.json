@@ -1,0 +1,10 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "drafts-empty",
+  "contentVersion": 1,
+  "settings": {
+    "current": "drafts",
+    "state": "empty"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "transfer-ticket",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Transfer a ticket",
+        "intro": "The new attendee gets an email; the old badge stops working.",
+        "fields": [
+          {
+            "id": "which",
+            "label": "Ticket",
+            "kind": "choice",
+            "options": [
+              "Ama Mensah",
+              "Jonas Lind"
+            ]
+          },
+          {
+            "id": "name",
+            "label": "New attendee’s name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "New attendee’s email address",
+            "kind": "email"
+          }
+        ],
+        "submit": "Transfer ticket",
+        "sent": "Transferred. The new attendee has an email with the ticket.",
+        "links": [
+          {
+            "label": "Back to your tickets",
+            "href": "/my-tickets"
+          }
+        ]
+      }
+    ]
+  }
+}

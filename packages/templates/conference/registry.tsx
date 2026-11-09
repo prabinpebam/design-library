@@ -1,0 +1,41 @@
+/**
+ * The Conference template's registry (Q64): its own block types and its own layout, each mapped to its own parts
+ * (parts/), all under the `conference` namespace. Core blocks and core layouts need no entry here.
+ */
+import { SiteLayout } from '@design-library/core/react';
+import type { BlockRenderer, Template } from '@design-library/core/render';
+import { Countdown } from './parts/fundamentals/Countdown';
+import { SponsorWall, type SponsorLevel } from './parts/compounds/SponsorWall';
+import { SponsorsLayout } from './parts/layouts/SponsorsLayout';
+import './tokens/tokens.css';
+import './parts/fundamentals/countdown.css';
+import './parts/compounds/sponsor-wall.css';
+import './parts/layouts/sponsors-layout.css';
+
+interface CountdownBlock {
+  type: 'conference.countdown';
+  label: string;
+  until: string;
+  passed: string;
+}
+
+interface SponsorWallBlock {
+  type: 'conference.sponsor-wall';
+  levels: SponsorLevel[];
+}
+
+const BLOCKS: { 'conference.countdown': BlockRenderer<CountdownBlock>; 'conference.sponsor-wall': BlockRenderer<SponsorWallBlock> } = {
+  'conference.countdown': (b, _ctx, i) => <Countdown key={i} label={b.label} until={b.until} passed={b.passed} />,
+  'conference.sponsor-wall': (b, ctx, i) => <SponsorWall key={i} levels={b.levels} headingLevel={ctx.layout === 'sponsors' ? 2 : 3} />,
+};
+
+export const registry: Template['registry'] = {
+  blocks: BLOCKS,
+  layouts: {
+    'conference.SponsorsLayout': ({ content, region }) => (
+      <SiteLayout width={content.settings?.width as 'wide' | 'reading' | undefined} header={region('header')} footer={region('footer')}>
+        <SponsorsLayout intro={region('intro')} levels={region('levels')} />
+      </SiteLayout>
+    ),
+  },
+};

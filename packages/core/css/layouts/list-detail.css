@@ -1,0 +1,88 @@
+/*
+ * Tier 3 layout: ListDetail (F15.51, catalogue Layout "List-detail"; atiya SplitView adapted). A list in a column of
+ * its own beside the chosen item's detail, both from the top, separated by space alone. The root is the container the
+ * widths are measured on, so the layout answers to the room it is given, not the window: below the list's column plus
+ * the detail's least width, one side shows at a time and the detail gets a Back. With a maxSize the layout holds a
+ * height and each side scrolls on its own, edge to edge; without one both grow and the page scrolls.
+ */
+@layer layouts {
+  [data-dl='list-detail'] {
+    container-type: inline-size;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='list-detail'][data-max-size='fill'] { block-size: 100%; }
+  [data-dl='list-detail'][data-max-size='md'] { block-size: var(--c-list-detail-max-md); }
+  [data-dl='list-detail'][data-max-size='lg'] { block-size: var(--c-list-detail-max-lg); }
+
+  [data-dl='list-detail'] > [data-dl-part='panes'] {
+    display: grid;
+    grid-template-columns: var(--c-list-detail-list-narrow) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--c-list-detail-gutter);
+  }
+
+  [data-dl='list-detail'][data-list-width='wide'] > [data-dl-part='panes'] {
+    grid-template-columns: var(--c-list-detail-list-wide) minmax(0, 1fr);
+  }
+
+  /* A held height: both sides take it and scroll inside themselves (ScrollArea at their edges). */
+  [data-dl='list-detail'][data-max-size] > [data-dl-part='panes'] {
+    block-size: 100%;
+    align-items: stretch;
+  }
+
+  [data-dl='list-detail'] [data-dl-part='list'],
+  [data-dl='list-detail'] [data-dl-part='detail'] {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  [data-dl='list-detail'] [data-dl-part='detail'] {
+    gap: var(--c-list-detail-back-gap);
+  }
+
+  [data-dl='list-detail'] [data-dl-part='list']:focus,
+  [data-dl='list-detail'] [data-dl-part='detail']:focus {
+    outline: none;
+  }
+
+  /* Back belongs to the one-at-a-time arrangement only. */
+  [data-dl='list-detail'] [data-dl-part='back'] {
+    display: none;
+  }
+
+  /* One side at a time: the list's column (18 or 22 rem), the gutter and the detail's least width (18 rem, a phone's). */
+  @container (max-width: 38rem) {
+    [data-dl='list-detail'] > [data-dl-part='panes'] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    [data-dl='list-detail'][data-show='detail'] [data-dl-part='list'],
+    [data-dl='list-detail'][data-show='list'] [data-dl-part='detail'] {
+      display: none;
+    }
+
+    [data-dl='list-detail'] [data-dl-part='back'] {
+      display: flex;
+    }
+  }
+
+  @container (max-width: 42rem) {
+    [data-dl='list-detail'][data-list-width='wide'] > [data-dl-part='panes'] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    [data-dl='list-detail'][data-list-width='wide'][data-show='detail'] [data-dl-part='list'],
+    [data-dl='list-detail'][data-list-width='wide'][data-show='list'] [data-dl-part='detail'] {
+      display: none;
+    }
+
+    [data-dl='list-detail'][data-list-width='wide'] [data-dl-part='back'] {
+      display: flex;
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "plans",
+  "contentVersion": 1,
+  "settings": {
+    "current": "settings-general"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Plans",
+        "title": "More for when you need it",
+        "lead": "Prices include VAT. Cancel at any time.",
+        "layout": "stacked"
+      },
+      {
+        "type": "tickets",
+        "heading": "Choose a plan",
+        "currency": "EUR",
+        "options": [
+          {
+            "value": "free",
+            "label": "Free",
+            "price": 0,
+            "description": "Everyday questions, a few images a day."
+          },
+          {
+            "value": "plus",
+            "label": "Plus",
+            "price": 20,
+            "description": "Longer chats, more images, voice.",
+            "meta": "Most chosen"
+          },
+          {
+            "value": "pro",
+            "label": "Pro",
+            "price": 200,
+            "description": "The most capable models, without limits."
+          }
+        ],
+        "submit": "Continue to checkout",
+        "sent": "Plan chosen. Go on to Checkout.",
+        "labels": {
+          "ticket": "Plan",
+          "count": "Months",
+          "tickets": "Plan",
+          "total": "Total",
+          "line": "{count} × {ticket}"
+        }
+      }
+    ]
+  }
+}

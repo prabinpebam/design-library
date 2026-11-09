@@ -1,0 +1,77 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "create-project",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Create a project",
+        "intro": "You can change all of this later.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Project name",
+            "kind": "text"
+          },
+          {
+            "id": "kind",
+            "label": "How you work",
+            "kind": "choice",
+            "options": [
+              "Sprints (scrum)",
+              "Continuous flow (kanban)"
+            ]
+          },
+          {
+            "id": "invite",
+            "label": "Invite people",
+            "kind": "text",
+            "optional": true
+          }
+        ],
+        "submit": "Create project",
+        "sent": "Created. Your board is ready.",
+        "links": [
+          {
+            "label": "Open the board",
+            "href": "/board"
+          }
+        ]
+      }
+    ]
+  }
+}

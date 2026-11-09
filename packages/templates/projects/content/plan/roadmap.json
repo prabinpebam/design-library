@@ -1,0 +1,73 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "roadmap",
+  "contentVersion": 1,
+  "settings": {
+    "current": "backlog"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Roadmap",
+        "title": "Kitewing app, 2027",
+        "lead": "Larger pieces of work by quarter.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Q1",
+        "items": [
+          {
+            "term": "Offline trips",
+            "details": "In progress · 60 %"
+          },
+          {
+            "term": "Shared trips",
+            "details": "Planned"
+          }
+        ]
+      },
+      {
+        "type": "details",
+        "heading": "Q2",
+        "items": [
+          {
+            "term": "Group bookings",
+            "details": "Planned"
+          },
+          {
+            "term": "Accessibility review",
+            "details": "Planned"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$comment": "Q65 R3: layout properties (and will-change) a transition may use, each with its reason. npm run check:motion fails on any other.",
+  "allow": [
+    {
+      "file": "packages/core/css/fundamentals/reveal.css",
+      "selector": "[data-dl='reveal']",
+      "properties": ["grid-template-rows"],
+      "why": "Reveal (P4, S3) is the one sanctioned layout animation: a panel opening in place must move what follows, which no transform can do; one per interaction, clipped only while moving."
+    }
+  ]
+}

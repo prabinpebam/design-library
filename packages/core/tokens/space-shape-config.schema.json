@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "space-shape-config/1",
+  "title": "Space and shape config",
+  "description": "A theme's space and shape: one option of each from space-shape-options.json. The choice becomes the default for the whole product; any subtree can still switch with data-space or data-shape. tools/space-shape.mjs builds and checks it (npm run tokens, npm run tokens:check).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "space", "shape"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": "space-shape-config/1" },
+    "space": {
+      "description": "How much room the product gives its content. Re-maps the space roles (inset, stack, inline, gutter, page margin); the 4 px scale, sizes and targets never change.",
+      "enum": ["compact", "normal", "loose", "extra-loose"],
+      "default": "normal"
+    },
+    "shape": {
+      "description": "How round corners are. Re-maps the radius roles (sm, md, lg, pill); shapes round by nature (radius.full) never change.",
+      "enum": ["sharp", "rounded", "soft", "super-soft"],
+      "default": "rounded"
+    }
+  }
+}

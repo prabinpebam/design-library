@@ -1,0 +1,46 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "harbour",
+  "version": "0.1.0",
+  "title": "Harbour Books",
+  "summary": "A small bookshop’s site: what’s new, the shop and how to visit. The worked example of the agent guide (Q76).",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "home",
+  "sections": [
+    {
+      "id": "shop",
+      "title": "Shop",
+      "summary": "Find a book and reserve it.",
+      "flows": [
+        { "id": "browse", "title": "Browse", "summary": "See what’s new and open a book.", "screens": ["home", "new-books", "book"] },
+        { "id": "reserve", "title": "Reserve", "summary": "Hold a book to collect in the shop.", "screens": ["reserve"] }
+      ]
+    },
+    {
+      "id": "visit",
+      "title": "Visit",
+      "summary": "Find the shop and its events.",
+      "flows": [
+        { "id": "find", "title": "Find the shop", "summary": "Opening hours and the way there.", "screens": ["visit"] },
+        { "id": "events", "title": "Events", "summary": "Readings and the book club.", "screens": ["events", "event"] }
+      ]
+    }
+  ],
+  "layouts": [
+    { "id": "home", "title": "Home", "component": "SiteLayout", "content": "content/home.json",
+      "regions": [
+        { "id": "header", "shared": true, "accepts": ["site-header"] },
+        { "id": "main", "accepts": ["*"] },
+        { "id": "footer", "shared": true, "accepts": ["site-footer"] }
+      ] },
+    { "id": "new-books", "title": "New books", "component": "SiteLayout", "planned": true },
+    { "id": "book", "title": "Book", "component": "SiteLayout", "planned": true },
+    { "id": "reserve", "title": "Reserve a book", "component": "SiteLayout", "planned": true },
+    { "id": "visit", "title": "Visit", "component": "SiteLayout", "planned": true },
+    { "id": "events", "title": "Events", "component": "SiteLayout", "planned": true },
+    { "id": "event", "title": "Event", "component": "SiteLayout", "planned": true }
+  ]
+}

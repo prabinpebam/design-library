@@ -1,0 +1,108 @@
+/*
+ * Tier 2 compound: Alert (F15.55, catalogue Feedback "Inline alert", "Page banner", "Callout"; ui-states section
+ * scope). One component in three placements. Its one boundary is a tinted fill in the tone's status colour (never a
+ * one-sided stripe, owner rule); the icon in the tone's foreground colour carries a word, so colour is never alone.
+ * Padding sits once on the inner row; a page banner runs edge to edge with the page margin inside.
+ */
+@layer compounds {
+  [data-dl='alert'] {
+    display: block;
+    inline-size: 100%;
+    border-radius: var(--c-alert-radius);
+    background-color: var(--dl-alert-tint);
+    color: var(--color-text);
+    --dl-alert-tint: var(--color-status-info-bg);
+    --dl-alert-mark: var(--color-status-info-fg);
+  }
+
+  [data-dl='alert'][data-tone='neutral'] { --dl-alert-tint: var(--color-bg-sunken); --dl-alert-mark: var(--color-text-muted); }
+  [data-dl='alert'][data-tone='success'] { --dl-alert-tint: var(--color-status-success-bg); --dl-alert-mark: var(--color-status-success-fg); }
+  [data-dl='alert'][data-tone='warning'] { --dl-alert-tint: var(--color-status-warning-bg); --dl-alert-mark: var(--color-status-warning-fg); }
+  [data-dl='alert'][data-tone='error'] { --dl-alert-tint: var(--color-status-danger-bg); --dl-alert-mark: var(--color-status-danger-fg); }
+
+  [data-dl='alert'][data-placement='page'] {
+    border-radius: 0;
+  }
+
+  [data-dl='alert'] > [data-dl-part='inner'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-alert-gap);
+    padding: var(--c-alert-padding-block) var(--c-alert-padding-inline);
+    --dl-alert-line: calc(var(--type-body-size) * var(--type-body-leading));
+    --dl-alert-lift: 0px;
+  }
+
+  /* Beside a small button (Close, or inline actions) the icon and the first line sit on the button's centre line. */
+  [data-dl='alert']:has(> [data-dl-part='inner'] > [data-dl-part='close']) > [data-dl-part='inner'],
+  [data-dl='alert'][data-placement='inline']:has(> [data-dl-part='inner'] > [data-dl-part='body'] > [data-dl-part='actions']) > [data-dl-part='inner'] {
+    --dl-alert-lift: max(0px, calc((var(--c-button-size-s) - var(--dl-alert-line)) / 2));
+  }
+
+  [data-dl='alert'][data-placement='page'] > [data-dl-part='inner'] {
+    padding-inline: var(--c-alert-page-padding-inline);
+  }
+
+  /* The icon sits on the first line of the words, whatever the title's length. */
+  [data-dl='alert'] > [data-dl-part='inner'] > [data-dl-part='status'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    min-block-size: calc(var(--dl-alert-line) + var(--dl-alert-lift));
+    padding-block-start: var(--dl-alert-lift);
+    color: var(--dl-alert-mark);
+  }
+
+  [data-dl='alert'] > [data-dl-part='inner'] > [data-dl-part='body'] {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--c-alert-actions-space);
+    min-inline-size: 0;
+  }
+
+  /* Inline: words and actions share a line while the words keep their least width; narrower, the actions wrap under. */
+  [data-dl='alert'][data-placement='inline'] > [data-dl-part='inner'] > [data-dl-part='body'] {
+    flex-flow: row wrap;
+    align-items: flex-start;
+    column-gap: var(--c-alert-actions-gap);
+  }
+
+  [data-dl='alert'][data-placement='inline'] > [data-dl-part='inner'] > [data-dl-part='body'] > [data-dl-part='words'] {
+    flex: 1 1 var(--c-alert-words-min);
+  }
+
+  [data-dl='alert'] > [data-dl-part='inner'] > [data-dl-part='body'] > [data-dl-part='words'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-alert-content-gap);
+    min-inline-size: 0;
+    padding-block-start: var(--dl-alert-lift);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='alert'] > [data-dl-part='inner'] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: var(--weight-semibold);
+  }
+
+  [data-dl='alert'] > [data-dl-part='inner'] > [data-dl-part='body'] > [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-alert-actions-gap);
+  }
+
+  [data-dl='alert'] > [data-dl-part='inner'] > [data-dl-part='close'] {
+    flex: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='alert'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

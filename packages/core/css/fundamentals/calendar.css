@@ -1,0 +1,182 @@
+/*
+ * Tier 1 fundamental: Calendar (Q50). Head (zoom-out title, paging), the view, Today. Day cells touch, so a range is one
+ * band with only its outer ends rounded (owner rule: square inner segments); the chosen day is a filled circle inside its
+ * cell and today a ring, so the two read apart. Zoom (Q65 C21, M9): the views sit in a Morph,
+ * so the old level scales away and fades while the new one scales in, as transitions that retarget when a second zoom comes
+ * mid-way; paging cross-fades; a step made with keys swaps at once (Z8); reduced motion only fades.
+ */
+@layer fundamentals {
+  [data-dl='calendar'] {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--c-calendar-gap);
+    color: var(--color-text);
+  }
+
+  [data-dl='calendar'] > [data-dl-part='head'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='calendar'] > [data-dl-part='head'] > [data-dl-part='paging'] {
+    display: flex;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='calendar'] [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='calendar'] [data-dl-part='views'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-calendar-month-gap);
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'] {
+    inline-size: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  /* The cells carry no rules or fills of a data table: the days are one surface. */
+  [data-dl='calendar'] [data-dl-part='grid'] :is(tr, th, td) {
+    border: none;
+    background-color: transparent;
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'] th {
+    block-size: var(--c-calendar-cell);
+    padding: 0;
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-weight: var(--type-label-weight);
+    text-align: center;
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'] th[data-dl-part='week'] {
+    font-variant-numeric: tabular-nums;
+    font-weight: var(--type-body-weight);
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'] td {
+    inline-size: var(--c-calendar-cell);
+    block-size: var(--c-calendar-cell);
+    padding: 0;
+    text-align: center;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'] td[data-dl-part='blank'] {
+    cursor: default;
+  }
+
+  [data-dl='calendar'] [data-dl-part='day'] {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--c-calendar-mark);
+    block-size: var(--c-calendar-mark);
+    border: var(--border-thick) solid transparent;
+    border-radius: var(--radius-full);
+    /* Q65 Z9: hover across the grid's cells is instant (a collection); no fading trail behind the pointer. */
+  }
+
+  @media (hover: hover) {
+    [data-dl='calendar'] td:not([aria-disabled='true']):hover > [data-dl-part='day'] {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='calendar'] td[data-outside] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='calendar'] td[data-today] > [data-dl-part='day'] {
+    border-color: var(--color-accent);
+  }
+
+  [data-dl='calendar'] td[aria-selected='true'] > [data-dl-part='day'] {
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='calendar'] td[aria-disabled='true'] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='calendar'] td[data-unavailable] > [data-dl-part='day'] {
+    text-decoration: line-through;
+  }
+
+  [data-dl='calendar'] td:focus-visible {
+    outline: none;
+  }
+
+  [data-dl='calendar'] td:focus-visible > [data-dl-part='day'] {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* A range: one band across the touching cells, rounded only at its outer ends; a preview while choosing the last day. */
+  [data-dl='calendar'] td[data-range] {
+    background-color: var(--state-selected);
+  }
+
+  [data-dl='calendar'] td:is([data-range='start'], [data-range='one']) {
+    border-start-start-radius: var(--radius-full);
+    border-end-start-radius: var(--radius-full);
+  }
+
+  [data-dl='calendar'] td:is([data-range='end'], [data-range='one']) {
+    border-start-end-radius: var(--radius-full);
+    border-end-end-radius: var(--radius-full);
+  }
+
+  [data-dl='calendar'] td[data-preview] {
+    background-color: var(--state-hover);
+  }
+
+  [data-dl='calendar'] td[data-range='end'][data-preview] > [data-dl-part='day'] {
+    border-color: var(--color-accent);
+  }
+
+  /* Months, years and decades: four wide cells a row, the same width as the week. */
+  [data-dl='calendar'] [data-dl-part='grid'][data-view] {
+    inline-size: calc(7 * var(--c-calendar-cell));
+  }
+
+  [data-dl='calendar'][data-months='2'] [data-dl-part='grid'][data-view] {
+    inline-size: calc(14 * var(--c-calendar-cell) + var(--c-calendar-month-gap));
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'][data-view] td {
+    inline-size: auto;
+    block-size: var(--c-calendar-zoom-cell);
+  }
+
+  [data-dl='calendar'] [data-dl-part='grid'][data-view] [data-dl-part='day'] {
+    inline-size: calc(100% - var(--space-inline-pair));
+    block-size: calc(var(--c-calendar-zoom-cell) - var(--space-inline-pair));
+    border-radius: var(--radius-md);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='calendar'] td[aria-selected='true'] > [data-dl-part='day'] {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+
+    [data-dl='calendar'] td[data-range] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "$description": "Clipping allow-list (owner F13b, 2026-11-07): every clip and scroll region with its reason. Read by tools/check-clipping.mjs and the library's Clipping page.",
+  "clips": [
+    {
+      "file": "packages/core/css/fundamentals/reveal.css",
+      "selector": "[data-dl='reveal'] > [data-dl-part='clip']",
+      "kind": "transient clip",
+      "reason": "Reveal (Q65 P4): content is clipped only while closed or growing and shrinking; once open and settled the clip switches to overflow: visible, so focus rings and shadows inside are never cut off"
+    },
+    {
+      "file": "packages/core/css/fundamentals/reveal.css",
+      "selector": "[data-dl='reveal'][data-open][data-appear] > [data-dl-part='clip']",
+      "kind": "transient clip",
+      "reason": "Reveal (Q65 P4): the starting style of a message that arrives open, clipped only while it grows"
+    },
+    {
+      "file": "packages/core/css/fundamentals/announcer.css",
+      "selector": "[data-dl='announcer']",
+      "kind": "visually hidden",
+      "reason": "The page's live announcer (F15.54): status and alert messages said to assistive technology; the notification pill or the changed control shows them"
+    },
+    {
+      "file": "packages/core/css/fundamentals/calendar.css",
+      "selector": "[data-dl='calendar'] [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "Calendar (Q50): the period after paging or zooming, said politely; the title button already shows it"
+    },
+    {
+      "file": "packages/core/css/fundamentals/rating.css",
+      "selector": "[data-dl='rating'] [data-dl-part='star-full']",
+      "kind": "shape crop",
+      "reason": "Shows a fraction of a star (4.3 of 5, half stars) by cropping the solid star over its outline; nothing inside is focusable"
+    },
+    {
+      "file": "packages/core/css/fundamentals/list.css",
+      "selector": "[data-dl='list'][data-reorder] + [data-dl-part='reorder-announce']",
+      "kind": "visually hidden",
+      "reason": "Says where a moved item landed (F15.8e); the list shows it"
+    },
+    {
+      "file": "packages/core/css/compounds/gradient-editor.css",
+      "selector": "[data-dl='gradient-editor'] > [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "Says a stop was added or removed; the bar shows it"
+    },
+    {
+      "file": "packages/core/css/compounds/tag-input.css",
+      "selector": "[data-dl='tag-input'] > [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "Says which tags were added, removed or refused, and the count; the chips and the message line show it"
+    },
+    {
+      "file": "packages/core/css/compounds/allocation-slider.css",
+      "selector": "[data-dl='allocation-slider'] > [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "Says which part gave or took share after a typed value; the legend shows the result"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='text-field'] [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "Said to assistive technology only; the tick shows it"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='checkbox'][data-label-hidden] > [data-dl-part='words']",
+      "kind": "visually hidden",
+      "reason": "A hidden label still names the checkbox (the label part was renamed words in F15.5)"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='segmented-control'] > [data-dl-part='segment'] > input",
+      "kind": "visually hidden",
+      "reason": "The native radio stays for keyboard and assistive technology; the segment draws its state"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='value']",
+      "kind": "text truncation",
+      "reason": "One line in the closed box; the full text is in the open list and the accessible name"
+    },
+    {
+      "file": "packages/core/css/compounds/stacked-bar.css",
+      "selector": "[data-dl='stacked-bar']",
+      "kind": "shape crop",
+      "reason": "Crops square segments to the whole bar’s rounded ends; nothing inside is focusable or shadowed"
+    },
+    {
+      "file": "packages/core/css/compounds/token-specimen.css",
+      "selector": "[data-dl='token-specimen'] [data-dl-part='track']",
+      "kind": "shape crop",
+      "reason": "The moving dot stays inside its track; nothing inside is focusable"
+    },
+    {
+      "file": "packages/core/css/compounds/example.css",
+      "selector": "[data-dl='example'] > [data-dl-part='canvas']",
+      "kind": "shape crop",
+      "reason": "Crops the preview’s scrollbar to the canvas’s rounded corners; the preview pads its content by the example inset, so rings and shadows inside survive"
+    },
+    {
+      "file": "packages/core/css/layouts/library.css",
+      "selector": "[data-dl-skip]",
+      "kind": "visually hidden",
+      "reason": "The skip link is out of sight until focused, then shown in full"
+    },
+    {
+      "file": "apps/library/src/revisions/revisions.css",
+      "selector": "[data-app='pick-label']",
+      "kind": "text truncation",
+      "reason": "The picker’s one-line label; the full selector is in the revision pane"
+    },
+    {
+      "file": "apps/library/src/revisions/revisions.css",
+      "selector": "[data-app='pick-status']",
+      "kind": "visually hidden",
+      "reason": "The picker’s announcement for screen readers"
+    },
+    {
+      "file": "packages/core/css/fundamentals/scroll-area.css",
+      "selector": "[data-dl='scroll-area'][data-axis=",
+      "kind": "axis lock",
+      "reason": "A one-axis ScrollArea never scrolls the other way; its content inset keeps edge rings and shadows inside"
+    },
+    {
+      "file": "packages/core/css/compounds/data-table.css",
+      "selector": "[data-dl='data-table']",
+      "kind": "shape crop",
+      "reason": "The outline’s rounded corners crop the table scrolling inside its ScrollArea; cells carry the padding, so rings stay inside"
+    },
+    {
+      "file": "packages/core/css/compounds/context-matrix.css",
+      "selector": "[data-dl='context-matrix']",
+      "kind": "shape crop",
+      "reason": "The outline’s rounded corners crop the contexts scrolling inside its ScrollArea; cells carry the padding"
+    },
+    {
+      "file": "packages/core/css/compounds/code-block.css",
+      "selector": "[data-dl='code-block'] > [data-dl-part='well']",
+      "kind": "shape crop",
+      "reason": "The well’s rounded corners crop the code scrolling inside its ScrollArea; the code carries the padding"
+    },
+    {
+      "file": "packages/core/css/fundamentals/badge.css",
+      "selector": "[data-dl='badge'] > [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "What a count, dot or presence means, said to assistive technology; the shape shows it"
+    },
+    {
+      "file": "packages/core/css/fundamentals/pickers.css",
+      "selector": "[data-dl='list-item'] [data-dl-part='item-announce']",
+      "kind": "visually hidden",
+      "reason": "\", unread\" said to assistive technology; the bold name and dot show it"
+    },
+    {
+      "file": "packages/core/css/fundamentals/pickers.css",
+      "selector": "[data-dl='list-item'] > [data-dl-part='item-words'] > [data-dl-part='item-description']",
+      "kind": "text truncation",
+      "reason": "A description stops after two lines; the full text stays in the accessible name and the DOM"
+    },
+    {
+      "file": "packages/core/css/fundamentals/pickers.css",
+      "selector": "[data-dl='list-item'] > :is([data-dl-part='item-avatar'], [data-dl-part='item-thumbnail'])",
+      "kind": "media crop",
+      "reason": "A picture is cropped to the round avatar or the square thumbnail; nothing focusable or bordered inside"
+    },
+    {
+      "file": "packages/core/css/fundamentals/chip.css",
+      "selector": "[data-dl='chip-group'] > [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "\"Removed …\" said to assistive technology; the chip leaving shows it"
+    },
+    {
+      "file": "packages/core/css/fundamentals/chip.css",
+      "selector": "[data-dl='chip'] > [data-dl-part='words']",
+      "kind": "text truncation",
+      "reason": "A long chip name ends with an ellipsis; the full name stays in the text and the Remove button's name"
+    },
+    {
+      "file": "packages/core/css/fundamentals/chip.css",
+      "selector": "[data-dl='chip'] > [data-dl-part='avatar']",
+      "kind": "media crop",
+      "reason": "A picture is cropped to the round avatar; nothing focusable or bordered inside"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='button'] > [data-dl-part='fill']",
+      "kind": "shape crop",
+      "reason": "Progress fill (F15.1d, Q38): reveals the fill up to the value from the reading-start edge; nothing inside is focusable, the button keeps its own outline and focus ring"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='button']:dir(rtl) > [data-dl-part='fill']",
+      "kind": "shape crop",
+      "reason": "The same progress fill, mirrored for right-to-left text"
+    },
+    {
+      "file": "packages/core/css/fundamentals/field.css",
+      "selector": "[data-dl='field'] > [data-dl-part='label'][data-hidden]",
+      "kind": "visually hidden",
+      "reason": "hideLabel (F15.2b, F15.7; Field since F15.18): the label still names the TextField, NumberField or any Field where a glyph or row heading says what it is"
+    },
+    {
+      "file": "packages/core/css/fundamentals/controls.css",
+      "selector": "[data-dl='select'] [data-dl-part='announce']",
+      "kind": "visually hidden",
+      "reason": "Said to assistive technology only (F15.4): the chosen option is visible in the box"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='card'][data-variant='outlined']",
+      "file": "packages/core/css/compounds/card.css",
+      "reason": "Card (F15.34): crops the full-bleed picture to the card's rounded corners in every layout, stacked or beside; the body's padding keeps the actions' focus rings inside, and the card's own focus ring is its outline, which it never clips"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='card'] > [data-dl-part='media']",
+      "file": "packages/core/css/compounds/card.css",
+      "reason": "Card: crops the picture to the media frame's shape and corners (plain and row cards round the picture itself); nothing inside is focusable"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='carousel'] [data-dl-part='media']",
+      "file": "packages/core/css/compounds/carousel.css",
+      "reason": "Carousel (F15.27): crops each slide's picture to its frame; nothing inside is focusable"
+    },
+    {
+      "kind": "visually hidden",
+      "selector": "[data-dl='carousel'] > [data-dl-part='announce']",
+      "file": "packages/core/css/compounds/carousel.css",
+      "reason": "Carousel: says the slide number after a change, politely; the counter shows it"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='carousel'] [data-dl-part='dot']",
+      "file": "packages/core/css/compounds/carousel.css",
+      "reason": "Carousel: every dot's mark is the pill's size and a resting one is cropped to a circle in its middle, so choosing one never moves anything; the dot's focus ring is on the button, outside the mark"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='carousel'] [data-dl-part='thumb']",
+      "file": "packages/core/css/compounds/carousel.css",
+      "reason": "Carousel: crops each thumbnail picture to its button's corners; the button's focus ring is its own outline, drawn inset, which it never clips"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='dialog']",
+      "file": "packages/core/css/compounds/dialog.css",
+      "reason": "Dialog (F15.32): keeps the surface inside its rounded corners; the body is the listed scroll region with its padding inside, and the header's and answers' focus rings sit inside the dialog padding"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='sheet']",
+      "file": "packages/core/css/compounds/sheet.css",
+      "reason": "Sheet (F15.47): keeps the surface inside its rounded corners and stops the slide's overflow; the body is the listed scroll region, and the header's and answers' focus rings sit inside the sheet padding"
+    },
+    {
+      "kind": "visually hidden",
+      "selector": "[data-dl='lightbox'] [data-dl-part='hidden-count']",
+      "file": "packages/core/css/compounds/lightbox.css",
+      "reason": "Lightbox (F15.38): says which picture of how many is shown; the counter shows it"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='media-player'] > [data-dl-part='stage']",
+      "file": "packages/core/css/compounds/media-player.css",
+      "reason": "MediaPlayer (F15.49): crops the video, poster or remote frame to the player's rounded corners; the play button sits in the middle, its focus ring well inside, and the native controls draw their own rings inside the video"
+    },
+    {
+      "kind": "visually hidden",
+      "selector": "[data-dl='persona'] [data-dl-part='announce']",
+      "file": "packages/core/css/fundamentals/avatar-group.css",
+      "reason": "Persona (F15.26): says the photo was changed or removed; the avatar shows it"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='avatar'] [data-dl-part='face']",
+      "file": "packages/core/css/fundamentals/avatar.css",
+      "reason": "Avatar (F15.25): crops the picture or initials to a circle or rounded square; the focus ring, presence and badges sit on the avatar outside the face"
+    },
+    {
+      "kind": "shape crop",
+      "selector": "[data-dl='image']",
+      "file": "packages/core/css/fundamentals/image.css",
+      "reason": "Image (F15.36): crops the picture to its frame's shape and corners and holds the space while it loads; nothing inside is focusable"
+    }
+  ],
+  "scrollRegions": [
+    {
+      "file": "packages/core/css/fundamentals/scroll-area.css",
+      "selector": "[data-dl='scroll-area'] > [data-dl-part='viewport']",
+      "reason": "Every ScrollArea: the scroll box bleeds to its surface; padding sits on its content part; the drawn bar sits in the content inset",
+      "bar": "ScrollArea"
+    },
+    {
+      "selector": "[data-dl='carousel'] > [data-dl-part='track']",
+      "file": "packages/core/css/compounds/carousel.css",
+      "reason": "Carousel: the slide track scrolls with snap and draws no bar (arrows, the picker, swipe and keys replace it; data-scrollbar=\"none\" in ScrollArea's file); the track's own focus ring is its outline; slides' content keeps its rings inside each slide"
+    },
+    {
+      "selector": "[data-dl='carousel'] [data-dl-part='pager'][data-pager='thumbnails']",
+      "file": "packages/core/css/compounds/carousel.css",
+      "reason": "Carousel: a long row of thumbnails scrolls sideways; its padding is the focus ring's width and each thumb draws its ring inset"
+    },
+    {
+      "selector": "[data-dl='dialog'] [data-dl-part='body']",
+      "file": "packages/core/css/compounds/dialog.css",
+      "reason": "Dialog: the body scrolls on its own with its padding inside, so the scrollbar sits at the dialog's edge and the fields' focus rings are never clipped"
+    },
+    {
+      "selector": "[data-dl='sheet'] [data-dl-part='body']",
+      "file": "packages/core/css/compounds/sheet.css",
+      "reason": "Sheet: the body scrolls on its own with its padding inside, so the scrollbar sits at the sheet's edge and the fields' focus rings are never clipped"
+    },
+    {
+      "selector": "[data-dl='avatar-group'] > [data-dl-part='popup']",
+      "file": "packages/core/css/fundamentals/avatar-group.css",
+      "reason": "AvatarGroup (F15.26): the \"+n\" list of everyone else scrolls inside its popup like every popup list; rows draw their focus inside themselves"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "issue-search",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "search",
+        "heading": "Find issues",
+        "label": "Search issues",
+        "button": "Search",
+        "query": "trip",
+        "summary": "{count} issues match “{query}”",
+        "results": [
+          {
+            "eyebrow": "KW-151 · Story",
+            "title": "Remember the last trip filter",
+            "description": "To do · Jonas Lind",
+            "href": "/issue"
+          },
+          {
+            "eyebrow": "KW-148 · Bug",
+            "title": "Dates shift by a day in Lisbon",
+            "description": "In progress · Ama Mensah",
+            "href": "/issue"
+          },
+          {
+            "eyebrow": "KW-140 · Task",
+            "title": "Trip filter analytics",
+            "description": "Done · Keiko Arai",
+            "href": "/issue"
+          }
+        ],
+        "none": {
+          "title": "No issues match “{query}”",
+          "text": "Search covers titles, keys and descriptions in this project.",
+          "links": [
+            {
+              "label": "Report an issue",
+              "href": "/create-issue"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

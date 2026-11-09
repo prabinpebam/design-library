@@ -1,0 +1,79 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "submit-talk",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Your talk",
+        "intro": "Thirty minutes, for designers and engineers who build interfaces.",
+        "fields": [
+          {
+            "id": "title",
+            "label": "Title",
+            "kind": "text"
+          },
+          {
+            "id": "abstract",
+            "label": "What it’s about",
+            "kind": "long",
+            "hint": "About 150 words: the problem, what you learned, what people take away."
+          },
+          {
+            "id": "level",
+            "label": "Level",
+            "kind": "choice",
+            "options": [
+              "Introductory",
+              "Intermediate",
+              "Advanced"
+            ]
+          },
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          }
+        ],
+        "submit": "Submit talk",
+        "sent": "Submitted. The next screen shows what happens.",
+        "links": [
+          {
+            "label": "Read the call again",
+            "href": "/cfp"
+          }
+        ],
+        "error": "The title and what it’s about are missing. Your other answers are kept.",
+        "outcome": {
+          "eyebrow": "Talk submitted",
+          "title": "Thanks for proposing a talk",
+          "text": "Five reviewers read every proposal without your name. We’ll tell you by 1 December.",
+          "links": [
+            {
+              "label": "Follow your submission",
+              "href": "/submission"
+            },
+            {
+              "label": "Submit another",
+              "href": "/submit-talk"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

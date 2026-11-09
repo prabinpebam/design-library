@@ -1,0 +1,57 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "customers",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Customers",
+        "title": "Who ships with Northwind",
+        "lead": "Manufacturers, retailers and growers on four continents.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Stories",
+        "max": 3,
+        "items": [
+          {
+            "eyebrow": "Retail",
+            "title": "Lumen Home cut stock-outs by half",
+            "description": "Weekly ocean slots and a shared warehouse in Rotterdam.",
+            "meta": "6 min read",
+            "href": "/story",
+            "picture": "sand"
+          },
+          {
+            "eyebrow": "Agriculture",
+            "title": "Fresh flowers to 12 countries overnight",
+            "description": "Cold-chain air freight from Nairobi.",
+            "meta": "4 min read",
+            "href": "/story",
+            "picture": "meadow"
+          },
+          {
+            "eyebrow": "Industry",
+            "title": "Spare parts within 48 hours",
+            "description": "Next-flight-out for a turbine maker.",
+            "meta": "5 min read",
+            "href": "/story",
+            "picture": "frost"
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "They answer the phone, and they know where our boxes are.",
+        "name": "Ines Duarte",
+        "role": "Supply lead, Lumen Home"
+      }
+    ]
+  }
+}

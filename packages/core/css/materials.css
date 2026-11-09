@@ -1,0 +1,71 @@
+/*
+ * Tier 0: material roles (Q73, docs/materials.md, MB1). Components read these and never mix their own backgrounds:
+ *   --material-chrome-bg      MT6 chrome: bars that stay while content scrolls under them
+ *   --material-floating-bg    MT7 floating: popovers, menus, the floating toolbar, notification pills, drawers
+ *   --material-backdrop       the backdrop filter both write beside their fill (`none` when solid)
+ *   --material-veil           MT10: dims media under controls and text that sit on it
+ * Canvas, sunken, raised, tint, control fill, modal and scrim are the colour roles (`--color-bg*`).
+ *
+ * Frosted is a finish of chrome and floating only: the role's solid colour at --material-tint plus a blur. The tint
+ * floor, 85 %, keeps text-muted at 4.5:1 or more over a uniform black (light) or white (dark) backdrop with no help
+ * from the blur (A6, AR9; measured in materials.md). `data-material="frosted" | "solid"` switches it for a subtree;
+ * the library and template sites set it on the root from the global setting. Reduced transparency, more contrast,
+ * forced colours, print and browsers without backdrop-filter are always solid (AR2-AR6).
+ *
+ * Hand-authored, not DTCG: the builder has no composite colour type for a mix of a role and transparency (as motion's
+ * T10 recipes). The leaf switches (--material-tint, --material-backdrop) inherit; the composites are declared again on
+ * every element that can change a leaf, so a subtree's switch reaches them (the same reason as token-contexts echoes).
+ */
+@layer tokens {
+  :root,
+  [data-material='frosted'] {
+    --material-tint: 85%;
+    --material-backdrop: blur(20px) saturate(1.5);
+  }
+
+  [data-material='solid'],
+  [data-contrast='more'],
+  [data-contrast='more'] [data-material] {
+    --material-tint: 100%;
+    --material-backdrop: none;
+  }
+
+  @media (prefers-contrast: more) {
+    :root:not([data-contrast='standard']) {
+      --material-tint: 100%;
+      --material-backdrop: none;
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce), (forced-colors: active), print {
+    :root,
+    [data-material] {
+      --material-tint: 100%;
+      --material-backdrop: none;
+    }
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :root,
+    [data-material] {
+      --material-tint: 100%;
+      --material-backdrop: none;
+    }
+  }
+
+  /* AR7: a floating surface inside another one (a notification pill in a floating region, not a top-layer popup, which
+     paints over the page on its own) is solid, so blur never stacks. */
+  [data-material='floating'] [data-material='floating']:not([popover]) {
+    --material-tint: 100%;
+    --material-backdrop: none;
+  }
+
+  :root,
+  [data-material],
+  [data-contrast] {
+    --material-chrome-bg: color-mix(in oklab, var(--color-bg) var(--material-tint), transparent);
+    --material-floating-bg: color-mix(in oklab, var(--color-bg-raised) var(--material-tint), transparent);
+    /* The veil is black in both schemes, by definition (Apple's 35 % dimming layer; Fluent smoke): a tier-0 value. */
+    --material-veil: color-mix(in oklab, black 35%, transparent);
+  }
+}

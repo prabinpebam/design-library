@@ -1,0 +1,1920 @@
+/*
+ * Tier 1 fundamentals: Button, Switch, the compact form of Progress, the text fields, Checkbox and SegmentedControl.
+ * Semantic tokens and each component's own c.* group only. Geometry never changes with state: outlines are reserved
+ * transparent, every Button label shares one box, and the Switch spinner draws inside the track's own box.
+ */
+@layer fundamentals {
+  /* Progress, compact form: a turning arc in the current text colour. */
+  [data-dl='progress'][data-form='inline'] {
+    display: inline-block;
+    flex: none;
+    inline-size: var(--size-icon-md);
+    block-size: var(--size-icon-md);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--c-progress-stroke-width);
+    stroke-linecap: round;
+    animation: dl-progress-turn var(--c-progress-revolution) var(--easing-linear) infinite;
+  }
+
+  @keyframes dl-progress-turn {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='progress'][data-form='inline'] {
+      animation: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='progress'][data-form='inline'] {
+    animation: none;
+  }
+
+  /* Button: every layer (rest, pending, done) sits in one grid area, so the widest label fixes the width. */
+  [data-dl='button'] {
+    display: inline-grid;
+    grid-template-areas: 'label';
+    place-items: center;
+    min-block-size: var(--c-button-size);
+    min-inline-size: var(--c-button-size);
+    padding-inline: var(--c-button-padding-inline);
+    border: var(--c-button-border-width) solid transparent;
+    border-radius: var(--c-button-radius);
+    background-color: transparent;
+    color: var(--color-text);
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+    cursor: pointer;
+    /* Q65 C2 / M5: every value interpolates at the default; the release of a press eases back over the same. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      border-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard),
+      scale var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='button'][data-size='xs'] {
+    min-block-size: var(--c-button-size-xs);
+    min-inline-size: var(--c-button-size-xs);
+    padding-inline: var(--c-button-padding-inline-sm);
+    border-radius: var(--c-button-radius-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='button'][data-size='s'] {
+    min-block-size: var(--c-button-size-s);
+    min-inline-size: var(--c-button-size-s);
+    padding-inline: var(--c-button-padding-inline-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='button'][data-size='m'] {
+    min-block-size: var(--c-button-size-m);
+    min-inline-size: var(--c-button-size-m);
+  }
+
+  [data-dl='button'][data-size='l'] {
+    min-block-size: var(--c-button-size-l);
+    min-inline-size: var(--c-button-size-l);
+    padding-inline: var(--c-button-padding-inline-lg);
+    border-radius: var(--c-button-radius-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='button'][data-size='xl'] {
+    min-block-size: var(--c-button-size-xl);
+    min-inline-size: var(--c-button-size-xl);
+    padding-inline: var(--c-button-padding-inline-lg);
+    border-radius: var(--c-button-radius-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='button'][data-size='xxl'] {
+    min-block-size: var(--c-button-size-xxl);
+    min-inline-size: var(--c-button-size-xxl);
+    padding-inline: var(--c-button-padding-inline-lg);
+    border-radius: var(--c-button-radius-lg);
+    font-size: var(--type-heading-3-size);
+  }
+
+  /* The inline spinner follows the icon size of each step. */
+  [data-dl='button']:is([data-size='xs'], [data-size='s']) [data-dl='progress'] {
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+  }
+
+  [data-dl='button']:is([data-size='l'], [data-size='xl']) [data-dl='progress'] {
+    inline-size: var(--size-icon-lg);
+    block-size: var(--size-icon-lg);
+  }
+
+  [data-dl='button'][data-size='xxl'] [data-dl='progress'] {
+    inline-size: var(--size-icon-xl);
+    block-size: var(--size-icon-xl);
+  }
+
+  [data-dl='button'][data-icon-only] {
+    padding-inline: 0;
+  }
+
+  /* A disclosure that's open: the selected tint, the one cue for "open". */
+  [data-dl='button'][aria-expanded='true'] {
+    background-color: var(--state-selected);
+  }
+
+  /*
+   * Q65 C2 (same-wrapper morph): the layers cross-fade in the button's held width. The leaving label clears over quick
+   * (it has been decided); the arriving one fades in over change. Visibility follows the fade, so a hidden layer is
+   * never read or hit. Reduced motion keeps the fade (it doesn't travel).
+   */
+  [data-dl='button'] > [data-dl-part='layer'] {
+    grid-area: label;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-button-gap);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity var(--duration-quick) var(--easing-exit),
+      visibility 0s var(--easing-linear) var(--duration-quick);
+  }
+
+  [data-dl='button'] > [data-dl-part='layer'][data-shown] {
+    visibility: visible;
+    opacity: 1;
+    transition:
+      opacity var(--duration-change) var(--easing-standard),
+      visibility 0s;
+  }
+
+  [data-dl='button'][data-emphasis='default'] {
+    border-color: var(--color-border-control);
+    background-color: var(--color-bg-control);
+  }
+
+  [data-dl='button'][data-emphasis='primary'] {
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  /* Danger: the status colour, for an action that destroys or can't be undone. */
+  [data-dl='button'][data-emphasis='danger'] {
+    background-color: var(--color-status-danger-fill);
+    color: var(--color-status-danger-on-fill);
+  }
+
+  /* Unavailable with a reason: focusable, readable (muted text keeps 4.5:1), does nothing; the reason is its description. */
+  [data-dl='button'][data-unavailable] {
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+  }
+
+  [data-dl='button'][data-unavailable]:is([data-emphasis='primary'], [data-emphasis='danger']) {
+    border-color: var(--color-border-strong);
+    background-color: transparent;
+  }
+
+  /*
+   * In progress, ring: an arc travels around the button's own border, inside its box, so nothing outside moves and
+   * nothing is clipped. Accent on the page; the on-fill text colour on a filled button. Same stroke and caps as the
+   * inline spinner and the Switch knob's arc.
+   */
+  [data-dl='button'] {
+    position: relative;
+  }
+
+  [data-dl='button'] > [data-dl-part='ring'] {
+    position: absolute;
+    inset: calc(-1 * var(--c-button-border-width));
+    inline-size: calc(100% + 2 * var(--c-button-border-width));
+    block-size: calc(100% + 2 * var(--c-button-border-width));
+    overflow: visible;
+    pointer-events: none;
+    color: var(--color-accent);
+  }
+
+  [data-dl='button'][data-emphasis='primary'] > [data-dl-part='ring'] {
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='button'][data-emphasis='danger'] > [data-dl-part='ring'] {
+    color: var(--color-status-danger-on-fill);
+  }
+
+  [data-dl='button'] > [data-dl-part='ring'] > rect {
+    x: calc(var(--c-button-ring-width) / 2);
+    y: calc(var(--c-button-ring-width) / 2);
+    width: calc(100% - var(--c-button-ring-width));
+    height: calc(100% - var(--c-button-ring-width));
+    rx: calc(var(--c-button-radius) - var(--c-button-ring-width) / 2);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--c-button-ring-width);
+    stroke-linecap: round;
+    stroke-dasharray: 25 75;
+    animation: dl-button-ring var(--c-button-ring-revolution) var(--easing-linear) infinite;
+  }
+
+  [data-dl='button'][data-size='xs'] > [data-dl-part='ring'] > rect {
+    rx: calc(var(--c-button-radius-sm) - var(--c-button-ring-width) / 2);
+  }
+
+  [data-dl='button']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) > [data-dl-part='ring'] > rect {
+    rx: calc(var(--c-button-radius-lg) - var(--c-button-ring-width) / 2);
+  }
+
+  @keyframes dl-button-ring {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Reduced motion: the arc holds still; the present-tense label still says it's working. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='button'] > [data-dl-part='ring'] > rect {
+      animation: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='button'] > [data-dl-part='ring'] > rect {
+    animation: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='button'] > [data-dl-part='ring'] {
+      color: Highlight;
+    }
+  }
+
+  /*
+   * In progress, fill (Q38): the button itself fills up from its reading-start edge as the percentage grows. The unfilled
+   * part takes a subtle tint with the normal text colour; the filled part is the button's own fill with its on-fill
+   * text, drawn as an aria-hidden copy of the content clipped to the percentage, so the label reads at 4.5:1 over both
+   * parts. The clip keeps the button's outer radius and a square leading edge (no rounded inner segment). No size change.
+   */
+  [data-dl='button'][data-filling][data-emphasis='primary'] {
+    background-color: var(--c-button-fill-track);
+    color: var(--color-text);
+  }
+
+  [data-dl='button'][data-filling][data-emphasis='danger'] {
+    background-color: var(--c-button-fill-track-danger);
+    color: var(--color-text);
+  }
+
+  [data-dl='button'] > [data-dl-part='fill'] {
+    position: absolute;
+    inset: calc(-1 * var(--c-button-border-width));
+    display: grid;
+    grid-template-areas: 'label';
+    place-items: center;
+    padding-inline: inherit;
+    border: inherit;
+    border-color: transparent;
+    border-radius: inherit;
+    pointer-events: none;
+    clip-path: inset(0 calc(100% - var(--button-fill, 0%)) 0 0);
+    /* Q65 C26: a determinate fill glides at an even pace (linear), retargeting on each update. */
+    transition: clip-path var(--c-button-fill-move) var(--easing-linear);
+  }
+
+  [data-dl='button'] > [data-dl-part='fill'] > [data-dl-part='layer'] {
+    grid-area: label;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-button-gap);
+  }
+
+  [data-dl='button']:dir(rtl) > [data-dl-part='fill'] {
+    clip-path: inset(0 0 0 calc(100% - var(--button-fill, 0%)));
+  }
+
+  [data-dl='button'][data-emphasis='primary'] > [data-dl-part='fill'] {
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='button'][data-emphasis='danger'] > [data-dl-part='fill'] {
+    background-color: var(--color-status-danger-fill);
+    color: var(--color-status-danger-on-fill);
+  }
+
+  /* Reduced motion: the fill jumps to each new percentage, no easing. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='button'] > [data-dl-part='fill'] {
+      transition: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='button'] > [data-dl-part='fill'] {
+    transition: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='button'] > [data-dl-part='fill'] {
+      background-color: Highlight;
+      color: HighlightText;
+      forced-color-adjust: none;
+    }
+  }
+
+  @media (hover: hover) {
+    [data-dl='button']:enabled:not([aria-disabled='true']):hover {
+      background-color: var(--state-hover);
+    }
+
+    [data-dl='button'][data-emphasis='primary']:enabled:not([aria-disabled='true']):hover {
+      background-color: var(--color-accent-hover);
+    }
+
+    [data-dl='button'][aria-expanded='true']:enabled:not([aria-disabled='true']):hover {
+      background-color: var(--state-selected);
+    }
+
+    /* Danger keeps its fill; the hover layer sits over it. */
+    [data-dl='button'][data-emphasis='danger']:enabled:not([aria-disabled='true']):hover {
+      background-color: var(--color-status-danger-fill);
+      background-image: linear-gradient(var(--state-hover), var(--state-hover));
+    }
+
+    /* Q71: so does the default button's control fill. */
+    [data-dl='button'][data-emphasis='default']:enabled:not([aria-disabled='true'], [aria-expanded='true']):hover {
+      background-color: var(--color-bg-control);
+      background-image: linear-gradient(var(--state-hover), var(--state-hover));
+    }
+  }
+
+  [data-dl='button'][data-emphasis='default']:enabled:not([aria-disabled='true'], [aria-expanded='true']):active {
+    background-color: var(--color-bg-control);
+    background-image: linear-gradient(var(--state-pressed), var(--state-pressed));
+  }
+
+  [data-dl='button'][data-emphasis='danger']:enabled:not([aria-disabled='true']):active {
+    background-color: var(--color-status-danger-fill);
+    background-image: linear-gradient(var(--state-pressed), var(--state-pressed));
+  }
+
+  /* Z17: the press shows in the first frame (quick, front-loaded); its release eases back over change (above). */
+  [data-dl='button']:enabled:not([aria-disabled='true']):active {
+    background-color: var(--state-pressed);
+    scale: var(--motion-press-scale);
+    transition:
+      background-color var(--duration-quick) var(--easing-standard),
+      border-color var(--duration-quick) var(--easing-standard),
+      color var(--duration-quick) var(--easing-standard),
+      scale var(--duration-quick) var(--easing-standard);
+  }
+
+  [data-dl='button'][data-emphasis='primary']:enabled:not([aria-disabled='true']):active {
+    background-color: var(--color-accent-pressed);
+  }
+
+  [data-dl='button'][aria-busy='true'] {
+    cursor: progress;
+  }
+
+  [data-dl='button']:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='button'][data-emphasis='default']:disabled {
+    border-color: var(--color-border);
+  }
+
+  [data-dl='button'][data-emphasis='primary']:disabled,
+  [data-dl='button'][data-emphasis='danger']:disabled {
+    background-color: var(--color-bg-sunken);
+  }
+
+  /*
+   * ButtonGroup: spaced, a pair's gap apart; or attached, one shape whose outer ends alone are rounded (as bars are),
+   * members sharing one line between them. Members keep their own size, focus ring and target.
+   */
+  [data-dl='button-group'] {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-button-group-gap);
+  }
+
+  [data-dl='button-group'][data-arrangement='attached'] {
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='button']:not(:first-child) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-inline-start-width: 0;
+  }
+
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='button']:not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  /* A focused member draws its ring over its neighbours, never under them. */
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='button']:focus-visible {
+    z-index: var(--c-button-group-focus-layer);
+  }
+  /* A MenuButton in an attached group (a split button's menu half) joins the same shape through its trigger. */
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='menu-button']:not(:first-child) > [data-dl-part='trigger'] {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-inline-start-width: 0;
+  }
+
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='menu-button']:not(:last-child) > [data-dl-part='trigger'] {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  /* Two filled halves meet (F15.1c): a hairline of real space between them keeps them two targets with no stroke, and
+     both fills keep the same box (no clipped edge), so the halves are the same height and edge at every size. */
+  [data-dl='button-group'][data-arrangement='attached']:has(> [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary']) {
+    gap: var(--border-hairline);
+  }
+
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='menu-button']:has(> [data-dl-part='trigger']:focus-visible) {
+    z-index: var(--c-button-group-focus-layer);
+  }
+  /* Switch: the control row is the target; the failure line grows below it and only exists while failed.
+     F15.6: three sizes set the track, the knob (the track's thickness less the inset on both sides) and the row. */
+  [data-dl='switch'] {
+    --switch-inline: var(--c-switch-track-inline);
+    --switch-block: var(--c-switch-track-block);
+    --switch-thumb: var(--c-switch-thumb);
+    --switch-size: var(--c-switch-size);
+    --switch-inset: var(--c-switch-thumb-inset);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='switch'][data-size='xs'] {
+    --switch-inline: var(--c-switch-track-inline-xs);
+    --switch-block: var(--c-switch-track-block-xs);
+    --switch-thumb: calc(var(--c-switch-track-block-xs) - 2 * var(--c-switch-thumb-inset-xs));
+    --switch-size: var(--c-switch-size-xs);
+    --switch-inset: var(--c-switch-thumb-inset-xs);
+  }
+
+  /* A hidden label still names the switch (a fill's visibility beside its Remove). */
+  [data-dl='switch'] [data-dl-part='name'][data-hidden] {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='switch'][data-size='s'] {
+    --switch-inline: var(--c-switch-track-inline-s);
+    --switch-block: var(--c-switch-track-block-s);
+    --switch-thumb: calc(var(--c-switch-track-block-s) - 2 * var(--c-switch-thumb-inset));
+    --switch-size: var(--c-switch-size-s);
+  }
+
+  [data-dl='switch'][data-size='l'] {
+    --switch-inline: var(--c-switch-track-inline-l);
+    --switch-block: var(--c-switch-track-block-l);
+    --switch-thumb: calc(var(--c-switch-track-block-l) - 2 * var(--c-switch-thumb-inset));
+    --switch-size: var(--c-switch-size-l);
+  }
+
+  [data-dl='switch']:is([data-size='xs'], [data-size='s']) > [data-dl-part='control'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='switch'][data-size='l'] > [data-dl-part='control'] {
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+  }
+
+  /* Label before the track: the row fills its container with the track at the end, as in a settings list. */
+  [data-dl='switch'][data-label='start'] {
+    align-self: stretch;
+    align-items: stretch;
+  }
+
+  [data-dl='switch'][data-label='start'] > [data-dl-part='control'] {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  /* With a description the track lines up with the label's first line. */
+  [data-dl='switch'] > [data-dl-part='control']:has([data-dl-part='description']) {
+    align-items: flex-start;
+    padding-block: calc((var(--switch-size) - 1lh) / 2);
+  }
+
+  [data-dl='switch'] > [data-dl-part='control']:has([data-dl-part='description']) > [data-dl-part='mark'] {
+    block-size: 1lh;
+  }
+
+  [data-dl='switch'] [data-dl-part='mark'] {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+  }
+
+  [data-dl='switch'] [data-dl-part='words'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Q72: the compact density context's label size (a design tool's inspector); the words stay the switch's name. */
+  [data-density='compact'] [data-dl='switch'] [data-dl-part='words'] > [data-dl-part='name'] {
+    font-size: var(--type-label-compact-size);
+    line-height: var(--type-label-compact-leading);
+    font-weight: var(--type-label-compact-weight);
+  }
+
+  [data-dl='switch'] [data-dl-part='description'] {
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='switch'] > [data-dl-part='control']:disabled [data-dl-part='description'] {
+    color: var(--color-text-disabled);
+  }
+
+  [data-dl='switch'] > [data-dl-part='control'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-switch-gap);
+    min-block-size: var(--switch-size);
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text);
+    text-align: start;
+    cursor: pointer;
+  }
+
+  [data-dl='switch'] [data-dl-part='track'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    inline-size: var(--switch-inline);
+    block-size: var(--switch-block);
+    padding-inline: calc(var(--switch-inset) - var(--c-switch-border-width));
+    border: var(--c-switch-border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-full);
+    background-color: transparent;
+    /* Q65 C4: the track's fill and edge interpolate; with reduced motion they still fade while the knob snaps. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='switch'] [data-dl-part='thumb'] {
+    inline-size: var(--switch-thumb);
+    block-size: var(--switch-thumb);
+    border-radius: var(--radius-full);
+    background-color: var(--color-border-strong);
+    transition:
+      translate var(--duration-move) var(--easing-standard),
+      background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='switch'] [aria-checked='true'] [data-dl-part='track'] {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+  }
+
+  [data-dl='switch'] [aria-checked='true'] [data-dl-part='thumb'] {
+    translate: calc(var(--switch-inline) - var(--switch-block));
+    background-color: var(--color-text-on-accent);
+  }
+
+  /*
+   * Pending (owner F9): the knob moves to the side being saved and its own edge becomes the spinner: the one Progress
+   * arc, sized so its circle is the knob's edge, turning around it on a neutral track. Nothing else moves.
+   */
+  [data-dl='switch'][data-busy='on'] [data-dl-part='track'] {
+    border-color: var(--color-border-strong);
+    background-color: transparent;
+  }
+
+  [data-dl='switch'][data-busy='on'] [data-dl-part='thumb'] {
+    position: relative;
+    background-color: transparent;
+    color: var(--c-switch-spinner);
+  }
+
+  [data-dl='switch'][data-busy='on'][data-to='on'] [data-dl-part='thumb'] {
+    translate: calc(var(--switch-inline) - var(--switch-block));
+  }
+
+  [data-dl='switch'][data-busy='on'][data-to='off'] [data-dl-part='thumb'] {
+    translate: none;
+  }
+
+  /* Progress draws its circle at 18 of 24 units, so its box overhangs the knob by a sixth on every side. */
+  [data-dl='switch'] [data-dl-part='thumb'] > [data-dl='progress'] {
+    position: absolute;
+    inset-block-start: calc(var(--switch-thumb) / -6);
+    inset-inline-start: calc(var(--switch-thumb) / -6);
+    inline-size: calc(var(--switch-thumb) * 4 / 3);
+    block-size: calc(var(--switch-thumb) * 4 / 3);
+    max-inline-size: none;
+  }
+
+  [data-dl='switch'][data-busy='on'] > [data-dl-part='control'] {
+    cursor: progress;
+  }
+
+  @media (hover: hover) {
+    [data-dl='switch'] > [data-dl-part='control']:enabled:not([aria-disabled='true']):hover [data-dl-part='track'] {
+      background-color: var(--state-hover);
+    }
+
+    [data-dl='switch'] > [data-dl-part='control'][aria-checked='true']:enabled:not([aria-disabled='true']):hover [data-dl-part='track'] {
+      background-color: var(--color-accent-hover);
+    }
+  }
+
+  [data-dl='switch'] > [data-dl-part='control']:enabled:not([aria-disabled='true']):active [data-dl-part='track'] {
+    background-color: var(--state-pressed);
+  }
+
+  [data-dl='switch'] > [data-dl-part='control']:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* Disabled off: a quiet outline and a disabled-grey knob. */
+  [data-dl='switch'] > [data-dl-part='control']:disabled:not([aria-checked='true']) [data-dl-part='track'] {
+    border-color: var(--color-border);
+    background-color: transparent;
+  }
+
+  [data-dl='switch'] > [data-dl-part='control']:disabled:not([aria-checked='true']) [data-dl-part='thumb'] {
+    background-color: var(--color-text-disabled);
+  }
+
+  /* Disabled on (owner F9b): keeps its accent fill and knob, faded evenly, so it still reads as on; never grey. */
+  [data-dl='switch'] > [data-dl-part='control'][aria-checked='true']:disabled [data-dl-part='track'] {
+    opacity: var(--c-switch-disabled-opacity);
+  }
+
+  /* Failure line: the mark beside the message; Retry under the message, on its start edge. */
+  [data-dl='switch'] > [data-dl-part='failure'] {
+    display: grid;
+    grid-template-columns: [mark] auto [message] minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-stack-pair) var(--space-inline-pair);
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='switch'] > [data-dl-part='failure'] > [data-dl='button'] {
+    grid-column: message;
+    justify-self: start;
+  }
+
+  [data-dl='switch'] > [data-dl-part='failure']:empty {
+    display: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='switch'] [data-dl-part='thumb'] {
+      background-color: CanvasText;
+    }
+
+    [data-dl='switch'] [aria-checked='true'] [data-dl-part='thumb'] {
+      background-color: HighlightText;
+    }
+
+    [data-dl='switch'] [aria-checked='true'] [data-dl-part='track'] {
+      background-color: Highlight;
+    }
+
+    /* Disabled in forced colours: GrayText, still filled when on and outlined when off. */
+    [data-dl='switch'] > [data-dl-part='control']:disabled [data-dl-part='track'] {
+      border-color: GrayText;
+    }
+
+    [data-dl='switch'] > [data-dl-part='control']:disabled:not([aria-checked='true']) [data-dl-part='thumb'] {
+      background-color: GrayText;
+    }
+
+    [data-dl='switch'] > [data-dl-part='control'][aria-checked='true']:disabled [data-dl-part='track'] {
+      opacity: 1;
+      background-color: GrayText;
+    }
+
+    [data-dl='switch'] > [data-dl-part='control'][aria-checked='true']:disabled [data-dl-part='thumb'] {
+      background-color: Canvas;
+    }
+
+    [data-dl='switch'][data-busy='on'] [data-dl-part='thumb'] {
+      background-color: transparent;
+      color: Highlight;
+    }
+  }
+
+  /* Text field: label, box, hint and failure line stacked as one group. Only the outline's colour changes by state. */
+  [data-dl='text-field'] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-field-gap);
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+  }
+
+
+  [data-dl='text-field'] [data-dl-part='box'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--c-field-size);
+    /* Q68: the box shrinks with its column (a two-column inspector row); the input inside shrinks with it. */
+    min-inline-size: 0;
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='text-field'] input {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    align-self: stretch;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text);
+    font: inherit;
+    outline: none;
+  }
+
+  [data-dl='text-field'] input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+
+  [data-dl='text-field'] [data-dl-part='trailing'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--c-field-trailing);
+    block-size: var(--c-field-trailing);
+  }
+
+  [data-dl='text-field'] [data-dl-part='trailing']:empty {
+    display: none;
+  }
+
+  /* The Button size scale for the box; the label, hint and messages keep their size, so a form's rhythm holds. */
+  [data-dl='text-field']:is([data-size='xs'], [data-size='s']) [data-dl-part='box'] {
+    padding-inline: var(--c-field-padding-inline-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='text-field'][data-size='xs'] [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-xs);
+  }
+
+  [data-dl='text-field'][data-size='s'] [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-s);
+  }
+
+  [data-dl='text-field'][data-size='m'] [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-m);
+  }
+
+  [data-dl='text-field']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) [data-dl-part='box'] {
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='text-field'][data-size='l'] [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-l);
+  }
+
+  [data-dl='text-field'][data-size='xl'] [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-xl);
+  }
+
+  [data-dl='text-field'][data-size='xxl'] [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-xxl);
+    font-size: var(--type-heading-3-size);
+  }
+
+  /* At xs the box's inside is 22 px, so its own Clear and Show buttons take that height (the 24 px target holds with the
+     box's border: WCAG 2.5.8's spacing allowance), and the field stays exactly 24 px. */
+  [data-dl='text-field'][data-size='xs'] [data-dl-part='box'] > [data-dl='button'] {
+    min-block-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
+    min-inline-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
+  }
+
+  /* Leading icon and fixed prefix or suffix text: muted, never squeezed, part of the box. */
+  [data-dl='text-field'] [data-dl-part='leading'],
+  [data-dl='text-field'] [data-dl-part='affix'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    color: var(--color-text-muted);
+  }
+
+  /*
+   * Attached parts (Q40): a choice before the box (country code) and an action after it (Search) join the box as one
+   * shape, the split button's box model: every part takes the same size token, the row stretches them to one height,
+   * the outer ends alone are rounded, and the box keeps all four sides of its outline (its state colours stay whole),
+   * so the attached buttons drop the side they share with it.
+   */
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] {
+    display: flex;
+    align-items: stretch;
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box']:not(:first-child) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box']:not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button'] > [data-dl-part='trigger'] {
+    block-size: 100%;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    border-inline-end-width: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'] {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-inline-start-width: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > :focus-visible,
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > :has(:focus-visible) {
+    z-index: var(--c-button-group-focus-layer);
+  }
+
+  /* A scope chip at the start of the box: a tint, not an outline (one enclosure inside the box at most). */
+  [data-dl='text-field'] [data-dl-part='chip'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    padding-inline-start: var(--space-inline-item);
+    border-radius: var(--radius-sm);
+    background-color: var(--state-selected);
+    color: var(--color-text);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='text-field'] [data-dl-part='chip'] > [data-dl='button'] {
+    min-block-size: var(--size-icon-md);
+    min-inline-size: var(--size-icon-md);
+  }
+
+  /* The shortcut key: shown only while the field is empty and not focused; muted, the field's own fill. */
+  [data-dl='text-field'] [data-dl-part='shortcut'] {
+    flex: none;
+    min-inline-size: var(--size-icon-md);
+    padding-inline: var(--space-inline-pair);
+    border: var(--border-hairline) solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font: inherit;
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    text-align: center;
+  }
+
+  /* A one-time code: one real input over a row of cells that only draw it. Each cell is the field's height, square. */
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='code'] {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-group);
+    justify-self: start;
+  }
+
+  /* A group of cells ("123" of "123 456"): cells sit a pair-gap apart, groups an inline-group gap apart. */
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='code'] > [data-dl-part='group'] {
+    display: inline-flex;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--c-field-size);
+    block-size: var(--c-field-size);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    font-size: var(--type-heading-4-size);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='text-field'][data-size='xs'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] { inline-size: var(--c-field-size-xs); block-size: var(--c-field-size-xs); font-size: var(--type-body-sm-size); }
+  [data-dl='text-field'][data-size='s'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] { inline-size: var(--c-field-size-s); block-size: var(--c-field-size-s); font-size: var(--type-body-sm-size); }
+  [data-dl='text-field'][data-size='m'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] { inline-size: var(--c-field-size-m); block-size: var(--c-field-size-m); }
+  [data-dl='text-field'][data-size='l'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] { inline-size: var(--c-field-size-l); block-size: var(--c-field-size-l); }
+  [data-dl='text-field'][data-size='xl'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] { inline-size: var(--c-field-size-xl); block-size: var(--c-field-size-xl); font-size: var(--type-heading-3-size); }
+  [data-dl='text-field'][data-size='xxl'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] { inline-size: var(--c-field-size-xxl); block-size: var(--c-field-size-xxl); font-size: var(--type-heading-3-size); }
+
+  /* The cell the next character goes into carries the focus ring: the input itself is invisible. */
+
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='code'] > input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    caret-color: transparent;
+  }
+
+  [data-dl='text-field'][data-invalid] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='text-field'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] {
+    border-color: var(--color-accent);
+  }
+
+  [data-dl='text-field'][data-busy='done'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] {
+    border-color: var(--color-status-success-fg);
+  }
+
+
+
+
+  [data-dl='text-field'][data-invalid] [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='text-field'][data-invalid] [data-dl-part='trailing'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  /* Read-only: a quieter outline and no fill, so it reads as shown, not editable; still focusable and selectable. */
+  [data-dl='text-field'][data-readonly] [data-dl-part='box'] {
+    border-color: var(--c-field-readonly-border);
+    background-color: transparent;
+  }
+
+  [data-dl='text-field'][data-busy='on'] [data-dl-part='box'] {
+    border-color: var(--color-accent);
+  }
+
+  [data-dl='text-field'][data-busy='on'] input {
+    cursor: progress;
+  }
+
+  [data-dl='text-field'][data-busy='done'] [data-dl-part='box'] {
+    border-color: var(--color-status-success-fg);
+  }
+
+  /* Q65 F6: the tick fades in over change and grows over move (fade only with reduced motion). */
+  [data-dl='text-field'][data-busy='done'] [data-dl-part='trailing'] {
+    color: var(--color-status-success-fg);
+    animation:
+      dl-field-confirm-fade var(--duration-change) var(--easing-enter),
+      dl-field-confirm-grow var(--duration-move) var(--easing-enter);
+  }
+
+  [data-dl='text-field'][data-busy='failed'] [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='text-field'][data-busy='failed'] [data-dl-part='trailing'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='text-field']:has(input:disabled) [data-dl-part='box'] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+  }
+
+  [data-dl='text-field'] input:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='text-field'] [data-dl-part='failure'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-stack-item);
+  }
+
+  [data-dl='text-field'] [data-dl-part='failure']:empty {
+    display: none;
+  }
+
+  [data-dl='text-field'] [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-item);
+  }
+
+  /* Said to assistive tech; the tick already shows it. */
+  [data-dl='text-field'] [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Flag (Q43): a 4:3 country flag at icon height, with a hairline so white flags hold their edge on a light surface. */
+  [data-dl='flag'] {
+    flex: none;
+    block-size: var(--size-icon-sm);
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-sm);
+    outline: var(--border-hairline) solid var(--color-border);
+    outline-offset: calc(-1 * var(--border-hairline));
+    object-fit: cover;
+  }
+
+
+  /* A colour swatch at the start of a text field: the ColourPicker's swatch (Q49), a small square of the colour that opens
+     the picker. Only the box's own swatch: the picker's popover has swatches of its own. */
+  [data-dl='text-field'] [data-dl-part='box'] > [data-dl-part='swatch'] {
+    flex: none;
+    align-self: center;
+    inline-size: var(--size-icon-md);
+    block-size: var(--size-icon-md);
+    border: var(--border-hairline) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  /*
+   * NumberField (Q40 P2): the text field's label and box (c.field, shared) with a scrub handle before the number and
+   * optional steppers after it. Tabular digits so a changing value never shifts.
+   */
+  [data-dl='number-field'] {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-field-gap);
+    min-inline-size: 0;
+  }
+
+
+  [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--c-field-size);
+    min-inline-size: 0;
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='number-field']:is([data-size='xs'], [data-size='s']) [data-dl-part='control'] > [data-dl-part='box'] {
+    gap: var(--space-inline-pair);
+    padding-inline: var(--c-field-padding-inline-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='number-field'][data-size='xs'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-xs); }
+  [data-dl='number-field'][data-size='s'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-s); }
+  [data-dl='number-field'][data-size='m'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-m); }
+  [data-dl='number-field'][data-size='l'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-l); }
+  [data-dl='number-field'][data-size='xl'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-xl); }
+  [data-dl='number-field'][data-size='xxl'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-xxl); }
+
+  [data-dl='number-field']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) [data-dl-part='control'] > [data-dl-part='box'] {
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='number-field'] input {
+    flex: 1 1 auto;
+    inline-size: 100%;
+    min-inline-size: 0;
+    align-self: stretch;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+  }
+
+  [data-dl='number-field'] input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+
+  /* The scrub handle: the glyph or icon, muted; the resize cursor says it drags. Hidden while dragging (pointer lock). */
+  [data-dl='number-field'] [data-dl-part='scrub'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--size-icon-md);
+    align-self: stretch;
+    color: var(--color-text-muted);
+    cursor: ew-resize;
+    touch-action: none;
+    user-select: none;
+  }
+
+  [data-dl='number-field'][data-scrubbing] [data-dl-part='scrub'] {
+    color: var(--color-text);
+    cursor: none;
+  }
+
+  /* The visible label drags the value too; a click on it still focuses the box. */
+  [data-dl='number-field']:not(:has(input:disabled)) > [data-dl='field'] > [data-dl-part='label'] {
+    cursor: ew-resize;
+    touch-action: none;
+    user-select: none;
+  }
+
+  [data-dl='number-field'][data-scrubbing] > [data-dl='field'] > [data-dl-part='label'] {
+    cursor: none;
+  }
+
+  /* Common values: a quiet list button at the box's end. At xs it takes the box's inside height, so the field stays 24 px. */
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl='menu-button'] {
+    flex: none;
+  }
+
+  [data-dl='number-field'][data-size='xs'] [data-dl-part='box'] > [data-dl='menu-button'] > [data-dl-part='trigger'] {
+    min-block-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
+    min-inline-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
+  }
+
+  /* A value from a variable: its name on a tint (not an outline: one enclosure inside the box), with Detach after it. */
+  [data-dl='number-field'][data-variable] input {
+    flex: 0 1 auto;
+    align-self: center;
+    inline-size: auto;
+    field-sizing: content;
+    padding-inline: var(--space-inline-pair);
+    border-radius: var(--radius-sm);
+    background-color: var(--state-selected);
+    font-variant-numeric: normal;
+  }
+
+  [data-dl='number-field'][data-size='xs'] [data-dl-part='box'] > [data-dl='button'] {
+    min-block-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
+    min-inline-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
+  }
+
+  [data-dl='number-field'][data-scrubbing] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-accent);
+  }
+
+  /* Steppers: two quiet square buttons inside the box's end, the field's own height less its border. */
+  [data-dl='number-field'] [data-dl-part='steppers'] {
+    display: inline-flex;
+    flex: none;
+    align-self: stretch;
+    margin-inline-end: calc(-1 * var(--space-inline-pair));
+  }
+
+  [data-dl='number-field'] [data-dl-part='steppers'] > button {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--size-target-min);
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    /* Q65 Z2: only the stepper's tint eases; the number it changes is drawn in the next frame. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard);
+  }
+
+  @media (hover: hover) {
+    [data-dl='number-field'] [data-dl-part='steppers'] > button:enabled:hover {
+      background-color: var(--state-hover);
+      color: var(--color-text);
+    }
+  }
+
+  [data-dl='number-field'] [data-dl-part='steppers'] > button:enabled:active {
+    background-color: var(--state-pressed);
+  }
+
+  [data-dl='number-field'] [data-dl-part='steppers'] > button:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='number-field'][data-invalid] [data-dl-part='control'] > [data-dl-part='box'],
+  [data-dl='number-field'][data-busy='failed'] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='number-field'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-accent);
+  }
+
+  [data-dl='number-field'][data-busy='done'] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-status-success-fg);
+  }
+
+  [data-dl='number-field']:has(input:disabled) [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-disabled);
+  }
+
+
+  @media (forced-colors: active) {
+    [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] {
+      border-color: CanvasText;
+    }
+  }
+
+  @keyframes dl-field-confirm-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes dl-field-confirm-grow {
+    from {
+      scale: 0.5;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='text-field'] [data-dl-part='box'] {
+      border-color: CanvasText;
+    }
+  }
+
+  /* Text area and select: the text field's label rhythm and box (c.field, shared), with no commit states. */
+  [data-dl='text-area'],
+  [data-dl='select'] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-field-gap);
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+  }
+
+
+  [data-dl='text-area'] [data-dl-part='box'],
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] {
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+  }
+
+  /* Q55: the box carries the outline and the ring layer (a textarea can't hold one); the textarea fills it, bare. */
+  [data-dl='text-area'] [data-dl-part='box'] {
+    display: grid;
+    min-block-size: var(--c-field-size);
+  }
+
+  [data-dl='text-area'] textarea {
+    min-inline-size: 0;
+    padding-block: var(--space-inset-sm);
+    border: none;
+    border-radius: inherit;
+    background-color: transparent;
+    color: inherit;
+    outline: none;
+    padding-inline: var(--c-field-padding-inline);
+    font: inherit;
+    resize: vertical;
+  }
+
+  [data-dl='text-area'] textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+
+  /* The combobox button is the box: leading icon, the chosen label (or the placeholder), the status mark, the chevron. */
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+    min-block-size: var(--c-field-size);
+    padding-inline: var(--c-field-padding-inline);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='value'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='value'][data-placeholder],
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='leading'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > :is([data-dl-part='leading'], [data-dl-part='chevron']) {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='trailing'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--c-field-trailing);
+    block-size: var(--c-field-trailing);
+  }
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='trailing']:empty {
+    display: none;
+  }
+
+
+  /* F15.4: the Button size scale for the box, as the text field; the label, hint and list keep their size. */
+  [data-dl='select']:is([data-size='xs'], [data-size='s']) [data-dl-part='control'] > [data-dl-part='box'] {
+    padding-inline: var(--c-field-padding-inline-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='select'][data-size='xs'] [data-dl-part='control'] > [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-xs);
+  }
+
+  [data-dl='select'][data-size='s'] [data-dl-part='control'] > [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-s);
+  }
+
+  [data-dl='select'][data-size='m'] [data-dl-part='control'] > [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-m);
+  }
+
+  [data-dl='select']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) [data-dl-part='control'] > [data-dl-part='box'] {
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='select'][data-size='l'] [data-dl-part='control'] > [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-l);
+  }
+
+  [data-dl='select'][data-size='xl'] [data-dl-part='control'] > [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-xl);
+  }
+
+  [data-dl='select'][data-size='xxl'] [data-dl-part='control'] > [data-dl-part='box'] {
+    min-block-size: var(--c-field-size-xxl);
+    font-size: var(--type-heading-3-size);
+  }
+
+  [data-dl='select'][data-invalid] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-status-danger-border);
+  }
+
+  [data-dl='select'][data-invalid] [data-dl-part='trailing'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  /* Read-only: the text field's quieter outline, no fill and no chevron; it doesn't open. */
+  [data-dl='select'][data-readonly] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--c-field-readonly-border);
+    background-color: transparent;
+    cursor: default;
+  }
+
+  [data-dl='select'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-accent);
+    cursor: progress;
+  }
+
+  [data-dl='select'][data-busy='done'] [data-dl-part='control'] > [data-dl-part='box'] {
+    border-color: var(--color-status-success-fg);
+  }
+
+  [data-dl='select'][data-busy='done'] [data-dl-part='trailing'] {
+    color: var(--color-status-success-fg);
+    animation:
+      dl-field-confirm-fade var(--duration-change) var(--easing-enter),
+      dl-field-confirm-grow var(--duration-move) var(--easing-enter);
+  }
+
+  [data-dl='select'] [data-dl-part='failure'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-stack-item);
+  }
+
+  [data-dl='select'] [data-dl-part='failure']:empty {
+    display: none;
+  }
+
+  [data-dl='select'] [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='select'] [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Text area (F15.3): text size on the Button scale (height comes from rows), growing with the text when asked, and the
+     text field's hint row, count, invalid and read-only treatments. */
+  [data-dl='text-area']:is([data-size='xs'], [data-size='s']) textarea {
+    padding-inline: var(--c-field-padding-inline-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='text-area']:is([data-size='l'], [data-size='xl']) textarea {
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='text-area'][data-size='xxl'] textarea {
+    padding-inline: var(--c-field-padding-inline-lg);
+    font-size: var(--type-heading-3-size);
+  }
+
+  [data-dl='text-area'][data-grow] textarea {
+    field-sizing: content;
+    /* Two lines to start, whatever rows says: rows has no effect once the box sizes to its content. */
+    min-block-size: calc(2lh + 2 * var(--space-inset-sm));
+    max-block-size: var(--size-scroll-sm);
+    resize: none;
+  }
+
+
+
+
+  [data-dl='text-area'][data-invalid] [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+
+  [data-dl='text-area'][data-readonly] [data-dl-part='box'] {
+    border-color: var(--c-field-readonly-border);
+    background-color: transparent;
+  }
+
+  [data-dl='text-area'][data-readonly] textarea {
+    resize: none;
+  }
+
+  /* Q56: while processing, the words under the box (where the hint was) say what the model is doing, after the arc. */
+  [data-dl='text-area'] [data-dl-part='status'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  /* F15.68 composer form: a tray above the text and a toolbar under it, all inside the one box (its outline and ring are
+     the only enclosure); larger corners; growing text starts at one line. */
+  [data-dl='text-area'][data-composer] [data-dl-part='box'] {
+    border-radius: var(--c-text-area-composer-radius);
+    cursor: text;
+  }
+
+  [data-dl='text-area'] [data-dl-part='tray'] {
+    display: block;
+    min-inline-size: 0;
+    padding-block-start: var(--c-text-area-inset);
+    padding-inline: var(--c-text-area-inset);
+  }
+
+  [data-dl='text-area'] [data-dl-part='bar'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-text-area-bar-gap);
+    min-inline-size: 0;
+    padding-block-end: var(--c-text-area-inset);
+    padding-inline: var(--c-text-area-inset);
+  }
+
+  [data-dl='text-area'][data-composer][data-grow] textarea {
+    min-block-size: calc(1lh + 2 * var(--space-inset-sm));
+  }
+
+  [data-dl='text-area']:has(textarea:disabled) [data-dl-part='box'],
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box']:is(:disabled, :has(> input:disabled)) {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  /* F15.44 search (the combobox): the box is a span around a text input that takes the value's place; the ring is the
+     box's, drawn while the input has focus, as a text field's. */
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box']:has(> input) {
+    cursor: text;
+  }
+
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > input {
+    flex: 1 1 auto;
+    align-self: stretch;
+    min-inline-size: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+  }
+
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  /*
+   * Checkbox (F15.5): the native input covers the whole row, so pointer, keyboard and forms behave natively. The box sits
+   * in a mark cell one label line tall, so it lines up with the first line however far the description wraps; the row's
+   * block padding makes a one-line row exactly its size (36, 44 or 48 px).
+   */
+  [data-dl='checkbox'] {
+    --checkbox-size: var(--c-checkbox-size);
+    --checkbox-box: var(--c-checkbox-box);
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--c-checkbox-gap);
+    min-block-size: var(--checkbox-size);
+    padding-block: calc((var(--checkbox-size) - 1lh) / 2);
+    color: var(--color-text);
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    cursor: pointer;
+  }
+
+  [data-dl='checkbox'][data-size='s'] {
+    --checkbox-size: var(--c-checkbox-size-s);
+    --checkbox-box: var(--c-checkbox-box-s);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='checkbox'][data-size='l'] {
+    --checkbox-size: var(--c-checkbox-size-l);
+    --checkbox-box: var(--c-checkbox-box-l);
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+  }
+
+  [data-dl='checkbox'][data-label-hidden] {
+    justify-content: center;
+    min-inline-size: var(--checkbox-size);
+  }
+
+  [data-dl='checkbox'] > input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  [data-dl='checkbox'] > [data-dl-part='mark'] {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    block-size: 1lh;
+  }
+
+  [data-dl='checkbox'] [data-dl-part='box'] {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--checkbox-box);
+    block-size: var(--checkbox-box);
+    border: var(--c-checkbox-border-width) solid var(--color-border-strong);
+    border-radius: var(--c-checkbox-radius);
+    background-color: var(--color-bg-raised);
+    color: transparent;
+    /* Q65 C5: the box's edge and fill interpolate; the mark (its colour) is drawn in the first frame (Z14). */
+    transition:
+      border-color var(--duration-change) var(--easing-standard),
+      background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='checkbox'] [data-dl-part='box'] > * {
+    scale: var(--motion-mark-scale);
+    transition: scale var(--duration-quick) var(--easing-standard);
+  }
+
+  /* The mark settles to full size over quick (none with reduced motion). */
+  [data-dl='checkbox'] > input:is(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] > * {
+    scale: 1;
+  }
+
+  [data-dl='checkbox'] > input:is(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='checkbox'] > input:focus-visible + [data-dl-part='mark'] > [data-dl-part='box'] {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='checkbox'] > [data-dl-part='words'] {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  [data-dl='checkbox'] > [data-dl-part='words'] > [data-dl-part='label'] {
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='checkbox'] > [data-dl-part='words'] > :is([data-dl-part='description'], [data-dl-part='error']) {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='checkbox'] > [data-dl-part='words'] > [data-dl-part='description'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='checkbox'] > [data-dl-part='words'] > [data-dl-part='error'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='checkbox'][data-invalid] > input:not(:checked) + [data-dl-part='mark'] > [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='checkbox'][data-label-hidden] > [data-dl-part='words'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) {
+    [data-dl='checkbox']:hover > input:enabled:not(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='checkbox']:active > input:enabled:not(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
+    background-color: var(--state-pressed);
+  }
+
+  [data-dl='checkbox']:has(input:disabled) {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='checkbox']:has(input:disabled) > [data-dl-part='words'] > [data-dl-part='description'] {
+    color: var(--color-text-disabled);
+  }
+
+  [data-dl='checkbox'] > input:disabled:not(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+  }
+
+  /* A checked or mixed box that can't change keeps its state's fill, muted (as a disabled on Switch, Q18). */
+  [data-dl='checkbox'] > input:disabled:is(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
+    opacity: var(--c-switch-disabled-opacity);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='checkbox'] > input:is(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+
+  /* Checkbox group: a fieldset with no frame; the legend, hint, rows and error stacked. Rows touch: each is its own target. */
+  [data-dl='checkbox-group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-checkbox-group-gap);
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  [data-dl='checkbox-group'] > [data-dl-part='legend'] {
+    padding: 0;
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+    color: var(--color-text);
+  }
+
+  [data-dl='checkbox-group'] > [data-dl-part='legend'] > [data-dl-part='optional'] {
+    font-weight: var(--type-body-weight);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='checkbox-group'] > [data-dl-part='items'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /*
+   * Segmented control: a dense group of square segments, 36 px at `md` and 24 px at `sm` (written target exceptions,
+   * O40 and O41). The group is a subtle fill with no outline; with more contrast its outline token rises to control strength. Each segment is a square target;
+   * its fill (chosen, hover, press) is drawn the same inset on all four sides, so the chosen one floats evenly inside.
+   * The native radio is visually hidden; its label is the target and carries the focus ring.
+   */
+  [data-dl='segmented-control'] {
+    display: inline-flex;
+    flex: none;
+    border-radius: var(--c-segmented-control-radius);
+    background-color: var(--color-bg-sunken);
+    outline: var(--border-hairline) solid var(--color-border-group);
+    /* The group, not each segment, holds the fills' stacking: a fill travelling past a neighbour (Q65 C6) stays under
+       every segment's text. */
+    isolation: isolate;
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment'] {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-segmented-control-gap);
+    min-block-size: var(--c-segmented-control-size);
+    min-inline-size: var(--c-segmented-control-size);
+    padding-inline: var(--c-segmented-control-padding-inline);
+    border-radius: var(--c-segmented-control-radius);
+    color: var(--color-text);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    font-weight: var(--type-label-weight);
+    cursor: pointer;
+  }
+
+  /* The Button size scale: xs and s are dense (body-sm text); normal and m use the label size; l and up grow the type as Button does. */
+  [data-dl='segmented-control'][data-size='xs'] > [data-dl-part='segment'] {
+    min-block-size: var(--c-segmented-control-size-xs);
+    min-inline-size: var(--c-segmented-control-size-xs);
+  }
+
+  [data-dl='segmented-control'][data-size='s'] > [data-dl-part='segment'] {
+    min-block-size: var(--c-segmented-control-size-s);
+    min-inline-size: var(--c-segmented-control-size-s);
+  }
+
+  [data-dl='segmented-control']:is([data-size='normal'], [data-size='m']) > [data-dl-part='segment'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+  }
+
+  [data-dl='segmented-control'][data-size='m'] > [data-dl-part='segment'] {
+    min-block-size: var(--c-segmented-control-size-m);
+    min-inline-size: var(--c-segmented-control-size-m);
+  }
+
+  [data-dl='segmented-control'][data-size='l'] > [data-dl-part='segment'] {
+    min-block-size: var(--c-segmented-control-size-l);
+    min-inline-size: var(--c-segmented-control-size-l);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='segmented-control'][data-size='xl'] > [data-dl-part='segment'] {
+    min-block-size: var(--c-segmented-control-size-xl);
+    min-inline-size: var(--c-segmented-control-size-xl);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='segmented-control'][data-size='xxl'] > [data-dl-part='segment'] {
+    min-block-size: var(--c-segmented-control-size-xxl);
+    min-inline-size: var(--c-segmented-control-size-xxl);
+    font-size: var(--type-heading-3-size);
+  }
+
+  [data-dl='segmented-control'][data-icon-only] > [data-dl-part='segment'] {
+    padding-inline: 0;
+  }
+
+  /* The fill: the same inset on every side, rounded to sit inside the group's corners. */
+  [data-dl='segmented-control'] > [data-dl-part='segment']::before {
+    content: '';
+    position: absolute;
+    inset: var(--c-segmented-control-inset);
+    z-index: var(--c-segmented-control-fill-layer);
+    border-radius: calc(var(--c-segmented-control-radius) - var(--c-segmented-control-inset));
+    transition: background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment'] {
+    transition: color var(--duration-change) var(--easing-standard);
+  }
+
+  /*
+   * Q65 C6 / M14: while a choice settles, the fill changes segment at once: under a pointer it travels there (flip on
+   * the ::before, useSlidingIndicator) while the text colours fade; under arrow keys everything moves at once (Z8).
+   */
+  [data-dl='segmented-control'][data-settling] > [data-dl-part='segment']::before,
+  [data-dl='segmented-control'][data-settling='key'] > [data-dl-part='segment'] {
+    transition: none;
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment'] > input,
+  [data-dl='segmented-control'][data-icon-only] [data-dl-part='name'] {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:checked) {
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:checked)::before {
+    background-color: var(--color-accent);
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:focus-visible) {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @media (hover: hover) {
+    [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:enabled:not(:checked)):hover::before {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:enabled:not(:checked)):active::before {
+    background-color: var(--state-pressed);
+    transition-duration: var(--duration-quick);
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:disabled) {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:disabled:checked)::before {
+    background-color: var(--color-bg-raised);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='segmented-control'] {
+      outline-color: CanvasText;
+    }
+
+    [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:checked) {
+      color: HighlightText;
+    }
+
+    [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:checked)::before {
+      background-color: Highlight;
+    }
+  }
+}

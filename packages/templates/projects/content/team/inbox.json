@@ -1,0 +1,71 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "inbox",
+  "contentVersion": 1,
+  "settings": {
+    "current": "my-work"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Inbox",
+        "title": "3 new",
+        "lead": "Mentions, assignments and changes to issues you watch.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "items": [
+          {
+            "eyebrow": "Mentioned you",
+            "title": "Ama on KW-148: “Can you check the Lisbon case?”",
+            "description": "Dates shift by a day in Lisbon",
+            "meta": "10 minutes ago",
+            "href": "/issue"
+          },
+          {
+            "eyebrow": "Assigned to you",
+            "title": "KW-151 Remember the last trip filter",
+            "description": "By Jonas Lind",
+            "meta": "1 hour ago",
+            "href": "/issue"
+          },
+          {
+            "eyebrow": "Status changed",
+            "title": "KW-140 moved to Done",
+            "description": "By Keiko Arai",
+            "meta": "Yesterday",
+            "href": "/issue"
+          }
+        ]
+      }
+    ]
+  }
+}

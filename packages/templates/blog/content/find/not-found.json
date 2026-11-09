@@ -1,0 +1,29 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "not-found",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Error 404",
+        "title": "We can’t find that page",
+        "text": "It may have moved, or the address may have a typo.",
+        "links": [
+          {
+            "label": "Go to the home page",
+            "href": "/index"
+          },
+          {
+            "label": "Search",
+            "href": "/search"
+          }
+        ]
+      }
+    ]
+  }
+}

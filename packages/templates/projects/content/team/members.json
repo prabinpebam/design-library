@@ -1,0 +1,79 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "members",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Members",
+        "title": "4 people in Kitewing app",
+        "lead": "Admins can change the workflow and invite people.",
+        "layout": "stacked"
+      },
+      {
+        "type": "people",
+        "heading": "People",
+        "items": [
+          {
+            "name": "Ama Mensah",
+            "role": "Admin"
+          },
+          {
+            "name": "Jonas Lind",
+            "role": "Member"
+          },
+          {
+            "name": "Keiko Arai",
+            "role": "Member"
+          },
+          {
+            "name": "Luis Ortega",
+            "role": "Viewer"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Need more hands?",
+        "lead": "Invite people by email.",
+        "actions": [
+          {
+            "label": "Invite people",
+            "primary": true,
+            "says": "Use Invite from the navigation of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

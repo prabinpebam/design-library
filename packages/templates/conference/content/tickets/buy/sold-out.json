@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "sold-out",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Sold out",
+        "title": "Two-day tickets have sold out",
+        "text": "Thursday-only tickets are still available, or join the waiting list for returns.",
+        "links": [
+          {
+            "label": "See Thursday tickets",
+            "href": "/tickets"
+          },
+          {
+            "label": "Join the waiting list",
+            "href": "/group-booking"
+          }
+        ],
+        "note": "Most returns come in February."
+      }
+    ]
+  }
+}

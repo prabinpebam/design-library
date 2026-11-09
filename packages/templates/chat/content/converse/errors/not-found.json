@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "chat",
+  "layout": "not-found",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Error 404",
+        "title": "This chat doesn’t exist",
+        "text": "It may have been deleted, or the link may be wrong.",
+        "links": [
+          {
+            "label": "Back to chats",
+            "href": "/chat"
+          }
+        ]
+      }
+    ]
+  }
+}

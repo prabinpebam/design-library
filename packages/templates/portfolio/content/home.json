@@ -1,0 +1,75 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "portfolio",
+  "layout": "home",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "title": "Asha Rao designs signs, maps and books that help people find their way",
+        "lead": "Independent designer in Lisbon. Wayfinding for ports, museums and hospitals since 2014.",
+        "actions": [
+          {
+            "label": "See the work",
+            "primary": true,
+            "says": "See the work isn’t part of this example."
+          },
+          {
+            "label": "Get in touch",
+            "says": "Get in touch isn’t part of this example."
+          }
+        ],
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Selected work",
+        "max": 2,
+        "items": [
+          {
+            "eyebrow": "Wayfinding",
+            "title": "Harbour wayfinding",
+            "description": "Signs and maps for a working port open to visitors.",
+            "picture": "harbour",
+            "meta": "2025",
+            "href": "/project"
+          },
+          {
+            "eyebrow": "Book",
+            "title": "Paths of the north",
+            "description": "A walking guide with 40 hand-drawn maps.",
+            "picture": "frost",
+            "meta": "2024",
+            "href": "/project"
+          },
+          {
+            "eyebrow": "Exhibition",
+            "title": "Desert light",
+            "description": "Graphics for a touring photography show.",
+            "picture": "sand",
+            "meta": "2023",
+            "href": "/project"
+          },
+          {
+            "eyebrow": "Identity",
+            "title": "Meadow school",
+            "description": "A name, a mark and signs for a primary school.",
+            "picture": "meadow",
+            "meta": "2022",
+            "href": "/project"
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "Visitors stopped asking the way. That was the brief, and Asha met it.",
+        "name": "Rui Matos",
+        "role": "Visitor services, Example Port"
+      }
+    ]
+  }
+}

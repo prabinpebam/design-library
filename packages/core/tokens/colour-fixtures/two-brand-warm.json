@@ -1,0 +1,19 @@
+{
+  "$comment": "Fixture: two brand colours in slots 1 and 3 (slot 2 left undefined), accent on colour 1 (the default), warm base colours, nothing pinned. tools/colour.mjs --check generates it and holds every contrast pair in four contexts.",
+  "contract": "colour-config/2",
+  "brand": {
+    "colours": {
+      "1": { "name": "Teal", "seed": "#0f766e" },
+      "3": { "name": "Saffron", "seed": "#f59e0b" }
+    }
+  },
+  "base": { "temperature": "warm" },
+  "functional": {
+    "info": { "seed": "#0b62c4" },
+    "success": { "seed": "#2e7d32" },
+    "warning": { "seed": "#8a5300" },
+    "danger": { "seed": "#c62828" }
+  },
+  "spectrum": { "hues": 12, "start": 25, "chroma": 0.17 },
+  "sets": []
+}

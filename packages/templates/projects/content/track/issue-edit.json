@@ -1,0 +1,9 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "issue-edit",
+  "contentVersion": 1,
+  "settings": {
+    "state": "edit"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "project-settings",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Project settings",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Project name",
+            "kind": "text"
+          },
+          {
+            "id": "key",
+            "label": "Key",
+            "kind": "text",
+            "hint": "Starts every issue’s key, such as KW-151."
+          },
+          {
+            "id": "lead",
+            "label": "Lead",
+            "kind": "choice",
+            "options": [
+              "Ama Mensah",
+              "Jonas Lind"
+            ]
+          }
+        ],
+        "submit": "Save",
+        "sent": "Saved.",
+        "links": [
+          {
+            "label": "Workflow",
+            "href": "/workflow-settings"
+          },
+          {
+            "label": "Members",
+            "href": "/members"
+          }
+        ]
+      }
+    ]
+  }
+}

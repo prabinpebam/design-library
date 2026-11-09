@@ -1,0 +1,21 @@
+{
+  "name": "@design-library/example",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Cold-walkthrough example (Q76): a page drawn from a template's content JSON with a custom preset, built by following only packages/core/AGENTS.md and its guide.",
+  "scripts": { "dev": "vite --host 127.0.0.1 --port 8767 --strictPort", "build": "vite build" },
+  "dependencies": {
+    "@design-library/core": "0.1.0",
+    "@design-library/templates": "0.1.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.5"
+  }
+}

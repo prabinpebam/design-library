@@ -1,0 +1,75 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "my-schedule",
+  "contentVersion": 1,
+  "settings": {
+    "current": "schedule"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Your schedule",
+        "title": "Sessions you’ve kept",
+        "lead": "Two on Thursday so far.",
+        "layout": "stacked"
+      },
+      {
+        "type": "agenda",
+        "heading": "Thursday 11 March",
+        "label": "Your Thursday",
+        "slots": [
+          {
+            "id": "k1",
+            "start": "09:30",
+            "end": "10:15",
+            "dateTime": "2027-03-11T09:30",
+            "sessions": [
+              {
+                "id": "k1s",
+                "title": "Interfaces that explain themselves",
+                "kind": "Keynote",
+                "people": [
+                  "Ama Mensah"
+                ],
+                "place": "Main hall",
+                "href": "/session"
+              }
+            ]
+          },
+          {
+            "id": "t1",
+            "start": "10:30",
+            "end": "11:15",
+            "dateTime": "2027-03-11T10:30",
+            "sessions": [
+              {
+                "id": "t1s",
+                "title": "Design tokens at scale",
+                "kind": "Talk",
+                "people": [
+                  "Jonas Lind"
+                ],
+                "place": "Room 2",
+                "href": "/session"
+              }
+            ]
+          }
+        ],
+        "empty": {
+          "reason": "first-use",
+          "title": "No sessions kept yet",
+          "text": "Keep the sessions you want to see from the schedule; they show here by time, with their rooms.",
+          "silhouette": "list",
+          "links": [
+            {
+              "label": "Open the schedule",
+              "href": "/schedule"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

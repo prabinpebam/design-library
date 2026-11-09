@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "entries": [
+    {
+      "path": "landing.html",
+      "title": "Overview",
+      "order": 0,
+      "icon": "home",
+      "type": "page"
+    },
+    { "path": "brief.md", "title": "Design brief", "order": 1, "icon": "flag", "type": "page", "status": "draft", "updated": "2026-11-06" },
+    { "path": "definition-of-done.md", "title": "Definitions of Done", "order": 2, "icon": "fact_check", "type": "page", "updated": "2026-11-06" },
+    { "path": "how-it-works.md", "title": "How the library works", "order": 2.5, "icon": "lightbulb", "type": "page", "status": "draft", "updated": "2026-11-09" },
+    { "path": "foundation.md", "title": "Foundation", "order": 3, "icon": "foundation", "type": "page", "status": "draft", "updated": "2026-11-06" },
+    { "path": "work-plan.md", "title": "Work plan", "order": 4, "icon": "route", "type": "page", "updated": "2026-11-06" },
+    { "path": "setup.md", "title": "Setup and provenance", "order": 5, "icon": "settings", "type": "page", "updated": "2026-11-06" },
+    { "path": "hosting.md", "title": "Hosting", "order": 5.5, "icon": "public", "type": "page", "status": "draft", "updated": "2026-11-09" },
+    { "path": "component-coverage.md", "title": "Component coverage", "order": 6, "icon": "checklist", "type": "page", "status": "draft", "updated": "2026-11-07" },
+    { "path": "component-catalogue.md", "title": "Component catalogue", "order": 7, "icon": "category", "type": "page", "status": "draft", "updated": "2026-11-07" },
+    { "path": "motion.md", "title": "Motion and transitions", "order": 8, "icon": "animation", "type": "page", "status": "draft", "updated": "2026-11-08" },
+    { "path": "design-tool-audit.md", "title": "Design tool audit", "order": 9, "icon": "rule", "type": "page", "status": "draft", "updated": "2026-11-08" },
+    { "path": "materials.md", "title": "Materials and backgrounds", "order": 10, "icon": "layers", "type": "page", "status": "draft", "updated": "2026-11-08" },
+    { "path": "visual-representation.md", "title": "Visual representation", "order": 10.5, "icon": "insights", "type": "page", "status": "draft", "updated": "2026-11-09" },
+    { "path": "consumer-audit.md", "title": "Consumer guide audit", "order": 11, "icon": "rule", "type": "page", "status": "draft", "updated": "2026-11-09" }
+  ]
+}

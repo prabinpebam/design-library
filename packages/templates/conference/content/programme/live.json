@@ -1,0 +1,63 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "live",
+  "contentVersion": 1,
+  "settings": {
+    "current": "schedule"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Live · Thursday 10:42",
+        "title": "On now: Design tokens at scale",
+        "lead": "Room 2, with Jonas Lind. Next in the main hall at 11:30.",
+        "layout": "stacked"
+      },
+      {
+        "type": "agenda",
+        "heading": "Next up",
+        "label": "Next sessions",
+        "slots": [
+          {
+            "id": "k1",
+            "start": "09:30",
+            "end": "10:15",
+            "dateTime": "2027-03-11T09:30",
+            "sessions": [
+              {
+                "id": "k1s",
+                "title": "Interfaces that explain themselves",
+                "kind": "Keynote",
+                "people": [
+                  "Ama Mensah"
+                ],
+                "place": "Main hall",
+                "href": "/session"
+              }
+            ]
+          },
+          {
+            "id": "t1",
+            "start": "10:30",
+            "end": "11:15",
+            "dateTime": "2027-03-11T10:30",
+            "sessions": [
+              {
+                "id": "t1s",
+                "title": "Design tokens at scale",
+                "kind": "Talk",
+                "people": [
+                  "Jonas Lind"
+                ],
+                "place": "Room 2",
+                "href": "/session"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "blog",
+  "shared": true,
+  "contentVersion": 1,
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Field Notes",
+        "mark": "edit",
+        "places": [
+          {
+            "label": "Articles",
+            "href": "/index"
+          },
+          {
+            "label": "Authors",
+            "href": "/author"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Subscribe",
+            "primary": true,
+            "says": "Subscribe isn’t part of this example."
+          }
+        ]
+      }
+    ],
+    "footer": [
+      {
+        "type": "site-footer",
+        "sectionsLabel": "More from Field Notes",
+        "sections": [
+          {
+            "id": "read",
+            "heading": "Read",
+            "links": [
+              {
+                "label": "Latest",
+                "href": "/index"
+              },
+              {
+                "label": "Design systems",
+                "href": "/index"
+              },
+              {
+                "label": "Accessibility",
+                "href": "/index"
+              }
+            ]
+          },
+          {
+            "id": "about",
+            "heading": "About",
+            "links": [
+              {
+                "label": "Authors",
+                "href": "/author"
+              },
+              {
+                "label": "Write for us",
+                "href": "/index"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Privacy",
+            "href": "/index"
+          },
+          {
+            "label": "Feed",
+            "href": "/index"
+          }
+        ],
+        "identity": "Field Notes is an example blog for this library.",
+        "legal": "Articles and people are made up for these examples."
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+/*
+ * Tier 1 fundamental: Tooltip (F15.45, catalogue Overlays). The wrapper takes no space of its own; the hint opens in
+ * the top layer, placed by behaviour/anchor.ts through --anchored-start and --anchored-y. One enclosure (the popup's
+ * surface, border and shadow, shared with every popup), no arrow: the offset and placement already say what it's for.
+ * The hint (`data-dl="hint"`) is the same element whether a Tooltip wraps a control or a sealed control carries its
+ * own (an icon-only or unavailable Button, F15.48), so it sets its own text styles rather than inheriting the control's.
+ */
+@layer fundamentals {
+  [data-dl='tooltip'] {
+    display: inline-flex;
+    max-inline-size: 100%;
+  }
+
+  [data-dl='hint'] {
+    position: fixed;
+    z-index: var(--c-tooltip-layer);
+    inset: auto;
+    inset-block-start: var(--anchored-y, 0px);
+    inset-inline-start: var(--anchored-start, 0px);
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-inline-pair);
+    inline-size: max-content;
+    max-inline-size: min(var(--c-tooltip-width), calc(100vw - 2 * var(--space-margin-page)));
+    padding-block: var(--c-tooltip-padding-block);
+    padding-inline: var(--c-tooltip-padding-inline);
+    border: var(--c-popup-border-width) solid var(--c-popup-border);
+    border-radius: var(--c-popup-radius);
+    background-color: var(--material-floating-bg, var(--c-popup-bg));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-popup-shadow);
+    color: var(--color-text);
+    font-size: var(--type-body-sm-size);
+    font-weight: var(--type-body-sm-weight);
+    line-height: var(--type-body-sm-leading);
+    text-align: start;
+    white-space: normal;
+    cursor: default;
+    pointer-events: auto;
+    /* Arrives and leaves through data-presence="hint" (motion.css, Q65 C8). */
+  }
+
+  [data-dl='hint'][hidden],
+  [data-dl='hint']:not(:popover-open) {
+    display: none;
+  }
+
+  [data-dl='hint'] > [data-dl-part='shortcut'] {
+    color: var(--color-text-muted);
+    font: inherit;
+  }
+}

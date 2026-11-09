@@ -1,0 +1,73 @@
+{
+  "$comment": "The library's space and shape options (owner F12, 2026-11-07; brief O53-O55). System data, not a theme's choice: a theme picks one of each in space-shape.config.json. Each option re-maps the semantic roles only; the 4 px scale, sizes, targets and text never change. tools/space-shape.mjs writes the tokens and checks the invariants. Edit here, then run npm run tokens.",
+  "space": {
+    "roles": {
+      "stack-pair": "Stacked pair that reads as one: label and field, title and subtitle",
+      "stack-row": "Between rows of a list whose rows carry their own fill (navigation items, menu items), so two fills never touch",
+      "stack-item": "Stacked items in one group",
+      "stack-group": "Groups within a section; fields in a form",
+      "stack-section": "Sections of a view",
+      "inline-pair": "Side-by-side pair: icon and label",
+      "inline-item": "Items in one row: buttons in a group",
+      "inline-group": "Groups in a row: toolbar groups",
+      "inset-xs": "Inside a compact group, around each member’s fill: a segmented control",
+      "inset-sm": "Inside compact containers: menus, list rows",
+      "inset-md": "Inside cards, popovers and panels",
+      "inset-lg": "Inside dialogs, sheets and page regions",
+      "gutter": "Between columns and regions of a layout",
+      "margin-page": "Content to window edge on small screens"
+    },
+    "options": {
+      "compact": {
+        "label": "Compact",
+        "for": "Dense working screens people use all day: tables, dashboards, admin and developer tools, where seeing more at once matters more than breathing room.",
+        "values": { "stack-pair": "space.1", "stack-row": "space.0-5", "stack-item": "space.2", "stack-group": "space.3", "stack-section": "space.6", "inline-pair": "space.1", "inline-item": "space.2", "inline-group": "space.3", "inset-xs": "space.0-5", "inset-sm": "space.2", "inset-md": "space.3", "inset-lg": "space.4", "gutter": "space.4", "margin-page": "space.3" }
+      },
+      "normal": {
+        "label": "Normal",
+        "for": "The default for most products: forms, settings and content pages read comfortably without wasting room.",
+        "values": { "stack-pair": "space.1", "stack-row": "space.1", "stack-item": "space.2", "stack-group": "space.4", "stack-section": "space.8", "inline-pair": "space.2", "inline-item": "space.2", "inline-group": "space.4", "inset-xs": "space.0-5", "inset-sm": "space.2", "inset-md": "space.4", "inset-lg": "space.6", "gutter": "space.6", "margin-page": "space.4" }
+      },
+      "loose": {
+        "label": "Loose",
+        "for": "Calmer products people visit now and then: marketing pages, onboarding, consumer apps, where each screen asks for one thing at a time.",
+        "values": { "stack-pair": "space.1", "stack-row": "space.1", "stack-item": "space.3", "stack-group": "space.6", "stack-section": "space.12", "inline-pair": "space.2", "inline-item": "space.3", "inline-group": "space.6", "inset-xs": "space.0-5", "inset-sm": "space.3", "inset-md": "space.6", "inset-lg": "space.8", "gutter": "space.8", "margin-page": "space.6" }
+      },
+      "extra-loose": {
+        "label": "Extra loose",
+        "for": "Editorial and showcase pages on large screens: portfolios, long reads and launches, where space itself sets the tone.",
+        "values": { "stack-pair": "space.2", "stack-row": "space.1", "stack-item": "space.4", "stack-group": "space.8", "stack-section": "space.16", "inline-pair": "space.3", "inline-item": "space.4", "inline-group": "space.8", "inset-xs": "space.0-5", "inset-sm": "space.4", "inset-md": "space.8", "inset-lg": "space.12", "gutter": "space.12", "margin-page": "space.6" }
+      }
+    }
+  },
+  "shape": {
+    "roles": {
+      "sm": "Small parts: badges’ marks, inline code, checkboxes, keys",
+      "md": "Controls and the things built like them: buttons, fields, menus, list items",
+      "lg": "Surfaces: cards, examples, tables, dialogs",
+      "pill": "Shapes drawn as pills by choice, not by nature: badges and the outer ends of a whole bar; square when the shape is sharp"
+    },
+    "options": {
+      "sharp": {
+        "label": "Sharp",
+        "for": "Precise, technical or editorial brands: data tools, finance, newspapers. Only shapes that are round by nature stay round (a switch, a dot, a spinner, an avatar).",
+        "values": { "sm": "0rem", "md": "0rem", "lg": "0rem", "pill": "0rem" }
+      },
+      "rounded": {
+        "label": "Rounded",
+        "for": "The default: friendly but businesslike, for most products.",
+        "values": { "sm": "0.25rem", "md": "0.5rem", "lg": "0.75rem", "pill": "999px" }
+      },
+      "soft": {
+        "label": "Soft",
+        "for": "Approachable consumer products: health, education, lifestyle, where the interface should feel gentle.",
+        "values": { "sm": "0.375rem", "md": "0.75rem", "lg": "1rem", "pill": "999px" }
+      },
+      "super-soft": {
+        "label": "Super soft",
+        "for": "Playful or very casual brands: games, kids, social apps. Controls become pills and surfaces get generous curves.",
+        "values": { "sm": "0.5rem", "md": "1.125rem", "lg": "1.5rem", "pill": "999px" }
+      }
+    }
+  }
+}

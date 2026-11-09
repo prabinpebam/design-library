@@ -1,0 +1,24 @@
+{
+  "$comment": "Fixture: four brand colours with colour 4 as the accent, base colours tinted from colour 1, a hand-set custom set, nothing pinned.",
+  "contract": "colour-config/2",
+  "brand": {
+    "colours": {
+      "1": { "name": "Rose", "seed": "#e11d48" },
+      "2": { "name": "Violet", "seed": "#7c3aed" },
+      "3": { "name": "Sun", "seed": "#facc15" },
+      "4": { "name": "Cobalt", "seed": "#2563eb" }
+    },
+    "accent": 4
+  },
+  "base": { "temperature": "neutral", "tint": { "from": 1, "strength": 0.015 } },
+  "functional": {
+    "info": { "seed": "#0369a1" },
+    "success": { "seed": "#15803d" },
+    "warning": { "seed": "#b45309" },
+    "danger": { "seed": "#b91c1c" }
+  },
+  "spectrum": { "hues": 12, "start": 25, "chroma": 0.15 },
+  "sets": [
+    { "name": "earthy", "purpose": "Map and terrain fills. Never text, never status.", "colours": { "clay": "#b5651d", "moss": "#6b7f3a", "sand": "#d8c49b", "slate": "#5b6770" } }
+  ]
+}

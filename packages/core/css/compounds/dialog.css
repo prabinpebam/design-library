@@ -1,0 +1,137 @@
+/*
+ * Tier 2 compound: Dialog (F15.32, Q53.3). The native modal dialog in the top layer over a scrim. One surface: a
+ * header (title, description, close), a body that scrolls on its own with its padding inside (so the scrollbar sits
+ * at the dialog's edge), and the answers at the end. One inset for all three so their edges line up; no dividers.
+ * Fills a narrow window, with square corners. Opens with a fade and a slight growth (Q65 C17) and leaves faster; reduced motion only fades.
+ */
+@layer compounds {
+  [data-dl='dialog'] {
+    inline-size: var(--c-dialog-width-m);
+    max-inline-size: calc(100% - 2 * var(--c-dialog-margin));
+    max-block-size: calc(100dvh - 2 * var(--c-dialog-margin));
+    padding: 0;
+    border: 0;
+    border-radius: var(--c-dialog-radius);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text);
+    box-shadow: var(--shadow-overlay);
+    overflow: hidden;
+    opacity: 1;
+    scale: 1;
+    /* Q65 C17: fades in and grows from dialog-scale; leaves one step shorter, accelerating. Reduced motion: fade only. */
+    transition:
+      opacity var(--duration-change) var(--easing-enter),
+      scale var(--duration-change) var(--easing-enter),
+      overlay var(--duration-change) var(--easing-enter) allow-discrete,
+      display var(--duration-change) var(--easing-enter) allow-discrete;
+  }
+
+  [data-dl='dialog']:not([open]) {
+    opacity: 0;
+    scale: var(--motion-dialog-scale);
+    transition:
+      opacity var(--duration-quick) var(--easing-exit),
+      scale var(--duration-quick) var(--easing-exit),
+      overlay var(--duration-quick) var(--easing-exit) allow-discrete,
+      display var(--duration-quick) var(--easing-exit) allow-discrete;
+  }
+
+  [data-dl='dialog'][data-size='s'] { inline-size: var(--c-dialog-width-s); }
+  [data-dl='dialog'][data-size='l'] { inline-size: var(--c-dialog-width-l); }
+
+  @starting-style {
+    [data-dl='dialog'][open] {
+      opacity: 0;
+      scale: var(--motion-dialog-scale);
+    }
+
+    [data-dl='dialog'][open]::backdrop {
+      background-color: transparent;
+    }
+  }
+
+  [data-dl='dialog']::backdrop {
+    background-color: var(--color-bg-overlay);
+    transition:
+      background-color var(--duration-change) var(--easing-enter),
+      overlay var(--duration-change) allow-discrete,
+      display var(--duration-change) allow-discrete;
+  }
+
+  [data-dl='dialog']:not([open])::backdrop {
+    background-color: transparent;
+    transition:
+      background-color var(--duration-quick) var(--easing-exit),
+      overlay var(--duration-quick) allow-discrete,
+      display var(--duration-quick) allow-discrete;
+  }
+
+  /* A column: the body takes the room there is and scrolls; with no body, header and answers sit apart when full screen. */
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-block-size: inherit;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-inline-group);
+    padding: var(--c-dialog-padding) var(--c-dialog-padding) var(--c-dialog-gap);
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] {
+    display: grid;
+    gap: var(--c-dialog-heading-gap);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading']:focus {
+    outline: none;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] > [data-dl-part='description'] {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] {
+    flex: 1 1 auto;
+    min-block-size: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 var(--c-dialog-padding) var(--c-dialog-gap);
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--c-dialog-actions-gap);
+    padding: 0 var(--c-dialog-padding) var(--c-dialog-padding);
+  }
+
+  /* A narrow window: the dialog fills it, square, so nothing peeks around it. */
+  @media (max-width: 30rem) {
+    [data-dl='dialog'][data-size] {
+      inline-size: 100%;
+      block-size: 100dvh;
+      max-inline-size: none;
+      max-block-size: none;
+      border-radius: 0;
+    }
+
+    :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) {
+      block-size: 100%;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='dialog'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

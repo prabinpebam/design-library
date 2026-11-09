@@ -1,0 +1,1751 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "conference",
+  "version": "1.1.0",
+  "title": "Conference",
+  "summary": "An event’s programme, its speakers and tickets.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "home",
+  "sections": [
+    {
+      "id": "event",
+      "title": "The event",
+      "summary": "What the event is, where it happens, who backs it, and a way back from a missing page.",
+      "flows": [
+        {
+          "id": "discover",
+          "title": "Discover the event",
+          "summary": "Know what the event is and why to come.",
+          "screens": [
+            "home",
+            "about-event"
+          ]
+        },
+        {
+          "id": "visit",
+          "title": "Plan the visit",
+          "summary": "Find the venue, get there and stay nearby, with answers to common questions.",
+          "screens": [
+            "venue",
+            "travel",
+            "faq"
+          ]
+        },
+        {
+          "id": "sponsors",
+          "title": "See the sponsors",
+          "summary": "Who makes the event possible.",
+          "screens": [
+            "sponsors"
+          ]
+        },
+        {
+          "id": "sponsor",
+          "title": "Become a sponsor",
+          "summary": "Ask for the sponsorship pack.",
+          "screens": [
+            "become-sponsor"
+          ]
+        },
+        {
+          "id": "errors",
+          "title": "Recover from an error",
+          "summary": "Know what happened and the way on.",
+          "screens": [
+            "not-found"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "programme",
+      "title": "Programme",
+      "summary": "The sessions, the people on stage, your own schedule and the day as it happens.",
+      "flows": [
+        {
+          "id": "programme",
+          "title": "Plan your days",
+          "summary": "See the programme and read one session.",
+          "screens": [
+            "schedule",
+            "session"
+          ]
+        },
+        {
+          "id": "speakers",
+          "title": "Speakers and talks",
+          "summary": "Meet the speakers, then propose a talk and follow its review.",
+          "screens": [
+            "speakers",
+            "speaker",
+            "cfp",
+            "submit-talk",
+            "submission"
+          ]
+        },
+        {
+          "id": "agenda",
+          "title": "Build your agenda",
+          "summary": "Keep the sessions you want to see.",
+          "screens": [
+            "my-schedule"
+          ]
+        },
+        {
+          "id": "live",
+          "title": "Follow it live",
+          "summary": "What is on now and next.",
+          "screens": [
+            "live"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tickets",
+      "title": "Tickets",
+      "summary": "Buy, manage and book tickets for a group, and sign in to see them.",
+      "flows": [
+        {
+          "id": "buy",
+          "title": "Buy tickets",
+          "summary": "Choose tickets, name the attendees, pay and get the order.",
+          "screens": [
+            "tickets",
+            "attendee-details",
+            "payment",
+            "sold-out"
+          ]
+        },
+        {
+          "id": "manage",
+          "title": "Manage your tickets",
+          "summary": "See your tickets and pass one on.",
+          "screens": [
+            "my-tickets",
+            "transfer-ticket"
+          ]
+        },
+        {
+          "id": "group",
+          "title": "Book for a team",
+          "summary": "Ask for a group price.",
+          "screens": [
+            "group-booking"
+          ]
+        },
+        {
+          "id": "sign-in",
+          "title": "Sign in",
+          "summary": "Sign in with the email on the ticket.",
+          "screens": [
+            "sign-in"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "home",
+      "title": "Home",
+      "component": "SiteLayout",
+      "content": "content/home.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "When and where, what it’s about, who’s speaking and one way to buy.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack.",
+        "try": [
+          "Open a speaker’s name: it goes to the speaker page.",
+          "Narrow the window: speakers drop to two columns, then one."
+        ],
+        "notBuilt": [
+          "A countdown to the event.",
+          "Sponsors’ logos."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The event’s name, Event, Schedule, Speakers and Tickets, Get tickets",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Opening",
+            "holds": "Dates and city, title, lead, two actions, the early-ticket note and a picture",
+            "uses": "Hero (split)"
+          },
+          {
+            "region": "Numbers",
+            "holds": "Days, talks, workshops, people",
+            "uses": "Section, Grid, Statistic"
+          },
+          {
+            "region": "Speakers",
+            "holds": "Eight people, each linking to their page",
+            "uses": "Section, Grid, Persona, Link"
+          },
+          {
+            "region": "Tracks",
+            "holds": "Three tracks and their rooms",
+            "uses": "Section, Grid, Card"
+          },
+          {
+            "region": "Proof",
+            "holds": "A past visitor’s words",
+            "uses": "Quote (large, centred)"
+          },
+          {
+            "region": "Closing action",
+            "holds": "The ticket deadline and the actions",
+            "uses": "Hero (divided, level 2)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Event, your visit, getting involved, the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "about-event",
+      "title": "About",
+      "component": "SiteLayout",
+      "content": "content/event/about-event.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Why come: what it is, what to expect, proof.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, points, figures",
+            "uses": "Hero, List, Statistic"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "venue",
+      "title": "Venue",
+      "component": "SiteLayout",
+      "content": "content/event/visit/venue.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Where it is and how to get in, including access.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, access details",
+            "uses": "Hero, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "travel",
+      "title": "Travel and stay",
+      "component": "SiteLayout",
+      "content": "content/event/visit/travel.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "How to arrive and where to stay.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, hotel cards",
+            "uses": "Hero, Card, Grid"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "schedule",
+      "title": "Schedule",
+      "component": "SiteLayout",
+      "content": "content/programme/schedule.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The programme day by day: each time slot and the sessions that run then, side by side.",
+        "narrow": "Parallel sessions stack under their time; the time moves above them; the tabs stay in one row.",
+        "try": [
+          "Switch to Friday with the tabs or the arrow keys.",
+          "Compare 10:30 on Thursday: three sessions at once, side by side.",
+          "Narrow the window to see the sessions stack."
+        ],
+        "notBuilt": [
+          "Saving sessions to your own schedule.",
+          "Filtering by track.",
+          "A time-grid view with rooms as columns."
+        ],
+        "regions": [
+          {
+            "region": "Opening",
+            "holds": "Title and what happens on each day",
+            "uses": "Hero (stacked)"
+          },
+          {
+            "region": "Days",
+            "holds": "One tab per day",
+            "uses": "Tabs"
+          },
+          {
+            "region": "Programme",
+            "holds": "Time slots; each session’s title (linked), people, kind and room; breaks without a surface",
+            "uses": "Agenda (new), Badge"
+          }
+        ]
+      }
+    },
+    {
+      "id": "session",
+      "title": "Session",
+      "component": "SiteLayout",
+      "content": "content/programme/session.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One session in full: when, where, who, and what you take away.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, speaker, takeaways",
+            "uses": "Breadcrumbs, Hero, Persona, List"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "speakers",
+      "title": "Speakers",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/speakers.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every speaker by session type.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, people by group",
+            "uses": "Hero, Persona, Grid"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "speaker",
+      "title": "Speaker",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/speaker.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One speaker: who they are, their sessions, and others to see.",
+        "narrow": "The places move behind Menu; sessions put the time above; people stack.",
+        "notBuilt": [
+          "Links to the speaker’s profiles.",
+          "Slides and recordings after the event."
+        ],
+        "regions": [
+          {
+            "region": "Where you are",
+            "holds": "Event, Speakers, the speaker",
+            "uses": "Breadcrumbs"
+          },
+          {
+            "region": "Person",
+            "holds": "Portrait (initials here), role, name as the page’s title and a few lines",
+            "uses": "Avatar, Hero (stacked), Text"
+          },
+          {
+            "region": "Sessions",
+            "holds": "Their keynote and panel with day, time and room",
+            "uses": "Section, Agenda"
+          },
+          {
+            "region": "Also speaking",
+            "holds": "Four more people",
+            "uses": "Section, Grid, Persona, Link"
+          }
+        ]
+      }
+    },
+    {
+      "id": "faq",
+      "title": "Questions",
+      "component": "SiteLayout",
+      "content": "content/event/visit/faq.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Answers to common questions.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, questions",
+            "uses": "Hero, Accordion"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "tickets",
+      "title": "Tickets",
+      "component": "SiteLayout",
+      "content": "content/tickets/buy/tickets.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Choose a ticket and how many, see the total, hold them; answers to common questions.",
+        "narrow": "The reading column takes the whole width; ticket tiles stack.",
+        "try": [
+          "Choose Student and set How many to 3: the total follows.",
+          "Press Continue to payment: the hold is confirmed where the button was.",
+          "Open a question."
+        ],
+        "notBuilt": [
+          "Payment.",
+          "Sold-out and waiting-list states for a ticket.",
+          "Discount codes."
+        ],
+        "regions": [
+          {
+            "region": "Opening",
+            "holds": "Title and what every ticket includes",
+            "uses": "Hero (stacked)"
+          },
+          {
+            "region": "Choice",
+            "holds": "Four tickets, each with what you get and its price; the most chosen marked",
+            "uses": "Section, RadioGroup (tiles)"
+          },
+          {
+            "region": "Quantity and total",
+            "holds": "How many, then the tickets and total in the reader’s currency format",
+            "uses": "NumberField, DescriptionList"
+          },
+          {
+            "region": "Next step",
+            "holds": "Continue to payment, then the hold confirmed in place",
+            "uses": "Button, Alert"
+          },
+          {
+            "region": "Questions",
+            "holds": "Three common questions",
+            "uses": "Section, Accordion"
+          }
+        ]
+      }
+    },
+    {
+      "id": "attendee-details",
+      "title": "Attendee details",
+      "component": "SiteLayout",
+      "content": "content/tickets/buy/attendee-details.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Name each attendee; step 2 of 4.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The attendee form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "payment",
+      "title": "Payment",
+      "component": "SiteLayout",
+      "content": "content/tickets/buy/payment.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Pay by card; step 3 of 4, with the total.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The payment form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "payment-declined",
+      "title": "Card declined",
+      "stateOf": "payment",
+      "component": "SiteLayout",
+      "content": "content/tickets/buy/payment-declined.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Declined: nothing charged, what to do, the form kept."
+      }
+    },
+    {
+      "id": "order-confirmed",
+      "title": "Order confirmed",
+      "component": "SiteLayout",
+      "content": "content/tickets/buy/order-confirmed.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Step 4 of 4: the order, what to bring, what next.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "payment"
+    },
+    {
+      "id": "my-tickets",
+      "title": "Your tickets",
+      "component": "SiteLayout",
+      "content": "content/tickets/my-tickets.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The tickets in an order and who holds each.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, tickets, transfer",
+            "uses": "Hero, DescriptionList, Button"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "transfer-ticket",
+      "title": "Transfer a ticket",
+      "component": "SiteLayout",
+      "content": "content/tickets/transfer-ticket.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Pass a ticket on, with what changes.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The transfer form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "group-booking",
+      "title": "Group booking",
+      "component": "SiteLayout",
+      "content": "content/tickets/group-booking.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Ask for a group price.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The group form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sponsors",
+      "title": "Sponsors",
+      "component": "conference.SponsorsLayout",
+      "content": "content/event/sponsors.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "intro",
+          "accepts": [
+            "hero",
+            "conference.countdown",
+            "cta",
+            "points"
+          ]
+        },
+        {
+          "id": "levels",
+          "accepts": [
+            "conference.sponsor-wall"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Who supports the event, by level, and how to join them: the worked example of a template’s own parts (Q64).",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The event’s name, its places with Sponsors current, Get tickets",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Intro",
+            "holds": "Why sponsor, the time until doors open, the way to become one; beside the levels in a wide window",
+            "uses": "Hero (stacked), conference.Countdown (template fundamental), Hero (divided)"
+          },
+          {
+            "region": "Levels",
+            "holds": "Lead partner, partners and supporters as tiles",
+            "uses": "conference.SponsorWall (template compound): Heading, Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Three link sections and the small print",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The intro moves above the levels; tiles drop to fewer columns.",
+        "try": [
+          "Widen the window: the intro sits beside the levels.",
+          "Narrow the window: the intro moves above the levels.",
+          "Open the Conference home: the countdown sits under the opening."
+        ],
+        "notBuilt": [
+          "Sponsor logos (names are set as text; no logos are drawn).",
+          "A sponsor’s own page."
+        ]
+      }
+    },
+    {
+      "id": "become-sponsor",
+      "title": "Become a sponsor",
+      "component": "SiteLayout",
+      "content": "content/event/become-sponsor.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Why sponsor, and ask for the pack.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the request form",
+            "uses": "Hero, Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sponsor-sent",
+      "title": "Request sent",
+      "component": "SiteLayout",
+      "content": "content/event/sponsor-sent.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What happens next, and who.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "become-sponsor"
+    },
+    {
+      "id": "cfp",
+      "title": "Call for papers",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/cfp.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The call: what we want, what we pay, and how to submit.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, what we pay, questions",
+            "uses": "Hero, List, Accordion"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "submit-talk",
+      "title": "Your talk",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/submit-talk.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Propose a talk: five questions.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The talk form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "submit-talk-error",
+      "title": "Missing answers",
+      "stateOf": "submit-talk",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/submit-talk-error.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Missing answers named; the rest kept."
+      }
+    },
+    {
+      "id": "talk-submitted",
+      "title": "Talk submitted",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/talk-submitted.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What happens to the proposal, and when.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "submit-talk"
+    },
+    {
+      "id": "submission",
+      "title": "Your submission",
+      "component": "SiteLayout",
+      "content": "content/programme/speakers/submission.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Where a proposal stands, step by step.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, status details",
+            "uses": "Hero, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-in",
+      "title": "Sign in",
+      "component": "SiteLayout",
+      "content": "content/tickets/sign-in.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sign in with the ticket’s email.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The sign-in form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "my-schedule",
+      "title": "Your schedule",
+      "component": "SiteLayout",
+      "content": "content/programme/my-schedule.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The sessions kept, by time and room.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the agenda",
+            "uses": "Hero, Agenda"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "my-schedule-empty",
+      "title": "Nothing kept yet",
+      "stateOf": "my-schedule",
+      "component": "SiteLayout",
+      "content": "content/programme/my-schedule-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Nothing kept yet: why, and the way to the schedule."
+      }
+    },
+    {
+      "id": "live",
+      "title": "Live now",
+      "component": "SiteLayout",
+      "content": "content/programme/live.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What’s on now and next.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the next sessions",
+            "uses": "Hero, Agenda"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "not-found",
+      "title": "Page not found",
+      "component": "SiteLayout",
+      "content": "content/event/not-found.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Not found, with the way home.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sold-out",
+      "title": "Sold out",
+      "component": "SiteLayout",
+      "content": "content/tickets/buy/sold-out.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sold out, with the alternatives.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ],
+  "parts": {
+    "fundamentals": [
+      {
+        "name": "conference.Countdown",
+        "source": "parts/fundamentals/Countdown.tsx"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "conference.SponsorWall",
+        "source": "parts/compounds/SponsorWall.tsx"
+      }
+    ],
+    "layouts": [
+      {
+        "name": "conference.SponsorsLayout",
+        "source": "parts/layouts/SponsorsLayout.tsx"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "conference.countdown",
+        "schema": "#/$defs/countdown",
+        "renders": "conference.Countdown"
+      },
+      {
+        "type": "conference.sponsor-wall",
+        "schema": "#/$defs/sponsorWall",
+        "renders": "conference.SponsorWall"
+      }
+    ]
+  }
+}

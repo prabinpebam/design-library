@@ -1,0 +1,65 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "portfolio",
+  "shared": true,
+  "contentVersion": 1,
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Asha Rao",
+        "places": [
+          {
+            "label": "Work",
+            "href": "/home"
+          },
+          {
+            "label": "About",
+            "href": "/about"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Get in touch",
+            "primary": true,
+            "says": "Get in touch isn’t part of this example."
+          }
+        ]
+      }
+    ],
+    "footer": [
+      {
+        "type": "site-footer",
+        "sectionsLabel": "Elsewhere",
+        "sections": [
+          {
+            "id": "work",
+            "heading": "Work",
+            "links": [
+              {
+                "label": "Harbour wayfinding",
+                "href": "/project"
+              },
+              {
+                "label": "All work",
+                "href": "/home"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "About",
+            "href": "/about"
+          },
+          {
+            "label": "Get in touch",
+            "href": "/about"
+          }
+        ],
+        "identity": "Asha Rao is an example designer for this library.",
+        "legal": "Pictures drawn for these examples."
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "trash",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Deleted files",
+        "title": "Kept for 30 days",
+        "lead": "Restore a file before then, or it’s gone for good.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Deleted",
+        "items": [
+          {
+            "term": "Old onboarding",
+            "details": "Deleted 3 days ago by you · 27 days left"
+          },
+          {
+            "term": "Logo tests",
+            "details": "Deleted 2 weeks ago by Keiko Arai · 16 days left"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Restore a file",
+        "lead": "Restored files return to where they were.",
+        "actions": [
+          {
+            "label": "Restore Old onboarding",
+            "primary": true,
+            "says": "Restoring isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+/*
+ * Tier 1 fundamental: Reveal (Q65 P4, S3). Content opens and closes in place by grid rows 0fr <-> 1fr (MD7), fading in
+ * over change and out over quick. The clip hides overflow only while closed or moving; once open it lets focus rings
+ * and shadows out (Clipping). Closed: hidden after the collapse, and inert (set by the component).
+ */
+@layer fundamentals {
+  [data-dl='reveal'] {
+    display: grid;
+    /* One column that never grows past its container: content inside shrinks (a tree's labels truncate) instead of
+       pushing the container sideways (Q68). */
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 0fr;
+    min-inline-size: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      grid-template-rows var(--duration-move) var(--easing-standard),
+      opacity var(--duration-quick) var(--easing-exit),
+      visibility 0s var(--easing-linear) var(--duration-move);
+  }
+
+  [data-dl='reveal'][data-open] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      grid-template-rows var(--duration-move) var(--easing-standard),
+      opacity var(--duration-change) var(--easing-standard),
+      visibility 0s;
+  }
+
+  /* appear: mounted already open (a message that just arrived) reveals once from closed. Otherwise first paint never animates (Z19). */
+  @starting-style {
+    [data-dl='reveal'][data-open][data-appear] {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+
+    [data-dl='reveal'][data-open][data-appear] > [data-dl-part='clip'] {
+      overflow: hidden;
+    }
+  }
+
+  [data-dl='reveal'] > [data-dl-part='clip'] {
+    min-block-size: 0;
+    min-inline-size: 0;
+    overflow: hidden;
+    transition: overflow 0s;
+    transition-behavior: allow-discrete;
+  }
+
+  /* Open and settled: nothing clipped. The switch waits for the growth to finish. */
+  [data-dl='reveal'][data-open] > [data-dl-part='clip'] {
+    overflow: visible;
+    transition: overflow 0s var(--duration-move);
+    transition-behavior: allow-discrete;
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "saved",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "posts",
+        "heading": "Saved for later",
+        "items": [
+          {
+            "eyebrow": "Walking",
+            "title": "The long way round the reservoir",
+            "description": "Seven hours, one flask, no signal.",
+            "meta": "12 February 2027 · 7 min",
+            "href": "/article",
+            "picture": "meadow"
+          },
+          {
+            "eyebrow": "Weather",
+            "title": "Reading a sky before it turns",
+            "description": "What the clouds said an hour before the rain.",
+            "meta": "30 January 2027 · 5 min",
+            "href": "/article",
+            "picture": "dusk"
+          }
+        ],
+        "empty": {
+          "reason": "first-use",
+          "title": "Nothing saved yet",
+          "text": "Press Save on any article to keep it here for later, on any device you sign in on.",
+          "silhouette": "list",
+          "links": [
+            {
+              "label": "Browse the latest",
+              "href": "/index"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

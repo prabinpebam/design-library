@@ -1,0 +1,148 @@
+/*
+ * Tier 3 layout: AppLayout (F15.75, Q61/Q62). Sidebar beside the main area, separated by tone (a sunken sidebar), no
+ * border. The main area is the header, then one scroller edge to edge (scrollbar at the main area's edge) whose content
+ * carries the page margin; inside it the view and, when given, the details column beside it. `column` holds the view to
+ * a readable width; `full` lets it take the whole width (a board scrolls sideways inside itself). Narrow (below 48 rem of
+ * its own width, a container query): the open sidebar floats over the main area under the header with the overlay
+ * shadow; the details column moves under the view.
+ */
+@layer layouts {
+  [data-dl='app-layout'] {
+    position: relative;
+    isolation: isolate;
+    container-type: inline-size;
+    display: flex;
+    inline-size: 100%;
+    min-inline-size: 0;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  [data-dl='app-layout'][data-height='fill'] { block-size: 100%; }
+  [data-dl='app-layout'][data-height='screen'] { block-size: 100dvh; }
+  [data-dl='app-layout'][data-height='lg'] { block-size: var(--c-app-layout-height-lg); }
+
+  [data-dl='app-layout'] > [data-dl-part='sidebar'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-app-layout-sidebar-gap);
+    flex: none;
+    box-sizing: border-box;
+    inline-size: var(--c-app-layout-sidebar);
+    min-block-size: 0;
+    overflow-y: auto;
+    padding: var(--c-app-layout-inset);
+    background-color: var(--c-app-layout-sidebar-fill);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='sidebar'][hidden] {
+    display: none;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-app-layout-header-gap);
+    min-block-size: var(--c-app-layout-header);
+    padding-inline: var(--c-app-layout-inset);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > :is([data-dl-part='header-start'], [data-dl-part='header-end']) {
+    display: flex;
+    align-items: center;
+    gap: var(--c-app-layout-header-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-end'] {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] {
+    flex: 1;
+    min-block-size: 0;
+    overflow: auto;
+    outline: none;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll']:focus-visible {
+    box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-app-layout-gutter);
+    box-sizing: border-box;
+    padding: var(--c-app-layout-margin);
+  }
+
+  [data-dl='app-layout'][data-width='column'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] {
+    max-inline-size: calc(var(--c-app-layout-column) + 2 * var(--c-app-layout-margin));
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='view'] {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: var(--c-app-layout-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='aside'] {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    gap: var(--c-app-layout-gap);
+    inline-size: var(--c-app-layout-aside);
+  }
+
+  @container (max-width: 48rem) {
+    /* Over the view it's a non-blocking drawer: floating material (MT7, FR7), frosted when on (materials MB5). */
+    [data-dl='app-layout'] > [data-dl-part='sidebar'] {
+      position: absolute;
+      inset-block: var(--c-app-layout-header) 0;
+      inset-inline-start: 0;
+      z-index: var(--c-app-layout-layer);
+      background-color: var(--material-floating-bg, var(--c-app-layout-sidebar-fill));
+      -webkit-backdrop-filter: var(--material-backdrop);
+      backdrop-filter: var(--material-backdrop);
+      box-shadow: var(--c-app-layout-overlay-shadow);
+    }
+
+    [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='body'] > [data-dl-part='aside'] {
+      inline-size: auto;
+    }
+  }
+
+  /* AR11: where the drawer (16 rem) covers more than half the window, it goes solid. */
+  @container (max-width: 32rem) {
+    [data-dl='app-layout'] > [data-dl-part='sidebar'] {
+      background-color: var(--c-app-layout-sidebar-fill);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='app-layout'] > [data-dl-part='sidebar'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

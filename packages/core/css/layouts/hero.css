@@ -1,0 +1,71 @@
+/*
+ * Tier 3 layout section: Hero (F15.53, catalogue Layout "Marketing sections" hero; atiya Hero adapted). The words (an
+ * eyebrow, the display title, a lead, the actions and a note) and, if given, a picture. The root is the container its
+ * arrangements answer to, so a hero in a narrow column stacks even on a wide window. No surface, border or scrim of
+ * its own: the display type and space make it the view's opening; the picture keeps Image's own corners.
+ */
+@layer layouts {
+  [data-dl='hero'] {
+    container-type: inline-size;
+    inline-size: 100%;
+  }
+
+  [data-dl='hero'] > [data-dl-part='body'] {
+    display: grid;
+    gap: var(--c-hero-gap);
+  }
+
+  [data-dl='hero'] [data-dl-part='words'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-hero-words-gap);
+    max-inline-size: var(--c-hero-measure);
+    min-inline-size: 0;
+  }
+
+  [data-dl='hero'] [data-dl-part='heading'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-hero-heading-gap);
+    overflow-wrap: break-word;
+  }
+
+  [data-dl='hero'] [data-dl-part='lead'] {
+    margin: 0;
+    font-size: var(--c-hero-lead-size);
+    line-height: var(--c-hero-lead-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='hero'] [data-dl-part='doing'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-hero-heading-gap);
+  }
+
+  [data-dl='hero'] [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-hero-actions-gap);
+  }
+
+  [data-dl='hero'] [data-dl-part='picture'] {
+    min-inline-size: 0;
+  }
+
+  /* Split: words and picture in two equal columns, the words centred on the picture's height. */
+  @container (min-width: 38rem) {
+    [data-dl='hero'][data-layout='split'][data-picture] > [data-dl-part='body'] {
+      grid-template-columns: repeat(2, minmax(var(--c-hero-split-min), 1fr));
+      align-items: center;
+    }
+
+    /* Divided: the words take the room, the actions sit at the end, level with the lead's last line. */
+    [data-dl='hero'][data-layout='divided'] > [data-dl-part='body'] {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+    }
+  }
+}

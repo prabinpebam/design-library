@@ -1,0 +1,6 @@
+{
+  "$schema": "../../core/schemas/assets.schema.json",
+  "assets": {
+    "shelves": { "src": "assets/shelves.svg", "alt": "Two wooden shelves of coloured book spines above a pale blue floor." }
+  }
+}

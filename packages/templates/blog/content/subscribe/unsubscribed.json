@@ -1,0 +1,30 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "unsubscribed",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Unsubscribed",
+        "title": "You won’t get any more emails",
+        "text": "We’ve removed your address from every list. Sorry to see you go.",
+        "links": [
+          {
+            "label": "Subscribe again",
+            "href": "/subscribe"
+          },
+          {
+            "label": "Back to the articles",
+            "href": "/index"
+          }
+        ]
+      }
+    ]
+  }
+}

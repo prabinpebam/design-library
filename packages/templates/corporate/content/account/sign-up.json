@@ -1,0 +1,75 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "sign-up",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sign-in",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Create an account",
+        "intro": "For customers with a Northwind account number. It takes a minute.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "company",
+            "label": "Company",
+            "kind": "text"
+          },
+          {
+            "id": "account",
+            "label": "Account number",
+            "kind": "text",
+            "hint": "On every invoice; it starts with NW."
+          },
+          {
+            "id": "email",
+            "label": "Work email address",
+            "kind": "email"
+          },
+          {
+            "id": "password",
+            "label": "Password",
+            "kind": "password",
+            "hint": "At least 12 characters."
+          }
+        ],
+        "submit": "Create account",
+        "sent": "Account created. Check your email to confirm the address.",
+        "links": [
+          {
+            "label": "Already have an account? Sign in",
+            "href": "/sign-in"
+          }
+        ],
+        "outcome": {
+          "eyebrow": "One more step",
+          "title": "Check your email",
+          "text": "We’ve sent a link to confirm the address. Open it to finish creating the account.",
+          "links": [
+            {
+              "label": "Back to sign in",
+              "href": "/sign-in"
+            },
+            {
+              "label": "Use a different address",
+              "href": "/sign-up"
+            }
+          ],
+          "note": "The link works for 24 hours."
+        }
+      }
+    ]
+  }
+}

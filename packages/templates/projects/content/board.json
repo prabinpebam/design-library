@@ -1,0 +1,6 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "projects",
+  "layout": "board",
+  "contentVersion": 1
+}

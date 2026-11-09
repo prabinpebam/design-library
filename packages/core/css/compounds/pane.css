@@ -1,0 +1,30 @@
+/*
+ * Tier 2 compound: Pane. A side pane's heading and close action, its sections in one column, a status line at its
+ * foot. The layout's aside owns the padding; the pane owns only the space between its parts. A progress mark inside
+ * the status line sits on the text's middle (named placement escape; the Progress itself is untouched).
+ */
+@layer compounds {
+  [data-dl='pane'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-pane-gap);
+  }
+
+  [data-dl='pane'] > [data-dl-part='head'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-pane-head-gap);
+  }
+
+  [data-dl='pane'] > [data-dl-part='status'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-pane-status-gap);
+  }
+
+  [data-dl='pane'] > [data-dl-part='status'] [data-dl='progress'] {
+    vertical-align: middle;
+  }
+}

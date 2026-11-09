@@ -1,0 +1,233 @@
+/*
+ * Tier 1 fundamental: ColourPicker (Q49). A design tool's colour panel: the saturation and brightness area, the hue and
+ * opacity tracks, the numbers row and swatches, stacked by one gap. The colours drawn are the content (the person's
+ * colour), set as custom properties by the component; everything around them is tokens.
+ */
+@layer fundamentals {
+  [data-dl='colour-picker'] {
+    --colour-picker-thumb: var(--c-colour-picker-thumb);
+    --colour-picker-check: var(--c-colour-picker-check);
+    --colour-picker-checkerboard: repeating-conic-gradient(var(--color-border) 0 25%, var(--color-bg-raised) 0 50%) 0 0 / calc(2 * var(--colour-picker-check)) calc(2 * var(--colour-picker-check));
+  }
+
+  /* The panel: inline, or inside the popover a swatch opens. */
+  [data-dl='colour-picker']:not([data-trigger]),
+  [data-dl='colour-picker'] > [data-dl-part='popup'] > [data-dl-part='panel'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-colour-picker-gap);
+    inline-size: var(--c-colour-picker-width);
+    max-inline-size: 100%;
+    padding: var(--c-colour-picker-inset);
+    border: var(--border-hairline) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-bg-raised);
+    box-sizing: content-box;
+  }
+
+  /* In its popover the panel is a floating surface (MT7, FR4): the floating material, frosted when the setting is on. */
+  [data-dl='colour-picker'] > [data-dl-part='popup'] > [data-dl-part='panel'] {
+    background-color: var(--material-floating-bg, var(--color-bg-raised));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+  }
+
+  /* The area: white to the hue across, black to transparent up (drawn by the component). Saturation across, brightness up. */
+  [data-dl='colour-picker'] [data-dl-part='area'] {
+    position: relative;
+    block-size: var(--c-colour-picker-area-height);
+    border-radius: var(--radius-md);
+    background: var(--colour-picker-area);
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='thumb'] {
+    position: absolute;
+    inline-size: var(--colour-picker-thumb);
+    block-size: var(--colour-picker-thumb);
+    /* Two tones, so it shows on any colour in either theme: the surface colour, then a hairline of the text colour. */
+    border: var(--c-colour-picker-thumb-ring) solid var(--color-bg-raised);
+    border-radius: var(--radius-full);
+    background-color: var(--colour-picker-colour);
+    box-shadow: 0 0 0 var(--border-hairline) var(--color-text), var(--shadow-raised);
+    translate: -50% -50%;
+    pointer-events: none;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='area'] > [data-dl-part='thumb'] {
+    inset-inline-start: var(--colour-picker-x);
+    inset-block-start: var(--colour-picker-y);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='sliders'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='tracks'] {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: var(--space-stack-item);
+    /* Half a thumb in at each end, so the thumb at 0 or 100 % stays over its track. */
+    padding-inline: calc(var(--colour-picker-thumb) / 2);
+  }
+
+  [data-dl='colour-picker'] :is([data-dl-part='hue'], [data-dl-part='alpha']) {
+    position: relative;
+    block-size: var(--c-colour-picker-track);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    touch-action: none;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='hue'] {
+    background: var(--colour-picker-hue-track);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='alpha'] {
+    background: linear-gradient(to right, transparent, var(--colour-picker-colour)), var(--colour-picker-checkerboard);
+  }
+
+  [data-dl='colour-picker'] :is([data-dl-part='hue'], [data-dl-part='alpha']) > [data-dl-part='thumb'] {
+    inset-block-start: 50%;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='hue'] > [data-dl-part='thumb'] {
+    inset-inline-start: var(--colour-picker-h);
+    background-color: var(--colour-picker-hue);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='alpha'] > [data-dl-part='thumb'] {
+    inset-inline-start: var(--colour-picker-a);
+    background: linear-gradient(var(--colour-picker-colour-a), var(--colour-picker-colour-a)), var(--colour-picker-checkerboard);
+  }
+
+  [data-dl='colour-picker'] :is([data-dl-part='area'], [data-dl-part='hue'], [data-dl-part='alpha']):focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* The numbers: the model menu, then the fields sharing the rest equally, then the opacity. */
+  [data-dl='colour-picker'] [data-dl-part='numbers'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='fields'] {
+    display: grid;
+    flex: 3 1 0;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='numbers'] > [data-dl='number-field'] {
+    flex: 1 1 0;
+    min-inline-size: 0;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='swatches'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='swatch-row'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='swatch'] {
+    inline-size: var(--c-colour-picker-swatch);
+    block-size: var(--c-colour-picker-swatch);
+    padding: 0;
+    border: var(--border-hairline) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(var(--colour-picker-swatch), var(--colour-picker-swatch)), var(--colour-picker-checkerboard);
+    cursor: pointer;
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='swatch'][data-current] {
+    outline: var(--border-thick) solid var(--color-text);
+    outline-offset: var(--border-hairline);
+  }
+
+  [data-dl='colour-picker'] [data-dl-part='swatch']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* As a trigger: a swatch that fills the box its parent gives it (20 px at least), the colour over a checkerboard. */
+  [data-dl='colour-picker'][data-trigger] {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: var(--c-colour-picker-swatch);
+    min-block-size: var(--c-colour-picker-swatch);
+    border-radius: inherit;
+  }
+
+  [data-dl='colour-picker'] > [data-dl-part='trigger'] {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 0;
+    border: none;
+    border-radius: inherit;
+    background: linear-gradient(var(--colour-picker-colour-a), var(--colour-picker-colour-a)), var(--colour-picker-checkerboard);
+    cursor: pointer;
+  }
+
+  [data-dl='colour-picker'][data-empty] > [data-dl-part='trigger'] {
+    background: transparent;
+  }
+
+  [data-dl='colour-picker'] > [data-dl-part='trigger']:disabled {
+    cursor: not-allowed;
+  }
+
+  [data-dl='colour-picker'] > [data-dl-part='trigger']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* The popover: the shared popup placement (usePopup) in the top layer; the panel inside draws the surface. */
+  [data-dl='colour-picker'] > [data-dl-part='popup'] {
+    position: fixed;
+    z-index: var(--c-popup-layer);
+    inset: auto;
+    inset-block-start: calc(var(--popup-edge, 0px) + var(--c-popup-offset));
+    inset-inline-start: var(--popup-start, 0px);
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-lg);
+    background: none;
+    box-shadow: var(--c-popup-shadow);
+    color: var(--color-text);
+    overflow: visible;
+  }
+
+  [data-dl='colour-picker'] > [data-dl-part='popup'][data-placement='above'] {
+    inset-block-start: auto;
+    inset-block-end: calc(100vh - var(--popup-edge, 0px) + var(--c-popup-offset));
+  }
+
+  [data-dl='colour-picker'] > [data-dl-part='popup'][hidden],
+  [data-dl='colour-picker'] > [data-dl-part='popup']:not(:popover-open) {
+    display: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='colour-picker'] :is([data-dl-part='area'], [data-dl-part='hue'], [data-dl-part='alpha'], [data-dl-part='swatch']) {
+      forced-color-adjust: none;
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

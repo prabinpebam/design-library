@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "chat-projects",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Projects",
+        "title": "Keep related chats together",
+        "lead": "Each project holds its chats, files and instructions.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Your projects",
+        "max": 3,
+        "items": [
+          {
+            "title": "Lake District trip",
+            "description": "6 chats · 2 files",
+            "href": "/chat-project"
+          },
+          {
+            "title": "House move",
+            "description": "11 chats · 5 files",
+            "href": "/chat-project"
+          },
+          {
+            "title": "Spanish practice",
+            "description": "23 chats",
+            "href": "/chat-project"
+          }
+        ]
+      }
+    ]
+  }
+}

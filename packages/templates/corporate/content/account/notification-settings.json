@@ -1,0 +1,76 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "notification-settings",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sign-in",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Notifications",
+        "intro": "Each change saves at once.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Shipments",
+            "items": [
+              {
+                "id": "departed",
+                "label": "Departed",
+                "description": "When a shipment leaves the port.",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "delayed",
+                "label": "Delayed",
+                "description": "As soon as a delay is known, with the new date.",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "delivered",
+                "label": "Delivered",
+                "kind": "switch",
+                "on": false
+              }
+            ]
+          },
+          {
+            "heading": "How we tell you",
+            "items": [
+              {
+                "id": "channel",
+                "label": "Send them by",
+                "kind": "choice",
+                "options": [
+                  "Email",
+                  "Text message",
+                  "Email and text message"
+                ],
+                "value": "Email"
+              },
+              {
+                "id": "digest",
+                "label": "News and offers",
+                "description": "At most once a month.",
+                "kind": "switch",
+                "on": false
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Back to account settings",
+            "href": "/account-settings"
+          }
+        ]
+      }
+    ]
+  }
+}

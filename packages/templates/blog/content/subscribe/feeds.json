@@ -1,0 +1,35 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "feeds",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Feeds",
+        "title": "Follow without email",
+        "lead": "Add a feed to any reader that supports RSS or Atom.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Feeds",
+        "items": [
+          {
+            "term": "Everything",
+            "details": "https://example.com/feed.xml"
+          },
+          {
+            "term": "Walking only",
+            "details": "https://example.com/walking/feed.xml"
+          }
+        ]
+      }
+    ]
+  }
+}

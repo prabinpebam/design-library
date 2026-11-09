@@ -1,0 +1,48 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "reader-settings",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Your profile",
+        "intro": "Your name shows on your comments.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "about",
+            "label": "About you",
+            "kind": "long",
+            "optional": true
+          }
+        ],
+        "submit": "Save profile",
+        "sent": "Profile saved.",
+        "links": [
+          {
+            "label": "Email preferences",
+            "href": "/email-preferences"
+          }
+        ]
+      }
+    ]
+  }
+}

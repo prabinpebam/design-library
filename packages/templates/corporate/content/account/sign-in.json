@@ -1,0 +1,47 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "sign-in",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sign-in",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Sign in to your account",
+        "intro": "Track shipments, download documents and pay invoices.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "password",
+            "label": "Password",
+            "kind": "password"
+          }
+        ],
+        "submit": "Sign in",
+        "sent": "Signed in. Your shipments would open next; this example stops here.",
+        "links": [
+          {
+            "label": "Forgot your password?",
+            "href": "/forgot-password"
+          },
+          {
+            "label": "Create an account",
+            "href": "/sign-up"
+          }
+        ],
+        "error": "That email address and password don’t match an account. Check them, or reset the password."
+      }
+    ]
+  }
+}

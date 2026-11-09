@@ -1,0 +1,557 @@
+{
+  "$comment": "Q78.2/Q78.3/Q79: every framework behind the library, in one place. `points` are for people: short, plain and high level, no rule ids or token names (Q79); the full framework is the Slate doc at `doc.path` (`page.md#anchor`; the library links it through site-links, Q80). `agent` is for agents: rules, a decision procedure (`decide`), the checks to run and the token categories it governs. `appliesTo` says where the library shows it and which component families it governs: page ids, families (`@family`) and sections. The library's Principles block reads this file; npm run agent:index writes it into agent/index.json, each agent/components/{Name}.json and guide/7-principles.md. Edit it here, never in a page or the guide.",
+  "frameworks": [
+    {
+      "id": "library",
+      "title": "How the library works",
+      "doc": {
+        "label": "How the library works",
+        "path": "how-it-works.md"
+      },
+      "points": [
+        "Every look comes from tokens: change a token and everything that reads it follows.",
+        "Parts are sealed. You change them through their options, never by restyling them.",
+        "Screens are drawn from data, so content and design stay apart.",
+        "Each tier builds on the one below: tokens, fundamentals, compounds, layouts and templates."
+      ],
+      "appliesTo": {
+        "pages": [
+          "overview",
+          "component-tokens"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Look comes only from tokens; a view, page or content file never carries a class name, style prop, CSS file or raw value.",
+          "Components are sealed (no className or style props). Change them by the seam ladder: prop or variant, slot, context attribute, theme, custom part inside a template, then a reviewed core change.",
+          "Screens are data: a template manifest names layouts and regions; content JSON fills them; the renderer maps content to layouts, compounds and fundamentals.",
+          "Tiers depend downward only: tokens <- fundamentals <- compounds <- layouts <- templates. A fundamental never imports a compound.",
+          "Never edit a generated file (tokens.colour.json, tokens.space-shape.json, css/tokens.css, tokens/generated/*, agent/*, generated content schemas)."
+        ],
+        "decide": [
+          "Search packages/core/agent/index.json for an existing component, block type, layout or template before writing anything.",
+          "Pick the lowest tier that meets the need: a fundamental if it is universal, a compound if it arranges fundamentals for one need, a layout for named regions of a screen.",
+          "If nothing fits, take the first seam on the ladder that works; a custom part lives in your template as {template}.{Part}."
+        ],
+        "checks": [
+          "npm run check:views",
+          "npm run check:content",
+          "npm run agent:index:check"
+        ],
+        "tokens": []
+      }
+    },
+    {
+      "id": "constraints",
+      "title": "The owner’s design rules",
+      "doc": {
+        "label": "Design constraints",
+        "path": "brief.md#design-constraints"
+      },
+      "points": [
+        "No stripe on one side to make something stand out.",
+        "On or off settings are switches, never buttons.",
+        "Segments inside a bar stay square; only the bar’s ends may round.",
+        "Space sits at the right level, scrolling reaches the edges, and focus is never cut off.",
+        "One version of each thing; most notifications go away on their own."
+      ],
+      "appliesTo": {
+        "pages": [
+          "overview",
+          "clipping",
+          "scrolling"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Never a one-sided accent border (border-left stripe) on a card, button, callout or nav item; use a fill, tint, full outline, icon or badge.",
+          "A binary setting is a Switch, never a Button used as an on/off toggle.",
+          "Inner segments of a stacked or segmented bar are square; only the outer ends of the whole bar may round.",
+          "Pad once at the right interior level (one or two levels below the visual wrapper), never all around a wrapper or per leaf; scroll regions bleed to the surface edge with the scrollbar at the edge; never clip a focus ring.",
+          "One component variant per need: no second pattern where one already does the job.",
+          "Notifications auto-dismiss; manual dismiss only when the person must read it."
+        ],
+        "decide": [
+          "Before adding an accent, choose fill, tint, full outline, icon or badge, in that order of preference.",
+          "Before adding a variant, search agent/components/{Name}.json for an existing prop that covers the need.",
+          "Before adding padding, find the wrapper that owns the visual edge and pad the first content level inside it; keep the scroll container itself unpadded."
+        ],
+        "checks": [
+          "npm run check:clipping",
+          "npm run check:views"
+        ],
+        "tokens": []
+      }
+    },
+    {
+      "id": "presets",
+      "title": "Presets",
+      "doc": {
+        "label": "Token presets",
+        "path": "foundation.md#token-presets-q70"
+      },
+      "points": [
+        "A preset is a saved set of choices: colour, type, icons, space, shape and surfaces.",
+        "One global preset names a choice for each, and every template follows it.",
+        "Your own presets sit beside the built-in ones, which can’t be changed."
+      ],
+      "appliesTo": {
+        "pages": [
+          "overview"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "A preset is a saved choice per category: colour, type, icons, space, shape, material. A global preset names one per category.",
+          "Built-in presets are read-only; user presets are saved beside them (design-library.presets) and sync across tabs.",
+          "Templates inherit the global preset; a template never hard-codes a category choice.",
+          "Choose at run time with @design-library/core/presets (applyGlobalPreset, applyCategoryPreset); change defaults at build time through the token config files."
+        ],
+        "decide": [
+          "The product owns this repository look: change the theme (config file, npm run tokens).",
+          "The app needs another built-in option: apply a category or global preset at run time.",
+          "A person wants to keep their choice: saveCategoryPreset or saveGlobalPreset."
+        ],
+        "checks": [
+          "npm run tokens:check",
+          "npm run agent:index:check"
+        ],
+        "tokens": []
+      }
+    },
+    {
+      "id": "colour",
+      "title": "Colour",
+      "doc": {
+        "label": "The colour model",
+        "path": "foundation.md#colour-model"
+      },
+      "points": [
+        "Parts ask for a colour by its job, such as text or a raised surface, never by its value.",
+        "Status colours mean status only, and always come with an icon or words.",
+        "Every text and control colour stays readable in light, dark and more contrast.",
+        "Decorative colours are for charts and identity, never for meaning."
+      ],
+      "appliesTo": {
+        "pages": [
+          "colour"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Components read semantic roles only (color.text, color.bg-raised, color.border-control, state.*); never p.* primitives.",
+          "Status meaning only through color.status.{info,success,warning,danger,neutral}.{fg,bg,border,fill,on-fill}, always with an icon or words: never colour alone.",
+          "spectrum.* and set.* only for the purpose in their $extensions[\"org.design-library\"].purpose (charts, identity), never for function.",
+          "Change colour in packages/core/tokens/colour.config.json, then npm run tokens; never edit tokens.colour.json.",
+          "Contrast: text 4.5:1 and non-text 3:1 in light, dark and both contrast levels; tokens:check refuses a theme that misses one."
+        ],
+        "decide": [
+          "Is it text, a surface, a line or a control fill? Use the matching color.text*, color.bg*, color.border* or color.bg-control role.",
+          "Does it mean a status? Use color.status.* and add an icon or words.",
+          "Is it the brand action, link, focus or selection? It already reads the accent; don’t add another.",
+          "Is it a category in a chart or an identity? Use a declared set.* or spectrum.* with its purpose.",
+          "None fits: add a role through the colour config, never a literal."
+        ],
+        "checks": [
+          "npm run tokens",
+          "npm run tokens:check"
+        ],
+        "tokens": [
+          "color",
+          "state",
+          "spectrum",
+          "set"
+        ]
+      }
+    },
+    {
+      "id": "spacing",
+      "title": "Spacing",
+      "doc": {
+        "label": "Spacing in the foundation plan",
+        "path": "foundation.md#space-and-shape-options"
+      },
+      "points": [
+        "Everything sits on one small base unit.",
+        "Things that belong together sit closer than the groups around them.",
+        "The container owns the space between its children, not each child.",
+        "Nothing shifts when you hover, focus or wait."
+      ],
+      "appliesTo": {
+        "pages": [
+          "space"
+        ],
+        "families": [
+          "arrangement",
+          "layout"
+        ],
+        "sections": [
+          "layouts"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "One 4 px base unit; components read roles (space.stack-pair, stack-item, stack-group, stack-section, inline-*, inset-*, gutter, margin-page), never a scale step.",
+          "Space inside a group is never larger than the space around it.",
+          "The parent owns space: gap and padding on the container (Stack, Cluster, Grid gap props); never margins set by a sibling position.",
+          "Geometry never moves on hover, focus or loading: borders are always there, transparent at rest.",
+          "Targets are at least size.target (44 px), or size.target-dense in dense contexts."
+        ],
+        "decide": [
+          "Related items (label and value): stack-pair. Items in a list: stack-item. Groups: stack-group. Sections: stack-section.",
+          "Side by side: inline-pair, inline-item, inline-group by the same levels.",
+          "Inside a surface: inset-* at the first content level, not on the wrapper.",
+          "Need a whole product denser or looser? Change the space option (compact, normal, loose, extra-loose), never single values."
+        ],
+        "checks": [
+          "npm run tokens:check",
+          "npm run check:clipping"
+        ],
+        "tokens": [
+          "space",
+          "size",
+          "breakpoint"
+        ]
+      }
+    },
+    {
+      "id": "visual-noise",
+      "title": "Visual noise",
+      "doc": {
+        "label": "Craft skills applied",
+        "path": "foundation.md#craft-skills-applied"
+      },
+      "points": [
+        "Every line, fill, shadow and icon must tell you something nothing else does.",
+        "Use the quietest cue that works: space first, then type, tone, a border, a shadow last.",
+        "One box around a group at most; no boxes inside boxes.",
+        "Extra cues appear only while they’re needed, such as during a drag."
+      ],
+      "appliesTo": {
+        "pages": [
+          "shape"
+        ],
+        "families": [
+          "panels",
+          "content"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Every mark (border, divider, fill, shadow, icon, colour, line of text) must carry information nothing else carries.",
+          "Cue order, cheapest first: space, alignment, type, tone, border, shadow. One cue per meaning.",
+          "Type is a cue: hierarchy comes from the type roles (type.*), not from extra colour, boxes or icons.",
+          "At most one enclosure per boundary; no box inside a box.",
+          "Transient affordances (drag handles, hover actions, customise cues) appear only while their state is active.",
+          "Approved components are never restyled as a side effect of another change."
+        ],
+        "decide": [
+          "Can space or alignment group it? Stop there.",
+          "Else, can type weight or size? Then tone (a fill step). Then a full hairline. A shadow only if it floats.",
+          "Already inside an enclosure? Do not add another; separate with space."
+        ],
+        "checks": [
+          "npm run check:parts",
+          "npm run check:views"
+        ],
+        "tokens": [
+          "radius",
+          "border",
+          "font",
+          "type",
+          "text",
+          "leading",
+          "weight",
+          "tracking"
+        ]
+      }
+    },
+    {
+      "id": "elevation",
+      "title": "Elevation and layering",
+      "doc": {
+        "label": "Materials and backgrounds",
+        "path": "materials.md"
+      },
+      "points": [
+        "Most things sit on the page. Lift something only when it really is above it.",
+        "Show height with tone first, a shadow only for what floats, an outline only where tone isn’t enough.",
+        "What blocks the page dims it; what doesn’t, leaves it visible.",
+        "Things go on top by where they live, never by a bigger number."
+      ],
+      "appliesTo": {
+        "pages": [
+          "elevation"
+        ],
+        "families": [
+          "floating",
+          "overlays"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Six levels: -1 sunken, 0 canvas, 1 raised, 2 chrome, 3 floating, 4 modal (packages/core/principles/elevation.json).",
+          "Tone first, shadow second, edge last. shadow.raised for anchored floating surfaces; shadow.overlay for free floating and modal. No shadow at rest on content or chrome.",
+          "z-index only as var(--layer-*) or a c.<part>.layer token aliasing one; never a number, never an inline zIndex.",
+          "Popups open in the top layer (popover attribute); dialogs as modal dialog elements; the layer token is only the fallback order.",
+          "A component ordering its own parts with layer.behind or layer.raised sets isolation: isolate on the holder."
+        ],
+        "decide": [
+          "Pick the level from the ladder by what the surface does, then the layer by the \"Choosing a layer\" questions (elevation.json, printed below in the guide); the first yes decides.",
+          "Hidden behind something? Find the ancestor that starts a stacking context and move the thing to the top layer; never raise the number."
+        ],
+        "checks": [
+          "npm run check:layers",
+          "npm run check:materials"
+        ],
+        "tokens": [
+          "shadow",
+          "layer"
+        ]
+      }
+    },
+    {
+      "id": "materials",
+      "title": "Materials",
+      "doc": {
+        "label": "Materials and backgrounds",
+        "path": "materials.md"
+      },
+      "points": [
+        "Each surface is made of a material that says what layer it belongs to.",
+        "Content surfaces are always solid; only bars and floating surfaces may be frosted.",
+        "Frosted is one switch for the whole product, and goes solid wherever reading could suffer.",
+        "Never frosted on frosted."
+      ],
+      "appliesTo": {
+        "pages": [
+          "materials"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "A component names its material (canvas, sunken, raised, tint, control, chrome, floating, modal, scrim, veil); tokens decide how it is painted.",
+          "The content layer (canvas, sunken, raised, tint, control) is always solid; only chrome and floating may be frosted.",
+          "Frosted is one global setting (data-material=\"frosted\" or \"solid\" on the root); never per component.",
+          "Never glass on glass: a floating surface inside another is solid.",
+          "Reduced transparency, more contrast, forced colours and print are solid. Blur radius never animates.",
+          "Chrome, floating and modal surfaces carry data-material and data-elevation (the add-on seam)."
+        ],
+        "decide": [
+          "A page or region: canvas; rails and wells: sunken; a card or field: raised or control fill; the current item: tint.",
+          "A bar content scrolls under: chrome. A popup or free toolbar: floating. A blocking surface: modal over the scrim. Controls over media: veil."
+        ],
+        "checks": [
+          "npm run check:materials"
+        ],
+        "tokens": [
+          "material"
+        ]
+      }
+    },
+    {
+      "id": "motion",
+      "title": "Motion",
+      "doc": {
+        "label": "Motion and transitions",
+        "path": "motion.md"
+      },
+      "points": [
+        "Motion shows how things move from one state to the next; it never decorates.",
+        "What stays across a change morphs instead of vanishing and coming back.",
+        "Most changes take a fifth of a second; nothing jumps.",
+        "What you drive directly, like typing or dragging, answers instantly.",
+        "With reduced motion, travel stops and gentle fades stay."
+      ],
+      "appliesTo": {
+        "pages": [
+          "motion"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Components read motion roles (duration.quick, change, move, move-far, shared; easing.standard, enter, exit, linear), never the private scale (fast, medium, slow).",
+          "Every visual value change (fill, border colour, shadow, opacity) eases at duration.change (200 ms); nothing jumps.",
+          "Content present in both states morphs (same wrapper, shared element) instead of disappearing and reappearing.",
+          "Zero latency where a person drives a value (typing, arrow-key steps, drags, sliders): no transition on that value (packages/core/motion/zero-latency.json).",
+          "With reduced motion travel snaps and fades stay; never transition: all; never a literal duration or curve."
+        ],
+        "decide": [
+          "Does the person drive the value directly? No transition on it.",
+          "Is it a colour, fill, border, shadow or opacity change? duration.change with easing.standard.",
+          "Does something travel or resize? duration.move or move-far; arriving uses easing.enter, leaving easing.exit.",
+          "Is the same thing on both sides of a view change? A shared-element morph (duration.shared)."
+        ],
+        "checks": [
+          "npm run check:motion"
+        ],
+        "tokens": [
+          "duration",
+          "easing",
+          "motion",
+          "count"
+        ]
+      }
+    },
+    {
+      "id": "ui-states",
+      "title": "States",
+      "doc": {
+        "label": "Craft skills applied",
+        "path": "foundation.md#craft-skills-applied"
+      },
+      "points": [
+        "Every change you make is confirmed where you made it.",
+        "Loading, saving, success, error and empty each have one place and one look.",
+        "An error keeps what you typed and always offers a way to recover.",
+        "An empty list says why it’s empty and what to do next."
+      ],
+      "appliesTo": {
+        "pages": [
+          "loading"
+        ],
+        "families": [
+          "buttons",
+          "inputs",
+          "selection",
+          "feedback",
+          "pickers"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Every committed change is confirmed where it was made for at least duration.confirm-min.",
+          "Each state has one owner level (app, view, section, component, field) and one look: loading, saving, success, error, empty.",
+          "Views and sections load with shimmer skeletons; one bottom notification pill, one line, at most three.",
+          "Errors keep the input and always offer a recovery (Retry, Revert).",
+          "Empty states live in the content’s own wrapper and say why and what to do."
+        ],
+        "decide": [
+          "Field-level change: the field shows pending, confirmed or failed (useCommit).",
+          "Whole view loading: a skeleton in the view, keeping the old view until the new one is ready.",
+          "A result of an action elsewhere: one notification pill that auto-dismisses.",
+          "Nothing to show: EmptyState inside the list or region, with the next action."
+        ],
+        "checks": [
+          "npm run typecheck"
+        ],
+        "tokens": []
+      }
+    },
+    {
+      "id": "perceived-performance",
+      "title": "Waiting",
+      "doc": {
+        "label": "Loading in the foundation plan",
+        "path": "foundation.md#loading"
+      },
+      "points": [
+        "Never a silent wait: say what’s happening, honestly.",
+        "Keep what’s on screen until the new view is ready.",
+        "Never block or lose what someone is typing while something loads."
+      ],
+      "appliesTo": {
+        "pages": [
+          "loading"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Classify the wait: instant, responsive, waiting or long, and give the matching feedback.",
+          "Never block or lose input during a wait; keep the old view until the new one is ready.",
+          "One honest status; never a silent wait.",
+          "Indicators wait duration.indicator-delay before showing and stay at least duration.indicator-min."
+        ],
+        "decide": [
+          "Under about 100 ms: no indicator. Up to about a second: a local indicator after the delay. Longer: progress with words. Very long: progress plus a way to keep working."
+        ],
+        "checks": [
+          "npm run typecheck"
+        ],
+        "tokens": []
+      }
+    },
+    {
+      "id": "ui-copy",
+      "title": "Words",
+      "doc": {
+        "label": "Craft skills applied",
+        "path": "foundation.md#craft-skills-applied"
+      },
+      "points": [
+        "Plain words a person would say, as few as do the job.",
+        "Buttons say what they do; errors say what happened and how to fix it.",
+        "The same thing is always called by the same name."
+      ],
+      "appliesTo": {
+        "pages": [
+          "type"
+        ],
+        "families": [
+          "text",
+          "chat",
+          "navigation"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Words come from content or props, never hard-coded in a component.",
+          "Sentence case, plain words, curly apostrophes; buttons are verbs that say the result.",
+          "Errors say what happened and how to fix it; never blame the person.",
+          "One name per thing across the product (the glossary).",
+          "Every icon-only control has an accessible name, shown by Tooltip."
+        ],
+        "decide": [
+          "Label: the noun or the verb, two to four words.",
+          "Error: what happened, then the fix, in one or two short sentences.",
+          "Empty state: why it is empty, then the action."
+        ],
+        "checks": [
+          "npm run check:content"
+        ],
+        "tokens": []
+      }
+    },
+    {
+      "id": "visual-representation",
+      "title": "Showing information",
+      "doc": {
+        "label": "Visual representation",
+        "path": "visual-representation.md"
+      },
+      "points": [
+        "Show it rather than tell it when a picture is faster to understand.",
+        "Choose the form that lets someone understand and act with the least reading.",
+        "Show it exactly as it is when accuracy or the exact words matter.",
+        "Every picture, icon and chart has a text alternative."
+      ],
+      "appliesTo": {
+        "pages": [
+          "type",
+          "templates"
+        ],
+        "families": [
+          "media",
+          "data",
+          "people"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Run the reasoning chain in docs/visual-representation.md before choosing text, an icon, a picture, an illustration, media or a chart.",
+          "Show as is when accuracy, verbatim words or the content itself must be preserved.",
+          "Every visual carries a text alternative; charts never mislead (zero baselines for bars, honest scales).",
+          "Chart categories read set.* or spectrum.* with their declared purpose; status never by colour alone.",
+          "Inner bar segments stay square."
+        ],
+        "decide": [
+          "Follow the agent procedure in docs/visual-representation.md (The chain as an agent procedure) and its Agent checklist."
+        ],
+        "checks": [
+          "npm run check:content"
+        ],
+        "tokens": []
+      }
+    }
+  ]
+}

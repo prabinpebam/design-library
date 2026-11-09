@@ -1,0 +1,33 @@
+/*
+ * Tier 2 compound: Toolbar. One row: the start part grows, the actions wrap without overlap. Too narrow for both
+ * (a 173 px floating panel's head, Q68 DT33), the actions move under the start part, still at the end, so nothing
+ * is clipped or scrolls sideways. No enclosure, so its members stay bare.
+ */
+@layer compounds {
+  [data-dl='toolbar'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--c-toolbar-gap);
+  }
+
+  [data-dl='toolbar'][data-align='end'] {
+    align-items: flex-end;
+  }
+
+  [data-dl='toolbar'][data-align='center'] {
+    align-items: center;
+  }
+
+  [data-dl='toolbar'] > [data-dl-part='start'] {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+
+  [data-dl='toolbar'] > [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-toolbar-gap);
+  }
+}

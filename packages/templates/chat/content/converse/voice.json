@@ -1,0 +1,72 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "voice",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Voice",
+        "title": "Listening…",
+        "lead": "Speak normally; pause and the assistant answers aloud.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Voice settings",
+        "items": [
+          {
+            "term": "Voice",
+            "details": "Juniper, calm and clear"
+          },
+          {
+            "term": "Language",
+            "details": "Detected as English"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Done talking?",
+        "lead": "The transcript is kept in the chat.",
+        "actions": [
+          {
+            "label": "End voice",
+            "primary": true,
+            "says": "Voice isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

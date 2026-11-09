@@ -1,0 +1,208 @@
+/*
+ * Tier 1 fundamental: ScrollArea (F14). The bar is drawn over the content, never beside it: the native bar is hidden,
+ * native scrolling stays, and a thin thumb sits on an overlay track at the end edge. Content width and alignment are
+ * the same whether the content overflows or not. Modes: `auto` (shown while scrolling, on hover, while dragged) and
+ * `always` (shown whenever the content overflows). Forced colours and touch screens get the system's bar back.
+ * The only place in the library that styles a scrollbar (npm run check:clipping fails on any other).
+ */
+@layer fundamentals {
+  [data-dl='scroll-area'] {
+    position: relative;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    min-block-size: 0;
+    min-inline-size: 0;
+  }
+
+  /* `fill` sets no size: a ScrollArea in a grid or flex region stretches to the size its parent gives it. */
+  [data-dl='scroll-area'][data-max='sm'] {
+    max-block-size: var(--c-scroll-area-max-sm);
+  }
+
+  [data-dl='scroll-area'][data-max='md'] {
+    max-block-size: var(--c-scroll-area-max-md);
+  }
+
+  [data-dl='scroll-area'][data-max='lg'] {
+    max-block-size: var(--c-scroll-area-max-lg);
+  }
+
+  [data-dl='scroll-area'][data-surface='sunken'],
+  [data-dl='scroll-area'][data-surface='sunken'] > [data-dl-part='viewport'] {
+    border-radius: var(--c-scroll-area-surface-radius);
+  }
+
+  [data-dl='scroll-area'][data-surface='sunken'] {
+    background-color: var(--c-scroll-area-surface);
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='viewport'] {
+    overflow: auto;
+    /* Q39: an in-page region never blocks the page's scroll. The wheel scrolls the region on the axes it can scroll,
+       then chains to the page at its end; a horizontal-only region passes the vertical wheel straight through. */
+    overscroll-behavior: auto;
+    scrollbar-width: none;
+  }
+
+  /* Containment only where a scroll must not leak: popups (Select, MenuButton lists) and modals. */
+  [data-dl='scroll-area'][data-contain] > [data-dl-part='viewport'] {
+    overscroll-behavior: contain;
+  }
+
+  [data-dl='scroll-area'][data-axis='block'] > [data-dl-part='viewport'] {
+    overflow-x: hidden;
+  }
+
+  [data-dl='scroll-area'][data-axis='inline'] > [data-dl-part='viewport'] {
+    overflow-y: hidden;
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='viewport']:focus {
+    outline: none;
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='viewport']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  /* The end edges keep at least the bar's strip, always (never only while overflowing), so the thumb never covers
+     content at either end and nothing moves when the content starts to overflow. */
+  [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'][data-inset='sm'] {
+    padding: var(--c-scroll-area-inset-sm);
+    padding-inline-end: max(var(--c-scroll-area-inset-sm), var(--c-scroll-area-track));
+    padding-block-end: max(var(--c-scroll-area-inset-sm), var(--c-scroll-area-track));
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'][data-inset='md'] {
+    padding: var(--c-scroll-area-inset-md);
+    padding-inline-end: max(var(--c-scroll-area-inset-md), var(--c-scroll-area-track));
+    padding-block-end: max(var(--c-scroll-area-inset-md), var(--c-scroll-area-track));
+  }
+
+  /* An inline-scrolling region's content wraps to the region where it can and grows past it only when it can't, so its
+     end padding scrolls into view too. */
+  [data-dl='scroll-area']:not([data-axis='block']) > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    inline-size: fit-content;
+    min-inline-size: 100%;
+  }
+
+  /* The track: an invisible strip over the end edge that takes the pointer; hidden until the content overflows. */
+  [data-dl='scroll-area'] > [data-dl-part='track'] {
+    position: absolute;
+    display: none;
+    touch-action: none;
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='track'][data-axis='y'] {
+    inset-block: var(--c-scroll-area-track-inset);
+    inset-inline-end: 0;
+    inline-size: var(--c-scroll-area-track);
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='track'][data-axis='x'] {
+    inset-inline: var(--c-scroll-area-track-inset);
+    inset-block-end: 0;
+    block-size: var(--c-scroll-area-track);
+  }
+
+  /* Both bars: each stops short of the other's strip, so they never cross in the corner. */
+  [data-dl='scroll-area'][data-overflow-x][data-overflow-y] > [data-dl-part='track'][data-axis='y'] {
+    inset-block-end: calc(var(--c-scroll-area-track) + var(--c-scroll-area-track-inset));
+  }
+
+  [data-dl='scroll-area'][data-overflow-x][data-overflow-y] > [data-dl-part='track'][data-axis='x'] {
+    inset-inline-end: calc(var(--c-scroll-area-track) + var(--c-scroll-area-track-inset));
+  }
+
+  [data-dl='scroll-area'][data-overflow-y] > [data-dl-part='track'][data-axis='y'],
+  [data-dl='scroll-area'][data-overflow-x] > [data-dl-part='track'][data-axis='x'] {
+    display: block;
+  }
+
+  /* The thumb is drawn at its full (hovered) thickness, centred in its strip, and scaled down at rest: hover and drag
+     change only its scale and colour, never its geometry. */
+  [data-dl='scroll-area'] > [data-dl-part='track'] > [data-dl-part='thumb'] {
+    position: absolute;
+    border-radius: var(--c-scroll-area-radius);
+    background-color: var(--c-scroll-area-colour);
+    transition:
+      opacity var(--c-scroll-area-fade) var(--easing-standard),
+      transform var(--c-scroll-area-fade) var(--easing-standard);
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='track'][data-axis='y'] > [data-dl-part='thumb'] {
+    inset-block-start: var(--scroll-area-thumb-offset-y, 0);
+    inset-inline-end: calc((var(--c-scroll-area-track) - var(--c-scroll-area-thumb-hover)) / 2);
+    inline-size: var(--c-scroll-area-thumb-hover);
+    block-size: var(--scroll-area-thumb-size-y, 0);
+    min-block-size: var(--c-scroll-area-thumb-min);
+    transform: scaleX(var(--c-scroll-area-rest-scale));
+  }
+
+  [data-dl='scroll-area'] > [data-dl-part='track'][data-axis='x'] > [data-dl-part='thumb'] {
+    inset-inline-start: var(--scroll-area-thumb-offset-x, 0);
+    inset-block-end: calc((var(--c-scroll-area-track) - var(--c-scroll-area-thumb-hover)) / 2);
+    block-size: var(--c-scroll-area-thumb-hover);
+    inline-size: var(--scroll-area-thumb-size-x, 0);
+    min-inline-size: var(--c-scroll-area-thumb-min);
+    transform: scaleY(var(--c-scroll-area-rest-scale));
+  }
+
+  /* Dragged (the pressed twin of hover): full thickness and darker. */
+  [data-dl='scroll-area'][data-dragging] > [data-dl-part='track'] > [data-dl-part='thumb'] {
+    transform: none;
+    background-color: var(--c-scroll-area-colour-active);
+  }
+
+  @media (hover: hover) {
+    [data-dl='scroll-area'] > [data-dl-part='track']:hover > [data-dl-part='thumb'] {
+      transform: none;
+      background-color: var(--c-scroll-area-colour-active);
+    }
+  }
+
+  /* `auto`: out of sight at rest; shown while scrolling, while dragged, and while the region is hovered. */
+  [data-dl='scroll-area'][data-mode='auto'] > [data-dl-part='track'] > [data-dl-part='thumb'] {
+    opacity: 0;
+  }
+
+  [data-dl='scroll-area'][data-mode='auto'][data-scrolling] > [data-dl-part='track'] > [data-dl-part='thumb'],
+  [data-dl='scroll-area'][data-mode='auto'][data-dragging] > [data-dl-part='track'] > [data-dl-part='thumb'] {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    [data-dl='scroll-area'][data-mode='auto']:hover > [data-dl-part='track'] > [data-dl-part='thumb'] {
+      opacity: 1;
+    }
+  }
+
+  /* A region whose own controls replace its scrollbar (Carousel's track: arrows, dots or thumbnails, swipe and keys)
+     draws none and isn't wrapped in ScrollArea. The one opt-out; scrollbar styling still lives only in this file. */
+  [data-scrollbar='none'] {
+    scrollbar-width: none;
+  }
+
+  /* Touch screens draw their own overlay bar while scrolling: keep it, and draw none. */
+  @media (hover: none) and (pointer: coarse) {
+    [data-dl='scroll-area'] > [data-dl-part='viewport'] {
+      scrollbar-width: auto;
+    }
+
+    [data-dl='scroll-area'] > [data-dl-part='track'] {
+      visibility: hidden;
+    }
+  }
+
+  /* Forced colours: the system's own bar, in system colours; the one place a bar may take a column. */
+  @media (forced-colors: active) {
+    [data-dl='scroll-area'] > [data-dl-part='viewport'] {
+      scrollbar-width: auto;
+    }
+
+    [data-dl='scroll-area'] > [data-dl-part='track'] {
+      visibility: hidden;
+    }
+  }
+}

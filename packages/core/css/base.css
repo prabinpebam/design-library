@@ -1,0 +1,155 @@
+/*
+ * Tier 0: reset and native element defaults. Elements carry no outer margin; layouts own space with gap and padding.
+ */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd,
+  ul,
+  ol,
+  pre,
+  table {
+    margin: 0;
+  }
+
+  ul,
+  ol {
+    padding: 0;
+    list-style: none;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer base {
+  :root {
+    font-family: var(--font-ui);
+    font-variation-settings: var(--axes-ui);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    font-weight: var(--type-body-weight);
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+
+  /* A context root re-resolves colour: inherited colours were computed in the parent's scheme. */
+  :root,
+  [data-scheme],
+  [data-contrast] {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+  }
+
+  h1 {
+    font-size: var(--type-heading-1-size);
+    line-height: var(--type-heading-1-leading);
+    font-weight: var(--type-heading-1-weight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h2 {
+    font-size: var(--type-heading-2-size);
+    line-height: var(--type-heading-2-leading);
+    font-weight: var(--type-heading-2-weight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  h3 {
+    font-size: var(--type-heading-3-size);
+    line-height: var(--type-heading-3-leading);
+    font-weight: var(--type-heading-3-weight);
+  }
+
+  h4 {
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+    font-weight: var(--type-heading-4-weight);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-variation-settings: var(--axes-display);
+  }
+
+  small {
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  a {
+    color: var(--color-text-link);
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-code);
+    font-variation-settings: var(--axes-code);
+    font-size: var(--type-code-size);
+  }
+
+  table {
+    border-collapse: collapse;
+    inline-size: 100%;
+  }
+
+  th,
+  td {
+    text-align: start;
+    vertical-align: top;
+    padding-block: var(--space-inset-sm);
+    padding-inline: var(--space-inset-sm);
+  }
+
+  th {
+    font-weight: var(--type-label-weight);
+    color: var(--color-text-muted);
+  }
+
+  /* One rule between rows: the cheapest cue that separates dense tabular rows. */
+  tbody tr {
+    border-block-start: var(--border-hairline) solid var(--color-border);
+  }
+
+  :focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

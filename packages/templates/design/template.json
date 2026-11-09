@@ -1,0 +1,850 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "design",
+  "version": "1.0.0",
+  "title": "Design tool",
+  "summary": "A Figma-like editor: tools, layers, the canvas and properties.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "home": "files",
+  "sections": [
+    {
+      "id": "files",
+      "title": "Files",
+      "summary": "Finding, starting and keeping files.",
+      "flows": [
+        {
+          "id": "browse",
+          "title": "Find a file",
+          "summary": "Recent files, then a team project.",
+          "screens": [
+            "files",
+            "project-files"
+          ]
+        },
+        {
+          "id": "drafts",
+          "title": "Start from drafts",
+          "summary": "Private files not yet in a project.",
+          "screens": [
+            "drafts"
+          ]
+        },
+        {
+          "id": "search",
+          "title": "Search files",
+          "summary": "Find a file by name or what is in it.",
+          "screens": [
+            "file-search"
+          ]
+        },
+        {
+          "id": "trash",
+          "title": "Restore a file",
+          "summary": "Bring back a deleted file.",
+          "screens": [
+            "trash"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "edit",
+      "title": "Edit",
+      "summary": "Designing, prototyping and handing off.",
+      "flows": [
+        {
+          "id": "design",
+          "title": "Design in the editor",
+          "summary": "Draw and set properties, link screens into a prototype, and hand off in Dev mode.",
+          "screens": [
+            "editor",
+            "editor-prototype",
+            "editor-dev"
+          ]
+        },
+        {
+          "id": "prototype",
+          "title": "Present",
+          "summary": "Play the prototype full screen.",
+          "screens": [
+            "present"
+          ]
+        },
+        {
+          "id": "comments",
+          "title": "Review with comments",
+          "summary": "Leave and answer comments on the canvas.",
+          "screens": [
+            "editor-comments"
+          ]
+        },
+        {
+          "id": "history",
+          "title": "Restore a version",
+          "summary": "See earlier versions and go back to one.",
+          "screens": [
+            "version-history"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "share",
+      "title": "Share and import",
+      "summary": "Sharing and exporting.",
+      "flows": [
+        {
+          "id": "share",
+          "title": "Share a file",
+          "summary": "Invite people, set what they can do, and export.",
+          "screens": [
+            "share",
+            "export"
+          ]
+        },
+        {
+          "id": "import",
+          "title": "Import a file",
+          "summary": "Bring in a file from elsewhere.",
+          "screens": [
+            "import"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Account",
+      "summary": "Signing in, the first run and the team.",
+      "flows": [
+        {
+          "id": "sign-in",
+          "title": "Sign in",
+          "summary": "Sign in with email or a work account.",
+          "screens": [
+            "sign-in"
+          ]
+        },
+        {
+          "id": "onboarding",
+          "title": "Get started",
+          "summary": "Say what you design and set up a team.",
+          "screens": [
+            "welcome",
+            "team-setup"
+          ]
+        },
+        {
+          "id": "settings",
+          "title": "Manage the account",
+          "summary": "Account details, the team and its plan.",
+          "screens": [
+            "account-settings",
+            "team-plan"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "files",
+      "title": "Recent files",
+      "component": "SiteLayout",
+      "content": "content/files.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Files opened lately, each opening the editor.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, file cards",
+            "uses": "Hero, Card"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "project-files",
+      "title": "Project",
+      "component": "SiteLayout",
+      "content": "content/files/project-files.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One project’s files and people.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, files, people",
+            "uses": "Breadcrumbs, Hero, Card, Persona"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "drafts",
+      "title": "Drafts",
+      "component": "SiteLayout",
+      "content": "content/files/drafts.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Private files not yet in a project.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Draft cards",
+            "uses": "Card"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "drafts-empty",
+      "title": "No drafts yet",
+      "stateOf": "drafts",
+      "component": "SiteLayout",
+      "content": "content/files/drafts-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "No drafts: what they are and how to start one."
+      }
+    },
+    {
+      "id": "file-search",
+      "title": "Search results",
+      "component": "SiteLayout",
+      "content": "content/files/file-search.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Find a file by its name or words inside it.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Search",
+            "uses": "Search block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "trash",
+      "title": "Deleted files",
+      "component": "SiteLayout",
+      "content": "content/files/trash.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What’s deleted and how long it’s kept.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, deleted files, restore",
+            "uses": "Hero, DescriptionList, Button"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "import",
+      "title": "Import",
+      "component": "SiteLayout",
+      "content": "content/share/import.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Bring a file in from elsewhere.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The import form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "editor",
+      "title": "Editor",
+      "component": "EditorLayout",
+      "content": "content/edit/design/editor.json",
+      "regions": [
+        {
+          "id": "bar"
+        },
+        {
+          "id": "layers"
+        },
+        {
+          "id": "canvas"
+        },
+        {
+          "id": "properties"
+        }
+      ],
+      "docs": {
+        "summary": "A Figma-like editor: the file bar, pages and layers, the canvas, and the full properties panel (Design, Prototype, Dev mode) drawn from the template’s JSON.",
+        "narrow": "Both panels start hidden and float over the canvas from their own edge when opened; Escape closes one. The bar’s tools wrap onto a second line.",
+        "try": [
+          "Select the Sign in button: Design shows alignment, position and rotation, layout and resizing, appearance, fill, stroke, effects, its instance properties and export.",
+          "Change Rotation, Opacity, Corner radius or the fill’s colour: the canvas follows at once; Dev mode’s CSS follows too.",
+          "Turn on Individual corners, set Sides to Custom, add a fill and switch it to Linear gradient (GradientEditor), add an effect and change its type.",
+          "Select the Sign in frame: auto layout is vertical, so the alignment grid, gap and padding show; Layout guides and Selection colours appear (recolour every child at once).",
+          "Open Prototype: the button navigates to Home with Smart animate; Dev mode: measurements, CSS, colours and export."
+        ],
+        "notBuilt": [
+          "Multiple selection, so Distribute says it isn’t part of the example.",
+          "Variables and styles on a value (NumberField can show a variable; none are bound here).",
+          "Auto layout re-arranging the canvas (the values are kept and shown in Dev mode’s CSS; the canvas keeps positions).",
+          "Gradients, images, effects and individual corners drawn on the canvas (the canvas draws the top solid fill, opacity, one radius, rotation and the first stroke)."
+        ],
+        "regions": [
+          {
+            "region": "Bar",
+            "holds": "Panel toggles at each end, the file’s name, the tools, zoom, who’s here and Share",
+            "uses": "EditorLayout, Toolbar, Text, SegmentedControl (icons), Select, AvatarGroup, Button"
+          },
+          {
+            "region": "Pages and layers",
+            "holds": "The file’s pages, then the page’s frames and the shapes in them",
+            "uses": "Heading, TreeView (new)"
+          },
+          {
+            "region": "Canvas",
+            "holds": "Three frames with their shapes; the selection with its handles and size",
+            "uses": "Canvas (new)"
+          },
+          {
+            "region": "Properties",
+            "holds": "The selection’s name and kind, position, size, and its fill or its text",
+            "uses": "Heading, Text, NumberField (glyphs), Select, TextArea"
+          }
+        ]
+      }
+    },
+    {
+      "id": "editor-prototype",
+      "title": "Prototype",
+      "component": "EditorLayout",
+      "content": "content/edit/design/editor-prototype.json",
+      "regions": [
+        {
+          "id": "bar"
+        },
+        {
+          "id": "layers"
+        },
+        {
+          "id": "canvas"
+        },
+        {
+          "id": "properties"
+        }
+      ],
+      "docs": {
+        "summary": "The editor with the inspector on Prototype: flow starting point, interactions, scroll behaviour and prototype settings.",
+        "try": [
+          "Select the Sign in button: its interaction navigates to Home with Smart animate; change the trigger or the animation.",
+          "Select the Sign in frame: it’s the flow’s starting point."
+        ]
+      }
+    },
+    {
+      "id": "present",
+      "title": "Present",
+      "component": "EditorLayout",
+      "content": "content/edit/present.json",
+      "regions": [
+        {
+          "id": "bar"
+        },
+        {
+          "id": "layers"
+        },
+        {
+          "id": "canvas"
+        },
+        {
+          "id": "properties"
+        }
+      ],
+      "docs": {
+        "summary": "The prototype played full size, one frame at a time: the flow’s frames on one side, what can be pressed and where it leads on the other.",
+        "narrow": "Both panels start hidden and float over the stage when opened; the bar keeps Back, the frame and Previous, Next and Restart.",
+        "try": [
+          "Press the Sign in button on the stage: the frame becomes Home in place, as Smart animate.",
+          "Press anything else: a note says it doesn’t lead anywhere.",
+          "Use Previous, Next and Restart, or pick a frame from Frames."
+        ]
+      }
+    },
+    {
+      "id": "editor-dev",
+      "title": "Dev mode",
+      "component": "EditorLayout",
+      "content": "content/edit/design/editor-dev.json",
+      "regions": [
+        {
+          "id": "bar"
+        },
+        {
+          "id": "layers"
+        },
+        {
+          "id": "canvas"
+        },
+        {
+          "id": "properties"
+        }
+      ],
+      "docs": {
+        "summary": "The editor in Dev mode: measurements, CSS generated from the layer’s values, its colours and export.",
+        "try": [
+          "Select any layer: its CSS updates as you change it on the Design tab."
+        ]
+      }
+    },
+    {
+      "id": "editor-comments",
+      "title": "Comments",
+      "component": "EditorLayout",
+      "content": "content/edit/editor-comments.json",
+      "regions": [
+        {
+          "id": "bar"
+        },
+        {
+          "id": "layers"
+        },
+        {
+          "id": "canvas"
+        },
+        {
+          "id": "properties"
+        }
+      ],
+      "docs": {
+        "summary": "The editor in comment mode: the page’s threads in the properties panel, each pinned to a layer, with replies and resolve.",
+        "narrow": "As the editor: the comments panel floats over the canvas from its edge.",
+        "try": [
+          "Choose “On Sign in button”: the layer is selected on the canvas and in the layers.",
+          "Write a reply and press Reply: it joins the thread at once.",
+          "Resolve a thread: it folds away; Show resolved brings the closed ones back."
+        ]
+      }
+    },
+    {
+      "id": "version-history",
+      "title": "Version history",
+      "component": "SiteLayout",
+      "content": "content/edit/version-history.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Earlier versions and going back.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, versions, restore",
+            "uses": "Hero, DescriptionList, Button"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "share",
+      "title": "Share",
+      "component": "SiteLayout",
+      "content": "content/share/share.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Invite people and set who can do what with the link.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Invite form, link settings",
+            "uses": "Form block, Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "export",
+      "title": "Export",
+      "component": "SiteLayout",
+      "content": "content/share/export.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Export frames in a format and scale.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The export form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-in",
+      "title": "Sign in",
+      "component": "SiteLayout",
+      "content": "content/account/sign-in.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sign in.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The sign-in form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "welcome",
+      "title": "Welcome",
+      "component": "SiteLayout",
+      "content": "content/account/welcome.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "First run, step 1 of 2.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Two choices",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "team-setup",
+      "title": "Set up a team",
+      "component": "SiteLayout",
+      "content": "content/account/team-setup.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "First run, step 2 of 2.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The team form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "account-settings",
+      "title": "Account",
+      "component": "SiteLayout",
+      "content": "content/account/account-settings.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Details and editor preferences.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Account form, preferences",
+            "uses": "Form block, Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "team-plan",
+      "title": "Team and plan",
+      "component": "SiteLayout",
+      "content": "content/account/team-plan.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The team, its members and plan.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, members, plan figures",
+            "uses": "Hero, Persona, Statistic"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ]
+}

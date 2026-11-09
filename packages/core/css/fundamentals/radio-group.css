@@ -1,0 +1,236 @@
+/*
+ * Tier 1 fundamental: RadioGroup. Rows like Checkbox's (the whole row is the target, the circle centred on the first
+ * label line); inline puts options side by side; tiles make each option a card whose outline is its one enclosure.
+ */
+@layer fundamentals {
+  [data-dl='radio-group'] {
+    --radio-row: var(--c-radio-group-size);
+    --radio-ring: var(--c-radio-group-ring);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  [data-dl='radio-group'][data-size='s'] {
+    --radio-row: var(--c-radio-group-size-s);
+    --radio-ring: var(--c-radio-group-ring-s);
+  }
+
+  [data-dl='radio-group'][data-size='l'] {
+    --radio-row: var(--c-radio-group-size-l);
+    --radio-ring: var(--c-radio-group-ring-l);
+  }
+
+  [data-dl='radio-group'][data-orientation='inline'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--c-radio-group-inline-gap);
+  }
+
+  [data-dl='radio-group'] > [data-dl-part='option'] {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  [data-dl='radio-group'] [data-dl-part='choice'] {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--c-radio-group-gap);
+    min-block-size: var(--radio-row);
+    padding-block: calc((var(--radio-row) - 1lh) / 2);
+    color: var(--color-text);
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    cursor: pointer;
+  }
+
+  [data-dl='radio-group'][data-size='s'] [data-dl-part='choice'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='radio-group'][data-size='l'] [data-dl-part='choice'] {
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+  }
+
+  [data-dl='radio-group'] [data-dl-part='choice'] > input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  [data-dl='radio-group'] [data-dl-part='mark'] {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    block-size: 1lh;
+  }
+
+  [data-dl='radio-group'] [data-dl-part='ring'] {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--radio-ring);
+    block-size: var(--radio-ring);
+    border: var(--c-radio-group-border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-full);
+    background-color: var(--color-bg-raised);
+    /* Q65 C5: the ring's edge and fill interpolate (decoration; the checked state itself is true at once, Z14). */
+    transition:
+      border-color var(--duration-change) var(--easing-standard),
+      background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='radio-group'] [data-dl-part='ring']::after {
+    content: '';
+    inline-size: calc(var(--radio-ring) * var(--c-radio-group-dot-ratio));
+    block-size: calc(var(--radio-ring) * var(--c-radio-group-dot-ratio));
+    border-radius: var(--radius-full);
+    background-color: transparent;
+    scale: var(--motion-mark-scale);
+    transition: scale var(--duration-quick) var(--easing-standard);
+  }
+
+  [data-dl='radio-group'] input:checked + [data-dl-part='mark'] > [data-dl-part='ring'] {
+    border-color: var(--color-accent);
+  }
+
+  /* The dot is drawn in the first frame and settles to full size over quick (none with reduced motion). */
+  [data-dl='radio-group'] input:checked + [data-dl-part='mark'] > [data-dl-part='ring']::after {
+    background-color: var(--color-accent);
+    scale: 1;
+  }
+
+  [data-dl='radio-group']:not([data-appearance='tile']) input:focus-visible + [data-dl-part='mark'] > [data-dl-part='ring'] {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='radio-group'] [data-dl-part='words'] {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  [data-dl='radio-group'] [data-dl-part='label'] {
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='radio-group'] [data-dl-part='description'] {
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='radio-group'] [data-dl-part='meta'] {
+    flex: none;
+    font-weight: var(--type-label-weight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The revealed question lines up with the option's words and closes with its own space below. */
+  [data-dl='radio-group'] [data-dl-part='reveal'] {
+    display: grid;
+    padding-block-end: var(--space-stack-item);
+    padding-inline-start: calc(var(--radio-ring) + var(--c-radio-group-gap));
+  }
+
+  [data-dl='radio-group'][data-invalid] input:not(:checked) + [data-dl-part='mark'] > [data-dl-part='ring'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  @media (hover: hover) {
+    [data-dl='radio-group'] [data-dl-part='choice']:hover > input:enabled:not(:checked) + [data-dl-part='mark'] > [data-dl-part='ring'] {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='radio-group'] [data-dl-part='choice']:active > input:enabled:not(:checked) + [data-dl-part='mark'] > [data-dl-part='ring'] {
+    background-color: var(--state-pressed);
+  }
+
+  [data-dl='radio-group'] [data-dl-part='choice']:has(input:disabled) {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='radio-group'] [data-dl-part='choice']:has(input:disabled) [data-dl-part='description'] {
+    color: var(--color-text-disabled);
+  }
+
+  [data-dl='radio-group'] input:disabled:not(:checked) + [data-dl-part='mark'] > [data-dl-part='ring'] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+  }
+
+  /* A chosen option that can't change keeps its accent, muted (as a disabled on Switch, Q18). */
+  [data-dl='radio-group'] input:disabled:checked + [data-dl-part='mark'] > [data-dl-part='ring'] {
+    opacity: var(--c-switch-disabled-opacity);
+  }
+
+  /* Tiles: a card per option, the card is the target; the chosen one's outline thickens inward, so nothing moves. */
+  [data-dl='radio-group'][data-appearance='tile'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--c-radio-group-tile-min), 100%), 1fr));
+    align-items: stretch;
+    gap: var(--c-radio-group-tile-gap);
+    inline-size: 100%;
+  }
+
+  [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option'] {
+    border: var(--border-hairline) solid var(--color-border-control);
+    border-radius: var(--c-radio-group-tile-radius);
+    background-color: var(--color-bg-control);
+  }
+
+  [data-dl='radio-group'][data-appearance='tile'] [data-dl-part='choice'] {
+    display: flex;
+    flex: 1 1 auto;
+    padding: var(--c-radio-group-tile-padding);
+  }
+
+  [data-dl='radio-group'][data-appearance='tile'] [data-dl-part='reveal'] {
+    padding: 0 var(--c-radio-group-tile-padding) var(--c-radio-group-tile-padding);
+  }
+
+  [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option'][data-chosen] {
+    border-color: var(--color-accent);
+    box-shadow: inset 0 0 0 var(--border-hairline) var(--color-accent);
+  }
+
+  [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option']:has(input:focus-visible) {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @media (hover: hover) {
+    [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option']:not([data-chosen]):has(input:enabled):hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option']:has(input:disabled) {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='radio-group'] input:checked + [data-dl-part='mark'] > [data-dl-part='ring'] {
+      border-color: Highlight;
+    }
+
+    [data-dl='radio-group'] input:checked + [data-dl-part='mark'] > [data-dl-part='ring']::after {
+      background-color: Highlight;
+    }
+
+    [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option'][data-chosen] {
+      border-color: Highlight;
+    }
+  }
+}

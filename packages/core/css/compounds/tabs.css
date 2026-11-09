@@ -1,0 +1,192 @@
+/*
+ * Tier 2 compound: Tabs (F15.30, Q53.3). A bar (the list, then optional extra content) over or beside one panel.
+ * The list scrolls sideways to its own edges when the tabs don't fit; focus rings sit inside each tab so the scroll
+ * region never clips them. The selected tab is marked by its text colour and an indicator of its own: a rounded bar
+ * under its content, drawn on every tab and coloured only when selected, so nothing moves. Vertical tabs use a
+ * selected fill instead (no one-sided stripe). No divider under the list: the panel gap separates them.
+ */
+@layer compounds {
+  [data-dl='tabs'] {
+    display: grid;
+    /* Q68: the panel's content never widens the tabs past their container. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-tabs-panel-gap);
+    /* Fills its container's line, so extra content sits at the end even inside a shrink-wrapping parent. */
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='tabs'][data-orientation='vertical'] {
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: start;
+    gap: var(--c-tabs-side-gap);
+  }
+
+  [data-dl='tabs'] > [data-dl-part='bar'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-tabs-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='tabs'][data-orientation='vertical'] > [data-dl-part='bar'] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  [data-dl='tabs'] [data-dl-part='list'] {
+    display: flex;
+    gap: var(--c-tabs-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Horizontal: the list keeps its natural width inside ScrollArea, which takes the room left beside any extra content
+     and scrolls sideways when the tabs don't fit. Focus rings sit inside each tab, so the region never clips them. */
+  [data-dl='tabs'] > [data-dl-part='bar'] > [data-dl-part='scroller'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  [data-dl='tabs'] [data-dl-part='scroller'] [data-dl-part='list'] {
+    inline-size: max-content;
+  }
+
+  [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='list'] {
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  [data-dl='tabs'] [data-dl-part='list'] > li {
+    display: flex;
+  }
+
+  [data-dl='tabs'] [data-dl-part='tab'] {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-tabs-item-gap);
+    min-block-size: var(--c-tabs-item-size);
+    padding-inline: var(--c-tabs-item-padding-inline);
+    border: 0;
+    border-radius: var(--c-tabs-radius);
+    background: none;
+    color: var(--color-text-muted);
+    font: inherit;
+    font-weight: var(--type-label-weight);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    /* Q65: a tab is a standalone control (not a collection, Z9): its text colour and hover fill interpolate. */
+    transition:
+      color var(--duration-change) var(--easing-standard),
+      background-color var(--duration-change) var(--easing-standard);
+  }
+
+  /*
+   * Q65 C6 / M14: while a choice settles the indicator changes tab at once: under a pointer it travels there (a flip on
+   * the ::after, useSlidingIndicator); under arrow keys the text colour moves at once too (Z8).
+   */
+  [data-dl='tabs'][data-settling] [data-dl-part='tab']::after,
+  [data-dl='tabs'][data-settling='key'] [data-dl-part='tab'] {
+    transition: none;
+  }
+
+  /* The indicator: its own rounded bar inside the tab's padding, on every tab, coloured only on the selected one. */
+  [data-dl='tabs'] [data-dl-part='tab']::after {
+    content: '';
+    position: absolute;
+    inset-inline: var(--c-tabs-item-padding-inline);
+    inset-block-end: 0;
+    block-size: var(--c-tabs-indicator);
+    border-radius: var(--radius-pill);
+    background-color: transparent;
+    transition: background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='tabs'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page']) {
+    color: var(--color-text);
+  }
+
+  [data-dl='tabs'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page'])::after {
+    background-color: var(--color-accent);
+  }
+
+  [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='tab'] {
+    justify-content: flex-start;
+  }
+
+  [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='tab']::after {
+    content: none;
+  }
+
+  [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page']) {
+    background-color: var(--state-selected);
+  }
+
+  @media (hover: hover) {
+    [data-dl='tabs'] [data-dl-part='tab']:not([aria-disabled='true']):hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='tabs'] [data-dl-part='tab']:not([aria-disabled='true']):active {
+    background-color: var(--state-pressed);
+    transition-duration: var(--duration-quick);
+  }
+
+  [data-dl='tabs'] [data-dl-part='tab'][aria-disabled='true'] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='tabs'] [data-dl-part='tab']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='tabs'] > [data-dl-part='bar'] > [data-dl-part='extra'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-tabs-gap);
+  }
+
+  [data-dl='tabs'] > [data-dl-part='panel'] {
+    min-inline-size: 0;
+  }
+
+  /* Q68: the Button size scale's dense sizes, for a narrow panel (an inspector): smaller text, padding and height. */
+  [data-dl='tabs']:is([data-size='xs'], [data-size='s']) [data-dl-part='tab'] {
+    padding-inline: var(--c-tabs-item-padding-inline-sm);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='tabs']:is([data-size='xs'], [data-size='s']) [data-dl-part='list'] {
+    gap: var(--c-tabs-gap-sm);
+  }
+
+  [data-dl='tabs'][data-size='xs'] [data-dl-part='tab'] { min-block-size: var(--c-tabs-item-size-xs); }
+  [data-dl='tabs'][data-size='s'] [data-dl-part='tab'] { min-block-size: var(--c-tabs-item-size-s); }
+
+  [data-dl='tabs']:is([data-size='xs'], [data-size='s']) [data-dl-part='tab']::after {
+    inset-inline: var(--c-tabs-item-padding-inline-sm);
+  }
+
+  [data-dl='tabs'] > [data-dl-part='panel']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='tabs'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page'])::after {
+      background-color: Highlight;
+    }
+
+    [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page']) {
+      outline: var(--border-hairline) solid Highlight;
+    }
+  }
+}

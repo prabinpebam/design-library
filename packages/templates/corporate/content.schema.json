@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-library.local/templates/corporate/content/1",
+  "title": "Corporate site content, version 1",
+  "description": "Every content file of this template: the core envelope; its blocks are core block types (no custom ones yet).",
+  "$ref": "https://design-library.local/core/content/1",
+  "$defs": {}
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "search-chats",
+  "contentVersion": 1,
+  "settings": {
+    "current": "search-chats"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "search",
+        "heading": "Search chats",
+        "label": "Search chats",
+        "button": "Search",
+        "query": "walk",
+        "summary": "{count} chats mention “{query}”",
+        "results": [
+          {
+            "eyebrow": "Today",
+            "title": "Plan a weekend walk",
+            "description": "A loop round Tarn Hows with a café stop.",
+            "href": "/chat"
+          },
+          {
+            "eyebrow": "Yesterday",
+            "title": "Explain my electricity bill",
+            "description": "Why the standing charge went up.",
+            "href": "/chat"
+          },
+          {
+            "eyebrow": "Last week",
+            "title": "Lisbon in three days",
+            "description": "Trams, tiles and where to eat.",
+            "href": "/chat"
+          }
+        ],
+        "none": {
+          "title": "No chats mention “{query}”",
+          "text": "Try another word, or start a new chat about it.",
+          "links": [
+            {
+              "label": "New chat",
+              "href": "/chat"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

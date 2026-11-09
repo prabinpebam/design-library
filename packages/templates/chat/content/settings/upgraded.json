@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "upgraded",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading",
+    "state": "done"
+  }
+}

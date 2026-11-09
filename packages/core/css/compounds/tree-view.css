@@ -1,0 +1,147 @@
+/*
+ * Tier 2 compound: TreeView (F15.74, Q61/Q62; catalogue Navigation "Tree"). Rows are bare at rest; the selected row
+ * keeps the tint (a fact), hover takes the state fill, and rows sit `space.stack-row` apart so two fills never touch
+ * (Q60). Depth is shown by indent alone, never by lines or boxes. The twisty turns a quarter for an open row; with
+ * reduced motion it turns without animating.
+ */
+@layer compounds {
+  [data-dl='tree-view'],
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='group'] {
+    display: grid;
+    /* One column that never grows past the panel: long labels truncate instead of widening it (Q68). */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-tree-view-row-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='tree-view'] {
+    color: var(--color-text);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-tree-view-row-gap);
+    border-radius: var(--c-tree-view-radius);
+    outline: none;
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-tree-view-gap);
+    min-block-size: var(--c-tree-view-row-size);
+    padding-inline: calc(var(--c-tree-view-padding) + var(--level, 0) * var(--c-tree-view-indent)) var(--c-tree-view-padding);
+    border-radius: var(--c-tree-view-radius);
+    cursor: default;
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  /* Q68: in a compact density context (a design tool's layers), rows are 32 px, as Figma UI3's. */
+  [data-density='compact'] [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] {
+    min-block-size: var(--c-tree-view-row-size-compact);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'][aria-selected='true'] > [data-dl-part='row'] {
+    background-color: var(--c-tree-view-selected-fill);
+    font-weight: var(--weight-semibold);
+  }
+
+  [data-dl='tree-view'] [role='treeitem']:focus-visible > [data-dl-part='row'] {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  @media (hover: hover) {
+    [data-dl='tree-view'] [role='treeitem']:not([aria-selected='true']) > [data-dl-part='row']:hover {
+      background-color: var(--c-tree-view-hover-fill);
+    }
+  }
+
+  [data-dl='tree-view'] [role='treeitem']:not([aria-selected='true']) > [data-dl-part='row']:active {
+    background-color: var(--c-tree-view-pressed-fill);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='twisty'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--c-tree-view-twisty);
+    block-size: var(--c-tree-view-twisty);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='twisty'] > [data-dl='icon'] {
+    transition: transform var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='twisty'][data-open] > [data-dl='icon'] {
+    transform: rotate(90deg);
+  }
+
+  /* Right to left: the open row's turn replaces the closed icon's mirror, so the same quarter turn points down. */
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='twisty'] > [data-dl='icon'] {
+      transition: none;
+    }
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='icon'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='label'] {
+    flex: 1;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='meta'] {
+    flex: none;
+    color: var(--color-text-muted);
+  }
+
+  /* Q68 DT11: row actions (a layer's visibility and lock). Hidden at rest so the tree stays quiet, shown while the row is
+     hovered or focused, and kept while they hold a state worth seeing (`pinActions`: a hidden or locked layer). Their
+     room is always held, so nothing moves when they appear. */
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='actions'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-tree-view-gap);
+    opacity: 0;
+    transition: opacity var(--duration-quick) var(--easing-standard);
+  }
+
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row']:hover > [data-dl-part='actions'],
+  [data-dl='tree-view'] [role='treeitem']:focus-visible > [data-dl-part='row'] > [data-dl-part='actions'],
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='actions']:is([data-pinned], :focus-within) {
+    opacity: 1;
+  }
+
+  /* A row drawn faded (a hidden layer): its icon and label take the muted text. */
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'][data-muted] > :is([data-dl-part='icon'], [data-dl-part='label']) {
+    color: var(--color-text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='actions'] {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='tree-view'] [role='treeitem'][aria-selected='true'] > [data-dl-part='row'] {
+      outline: var(--border-hairline) solid Highlight;
+    }
+  }
+}

@@ -1,0 +1,288 @@
+/*
+ * Tier 1 fundamental: Slider (F16, F15.10). Thumbs on a track: one, a range or several. The rail is the hit row
+ * (24/44/48 px by size); a thumb centre at --p (0–1) sits half a thumb in from either end, so nothing overhangs.
+ * Step dots sit on the track, mark labels and bounds in the scale row under it, the value bubble over the thumb.
+ * Logical properties throughout, so right-to-left mirrors without extra rules.
+ */
+@layer fundamentals {
+  [data-dl='slider'] {
+    --slider-track: var(--c-slider-track);
+    --slider-thumb: var(--c-slider-thumb);
+    --slider-hit: var(--c-slider-hit);
+    --slider-line: calc(var(--type-caption-size) * var(--type-caption-leading));
+
+    display: grid;
+    gap: var(--c-slider-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='slider'][data-size='s'] {
+    --slider-track: var(--c-slider-track-s);
+    --slider-thumb: var(--c-slider-thumb-s);
+    --slider-hit: var(--c-slider-hit-s);
+  }
+
+  [data-dl='slider'][data-size='l'] {
+    --slider-track: var(--c-slider-track-l);
+    --slider-thumb: var(--c-slider-thumb-l);
+    --slider-hit: var(--c-slider-hit-l);
+  }
+
+  [data-dl='slider'] > [data-dl-part='header'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    column-gap: var(--space-inline-pair);
+  }
+
+  [data-dl='slider'] [data-dl-part='label'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  /* Q72: the compact density context's label role, as Field's. */
+  [data-density='compact'] [data-dl='slider'] [data-dl-part='label'] {
+    overflow: hidden;
+    font-size: var(--type-label-compact-size);
+    line-height: var(--type-label-compact-leading);
+    font-weight: var(--type-label-compact-weight);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  [data-dl='slider'] [data-dl-part='value'] {
+    margin-inline-start: auto;
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Icons in the outer columns of the rail's row; the scale row runs under the rail only. */
+  [data-dl='slider'] > [data-dl-part='body'] {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+    align-items: center;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='slider'] > [data-dl-part='body']:has(> [data-dl-part='start'], > [data-dl-part='end'], > [data-dl-part='in-start'], > [data-dl-part='in-end']) {
+    column-gap: var(--c-slider-icon-gap);
+  }
+
+  [data-dl='slider'] [data-dl-part='start'] {
+    display: inline-flex;
+    grid-area: 1 / 2;
+  }
+
+  [data-dl='slider'] [data-dl-part='end'] {
+    display: inline-flex;
+    grid-area: 1 / 4;
+  }
+
+  [data-dl='slider'] [data-dl-part='rail'] {
+    position: relative;
+    grid-area: 1 / 3;
+    block-size: var(--slider-hit);
+    touch-action: none;
+    cursor: pointer;
+  }
+
+  /* Paired number boxes: one after the track, or one at each end of a range; a fixed width so the track never jumps. */
+  [data-dl='slider'] [data-dl-part='in-start'] {
+    grid-area: 1 / 1;
+    inline-size: var(--c-slider-input);
+  }
+
+  [data-dl='slider'] [data-dl-part='in-end'] {
+    grid-area: 1 / 5;
+    inline-size: var(--c-slider-input);
+  }
+
+  [data-dl='slider'] [data-dl-part='fill'][data-grab] {
+    cursor: grab;
+  }
+
+  /* Room over the row for a bubble that is always shown, owned by the body's padding. */
+  [data-dl='slider'][data-bubble='always'] > [data-dl-part='body'] {
+    padding-block-start: calc(var(--slider-line) + var(--c-slider-bubble-gap));
+  }
+
+  [data-dl='slider'] [data-dl-part='track'],
+  [data-dl='slider'] [data-dl-part='fill'] {
+    position: absolute;
+    inset-block-start: calc(50% - var(--slider-track) / 2);
+    block-size: var(--slider-track);
+    border-radius: var(--radius-full);
+  }
+
+  [data-dl='slider'] [data-dl-part='track'] {
+    inset-inline: calc(var(--slider-thumb) / 2);
+    background-color: var(--color-border);
+  }
+
+  [data-dl='slider'] [data-dl-part='fill'] {
+    inset-inline-start: calc(var(--slider-thumb) / 2 + (100% - var(--slider-thumb)) * var(--from));
+    inline-size: calc((100% - var(--slider-thumb)) * (var(--to) - var(--from)));
+    background-color: var(--color-accent);
+  }
+
+  /* A step dot on the track's centre line: quiet ink on the bare track, the accent's own text colour on the fill. */
+  [data-dl='slider'] [data-dl-part='mark'] {
+    position: absolute;
+    inset-block-start: calc(50% - var(--c-slider-tick) / 2);
+    inset-inline-start: calc(var(--slider-thumb) / 2 + (100% - var(--slider-thumb)) * var(--p) - var(--c-slider-tick) / 2);
+    inline-size: var(--c-slider-tick);
+    block-size: var(--c-slider-tick);
+    border-radius: var(--radius-full);
+    background-color: var(--color-text-muted);
+  }
+
+  [data-dl='slider'] [data-dl-part='mark'][data-in] {
+    background-color: var(--color-text-on-accent);
+  }
+
+  /* Mark labels and bounds: each stays inside the track's span (the first starts at its point, the last ends at it). */
+  [data-dl='slider'] [data-dl-part='scale'] {
+    position: relative;
+    grid-area: 2 / 3;
+    block-size: var(--slider-line);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='slider'] [data-dl-part='scale'] > span {
+    position: absolute;
+    inset-inline-start: calc(var(--slider-thumb) / 2 + (100% - var(--slider-thumb)) * var(--p));
+    translate: calc(var(--p) * -100%);
+    white-space: nowrap;
+  }
+
+  [data-dl='slider'] [data-dl-part='thumb'] {
+    position: absolute;
+    inset-block-start: calc(50% - var(--slider-thumb) / 2);
+    inset-inline-start: calc((100% - var(--slider-thumb)) * var(--p));
+    inline-size: var(--slider-thumb);
+    block-size: var(--slider-thumb);
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    /* Q65 Z3: only the thumb's tint eases; its position never does. */
+    transition: background-color var(--duration-change) var(--easing-standard);
+  }
+
+  /* The hit area: an invisible circle the size of the target around the drawn thumb. */
+  [data-dl='slider'] [data-dl-part='thumb']::before {
+    content: '';
+    position: absolute;
+    inset: calc((var(--slider-thumb) - var(--slider-hit)) / 2);
+    border-radius: var(--radius-full);
+  }
+
+  [data-dl='slider'] [data-dl-part='thumb']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='slider'] [data-dl-part='thumb'][data-dragging='on'] {
+    background-color: var(--color-accent-pressed);
+  }
+
+  @media (hover: hover) {
+    [data-dl='slider']:not([data-disabled], [data-readonly]) [data-dl-part='thumb']:hover {
+      background-color: var(--color-accent-hover);
+    }
+  }
+
+  [data-dl='slider']:not([data-disabled], [data-readonly]) [data-dl-part='thumb']:active {
+    background-color: var(--color-accent-pressed);
+  }
+
+  /*
+   * The value bubble: a wide, empty strip centred on the thumb (equal insets, so it mirrors), its words centred in it.
+   * Inverse ink, never moving anything around it.
+   */
+  [data-dl='slider'] [data-dl-part='bubble'] {
+    position: absolute;
+    inset-block-end: calc(100% + var(--c-slider-bubble-gap));
+    inset-inline: calc(var(--slider-hit) * -2);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    transition: opacity var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='slider'] [data-dl-part='bubble'] > span {
+    padding-inline: var(--c-slider-bubble-padding);
+    border-radius: var(--c-slider-bubble-radius);
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  [data-dl='slider'][data-bubble='active'] [data-dl-part='bubble'] {
+    opacity: 0;
+  }
+
+  [data-dl='slider'][data-bubble='active'] [data-dl-part='thumb']:is(:focus-visible, [data-dragging='on']) > [data-dl-part='bubble'] {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    [data-dl='slider'][data-bubble='active']:not([data-disabled]) [data-dl-part='thumb']:hover > [data-dl-part='bubble'] {
+      opacity: 1;
+    }
+  }
+
+  [data-dl='slider'] > [data-dl-part='error'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    color: var(--color-status-danger-fg);
+  }
+
+  /* Read-only: quiet ink and not draggable, still focusable. */
+  [data-dl='slider'][data-readonly] [data-dl-part='rail'] {
+    cursor: default;
+  }
+
+  [data-dl='slider'][data-readonly] :is([data-dl-part='fill'], [data-dl-part='thumb']) {
+    background-color: var(--color-text-muted);
+  }
+
+  [data-dl='slider'][data-disabled] [data-dl-part='rail'] {
+    cursor: not-allowed;
+  }
+
+  [data-dl='slider'][data-disabled] :is([data-dl-part='fill'], [data-dl-part='thumb']) {
+    background-color: var(--color-text-disabled);
+  }
+
+  [data-dl='slider'][data-disabled] :is([data-dl-part='label'], [data-dl-part='value'], [data-dl-part='scale'], [data-dl-part='body']) {
+    color: var(--color-text-disabled);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='slider'] [data-dl-part='track'],
+    [data-dl='slider'] [data-dl-part='mark'] {
+      background-color: CanvasText;
+    }
+
+    [data-dl='slider'] [data-dl-part='fill'],
+    [data-dl='slider'] [data-dl-part='thumb'] {
+      background-color: Highlight;
+    }
+
+    [data-dl='slider'][data-disabled] :is([data-dl-part='fill'], [data-dl-part='thumb']) {
+      background-color: GrayText;
+    }
+  }
+}

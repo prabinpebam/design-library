@@ -1,0 +1,74 @@
+/*
+ * Tier 1 fundamental: AlignmentPicker (F15.T2, Q66). One enclosure (the sunken box) around nine bare points: a quiet
+ * dot at rest, the accent mark on the chosen point (a fact, so it stays), the state fill only while hovered or pressed.
+ * Geometry never changes between states. 24 px points on a dense surface, by decision.
+ */
+@layer fundamentals {
+  [data-dl='alignment-picker'] {
+    display: inline-grid;
+    grid-template-columns: repeat(3, var(--c-alignment-picker-cell));
+    grid-auto-rows: var(--c-alignment-picker-cell);
+    padding: var(--c-alignment-picker-padding);
+    border-radius: var(--c-alignment-picker-radius);
+    background-color: var(--c-alignment-picker-fill);
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point'] {
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--c-alignment-picker-radius);
+    background: none;
+    cursor: pointer;
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point']::before {
+    content: '';
+    inline-size: calc(var(--c-alignment-picker-dot) / 2);
+    block-size: calc(var(--c-alignment-picker-dot) / 2);
+    border-radius: var(--radius-full);
+    background-color: var(--c-alignment-picker-dot-colour);
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point'][aria-checked='true']::before {
+    inline-size: var(--c-alignment-picker-dot);
+    block-size: var(--c-alignment-picker-dot);
+    border-radius: var(--radius-sm);
+    background-color: var(--c-alignment-picker-mark-colour);
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  @media (hover: hover) {
+    [data-dl='alignment-picker'] [data-dl-part='point']:hover {
+      background-color: var(--c-alignment-picker-hover-fill);
+    }
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point']:active {
+    background-color: var(--c-alignment-picker-pressed-fill);
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point']:disabled {
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='alignment-picker'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+
+    [data-dl='alignment-picker'] [data-dl-part='point']::before {
+      background-color: CanvasText;
+    }
+
+    [data-dl='alignment-picker'] [data-dl-part='point'][aria-checked='true']::before {
+      background-color: Highlight;
+    }
+  }
+}

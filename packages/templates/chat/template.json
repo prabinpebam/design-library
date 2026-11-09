@@ -1,0 +1,1040 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "chat",
+  "version": "1.0.0",
+  "title": "AI chat",
+  "summary": "A ChatGPT-like assistant: chat history, the model menu, rich replies, generated pictures and the composer.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "assets": "assets.json",
+  "home": "chat",
+  "sections": [
+    {
+      "id": "converse",
+      "title": "Converse",
+      "summary": "Talk with the assistant, share a chat, and what happens when a reply can’t come.",
+      "flows": [
+        {
+          "id": "chat",
+          "title": "Chat",
+          "summary": "Ask, read the answer and keep going.",
+          "screens": [
+            "chat"
+          ]
+        },
+        {
+          "id": "share",
+          "title": "Share a chat",
+          "summary": "Make a link to a chat and read a shared one.",
+          "screens": [
+            "share-chat",
+            "shared-chat"
+          ]
+        },
+        {
+          "id": "voice",
+          "title": "Talk by voice",
+          "summary": "Speak and listen instead of typing.",
+          "screens": [
+            "voice"
+          ]
+        },
+        {
+          "id": "errors",
+          "title": "Recover from an error",
+          "summary": "Know what happened and when it will work again.",
+          "screens": [
+            "offline",
+            "rate-limited",
+            "not-found"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "find",
+      "title": "Find",
+      "summary": "Getting back to earlier work.",
+      "flows": [
+        {
+          "id": "search",
+          "title": "Search chats",
+          "summary": "Find a chat by what was said.",
+          "screens": [
+            "search-chats"
+          ]
+        },
+        {
+          "id": "library",
+          "title": "Browse images",
+          "summary": "Every picture made in a chat.",
+          "screens": [
+            "images"
+          ]
+        },
+        {
+          "id": "projects",
+          "title": "Organise by project",
+          "summary": "Keep related chats and files together.",
+          "screens": [
+            "chat-projects",
+            "chat-project"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Account",
+      "summary": "Signing in and the first run.",
+      "flows": [
+        {
+          "id": "sign-in",
+          "title": "Sign in",
+          "summary": "Sign in or create an account.",
+          "screens": [
+            "sign-in",
+            "sign-up"
+          ]
+        },
+        {
+          "id": "onboarding",
+          "title": "Get started",
+          "summary": "Say what the assistant should know and how it should reply.",
+          "screens": [
+            "welcome",
+            "choose-style"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "summary": "Changing how it works and the plan.",
+      "flows": [
+        {
+          "id": "general",
+          "title": "Change settings",
+          "summary": "Appearance, personalisation and what happens to data.",
+          "screens": [
+            "settings-general",
+            "settings-personalisation",
+            "settings-data"
+          ]
+        },
+        {
+          "id": "plan",
+          "title": "Upgrade the plan",
+          "summary": "Compare plans, pay and start using it.",
+          "screens": [
+            "plans",
+            "checkout"
+          ]
+        },
+        {
+          "id": "export",
+          "title": "Export your data",
+          "summary": "Get a copy of every chat and file to keep or move elsewhere.",
+          "screens": [
+            "export-data"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "chat",
+      "title": "Chat",
+      "component": "ChatLayout",
+      "content": "content/chat.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "conversation"
+        },
+        {
+          "id": "composer"
+        }
+      ],
+      "docs": {
+        "summary": "A conversation with its history, built on F15.70.",
+        "narrow": "The sidebar starts closed and floats over the conversation when opened (Escape closes it); the column takes the whole width.",
+        "try": [
+          "Send a message: the ring turns, a few working steps show, then the words stream in; Stop ends the reply where it is.",
+          "Choose Create image from the + menu, then send: the picture is drawn in the reply.",
+          "Under a reply: Copy, rate, Try again (the old version stays, with 1 / 2) or Branch into a new chat.",
+          "Open “Summarise the release notes”: the failed reply offers Try again.",
+          "In the sidebar: rename, share, archive (with Undo) or delete (asks first) a chat; Search chats; the account menu’s Settings."
+        ],
+        "notBuilt": [
+          "The sidebar’s rail form and an account row pinned to its foot.",
+          "Search as you type; editing a message in place.",
+          "Voice mode, Canvas, maths, the whole-chat drop area and a Sources panel."
+        ],
+        "regions": [
+          {
+            "region": "Sidebar",
+            "holds": "New chat, Search chats, the chats by date and project, the account",
+            "uses": "ListItem, ConversationList, Persona, MenuButton"
+          },
+          {
+            "region": "Header",
+            "holds": "Sidebar toggle, model menu, Share or Temporary chat",
+            "uses": "ChatLayout header, MenuButton, Button, Switch"
+          },
+          {
+            "region": "Conversation",
+            "holds": "Messages: thinking, words, tables, code, pictures, cards, sources, a failed reply",
+            "uses": "ChatMessage, ChatThinking, MessageActions, ImageGeneration, DataTable, CodeBlock, Card, Alert"
+          },
+          {
+            "region": "Composer",
+            "holds": "Text, attachments, tools, Dictate, Send and Stop",
+            "uses": "Composer"
+          },
+          {
+            "region": "Dialogs",
+            "holds": "Search, Share, Delete, Settings",
+            "uses": "Dialog, TextField, List, Switch"
+          }
+        ]
+      }
+    },
+    {
+      "id": "chat-new",
+      "title": "New chat",
+      "stateOf": "chat",
+      "component": "ChatLayout",
+      "content": "content/chat-new.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "conversation"
+        },
+        {
+          "id": "composer"
+        }
+      ],
+      "docs": {
+        "summary": "A new chat: the greeting, suggestions under the composer, and a temporary chat switch; the first message becomes the conversation in place."
+      }
+    },
+    {
+      "id": "chat-error",
+      "title": "Reply failed",
+      "stateOf": "chat",
+      "component": "ChatLayout",
+      "content": "content/chat-error.json",
+      "regions": [
+        {
+          "id": "sidebar"
+        },
+        {
+          "id": "header"
+        },
+        {
+          "id": "conversation"
+        },
+        {
+          "id": "composer"
+        }
+      ],
+      "docs": {
+        "summary": "A reply that didn’t finish: the message is kept, the error says why, and Try again writes the reply where the error was."
+      }
+    },
+    {
+      "id": "share-chat",
+      "title": "Share",
+      "component": "SiteLayout",
+      "content": "content/converse/share-chat.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Make a link to a chat and decide what it shows.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Settings for the link, ways on",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "shared-chat",
+      "title": "Shared chat",
+      "component": "SiteLayout",
+      "content": "content/converse/shared-chat.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A read-only copy of a chat someone shared.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the conversation, a call to start",
+            "uses": "Hero, Quote, Text, Image"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "voice",
+      "title": "Voice",
+      "component": "SiteLayout",
+      "content": "content/converse/voice.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Talk instead of typing: what it’s doing, the voice, and the way out.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status, settings, end",
+            "uses": "Hero, DescriptionList, Button"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "search-chats",
+      "title": "Search chats",
+      "component": "SiteLayout",
+      "content": "content/find/search-chats.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Find a chat by what was said.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Search",
+            "uses": "Search block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "search-chats-empty",
+      "title": "Nothing found",
+      "stateOf": "search-chats",
+      "component": "SiteLayout",
+      "content": "content/find/search-chats-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Nothing found: why, and start a chat about it."
+      }
+    },
+    {
+      "id": "images",
+      "title": "Images",
+      "component": "SiteLayout",
+      "content": "content/find/images.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every picture made in a chat.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "A gallery",
+            "uses": "ImageGrid"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "chat-projects",
+      "title": "Projects",
+      "component": "SiteLayout",
+      "content": "content/find/chat-projects.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every project with what it holds.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, project cards",
+            "uses": "Hero, Card"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "chat-project",
+      "title": "Project",
+      "component": "SiteLayout",
+      "content": "content/find/chat-project.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One project: its instructions and chats.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, chats",
+            "uses": "Breadcrumbs, Hero, Card (row)"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-in",
+      "title": "Sign in",
+      "component": "SiteLayout",
+      "content": "content/account/sign-in.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sign in to the assistant.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The sign-in form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-up",
+      "title": "Create an account",
+      "component": "SiteLayout",
+      "content": "content/account/sign-up.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Create an account.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The sign-up form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "welcome",
+      "title": "Welcome",
+      "component": "SiteLayout",
+      "content": "content/account/welcome.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "First run, step 1 of 2: what it should know.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Optional questions",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "choose-style",
+      "title": "How it should reply",
+      "component": "SiteLayout",
+      "content": "content/account/choose-style.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "First run, step 2 of 2: how it replies.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Style settings",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "settings-general",
+      "title": "General",
+      "component": "SiteLayout",
+      "content": "content/settings/general/settings-general.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Appearance and how chats behave.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Two groups of settings",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "settings-personalisation",
+      "title": "Personalisation",
+      "component": "SiteLayout",
+      "content": "content/settings/general/settings-personalisation.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Memory and reply style.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Settings",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "settings-data",
+      "title": "Data controls",
+      "component": "SiteLayout",
+      "content": "content/settings/general/settings-data.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Training, retention and export.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Settings",
+            "uses": "Settings block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "export-data",
+      "title": "Export your data",
+      "component": "SiteLayout",
+      "content": "content/settings/export-data.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Choose what to export; the form becomes when the download link arrives.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The form, then what happens next in its place",
+            "uses": "Form block, Morph"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "plans",
+      "title": "Plans",
+      "component": "SiteLayout",
+      "content": "content/settings/plans.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Compare plans and choose one.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, plan choice with total",
+            "uses": "Tickets block: RadioGroup (tiles), NumberField, DescriptionList"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "checkout",
+      "title": "Checkout",
+      "component": "SiteLayout",
+      "content": "content/settings/checkout.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Pay for a plan.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "The payment form",
+            "uses": "Form block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "upgraded",
+      "title": "Upgraded",
+      "component": "SiteLayout",
+      "content": "content/settings/upgraded.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Done, what changed and the way on.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "checkout"
+    },
+    {
+      "id": "offline",
+      "title": "Offline",
+      "component": "SiteLayout",
+      "content": "content/converse/errors/offline.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "No connection: what’s kept, what happens next.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "rate-limited",
+      "title": "Limit reached",
+      "component": "SiteLayout",
+      "content": "content/converse/errors/rate-limited.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A limit, when it resets, and the way past it.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "not-found",
+      "title": "Not found",
+      "component": "SiteLayout",
+      "content": "content/converse/errors/not-found.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Not found.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The app’s name and its main places",
+            "uses": "SiteHeader"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ]
+}

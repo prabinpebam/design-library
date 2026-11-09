@@ -1,0 +1,99 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "checkout",
+  "contentVersion": 1,
+  "settings": {
+    "current": "settings-general",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Checkout",
+        "intro": "Plus · €20 a month, starting today.",
+        "fields": [
+          {
+            "id": "card",
+            "label": "Card number",
+            "kind": "text"
+          },
+          {
+            "id": "expiry",
+            "label": "Expiry date",
+            "kind": "text",
+            "hint": "MM/YY"
+          },
+          {
+            "id": "cvc",
+            "label": "Security code",
+            "kind": "text"
+          },
+          {
+            "id": "country",
+            "label": "Country",
+            "kind": "choice",
+            "options": [
+              "Portugal",
+              "United Kingdom",
+              "India",
+              "Other"
+            ]
+          }
+        ],
+        "submit": "Subscribe",
+        "sent": "Subscribed. The next screen confirms it.",
+        "links": [
+          {
+            "label": "Back to plans",
+            "href": "/plans"
+          }
+        ],
+        "outcome": {
+          "eyebrow": "You’re on Plus",
+          "title": "Welcome to Plus",
+          "text": "Longer chats, more images and voice are on now. The receipt is in your email.",
+          "links": [
+            {
+              "label": "Start a chat",
+              "href": "/chat"
+            },
+            {
+              "label": "Manage the plan",
+              "href": "/plans"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

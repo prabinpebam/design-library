@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "search-empty",
+  "contentVersion": 1,
+  "settings": {
+    "current": "search"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "search",
+        "heading": "Search",
+        "label": "Search the site",
+        "button": "Search",
+        "query": "reefer cargo",
+        "summary": "{count} results for “{query}”",
+        "results": [
+          {
+            "eyebrow": "Service",
+            "title": "Ocean freight",
+            "href": "/home",
+            "description": "Full and shared containers between 140 ports, with customs clearance at both ends."
+          },
+          {
+            "eyebrow": "Service",
+            "title": "Customs clearance",
+            "href": "/home",
+            "description": "We file the declarations, pay the duties and tell you when the goods are released."
+          },
+          {
+            "eyebrow": "Company",
+            "title": "About Northwind",
+            "href": "/about",
+            "description": "A family freight forwarder since 1962, now with offices in Rotterdam, Hamburg and Singapore."
+          },
+          {
+            "eyebrow": "Careers",
+            "title": "Customs specialist, Rotterdam",
+            "href": "/careers",
+            "description": "Join the team that clears 4,000 containers a month through Dutch customs."
+          },
+          {
+            "eyebrow": "Contact",
+            "title": "Talk to a planner",
+            "href": "/contact",
+            "description": "Questions about a quote or a shipment on its way, answered within one working day."
+          }
+        ],
+        "none": {
+          "title": "Nothing found for “{query}”",
+          "text": "Check the spelling, or try fewer or more general words, such as “customs” or “ocean”.",
+          "links": [
+            {
+              "label": "Browse services",
+              "href": "/home"
+            },
+            {
+              "label": "Ask a planner",
+              "href": "/contact"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

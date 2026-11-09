@@ -1,0 +1,70 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "design",
+  "layout": "files",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Recent",
+        "title": "Recent files",
+        "lead": "Files you and your team opened lately.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Recently opened",
+        "max": 3,
+        "items": [
+          {
+            "eyebrow": "Kitewing app",
+            "title": "Sign-in flow",
+            "description": "Edited 2 hours ago by Ama Mensah",
+            "href": "/editor"
+          },
+          {
+            "eyebrow": "Kitewing app",
+            "title": "Trip cards",
+            "description": "Edited yesterday by Jonas Lind",
+            "href": "/editor"
+          },
+          {
+            "eyebrow": "Brand",
+            "title": "Icons 2027",
+            "description": "Edited last week by Keiko Arai",
+            "href": "/editor"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,131 @@
+/*
+ * Tier 2 compound: SiteHeader (F15.71, Q61; catalogue Navigation "Site header"). The name at the start, the places
+ * in the middle, the actions at the end, on one bar; the root is the container the narrow form answers to. Places are
+ * bare at rest; hover takes the state fill and the current place keeps the tint (a fact, not a moment), and they sit
+ * `space.stack-row` apart in the menu list so two fills never touch (Q60). No surface or border of its own: the layout
+ * that places it draws any boundary.
+ */
+@layer compounds {
+  [data-dl='site-header'] {
+    container-type: inline-size;
+    inline-size: 100%;
+  }
+
+  [data-dl='site-header'] > [data-dl-part='bar'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-site-header-gap);
+    min-block-size: var(--c-site-header-height);
+  }
+
+  [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='name'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-site-header-mark-gap);
+    min-block-size: var(--c-site-header-link-size);
+    font-size: var(--c-site-header-name-size);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='name'] > [data-dl-part='mark'] {
+    display: inline-flex;
+    color: var(--color-accent);
+  }
+
+  [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'] {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-site-header-link-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] > li > [data-dl-part='link'] {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--c-site-header-link-size);
+    padding-inline: var(--c-site-header-link-padding);
+    border-radius: var(--c-site-header-link-radius);
+    color: var(--color-text);
+    text-decoration: none;
+    /* Q65 M5: a standalone control's fill, edge and text interpolate at the default. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      border-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard);
+  }
+
+  :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] > li > [data-dl-part='link'][aria-current='page'] {
+    background-color: var(--c-site-header-current-fill);
+    font-weight: var(--weight-semibold);
+  }
+
+  :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] > li > [data-dl-part='link']:focus-visible,
+  [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='name']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  @media (hover: hover) {
+    :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] > li > [data-dl-part='link']:not([aria-current='page']):hover {
+      background-color: var(--c-site-header-hover-fill);
+    }
+  }
+
+  :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] > li > [data-dl-part='link']:active {
+    background-color: var(--c-site-header-pressed-fill);
+  }
+
+  [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='end'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-site-header-gap);
+  }
+
+  [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='end'] > [data-dl-part='menu'],
+  [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] {
+    display: none;
+  }
+
+  /* Narrow: the places move behind Menu and open as a list under the bar, one row each. */
+  @container (max-width: 48rem) {
+    [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'] {
+      display: none;
+    }
+
+    [data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='end'] > [data-dl-part='menu'] {
+      display: inline-flex;
+    }
+
+    [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] {
+      display: block;
+      padding-block-end: var(--c-site-header-panel-padding);
+    }
+
+    [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] > [data-dl-part='list'] {
+      flex-direction: column;
+      gap: var(--c-site-header-row-gap);
+    }
+
+    [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] > [data-dl-part='list'] > li > [data-dl-part='link'] {
+      display: flex;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :is([data-dl='site-header'] > [data-dl-part='bar'] > [data-dl-part='links'], [data-dl='site-header'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel']) > [data-dl-part='list'] > li > [data-dl-part='link'][aria-current='page'] {
+      outline: var(--border-hairline) solid Highlight;
+    }
+  }
+}

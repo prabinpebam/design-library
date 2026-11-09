@@ -1,0 +1,30 @@
+/*
+ * Tier 2 compound: MessageActions (F15.66, Q57). A row of quiet icon buttons under a chat message: members stay bare at
+ * rest (no enclosure of their own), the versions control first. Space comes from the row's gap.
+ */
+@layer compounds {
+  [data-dl='message-actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-message-actions-gap);
+  }
+
+  [data-dl='message-actions'] > [data-dl-part='versions'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-message-actions-gap);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='message-actions'] [data-dl-part='spoken'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='message-actions'] > [data-dl-part='thanks'] {
+    padding-inline: var(--space-inline-pair);
+  }
+}

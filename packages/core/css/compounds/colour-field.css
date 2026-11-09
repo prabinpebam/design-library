@@ -1,0 +1,55 @@
+/*
+ * Tier 2 compound: ColourField (F7d; moved from tier 1 by the owner's tier definitions, 2026-11-07 17:38). A special-need
+ * arrangement of fundamentals (Text, Button, Badge, ColourPicker's swatch). Semantic tokens and its own c.* group
+ * only. Geometry never changes with state: the swatch's edge only changes style (solid ↔ dashed).
+ */
+@layer compounds {
+  /* ColourField: mark, swatch, name and Clear as one group. */
+  [data-dl='colour-field'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-colour-field-gap);
+    inline-size: calc(2 * var(--c-colour-field-swatch));
+  }
+
+  [data-dl='colour-field'] > [data-dl-part='head'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-colour-field-mark-gap);
+    min-block-size: var(--size-control-sm);
+  }
+
+  [data-dl='colour-field'] > [data-dl-part='head'] > [data-dl-part='mark'] {
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+    font-weight: var(--type-heading-4-weight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The ColourPicker's swatch fills the whole swatch, so the swatch is the target. */
+  [data-dl='colour-field'] > [data-dl-part='swatch'] {
+    position: relative;
+    inline-size: var(--c-colour-field-swatch);
+    block-size: var(--c-colour-field-swatch);
+    border: var(--c-colour-field-border-width) solid var(--c-colour-field-border);
+    border-radius: var(--c-colour-field-radius);
+    background-color: var(--colour-field-value, transparent);
+  }
+
+  [data-dl='colour-field'][data-empty] > [data-dl-part='swatch'] {
+    border-style: dashed;
+  }
+
+  [data-dl='colour-field'] > [data-dl-part='meta'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='colour-field'] > [data-dl-part='swatch'] {
+      forced-color-adjust: none;
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,205 @@
+/*
+ * Tier 3 layout: ChatLayout (F15.69, Q57). Sidebar beside the main area, separated by tone (a sunken sidebar), no
+ * border. The main area is header, conversation and composer in a column: the conversation scrolls on its own, edge to
+ * edge (scrollbar at the main area's edge), its content held in the reading column; the composer stays under it in the
+ * same column. Narrow (below 48 rem of its own width, a container query): the open sidebar floats over the
+ * main area with the overlay shadow.
+ */
+@layer layouts {
+  [data-dl='chat-layout'] {
+    position: relative;
+    isolation: isolate;
+    container-type: inline-size;
+    display: flex;
+    inline-size: 100%;
+    min-inline-size: 0;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  [data-dl='chat-layout'][data-height='fill'] { block-size: 100%; }
+  [data-dl='chat-layout'][data-height='screen'] { block-size: 100dvh; }
+[data-dl='chat-layout'][data-height='lg'] { block-size: var(--c-chat-layout-height-lg); }
+
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'] {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    inline-size: var(--c-chat-layout-sidebar);
+    min-block-size: 0;
+    overflow-y: auto;
+    padding: var(--c-chat-layout-inset);
+    background-color: var(--c-chat-layout-sidebar-fill);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='sidebar'][hidden] {
+    display: none;
+  }
+
+  @container (max-width: 48rem) {
+    /* Over the conversation it's a non-blocking drawer: floating material (MT7, FR7), frosted when on (materials MB5). */
+    [data-dl='chat-layout'] > [data-dl-part='sidebar'] {
+      position: absolute;
+      /* Under the header, so its toggle stays in reach to close it. */
+      inset-block: var(--c-chat-layout-header) 0;
+      inset-inline-start: 0;
+      z-index: var(--c-chat-layout-layer);
+      background-color: var(--material-floating-bg, var(--c-chat-layout-sidebar-fill));
+      -webkit-backdrop-filter: var(--material-backdrop);
+      backdrop-filter: var(--material-backdrop);
+      box-shadow: var(--c-chat-layout-overlay-shadow);
+    }
+  }
+
+  /* AR11: where the drawer (16 rem) covers more than half the window, it goes solid. */
+  @container (max-width: 32rem) {
+    [data-dl='chat-layout'] > [data-dl-part='sidebar'] {
+      background-color: var(--c-chat-layout-sidebar-fill);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='header'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--c-chat-layout-header);
+    padding-inline: var(--c-chat-layout-inset);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > :is([data-dl-part='header-start'], [data-dl-part='header-end']) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-end'] {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-block-size: 0;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'],
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='composer'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] {
+    flex: 1;
+    min-block-size: 0;
+    overflow-y: auto;
+    outline: none;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll']:focus-visible {
+    box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] :is([data-dl-part='greeting-area'], [data-dl-part='scroll'], [data-dl-part='composer']) > [data-dl-part='column'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-chat-layout-gap);
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: calc(var(--c-chat-layout-column) + 2 * var(--c-chat-layout-page-margin));
+    padding-inline: var(--c-chat-layout-page-margin);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] > [data-dl-part='column'] {
+    padding-block: var(--c-chat-layout-page-margin);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='composer'] {
+    flex: none;
+    padding-block-end: var(--c-chat-layout-inset);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='jump'] {
+    position: absolute;
+    inset-block-end: var(--c-chat-layout-inset);
+    inset-inline-start: 50%;
+    z-index: var(--c-chat-layout-layer);
+    display: inline-flex;
+    border-radius: var(--radius-md);
+    background-color: var(--material-floating-bg, var(--color-bg-raised));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-chat-layout-overlay-shadow);
+    transform: translateX(-50%);
+  }
+
+  /*
+   * A new chat: the greeting and the composer together in the middle of the main area. The conversation (holding the
+   * greeting at its end) and the composer share the free space equally, so the pair is centred; the composer is the
+   * same element in both states (Q65 C12/C18), so on the first message it travels to the bottom (FLIP, ChatLayout.tsx).
+   */
+  [data-dl='chat-layout'][data-empty] > [data-dl-part='main'] > [data-dl-part='conversation'] {
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  [data-dl='chat-layout'][data-empty] > [data-dl-part='main'] > [data-dl-part='composer'] {
+    flex: 1;
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='greeting-area'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-block-size: 0;
+    padding-block-end: var(--space-stack-group);
+    transition: opacity var(--duration-change) var(--easing-enter);
+  }
+
+  /* The first message: the greeting leaves where it lands, fading over quick, out of the conversation's flow. */
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='greeting-area'][data-leaving] {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-quick) var(--easing-exit);
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='scroll'] {
+    transition: opacity var(--duration-change) var(--easing-enter);
+  }
+
+  @starting-style {
+    [data-dl='chat-layout'][data-flip-settled] > [data-dl-part='main'] > [data-dl-part='conversation'] > :is([data-dl-part='scroll'], [data-dl-part='greeting-area']) {
+      opacity: 0;
+    }
+  }
+
+  [data-dl='chat-layout'] > [data-dl-part='main'] > [data-dl-part='conversation'] > [data-dl-part='greeting-area'] > [data-dl-part='column'] > [data-dl-part='greeting'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='chat-layout'] > [data-dl-part='sidebar'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

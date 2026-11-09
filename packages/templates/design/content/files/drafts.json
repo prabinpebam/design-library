@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "drafts",
+  "contentVersion": 1,
+  "settings": {
+    "current": "drafts"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "cards",
+        "heading": "Drafts",
+        "max": 3,
+        "items": [
+          {
+            "title": "Onboarding ideas",
+            "description": "Edited today",
+            "href": "/editor"
+          },
+          {
+            "title": "Untitled",
+            "description": "Edited Tuesday",
+            "href": "/editor"
+          }
+        ],
+        "empty": {
+          "reason": "first-use",
+          "title": "No drafts yet",
+          "text": "Drafts are files only you can see. Start one, then move it to a project when it’s ready to share.",
+          "silhouette": "tiles",
+          "links": [
+            {
+              "label": "Open the editor",
+              "href": "/editor"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

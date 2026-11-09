@@ -1,0 +1,42 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "offices",
+  "contentVersion": 1,
+  "settings": {
+    "current": "contact"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Offices",
+        "title": "Visit us",
+        "lead": "Three offices near the ports we serve. Come by; there’s coffee.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Our offices",
+        "max": 3,
+        "items": [
+          {
+            "title": "Rotterdam (head office)",
+            "description": "Example Quay 1. Open 8:00 to 18:00. Metro: Wilhelminaplein.",
+            "picture": "harbour"
+          },
+          {
+            "title": "Hamburg",
+            "description": "Example Harbour 22. Open 8:00 to 17:00. S-Bahn: Landungsbrücken.",
+            "picture": "frost"
+          },
+          {
+            "title": "Singapore",
+            "description": "Example Road 5. Open 9:00 to 18:00. MRT: Tanjong Pagar.",
+            "picture": "dusk"
+          }
+        ]
+      }
+    ]
+  }
+}

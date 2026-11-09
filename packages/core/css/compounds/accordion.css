@@ -1,0 +1,123 @@
+/*
+ * Tier 2 compound: Accordion (F15.35, Q53.3; atiya Questions). A list of sections with one hairline between them and
+ * one above and below the list: the only boundary marks. Each heading is a full-width button: its words, an optional
+ * summary, and a chevron at the end that turns when open. Hover fills the button; nothing moves. An open section's
+ * content lines up with the heading's words.
+ */
+@layer compounds {
+  [data-dl='accordion'] {
+    display: grid;
+    gap: var(--c-accordion-controls-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='controls'] {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] {
+    display: grid;
+    border-block: var(--border-hairline) solid var(--color-border);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] + [data-dl-part='item'] {
+    border-block-start: var(--border-hairline) solid var(--color-border);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] {
+    margin: 0;
+    font: inherit;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-accordion-trigger-gap);
+    inline-size: 100%;
+    min-block-size: var(--c-accordion-trigger-size);
+    padding: var(--c-accordion-trigger-padding-block) var(--c-accordion-trigger-padding-inline);
+    border: 0;
+    border-radius: var(--c-accordion-radius);
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'] > [data-dl-part='title'] {
+    display: grid;
+    gap: var(--c-accordion-title-gap);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'] > [data-dl-part='title'] > [data-dl-part='name'] {
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'] > [data-dl-part='title'] > [data-dl-part='summary'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'] > [data-dl='icon'] {
+    flex: none;
+    color: var(--color-text-muted);
+    transition: rotate var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'][aria-expanded='true'] > [data-dl='icon'] {
+    rotate: 180deg;
+  }
+
+  @media (hover: hover) {
+    [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger']:not(:disabled):hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger']:not(:disabled):active {
+    background-color: var(--state-pressed);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger']:disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger']:disabled > [data-dl='icon'],
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger']:disabled > [data-dl-part='title'] > [data-dl-part='summary'] {
+    color: var(--color-text-disabled);
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] {
+    display: grid;
+    gap: var(--space-stack-item);
+    padding: 0 var(--c-accordion-panel-padding) var(--c-accordion-panel-padding);
+    min-inline-size: 0;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'][hidden] {
+    display: none;
+  }
+
+  [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] > :is(p, ul, ol) {
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] > [data-dl-part='trigger'] > [data-dl='icon'] {
+      transition: none;
+    }
+  }
+}

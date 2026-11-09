@@ -1,0 +1,35 @@
+/*
+ * Tier 2 compound: FloatingBar (F15.76, Q63). One raised surface with the overlay shadow (it floats over the screen),
+ * at the window's bottom end corner, above the screen's own content and below the notification pill's layer. Its
+ * controls are bare members of its one enclosure.
+ */
+@layer compounds {
+  [data-dl='floating-bar'] {
+    position: fixed;
+    inset-block-end: var(--c-floating-bar-offset);
+    inset-inline-end: var(--c-floating-bar-offset);
+    z-index: var(--c-floating-bar-layer);
+    display: flex;
+    align-items: center;
+    gap: var(--c-floating-bar-gap);
+    padding: var(--c-floating-bar-padding);
+    border-radius: var(--c-floating-bar-radius);
+    /* Q73 MT7 floating: frosted when the global material setting is on (css/materials.css), solid otherwise. */
+    background-color: var(--material-floating-bg, var(--c-floating-bar-fill));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-floating-bar-shadow);
+  }
+
+  [data-dl='floating-bar'][data-placement='inline'] {
+    position: static;
+    display: inline-flex;
+    justify-self: start;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='floating-bar'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

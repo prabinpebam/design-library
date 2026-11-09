@@ -1,0 +1,46 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "sign-in",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Sign in",
+        "intro": "No password: we email you a link that signs you in.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          }
+        ],
+        "submit": "Email me a link",
+        "sent": "Link sent. The next screen shows what to do.",
+        "outcome": {
+          "eyebrow": "Check your email",
+          "title": "Your sign-in link is on its way",
+          "text": "Open it on this device to sign in. It works once, for 15 minutes.",
+          "links": [
+            {
+              "label": "Send it again",
+              "href": "/sign-in"
+            },
+            {
+              "label": "Back to the articles",
+              "href": "/index"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

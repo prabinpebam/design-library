@@ -1,0 +1,203 @@
+/*
+ * Tier 2 compound: Sheet (F15.47, catalogue Overlays "Side sheet", "Bottom sheet"). A panel against one edge of the
+ * window, full height (side) or full width (bottom). Modal sheets are native modal dialogs in the top layer over the
+ * scrim; standard sheets sit over the page's edge on the overlay layer with a shadow and no scrim. One surface: a
+ * header (title, description, tools, close), a body that scrolls on its own with its padding inside (scrollbar at the
+ * sheet's edge) and the answers at the foot; one inset for all three, no dividers. The edge it comes from is square;
+ * the corners facing the page are rounded. Slides in from its edge over move-far and back over move (Q65 C17); reduced motion only fades.
+ */
+@layer compounds {
+  [data-dl='sheet'] {
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    inline-size: var(--c-sheet-width-m);
+    max-inline-size: 100%;
+    block-size: 100dvh;
+    max-block-size: 100dvh;
+    background-color: var(--color-bg-raised);
+    color: var(--color-text);
+    box-shadow: var(--shadow-overlay);
+    overflow: hidden;
+    translate: 0 0;
+    opacity: 1;
+    /* Q65 C17: slides in from its edge over move-far and leaves one step shorter; with reduced motion it only fades. */
+    transition:
+      translate var(--duration-move-far) var(--easing-enter),
+      opacity var(--duration-change) var(--easing-enter),
+      overlay var(--duration-move-far) var(--easing-enter) allow-discrete,
+      display var(--duration-move-far) var(--easing-enter) allow-discrete;
+  }
+
+  /* Closed: back past its own edge, faster and accelerating out of the way. */
+  [data-dl='sheet']:not([open]):not([data-modal='false']),
+  [data-dl='sheet'][data-modal='false'][hidden] {
+    translate: var(--sheet-off);
+    opacity: 0;
+    transition:
+      translate var(--duration-move) var(--easing-exit),
+      opacity var(--duration-quick) var(--easing-exit),
+      overlay var(--duration-move) var(--easing-exit) allow-discrete,
+      display var(--duration-move) var(--easing-exit) allow-discrete;
+  }
+
+  [data-dl='sheet'][data-modal='false'] {
+    z-index: var(--c-sheet-layer);
+    /* A standard sheet doesn't block the page: floating material (MT7, FR7), frosted when on (materials MB5). */
+    background-color: var(--material-floating-bg, var(--color-bg-raised));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+  }
+
+  /* AR11: a sheet covering more than about half the window goes solid (s 20, m 26, l 40 rem wide). */
+  @media (max-width: 52rem) {
+    [data-dl='sheet'][data-modal='false']:not([data-size='l']) {
+      background-color: var(--color-bg-raised);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  @media (max-width: 80rem) {
+    [data-dl='sheet'][data-modal='false'][data-size='l'] {
+      background-color: var(--color-bg-raised);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  [data-dl='sheet'][data-modal='false'][hidden] {
+    display: none;
+  }
+
+  [data-dl='sheet'][data-size='s'] { inline-size: var(--c-sheet-width-s); }
+  [data-dl='sheet'][data-size='l'] { inline-size: var(--c-sheet-width-l); }
+
+  [data-dl='sheet'][data-side='end'] {
+    inset-inline-start: auto;
+    border-start-start-radius: var(--c-sheet-radius);
+    border-end-start-radius: var(--c-sheet-radius);
+  }
+
+  [data-dl='sheet'][data-side='start'] {
+    inset-inline-end: auto;
+    border-start-end-radius: var(--c-sheet-radius);
+    border-end-end-radius: var(--c-sheet-radius);
+  }
+
+  [data-dl='sheet'][data-side='bottom'] {
+    inset-block-start: auto;
+    inline-size: 100%;
+    block-size: auto;
+    max-block-size: calc(100dvh - var(--c-sheet-top-gap));
+    border-start-start-radius: var(--c-sheet-radius);
+    border-start-end-radius: var(--c-sheet-radius);
+  }
+
+  /* Where each sheet starts and ends its slide: just past its own edge (mirrored in right to left). */
+  [data-dl='sheet'][data-side='end'] { --sheet-off: 100% 0; }
+  [data-dl='sheet'][data-side='start'] { --sheet-off: -100% 0; }
+  [data-dl='sheet'][data-side='bottom'] { --sheet-off: 0 100%; }
+  [data-dl='sheet'][data-side='end']:dir(rtl) { --sheet-off: -100% 0; }
+  [data-dl='sheet'][data-side='start']:dir(rtl) { --sheet-off: 100% 0; }
+
+  @starting-style {
+    [data-dl='sheet'][open],
+    [data-dl='sheet'][data-modal='false']:not([hidden]) {
+      translate: var(--sheet-off);
+      opacity: 0;
+    }
+  }
+
+  [data-dl='sheet']::backdrop {
+    background-color: var(--color-bg-overlay);
+    transition:
+      background-color var(--duration-change) var(--easing-enter),
+      overlay var(--duration-move-far) allow-discrete,
+      display var(--duration-move-far) allow-discrete;
+  }
+
+  [data-dl='sheet']:not([open])::backdrop {
+    background-color: transparent;
+    transition:
+      background-color var(--duration-quick) var(--easing-exit),
+      overlay var(--duration-move) allow-discrete,
+      display var(--duration-move) allow-discrete;
+  }
+
+  @starting-style {
+    [data-dl='sheet'][open]::backdrop {
+      background-color: transparent;
+    }
+  }
+
+  /* A column: the body takes the room there is and scrolls; the header and the answers stay put. */
+  [data-dl='sheet'] > [data-dl-part='surface'] {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    max-block-size: inherit;
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='header'] {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-inline-group);
+    padding: var(--c-sheet-padding) var(--c-sheet-padding) var(--c-sheet-gap);
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='header'] > [data-dl-part='heading'] {
+    display: grid;
+    gap: var(--c-sheet-heading-gap);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='header'] > [data-dl-part='heading']:focus {
+    outline: none;
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='header'] > [data-dl-part='heading'] > [data-dl-part='description'] {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='header'] > [data-dl-part='tools'] {
+    display: flex;
+    flex: none;
+    gap: var(--c-sheet-tools-gap);
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='body'] {
+    flex: 1 1 auto;
+    min-block-size: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 var(--c-sheet-padding) var(--c-sheet-gap);
+  }
+
+  [data-dl='sheet'] > [data-dl-part='surface'] > [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--c-sheet-actions-gap);
+    padding: 0 var(--c-sheet-padding) var(--c-sheet-padding);
+  }
+
+  /* A narrow window: a side sheet fills it, square, so nothing peeks around it. */
+  @media (max-width: 30rem) {
+    [data-dl='sheet'][data-size] {
+      inline-size: 100%;
+      border-radius: 0;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='sheet'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

@@ -1,0 +1,102 @@
+/*
+ * Tier 1 fundamental: Image (F15.36, Q53.3; atiya Figure). A frame of a fixed shape: it holds the picture's space
+ * before it loads, shows the sunken fill (shimmering) while it waits, and fades the picture in. A picture that can't
+ * load shows an icon and its alternative text in the frame. With a caption it's a figure; the caption is muted words
+ * under it, no rule or box. Corners round on the picture itself.
+ */
+@layer fundamentals {
+  [data-dl='image'] {
+    display: grid;
+    overflow: hidden;
+    inline-size: 100%;
+    aspect-ratio: 3 / 2;
+    background-color: var(--color-bg-sunken);
+  }
+
+  [data-dl='image'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+  [data-dl='image'][data-ratio='square'] { aspect-ratio: 1; }
+  [data-dl='image'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
+  /* Natural: the shape from width and height when given, so the frame is right before the picture arrives. */
+  [data-dl='image'][data-ratio='natural'] { aspect-ratio: var(--image-ratio, auto); }
+
+  /* `--image-radius` is the one seam a compound may set from its own wrapper: Card's media slot sets it to 0 (Q69), so a
+     picture in a card follows only the card's outer corners and stays square where it meets the body. */
+  [data-dl='image'][data-rounded] {
+    border-radius: var(--image-radius, var(--c-image-radius));
+  }
+
+  [data-dl='image'] > img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='image'][data-fit='contain'] > img {
+    object-fit: contain;
+  }
+
+  /* Waiting: the picture is transparent over the fill, which shimmers like a skeleton. */
+  [data-dl='image'][data-state='loading'] > img {
+    opacity: 0;
+  }
+
+  [data-dl='image'][data-state='loading'] {
+    background-image: linear-gradient(90deg, transparent, var(--state-hover), transparent);
+    background-size: 200% 100%;
+    /* ui-states: a few passes, then still (Q65 F17). */
+    animation: dl-image-shimmer var(--duration-shimmer) var(--easing-linear) var(--count-shimmer-passes);
+  }
+
+  @keyframes dl-image-shimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+  }
+
+  [data-dl='image'] > [data-dl-part='fallback'] {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--c-image-fallback-gap);
+    padding: var(--c-image-fallback-padding);
+    color: var(--color-text-muted);
+    text-align: center;
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='figure'] {
+    display: grid;
+    gap: var(--c-image-caption-gap);
+    margin: 0;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='figure'] > [data-dl-part='caption'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--c-image-credit-gap);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='figure'] [data-dl-part='credit'] {
+    font-size: var(--type-caption-size);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='image'] > img {
+      transition: none;
+    }
+
+    [data-dl='image'][data-state='loading'] {
+      animation: none;
+    }
+  }
+}

@@ -1,0 +1,156 @@
+/*
+ * Tier 2 compound: Pagination (F15.31, Q53.3). One wrapping row: the range and total, the pages, the size changer.
+ * Pages are quiet squares; the current page has the selected fill and is not a control. Previous and Next keep their
+ * place when hidden on the first or last page, so the numbers never shift. Under 30 rem of its own width the numbers
+ * give way to "Page 3 of 20". Sequence: two neighbour links, stacked, each with its direction over its title.
+ */
+@layer compounds {
+  [data-dl='pagination'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--c-pagination-group-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  [data-dl='pagination'] > [data-dl-part='total'] {
+    margin: 0;
+    align-self: center;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='pagination'] > [data-dl-part='pages'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-pagination-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='pagination'] :is([data-dl-part='page'], [data-dl-part='step']) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-inline-pair);
+    min-inline-size: var(--c-pagination-item);
+    min-block-size: var(--c-pagination-item);
+    padding: 0;
+    border: 0;
+    border-radius: var(--c-pagination-radius);
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    cursor: pointer;
+    /* Q65 M5: a standalone control's fill, edge and text interpolate at the default. */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      border-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='pagination'] [data-dl-part='step'] {
+    padding-inline: var(--c-pagination-step-padding-inline);
+    color: var(--color-text-link);
+  }
+
+  [data-dl='pagination'] [data-dl-part='step'][data-hidden] {
+    visibility: hidden;
+  }
+
+  [data-dl='pagination'] [data-dl-part='page'][aria-current='page'] {
+    background-color: var(--state-selected);
+    cursor: default;
+  }
+
+  @media (hover: hover) {
+    [data-dl='pagination'] :is(a, button):hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='pagination'] :is(a, button):active {
+    background-color: var(--state-pressed);
+  }
+
+  [data-dl='pagination'] :is(a, button):focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='pagination'] [data-dl-part='gap'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--c-pagination-item);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='pagination'] [data-dl-part='position'] {
+    display: none;
+    padding-inline: var(--c-pagination-step-padding-inline);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='pagination'][data-variant='compact'] :is([data-dl-part='number-item'], [data-dl-part='gap']) {
+    display: none;
+  }
+
+  [data-dl='pagination'][data-variant='compact'] [data-dl-part='position'] {
+    display: block;
+  }
+
+  /* A narrow pagination shows where you are in words instead of the numbers. */
+  @container (max-width: 30rem) {
+    [data-dl='pagination'] :is([data-dl-part='number-item'], [data-dl-part='gap']) {
+      display: none;
+    }
+
+    [data-dl='pagination'] [data-dl-part='position'] {
+      display: block;
+    }
+  }
+
+  /* Sequence: previous and next by name, stacked, each a whole-width target. */
+  [data-dl='pagination'][data-variant='sequence'] {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-pagination-group-gap);
+  }
+
+  [data-dl='pagination'] [data-dl-part='neighbour'] {
+    display: grid;
+    gap: var(--c-pagination-sequence-gap);
+    justify-items: start;
+    padding-block: var(--space-stack-item);
+    padding-inline: var(--c-pagination-step-padding-inline);
+    border-radius: var(--c-pagination-radius);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  [data-dl='pagination'] [data-dl-part='neighbour'] [data-dl-part='direction'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='pagination'] [data-dl-part='neighbour'] [data-dl-part='title'] {
+    color: var(--color-text-link);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-hairline);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='pagination'] [data-dl-part='page'][aria-current='page'] {
+      outline: var(--border-hairline) solid Highlight;
+    }
+  }
+}

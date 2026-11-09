@@ -1,0 +1,101 @@
+/*
+ * Tier 2 compound: ChatThinking (F15.67, Q57). One quiet line above a reply: the arc (or a tick once done), the words,
+ * and a chevron when there's reasoning to open (a disclosure button; the reasoning opens in place with Reveal). While working the words shimmer (a light passing along them); the
+ * words alone carry the state. No enclosure: the opened reasoning is set off by an indent and muted type.
+ */
+@layer compounds {
+  [data-dl='chat-thinking'] {
+    display: grid;
+    gap: var(--c-chat-thinking-gap);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='chat-thinking'] > [data-dl-part='line'] {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--size-target-min);
+    list-style: none;
+    cursor: default;
+  }
+
+  [data-dl='chat-thinking'] > button[data-dl-part='line'] {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  [data-dl='chat-thinking'] > button[data-dl-part='line']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* Q65 C18: when it settles (or a label changes), the new mark and words fade in where the old ones were. */
+  [data-dl='chat-thinking'] > [data-dl-part='line'] > :not([data-dl-part='chevron']) {
+    transition: opacity var(--duration-change) var(--easing-standard);
+  }
+
+  @starting-style {
+    [data-dl='chat-thinking'][data-settled] > [data-dl-part='line'] > :not([data-dl-part='chevron']) {
+      opacity: 0;
+    }
+  }
+
+  [data-dl='chat-thinking'] [data-dl-part='chevron'] {
+    display: inline-flex;
+    transition: transform var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='chat-thinking'][data-open] [data-dl-part='chevron'] {
+    transform: rotate(180deg);
+  }
+
+  [data-dl='chat-thinking'][data-state='working'] [data-dl-part='label'] {
+    background-image: linear-gradient(90deg, var(--color-text-muted) 35%, var(--color-text) 50%, var(--color-text-muted) 65%);
+    background-size: 300% 100%;
+    background-clip: text;
+    color: transparent;
+    animation: dl-thinking-shimmer var(--duration-shimmer) var(--easing-linear) infinite;
+  }
+
+  @keyframes dl-thinking-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  [data-dl='chat-thinking'] [data-dl-part='steps'] {
+    display: grid;
+    gap: var(--space-stack-pair);
+    padding-inline-start: var(--c-chat-thinking-indent);
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='chat-thinking'][data-state='working'] [data-dl-part='label'] {
+      animation: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='chat-thinking'][data-state='working'] [data-dl-part='label'] {
+    animation: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='chat-thinking'][data-state='working'] [data-dl-part='label'] {
+      background-image: none;
+      color: CanvasText;
+    }
+  }
+}

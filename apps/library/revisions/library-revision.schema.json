@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-library.local/schema/library-revision.schema.json",
+  "title": "Design Library revision",
+  "description": "Slate's revision contract (lifecycle, bounds, fingerprints) with library targets: owning source files and stable catalogue identities instead of one page and a DOM selector. The executable contract is contract.js.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "id", "name", "status", "version", "createdAt", "updatedAt", "archivedAt", "resolution", "sources", "comments"],
+  "properties": {
+    "schemaVersion": { "enum": [1, 1.1], "description": "1: R1-R3 block targets. 1.1 (F4, additive): adds element targets with an element anchor." },
+    "kind": { "const": "design-library-revision" },
+    "id": { "type": "string", "pattern": "^rev-[a-f0-9-]{36}$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "\\S" },
+    "status": { "enum": ["active", "archived"] },
+    "version": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 },
+    "createdAt": { "$ref": "#/$defs/timestamp" },
+    "updatedAt": { "$ref": "#/$defs/timestamp" },
+    "archivedAt": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/timestamp" }] },
+    "resolution": { "type": ["string", "null"], "maxLength": 20000 },
+    "sources": { "type": "array", "maxItems": 128, "items": { "$ref": "#/$defs/source" } },
+    "comments": { "type": "array", "maxItems": 1000, "items": { "$ref": "#/$defs/comment" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "active" } } },
+      "then": { "properties": { "archivedAt": { "type": "null" }, "resolution": { "type": "null" } } },
+      "else": { "properties": { "archivedAt": { "$ref": "#/$defs/timestamp" }, "resolution": { "type": "string", "minLength": 1, "pattern": "\\S" }, "comments": { "items": { "properties": { "status": { "const": "addressed" } } } } } }
+    }
+  ],
+  "$defs": {
+    "timestamp": { "type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$" },
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "sourcePath": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "Repository-relative owning source inside packages/core/ or apps/library/src/.",
+      "pattern": "^(?!.*[\\\\:%?#\\u0000-\\u001f])(?!.*/\\.)(?:packages/core/|apps/library/src/)(?:[^/]+/)*[^/]+\\.(?:tsx?|css|json|js)$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "sha256", "content"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^source-[a-f0-9-]{36}$" },
+        "path": { "$ref": "#/$defs/sourcePath" },
+        "sha256": { "$ref": "#/$defs/hash" },
+        "content": { "type": "string", "maxLength": 1000000 }
+      }
+    },
+    "heading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "text", "id"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "text": { "type": "string", "maxLength": 10000 },
+        "id": { "type": "string", "maxLength": 1024 }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["route", "page", "kind", "anchor", "identity", "sourceIds", "text", "html", "sha256", "occurrence", "matches", "headings", "before", "after"],
+      "properties": {
+        "route": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,99}$", "description": "Library page id, as in #/button." },
+        "page": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "\\S" },
+        "kind": { "enum": ["section", "heading", "prose", "token", "matrix-row", "matrix-cell", "example", "pane", "code", "prop", "a11y", "key", "built-from", "index-item", "element"] },
+        "anchor": { "type": "string", "maxLength": 1024, "pattern": "^[a-z][a-z-]*:[^\\u0000-\\u001f]+$", "description": "The block's data-rev value: stable, built from its identity at pattern level, unique within the page." },
+        "identity": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "page": { "$ref": "#/$defs/name" }, "section": { "$ref": "#/$defs/name" }, "component": { "$ref": "#/$defs/name" },
+            "story": { "$ref": "#/$defs/name" }, "context": { "$ref": "#/$defs/name" }, "token": { "$ref": "#/$defs/name" },
+            "pair": { "$ref": "#/$defs/name" }, "group": { "$ref": "#/$defs/name" }, "prop": { "$ref": "#/$defs/name" },
+            "key": { "$ref": "#/$defs/name" }, "note": { "$ref": "#/$defs/name" }, "item": { "$ref": "#/$defs/name" }
+          }
+        },
+        "sourceIds": { "type": "array", "minItems": 1, "maxItems": 16, "uniqueItems": true, "items": { "type": "string", "pattern": "^source-[a-f0-9-]{36}$" } },
+        "text": { "type": "string", "maxLength": 1000000 },
+        "html": { "type": "string", "minLength": 1, "maxLength": 1000000, "pattern": "\\S" },
+        "sha256": { "$ref": "#/$defs/hash" },
+        "occurrence": { "type": "integer", "minimum": 1, "maximum": 100000 },
+        "matches": { "type": "integer", "minimum": 1, "maximum": 100000 },
+        "headings": { "type": "array", "maxItems": 6, "items": { "$ref": "#/$defs/heading" } },
+        "before": { "type": "string", "maxLength": 1000 },
+        "after": { "type": "string", "maxLength": 1000 },
+        "element": { "$ref": "#/$defs/element" }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Schema 1.1: what a picked element is, where its source is, what it belongs to and what styles it. Only on element targets.",
+      "required": ["tag", "role", "name", "selector", "path", "box", "viewport", "htmlTruncated", "block", "component", "frames", "sourceNote", "context", "tokens", "states"],
+      "properties": {
+        "tag": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,63}$" },
+        "role": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 500, "description": "Accessible name." },
+        "selector": { "type": "string", "maxLength": 1000, "description": "Unique within the page's article (@medv/finder); empty when none was found." },
+        "path": { "type": "array", "minItems": 1, "maxItems": 16, "items": { "type": "string", "minLength": 1, "maxLength": 200 } },
+        "box": { "type": "object", "additionalProperties": false, "required": ["x", "y", "width", "height"], "properties": { "x": { "type": "integer" }, "y": { "type": "integer" }, "width": { "type": "integer" }, "height": { "type": "integer" } } },
+        "viewport": { "type": "object", "additionalProperties": false, "required": ["width", "height"], "properties": { "width": { "type": "integer", "minimum": 0 }, "height": { "type": "integer", "minimum": 0 } } },
+        "htmlTruncated": { "type": "boolean" },
+        "block": { "type": "string", "maxLength": 1000, "description": "Anchor of the nearest catalogue block, or empty." },
+        "component": { "type": "string", "maxLength": 200 },
+        "frames": {
+          "type": "array", "maxItems": 12,
+          "description": "React component stack, innermost first (react-grab; dev server only). Line and column are 1-based.",
+          "items": { "type": "object", "additionalProperties": false, "required": ["component", "file", "line", "column"], "properties": {
+            "component": { "type": "string", "maxLength": 200 },
+            "file": { "type": "string", "minLength": 1, "maxLength": 1024, "description": "Repository-relative path, or a base name when it was ambiguous." },
+            "line": { "type": "integer", "minimum": 1 },
+            "column": { "type": "integer", "minimum": 1 }
+          } }
+        },
+        "sourceNote": { "type": "string", "maxLength": 500 },
+        "context": { "type": "object", "additionalProperties": false, "required": ["scheme", "contrast", "specimen"], "properties": { "scheme": { "type": "string", "maxLength": 50 }, "contrast": { "type": "string", "maxLength": 50 }, "specimen": { "type": "boolean" } } },
+        "tokens": {
+          "type": "array", "maxItems": 48,
+          "items": { "type": "object", "additionalProperties": false, "required": ["property", "token", "value", "from"], "properties": {
+            "property": { "type": "string", "minLength": 1, "maxLength": 100 },
+            "token": { "type": "string", "pattern": "^--[A-Za-z0-9-]{1,100}$" },
+            "value": { "type": "string", "maxLength": 200 },
+            "from": { "type": "string", "minLength": 1, "maxLength": 200 }
+          } }
+        },
+        "states": { "type": "array", "maxItems": 16, "items": { "type": "string", "minLength": 1, "maxLength": 100 } }
+      }
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 500, "pattern": "\\S" },
+    "comment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "status", "createdAt", "updatedAt", "targets"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^comment-[a-f0-9-]{36}$" },
+        "text": { "type": "string", "minLength": 1, "maxLength": 20000, "pattern": "\\S" },
+        "status": { "enum": ["open", "addressed"] },
+        "createdAt": { "$ref": "#/$defs/timestamp" },
+        "updatedAt": { "$ref": "#/$defs/timestamp" },
+        "targets": { "type": "array", "minItems": 1, "maxItems": 100, "items": { "$ref": "#/$defs/target" } }
+      }
+    }
+  }
+}

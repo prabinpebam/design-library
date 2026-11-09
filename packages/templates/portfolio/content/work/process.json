@@ -1,0 +1,71 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "process",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Work",
+            "href": "/work"
+          },
+          {
+            "label": "Tidewater",
+            "href": "/project"
+          },
+          {
+            "label": "Process"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Tidewater · Process",
+        "title": "How we got there",
+        "lead": "Twelve weeks, forty interviews and three prototypes.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "Weeks 1–3: listening"
+          },
+          {
+            "kind": "text",
+            "text": "Forty interviews with shift workers about the week before payday."
+          },
+          {
+            "kind": "picture",
+            "picture": "sand",
+            "caption": "The wall of quotes we sorted by moment."
+          },
+          {
+            "kind": "heading",
+            "text": "Weeks 4–9: three prototypes"
+          },
+          {
+            "kind": "text",
+            "text": "Each tested with twelve people; the second won on trust."
+          },
+          {
+            "kind": "heading",
+            "text": "Weeks 10–12: shipping"
+          },
+          {
+            "kind": "text",
+            "text": "Design and engineering in one room until launch."
+          }
+        ]
+      }
+    ]
+  }
+}

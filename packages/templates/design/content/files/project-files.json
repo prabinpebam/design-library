@@ -1,0 +1,94 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "project-files",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Kitewing app"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Project",
+        "title": "Kitewing app",
+        "lead": "12 files · 4 people",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Files",
+        "max": 3,
+        "items": [
+          {
+            "eyebrow": "Kitewing app",
+            "title": "Sign-in flow",
+            "description": "Edited 2 hours ago by Ama Mensah",
+            "href": "/editor"
+          },
+          {
+            "eyebrow": "Kitewing app",
+            "title": "Trip cards",
+            "description": "Edited yesterday by Jonas Lind",
+            "href": "/editor"
+          }
+        ]
+      },
+      {
+        "type": "people",
+        "heading": "People",
+        "items": [
+          {
+            "name": "Ama Mensah",
+            "role": "Can edit"
+          },
+          {
+            "name": "Jonas Lind",
+            "role": "Can edit"
+          },
+          {
+            "name": "Keiko Arai",
+            "role": "Can view"
+          }
+        ]
+      }
+    ]
+  }
+}

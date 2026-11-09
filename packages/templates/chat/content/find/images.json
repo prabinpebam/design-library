@@ -1,0 +1,51 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "images",
+  "contentVersion": 1,
+  "settings": {
+    "current": "images"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "gallery",
+        "heading": "Images",
+        "label": "Images made in chats",
+        "layout": "quilted",
+        "items": [
+          "tarnMorning",
+          "tarnDusk",
+          "garden",
+          "lisbon",
+          "card"
+        ]
+      }
+    ]
+  }
+}

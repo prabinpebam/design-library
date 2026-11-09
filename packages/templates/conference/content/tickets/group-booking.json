@@ -1,0 +1,41 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "group-booking",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Book for a team",
+        "intro": "Ten or more tickets: 15 % off, one invoice.",
+        "fields": [
+          {
+            "id": "company",
+            "label": "Company",
+            "kind": "text"
+          },
+          {
+            "id": "count",
+            "label": "How many people",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          }
+        ],
+        "submit": "Ask for a group price",
+        "sent": "Thanks. We reply with a quote within two working days."
+      }
+    ]
+  }
+}

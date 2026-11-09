@@ -1,0 +1,49 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "issue",
+  "contentVersion": 1,
+  "record": {
+    "id": "kw-142",
+    "description": [
+      "As a traveller, I want my next trips on the home screen, so I can see what’s coming without searching.",
+      "Show up to three upcoming trips as cards, soonest first, each with its place, dates and a picture. With no trips, show the empty state from KW-137."
+    ],
+    "checklist": [
+      {
+        "id": "a",
+        "label": "Cards follow the design file",
+        "done": true
+      },
+      {
+        "id": "b",
+        "label": "Soonest trip first",
+        "done": true
+      },
+      {
+        "id": "c",
+        "label": "Works with no pictures",
+        "done": false
+      },
+      {
+        "id": "d",
+        "label": "Screen reader reads place, then dates",
+        "done": false
+      }
+    ],
+    "reporter": "Keiko Arai",
+    "created": "2 November 2026",
+    "comments": [
+      {
+        "name": "Jonas Lind",
+        "when": "Yesterday",
+        "text": "The design has three cards; should a fourth trip show a “See all” link?"
+      },
+      {
+        "name": "Ama Mensah",
+        "when": "Today",
+        "text": "Yes, I’ll add it under the cards. It goes to the trips list."
+      }
+    ]
+  }
+}

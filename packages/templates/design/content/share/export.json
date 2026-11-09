@@ -1,0 +1,78 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "export",
+  "contentVersion": 1,
+  "settings": {
+    "current": "editor",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Export",
+        "intro": "Every frame of “Sign-in flow”.",
+        "fields": [
+          {
+            "id": "format",
+            "label": "Format",
+            "kind": "choice",
+            "options": [
+              "PNG",
+              "JPG",
+              "SVG",
+              "PDF"
+            ]
+          },
+          {
+            "id": "scale",
+            "label": "Scale",
+            "kind": "choice",
+            "options": [
+              "1×",
+              "2×",
+              "3×"
+            ]
+          }
+        ],
+        "submit": "Export 3 frames",
+        "sent": "Exporting isn’t part of this example.",
+        "links": [
+          {
+            "label": "Back to sharing",
+            "href": "/share"
+          }
+        ]
+      }
+    ]
+  }
+}

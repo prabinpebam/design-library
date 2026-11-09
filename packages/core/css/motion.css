@@ -1,0 +1,133 @@
+/*
+ * Tier 0: shared presence motion (Q65 S4, C7, C8). A popup a component opens in the top layer opts in by marking
+ * itself `data-presence="popup"` (lists, menus, popovers, pickers) or `data-presence="hint"` (tooltips), as text
+ * entries opt into the focus ring with `data-dl-ring`. The component keeps its own look and its own closed rule
+ * (`display: none` while `hidden` or not `:popover-open`); this adds only how it arrives and leaves.
+ *
+ * Popup: grows from motion.enter-scale at the side it opens from and fades in over change (easing enter); leaves one
+ * step shorter over quick (easing exit), with display and overlay held for the fade (allow-discrete). Reduced motion:
+ * the scale is 1, so it only fades. Hint: fades in and out over quick, no growth.
+ */
+@layer base {
+  [data-presence='popup'] {
+    transform-origin: top center;
+    transition:
+      opacity var(--duration-change) var(--easing-enter),
+      scale var(--duration-change) var(--easing-enter),
+      overlay var(--duration-change) var(--easing-enter) allow-discrete,
+      display var(--duration-change) var(--easing-enter) allow-discrete;
+  }
+
+  [data-presence='popup']:is([data-placement='above'], [data-side='top']) {
+    transform-origin: bottom center;
+  }
+
+  [data-presence='popup'][data-side='start'] {
+    transform-origin: center right;
+  }
+
+  [data-presence='popup'][data-side='end'] {
+    transform-origin: center left;
+  }
+
+  [data-presence='popup'][data-side='start']:dir(rtl) {
+    transform-origin: center left;
+  }
+
+  [data-presence='popup'][data-side='end']:dir(rtl) {
+    transform-origin: center right;
+  }
+
+  [data-presence='popup']:is([hidden], :not(:popover-open)) {
+    opacity: 0;
+    scale: var(--motion-enter-scale);
+    transition:
+      opacity var(--duration-quick) var(--easing-exit),
+      scale var(--duration-quick) var(--easing-exit),
+      overlay var(--duration-quick) var(--easing-exit) allow-discrete,
+      display var(--duration-quick) var(--easing-exit) allow-discrete;
+  }
+
+  [data-presence='hint'] {
+    transition:
+      opacity var(--duration-quick) var(--easing-standard),
+      overlay var(--duration-quick) allow-discrete,
+      display var(--duration-quick) allow-discrete;
+  }
+
+  [data-presence='hint']:is([hidden], :not(:popover-open)) {
+    opacity: 0;
+  }
+
+  /*
+   * Item (C11, C15): a member of a list that moves (useFlipList). One that arrives after the list's first render
+   * fades in over change; one removed is kept a moment by useExiting, marked data-leaving, and fades out where it is
+   * over quick; then the items after it travel up into its place (the collapse is their slide, not a height animation).
+   */
+  [data-presence='item'] {
+    transition: opacity var(--duration-change) var(--easing-enter);
+  }
+
+  [data-presence='item'][data-leaving] {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-quick) var(--easing-exit);
+  }
+
+  @starting-style {
+    [data-flip-settled] [data-presence='item'] {
+      opacity: 0;
+    }
+  }
+
+  /* Suspended (Q65 P2, Z18): a global switch (theme, contrast, space, shape) lands in one frame; no transition starts
+     while it is applied (behaviour/motion.ts `suspendMotion`). Loops keep running. */
+  [data-motion='suspend'] *,
+  [data-motion='suspend'] *::before,
+  [data-motion='suspend'] *::after {
+    transition: none !important;
+  }
+
+  /*
+   * Shared element (Q65 P7, C10): viewTransition() in behaviour/motion.ts. Named elements travel over the shared role;
+   * everything else cross-fades over change. Reduced motion: no names are set and shared is 0, so it only fades. The
+   * overlay never takes the pointer (MA6): a click during the change reaches the page.
+   */
+  ::view-transition {
+    pointer-events: none;
+  }
+
+  ::view-transition-group(*) {
+    animation-duration: var(--duration-shared);
+    animation-timing-function: var(--easing-standard);
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: var(--duration-change);
+  }
+
+  /* Rounded (Q75): a named element seen with round corners (its own, or a clipping card's) travels clipped by its group,
+     whose radius viewTransition() eases from the old corners to the new ones; both views fill the group, as the
+     element's own object-fit would. */
+  ::view-transition-group(*.dl-rounded) {
+    overflow: clip;
+  }
+
+  ::view-transition-old(*.dl-rounded),
+  ::view-transition-new(*.dl-rounded) {
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  @starting-style {
+    [data-presence='popup'] {
+      opacity: 0;
+      scale: var(--motion-enter-scale);
+    }
+
+    [data-presence='hint'] {
+      opacity: 0;
+    }
+  }
+}

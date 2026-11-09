@@ -1,0 +1,183 @@
+/*
+ * Tier 1 feedback: Skeleton and the bar form of Progress (the compact arc lives with the controls it sits in).
+ * Semantic tokens and each component's own c.* group only. Nothing here moves layout: a skeleton takes the box its
+ * content will take, and the bar reserves its own thickness whether it's full, partial or travelling.
+ */
+@layer fundamentals {
+  /* Progress, bar form: a thin track, a fill to the known share, or a travelling segment when the total isn't known. */
+  [data-dl='progress'][data-form='bar'] {
+    display: block;
+    inline-size: 100%;
+    block-size: var(--c-progress-bar-thickness);
+  }
+
+  [data-dl='progress'][data-form='bar'] svg {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    stroke-width: 2;
+  }
+
+  [data-dl='progress'][data-form='bar'] [data-dl-part='track'] {
+    stroke: var(--c-progress-bar-track);
+  }
+
+  [data-dl='progress'][data-form='bar'] [data-dl-part='fill'] {
+    stroke: var(--c-progress-bar-fill);
+  }
+
+  /* Q65 C20 (K-18): a known share grows by transform, at an even pace over the move role, so each step flows into the
+     next and a quick run of updates retargets; reduced motion: it steps. */
+  [data-dl='progress'][data-form='bar'][data-known] [data-dl-part='fill'] {
+    transform-origin: 0 0;
+    scale: var(--progress-share) 1;
+    transition: scale var(--duration-move) var(--easing-linear);
+  }
+
+  /* Labelled bar: the label at the start and the value at the end above the bar; the bar keeps its own thickness. */
+  [data-dl='progress'][data-form='bar'][data-labelled] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-progress-label-gap);
+    block-size: auto;
+  }
+
+  [data-dl='progress'][data-labelled] [data-dl-part='head'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: var(--c-progress-head-gap);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='progress'][data-labelled] [data-dl-part='amount'] {
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='progress'][data-labelled] [data-dl-part='rail'] {
+    display: block;
+    block-size: var(--c-progress-bar-thickness);
+  }
+
+  /* Delayed: invisible for the indicator delay after it mounts, then shown; timing, not motion, so reduced motion keeps it. */
+  [data-dl='progress'][data-delayed] {
+    transition: visibility 0s var(--duration-indicator-delay);
+  }
+
+  @starting-style {
+    [data-dl='progress'][data-delayed] {
+      visibility: hidden;
+    }
+  }
+
+  [data-dl='progress'][data-form='bar']:not([data-known]) [data-dl-part='fill'] {
+    stroke-dasharray: 30 70;
+    animation: dl-progress-sweep var(--c-progress-bar-sweep) var(--easing-standard) infinite;
+  }
+
+  @keyframes dl-progress-sweep {
+    from {
+      stroke-dashoffset: 30;
+    }
+    to {
+      stroke-dashoffset: -100;
+    }
+  }
+
+  /* Skeleton: shapes in the content's own box; a light passes across a few times, then holds still. */
+  [data-dl='skeleton'] {
+    --dl-skeleton-surface: linear-gradient(
+      90deg,
+      var(--c-skeleton-fill) 0%,
+      var(--c-skeleton-fill) 40%,
+      var(--c-skeleton-highlight) 50%,
+      var(--c-skeleton-fill) 60%,
+      var(--c-skeleton-fill) 100%
+    );
+    display: block;
+  }
+
+  [data-dl='skeleton'][data-shape='text'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+    inline-size: 100%;
+  }
+
+  [data-dl='skeleton'] [data-dl-part='line'],
+  [data-dl='skeleton'][data-shape='block'],
+  [data-dl='skeleton'][data-shape='circle'] {
+    background: var(--dl-skeleton-surface);
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    border-radius: var(--c-skeleton-radius);
+    animation: dl-shimmer var(--duration-shimmer) var(--easing-standard) var(--count-shimmer-passes);
+  }
+
+  [data-dl='skeleton'] [data-dl-part='line'] {
+    display: block;
+    block-size: var(--c-skeleton-line);
+  }
+
+  [data-dl='skeleton'] [data-dl-part='line'][data-last] {
+    inline-size: 60%;
+  }
+
+  [data-dl='skeleton'][data-shape='block'] {
+    inline-size: 100%;
+    block-size: 100%;
+    min-block-size: var(--size-control-lg);
+  }
+
+  [data-dl='skeleton'][data-shape='circle'] {
+    flex: none;
+    border-radius: var(--radius-full);
+    inline-size: var(--size-control-md);
+    block-size: var(--size-control-md);
+  }
+
+  [data-dl='skeleton'][data-shape='circle'][data-size='sm'] {
+    inline-size: var(--size-icon-lg);
+    block-size: var(--size-icon-lg);
+  }
+
+  [data-dl='skeleton'][data-shape='circle'][data-size='lg'] {
+    inline-size: var(--size-specimen);
+    block-size: var(--size-specimen);
+  }
+
+  [data-dl='skeleton'][data-still] [data-dl-part='line'],
+  [data-dl='skeleton'][data-still][data-shape='block'],
+  [data-dl='skeleton'][data-still][data-shape='circle'] {
+    animation: none;
+  }
+
+  @keyframes dl-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: 0% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='skeleton'] [data-dl-part='line'],
+    [data-dl='skeleton'][data-shape='block'],
+    [data-dl='skeleton'][data-shape='circle'],
+    [data-dl='progress'][data-form='bar'] [data-dl-part='fill'] {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='skeleton'] [data-dl-part='line'],
+  [data-motion='reduce'] [data-dl='skeleton'][data-shape='block'],
+  [data-motion='reduce'] [data-dl='skeleton'][data-shape='circle'],
+  [data-motion='reduce'] [data-dl='progress'][data-form='bar'] [data-dl-part='fill'] {
+    animation: none;
+    transition: none;
+  }
+}

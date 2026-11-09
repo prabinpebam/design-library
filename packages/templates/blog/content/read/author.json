@@ -1,0 +1,44 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "author",
+  "contentVersion": 1,
+  "settings": {
+    "current": "author"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "person",
+        "name": "Mina Haddad",
+        "role": "Design systems lead, writing since 2019",
+        "bio": [
+          "Mina builds component libraries and writes about the decisions behind them.",
+          "She lives in Leeds and walks the Dales at weekends."
+        ]
+      },
+      {
+        "type": "posts",
+        "heading": "Articles by Mina",
+        "items": [
+          {
+            "eyebrow": "Design systems",
+            "title": "One gap for every list of rows",
+            "description": "Why filled rows need space between them, and how one token keeps it everywhere.",
+            "meta": "8 November 2026 · 5 min read",
+            "picture": "meadow",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Accessibility",
+            "title": "Focus rings that never overlap",
+            "description": "Drawing the ring inside the box so tight layouts stay tidy.",
+            "meta": "2 November 2026 · 7 min read",
+            "picture": "frost",
+            "href": "/article"
+          }
+        ]
+      }
+    ]
+  }
+}

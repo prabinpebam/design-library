@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "services",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Services",
+        "title": "Freight that arrives when you said it would",
+        "lead": "Four ways to move goods, one planner who answers your calls.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "What we move and how",
+        "max": 2,
+        "items": [
+          {
+            "eyebrow": "Ocean",
+            "title": "Ocean freight",
+            "description": "Full and shared containers between 140 ports, with customs at both ends.",
+            "href": "/service",
+            "picture": "harbour"
+          },
+          {
+            "eyebrow": "Air",
+            "title": "Air freight",
+            "description": "Next-flight-out for urgent parts; consolidated air for the rest.",
+            "href": "/service",
+            "picture": "frost"
+          },
+          {
+            "eyebrow": "Road",
+            "title": "Road and last mile",
+            "description": "Pallets and parcels across Europe, tracked to the door.",
+            "href": "/service",
+            "picture": "sand"
+          },
+          {
+            "eyebrow": "Customs",
+            "title": "Customs clearance",
+            "description": "Declarations filed, duties paid, release confirmed.",
+            "href": "/service",
+            "picture": "meadow"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Not sure which fits?",
+        "lead": "Tell a planner what you’re moving; they’ll suggest a route and a price.",
+        "actions": [
+          {
+            "label": "Get a quote",
+            "primary": true,
+            "says": "Quotes aren’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

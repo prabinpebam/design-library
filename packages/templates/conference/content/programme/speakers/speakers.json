@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "speakers",
+  "contentVersion": 1,
+  "settings": {
+    "current": "speaker"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Speakers",
+        "title": "24 people who build interfaces",
+        "lead": "Designers, engineers and researchers from 14 countries.",
+        "layout": "stacked"
+      },
+      {
+        "type": "people",
+        "heading": "Keynotes",
+        "items": [
+          {
+            "name": "Ama Mensah",
+            "role": "Design lead, Kitewing",
+            "href": "/speaker"
+          },
+          {
+            "name": "Jonas Lind",
+            "role": "Engineer, Tidewater",
+            "href": "/speaker"
+          }
+        ]
+      },
+      {
+        "type": "people",
+        "heading": "Talks",
+        "items": [
+          {
+            "name": "Keiko Arai",
+            "role": "Researcher, City of Porto",
+            "href": "/speaker"
+          },
+          {
+            "name": "Ravi Patel",
+            "role": "Accessibility lead, Meadow",
+            "href": "/speaker"
+          },
+          {
+            "name": "Lena Novak",
+            "role": "Design systems, Kiln",
+            "href": "/speaker"
+          }
+        ]
+      }
+    ]
+  }
+}

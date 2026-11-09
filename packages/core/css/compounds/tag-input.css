@@ -1,0 +1,95 @@
+/*
+ * Tier 2 compound: TagInput (F15.15). One field box holding the tags and the text input, wrapping onto more lines as
+ * tags are added. The box's block padding centres a chip in a one-line box of the field height; the focus ring is on
+ * the box, never clipped.
+ */
+@layer compounds {
+  [data-dl='tag-input'] {
+    --tag-input-size: var(--c-field-size);
+    --tag-input-chip: var(--c-chip-size);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-tag-input-gap);
+    min-block-size: var(--tag-input-size);
+    padding-block: calc((var(--tag-input-size) - var(--tag-input-chip)) / 2 - var(--c-field-border-width));
+    padding-inline: var(--c-tag-input-padding-start) var(--c-tag-input-padding-end);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    cursor: text;
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='tag-input'][data-size='s'] {
+    --tag-input-size: var(--c-field-size-s);
+    --tag-input-chip: var(--c-chip-size-s);
+
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='tag-input'][data-size='l'] {
+    --tag-input-size: var(--c-field-size-l);
+    --tag-input-chip: var(--c-chip-size-l);
+  }
+
+  [data-dl='tag-input'][data-invalid] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='tag-input'][data-readonly] {
+    border-color: var(--c-field-readonly-border);
+    cursor: default;
+  }
+
+  [data-dl='tag-input'][data-disabled] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-disabled);
+    cursor: default;
+  }
+
+  /* The tags flow as part of the box's own wrap, so the input follows the last tag on its line. */
+  [data-dl='tag-input'] > [data-dl-part='tags'] {
+    display: contents;
+    list-style: none;
+  }
+
+  [data-dl='tag-input'] > [data-dl-part='tags'] > li {
+    display: flex;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  [data-dl='tag-input'] > input {
+    flex: 1 1 var(--c-tag-input-min-input);
+    min-inline-size: var(--c-tag-input-min-input);
+    block-size: var(--tag-input-chip);
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    outline: none;
+  }
+
+  [data-dl='tag-input'] > input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='tag-input'] > [data-dl='button'] {
+    flex: none;
+  }
+
+  [data-dl='tag-input']:not(:has(> [data-dl-part='tags'])) {
+    padding-inline-start: var(--c-field-padding-inline);
+  }
+
+  [data-dl='tag-input'] > [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

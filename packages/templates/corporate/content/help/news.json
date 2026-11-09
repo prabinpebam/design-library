@@ -1,0 +1,51 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "news",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "News",
+        "title": "What’s new at Northwind",
+        "lead": "Routes, offices and the people behind them.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "items": [
+          {
+            "eyebrow": "Routes",
+            "title": "A weekly sailing to Lagos from March",
+            "description": "Direct from Rotterdam in 14 days.",
+            "meta": "2 February 2027",
+            "href": "/news-article",
+            "picture": "harbour"
+          },
+          {
+            "eyebrow": "Offices",
+            "title": "Singapore moves to a bigger home",
+            "description": "Room for 40 more planners near the port.",
+            "meta": "18 January 2027",
+            "href": "/news-article",
+            "picture": "dusk"
+          },
+          {
+            "eyebrow": "People",
+            "title": "Meet our new head of customs",
+            "description": "Twenty years at the Dutch border, now on your side.",
+            "meta": "9 January 2027",
+            "href": "/news-article"
+          }
+        ],
+        "page": 1,
+        "pages": 3,
+        "pagingLabel": "News pages"
+      }
+    ]
+  }
+}

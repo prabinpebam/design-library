@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "cfp",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Call for papers · closes 1 November",
+        "title": "Speak at Interface Days 2027",
+        "lead": "We’re looking for 24 talks about interfaces that work for the people who use them.",
+        "layout": "stacked",
+        "actions": [
+          {
+            "label": "Submit a talk",
+            "primary": true,
+            "says": "Use Your talk from the footer of this example."
+          }
+        ]
+      },
+      {
+        "type": "points",
+        "heading": "We pay",
+        "items": [
+          "Travel and three nights in Lisbon",
+          "A €500 fee for every talk",
+          "A coach to rehearse with, if you want one"
+        ]
+      },
+      {
+        "type": "questions",
+        "heading": "Questions",
+        "items": [
+          {
+            "title": "Have I got to be an expert?",
+            "text": "No. First-time speakers make up a third of the programme."
+          }
+        ]
+      }
+    ]
+  }
+}

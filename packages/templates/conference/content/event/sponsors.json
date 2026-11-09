@@ -1,0 +1,94 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "sponsors",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sponsors"
+  },
+  "regions": {
+    "intro": [
+      {
+        "type": "hero",
+        "eyebrow": "Sponsors",
+        "title": "The companies behind Interface Days",
+        "lead": "Their support keeps student tickets at €120, pays every speaker and opens the workshops to people who couldn’t travel otherwise.",
+        "layout": "stacked"
+      },
+      {
+        "type": "conference.countdown",
+        "label": "Doors open in",
+        "until": "2027-03-11T09:00:00+00:00",
+        "passed": "The conference has started: thank you to everyone here."
+      },
+      {
+        "type": "cta",
+        "title": "Become a sponsor",
+        "lead": "Three levels, from a supporter’s tile to the lead partner’s evening. Write to us before 31 January.",
+        "actions": [
+          {
+            "label": "Ask for the sponsor pack",
+            "primary": true,
+            "says": "Ask for the sponsor pack isn’t part of this example."
+          }
+        ]
+      }
+    ],
+    "levels": [
+      {
+        "type": "conference.sponsor-wall",
+        "levels": [
+          {
+            "id": "lead",
+            "title": "Lead partner",
+            "size": "l",
+            "sponsors": [
+              {
+                "name": "Northwind Freight",
+                "note": "Supports every student ticket"
+              }
+            ]
+          },
+          {
+            "id": "partners",
+            "title": "Partners",
+            "size": "m",
+            "sponsors": [
+              {
+                "name": "Kitewing",
+                "note": "The Thursday evening party"
+              },
+              {
+                "name": "Larchfield Type",
+                "note": "The workshops"
+              },
+              {
+                "name": "Tarn Studio",
+                "note": "Captions for every talk"
+              }
+            ]
+          },
+          {
+            "id": "supporters",
+            "title": "Supporters",
+            "size": "s",
+            "sponsors": [
+              {
+                "name": "Harbour Coffee"
+              },
+              {
+                "name": "Meadow Print"
+              },
+              {
+                "name": "Dune Audio"
+              },
+              {
+                "name": "Frost Labs"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

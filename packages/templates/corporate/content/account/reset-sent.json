@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "reset-sent",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sign-in",
+    "width": "reading",
+    "state": "done"
+  }
+}

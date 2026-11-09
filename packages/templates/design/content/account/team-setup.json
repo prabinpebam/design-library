@@ -1,0 +1,69 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "team-setup",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Set up a team",
+        "intro": "Step 2 of 2. Teams share projects and a library.",
+        "fields": [
+          {
+            "id": "team",
+            "label": "Team name",
+            "kind": "text"
+          },
+          {
+            "id": "invite",
+            "label": "Invite people",
+            "kind": "text",
+            "optional": true,
+            "hint": "Email addresses, separated by commas."
+          }
+        ],
+        "submit": "Create team",
+        "sent": "Team created.",
+        "links": [
+          {
+            "label": "Skip for now",
+            "href": "/files"
+          }
+        ]
+      }
+    ]
+  }
+}

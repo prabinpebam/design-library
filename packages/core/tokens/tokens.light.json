@@ -1,0 +1,293 @@
+{
+  "color": {
+    "text": {
+      "$type": "color",
+      "$value": "{p.base.900}",
+      "$description": "Body text on every surface"
+    },
+    "text-muted": {
+      "$type": "color",
+      "$value": "{p.standard.text-muted}",
+      "$description": "Secondary text: hints, captions, metadata"
+    },
+    "text-disabled": {
+      "$type": "color",
+      "$value": "{p.base.400}",
+      "$description": "Disabled text (a colour, never opacity)"
+    },
+    "text-on-accent": {
+      "$type": "color",
+      "$value": "{p.base.0}",
+      "$description": "Text and icons on an accent fill"
+    },
+    "text-link": {
+      "$type": "color",
+      "$value": "{p.accent.600}",
+      "$description": "Links in running text"
+    },
+    "bg": {
+      "$type": "color",
+      "$value": "{p.base.25}",
+      "$description": "The page canvas"
+    },
+    "bg-raised": {
+      "$type": "color",
+      "$value": "{p.base.0}",
+      "$description": "Fields, cards, dialogs"
+    },
+    "bg-tint": {
+      "$type": "color",
+      "$value": "{p.base.100}",
+      "$description": "A neutral fill one clear step from the page in both themes (lighter in dark, darker in light): a person's chat bubble (F15.65). Text on it holds 4.5:1"
+    },
+    "bg-sunken": {
+      "$type": "color",
+      "$value": "{p.base.50}",
+      "$description": "Wells, code blocks, navigation region"
+    },
+    "border-group": {
+      "$type": "color",
+      "$value": "{color.bg-sunken}",
+      "$description": "The outline of a group its fill already marks (a segmented control): the fill’s own tone, so it draws nothing until more contrast raises it"
+    },
+    "bg-overlay": {
+      "$type": "color",
+      "$value": "{p.alpha.base-50}",
+      "$description": "Scrim behind dialogs"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{p.standard.border}",
+      "$description": "Outlines that separate where space and tone cannot: soft in standard contrast, where fills do most of the separating (Q71)"
+    },
+    "border-strong": {
+      "$type": "color",
+      "$value": "{p.standard.border-strong}",
+      "$description": "Outlines that are the control’s only mark: unchecked boxes and radios, switch tracks, slider rails (3:1 non-text)"
+    },
+    "border-control": {
+      "$type": "color",
+      "$value": "{p.standard.border-control}",
+      "$description": "Outlines of boxed controls their fill already marks (fields, selects, default buttons, chips): soft in standard contrast, text strength in more contrast (Q71)"
+    },
+    "bg-control": {
+      "$type": "color",
+      "$value": "{p.standard.bg-control}",
+      "$description": "The fill of boxed controls (fields, selects, default buttons, chips): a subtle step from every surface (page, raised, sunken), so the fill, not the outline, tells a control from its surface. More contrast: the raised surface with a strong outline (Q71)"
+    },
+    "focus": {
+      "$type": "color",
+      "$value": "{p.accent.500}",
+      "$description": "The focus ring"
+    },
+    "accent": {
+      "$type": "color",
+      "$value": "{p.accent.500}",
+      "$description": "Primary actions, selected and checked fills"
+    },
+    "accent-hover": {
+      "$type": "color",
+      "$value": "{p.accent.600}",
+      "$description": "Primary actions, hovered"
+    },
+    "accent-pressed": {
+      "$type": "color",
+      "$value": "{p.accent.700}",
+      "$description": "Primary actions, pressed"
+    },
+    "accent-subtle": {
+      "$type": "color",
+      "$value": "{p.accent.100}",
+      "$description": "Selected backgrounds"
+    },
+    "status": {
+      "$description": "Functional colours: one meaning each, never decoration. fg for text and icons on any surface, bg for a tint behind a message, border at 3:1 on the canvas, fill for solid emphasis and on-fill for text on it.",
+      "info": {
+        "fg": {
+          "$type": "color",
+          "$value": "{p.info.700}",
+          "$description": "Information: text and icons"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{p.info.100}",
+          "$description": "Information: background tint behind a message"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{p.info.600}",
+          "$description": "Information: outline, 3:1 on the canvas"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{p.info.700}",
+          "$description": "Information: solid emphasis fill"
+        },
+        "on-fill": {
+          "$type": "color",
+          "$value": "{p.base.0}",
+          "$description": "Information: text and icons on the solid fill"
+        }
+      },
+      "success": {
+        "fg": {
+          "$type": "color",
+          "$value": "{p.success.700}",
+          "$description": "Success (also good, positive, done): text and icons"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{p.success.100}",
+          "$description": "Success (also good, positive, done): background tint behind a message"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{p.success.600}",
+          "$description": "Success (also good, positive, done): outline, 3:1 on the canvas"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{p.success.700}",
+          "$description": "Success (also good, positive, done): solid emphasis fill"
+        },
+        "on-fill": {
+          "$type": "color",
+          "$value": "{p.base.0}",
+          "$description": "Success (also good, positive, done): text and icons on the solid fill"
+        }
+      },
+      "warning": {
+        "fg": {
+          "$type": "color",
+          "$value": "{p.warning.800}",
+          "$description": "Warning (also alert, caution): text and icons"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{p.warning.100}",
+          "$description": "Warning (also alert, caution): background tint behind a message"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{p.warning.600}",
+          "$description": "Warning (also alert, caution): outline, 3:1 on the canvas"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{p.warning.800}",
+          "$description": "Warning (also alert, caution): solid emphasis fill"
+        },
+        "on-fill": {
+          "$type": "color",
+          "$value": "{p.base.0}",
+          "$description": "Warning (also alert, caution): text and icons on the solid fill"
+        }
+      },
+      "danger": {
+        "fg": {
+          "$type": "color",
+          "$value": "{p.danger.600}",
+          "$description": "Danger (also bad, negative, error, destructive): text and icons"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{p.danger.100}",
+          "$description": "Danger (also bad, negative, error, destructive): background tint behind a message"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{p.danger.600}",
+          "$description": "Danger (also bad, negative, error, destructive): outline, 3:1 on the canvas"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{p.danger.600}",
+          "$description": "Danger (also bad, negative, error, destructive): solid emphasis fill"
+        },
+        "on-fill": {
+          "$type": "color",
+          "$value": "{p.base.0}",
+          "$description": "Danger (also bad, negative, error, destructive): text and icons on the solid fill"
+        }
+      },
+      "neutral": {
+        "fg": {
+          "$type": "color",
+          "$value": "{color.text-muted}",
+          "$description": "Neutral status (no judgement: draft, inactive): text and icons; follows muted text, so more contrast raises it"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{p.base.100}",
+          "$description": "Neutral status: background tint behind a message"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{p.base.600}",
+          "$description": "Neutral status: outline, 3:1 on the canvas"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{p.base.600}",
+          "$description": "Neutral status: solid emphasis fill"
+        },
+        "on-fill": {
+          "$type": "color",
+          "$value": "{p.base.0}",
+          "$description": "Neutral status: text and icons on the solid fill"
+        }
+      }
+    },
+    "shadow": {
+      "$type": "color",
+      "$value": "{p.alpha.base-shadow}",
+      "$description": "Shadow colour for floating layers"
+    }
+  },
+  "state": {
+    "hover": {
+      "$type": "color",
+      "$value": "{p.alpha.base-6}",
+      "$description": "Hover layer over any surface"
+    },
+    "pressed": {
+      "$type": "color",
+      "$value": "{p.alpha.base-12}",
+      "$description": "Pressed layer over any surface"
+    },
+    "selected": {
+      "$type": "color",
+      "$value": "{p.alpha.accent-14}",
+      "$description": "Selected layer over any surface"
+    }
+  },
+  "p": {
+    "standard": {
+      "text-muted": {
+        "$type": "color",
+        "$value": "{p.base.600}",
+        "$description": "Private. Standard-contrast secondary text, read by color.text-muted and the standard-contrast context"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{p.base.100}",
+        "$description": "Private. Standard-contrast outline, read by color.border and the standard-contrast context"
+      },
+      "border-strong": {
+        "$type": "color",
+        "$value": "{p.base.500}",
+        "$description": "Private. Standard-contrast control outline, read by color.border-strong and the standard-contrast context"
+      },
+      "border-control": {
+        "$type": "color",
+        "$value": "{p.base.200}",
+        "$description": "Private. Standard-contrast outline of a filled control, read by color.border-control and the standard-contrast context"
+      },
+      "bg-control": {
+        "$type": "color",
+        "$value": "{p.base.100}",
+        "$description": "Private. Standard-contrast control fill, read by color.bg-control and the standard-contrast context"
+      }
+    }
+  }
+}

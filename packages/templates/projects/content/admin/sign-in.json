@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "sign-in",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Sign in",
+        "intro": "To your team’s projects.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Work email address",
+            "kind": "email"
+          },
+          {
+            "id": "password",
+            "label": "Password",
+            "kind": "password"
+          }
+        ],
+        "submit": "Sign in",
+        "sent": "Signed in.",
+        "links": [
+          {
+            "label": "New team? Create a project",
+            "href": "/create-project"
+          }
+        ]
+      }
+    ]
+  }
+}

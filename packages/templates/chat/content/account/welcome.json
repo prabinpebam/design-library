@@ -1,0 +1,80 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "welcome",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "What should the assistant know?",
+        "intro": "Optional. It uses this in every chat; change it in Personalisation.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "What should it call you",
+            "kind": "text",
+            "optional": true
+          },
+          {
+            "id": "work",
+            "label": "What you do",
+            "kind": "text",
+            "optional": true
+          },
+          {
+            "id": "more",
+            "label": "Anything else",
+            "kind": "long",
+            "optional": true,
+            "hint": "Interests, values, things to avoid."
+          }
+        ],
+        "submit": "Continue",
+        "sent": "Saved.",
+        "links": [
+          {
+            "label": "Next: how it should reply",
+            "href": "/choose-style"
+          },
+          {
+            "label": "Skip",
+            "href": "/chat"
+          }
+        ]
+      }
+    ]
+  }
+}

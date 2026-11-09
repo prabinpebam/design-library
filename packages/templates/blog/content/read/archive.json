@@ -1,0 +1,49 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "archive",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Archive",
+        "title": "Every article by month",
+        "lead": "84 articles since March 2023.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "2027",
+        "items": [
+          {
+            "term": "February",
+            "details": "The long way round the reservoir"
+          },
+          {
+            "term": "January",
+            "details": "Reading a sky before it turns; A pack that weighs less than lunch"
+          }
+        ]
+      },
+      {
+        "type": "details",
+        "heading": "2026",
+        "items": [
+          {
+            "term": "December",
+            "details": "Winter light on the ridge; Boots, resoled"
+          },
+          {
+            "term": "November",
+            "details": "Mapping a path that isn’t there"
+          }
+        ]
+      }
+    ]
+  }
+}

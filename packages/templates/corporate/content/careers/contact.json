@@ -1,0 +1,83 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "contact",
+  "contentVersion": 1,
+  "settings": {
+    "current": "contact"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Contact",
+        "title": "Talk to a planner",
+        "lead": "Tell us what you’re moving and where; we reply within one working day.",
+        "layout": "stacked"
+      },
+      {
+        "type": "form",
+        "heading": "Send us a message",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email",
+            "hint": "We only use it to reply."
+          },
+          {
+            "id": "phone",
+            "label": "Phone number",
+            "kind": "tel",
+            "optional": true
+          },
+          {
+            "id": "topic",
+            "label": "What it’s about",
+            "kind": "choice",
+            "options": [
+              "A quote",
+              "A shipment on its way",
+              "Working with us",
+              "Something else"
+            ]
+          },
+          {
+            "id": "message",
+            "label": "Message",
+            "kind": "long",
+            "hint": "The route, the goods and the dates, if you know them."
+          }
+        ],
+        "submit": "Send message",
+        "sent": "Message sent. A planner will reply within one working day.",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}."
+      },
+      {
+        "type": "details",
+        "heading": "Offices",
+        "items": [
+          {
+            "term": "Rotterdam (head office)",
+            "details": "Example Quay 1, open 8:00 to 18:00"
+          },
+          {
+            "term": "Hamburg",
+            "details": "Example Harbour 22, open 8:00 to 17:00"
+          },
+          {
+            "term": "Singapore",
+            "details": "Example Road 5, open 9:00 to 18:00"
+          }
+        ]
+      }
+    ]
+  }
+}

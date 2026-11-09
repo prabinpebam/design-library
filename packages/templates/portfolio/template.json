@@ -1,0 +1,931 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "portfolio",
+  "version": "1.0.0",
+  "title": "Portfolio",
+  "summary": "One person’s work, a project in depth, and who they are.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "home",
+  "sections": [
+    {
+      "id": "work",
+      "title": "Work",
+      "summary": "The projects, how they were made, and a way back from a missing page.",
+      "flows": [
+        {
+          "id": "browse",
+          "title": "Browse the work",
+          "summary": "See the projects at a glance and pick one.",
+          "screens": [
+            "home",
+            "work"
+          ]
+        },
+        {
+          "id": "case",
+          "title": "Read a case study",
+          "summary": "Follow one project from brief to result.",
+          "screens": [
+            "project",
+            "process"
+          ]
+        },
+        {
+          "id": "errors",
+          "title": "Recover from an error",
+          "summary": "Know what happened and the way back.",
+          "screens": [
+            "not-found"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "summary": "Who the designer is.",
+      "flows": [
+        {
+          "id": "story",
+          "title": "Meet the designer",
+          "summary": "Background, experience and the full résumé.",
+          "screens": [
+            "about",
+            "resume"
+          ]
+        },
+        {
+          "id": "talks",
+          "title": "Watch talks",
+          "summary": "Talks given, with recordings.",
+          "screens": [
+            "speaking"
+          ]
+        },
+        {
+          "id": "writing",
+          "title": "Read the writing",
+          "summary": "Essays and notes.",
+          "screens": [
+            "writing"
+          ]
+        },
+        {
+          "id": "uses",
+          "title": "See the tools",
+          "summary": "What the work is made with.",
+          "screens": [
+            "uses"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hire",
+      "title": "Hire",
+      "summary": "Getting in touch about work.",
+      "flows": [
+        {
+          "id": "contact",
+          "title": "Get in touch",
+          "summary": "Send a message about a project.",
+          "screens": [
+            "contact"
+          ]
+        },
+        {
+          "id": "booking",
+          "title": "Book a call",
+          "summary": "Pick a time for an introduction call.",
+          "screens": [
+            "booking"
+          ]
+        },
+        {
+          "id": "availability",
+          "title": "Check availability",
+          "summary": "Know when the designer is free and the rates.",
+          "screens": [
+            "availability"
+          ]
+        },
+        {
+          "id": "quote",
+          "title": "Ask for a quote",
+          "summary": "Describe a project and get a price and a start date.",
+          "screens": [
+            "quote-request"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "home",
+      "title": "Home",
+      "component": "SiteLayout",
+      "content": "content/home.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Who they are in one sentence, then the selected work.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack.",
+        "notBuilt": [
+          "Filters by kind of work."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, Work and About, Get in touch",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Opening",
+            "holds": "A sentence about the work, two actions",
+            "uses": "Hero (stacked, no picture)"
+          },
+          {
+            "region": "Selected work",
+            "holds": "Four projects linking to their pages",
+            "uses": "Section, Grid, Card (href, media, meta)"
+          },
+          {
+            "region": "Proof",
+            "holds": "A client’s words",
+            "uses": "Quote"
+          },
+          {
+            "region": "Footer",
+            "holds": "Links and the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "work",
+      "title": "All work",
+      "component": "SiteLayout",
+      "content": "content/work/work.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every project as a card, newest first.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, project cards",
+            "uses": "Hero, Card, Grid, Image"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "project",
+      "title": "Project",
+      "component": "SiteLayout",
+      "content": "content/work/project.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One project: the problem, the facts, what was made and the pictures.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack. The quilted grid keeps two columns, the first picture across both.",
+        "notBuilt": [
+          "Opening a picture large (Lightbox exists; ImageGrid takes `onSelect`).",
+          "Previous and next project."
+        ],
+        "regions": [
+          {
+            "region": "Where you are",
+            "holds": "Work, then the project",
+            "uses": "Breadcrumbs"
+          },
+          {
+            "region": "Opening",
+            "holds": "Title, lead and a wide picture",
+            "uses": "Hero (stacked)"
+          },
+          {
+            "region": "Facts",
+            "holds": "Client, role, scope, year",
+            "uses": "Section, DescriptionList"
+          },
+          {
+            "region": "Story",
+            "holds": "Headings, a paragraph and a list",
+            "uses": "Heading, Text, List"
+          },
+          {
+            "region": "Pictures",
+            "holds": "Five pictures, the first large",
+            "uses": "Section, ImageGrid (quilted)"
+          },
+          {
+            "region": "Closing action",
+            "holds": "An invitation to get in touch",
+            "uses": "Hero (divided, level 2)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "process",
+      "title": "Process",
+      "component": "SiteLayout",
+      "content": "content/work/process.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The story behind one project, phase by phase.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, the process with a picture",
+            "uses": "Breadcrumbs, Hero, Heading, Text, Image"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "component": "SiteLayout",
+      "content": "content/about/about.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The person, what they do, and a short form, in a reading column.",
+        "narrow": "The places move behind Menu; the reading column takes the whole width.",
+        "notBuilt": [
+          "A portrait (no drawn people; Persona shows initials)."
+        ],
+        "regions": [
+          {
+            "region": "Person",
+            "holds": "Role, name as the page’s title, and a few lines",
+            "uses": "Hero (stacked), Text"
+          },
+          {
+            "region": "What I do",
+            "holds": "Three lines",
+            "uses": "Section, List"
+          },
+          {
+            "region": "Get in touch",
+            "holds": "Name, email, the project; Send; a confirmation",
+            "uses": "Section, TextField, TextArea, Button, Alert"
+          }
+        ]
+      }
+    },
+    {
+      "id": "resume",
+      "title": "Résumé",
+      "component": "SiteLayout",
+      "content": "content/about/resume.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Experience, skills and education, scannable.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, experience, skills, education",
+            "uses": "Hero, DescriptionList, List"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "speaking",
+      "title": "Talks",
+      "component": "SiteLayout",
+      "content": "content/about/speaking.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every talk with where and how long.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, a list of talks",
+            "uses": "Hero, Card (row)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "writing",
+      "title": "Writing",
+      "component": "SiteLayout",
+      "content": "content/about/writing.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Essays, newest first.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, a list of essays",
+            "uses": "Hero, Card (row)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "uses",
+      "title": "Tools",
+      "component": "SiteLayout",
+      "content": "content/about/uses.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The tools behind the work.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, a list of tools",
+            "uses": "Hero, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "contact",
+      "title": "Contact",
+      "component": "SiteLayout",
+      "content": "content/hire/contact.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A short form, and booking a call instead.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "contact-sent",
+      "title": "Message sent",
+      "stateOf": "contact",
+      "component": "SiteLayout",
+      "content": "content/hire/contact-sent.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "After sending: when to expect a reply, and other ways on."
+      }
+    },
+    {
+      "id": "booking",
+      "title": "Book a call",
+      "component": "SiteLayout",
+      "content": "content/hire/booking.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Pick a time and say what it’s about.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The booking form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "quote-request",
+      "title": "Ask for a quote",
+      "component": "SiteLayout",
+      "content": "content/hire/quote-request.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A short brief: what, by when and the budget; the form becomes the reply time.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The form, then what happens next in its place",
+            "uses": "Form block, Morph"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "booking-confirmed",
+      "title": "Call booked",
+      "component": "SiteLayout",
+      "content": "content/hire/booking-confirmed.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What was booked and how to change it.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "booking"
+    },
+    {
+      "id": "availability",
+      "title": "Availability",
+      "component": "SiteLayout",
+      "content": "content/hire/availability.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "When the designer is free, the rate and how to start.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, terms, call to action",
+            "uses": "Hero, DescriptionList, Button"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "not-found",
+      "title": "Page not found",
+      "component": "SiteLayout",
+      "content": "content/work/not-found.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Not found, with the way home.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "import",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Import a file",
+        "intro": "Bring in a file from another tool; layers and text stay editable.",
+        "fields": [
+          {
+            "id": "from",
+            "label": "From",
+            "kind": "choice",
+            "options": [
+              "A .fig file",
+              "Sketch",
+              "PDF",
+              "Images"
+            ]
+          },
+          {
+            "id": "to",
+            "label": "Into",
+            "kind": "choice",
+            "options": [
+              "Drafts",
+              "Kitewing app",
+              "Brand"
+            ]
+          }
+        ],
+        "submit": "Choose file",
+        "sent": "Choosing a file isn’t part of this example."
+      }
+    ]
+  }
+}

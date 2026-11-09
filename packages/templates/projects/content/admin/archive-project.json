@@ -1,0 +1,69 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "archive-project",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Archive Kitewing app",
+        "intro": "The project leaves every board and search. Its issues and history are kept, and an admin can restore it at any time.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Type the project’s name to confirm",
+            "kind": "text",
+            "hint": "Kitewing app"
+          }
+        ],
+        "submit": "Archive project",
+        "sent": "Project archived.",
+        "error": "Only project admins can archive it. Ask Ama Mensah, who owns this project.",
+        "outcome": {
+          "eyebrow": "Archived",
+          "title": "Kitewing app is archived",
+          "text": "It no longer shows on boards. Restore it from Project settings whenever you need it.",
+          "links": [
+            {
+              "label": "Back to project settings",
+              "href": "/project-settings"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

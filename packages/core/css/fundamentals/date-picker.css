@@ -1,0 +1,81 @@
+/*
+ * Tier 1 fundamentals: DatePicker and DateRangePicker (Q50). The field box (c.field, shared with TextField) holding the
+ * typed date or dates and the calendar button; the Calendar opens in a top-layer popover through the shared usePopup.
+ */
+@layer fundamentals {
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) [data-dl-part='control'] > [data-dl-part='box'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--c-field-size);
+    padding-inline: var(--c-field-padding-inline) var(--space-inline-pair);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) [data-dl-part='box'] > input {
+    flex: 1 1 0;
+    min-inline-size: 0;
+    align-self: stretch;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) [data-dl-part='box'] > input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker'])[data-invalid] [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']):has(input:disabled) [data-dl-part='box'] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+  }
+
+  [data-dl='date-range-picker'] [data-dl-part='dash'] {
+    flex: none;
+    color: var(--color-text-muted);
+  }
+
+  /* The popover: the shared placement in the top layer; the surface holds the Calendar with one inset. */
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) > [data-dl-part='popup'] {
+    position: fixed;
+    z-index: var(--c-popup-layer);
+    inset: auto;
+    inset-block-start: calc(var(--popup-edge, 0px) + var(--c-popup-offset));
+    inset-inline-start: var(--popup-start, 0px);
+    margin: 0;
+    padding: var(--c-popup-inset);
+    border: var(--c-popup-border-width) solid var(--c-popup-border);
+    border-radius: var(--c-popup-radius);
+    background-color: var(--material-floating-bg, var(--c-popup-bg));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-popup-shadow);
+    color: var(--color-text);
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) > [data-dl-part='popup'][data-placement='above'] {
+    inset-block-start: auto;
+    inset-block-end: calc(100vh - var(--popup-edge, 0px) + var(--c-popup-offset));
+  }
+
+  :is([data-dl='date-picker'], [data-dl='date-range-picker']) > [data-dl-part='popup']:is([hidden], :not(:popover-open)) {
+    display: none;
+  }
+}

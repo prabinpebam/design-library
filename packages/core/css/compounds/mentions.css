@@ -1,0 +1,17 @@
+/*
+ * Tier 2 compound: Mentions (F15.42, catalogue Inputs: Mentions). TextArea plus the shared popup list (pickers.css,
+ * c.popup): the list keeps the popup's own width rather than the text area's, so names don't float in a wide box.
+ */
+@layer compounds {
+  [data-dl='mentions'] {
+    display: grid;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: var(--size-measure);
+  }
+
+  [data-dl='mentions'] > [data-dl-part='popup'] {
+    min-inline-size: 0;
+    inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
+  }
+}

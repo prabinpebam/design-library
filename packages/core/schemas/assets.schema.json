@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-library.local/core/assets/1",
+  "title": "Template assets, version 1",
+  "description": "A template's pictures by id. Content names a picture by its id; `src` is a file in the template's own folder; `alt` says what it shows.",
+  "type": "object",
+  "required": ["assets"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "assets": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-zA-Z0-9-]*$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["src", "alt"],
+        "properties": {
+          "src": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" },
+          "alt": { "type": "string", "description": "What the picture shows, for people who can't see it. Empty only for a decorative picture." }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

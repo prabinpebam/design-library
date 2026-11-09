@@ -1,0 +1,88 @@
+/*
+ * Tier 2 compound: EmptyState (F15.57, catalogue Feedback "Empty state"; ui-states empty-states reference). It fills
+ * the content's own wrapper at the scope's least height, centred, so the wrapper never collapses to one line and the
+ * first item replaces it in place. No enclosure of its own: the wrapper's boundary is the only one. The silhouette is
+ * hairline outlines, still and faint, so it can't be taken for a loading skeleton (solid shapes that shimmer).
+ */
+@layer compounds {
+  [data-dl='empty-state'] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-empty-state-actions-space);
+    inline-size: 100%;
+    min-block-size: var(--c-empty-state-min-block-section);
+    padding: var(--c-empty-state-padding-section);
+    text-align: center;
+  }
+
+  [data-dl='empty-state'][data-scope='view'] {
+    min-block-size: var(--c-empty-state-min-block-view);
+    padding: var(--c-empty-state-padding-view);
+  }
+
+  [data-dl='empty-state'][data-scope='component'] {
+    align-items: flex-start;
+    gap: var(--c-empty-state-gap);
+    min-block-size: 0;
+    padding: var(--c-empty-state-padding-component);
+    text-align: start;
+  }
+
+  [data-dl='empty-state'] [data-dl-part='words'] {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    gap: var(--c-empty-state-gap);
+    max-inline-size: var(--c-empty-state-words-max);
+  }
+
+  [data-dl='empty-state'] [data-dl-part='actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: inherit;
+    gap: var(--c-empty-state-actions-gap);
+  }
+
+  [data-dl='empty-state'] [data-dl-part='silhouette'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-empty-state-silhouette-gap);
+    inline-size: min(100%, var(--c-empty-state-silhouette-width));
+  }
+
+  [data-dl='empty-state'] [data-dl-part='shape'] {
+    display: block;
+    block-size: var(--c-empty-state-silhouette-row);
+    border: var(--border-hairline) dashed var(--color-border);
+    border-radius: var(--c-empty-state-silhouette-radius);
+  }
+
+  [data-dl='empty-state'] [data-shape='tiles'] {
+    flex-direction: row;
+  }
+
+  [data-dl='empty-state'] [data-shape='tiles'] [data-dl-part='shape'] {
+    flex: 1 1 0;
+    block-size: auto;
+    aspect-ratio: 1;
+  }
+
+  /* A table's outline: one header band, then rows; the rows touch, as a table's do. */
+  [data-dl='empty-state'] [data-shape='table'] {
+    gap: 0;
+  }
+
+  [data-dl='empty-state'] [data-shape='table'] [data-dl-part='shape'] {
+    border-radius: 0;
+  }
+
+  [data-dl='empty-state'] [data-shape='table'] [data-dl-part='shape'] + [data-dl-part='shape'] {
+    border-block-start: 0;
+  }
+
+  [data-dl='empty-state'] [data-shape='table'] [data-dl-part='shape']:first-child {
+    background-color: var(--color-bg-sunken);
+  }
+}

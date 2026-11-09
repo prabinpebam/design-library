@@ -1,0 +1,228 @@
+/*
+ * Tier 3 layout: LibraryLayout. Regions: header, nav, main.
+ * Small screens: regions stack and the page scrolls. From breakpoint.md (64rem): navigation beside main, each region
+ * scrolls on its own and bleeds to its edge; padding sits on each region's content, never on the scroll region.
+ */
+@layer layouts {
+  [data-dl='library-layout'] {
+    position: relative;
+    display: grid;
+    grid-template-areas: 'header' 'nav' 'main';
+    grid-template-rows: auto auto 1fr;
+    min-block-size: 100dvh;
+  }
+
+  /* Skip link: out of sight until focused, then shown in place over the header. */
+  [data-dl-skip] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    z-index: var(--layer-sticky);
+    padding-block: var(--space-inset-sm);
+    padding-inline: var(--space-inset-md);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text-link);
+    clip-path: inset(50%);
+  }
+
+  [data-dl-skip]:focus-visible {
+    clip-path: none;
+  }
+
+  [data-dl-region='main']:focus {
+    outline: none;
+  }
+
+  [data-dl-region='header'] {
+    grid-area: header;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-inline-group);
+    padding-block: var(--space-inset-md);
+    padding-inline: var(--space-margin-page);
+    /* The one rule between the header and everything below it; navigation and main separate by space alone. */
+    border-block-end: var(--border-hairline) solid var(--color-border);
+  }
+
+  [data-dl-region='nav'] {
+    grid-area: nav;
+  }
+
+  /* The navigation handle exists only where the navigation sits beside main. */
+  [data-dl-resize='nav'] {
+    display: none;
+  }
+
+  [data-dl-region='main'] {
+    grid-area: main;
+    min-inline-size: 0;
+  }
+
+  /* Each region holds one ScrollArea that fills it: the region sizes, the ScrollArea scrolls and draws the bar. */
+  [data-dl-region='nav'],
+  [data-dl-region='main'],
+  [data-dl-region='aside'] {
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  }
+
+  [data-dl-region='main'] [data-dl-part='viewport']#main:focus {
+    outline: none;
+  }
+
+  [data-dl-region-content='nav'] {
+    padding-block: var(--space-inset-md);
+    padding-inline: var(--space-margin-page);
+  }
+
+  [data-dl-region-content='main'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-section);
+    padding-block: var(--space-inset-lg);
+    padding-inline: var(--space-margin-page);
+    transition: opacity var(--duration-page-in) var(--easing-enter);
+  }
+
+  /* A page change: the old page fades out completely before main returns to the top and the new page fades in. */
+  [data-dl-region-content='main'][data-dl-page='out'] {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-page-out) var(--easing-exit);
+  }
+
+  /* The new page, already at the top, waits unseen for its first paint; then the fade in plays in full. */
+  [data-dl-region-content='main'][data-dl-page='swap'] {
+    opacity: 0;
+    transition: none;
+  }
+
+  /* The pane: below the breakpoint, a sheet over the lower part of the screen; main keeps room to scroll past it. It is
+     a non-blocking sheet over content, half the screen at most (AR11): floating material, frosted when on (MB5). */
+  [data-dl-region='aside'] {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: var(--layer-overlay);
+    max-block-size: calc(100dvh * var(--size-sheet-share));
+    background-color: var(--material-floating-bg, var(--color-bg-raised));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--shadow-overlay);
+  }
+
+  [data-has-aside] [data-dl-region-content='main'] {
+    padding-block-end: calc(100dvh * var(--size-sheet-share));
+  }
+
+  [data-dl-region-content='aside'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-group);
+    padding-block: var(--space-inset-md);
+    padding-inline: var(--space-margin-page);
+  }
+
+  @media print {
+    [data-dl-region='aside'] {
+      display: none;
+    }
+
+    [data-has-aside] [data-dl-region-content='main'] {
+      padding-block-end: 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    [data-dl-region-content='main'] {
+      padding-block: var(--space-stack-section);
+      padding-inline: var(--space-gutter);
+    }
+    [data-dl='library-layout'] {
+      --library-layout-nav: clamp(var(--size-nav-width-min), var(--library-layout-nav-width, var(--size-nav-width)), var(--size-nav-width-max));
+      grid-template-areas: 'header header' 'nav main';
+      grid-template-columns: var(--library-layout-nav) minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      block-size: 100dvh;
+    }
+
+    /*
+     * The handle: a 24 px strip just past the navigation's end edge, over main's own padding, so it never covers the
+     * navigation's scrollbar. Invisible at rest (space already separates the regions); a line on the edge appears
+     * while it's hovered, pressed or dragged, and the focus ring while it has keyboard focus.
+     */
+    [data-dl-resize='nav'] {
+      display: block;
+      position: relative;
+      grid-area: nav;
+      justify-self: end;
+      inline-size: var(--size-target-min);
+      margin-inline-end: calc(-1 * var(--size-target-min));
+      /* Above main's scrolling content, as the skip link is; below popovers and the pane's sheet. */
+      z-index: var(--layer-sticky);
+      cursor: col-resize;
+      touch-action: none;
+    }
+
+    [data-dl-resize='nav']::before {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+      inline-size: var(--border-thick);
+    }
+
+    @media (hover: hover) {
+      [data-dl-resize='nav']:hover::before {
+        background-color: var(--color-border-strong);
+      }
+    }
+
+    [data-dl-resize='nav']:active::before,
+    [data-dl-resize='nav'][data-dragging]::before {
+      background-color: var(--color-focus);
+    }
+
+    [data-dl-resize='nav']:focus-visible {
+      outline: var(--size-focus-width) solid var(--color-focus);
+      outline-offset: calc(-1 * var(--size-focus-width));
+    }
+
+    /* While dragging, text across the page isn't selected by the same motion. */
+    [data-dl='library-layout']:has([data-dl-resize='nav'][data-dragging]) {
+      cursor: col-resize;
+      user-select: none;
+    }
+
+    @media (forced-colors: active) {
+      [data-dl-resize='nav']:active::before,
+      [data-dl-resize='nav'][data-dragging]::before {
+        background-color: Highlight;
+      }
+    }
+
+    [data-dl-region='nav'],
+    [data-dl-region='main'] {
+      min-block-size: 0;
+    }
+
+    /* Beside main, the pane is its own scrolling region on a sunken tone: separated by tone, no rule or shadow. */
+    [data-dl='library-layout'][data-has-aside] {
+      grid-template-areas: 'header header header' 'nav main aside';
+      grid-template-columns: var(--library-layout-nav) minmax(0, 1fr) var(--size-pane-width);
+    }
+
+    [data-dl-region='aside'] {
+      position: static;
+      grid-area: aside;
+      max-block-size: none;
+      background-color: var(--color-bg-sunken);
+      box-shadow: none;
+    }
+
+    [data-has-aside] [data-dl-region-content='main'] {
+      padding-block-end: var(--space-stack-section);
+    }
+  }
+}

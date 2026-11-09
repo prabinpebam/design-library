@@ -1,0 +1,205 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "projects",
+  "shared": true,
+  "contentVersion": 1,
+  "record": {
+    "project": "Kitewing app",
+    "sprint": {
+      "name": "Sprint 14",
+      "ends": "Ends Friday 20 November"
+    },
+    "places": [
+      {
+        "id": "board",
+        "label": "Board"
+      },
+      {
+        "id": "backlog",
+        "label": "Backlog"
+      }
+    ],
+    "people": [
+      "Ama Mensah",
+      "Jonas Lind",
+      "Keiko Arai",
+      "Luis Ortega"
+    ],
+    "statuses": [
+      {
+        "id": "todo",
+        "title": "To do"
+      },
+      {
+        "id": "doing",
+        "title": "In progress",
+        "limit": 3
+      },
+      {
+        "id": "review",
+        "title": "In review"
+      },
+      {
+        "id": "done",
+        "title": "Done"
+      }
+    ],
+    "types": {
+      "Story": "neutral",
+      "Bug": "danger",
+      "Task": "info"
+    },
+    "issues": [
+      {
+        "id": "kw-151",
+        "key": "KW-151",
+        "title": "Remember the last trip filter",
+        "type": "Story",
+        "status": "todo",
+        "assignee": "Jonas Lind",
+        "points": 3,
+        "sprint": true
+      },
+      {
+        "id": "kw-148",
+        "key": "KW-148",
+        "title": "Sign-in error is read twice",
+        "type": "Bug",
+        "status": "todo",
+        "points": 1,
+        "sprint": true
+      },
+      {
+        "id": "kw-142",
+        "key": "KW-142",
+        "title": "Trip cards on the home screen",
+        "type": "Story",
+        "status": "doing",
+        "assignee": "Ama Mensah",
+        "points": 5,
+        "sprint": true
+      },
+      {
+        "id": "kw-139",
+        "key": "KW-139",
+        "title": "Dark theme for settings",
+        "type": "Task",
+        "status": "doing",
+        "assignee": "Keiko Arai",
+        "points": 2,
+        "sprint": true
+      },
+      {
+        "id": "kw-137",
+        "key": "KW-137",
+        "title": "Empty state for no trips",
+        "type": "Story",
+        "status": "review",
+        "assignee": "Jonas Lind",
+        "points": 2,
+        "sprint": true
+      },
+      {
+        "id": "kw-131",
+        "key": "KW-131",
+        "title": "Password field shows its rules",
+        "type": "Story",
+        "status": "done",
+        "assignee": "Luis Ortega",
+        "points": 3,
+        "sprint": true
+      },
+      {
+        "id": "kw-129",
+        "key": "KW-129",
+        "title": "Crash when a trip has no dates",
+        "type": "Bug",
+        "status": "done",
+        "assignee": "Ama Mensah",
+        "points": 1,
+        "sprint": true
+      },
+      {
+        "id": "kw-160",
+        "key": "KW-160",
+        "title": "Share a trip with a link",
+        "type": "Story",
+        "status": "todo",
+        "points": 8,
+        "sprint": false
+      },
+      {
+        "id": "kw-158",
+        "key": "KW-158",
+        "title": "Offline mode for saved trips",
+        "type": "Story",
+        "status": "todo",
+        "points": 13,
+        "sprint": false
+      },
+      {
+        "id": "kw-155",
+        "key": "KW-155",
+        "title": "Update the map provider",
+        "type": "Task",
+        "status": "todo",
+        "assignee": "Luis Ortega",
+        "points": 3,
+        "sprint": false
+      },
+      {
+        "id": "kw-153",
+        "key": "KW-153",
+        "title": "Times show in the wrong zone abroad",
+        "type": "Bug",
+        "status": "todo",
+        "points": 2,
+        "sprint": false
+      }
+    ],
+    "strings": {
+      "point": "{count} point",
+      "points": "{count} points",
+      "key": "Key",
+      "summary": "Summary",
+      "type": "Type",
+      "status": "Status",
+      "assignee": "Assignee",
+      "pointsHeader": "Points",
+      "unassigned": "Unassigned",
+      "sprintBoard": "{sprint} board",
+      "backlog": "Backlog",
+      "pointsDone": "{ends} · {done} of {total} points done",
+      "sprintIntro": "{count} issues · {points} points · {ends}",
+      "sprintIssues": "{sprint} issues",
+      "backlogIntro": "{count} issues · {points} points, not planned yet",
+      "backlogIssues": "Backlog issues",
+      "description": "Description",
+      "doneWhen": "Done when",
+      "doneCount": "{done} of {total} done",
+      "checklist": "Checklist",
+      "comments": "Comments",
+      "addComment": "Add a comment",
+      "comment": "Comment",
+      "justNow": "Just now",
+      "sprint": "Sprint",
+      "reporter": "Reporter",
+      "created": "Created",
+      "softwareProject": "Software project",
+      "planning": "Planning",
+      "searchBoard": "Search this board",
+      "createIssue": "Create issue",
+      "creatingIssues": "Creating issues",
+      "notInExample": "{label} isn’t part of this example.",
+      "me": "Ama Mensah",
+      "edit": "Edit",
+      "editIssue": "Edit {key}",
+      "title": "Title",
+      "titleMissing": "Enter a title.",
+      "descriptionHint": "What should happen, and how we’ll know it’s done. A blank line starts a new paragraph.",
+      "saveChanges": "Save changes",
+      "cancel": "Cancel",
+      "changesSaved": "{key} saved."
+    }
+  }
+}

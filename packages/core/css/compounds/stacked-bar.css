@@ -1,0 +1,37 @@
+/*
+ * Tier 2 compound: StackedBar. Parts of a whole in one bar; inner segments square, only the whole bar's outer ends
+ * rounded (clipped by the bar), so small parts stay legible.
+ */
+@layer compounds {
+  [data-dl='stacked-bar'] {
+    display: flex;
+    max-inline-size: var(--c-stacked-bar-measure);
+    block-size: var(--c-stacked-bar-thickness);
+    border-radius: var(--c-stacked-bar-radius);
+    overflow: hidden;
+  }
+
+  [data-dl='stacked-bar'] > span {
+    inline-size: var(--share);
+  }
+
+  [data-dl='stacked-bar'] > [data-status='success'] {
+    background-color: var(--c-stacked-bar-success);
+  }
+
+  [data-dl='stacked-bar'] > [data-status='warning'] {
+    background-color: var(--c-stacked-bar-warning);
+  }
+
+  [data-dl='stacked-bar'] > [data-status='danger'] {
+    background-color: var(--c-stacked-bar-danger);
+  }
+
+  [data-dl='stacked-bar'] > [data-status='info'] {
+    background-color: var(--c-stacked-bar-info);
+  }
+
+  [data-dl='stacked-bar'] > [data-status='neutral'] {
+    background-color: var(--c-stacked-bar-neutral);
+  }
+}

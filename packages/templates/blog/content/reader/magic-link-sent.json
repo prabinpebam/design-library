@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "magic-link-sent",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading",
+    "state": "done"
+  }
+}

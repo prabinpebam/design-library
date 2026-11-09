@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "create-issue-error",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading",
+    "state": "failed"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "report-comment",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Report a comment",
+        "intro": "The editors read every report within a day. The person who wrote the comment isn’t told who reported it.",
+        "fields": [
+          {
+            "id": "reason",
+            "label": "What’s wrong with it",
+            "kind": "choice",
+            "options": [
+              "It’s abusive or harassing",
+              "It’s spam or advertising",
+              "It shares someone’s private details",
+              "Something else"
+            ]
+          },
+          {
+            "id": "details",
+            "label": "Anything the editors should know",
+            "kind": "long",
+            "optional": true
+          }
+        ],
+        "submit": "Send report",
+        "sent": "Report sent.",
+        "error": "The report didn’t send: the connection dropped. Your answers are kept; try again.",
+        "outcome": {
+          "eyebrow": "Report sent",
+          "title": "Thanks: the editors will look at it",
+          "text": "You’ll get an email when they’ve decided. The comment stays up until then.",
+          "links": [
+            {
+              "label": "Back to the comments",
+              "href": "/comments"
+            }
+          ]
+        },
+        "links": [
+          {
+            "label": "Read the house rules",
+            "href": "/article"
+          }
+        ]
+      }
+    ]
+  }
+}

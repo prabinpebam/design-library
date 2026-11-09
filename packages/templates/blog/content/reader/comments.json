@@ -1,0 +1,57 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "comments",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "The long way round the reservoir",
+            "href": "/article"
+          },
+          {
+            "label": "Comments"
+          }
+        ]
+      },
+      {
+        "type": "questions",
+        "heading": "12 comments",
+        "items": [
+          {
+            "title": "Tom Ellis · 2 days ago",
+            "text": "Did the path past the dam reopen? It was fenced off in autumn."
+          },
+          {
+            "title": "Maya Chen · 2 days ago",
+            "text": "It has, since January. Muddy, but open."
+          }
+        ]
+      },
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Add a comment",
+        "fields": [
+          {
+            "id": "comment",
+            "label": "Your comment",
+            "kind": "long",
+            "hint": "Be kind; comments are read before they show."
+          }
+        ],
+        "submit": "Post comment",
+        "sent": "Thanks. Your comment shows once it’s read, usually within a day."
+      }
+    ]
+  }
+}

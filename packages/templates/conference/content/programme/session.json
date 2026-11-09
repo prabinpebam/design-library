@@ -1,0 +1,51 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "session",
+  "contentVersion": 1,
+  "settings": {
+    "current": "schedule"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Schedule",
+            "href": "/schedule"
+          },
+          {
+            "label": "Interfaces that explain themselves"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Keynote · Thursday 09:30 · Main hall",
+        "title": "Interfaces that explain themselves",
+        "lead": "Why the best help is the interface itself, and how to build it.",
+        "layout": "stacked"
+      },
+      {
+        "type": "people",
+        "heading": "Speaker",
+        "items": [
+          {
+            "name": "Ama Mensah",
+            "role": "Design lead, Kitewing",
+            "href": "/speaker"
+          }
+        ]
+      },
+      {
+        "type": "points",
+        "heading": "You’ll leave with",
+        "items": [
+          "Five patterns that replace help text",
+          "A way to test whether a screen explains itself"
+        ]
+      }
+    ]
+  }
+}

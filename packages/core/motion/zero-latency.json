@@ -1,0 +1,60 @@
+{
+  "$comment": "Q65 zero-latency places (docs/motion.md Z1-Z22). One source for npm run check:motion and the Motion page's list. Each rule: CSS rules whose selector matches `selector` (a regular expression) may not transition or animate any of `properties`. Rows without rules are checked by the browser probe (production-ready), not statically.",
+  "places": [
+    { "id": "Z1", "place": "Typing in any text entry", "instant": "Characters, caret, deletion, paste, composition", "mayEase": "The field's border and focus ring", "rules": [] },
+    { "id": "Z2", "place": "NumberField: arrows, hold, wheel, scrub, steppers", "instant": "The number shown and the value applied", "mayEase": "The stepper's press tint", "rules": [] },
+    {
+      "id": "Z3",
+      "place": "Slider, range and AllocationSlider: drag, keys, track press",
+      "instant": "Thumb position, fill and value text",
+      "mayEase": "The thumb's hover and focus ring",
+      "rules": [
+        { "selector": "\\[data-dl='slider'\\][^,]*\\[data-dl-part='(thumb|fill|bubble|value)'\\]", "properties": ["inset", "inset-inline-start", "inset-inline-end", "left", "right", "translate", "transform", "inline-size", "width", "scale"] },
+        { "selector": "\\[data-dl='allocation-slider'\\][^,]*\\[data-dl-part='(segment|boundary|share)'\\]", "properties": ["inset", "inset-inline-start", "left", "right", "translate", "transform", "inline-size", "width", "flex-grow", "flex-basis", "scale"] }
+      ]
+    },
+    {
+      "id": "Z4",
+      "place": "Colour picker: area, hue and opacity sliders, hex entry, preview",
+      "instant": "Handle position and the previewed colour",
+      "mayEase": "The handle's ring",
+      "rules": [{ "selector": "\\[data-dl='colour-picker'\\][^,]*\\[data-dl-part='(thumb|swatch|area|hue|alpha)'\\]", "properties": ["inset", "inset-inline-start", "inset-block-start", "left", "top", "translate", "transform", "background-color", "background"] }]
+    },
+    {
+      "id": "Z5",
+      "place": "Dragging anything: board cards, list reorder, carousel, splitters",
+      "instant": "The dragged item's or handle's position",
+      "mayEase": "Neighbours making room, the settle on release",
+      "rules": [{ "selector": "\\[data-dragging\\]", "properties": ["inset", "left", "top", "translate", "transform"] }]
+    },
+    { "id": "Z6", "place": "Pane, column and window resizing", "instant": "Sizes and reflow", "mayEase": "Nothing", "rules": [{ "selector": "\\[data-dl='(pane|editor-layout|app-layout|library-layout)'\\]", "properties": ["inline-size", "width", "grid-template-columns", "flex-basis"] }] },
+    { "id": "Z7", "place": "Scrolling", "instant": "Scroll position from wheel, touch, keys and the bar", "mayEase": "The scrollbar thumb's fade", "rules": [] },
+    { "id": "Z8", "place": "Keyboard movement inside a widget", "instant": "The active option and its highlight", "mayEase": "Nothing (indicators move at once under keys)", "rules": [] },
+    {
+      "id": "Z9",
+      "place": "Pointer hover across a collection: menu items, list rows, table rows, calendar cells",
+      "instant": "The highlight under the pointer, in and out",
+      "mayEase": "Nothing",
+      "rules": [{ "selector": "role=['\"]?(option|menuitem|menuitemradio|menuitemcheckbox|treeitem|gridcell|row)['\"]?\\]|\\[data-dl='list-item'\\]|\\[data-dl-part='(day|item|row)'\\]", "properties": ["background-color", "background", "color", "box-shadow"] }]
+    },
+    { "id": "Z10", "place": "Live counts and readouts tied to input", "instant": "The number", "mayEase": "A badge's arrival at 0 to 1", "rules": [] },
+    { "id": "Z11", "place": "Filtering and search as you type", "instant": "The results' contents", "mayEase": "An Updating sign past 300 ms", "rules": [] },
+    {
+      "id": "Z12",
+      "place": "Keyboard focus arriving",
+      "instant": "The focus ring on the newly focused element",
+      "mayEase": "The ring leaving the previous element",
+      "rules": [{ "selector": ":focus-visible|:focus-within|:focus\\b", "properties": ["outline", "outline-color", "outline-width", "outline-offset", "box-shadow", "opacity"] }]
+    },
+    { "id": "Z13", "place": "Streaming text", "instant": "Appended text", "mayEase": "The caret mark", "rules": [] },
+    { "id": "Z14", "place": "Selection by pointer or keyboard", "instant": "The selected state", "mayEase": "The selection fill's colour", "rules": [] },
+    { "id": "Z15", "place": "Undo and redo", "instant": "The restored content", "mayEase": "Nothing", "rules": [] },
+    { "id": "Z16", "place": "Zoom and pan on a canvas or picture", "instant": "The transform", "mayEase": "Momentum after release", "rules": [{ "selector": "\\[data-dl='canvas'\\][^,]*\\[data-dl-part='(document|place)'\\]", "properties": ["transform", "translate", "scale", "inset", "left", "top"] }] },
+    { "id": "Z17", "place": "Press acknowledgement on any control", "instant": "The pressed look in the first frame", "mayEase": "Its release", "rules": [] },
+    { "id": "Z18", "place": "Global switches: theme, contrast, space, shape, direction", "instant": "Every token value", "mayEase": "One root cross-fade", "rules": [] },
+    { "id": "Z19", "place": "First render of a page or region", "instant": "Initial values", "mayEase": "Deliberate entrances", "rules": [] },
+    { "id": "Z20", "place": "Keyboard shortcuts and commands", "instant": "Their effect on the content", "mayEase": "A panel's own reveal", "rules": [] },
+    { "id": "Z21", "place": "Marquee and lasso selection", "instant": "The marquee's edges and what it selects", "mayEase": "Nothing", "rules": [] },
+    { "id": "Z22", "place": "Overlays that follow the pointer", "instant": "Their position and value", "mayEase": "Arrival and departure", "rules": [] }
+  ]
+}

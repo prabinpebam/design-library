@@ -1,0 +1,130 @@
+/*
+ * Tier 2 compound: Agenda (F15.73, Q61/Q62; catalogue Data display "Schedule"). Each slot is a row: its time in a
+ * narrow column, then its sessions side by side. A session is one quiet surface (the sunken tone, no border) because
+ * parallel sessions need a boundary that space alone can't draw; a pause (a break, lunch) has no surface and
+ * muted words. Its kind is a neutral label. In a narrow container the time sits above the sessions and they stack.
+ */
+@layer compounds {
+  [data-dl='agenda'] {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--c-agenda-slot-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text);
+  }
+
+  [data-dl='agenda'] [data-dl-part='slot'] {
+    display: grid;
+    grid-template-columns: var(--c-agenda-time-width) minmax(0, 1fr);
+    gap: var(--c-agenda-column-gap);
+    align-items: start;
+  }
+
+  [data-dl='agenda'] p,
+  [data-dl='agenda'] h2,
+  [data-dl='agenda'] h3,
+  [data-dl='agenda'] h4,
+  [data-dl='agenda'] h5,
+  [data-dl='agenda'] h6 {
+    margin: 0;
+  }
+
+  [data-dl='agenda'] [data-dl-part='time'] {
+    padding-block-start: var(--c-agenda-session-padding);
+    font-weight: var(--weight-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='agenda'] [data-dl-part='sessions'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--c-agenda-session-min)), 1fr));
+    gap: var(--c-agenda-session-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='agenda'] [data-dl-part='session'] {
+    display: grid;
+    align-content: start;
+    gap: var(--c-agenda-session-inner-gap);
+    padding: var(--c-agenda-session-padding);
+    border-radius: var(--c-agenda-session-radius);
+    background-color: var(--c-agenda-session-fill);
+  }
+
+  [data-dl='agenda'] [data-dl-part='session'][data-pause] {
+    background-color: transparent;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='agenda'] [data-dl-part='title'] {
+    font-size: var(--c-agenda-title-size);
+    font-weight: var(--weight-semibold);
+    line-height: var(--type-heading-4-leading);
+  }
+
+  [data-dl='agenda'] [data-dl-part='session'][data-pause] [data-dl-part='title'] {
+    font-weight: var(--weight-regular);
+  }
+
+  [data-dl='agenda'] [data-dl-part='title'] a {
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+
+  [data-dl='agenda'] [data-dl-part='title'] a:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-width);
+  }
+
+  @media (hover: hover) {
+    [data-dl='agenda'] [data-dl-part='title'] a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  [data-dl='agenda'] [data-dl-part='title'] a:active {
+    text-decoration: underline;
+  }
+
+  [data-dl='agenda'] [data-dl-part='description'],
+  [data-dl='agenda'] [data-dl-part='people'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='agenda'] [data-dl-part='description'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='agenda'] [data-dl-part='meta'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-agenda-meta-gap);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  @container (max-width: 36rem) {
+    [data-dl='agenda'] [data-dl-part='slot'] {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--c-agenda-session-gap);
+    }
+
+    [data-dl='agenda'] [data-dl-part='time'] {
+      padding-block-start: 0;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='agenda'] [data-dl-part='session']:not([data-pause]) {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

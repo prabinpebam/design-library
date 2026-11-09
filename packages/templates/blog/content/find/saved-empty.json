@@ -1,0 +1,10 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "saved-empty",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "state": "empty"
+  }
+}

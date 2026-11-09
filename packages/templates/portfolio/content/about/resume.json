@@ -1,0 +1,58 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "resume",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Résumé",
+        "title": "Asha Rao, product designer",
+        "lead": "Ten years in products people use every day.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Experience",
+        "items": [
+          {
+            "term": "2023–now",
+            "details": "Lead designer, Tidewater, Lisbon"
+          },
+          {
+            "term": "2020–2023",
+            "details": "Senior designer, City of Porto digital services"
+          },
+          {
+            "term": "2017–2020",
+            "details": "Designer, Kiln Studio"
+          }
+        ]
+      },
+      {
+        "type": "points",
+        "heading": "Skills",
+        "items": [
+          "Research with people who are hard to reach",
+          "Design systems and their tokens",
+          "Prototyping in code"
+        ]
+      },
+      {
+        "type": "details",
+        "heading": "Education",
+        "items": [
+          {
+            "term": "2017",
+            "details": "MA Interaction Design, Example University"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,203 @@
+/*
+ * Tier 2 compound: AllocationSlider (F15.10c). Shares of a whole in one bar: inner segment ends square, only the bar's
+ * outer ends rounded (on the end segments, nothing cropped). Boundaries are page-coloured gaps that darken while
+ * hovered, focused or dragged. Each part draws in a category colour (Q44); the legend says every share.
+ */
+@layer compounds {
+  [data-dl='allocation-slider'] {
+    --allocation-bar: var(--c-allocation-slider-bar);
+
+    display: grid;
+    gap: var(--c-allocation-slider-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='allocation-slider'][data-size='s'] {
+    --allocation-bar: var(--c-allocation-slider-bar-s);
+  }
+
+  [data-dl='allocation-slider'][data-size='l'] {
+    --allocation-bar: var(--c-allocation-slider-bar-l);
+  }
+
+  [data-dl='allocation-slider'] > [data-dl-part='label'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='allocation-slider'] > [data-dl-part='bar'] {
+    position: relative;
+    display: flex;
+    block-size: var(--allocation-bar);
+    touch-action: none;
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='segment'] {
+    inline-size: calc(var(--share) * 100%);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='segment'][data-edge='start'],
+  [data-dl='allocation-slider'] [data-dl-part='segment'][data-edge='both'] {
+    border-start-start-radius: var(--c-allocation-slider-radius);
+    border-end-start-radius: var(--c-allocation-slider-radius);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='segment'][data-edge='end'],
+  [data-dl='allocation-slider'] [data-dl-part='segment'][data-edge='both'] {
+    border-start-end-radius: var(--c-allocation-slider-radius);
+    border-end-end-radius: var(--c-allocation-slider-radius);
+  }
+
+  /* Category colours (Q44): each part its own, from color.category.*, never the only cue (the legend names every share). */
+  [data-dl='allocation-slider'] [data-category='1'] {
+    --allocation-category: var(--color-category-1);
+  }
+
+  [data-dl='allocation-slider'] [data-category='2'] {
+    --allocation-category: var(--color-category-2);
+  }
+
+  [data-dl='allocation-slider'] [data-category='3'] {
+    --allocation-category: var(--color-category-3);
+  }
+
+  [data-dl='allocation-slider'] [data-category='4'] {
+    --allocation-category: var(--color-category-4);
+  }
+
+  [data-dl='allocation-slider'] [data-category='5'] {
+    --allocation-category: var(--color-category-5);
+  }
+
+  [data-dl='allocation-slider'] [data-category='6'] {
+    --allocation-category: var(--color-category-6);
+  }
+
+  [data-dl='allocation-slider'] [data-category='7'] {
+    --allocation-category: var(--color-category-7);
+  }
+
+  [data-dl='allocation-slider'] [data-category='8'] {
+    --allocation-category: var(--color-category-8);
+  }
+
+  [data-dl='allocation-slider'] [data-category] [data-dl-part='swatch'],
+  [data-dl='allocation-slider'] [data-dl-part='segment'][data-category] {
+    background-color: var(--allocation-category);
+  }
+
+  /* A boundary: a gap the page shows through, centred on the running total; its hit area is wider than the gap. */
+  [data-dl='allocation-slider'] [data-dl-part='boundary'] {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(var(--at) * 100% - var(--c-allocation-slider-handle) / 2);
+    inline-size: var(--c-allocation-slider-handle);
+    background-color: var(--color-bg);
+    cursor: col-resize;
+    transition: background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='boundary']::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc((var(--c-allocation-slider-handle) - var(--c-allocation-slider-hit)) / 2);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='boundary']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='boundary']:is(:focus-visible, [data-dragging]) {
+    background-color: var(--color-text);
+  }
+
+  @media (hover: hover) {
+    [data-dl='allocation-slider']:not([data-disabled], [data-readonly]) [data-dl-part='boundary']:not([data-inactive]):hover {
+      background-color: var(--color-text);
+    }
+  }
+
+  [data-dl='allocation-slider']:not([data-disabled], [data-readonly]) [data-dl-part='boundary']:not([data-inactive]):active {
+    background-color: var(--color-text);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='boundary'][data-inactive],
+  [data-dl='allocation-slider']:is([data-disabled], [data-readonly]) [data-dl-part='boundary'] {
+    cursor: default;
+  }
+
+  [data-dl='allocation-slider'] > [data-dl-part='legend'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-stack-pair) var(--c-allocation-slider-legend-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='legend'] > li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='swatch'] {
+    inline-size: var(--c-allocation-slider-swatch);
+    block-size: var(--c-allocation-slider-swatch);
+    border-radius: var(--radius-sm);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='share'] {
+    font-weight: var(--type-label-weight);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='share-input'] {
+    inline-size: var(--c-allocation-slider-input);
+  }
+
+  [data-dl='allocation-slider'] [data-dl-part='fixed'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='allocation-slider'] > [data-dl-part='error'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='allocation-slider'] > [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='allocation-slider'][data-disabled] [data-category] {
+    --allocation-category: var(--color-text-disabled);
+  }
+
+  [data-dl='allocation-slider'][data-disabled] {
+    color: var(--color-text-disabled);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='allocation-slider'] [data-category] {
+      --allocation-category: CanvasText;
+    }
+
+    [data-dl='allocation-slider'] :is([data-category='1'], [data-category='3'], [data-category='5'], [data-category='7']) {
+      --allocation-category: Highlight;
+    }
+
+    [data-dl='allocation-slider'] [data-dl-part='boundary'] {
+      background-color: Canvas;
+    }
+  }
+}

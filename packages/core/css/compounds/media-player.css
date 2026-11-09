@@ -1,0 +1,84 @@
+/*
+ * Tier 2 compound: MediaPlayer (F15.49, catalogue Media "Video player", "Audio player"; atiya VideoEmbed adapted). A
+ * video takes its own shape from the start (aspect-ratio), with rounded corners on the media itself; a tall one narrows
+ * so it never grows taller than the window, and centres. An embed's poster holds one large play button in its centre
+ * and the length badge in a corner; no scrim, no border: the poster is the enclosure. The caption sits under it. Audio
+ * is compact: its title, the native controls, the caption, no wider than a readable line.
+ */
+@layer compounds {
+  [data-dl='media-player'] {
+    display: grid;
+    justify-items: center;
+    gap: var(--c-media-player-caption-gap);
+    inline-size: 100%;
+    margin: 0;
+    min-inline-size: 0;
+  }
+
+  [data-dl='media-player'] > [data-dl-part='stage'] {
+    position: relative;
+    display: grid;
+    inline-size: 100%;
+    aspect-ratio: var(--media-player-ratio);
+    border-radius: var(--c-media-player-radius);
+    background-color: var(--color-bg-sunken);
+    overflow: hidden;
+  }
+
+  /* A tall video narrows to the window's height rather than grow past it. */
+  [data-dl='media-player'][data-tall] > [data-dl-part='stage'] {
+    inline-size: min(100%, calc((100dvh - 2 * var(--c-media-player-screen-gap)) * var(--media-player-aspect)));
+  }
+
+  [data-dl='media-player'] > [data-dl-part='stage'] > :is(video, iframe, [data-dl-part='poster']) {
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+    object-fit: cover;
+  }
+
+  [data-dl='media-player'] > [data-dl-part='stage'] > video {
+    object-fit: contain;
+    background-color: var(--color-bg-sunken);
+  }
+
+  [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='play'] {
+    grid-area: 1 / 1;
+    place-self: center;
+  }
+
+  [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='length'] {
+    position: absolute;
+    inset-block-end: var(--c-media-player-badge-inset);
+    inset-inline-end: var(--c-media-player-badge-inset);
+    display: flex;
+  }
+
+  [data-dl='media-player'] [data-dl-part='caption'] {
+    justify-self: stretch;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='media-player'][data-kind='audio'] {
+    justify-items: stretch;
+    max-inline-size: var(--c-media-player-audio-width);
+  }
+
+  [data-dl='media-player'][data-kind='audio'] > [data-dl-part='title'] {
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='media-player'][data-kind='audio'] > audio {
+    inline-size: 100%;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='media-player'] > [data-dl-part='stage'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

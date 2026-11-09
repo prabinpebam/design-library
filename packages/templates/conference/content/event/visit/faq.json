@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "faq",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Questions",
+        "title": "Before you come",
+        "lead": "If yours isn’t here, email hello@example.com.",
+        "layout": "stacked"
+      },
+      {
+        "type": "questions",
+        "heading": "Common questions",
+        "items": [
+          {
+            "title": "Will talks be recorded?",
+            "text": "Yes, every talk, online two weeks after the event."
+          },
+          {
+            "title": "Can I get a refund?",
+            "text": "Until 1 February, minus a €20 fee; after that, transfer your ticket instead."
+          },
+          {
+            "title": "Is there food for every diet?",
+            "text": "Yes; tell us yours when you name the attendee."
+          }
+        ]
+      }
+    ]
+  }
+}

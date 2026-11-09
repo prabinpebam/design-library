@@ -1,0 +1,90 @@
+/*
+ * Tier 2 compound: Notifications (F15.54, catalogue Feedback "Notification (pill)", "Hard-dismiss notification",
+ * "Stack and queue"; ui-states notification pill). One region at the bottom of the window, centred, in the top layer
+ * while it shows anything. Each pill is one raised surface with a shadow (its one boundary): a status icon in its
+ * status colour, the message, a count for repeats, one quiet action and Close. Rises and fades in; under reduced
+ * motion the rise is zeroed through the motion tokens and only the fade is left. Q65 C15 (M8): the other pills shift
+ * into place when one arrives or leaves (useFlipList); an update cross-fades its words (Morph) as the width eases.
+ */
+@layer compounds {
+  [data-dl='notifications'] {
+    position: fixed;
+    inset: auto 0 0;
+    margin: 0 auto;
+    padding: 0 var(--c-notifications-edge) var(--c-notifications-edge);
+    border: 0;
+    background: none;
+    overflow: visible;
+    inline-size: auto;
+    max-inline-size: calc(var(--c-notifications-max-width) + 2 * var(--c-notifications-edge));
+    z-index: var(--c-notifications-layer);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--c-notifications-gap);
+    pointer-events: none;
+  }
+
+  [data-dl='notifications']:popover-open {
+    display: flex;
+  }
+
+  [data-dl='notifications'] > * {
+    pointer-events: auto;
+  }
+
+  [data-dl='notifications'] [data-dl-part='pill'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-notifications-content-gap);
+    min-block-size: var(--c-notifications-height);
+    max-inline-size: 100%;
+    padding: var(--c-notifications-padding-block) var(--c-notifications-padding-inline);
+    border-radius: var(--c-notifications-radius);
+    background-color: var(--material-floating-bg, var(--color-bg-raised));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    color: var(--color-text);
+    box-shadow: var(--shadow-overlay);
+    opacity: 1;
+    translate: 0 0;
+    /* Q65 C15: a new pill rises from the bottom and fades in; with reduced motion it only fades. */
+    transition:
+      opacity var(--duration-change) var(--easing-enter),
+      translate var(--duration-move) var(--easing-enter);
+  }
+
+  /* Dismissed: it fades out where it is, one step shorter (kept mounted by useExiting, inert meanwhile). */
+  [data-dl='notifications'] [data-dl-part='pill'][data-leaving] {
+    opacity: 0;
+    transition: opacity var(--duration-quick) var(--easing-exit);
+  }
+
+  @starting-style {
+    [data-dl='notifications'] [data-dl-part='pill'] {
+      opacity: 0;
+      translate: 0 var(--c-notifications-rise);
+    }
+  }
+
+  [data-dl='notifications'] [data-dl-part='status'] {
+    display: inline-flex;
+    flex: none;
+  }
+
+  [data-dl='notifications'] [data-tone='info'] [data-dl-part='status'] { color: var(--color-status-info-fg); }
+  [data-dl='notifications'] [data-tone='success'] [data-dl-part='status'] { color: var(--color-status-success-fg); }
+  [data-dl='notifications'] [data-tone='warning'] [data-dl-part='status'] { color: var(--color-status-warning-fg); }
+  [data-dl='notifications'] [data-tone='error'] [data-dl-part='status'] { color: var(--color-status-danger-fg); }
+
+  [data-dl='notifications'] [data-dl-part='message'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='notifications'] [data-dl-part='pill'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

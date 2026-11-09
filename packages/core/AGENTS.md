@@ -1,0 +1,103 @@
+# Design Library: guide for agents using it
+
+You're building a website or app with this library. This file tells you where everything is, the rules you must never break, and the steps for each task. It is for **using** the library; changing the library itself follows the repository root's `AGENTS.md`.
+
+## What it is
+
+A token-driven, data-driven UI library. Four tiers sit on tokens, and screens are drawn from JSON:
+
+| Tier | What it is | You use it by |
+| --- | --- | --- |
+| **Tokens** | Every design decision as data (colour, type, space, shape, motion, materials), generated into CSS custom properties | Choosing a preset or editing a config file, then `npm run tokens` |
+| **Fundamentals** | Universal building blocks: text, buttons, fields, lists, Stack, Cluster, Grid… | Importing from `@design-library/core/react` and passing props |
+| **Compounds** | Arrangements of fundamentals for a need: Card, Dialog, Toolbar, Navigation… | The same import; content through props and slots |
+| **Layouts** | A screen or section with named regions: SiteLayout, AppLayout, ChatLayout, EditorLayout… | The same import, or by name in a template manifest |
+| **Templates** | A collection of layouts for one kind of product, with a content schema, content JSON and any custom parts | `TemplateView` from `@design-library/core/render` with a template's content |
+
+Components are **sealed**: no `className` or `style` props. Their look comes only from tokens; their content from props or content JSON.
+
+## Find things here first
+
+| You need | Read |
+| --- | --- |
+| Any exact name: a component and its props, a block type and its fields, a layout and its required settings, a template and its layouts, a token and its CSS variable, a preset, an icon, a schema, a command | `agent/index.json` (generated from source; never hand-edited) |
+| One component's full contract: every prop with its type, default and comment, accessibility, keys, the tokens it reads, what it's built from | `agent/components/{Name}.json` (template parts: `{template}.{Name}.json`) |
+| The content schemas | `schemas/` (`template.schema.json`, `content.schema.json`, `blocks.schema.json`, `assets.schema.json`) and each template's `content.schema.json` |
+| How a part looks in every context | The library app (optional): `npm run dev`, then `http://127.0.0.1:8766/`; each component's `libraryPage` in the index |
+| Working examples | `packages/templates/*`: eight templates, all content as JSON; `apps/example/` with `packages/templates/harbour/`, the smallest app and template built by following this guide |
+
+Search the index before writing anything: `Select-String -Path packages/core/agent/index.json -Pattern '"name": "Card"'` (PowerShell) or `grep -n '"name": "Card"' packages/core/agent/index.json`.
+
+## Never
+
+1. **Never style a view.** No `className`, `style`, CSS file, inline colour, size or duration in your pages, views or content. Arrange with layouts and Stack, Cluster and Grid; the look comes from tokens.
+2. **Never fork a component.** Don't copy, wrap-and-replace, patch or restyle a core component, and never select `[data-dl='…']` in your CSS. Use the [seam ladder](#the-seam-ladder).
+3. **Never read primitives.** Read semantic roles (`--color-text`, `--space-stack-item`) or a part's own tokens; never `p.*`, and `spectrum.*` and `set.*` only for their declared purpose (charts, identity), never for meaning.
+4. **Never put markup in content.** Content is pure JSON: plain text, numbers, enums, ids and links. No HTML, Markdown, CSS, class names, colours or pixel values.
+5. **Never edit a generated file.** `tokens.colour.json`, `tokens.space-shape.json`, `css/tokens.css`, `tokens/generated/*`, a template's generated `content.schema.json`, and everything in `agent/` are written by commands.
+6. **Never add a core component to solve one product's need.** Make a custom part inside your template; promotion to core is a separate, reviewed change.
+7. **Never use colour alone for meaning, or a button as an on/off toggle.** Status reads `color.status.*` with an icon or words; binary settings use `Switch`.
+8. **Never hard-code words a person reads inside a component.** They come from content or props.
+
+## The seam ladder
+
+When something doesn't look or behave as you need, take the first step that works:
+
+| Step | Seam | Example |
+| --- | --- | --- |
+| 1 | A **prop or variant** the component already has | `<Button label="Delete page" emphasis="danger" size="l" />` (check `agent/components/Button.json`) |
+| 2 | A **slot**: pass another part as children or a `ReactNode` prop | A `Badge` into a `Card`'s `meta`, buttons into its `actions` |
+| 3 | A **context attribute** on an ancestor | `data-density="compact"`, `data-scheme="dark"`, `data-contrast="more"` |
+| 4 | The **theme**: a preset, or a token config file, then `npm run tokens` | Brand colours in `colour.config.json`; space and shape in `space-shape.config.json` |
+| 5 | A **custom part inside your template** (fundamental, compound, layout or block type) with its own `t.{template}.*` tokens | `conference.SponsorWall` in `packages/templates/conference/parts/` |
+| 6 | A **core change**: a new variant or slot, reviewed on its own | Only when two or more products need it |
+
+## Tasks
+
+| Task | Steps | Status |
+| --- | --- | --- |
+| Install and integrate into a website or app | [guide/1-install.md](guide/1-install.md) | Ready |
+| Write a content or view schema (JSON) and its content | [guide/2-content.md](guide/2-content.md) | Ready |
+| Customize tokens: presets, colour, type, space, shape, materials, motion | [guide/3-tokens.md](guide/3-tokens.md) | Ready |
+| Customize fundamentals and compounds through public seams | [guide/4-components.md](guide/4-components.md) | Ready |
+| Use a layout, or make one inside a template | [guide/5-layouts.md](guide/5-layouts.md) | Ready |
+| Use a template, then adapt one as your own | [guide/6-templates.md](guide/6-templates.md) | Ready |
+| Apply the principles: the rules and decision procedure for each token category and component family | [guide/7-principles.md](guide/7-principles.md) (generated from `principles/principles.json`) | Ready |
+| Decide how to show information: a visual (chart, icon, picture, illustration, media) or exact text | [docs/visual-representation.md](../../docs/visual-representation.md): run the reasoning chain RC1–RC8 | Ready to follow; chart components and picture roles are planned (BP1–BP10), not built |
+
+Steps are written in the order an agent usually needs them; each stands alone and ends with its checks.
+
+## Checks
+
+Run from the repository root. Each one exits non-zero and names the file and the fix.
+
+| After you change | Run |
+| --- | --- |
+| Content JSON, a manifest or a template schema | `npm run check:content` |
+| A template's `types.ts` (application records) | `npm run content:schemas`, then `npm run check:content` |
+| A token config, a template's tokens | `npm run tokens`, then `npm run tokens:check` |
+| TypeScript or TSX | `npm run typecheck` |
+| A view or a template's bindings | `npm run check:views` |
+| A custom part's CSS | `npm run check:parts`, `npm run check:materials`, `npm run check:motion` |
+| A component, block type, template or token | `npm run agent:index` (keeps this index true; `npm run agent:index:check` fails when stale) |
+| A principle or the elevation ladder (`principles/*.json`) | `npm run agent:index` (rewrites `guide/7-principles.md`; the library's Principles sections read the same file) |
+| Anything before you call it done | `npm run build -w apps/library`, then open the screen |
+
+## Words
+
+| Term | Means |
+| --- | --- |
+| **Semantic role** | A token named for its job (`color.text`, `space.stack-item`); what components read |
+| **Component token** | A part's own token (`c.button.*`, `t.conference.countdown.*`) aliasing semantic roles |
+| **Primitive** | A raw value token (`p.*`); private |
+| **Context** | A setting the whole subtree follows: scheme (light, dark), contrast (standard, more), motion (reduce), density, material |
+| **Preset** | A saved set of token choices for one category (colour, type, icons, space, shape, material), or a global preset naming one per category |
+| **Material** | The surface a part sits on (canvas, raised, floating, overlay…); frosted or solid by one global setting |
+| **Template** | A folder with `template.json` (manifest), `content.schema.json`, content files, assets and custom parts |
+| **Layout** | In a manifest: one screen (an id, a layout component and its regions) |
+| **Region** | A named slot of a layout (`header`, `main`, `footer`) that holds blocks |
+| **Block** | One typed piece of content in a region (`{ "type": "hero", … }`), drawn by a component through the registry |
+| **Record** | An application layout's content: one typed object (a chat's threads, a board's issues) in place of regions |
+| **Custom part** | A fundamental, compound, layout or block type that lives inside one template, named `{template}.{Part}` |
+| **Seam** | A public way to change something: a prop, slot, context attribute, token or template part |
+| **Principle** | A rule from one of the frameworks behind the library (colour, spacing, motion…); all of them, with their decision procedures, are in `guide/7-principles.md` |

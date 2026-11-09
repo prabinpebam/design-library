@@ -1,0 +1,105 @@
+/*
+ * Tier 2 compound: ImageGrid (F15.37, Q53.3; atiya Gallery, AlbumGrid). One list, four arrangements, one small gap.
+ * Standard: equal frames in as many columns as fit. Quilted: square cells, dense, some pictures across two. Masonry:
+ * columns of whole pictures (space under each is its own padding, so nothing depends on a neighbour). Justified: rows
+ * of whole pictures that grow by their shape to fill the width; the last row keeps its natural size.
+ */
+@layer compounds {
+  [data-dl='image-grid'] {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='image-grid'] > [data-dl-part='item'] {
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  [data-dl='image-grid'][data-layout='standard'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--c-image-grid-min)), 1fr));
+    gap: var(--c-image-grid-gap);
+  }
+
+  [data-dl='image-grid'][data-layout='quilted'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--c-image-grid-cell), 1fr));
+    grid-auto-rows: 1fr;
+    grid-auto-flow: dense;
+    gap: var(--c-image-grid-gap);
+  }
+
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span='wide'] { grid-column: span 2; }
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span='tall'] { grid-row: span 2; }
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span='large'] { grid-column: span 2; grid-row: span 2; }
+
+  /* A spanning picture fills its cells and takes no part in sizing them: the square cells set the rows. */
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span] {
+    position: relative;
+  }
+
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span] > :is([data-dl='image'], [data-dl-part='open']) {
+    position: absolute;
+    inset: 0;
+  }
+
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span] [data-dl='image'] {
+    block-size: 100%;
+    aspect-ratio: auto;
+  }
+
+  [data-dl='image-grid'][data-layout='masonry'] {
+    columns: var(--c-image-grid-min);
+    column-gap: var(--c-image-grid-gap);
+  }
+
+  [data-dl='image-grid'][data-layout='masonry'] > [data-dl-part='item'] {
+    break-inside: avoid;
+    padding-block-end: var(--c-image-grid-gap);
+  }
+
+  [data-dl='image-grid'][data-layout='justified'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-image-grid-gap);
+  }
+
+  [data-dl='image-grid'][data-layout='justified'] > [data-dl-part='item'] {
+    --shape: calc(var(--w, 3) / var(--h, 2));
+
+    flex: var(--shape) 1 calc(var(--shape) * var(--c-image-grid-row));
+  }
+
+  [data-dl='image-grid'][data-layout='justified'] > [data-dl-part='item'] [data-dl='image'] {
+    block-size: 100%;
+  }
+
+  /* The last row keeps its pictures' natural size instead of stretching them across the width. */
+  [data-dl='image-grid'][data-layout='justified']::after {
+    content: '';
+    flex: 1000 1 0;
+  }
+
+  [data-dl='image-grid'] [data-dl-part='open'] {
+    display: grid;
+    padding: 0;
+    border: 0;
+    border-radius: var(--c-image-radius);
+    background: none;
+    cursor: zoom-in;
+  }
+
+  [data-dl='image-grid'] [data-dl-part='open']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @media (hover: hover) {
+    [data-dl='image-grid'] [data-dl-part='open']:hover [data-dl='image'] > img {
+      opacity: var(--c-image-grid-hover-opacity);
+    }
+  }
+}

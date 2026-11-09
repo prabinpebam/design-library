@@ -1,0 +1,43 @@
+/*
+ * Tier 1 fundamental: Popover (F15.46, catalogue Overlays). The trigger is a Button; the surface opens in the top
+ * layer, placed by behaviour/anchor.ts. One enclosure (the shared popup surface, border and shadow); padding once, at
+ * the surface layer; title, content and actions spaced by the surface's gap.
+ */
+@layer fundamentals {
+  [data-dl='popover'] {
+    display: inline-flex;
+  }
+
+  [data-dl='popover'] > [data-dl-part='surface'] {
+    position: fixed;
+    z-index: var(--c-popup-layer);
+    inset: auto;
+    inset-block-start: var(--anchored-y, 0px);
+    inset-inline-start: var(--anchored-start, 0px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-popover-gap);
+    inline-size: min(var(--c-popover-width), calc(100vw - 2 * var(--space-margin-page)));
+    padding: var(--c-popover-padding);
+    border: var(--c-popup-border-width) solid var(--c-popup-border);
+    border-radius: var(--c-popup-radius);
+    background-color: var(--material-floating-bg, var(--c-popup-bg));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-popup-shadow);
+    color: var(--color-text);
+    /* Arrives and leaves through data-presence="popup" (motion.css, Q65 C7). */
+  }
+
+  [data-dl='popover'] > [data-dl-part='surface']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='popover'] > [data-dl-part='surface'][hidden],
+  [data-dl='popover'] > [data-dl-part='surface']:not(:popover-open) {
+    display: none;
+  }
+}

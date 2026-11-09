@@ -1,0 +1,37 @@
+/*
+ * Tier 2 compound: ScreenPreview (F15.71, Q61). A live window of a fixed width onto a whole screen. The frame's
+ * outline is its one boundary (the screen inside has its own surface); the caption sits under it, muted.
+ */
+@layer compounds {
+  [data-dl='screen-preview'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-screen-preview-gap);
+    margin: 0;
+    max-inline-size: 100%;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='frame'] {
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: var(--c-screen-preview-height);
+    border: var(--border-hairline) solid var(--color-border);
+    border-radius: var(--c-screen-preview-radius);
+    background-color: var(--color-bg);
+  }
+
+  [data-dl='screen-preview'][data-width='phone'] > [data-dl-part='frame'] {
+    inline-size: var(--c-screen-preview-phone);
+    max-inline-size: 100%;
+  }
+
+  [data-dl='screen-preview'][data-width='tablet'] > [data-dl-part='frame'] {
+    inline-size: var(--c-screen-preview-tablet);
+    max-inline-size: 100%;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='caption'] {
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+  }
+}

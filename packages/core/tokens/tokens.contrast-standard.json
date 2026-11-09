@@ -1,0 +1,34 @@
+{
+  "color": {
+    "text-muted": {
+      "$type": "color",
+      "$value": "{p.standard.text-muted}",
+      "$description": "Standard contrast: restores the theme's text-muted where a person turned more contrast off"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{p.standard.border}",
+      "$description": "Standard contrast: restores the theme's border where a person turned more contrast off"
+    },
+    "border-strong": {
+      "$type": "color",
+      "$value": "{p.standard.border-strong}",
+      "$description": "Standard contrast: restores the theme's border-strong where a person turned more contrast off"
+    },
+    "border-group": {
+      "$type": "color",
+      "$value": "{color.bg-sunken}",
+      "$description": "Standard contrast: restores the group outline to the fill's tone, drawing nothing"
+    },
+    "border-control": {
+      "$type": "color",
+      "$value": "{p.standard.border-control}",
+      "$description": "Standard contrast: restores the theme's soft control outline where a person turned more contrast off"
+    },
+    "bg-control": {
+      "$type": "color",
+      "$value": "{p.standard.bg-control}",
+      "$description": "Standard contrast: restores the theme's control fill where a person turned more contrast off"
+    }
+  }
+}

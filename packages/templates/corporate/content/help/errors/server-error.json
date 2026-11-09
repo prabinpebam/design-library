@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "corporate",
+  "layout": "server-error",
+  "contentVersion": 1,
+  "settings": {
+    "current": "server-error"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Error 500",
+        "title": "Something went wrong on our side",
+        "text": "The page couldn’t load. It isn’t anything you did. Try again in a minute; if it keeps happening, call your planner.",
+        "links": [
+          {
+            "label": "Try again",
+            "href": "/server-error"
+          },
+          {
+            "label": "Go to the home page",
+            "href": "/home"
+          }
+        ],
+        "note": "Planners answer on +31 10 000 0000, 8:00 to 18:00."
+      }
+    ]
+  }
+}

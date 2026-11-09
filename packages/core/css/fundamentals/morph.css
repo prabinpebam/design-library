@@ -1,0 +1,80 @@
+/*
+ * Tier 1 fundamental: Morph (Q65 P3, S2). One box; its content changes state in place. The current layer is in flow;
+ * the leaving layer sits over it at the top start corner, out of flow, fading out over quick (easing exit) while the
+ * new layer fades in over change. The height eases between the two (Morph.tsx, Web Animations, size="layout").
+ * Passes its container's size limits through, so a scrolling body inside still scrolls.
+ */
+@layer fundamentals {
+  [data-dl='morph'] {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    max-block-size: inherit;
+  }
+
+  [data-dl='morph'] > [data-dl-part='layer'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    max-block-size: inherit;
+    opacity: 1;
+    transition: opacity var(--duration-change) var(--easing-standard);
+  }
+
+  /* A state that arrives after first render fades in (Z19: first render never animates). */
+  @starting-style {
+    [data-dl='morph'][data-settled] > [data-dl-part='layer'] {
+      opacity: 0;
+    }
+  }
+
+  [data-dl='morph'] > [data-dl-part='layer'][data-leaving] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-quick) var(--easing-exit);
+  }
+
+  /*
+   * Zoom (C21): the layers scale the way the level moves, as transitions, so a second zoom mid-way retargets from where
+   * each layer is drawn (M8). Out: the new level arrives from larger, the old leaves smaller; in: the reverse.
+   */
+  [data-dl='morph']:is([data-motion='zoom-out'], [data-motion='zoom-in']) > [data-dl-part='layer'] {
+    scale: 1;
+    transition:
+      opacity var(--duration-change) var(--easing-standard),
+      scale var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='morph'][data-motion='zoom-out'] > [data-dl-part='layer'][data-leaving] {
+    scale: var(--motion-zoom-scale);
+  }
+
+  [data-dl='morph'][data-motion='zoom-in'] > [data-dl-part='layer'][data-leaving] {
+    scale: calc(2 - var(--motion-zoom-scale));
+  }
+
+  [data-dl='morph']:is([data-motion='zoom-out'], [data-motion='zoom-in']) > [data-dl-part='layer'][data-leaving] {
+    transition:
+      opacity var(--duration-quick) var(--easing-exit),
+      scale var(--duration-move) var(--easing-standard);
+  }
+
+  @starting-style {
+    [data-dl='morph'][data-settled][data-motion='zoom-out'] > [data-dl-part='layer'] {
+      scale: calc(2 - var(--motion-zoom-scale));
+    }
+
+    [data-dl='morph'][data-settled][data-motion='zoom-in'] > [data-dl-part='layer'] {
+      scale: var(--motion-zoom-scale);
+    }
+  }
+
+  /* A step driven by keys swaps at once (Z8). */
+  [data-dl='morph'][data-motion='none'] > [data-dl-part='layer'] {
+    transition: none;
+  }
+}

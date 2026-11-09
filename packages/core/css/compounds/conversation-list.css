@@ -1,0 +1,100 @@
+/*
+ * Tier 2 compound: ConversationList (F15.69, Q57). Groups separated by space and a small muted heading; rows sit
+ * apart by the rows role (`space.stack-row`, Q60), so two fills never touch; bare at rest. Hover, focus and the open row take a tint (the open row's tint stays: a
+ * fact about it, not a moment); the More button appears only on hover, focus and the open row, holding its place.
+ */
+@layer compounds {
+  [data-dl='conversation-list'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-conversation-list-group-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='heading'] {
+    margin: 0;
+    padding-inline: var(--c-conversation-list-padding-inline);
+    color: var(--color-text-muted);
+    font-size: var(--type-body-sm-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='items'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-conversation-list-row-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='row'] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-block-size: var(--c-conversation-list-row);
+    border-radius: var(--c-conversation-list-radius);
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='row'][data-current] {
+    background-color: var(--c-conversation-list-current-fill);
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='link'] {
+    flex: 1;
+    min-inline-size: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    padding-inline: var(--c-conversation-list-padding-inline);
+    border-radius: inherit;
+    color: var(--color-text);
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='link']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='more'] {
+    display: inline-flex;
+    flex: none;
+    padding-inline-end: var(--space-inset-xs);
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='rename'] {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  @media (hover: hover) {
+    [data-dl='conversation-list'] [data-dl-part='row']:not([data-current]):hover {
+      background-color: var(--c-conversation-list-hover-fill);
+    }
+
+    [data-dl='conversation-list'] [data-dl-part='row']:not([data-current]):not(:hover):not(:focus-within) [data-dl-part='more'] {
+      opacity: 0;
+    }
+  }
+
+  [data-dl='conversation-list'] [data-dl-part='row']:active {
+    background-color: var(--c-conversation-list-pressed-fill);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='conversation-list'] [data-dl-part='row'][data-current] {
+      outline: var(--border-hairline) solid Highlight;
+    }
+  }
+}

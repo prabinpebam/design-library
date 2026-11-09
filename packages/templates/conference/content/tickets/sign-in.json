@@ -1,0 +1,37 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "sign-in",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Sign in",
+        "intro": "Use the email address on your ticket; we’ll send a link.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          }
+        ],
+        "submit": "Email me a link",
+        "sent": "Link sent. Check your email.",
+        "links": [
+          {
+            "label": "No ticket yet? Get one",
+            "href": "/tickets"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "chat",
+  "layout": "settings-data",
+  "contentVersion": 1,
+  "settings": {
+    "current": "settings-general",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Data controls",
+        "intro": "What happens to your chats.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Your data",
+            "items": [
+              {
+                "id": "train",
+                "label": "Improve the model for everyone",
+                "kind": "switch",
+                "on": false,
+                "description": "Off: your chats are never used to train it."
+              },
+              {
+                "id": "keep",
+                "label": "Keep chats for",
+                "kind": "choice",
+                "options": [
+                  "Forever",
+                  "1 year",
+                  "30 days"
+                ],
+                "value": "Forever"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Export all chats",
+            "href": "/settings-data"
+          },
+          {
+            "label": "Back to General",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ]
+  }
+}

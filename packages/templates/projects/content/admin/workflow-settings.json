@@ -1,0 +1,99 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "workflow-settings",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Workflow",
+        "intro": "The columns on the board and what moving between them does.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Statuses",
+            "items": [
+              {
+                "id": "todo",
+                "label": "To do",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "progress",
+                "label": "In progress",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "review",
+                "label": "In review",
+                "kind": "switch",
+                "on": true,
+                "description": "Needs a reviewer before Done."
+              },
+              {
+                "id": "done",
+                "label": "Done",
+                "kind": "switch",
+                "on": true
+              }
+            ]
+          },
+          {
+            "heading": "Rules",
+            "items": [
+              {
+                "id": "done-rule",
+                "label": "When an issue is done",
+                "kind": "choice",
+                "options": [
+                  "Keep it on the board",
+                  "Hide it after a day",
+                  "Hide it at once"
+                ],
+                "value": "Hide it after a day"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Back to project settings",
+            "href": "/project-settings"
+          }
+        ]
+      }
+    ]
+  }
+}

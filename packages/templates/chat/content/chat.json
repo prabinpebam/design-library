@@ -1,0 +1,578 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "chat",
+  "layout": "chat",
+  "contentVersion": 1,
+  "record": {
+    "assistant": "Assistant",
+    "sidebar": {
+      "groups": [
+        {
+          "label": "Garden redesign",
+          "items": [
+            {
+              "id": "garden",
+              "title": "Terraces for a sloping garden"
+            }
+          ]
+        },
+        {
+          "label": "Today",
+          "items": [
+            {
+              "id": "walk",
+              "title": "Weekend walk in the Lake District"
+            },
+            {
+              "id": "ring",
+              "title": "Change the focus ring colour"
+            }
+          ]
+        },
+        {
+          "label": "Yesterday",
+          "items": [
+            {
+              "id": "bill",
+              "title": "Explain my electricity bill"
+            }
+          ]
+        },
+        {
+          "label": "Previous 7 days",
+          "items": [
+            {
+              "id": "notes",
+              "title": "Summarise the release notes"
+            },
+            {
+              "id": "lisbon",
+              "title": "Lisbon in three days"
+            },
+            {
+              "id": "card",
+              "title": "Birthday card ideas"
+            }
+          ]
+        }
+      ],
+      "account": {
+        "name": "Sam Rivera",
+        "plan": "Free plan",
+        "menu": [
+          {
+            "value": "settings",
+            "label": "Settings"
+          },
+          {
+            "value": "help",
+            "label": "Help"
+          },
+          {
+            "value": "logout",
+            "label": "Log out"
+          }
+        ]
+      }
+    },
+    "models": [
+      {
+        "value": "fast",
+        "label": "Fast",
+        "description": "Quick answers for everyday questions"
+      },
+      {
+        "value": "thinking",
+        "label": "Thinking",
+        "description": "Takes longer and reasons step by step"
+      }
+    ],
+    "model": "fast",
+    "tools": [
+      {
+        "value": "image",
+        "label": "Create image",
+        "description": "Draw a picture from your words",
+        "icon": "image"
+      },
+      {
+        "value": "research",
+        "label": "Deep research",
+        "description": "Read many sources and write a report",
+        "icon": "search"
+      },
+      {
+        "value": "web",
+        "label": "Web search",
+        "description": "Look things up on the web",
+        "icon": "globe"
+      }
+    ],
+    "disclaimer": "Answers can be wrong. Check important facts.",
+    "welcome": {
+      "greeting": "What can I help with?",
+      "suggestions": [
+        "Plan a weekend walk",
+        "Explain a bill",
+        "Draw a picture"
+      ],
+      "temporary": {
+        "greeting": "Temporary chat",
+        "note": "This chat won’t appear in your history or be used to improve answers."
+      }
+    },
+    "threads": [
+      {
+        "id": "garden",
+        "title": "Terraces for a sloping garden",
+        "turns": [
+          {
+            "id": "g1",
+            "from": "person",
+            "attachments": [
+              {
+                "kind": "image",
+                "name": "garden-slope.png",
+                "src": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20480%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22s%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23d6eef5%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5fbfd%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22640%22%20height%3D%22480%22%20fill%3D%22url(%23s)%22%2F%3E%3Ccircle%20cx%3D%22440%22%20cy%3D%22110%22%20r%3D%2252%22%20fill%3D%22%23fff4b8%22%2F%3E%3Cpath%20d%3D%22M0%20320%20C120%20250%20230%20270%20330%20300%20S520%20250%20640%20290%20V480%20H0z%22%20fill%3D%22%239fcf8f%22%2F%3E%3Cpath%20d%3D%22M0%20370%20C150%20320%20270%20345%20390%20372%20S560%20340%20640%20360%20V480%20H0z%22%20fill%3D%22%2379b46a%22%2F%3E%3Cpath%20d%3D%22M0%20425%20C170%20395%20330%20410%20640%20405%20V480%20H0z%22%20fill%3D%22%234f8f45%22%2F%3E%3C%2Fsvg%3E",
+                "alt": "A gently sloping garden with three green terraces."
+              }
+            ],
+            "blocks": [
+              {
+                "type": "text",
+                "text": "How many terraces would suit this slope?"
+              }
+            ]
+          },
+          {
+            "id": "g2",
+            "from": "assistant",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Three terraces about 40 cm high suit it: low enough to build without a structural engineer, and each wide enough for a bed and a path."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "walk",
+        "title": "Weekend walk in the Lake District",
+        "turns": [
+          {
+            "id": "w1",
+            "from": "person",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Plan a two-day walk in the Lake District for a beginner, with a night in a village."
+              }
+            ]
+          },
+          {
+            "id": "w2",
+            "from": "assistant",
+            "thinking": {
+              "summary": "Thought for 8 seconds",
+              "steps": [
+                "Looked for routes under 10 km a day with paths most of the way.",
+                "Chose Grasmere for the night: both days start or end there.",
+                "Checked that each day has a café or a pub on the way."
+              ]
+            },
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Here’s a gentle plan with a night in Grasmere between the two days."
+              },
+              {
+                "type": "heading",
+                "text": "Two days, about 14 km"
+              },
+              {
+                "type": "table",
+                "label": "The two days",
+                "columns": [
+                  {
+                    "key": "day",
+                    "header": "Day"
+                  },
+                  {
+                    "key": "route",
+                    "header": "Route"
+                  },
+                  {
+                    "key": "distance",
+                    "header": "Distance"
+                  }
+                ],
+                "rows": [
+                  {
+                    "day": "Saturday",
+                    "route": "Ambleside to Grasmere by Rydal Water",
+                    "distance": "6 km"
+                  },
+                  {
+                    "day": "Sunday",
+                    "route": "Easedale Tarn and back",
+                    "distance": "8 km"
+                  }
+                ]
+              },
+              {
+                "type": "list",
+                "items": [
+                  "Wear boots with a firm sole: the tarn path is stony.",
+                  "Carry a waterproof even when the forecast is dry.",
+                  "The 555 bus links Ambleside and Grasmere if a day runs long."
+                ]
+              },
+              {
+                "type": "sources",
+                "items": [
+                  {
+                    "label": "Foundation, chat inventory",
+                    "href": "http://127.0.0.1:8765/#component-coverage.md"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "w3",
+            "from": "person",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Draw me the view from Easedale Tarn in the morning."
+              }
+            ]
+          },
+          {
+            "id": "w4",
+            "from": "assistant",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Here’s the tarn just after sunrise."
+              },
+              {
+                "type": "image",
+                "picture": "tarnMorning",
+                "ratio": "photo"
+              }
+            ]
+          },
+          {
+            "id": "w5",
+            "from": "person",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "And one at dusk, please."
+              }
+            ]
+          },
+          {
+            "id": "w6",
+            "from": "assistant",
+            "blocks": [
+              {
+                "type": "generating",
+                "label": "Adding the evening light",
+                "picture": "tarnDusk",
+                "ratio": "photo",
+                "seconds": 8
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ring",
+        "title": "Change the focus ring colour",
+        "turns": [
+          {
+            "id": "r1",
+            "from": "person",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "How do I change the focus ring colour for text fields only?"
+              }
+            ]
+          },
+          {
+            "id": "r2",
+            "from": "assistant",
+            "earlier": [
+              [
+                {
+                  "type": "text",
+                  "text": "Set `c.field.ring-color` in the token source and rebuild the tokens."
+                }
+              ]
+            ],
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Change `c.field.ring-color` in the token source, then run `npm run tokens`. Every text-entry box reads it; buttons keep the page’s focus colour."
+              },
+              {
+                "type": "code",
+                "label": "tokens.json",
+                "code": "{\n  \"c\": {\n    \"field\": {\n      \"ring-color\": { \"$type\": \"color\", \"$value\": \"{color.accent}\" }\n    }\n  }\n}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bill",
+        "title": "Explain my electricity bill",
+        "turns": [
+          {
+            "id": "b1",
+            "from": "person",
+            "attachments": [
+              {
+                "kind": "file",
+                "name": "electricity-bill-october.pdf",
+                "type": "PDF"
+              }
+            ],
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Why is this month’s bill higher than last month’s?"
+              }
+            ]
+          },
+          {
+            "id": "b2",
+            "from": "assistant",
+            "thinking": {
+              "summary": "Read 1 file",
+              "steps": [
+                "Read electricity-bill-october.pdf, 3 pages."
+              ]
+            },
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Two things raised it:"
+              },
+              {
+                "type": "list",
+                "numbered": true,
+                "items": [
+                  "You used 18% more, mostly in the evenings.",
+                  "The standing charge rose from 1 October."
+                ]
+              },
+              {
+                "type": "card",
+                "eyebrow": "Suggestion",
+                "title": "Try the evening tariff",
+                "description": "Cheaper after 8 pm, when most of your use happens.",
+                "action": "Compare tariffs"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "notes",
+        "title": "Summarise the release notes",
+        "turns": [
+          {
+            "id": "n1",
+            "from": "person",
+            "attachments": [
+              {
+                "kind": "file",
+                "name": "release-notes-0.1.md",
+                "type": "Markdown"
+              }
+            ],
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Summarise these in three lines."
+              }
+            ]
+          },
+          {
+            "id": "n2",
+            "from": "assistant",
+            "blocks": [
+              {
+                "type": "error",
+                "text": "The connection dropped while writing the reply. Your message is kept.",
+                "retry": [
+                  {
+                    "type": "list",
+                    "items": [
+                      "Tokens now cover colour, space, shape, type and motion.",
+                      "Every text field shares one focus ring.",
+                      "Chat components arrive: messages, composer and the chat layout."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lisbon",
+        "title": "Lisbon in three days",
+        "turns": [
+          {
+            "id": "l1",
+            "from": "person",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "Three days in Lisbon in spring: what should I not miss?"
+              }
+            ]
+          },
+          {
+            "id": "l2",
+            "from": "assistant",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "One area a day keeps the hills manageable."
+              },
+              {
+                "type": "card",
+                "eyebrow": "Day one",
+                "title": "Alfama and the castle",
+                "description": "Morning at the castle, then down through the lanes to the river.",
+                "picture": "lisbon"
+              },
+              {
+                "type": "card",
+                "eyebrow": "Day two",
+                "title": "Belém",
+                "description": "The monastery, the tower and the riverside walk."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "card",
+        "title": "Birthday card ideas",
+        "turns": [
+          {
+            "id": "c1",
+            "from": "person",
+            "blocks": [
+              {
+                "type": "text",
+                "text": "A quiet design for a birthday card, please."
+              }
+            ]
+          },
+          {
+            "id": "c2",
+            "from": "assistant",
+            "blocks": [
+              {
+                "type": "image",
+                "picture": "card",
+                "ratio": "square"
+              },
+              {
+                "type": "text",
+                "text": "Soft hills and a pink sun, with room for words in the sky."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "current": "walk",
+    "replies": {
+      "thinking": [
+        "Thinking",
+        "Reading your message",
+        "Writing a reply"
+      ],
+      "text": [
+        {
+          "type": "text",
+          "text": "This reply is written in the view data: the example shows how a reply arrives, not a model’s answer."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Words stream in with a soft caret.",
+            "Stop ends the reply where it is.",
+            "Copy, rate, try again or branch from the actions under it."
+          ]
+        }
+      ],
+      "image": [
+        {
+          "type": "text",
+          "text": "Here’s a picture for you."
+        },
+        {
+          "type": "generating",
+          "label": "Creating image",
+          "picture": "garden",
+          "ratio": "square",
+          "variant": "stipple",
+          "seconds": 6
+        }
+      ]
+    },
+    "shareBase": "https://chat.example/share/",
+    "strings": {
+      "notInExample": "{label} isn’t part of this example.",
+      "sources": "Sources:",
+      "replyFailed": "This reply didn’t finish",
+      "tryAgain": "Try again",
+      "thoughtFor": "Thought for {seconds} seconds",
+      "todayGroup": "Today",
+      "branchTitle": "Branch · {title}",
+      "branched": "Branched into a new chat",
+      "archived": "Chat archived",
+      "undo": "Undo",
+      "you": "You",
+      "stopped": "You stopped this reply.",
+      "creatingImage": "Creating an image",
+      "dictation": "Dictation",
+      "newChat": "New chat",
+      "searchChats": "Search chats",
+      "account": "Account",
+      "model": "Model: {model}",
+      "temporaryChat": "Temporary chat",
+      "share": "Share",
+      "shareTitle": "Share this chat",
+      "shareDescription": "Anyone with the link can read the chat as it is now. Later messages stay private.",
+      "done": "Done",
+      "link": "Link",
+      "copyLink": "Copy link",
+      "linkCopied": "Link copied",
+      "search": "Search",
+      "chats": "Chats",
+      "noMatch": "No chats match “{query}”. Try fewer words.",
+      "deleteTitle": "Delete this chat?",
+      "deleteDescription": "“{title}” and its messages will be deleted. This can’t be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleted": "Chat deleted",
+      "settings": "Settings",
+      "suggestions": "Follow-up suggestions",
+      "suggestionsDescription": "Offers next questions under a reply.",
+      "memory": "Memory",
+      "memoryDescription": "Lets the assistant remember what you tell it across chats."
+    }
+  }
+}

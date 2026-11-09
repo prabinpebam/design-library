@@ -1,0 +1,77 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "shared-chat",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Shared chat · 8 November 2026",
+        "title": "Plan a weekend walk",
+        "lead": "A conversation shared by its owner. It won’t change.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "quote",
+            "text": "Plan a gentle loop in the Lake District for Saturday, with a café.",
+            "name": "You"
+          },
+          {
+            "kind": "text",
+            "text": "Try Tarn Hows from Coniston: 3 miles, mostly flat, about 90 minutes. The café at the car park opens at 10."
+          },
+          {
+            "kind": "picture",
+            "picture": "tarnMorning",
+            "caption": "Tarn Hows in the morning."
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Have your own conversation",
+        "lead": "Ask anything; it’s free to start.",
+        "actions": [
+          {
+            "label": "Start chatting",
+            "primary": true,
+            "says": "Use Chats in the header of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

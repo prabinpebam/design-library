@@ -1,0 +1,46 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "my-tickets",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Your tickets",
+        "title": "Order 4417 · 2 tickets",
+        "lead": "Both days, 11–12 March.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Tickets",
+        "items": [
+          {
+            "term": "Ama Mensah",
+            "details": "Two days · badge at the door"
+          },
+          {
+            "term": "Jonas Lind",
+            "details": "Two days · badge at the door"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Can’t make it?",
+        "lead": "Pass a ticket to a colleague until 10 March.",
+        "actions": [
+          {
+            "label": "Transfer a ticket",
+            "primary": true,
+            "says": "Use Transfer a ticket from the footer of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

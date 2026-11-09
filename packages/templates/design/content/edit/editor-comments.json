@@ -1,0 +1,9 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "editor-comments",
+  "contentVersion": 1,
+  "settings": {
+    "mode": "comments"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "colour-config/2",
+  "title": "Theme colour config",
+  "description": "A theme's colour decisions (docs/foundation.md#colour-model). tools/colour.mjs validates the rules this schema can't express (the accent and a tint's from naming a defined slot) and generates tokens.colour.json.",
+  "type": "object",
+  "required": ["contract", "brand", "base", "functional", "spectrum"],
+  "additionalProperties": false,
+  "$defs": {
+    "hex": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "pins": {
+      "description": "Steps held at hand-set values; unpinned steps follow the tone curve bent through them.",
+      "type": "object",
+      "propertyNames": { "pattern": "^(0|25|50|100|200|300|400|500|600|700|800|850|900|950)$" },
+      "additionalProperties": { "$ref": "#/$defs/hex" }
+    },
+    "seeded": {
+      "type": "object",
+      "required": ["seed"],
+      "additionalProperties": false,
+      "properties": { "seed": { "$ref": "#/$defs/hex" }, "pins": { "$ref": "#/$defs/pins" } }
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "$comment": { "type": "string" },
+    "contract": { "const": "colour-config/2" },
+    "brand": {
+      "description": "Up to four brand colours in numbered slots (F7d): numbered, not ranked. At least one is defined; accent names the defined slot that actions, links, focus and selection read.",
+      "type": "object",
+      "required": ["colours"],
+      "additionalProperties": false,
+      "properties": {
+        "$comment": { "type": "string" },
+        "colours": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "enum": ["1", "2", "3", "4"] },
+          "additionalProperties": {
+            "type": "object",
+            "required": ["seed"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "description": "Optional; shown in the library and token descriptions. Default: Brand colour N.", "type": "string", "minLength": 1 },
+              "seed": { "$ref": "#/$defs/hex" },
+              "pins": { "$ref": "#/$defs/pins" }
+            }
+          }
+        },
+        "accent": { "description": "The slot the accent reuses; must be defined. Default 1.", "enum": [1, 2, 3, 4], "default": 1 }
+      }
+    },
+    "base": {
+      "description": "Base colours: black, white and the greys between, always needed. Neutral by default; warm, cool or tinted for the brand's mood.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "$comment": { "type": "string" },
+        "temperature": { "enum": ["neutral", "warm", "cool"], "default": "neutral" },
+        "tint": {
+          "description": "Tints the greys with a hue: a hand-set colour or a brand colour, one of them.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "colour": { "$ref": "#/$defs/hex" },
+            "from": { "description": "A brand colour slot, or accent.", "enum": [1, 2, 3, 4, "accent"] },
+            "strength": { "description": "OKLCH chroma of the tint; at most 0.04 so the base stays greys.", "type": "number", "minimum": 0, "maximum": 0.04, "default": 0.02 }
+          }
+        },
+        "pins": { "$ref": "#/$defs/pins" }
+      }
+    },
+    "functional": {
+      "type": "object",
+      "required": ["info", "success", "warning", "danger"],
+      "additionalProperties": false,
+      "properties": {
+        "info": { "$ref": "#/$defs/seeded" },
+        "success": { "$ref": "#/$defs/seeded" },
+        "warning": { "$ref": "#/$defs/seeded" },
+        "danger": { "$ref": "#/$defs/seeded" }
+      }
+    },
+    "spectrum": {
+      "type": "object",
+      "required": ["hues"],
+      "additionalProperties": false,
+      "properties": {
+        "hues": { "type": "integer", "minimum": 6, "maximum": 24 },
+        "start": { "type": "number", "minimum": 0, "maximum": 360 },
+        "chroma": { "type": "number", "minimum": 0, "maximum": 0.37 }
+      }
+    },
+    "sets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "purpose"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "purpose": { "description": "Required: what the set is for and what it must never be used for. Emitted into each token's $extensions so agents use it correctly.", "type": "string", "minLength": 12 },
+          "demo": { "type": "boolean" },
+          "roles": {
+            "description": "Purpose-scoped exception (Q44): \"category\" makes this set the category colours. The generator emits public roles color.category.1..n (in member order, the same in every context) and color.category.on-1..n (ink, 4.5:1), and checks each member at 3:1 on every surface in every context. Components read only those roles, never set.* directly; status roles never read them. At most one set may claim it. \"ai\" (Q56) makes this set the AI processing gradient: public roles color.ai.1..n (gradient stops, each 3:1 on every surface), read only by the AI processing state; never status, never focus or selection. At most one set may claim each.",
+            "enum": ["category", "ai"]
+          },
+          "colours": { "type": "object", "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" }, "additionalProperties": { "$ref": "#/$defs/hex" } },
+          "generate": {
+            "type": "object",
+            "required": ["lightness", "chroma", "hues"],
+            "additionalProperties": false,
+            "properties": {
+              "lightness": { "type": "number", "minimum": 0, "maximum": 1 },
+              "chroma": { "type": "number", "minimum": 0, "maximum": 0.37 },
+              "hues": { "type": "array", "items": { "type": "number", "minimum": 0, "maximum": 360 }, "minItems": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

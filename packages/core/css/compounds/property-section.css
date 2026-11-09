@@ -1,0 +1,31 @@
+/*
+ * Tier 2 compound: PropertySection (F15.T2, Q66). A heading row (heading at the start, the group's actions at the end)
+ * then the rows, all on one gap. No enclosure: groups are told apart by the panel's larger gap between them.
+ */
+@layer compounds {
+  [data-dl='property-section'] {
+    display: grid;
+    /* One column that never grows past the panel: a wide field shrinks instead of pushing the panel sideways (Q68). */
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-property-section-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='property-section'] > [data-dl-part='head'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-property-section-actions-gap);
+    min-block-size: var(--c-property-section-head);
+  }
+
+  [data-dl='property-section'][data-density='compact'] > [data-dl-part='head'] {
+    min-block-size: var(--c-property-section-head-compact);
+  }
+
+  [data-dl='property-section'] > [data-dl-part='head'] > [data-dl-part='actions'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-property-section-actions-gap);
+  }
+}

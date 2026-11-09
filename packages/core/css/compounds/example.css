@@ -1,0 +1,54 @@
+/*
+ * Tier 2 compound: Example. Head, then one outlined canvas around one preview in the library's own context, then the
+ * source behind "Show the code". Padding sits on the preview (the content layer) inside a ScrollArea, so a wide preview scrolls edge to edge under an overlay bar.
+ */
+@layer compounds {
+  [data-dl='example'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-example-gap);
+  }
+
+  [data-dl='example'] > [data-dl-part='head'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-example-head-gap);
+  }
+
+  [data-dl='example'] > [data-dl-part='canvas'] {
+    display: grid;
+    border: var(--c-example-outline-width) solid var(--c-example-outline);
+    border-radius: var(--c-example-radius);
+    overflow: clip;
+  }
+
+  [data-dl='example'] [data-dl-part='preview'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-group);
+    padding: var(--c-example-inset);
+    min-inline-size: 0;
+  }
+
+  [data-dl='example'] [data-dl-part='preview'] > [data-dl-part='content'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-example-content-gap);
+  }
+
+  [data-dl='example'] [data-dl-part='preview'] > [data-dl-part='content'][data-arrangement='row'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-example-row-gap);
+  }
+
+  [data-dl='example'] > [data-dl-part='source'] > summary {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--c-example-toggle-height);
+    cursor: pointer;
+    color: var(--c-example-toggle-fg);
+  }
+}

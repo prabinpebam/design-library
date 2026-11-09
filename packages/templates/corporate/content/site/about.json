@@ -1,0 +1,87 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "about",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "About us",
+        "title": "A family firm that grew up moving other people’s things",
+        "lead": "Founded in 1962 with one lorry in Rotterdam; today 2,400 people in 18 offices.",
+        "layout": "stacked",
+        "picture": "dusk"
+      },
+      {
+        "type": "points",
+        "heading": "What we hold to",
+        "items": [
+          "Say when it will arrive, and be right.",
+          "One planner who knows your shipments by name.",
+          "Cut emissions per tonne every year, and publish the figure."
+        ]
+      },
+      {
+        "type": "stats",
+        "heading": "Northwind today",
+        "items": [
+          {
+            "label": "People",
+            "value": 2400
+          },
+          {
+            "label": "Offices",
+            "value": 18
+          },
+          {
+            "label": "Years moving freight",
+            "value": 64
+          },
+          {
+            "label": "Emissions per tonne since 2020",
+            "value": "−31",
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "type": "cards",
+        "heading": "Leadership",
+        "max": 3,
+        "items": [
+          {
+            "title": "Mara de Vries",
+            "eyebrow": "Chief executive",
+            "description": "Joined as a planner in 1998; has run the company since 2017."
+          },
+          {
+            "title": "Tomás Ortega",
+            "eyebrow": "Operations",
+            "description": "Runs the network of carriers, warehouses and ports."
+          },
+          {
+            "title": "Lena Okafor",
+            "eyebrow": "Technology",
+            "description": "Leads the tracking platform customers use every day."
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Work with us",
+        "lead": "We’re hiring planners, drivers and engineers in eight countries.",
+        "actions": [
+          {
+            "label": "See open roles",
+            "primary": true,
+            "says": "See open roles isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "conference",
+  "shared": true,
+  "contentVersion": 1,
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Interface Days 2027",
+        "mark": "people",
+        "places": [
+          {
+            "label": "Event",
+            "href": "/home"
+          },
+          {
+            "label": "Schedule",
+            "href": "/schedule"
+          },
+          {
+            "label": "Speakers",
+            "href": "/speaker"
+          },
+          {
+            "label": "Tickets",
+            "href": "/tickets"
+          },
+          {
+            "label": "Sponsors",
+            "href": "/sponsors"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Get tickets",
+            "primary": true,
+            "says": "Get tickets isn’t part of this example."
+          }
+        ]
+      }
+    ],
+    "footer": [
+      {
+        "type": "site-footer",
+        "sectionsLabel": "More about Interface Days",
+        "sections": [
+          {
+            "id": "event",
+            "heading": "Event",
+            "links": [
+              {
+                "label": "Schedule",
+                "href": "/schedule"
+              },
+              {
+                "label": "Speakers",
+                "href": "/speaker"
+              },
+              {
+                "label": "Tickets",
+                "href": "/tickets"
+              }
+            ]
+          },
+          {
+            "id": "visit",
+            "heading": "Your visit",
+            "links": [
+              {
+                "label": "Venue and travel",
+                "href": "/home"
+              },
+              {
+                "label": "Accessibility",
+                "href": "/home"
+              },
+              {
+                "label": "Code of conduct",
+                "href": "/home"
+              }
+            ]
+          },
+          {
+            "id": "more",
+            "heading": "Get involved",
+            "links": [
+              {
+                "label": "Speak at 2028",
+                "href": "/home"
+              },
+              {
+                "label": "Sponsor",
+                "href": "/sponsors"
+              },
+              {
+                "label": "Volunteer",
+                "href": "/home"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Privacy",
+            "href": "/home"
+          },
+          {
+            "label": "Terms of sale",
+            "href": "/home"
+          }
+        ],
+        "identity": "Interface Days is an example event for this library.",
+        "legal": "Speakers, sessions and prices are made up for these examples."
+      }
+    ]
+  }
+}

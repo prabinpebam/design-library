@@ -1,0 +1,91 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "chat",
+  "layout": "settings-personalisation",
+  "contentVersion": 1,
+  "settings": {
+    "current": "settings-general",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Personalisation",
+        "intro": "What the assistant remembers and how it replies.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Memory",
+            "items": [
+              {
+                "id": "memory",
+                "label": "Remember things between chats",
+                "kind": "switch",
+                "on": true,
+                "description": "It tells you when it saves something."
+              },
+              {
+                "id": "history",
+                "label": "Use earlier chats",
+                "kind": "switch",
+                "on": true
+              }
+            ]
+          },
+          {
+            "heading": "Replies",
+            "items": [
+              {
+                "id": "tone",
+                "label": "Tone",
+                "kind": "choice",
+                "options": [
+                  "Friendly",
+                  "Straight to the point",
+                  "Thorough"
+                ],
+                "value": "Friendly"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "General",
+            "href": "/settings-general"
+          },
+          {
+            "label": "Data controls",
+            "href": "/settings-data"
+          }
+        ]
+      }
+    ]
+  }
+}

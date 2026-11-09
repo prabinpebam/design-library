@@ -1,0 +1,34 @@
+/*
+ * Tier 2 compound: Breadcrumbs (F15.29, Q53.3). An ordered list of steps on one line that wraps between whole steps;
+ * each step after the first starts with a decorative separator. No enclosure, no fill: the path is wayfinding above
+ * the content, told apart by its smaller text and the current page's plain colour.
+ */
+@layer compounds {
+  [data-dl='breadcrumbs'] > ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--c-breadcrumbs-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--c-breadcrumbs-size);
+  }
+
+  [data-dl='breadcrumbs'] [data-dl-part='step'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-breadcrumbs-gap);
+    min-block-size: var(--c-breadcrumbs-step);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='breadcrumbs'] [data-dl-part='separator'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='breadcrumbs'] [data-dl-part='current'] {
+    color: var(--color-text);
+  }
+}

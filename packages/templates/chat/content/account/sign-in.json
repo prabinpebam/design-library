@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "sign-in",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Welcome back",
+        "intro": "Sign in to see your chats.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "password",
+            "label": "Password",
+            "kind": "password"
+          }
+        ],
+        "submit": "Continue",
+        "sent": "Signed in.",
+        "links": [
+          {
+            "label": "Create an account",
+            "href": "/sign-up"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "sponsor-sent",
+  "contentVersion": 1,
+  "settings": {
+    "current": "sponsors",
+    "width": "reading",
+    "state": "done"
+  }
+}

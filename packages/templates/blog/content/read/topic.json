@@ -1,0 +1,52 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "topic",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Topic",
+        "title": "Walking",
+        "lead": "23 articles about long days on foot.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "items": [
+          {
+            "eyebrow": "Walking",
+            "title": "The long way round the reservoir",
+            "description": "Seven hours, one flask, no signal.",
+            "meta": "12 February 2027 · 7 min",
+            "href": "/article",
+            "picture": "meadow"
+          },
+          {
+            "eyebrow": "Weather",
+            "title": "Reading a sky before it turns",
+            "description": "What the clouds said an hour before the rain.",
+            "meta": "30 January 2027 · 5 min",
+            "href": "/article",
+            "picture": "dusk"
+          },
+          {
+            "eyebrow": "Gear",
+            "title": "A pack that weighs less than lunch",
+            "description": "Everything I carry, weighed.",
+            "meta": "14 January 2027 · 9 min",
+            "href": "/article",
+            "picture": "sand"
+          }
+        ],
+        "page": 1,
+        "pages": 4,
+        "pagingLabel": "Pages of walking articles"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "availability",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Availability",
+        "title": "Booking from June 2027",
+        "lead": "One project at a time, three to six months each.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Working together",
+        "items": [
+          {
+            "term": "Next opening",
+            "details": "June 2027"
+          },
+          {
+            "term": "Day rate",
+            "details": "€850, or a fixed price for a defined project"
+          },
+          {
+            "term": "Where",
+            "details": "Remote, or on site in Lisbon and Porto"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Have a project for June?",
+        "lead": "Tell me about it now; good projects are worth waiting for.",
+        "actions": [
+          {
+            "label": "Get in touch",
+            "primary": true,
+            "says": "Use Contact in the footer of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

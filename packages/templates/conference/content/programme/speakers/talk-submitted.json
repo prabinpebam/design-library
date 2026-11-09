@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "talk-submitted",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading",
+    "state": "done"
+  }
+}

@@ -1,0 +1,13 @@
+/*
+ * Tier 0 support: the page's two live regions (behaviour/announce.ts). Read by screen readers, never seen.
+ */
+@layer fundamentals {
+  [data-dl='announcer'] {
+    position: fixed;
+    overflow: hidden;
+    inline-size: var(--border-hairline);
+    block-size: var(--border-hairline);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

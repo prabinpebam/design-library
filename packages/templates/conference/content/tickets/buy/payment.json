@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "payment",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Payment",
+        "intro": "Step 3 of 4 · 2 × Two days, €780 including VAT.",
+        "fields": [
+          {
+            "id": "card",
+            "label": "Card number",
+            "kind": "text"
+          },
+          {
+            "id": "expiry",
+            "label": "Expiry date",
+            "kind": "text",
+            "hint": "MM/YY"
+          },
+          {
+            "id": "cvc",
+            "label": "Security code",
+            "kind": "text",
+            "hint": "The three digits on the back."
+          },
+          {
+            "id": "billing",
+            "label": "Billing email",
+            "kind": "email"
+          }
+        ],
+        "submit": "Pay €780",
+        "sent": "Paid. The next screen has your order.",
+        "links": [
+          {
+            "label": "Back to attendee details",
+            "href": "/attendee-details"
+          }
+        ],
+        "error": "Your bank declined the card. Nothing was charged. Try another card, or call your bank and try again.",
+        "outcome": {
+          "eyebrow": "Order 4417",
+          "title": "You’re coming to Interface Days",
+          "text": "Two tickets for 11–12 March. Badges are at the door; bring the email or this order number.",
+          "links": [
+            {
+              "label": "See your tickets",
+              "href": "/my-tickets"
+            },
+            {
+              "label": "Plan your days",
+              "href": "/schedule"
+            }
+          ],
+          "note": "A receipt is on its way to your email."
+        }
+      }
+    ]
+  }
+}

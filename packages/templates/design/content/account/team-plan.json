@@ -1,0 +1,81 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "team-plan",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Team and plan",
+        "title": "Kitewing · Professional",
+        "lead": "4 editors · renews 1 March 2027",
+        "layout": "stacked"
+      },
+      {
+        "type": "people",
+        "heading": "Members",
+        "items": [
+          {
+            "name": "Ama Mensah",
+            "role": "Owner"
+          },
+          {
+            "name": "Jonas Lind",
+            "role": "Editor"
+          },
+          {
+            "name": "Keiko Arai",
+            "role": "Viewer"
+          }
+        ]
+      },
+      {
+        "type": "stats",
+        "heading": "This plan",
+        "items": [
+          {
+            "label": "Editors",
+            "value": 4
+          },
+          {
+            "label": "Price per editor",
+            "value": "€15"
+          },
+          {
+            "label": "Projects",
+            "value": "Unlimited"
+          }
+        ]
+      }
+    ]
+  }
+}

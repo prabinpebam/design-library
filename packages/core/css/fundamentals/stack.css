@@ -1,0 +1,25 @@
+/*
+ * Tier 1 fundamental (arrangement): Stack. Children in a column; the gap comes from a space role, so views need no styled wrapper.
+ */
+@layer fundamentals {
+  [data-dl='stack'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  [data-dl='stack'][data-gap='pair'] {
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='stack'][data-gap='item'] {
+    gap: var(--space-stack-item);
+  }
+
+  [data-dl='stack'][data-gap='group'] {
+    gap: var(--space-stack-group);
+  }
+
+  [data-dl='stack'][data-gap='section'] {
+    gap: var(--space-stack-section);
+  }
+}

@@ -1,0 +1,122 @@
+/*
+ * Tier 2 compound: Lightbox (F15.38, Q53.3). The native modal dialog filling the window on the page's own surface:
+ * a bar (counter, Close), the stage (Previous, the picture as large as fits, Next) and the caption. Previous and Next
+ * sit beside the picture, never over it. One padding inside the window's edges; no borders or shadows.
+ */
+@layer compounds {
+  [data-dl='lightbox'] {
+    inline-size: 100%;
+    block-size: 100dvh;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    opacity: 1;
+    /* Q65 C17 (K-4): fades in, leaves one step shorter. Opened from a thumbnail, the picture travels instead (C10). */
+    transition:
+      opacity var(--duration-change) var(--easing-enter),
+      overlay var(--duration-change) var(--easing-enter) allow-discrete,
+      display var(--duration-change) var(--easing-enter) allow-discrete;
+  }
+
+  [data-dl='lightbox']:not([open]) {
+    opacity: 0;
+    transition:
+      opacity var(--duration-quick) var(--easing-exit),
+      overlay var(--duration-quick) var(--easing-exit) allow-discrete,
+      display var(--duration-quick) var(--easing-exit) allow-discrete;
+  }
+
+  @starting-style {
+    [data-dl='lightbox'][open] {
+      opacity: 0;
+    }
+  }
+
+  /* While a picture travels from its thumbnail (C10), the surface fades by itself (Lightbox.tsx), so the dialog's own
+     fade is off and the backdrop stays clear: the page shows through until the surface arrives. */
+  [data-dl='lightbox'][data-travel] {
+    transition: none;
+  }
+
+  [data-dl='lightbox'][data-travel]::backdrop {
+    background-color: transparent;
+  }
+
+  [data-dl='lightbox']::backdrop {
+    background-color: var(--color-bg);
+  }
+
+  [data-dl='lightbox'] > [data-dl-part='surface'] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: var(--c-lightbox-gap);
+    block-size: 100%;
+    padding: var(--c-lightbox-padding);
+  }
+
+  [data-dl='lightbox'] [data-dl-part='bar'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  [data-dl='lightbox'] [data-dl-part='count'] {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='lightbox'] [data-dl-part='stage'] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--c-lightbox-side-gap);
+    min-block-size: 0;
+    touch-action: pan-y;
+  }
+
+  /* Each side keeps its width when its button is absent, so the picture doesn't shift at either end. */
+  [data-dl='lightbox'] [data-dl-part='side'] {
+    display: grid;
+    min-inline-size: var(--size-control-xl);
+  }
+
+  [data-dl='lightbox'] [data-dl-part='picture'] {
+    display: grid;
+    place-items: center;
+    block-size: 100%;
+    min-block-size: 0;
+  }
+
+  [data-dl='lightbox'] [data-dl-part='picture'] > [data-dl='image'] {
+    block-size: 100%;
+    background-color: transparent;
+  }
+
+  [data-dl='lightbox'] [data-dl-part='caption'] {
+    margin: 0;
+    min-block-size: var(--type-body-leading);
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='lightbox'] [data-dl-part='hidden-count'] {
+    position: absolute;
+    inline-size: var(--border-hairline);
+    block-size: var(--border-hairline);
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* A narrow window: the sides give their room to the picture; swipe or the keys move between pictures. */
+  @media (max-width: 30rem) {
+    [data-dl='lightbox'] [data-dl-part='side'] {
+      min-inline-size: 0;
+    }
+  }
+}

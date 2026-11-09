@@ -1,0 +1,74 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "share-chat",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Share “Plan a weekend walk”",
+        "intro": "Anyone with the link can read the chat up to now; later messages stay private.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "Link",
+            "items": [
+              {
+                "id": "link",
+                "label": "Anyone with the link can read it",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "name",
+                "label": "Show my name",
+                "kind": "switch",
+                "on": false
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Open the shared chat",
+            "href": "/shared-chat"
+          },
+          {
+            "label": "Back to the chat",
+            "href": "/chat"
+          }
+        ]
+      }
+    ]
+  }
+}

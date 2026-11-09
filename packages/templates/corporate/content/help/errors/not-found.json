@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "corporate",
+  "layout": "not-found",
+  "contentVersion": 1,
+  "settings": {
+    "current": "not-found"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Error 404",
+        "title": "We can’t find that page",
+        "text": "It may have moved, or the address may have a typo. Try the home page or search for what you need.",
+        "links": [
+          {
+            "label": "Go to the home page",
+            "href": "/home"
+          },
+          {
+            "label": "Search the site",
+            "href": "/search"
+          },
+          {
+            "label": "Contact us",
+            "href": "/contact"
+          }
+        ]
+      }
+    ]
+  }
+}

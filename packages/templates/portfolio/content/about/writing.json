@@ -1,0 +1,37 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "writing",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Writing",
+        "title": "Notes on the work",
+        "lead": "Short essays, published when there’s something to say.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "items": [
+          {
+            "title": "Tokens are decisions, not values",
+            "description": "Why a design system should name its choices.",
+            "meta": "March 2026 · 6 min",
+            "href": "/writing"
+          },
+          {
+            "title": "Interviewing people who are tired",
+            "description": "Research after a ten-hour shift, kindly.",
+            "meta": "October 2025 · 8 min",
+            "href": "/writing"
+          }
+        ]
+      }
+    ]
+  }
+}

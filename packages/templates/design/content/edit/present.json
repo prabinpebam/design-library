@@ -1,0 +1,9 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "present",
+  "contentVersion": 1,
+  "settings": {
+    "mode": "present"
+  }
+}

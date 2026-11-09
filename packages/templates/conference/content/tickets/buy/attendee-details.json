@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "attendee-details",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Who’s coming",
+        "intro": "Step 2 of 4 · 2 × Two days. Names go on the badges.",
+        "fields": [
+          {
+            "id": "a1",
+            "label": "Attendee 1, full name",
+            "kind": "text"
+          },
+          {
+            "id": "a1e",
+            "label": "Attendee 1, email address",
+            "kind": "email"
+          },
+          {
+            "id": "a2",
+            "label": "Attendee 2, full name",
+            "kind": "text"
+          },
+          {
+            "id": "a2e",
+            "label": "Attendee 2, email address",
+            "kind": "email"
+          },
+          {
+            "id": "diet",
+            "label": "Food",
+            "kind": "choice",
+            "options": [
+              "No preference",
+              "Vegetarian",
+              "Vegan",
+              "Gluten-free"
+            ]
+          }
+        ],
+        "submit": "Continue to payment",
+        "sent": "Saved. Go on to Payment.",
+        "links": [
+          {
+            "label": "Continue to payment",
+            "href": "/payment"
+          },
+          {
+            "label": "Change tickets",
+            "href": "/tickets"
+          }
+        ]
+      }
+    ]
+  }
+}

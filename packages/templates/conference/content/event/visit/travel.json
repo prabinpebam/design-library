@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "travel",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Travel and stay",
+        "title": "Getting to Lisbon",
+        "lead": "From the airport, the metro takes 35 minutes to the venue.",
+        "layout": "stacked"
+      },
+      {
+        "type": "cards",
+        "heading": "Hotels with a rate for us",
+        "max": 3,
+        "items": [
+          {
+            "title": "Riverside Hotel",
+            "description": "€120 a night, five minutes’ walk. Code INTERFACE27.",
+            "picture": "harbour"
+          },
+          {
+            "title": "Alfama Rooms",
+            "description": "€90 a night, 15 minutes by tram.",
+            "picture": "sand"
+          },
+          {
+            "title": "Hostel Belém",
+            "description": "€35 a night in a shared room.",
+            "picture": "meadow"
+          }
+        ]
+      }
+    ]
+  }
+}

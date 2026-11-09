@@ -1,0 +1,126 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "corporate",
+  "shared": true,
+  "contentVersion": 1,
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Northwind Freight",
+        "mark": "organisation",
+        "places": [
+          {
+            "label": "Services",
+            "href": "/home"
+          },
+          {
+            "label": "About",
+            "href": "/about"
+          },
+          {
+            "label": "Careers",
+            "href": "/careers"
+          },
+          {
+            "label": "Contact",
+            "href": "/contact"
+          }
+        ],
+        "actions": [
+          {
+            "label": "Get a quote",
+            "primary": true,
+            "says": "Quotes aren’t part of this example."
+          }
+        ]
+      }
+    ],
+    "footer": [
+      {
+        "type": "site-footer",
+        "sectionsLabel": "More from Northwind",
+        "sections": [
+          {
+            "id": "services",
+            "heading": "Services",
+            "links": [
+              {
+                "label": "Ocean freight",
+                "href": "/home"
+              },
+              {
+                "label": "Air freight",
+                "href": "/home"
+              },
+              {
+                "label": "Road and last mile",
+                "href": "/home"
+              }
+            ]
+          },
+          {
+            "id": "company",
+            "heading": "Company",
+            "links": [
+              {
+                "label": "About",
+                "href": "/about"
+              },
+              {
+                "label": "Careers",
+                "href": "/careers"
+              },
+              {
+                "label": "Contact",
+                "href": "/contact"
+              }
+            ]
+          },
+          {
+            "id": "help",
+            "heading": "Help",
+            "links": [
+              {
+                "label": "Track a shipment",
+                "href": "/home"
+              },
+              {
+                "label": "Client sign-in",
+                "href": "/sign-in"
+              },
+              {
+                "label": "Search",
+                "href": "/search"
+              },
+              {
+                "label": "Offices",
+                "href": "/contact"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Privacy",
+            "href": "/home"
+          },
+          {
+            "label": "Terms",
+            "href": "/home"
+          },
+          {
+            "label": "Cookies",
+            "href": "/home"
+          },
+          {
+            "label": "Accessibility",
+            "href": "/home"
+          }
+        ],
+        "identity": "Northwind Freight is an example company for this library.",
+        "legal": "© 2026 Northwind Freight. All names and figures are made up."
+      }
+    ]
+  }
+}

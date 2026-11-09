@@ -1,0 +1,72 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "contact",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Get in touch",
+        "intro": "About a project, a talk or a coffee in Lisbon.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "about",
+            "label": "What it’s about",
+            "kind": "choice",
+            "options": [
+              "A project",
+              "A talk",
+              "Something else"
+            ]
+          },
+          {
+            "id": "message",
+            "label": "Message",
+            "kind": "long"
+          }
+        ],
+        "submit": "Send message",
+        "sent": "Message sent. I reply within three working days.",
+        "links": [
+          {
+            "label": "Or book a call",
+            "href": "/booking"
+          }
+        ],
+        "outcome": {
+          "eyebrow": "Message sent",
+          "title": "Thanks, I’ll be in touch",
+          "text": "I reply to every message within three working days.",
+          "links": [
+            {
+              "label": "See the work",
+              "href": "/work"
+            },
+            {
+              "label": "Book a call instead",
+              "href": "/booking"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

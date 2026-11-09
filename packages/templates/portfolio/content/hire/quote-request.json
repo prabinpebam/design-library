@@ -1,0 +1,70 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "quote-request",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Ask for a quote",
+        "intro": "A few lines are enough. You’ll get a price and the earliest start date within two working days.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "kind",
+            "label": "What kind of project",
+            "kind": "choice",
+            "options": [
+              "A brand identity",
+              "A website",
+              "A design system",
+              "Something else"
+            ]
+          },
+          {
+            "id": "brief",
+            "label": "What you need, and by when",
+            "kind": "long"
+          },
+          {
+            "id": "budget",
+            "label": "Budget",
+            "kind": "text",
+            "optional": true,
+            "hint": "A range is fine."
+          }
+        ],
+        "submit": "Ask for a quote",
+        "sent": "Request sent.",
+        "error": "The request didn’t send. Your brief is kept; try again in a moment.",
+        "outcome": {
+          "eyebrow": "Request sent",
+          "title": "A quote is on its way",
+          "text": "Expect a price and a start date by email within two working days.",
+          "links": [
+            {
+              "label": "See the work",
+              "href": "/work"
+            },
+            {
+              "label": "Check availability",
+              "href": "/availability"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

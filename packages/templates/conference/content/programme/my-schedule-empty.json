@@ -1,0 +1,10 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "my-schedule-empty",
+  "contentVersion": 1,
+  "settings": {
+    "current": "schedule",
+    "state": "empty"
+  }
+}

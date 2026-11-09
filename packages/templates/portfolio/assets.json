@@ -1,0 +1,25 @@
+{
+  "$schema": "../../core/schemas/assets.schema.json",
+  "assets": {
+    "harbour": {
+      "src": "assets/harbour.svg",
+      "alt": "Blue hills by the sea under a pale sky and a low sun."
+    },
+    "meadow": {
+      "src": "assets/meadow.svg",
+      "alt": "A green meadow rising to soft hills."
+    },
+    "dusk": {
+      "src": "assets/dusk.svg",
+      "alt": "Violet hills at dusk with an orange horizon."
+    },
+    "sand": {
+      "src": "assets/sand.svg",
+      "alt": "Golden dunes under a warm sky."
+    },
+    "frost": {
+      "src": "assets/frost.svg",
+      "alt": "White hills under a cold blue sky."
+    }
+  }
+}

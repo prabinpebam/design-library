@@ -1,0 +1,10 @@
+/*
+ * Tier 1 fundamental: Code. Inline code takes the base monospace style; a key name is drawn as a key cap.
+ */
+@layer fundamentals {
+  [data-dl='code'][data-kind='key'] {
+    padding-inline: var(--c-code-key-inset);
+    border: var(--c-code-key-outline-width) solid var(--c-code-key-outline);
+    border-radius: var(--c-code-key-radius);
+  }
+}

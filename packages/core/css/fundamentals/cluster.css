@@ -1,0 +1,48 @@
+/*
+ * Tier 1 fundamental (arrangement): Cluster. Children in a wrapping row; the gap comes from an inline space role, and wrapped
+ * lines sit a pair's space apart, so views need no styled wrapper.
+ */
+@layer fundamentals {
+  [data-dl='cluster'] {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: var(--space-stack-pair);
+  }
+
+  [data-dl='cluster'][data-nowrap] {
+    flex-wrap: nowrap;
+  }
+
+  /* One line: children may shrink below their content, so text inside them wraps instead of overflowing. */
+  [data-dl='cluster'][data-nowrap] > * {
+    min-inline-size: 0;
+  }
+
+  [data-dl='cluster'][data-gap='pair'] {
+    column-gap: var(--space-inline-pair);
+  }
+
+  [data-dl='cluster'][data-gap='item'] {
+    column-gap: var(--space-inline-item);
+  }
+
+  [data-dl='cluster'][data-gap='group'] {
+    column-gap: var(--space-inline-group);
+  }
+
+  [data-dl='cluster'][data-justify='between'] {
+    justify-content: space-between;
+  }
+
+  [data-dl='cluster'][data-align='center'] {
+    align-items: center;
+  }
+
+  [data-dl='cluster'][data-align='baseline'] {
+    align-items: baseline;
+  }
+
+  [data-dl='cluster'][data-align='start'] {
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@design-library/catalogue",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Generates the versioned catalogue.json from core source (S4)."
+}

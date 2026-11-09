@@ -1,0 +1,55 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "search",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "search",
+        "heading": "Search",
+        "label": "Search articles",
+        "button": "Search",
+        "query": "weather",
+        "summary": "{count} articles match “{query}”",
+        "results": [
+          {
+            "eyebrow": "Walking",
+            "title": "The long way round the reservoir",
+            "description": "Seven hours, one flask, no signal.",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Weather",
+            "title": "Reading a sky before it turns",
+            "description": "What the clouds said an hour before the rain.",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Gear",
+            "title": "A pack that weighs less than lunch",
+            "description": "Everything I carry, weighed.",
+            "href": "/article"
+          }
+        ],
+        "none": {
+          "title": "No articles about “{query}” yet",
+          "text": "Try a broader word, such as “walking” or “weather”, or browse by topic.",
+          "links": [
+            {
+              "label": "Browse topics",
+              "href": "/topic"
+            },
+            {
+              "label": "See the archive",
+              "href": "/archive"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

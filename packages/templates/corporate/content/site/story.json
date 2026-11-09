@@ -1,0 +1,91 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "story",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Customers",
+            "href": "/customers"
+          },
+          {
+            "label": "Lumen Home"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Customer story",
+        "title": "Lumen Home cut stock-outs by half",
+        "lead": "How weekly ocean slots and one shared warehouse changed a retailer’s year.",
+        "layout": "split",
+        "picture": "sand"
+      },
+      {
+        "type": "stats",
+        "heading": "In one year",
+        "items": [
+          {
+            "label": "Fewer stock-outs",
+            "value": 52,
+            "unit": "%"
+          },
+          {
+            "label": "Lower freight cost",
+            "value": 18,
+            "unit": "%"
+          },
+          {
+            "label": "Stores supplied",
+            "value": 140
+          }
+        ]
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "The problem"
+          },
+          {
+            "kind": "text",
+            "text": "Spot bookings meant containers waited weeks for space, and shelves emptied before the season."
+          },
+          {
+            "kind": "heading",
+            "text": "What changed"
+          },
+          {
+            "kind": "text",
+            "text": "A fixed weekly slot from Ningbo and a shared warehouse near Rotterdam let stores reorder every Monday."
+          },
+          {
+            "kind": "quote",
+            "text": "We stopped guessing when stock would land.",
+            "name": "Ines Duarte"
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Want results like these?",
+        "lead": "Talk to the planner who set this up.",
+        "actions": [
+          {
+            "label": "Get a quote",
+            "primary": true,
+            "says": "Quotes aren’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

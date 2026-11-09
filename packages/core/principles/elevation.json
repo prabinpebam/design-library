@@ -1,0 +1,166 @@
+{
+  "$comment": "Q78.1: the elevation ladder, the separation cues and the z-index procedure, as data. The library’s Elevation and layering page and the agent guide read this file, and docs/materials.md (Elevation: one ladder) matches it; edit it here, never in a page.",
+  "ladder": [
+    {
+      "level": -1,
+      "name": "Sunken",
+      "material": "MT2 sunken",
+      "layers": [
+        "layer.base"
+      ],
+      "fill": "--color-bg-sunken",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": null,
+      "examples": "Navigation rail, code block, board column, empty track",
+      "use": "A region set into the page that holds other things.",
+      "never": "A shadow or an outline: a well is lower, not a box.",
+      "detail": "One tone step down; no shadow, no outline."
+    },
+    {
+      "level": 0,
+      "name": "Canvas",
+      "material": "MT1 canvas",
+      "layers": [
+        "layer.base"
+      ],
+      "fill": "--color-bg",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": null,
+      "examples": "The page, a layout’s main region",
+      "use": "The page itself. Most content needs nothing above it.",
+      "never": "Panels around whole regions: enclosure noise.",
+      "detail": "color.bg; no panels around whole regions."
+    },
+    {
+      "level": 1,
+      "name": "Raised",
+      "material": "MT3 raised, MT4 tint, MT5 control fill",
+      "layers": [
+        "layer.base",
+        "layer.raised (inside a component)"
+      ],
+      "fill": "--color-bg-raised",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": "--color-border",
+      "examples": "Card, panel, field, the current item",
+      "use": "Something set onto the page that a person reads or works in.",
+      "never": "A shadow at rest: content doesn’t float.",
+      "detail": "One tone step up; a hairline only where tone can’t separate; never a shadow at rest."
+    },
+    {
+      "level": 2,
+      "name": "Chrome",
+      "material": "MT6 chrome",
+      "layers": [
+        "layer.sticky"
+      ],
+      "fill": "--material-chrome-bg",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": null,
+      "examples": "Sticky site header, title bar, docked toolbar",
+      "use": "A bar that stays put while the page scrolls under it.",
+      "never": "A shadow at rest, or floating material for a docked bar.",
+      "detail": "layer.sticky; frosted when the global setting is on; hairline only while content is under it; no shadow at rest."
+    },
+    {
+      "level": 3,
+      "name": "Floating",
+      "material": "MT7 floating",
+      "layers": [
+        "layer.popover",
+        "layer.toast",
+        "layer.tooltip"
+      ],
+      "fill": "--material-floating-bg",
+      "on": "--color-bg",
+      "shadow": "--shadow-raised",
+      "edge": "--color-border",
+      "examples": "Menu, select list, popover, date picker, tooltip, floating toolbar, notification",
+      "use": "Something that opens over the page without blocking it.",
+      "never": "Glass on glass: a floating surface inside another is solid.",
+      "detail": "Top layer; shadow.raised when anchored to a trigger, shadow.overlay when free; frosted when on; never glass on glass."
+    },
+    {
+      "level": 4,
+      "name": "Modal",
+      "material": "MT9 scrim + MT8 modal",
+      "layers": [
+        "layer.overlay",
+        "layer.dialog"
+      ],
+      "fill": "--color-bg-raised",
+      "on": "--color-bg-overlay",
+      "shadow": "--shadow-overlay",
+      "edge": null,
+      "examples": "Dialog, modal sheet, lightbox",
+      "use": "Something that blocks the page until it’s answered, over a dimmed page.",
+      "never": "Frosted: the scrim already separates and the content is text.",
+      "detail": "layer.overlay scrim + layer.dialog surface; shadow.overlay; always solid."
+    }
+  ],
+  "cues": [
+    {
+      "id": "tone",
+      "name": "Tone",
+      "fill": "--color-bg-raised",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": null,
+      "says": "A different surface at the same height",
+      "use": "First choice: a card or panel on the page. In dark mode nearer is lighter."
+    },
+    {
+      "id": "hairline",
+      "name": "Hairline",
+      "fill": "--color-bg-raised",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": "--color-border",
+      "says": "An edge tone alone can’t show",
+      "use": "Where tone is too close, or in more contrast. Always a full outline, never one side."
+    },
+    {
+      "id": "anchored",
+      "name": "Shadow, anchored",
+      "fill": "--material-floating-bg",
+      "on": "--color-bg",
+      "shadow": "--shadow-raised",
+      "edge": "--color-border",
+      "says": "It floats just above, tied to what opened it",
+      "use": "Menus, lists, popovers, tooltips."
+    },
+    {
+      "id": "free",
+      "name": "Shadow, free",
+      "fill": "--material-floating-bg",
+      "on": "--color-bg",
+      "shadow": "--shadow-overlay",
+      "edge": "--color-border",
+      "says": "It floats well above, on its own",
+      "use": "A floating toolbar, a notification, a dialog over its scrim."
+    },
+    {
+      "id": "tint",
+      "name": "Tint",
+      "fill": "--color-bg-tint",
+      "on": "--color-bg",
+      "shadow": null,
+      "edge": null,
+      "says": "This one, among many: a state, not a height",
+      "use": "The current page, a selected row, a person’s own chat bubble."
+    }
+  ],
+  "zIndex": [
+    "Does it need to be above anything at all? Content stays at layer.base in source order; nothing raises itself to win.",
+    "Does it stay while content scrolls under it? It’s chrome: layer.sticky, inside its own scroll region.",
+    "Does it open from a trigger or float free? Open it in the browser’s top layer (the popover attribute, or a modal dialog element); its layer token (layer.popover, layer.toast, layer.tooltip) is only the fallback order.",
+    "Does it block the page? A modal dialog element, with layer.overlay for the scrim and layer.dialog for the surface.",
+    "Does a component order its own parts? layer.behind and layer.raised, with isolation: isolate on the element that holds them, so the order never leaks.",
+    "Still hidden behind something? Find the ancestor that starts a stacking context (a transform, filter, opacity below 1, isolation or a z-index) and move the thing to the top layer or to the layout’s overlay. Never a bigger number.",
+    "Write z-index only as var(--layer-*) or a component token that aliases one (c.<part>.layer). npm run check:layers fails on a number, an inline zIndex, a component stacking token that aliases no layer, and inside layers without isolation, in core, the library, templates and the example app."
+  ]
+}

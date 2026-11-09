@@ -1,0 +1,153 @@
+{
+  "$description": "Font registry (owner Q35, 2026-11-07 20:39): the curated free, openly licensed faces a theme may pick for its 1-4 roles. Each is self-hosted from its @fontsource-variable package through the one provider loader (fonts/loader.ts). Axes list only what the loaded files carry; a binary axis (0 to 1 in whole steps) shows as a Switch, a range as a slider. Licences read from each package's package.json on install (2026-11-07).",
+  "roles": [
+    { "id": "display", "label": "Display", "variable": "--font-display", "function": "Page titles, headings, big numbers", "collapsesTo": null },
+    { "id": "text", "label": "Text", "variable": "--font-text", "function": "Everything read at length: paragraphs, notes, descriptions", "collapsesTo": "display" },
+    { "id": "ui", "label": "Interface", "variable": "--font-ui", "function": "Controls, labels, navigation, captions, metadata", "collapsesTo": "text" },
+    { "id": "code", "label": "Code", "variable": "--font-code", "function": "Code, keys and tabular identifiers", "collapsesTo": null }
+  ],
+  "faces": [
+    {
+      "id": "bricolage-grotesque", "name": "Bricolage Grotesque", "family": "Bricolage Grotesque Variable", "classification": "sans", "suits": ["display"],
+      "sample": "A library you only need once",
+      "description": "A grotesque with ink traps and a little mischief; its optical size tightens at heading sizes and its width axis condenses a long title.",
+      "designer": "Mathieu Triay", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/bricolage-grotesque",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 200, "max": 800, "default": 700, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 12, "max": 96, "default": 96, "step": 1 },
+        { "tag": "wdth", "label": "Width", "min": 75, "max": 100, "default": 100, "step": 1 }
+      ],
+      "italic": false
+    },
+    {
+      "id": "fraunces", "name": "Fraunces", "family": "Fraunces Variable", "classification": "serif", "suits": ["display", "text"],
+      "sample": "Soft serifs for a warm headline",
+      "description": "A soft, old-style display serif; its SOFT axis rounds every serif and WONK lets a few letters lean.",
+      "designer": "Undercase Type (Phaedra Charles, Flavia Zimbardi)", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/fraunces",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 100, "max": 900, "default": 600, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 9, "max": 144, "default": 144, "step": 1 },
+        { "tag": "SOFT", "label": "Softness", "min": 0, "max": 100, "default": 50, "step": 1 },
+        { "tag": "WONK", "label": "Wonky letters", "min": 0, "max": 1, "default": 0, "step": 1 }
+      ],
+      "italic": true
+    },
+    {
+      "id": "space-grotesk", "name": "Space Grotesk", "family": "Space Grotesk Variable", "classification": "sans", "suits": ["display", "ui"],
+      "sample": "Tokens in, screens out",
+      "description": "A proportional grotesque grown from a monospace; technical without being cold.",
+      "designer": "Florian Karsten", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/space-grotesk",
+      "axes": [{ "tag": "wght", "label": "Weight", "min": 300, "max": 700, "default": 600, "step": 1 }],
+      "italic": false
+    },
+    {
+      "id": "inter", "name": "Inter", "family": "Inter Variable", "classification": "sans", "suits": ["display", "text", "ui"],
+      "sample": "Every value comes from a token, so one change reaches every screen.",
+      "description": "Drawn for screens: a tall x-height, open shapes and an optical size that tightens for headings.",
+      "designer": "Rasmus Andersson", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/inter",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 100, "max": 900, "default": 400, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 14, "max": 32, "default": 14, "step": 1 }
+      ],
+      "italic": true
+    },
+    {
+      "id": "source-serif-4", "name": "Source Serif 4", "family": "Source Serif 4 Variable", "classification": "serif", "suits": ["display", "text"],
+      "sample": "Long reads sit comfortably in a sturdy, open serif.",
+      "description": "A transitional serif with optical sizes from captions to display; calm for long reading.",
+      "designer": "Frank Grießhammer (Adobe)", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/source-serif-4",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 200, "max": 900, "default": 400, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 8, "max": 60, "default": 16, "step": 1 }
+      ],
+      "italic": true
+    },
+    {
+      "id": "literata", "name": "Literata", "family": "Literata Variable", "classification": "serif", "suits": ["display", "text"],
+      "sample": "A book face that reads as easily on a phone as on paper.",
+      "description": "Made for e-reading: generous counters, sturdy serifs and optical sizes up to display.",
+      "designer": "TypeTogether (Veronika Burian, José Scaglione)", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/literata",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 200, "max": 900, "default": 400, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 7, "max": 72, "default": 12, "step": 1 }
+      ],
+      "italic": true
+    },
+    {
+      "id": "figtree", "name": "Figtree", "family": "Figtree Variable", "classification": "sans", "suits": ["text", "ui"],
+      "sample": "Save changes",
+      "description": "A clean, friendly geometric sans: clear in a small caption, warm on a button.",
+      "designer": "Erik Kennedy", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/figtree",
+      "axes": [{ "tag": "wght", "label": "Weight", "min": 300, "max": 900, "default": 500, "step": 1 }],
+      "italic": true
+    },
+    {
+      "id": "ibm-plex-sans", "name": "IBM Plex Sans", "family": "IBM Plex Sans Variable", "classification": "sans", "suits": ["text", "ui"],
+      "sample": "Settings, filters and dense tables stay legible.",
+      "description": "A neo-grotesque with engineered details and a width axis for dense interfaces.",
+      "designer": "Mike Abbink with Bold Monday (IBM)", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/ibm-plex-sans",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 100, "max": 700, "default": 400, "step": 1 },
+        { "tag": "wdth", "label": "Width", "min": 85, "max": 100, "default": 100, "step": 1 }
+      ],
+      "italic": true
+    },
+    {
+      "id": "nunito-sans", "name": "Nunito Sans", "family": "Nunito Sans Variable", "classification": "sans", "suits": ["text", "ui"],
+      "sample": "Soft corners, friendly labels.",
+      "description": "A humanist sans with gentle terminals, widths and an adjustable lower-case height.",
+      "designer": "Vernon Adams, Jacques Le Bailly, Manvel Shmavonyan, Alexei Vanyashin", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/nunito-sans",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 200, "max": 1000, "default": 400, "step": 1 },
+        { "tag": "wdth", "label": "Width", "min": 75, "max": 125, "default": 100, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 6, "max": 12, "default": 12, "step": 1 },
+        { "tag": "YTLC", "label": "Lower-case height", "min": 440, "max": 540, "default": 500, "step": 1 }
+      ],
+      "italic": true
+    },
+    {
+      "id": "roboto-flex", "name": "Roboto Flex", "family": "Roboto Flex Variable", "classification": "sans", "suits": ["display", "text", "ui"],
+      "sample": "One face, every width and weight.",
+      "description": "A parametric Roboto: weight, width, optical size, grade and slant all move, so one family covers a whole theme.",
+      "designer": "Font Bureau (David Berlow) for Google", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/roboto-flex",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 100, "max": 1000, "default": 400, "step": 1 },
+        { "tag": "wdth", "label": "Width", "min": 25, "max": 151, "default": 100, "step": 1 },
+        { "tag": "opsz", "label": "Optical size", "min": 8, "max": 144, "default": 14, "step": 1 },
+        { "tag": "GRAD", "label": "Grade", "min": -200, "max": 150, "default": 0, "step": 1 },
+        { "tag": "slnt", "label": "Slant", "min": -10, "max": 0, "default": 0, "step": 1 }
+      ],
+      "italic": false
+    },
+    {
+      "id": "jetbrains-mono", "name": "JetBrains Mono", "family": "JetBrains Mono Variable", "classification": "mono", "suits": ["code"],
+      "sample": "gap: var(--space-stack-group);",
+      "description": "A monospace drawn for reading code: tall lower case, clear 0/O and 1/l/I, and code ligatures.",
+      "designer": "JetBrains (Philipp Nurullin, Konstantin Bulenkov)", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/jetbrains-mono",
+      "axes": [{ "tag": "wght", "label": "Weight", "min": 100, "max": 800, "default": 400, "step": 1 }],
+      "italic": true
+    },
+    {
+      "id": "recursive", "name": "Recursive", "family": "Recursive Variable", "classification": "mono", "suits": ["code", "display", "ui"],
+      "sample": "const theme = { roles: 4 };",
+      "description": "Sans and mono in one family: MONO switches the widths, CASL moves from linear to casual, CRSV adds cursive forms.",
+      "designer": "Arrow Type (Stephen Nixon)", "licence": "SIL Open Font License 1.1", "package": "@fontsource-variable/recursive",
+      "axes": [
+        { "tag": "wght", "label": "Weight", "min": 300, "max": 1000, "default": 400, "step": 1 },
+        { "tag": "slnt", "label": "Slant", "min": -15, "max": 0, "default": 0, "step": 1 },
+        { "tag": "MONO", "label": "Monospace", "min": 0, "max": 1, "default": 1, "step": 1 },
+        { "tag": "CASL", "label": "Casual", "min": 0, "max": 1, "default": 0, "step": 0.01 },
+        { "tag": "CRSV", "label": "Cursive", "min": 0, "max": 1, "default": 0.5, "step": 0.5 }
+      ],
+      "italic": false
+    }
+  ],
+  "presets": [
+    { "id": "studio", "name": "Studio", "for": "The library’s own: a grotesque that speaks, a screen sans that reads and works, a code monospace", "roles": { "display": "bricolage-grotesque", "text": "inter", "ui": null, "code": "jetbrains-mono" }, "default": true },
+    { "id": "editorial", "name": "Editorial", "for": "Magazine-like reading: a soft serif display, a sturdy reading serif, a friendly interface sans", "roles": { "display": "fraunces", "text": "source-serif-4", "ui": "figtree", "code": "jetbrains-mono" }, "axes": { "display": { "SOFT": 100 } } },
+    { "id": "one-face", "name": "One face", "for": "The least to load: one sans sets everything; code stays on the system monospace", "roles": { "display": "inter", "text": null, "ui": null, "code": null } },
+    { "id": "technical", "name": "Technical", "for": "Tools and dashboards: a crisp grotesque, a dense sans with a width axis, a monospace with a casual side", "roles": { "display": "space-grotesk", "text": "ibm-plex-sans", "ui": null, "code": "recursive" } },
+    { "id": "bookish", "name": "Bookish", "for": "Long reading first: one book face for titles and text, a humanist sans for the interface", "roles": { "display": "literata", "text": null, "ui": "nunito-sans", "code": "jetbrains-mono" } },
+    { "id": "flexible", "name": "Flexible", "for": "One parametric family for every role, for brands that want one voice everywhere", "roles": { "display": "roboto-flex", "text": null, "ui": null, "code": "jetbrains-mono" }, "axes": { "display": { "wdth": 120 } } }
+  ]
+}

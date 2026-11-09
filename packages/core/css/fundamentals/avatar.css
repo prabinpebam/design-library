@@ -1,0 +1,128 @@
+/*
+ * Tier 1 fundamental: Avatar (F15.25, Q52). A face box at one of 13 sizes: a picture over the initials on the name's
+ * category colour, or the kind's icon. Circle for people, a rounded square (radius in proportion to size) for
+ * organisations, teams and bots. Badges pin to it through Badge's anchor; the activity ring is two shadows (a surface
+ * gap, then the accent), so the box never changes size and the focus ring sits outside both.
+ */
+@layer fundamentals {
+  [data-dl='avatar'] {
+    --avatar-size: var(--c-avatar-size-32);
+
+    display: inline-flex;
+    flex: none;
+    vertical-align: middle;
+  }
+
+  [data-dl='avatar'][data-size='16'] { --avatar-size: var(--c-avatar-size-16); }
+  [data-dl='avatar'][data-size='20'] { --avatar-size: var(--c-avatar-size-20); }
+  [data-dl='avatar'][data-size='24'] { --avatar-size: var(--c-avatar-size-24); }
+  [data-dl='avatar'][data-size='36'] { --avatar-size: var(--c-avatar-size-36); }
+  [data-dl='avatar'][data-size='40'] { --avatar-size: var(--c-avatar-size-40); }
+  [data-dl='avatar'][data-size='44'] { --avatar-size: var(--c-avatar-size-44); }
+  [data-dl='avatar'][data-size='48'] { --avatar-size: var(--c-avatar-size-48); }
+  [data-dl='avatar'][data-size='56'] { --avatar-size: var(--c-avatar-size-56); }
+  [data-dl='avatar'][data-size='64'] { --avatar-size: var(--c-avatar-size-64); }
+  [data-dl='avatar'][data-size='80'] { --avatar-size: var(--c-avatar-size-80); }
+  [data-dl='avatar'][data-size='96'] { --avatar-size: var(--c-avatar-size-96); }
+  [data-dl='avatar'][data-size='128'] { --avatar-size: var(--c-avatar-size-128); }
+
+  [data-dl='avatar'][data-shape='circle'] {
+    --avatar-radius: var(--radius-full);
+  }
+
+  [data-dl='avatar'][data-shape='square'] {
+    --avatar-radius: calc(var(--avatar-size) * var(--c-avatar-square-scale));
+  }
+
+  /* As a button or link: no chrome of its own, only the focus ring around the face's shape. */
+  :is(button, a)[data-dl='avatar'] {
+    padding: 0;
+    border: 0;
+    border-radius: var(--avatar-radius);
+    background: none;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  :is(button, a)[data-dl='avatar']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  :is(button, a)[data-dl='avatar']:has([data-activity]):focus-visible {
+    outline-offset: calc(var(--size-focus-offset) + var(--c-avatar-ring-gap) + var(--c-avatar-ring-width));
+  }
+
+  [data-dl='avatar'] [data-dl-part='face'] {
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    overflow: hidden;
+    inline-size: var(--avatar-size);
+    block-size: var(--avatar-size);
+    border-radius: var(--avatar-radius);
+    background-color: var(--avatar-colour, transparent);
+    color: var(--avatar-ink, var(--color-text));
+  }
+
+  [data-dl='avatar'] [data-dl-part='face'][data-category='1'] { --avatar-colour: var(--color-category-1); --avatar-ink: var(--color-category-on-1); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='2'] { --avatar-colour: var(--color-category-2); --avatar-ink: var(--color-category-on-2); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='3'] { --avatar-colour: var(--color-category-3); --avatar-ink: var(--color-category-on-3); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='4'] { --avatar-colour: var(--color-category-4); --avatar-ink: var(--color-category-on-4); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='5'] { --avatar-colour: var(--color-category-5); --avatar-ink: var(--color-category-on-5); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='6'] { --avatar-colour: var(--color-category-6); --avatar-ink: var(--color-category-on-6); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='7'] { --avatar-colour: var(--color-category-7); --avatar-ink: var(--color-category-on-7); }
+  [data-dl='avatar'] [data-dl-part='face'][data-category='8'] { --avatar-colour: var(--color-category-8); --avatar-ink: var(--color-category-on-8); }
+
+  /* Activity: a surface-coloured gap, then the accent ring, both outside the box. */
+  [data-dl='avatar'] [data-dl-part='face'][data-activity] {
+    box-shadow:
+      0 0 0 var(--c-avatar-ring-gap) var(--color-bg),
+      0 0 0 calc(var(--c-avatar-ring-gap) + var(--c-avatar-ring-width)) var(--color-accent);
+  }
+
+  [data-dl='avatar'] [data-dl-part='initials'] {
+    font-size: calc(var(--avatar-size) * var(--c-avatar-initials-scale));
+    line-height: 1;
+    font-weight: var(--c-avatar-initials-weight);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* One letter at 16 and 20 px gets a larger share, so it stays readable (8 and 10 px). */
+  [data-dl='avatar']:is([data-size='16'], [data-size='20']) [data-dl-part='initials'] {
+    font-size: calc(var(--avatar-size) * var(--c-avatar-initials-scale-s));
+  }
+
+  [data-dl='avatar'] [data-dl-part='face'] > svg {
+    inline-size: calc(var(--avatar-size) * var(--c-avatar-icon-scale));
+    block-size: calc(var(--avatar-size) * var(--c-avatar-icon-scale));
+  }
+
+  /* The picture covers the initials once it has loaded, so a slow or failed picture never leaves the box empty. */
+  [data-dl='avatar'] [data-dl-part='face'] > img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+
+  [data-dl='avatar'] [data-dl-part='face'] > img[data-loaded] {
+    opacity: 1;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='avatar'] [data-dl-part='face'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+
+    [data-dl='avatar'] [data-dl-part='face'][data-activity] {
+      outline: var(--c-avatar-ring-width) solid Highlight;
+      outline-offset: var(--c-avatar-ring-gap);
+    }
+  }
+}

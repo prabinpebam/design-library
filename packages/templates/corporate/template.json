@@ -1,0 +1,1654 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "corporate",
+  "version": "1.0.0",
+  "title": "Corporate site",
+  "summary": "A company’s site: what it does, who it is, jobs and a way to get in touch.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "home",
+  "sections": [
+    {
+      "id": "site",
+      "title": "Company",
+      "summary": "What the company does and for whom.",
+      "flows": [
+        {
+          "id": "explore",
+          "title": "Get to know the company",
+          "summary": "Find out who they are and what they stand for.",
+          "screens": [
+            "home",
+            "about"
+          ]
+        },
+        {
+          "id": "services",
+          "title": "Compare services",
+          "summary": "See what they offer and what one service includes.",
+          "screens": [
+            "services",
+            "service"
+          ]
+        },
+        {
+          "id": "customers",
+          "title": "Read a customer story",
+          "summary": "See proof from a customer like you.",
+          "screens": [
+            "customers",
+            "story"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "careers",
+      "title": "Careers and contact",
+      "summary": "Join the company, or get in touch and visit.",
+      "flows": [
+        {
+          "id": "jobs",
+          "title": "Find a job",
+          "summary": "Browse openings and read one in full.",
+          "screens": [
+            "careers",
+            "job"
+          ]
+        },
+        {
+          "id": "apply",
+          "title": "Apply for a job",
+          "summary": "Send an application and know what happens next.",
+          "screens": [
+            "apply"
+          ]
+        },
+        {
+          "id": "message",
+          "title": "Send a message",
+          "summary": "Ask a question and get an answer by email.",
+          "screens": [
+            "contact"
+          ]
+        },
+        {
+          "id": "visit",
+          "title": "Visit an office",
+          "summary": "Find an office and how to get there.",
+          "screens": [
+            "offices"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Client account",
+      "summary": "Signing in, creating an account and keeping it.",
+      "flows": [
+        {
+          "id": "sign-in",
+          "title": "Sign in",
+          "summary": "Get into the account, or back in after forgetting the password.",
+          "screens": [
+            "sign-in",
+            "forgot-password"
+          ]
+        },
+        {
+          "id": "sign-up",
+          "title": "Create an account",
+          "summary": "Open an account and confirm the email address.",
+          "screens": [
+            "sign-up"
+          ]
+        },
+        {
+          "id": "settings",
+          "title": "Manage the account",
+          "summary": "Change details and what the company sends.",
+          "screens": [
+            "account-settings",
+            "notification-settings"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "help",
+      "title": "News and help",
+      "summary": "The latest news, search, and help when something goes wrong.",
+      "flows": [
+        {
+          "id": "news",
+          "title": "Follow the news",
+          "summary": "Read what changed lately.",
+          "screens": [
+            "news",
+            "news-article"
+          ]
+        },
+        {
+          "id": "search",
+          "title": "Search the site",
+          "summary": "Find a page by what it says.",
+          "screens": [
+            "search"
+          ]
+        },
+        {
+          "id": "errors",
+          "title": "Recover from an error",
+          "summary": "Know what happened and the way back.",
+          "screens": [
+            "not-found",
+            "server-error",
+            "maintenance"
+          ]
+        },
+        {
+          "id": "legal",
+          "title": "Read the policies",
+          "summary": "Know how personal data is used.",
+          "screens": [
+            "privacy"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "home",
+      "title": "Home",
+      "component": "SiteLayout",
+      "content": "content/home.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Who they are, what they do, proof, and one clear next step.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack.",
+        "notBuilt": [
+          "A logo strip of customers.",
+          "A mega menu under the places."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places with this one current, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Opening",
+            "holds": "Eyebrow, title, lead, two actions, a note and a picture",
+            "uses": "Hero (split)"
+          },
+          {
+            "region": "Numbers",
+            "holds": "Four figures from last year",
+            "uses": "Section, Grid, Statistic"
+          },
+          {
+            "region": "Services",
+            "holds": "Three services with pictures",
+            "uses": "Section, Grid, Card, Image"
+          },
+          {
+            "region": "Proof",
+            "holds": "A customer’s words",
+            "uses": "Quote (large, centred)"
+          },
+          {
+            "region": "Industries",
+            "holds": "Four short cards",
+            "uses": "Section, Grid, Card"
+          },
+          {
+            "region": "Closing action",
+            "holds": "Title, lead and the actions side by side",
+            "uses": "Hero (divided, level 2)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Three link sections and the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "component": "SiteLayout",
+      "content": "content/site/about.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The company’s story, what it holds to, figures and its leaders.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack.",
+        "notBuilt": [
+          "Portraits of the leaders (Card takes a picture; none drawn for people).",
+          "A timeline of the company’s history."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places with this one current, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Opening",
+            "holds": "Title, lead and a wide picture under them",
+            "uses": "Hero (stacked)"
+          },
+          {
+            "region": "Values",
+            "holds": "Three short lines",
+            "uses": "Section, List"
+          },
+          {
+            "region": "Figures",
+            "holds": "Four figures",
+            "uses": "Section, Grid, Statistic"
+          },
+          {
+            "region": "Leadership",
+            "holds": "Three people",
+            "uses": "Section, Grid, Card"
+          },
+          {
+            "region": "Closing action",
+            "holds": "An invitation to the careers page",
+            "uses": "Hero (divided, level 2)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Three link sections and the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "component": "SiteLayout",
+      "content": "content/site/services.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every service on one page, each linking to its own.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, four service cards with pictures, a closing call to action",
+            "uses": "Hero, Card, Grid, Image, Button"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "service",
+      "title": "Service",
+      "component": "SiteLayout",
+      "content": "content/site/service.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One service in full: what it is, proof in numbers, what’s included and common questions.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening with picture, figures, inclusions, questions",
+            "uses": "Breadcrumbs, Hero (split), Statistic, DescriptionList, Accordion"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "customers",
+      "title": "Customers",
+      "component": "SiteLayout",
+      "content": "content/site/customers.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Proof from customers: a story per sector and one voice.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, three story cards, a quote",
+            "uses": "Hero, Card, Grid, Quote"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "story",
+      "title": "Customer story",
+      "component": "SiteLayout",
+      "content": "content/site/story.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One customer’s story: the problem, the change, the numbers and a way to start.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, figures, the story, call to action",
+            "uses": "Breadcrumbs, Hero, Statistic, Heading, Text, Quote"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "news",
+      "title": "News",
+      "component": "SiteLayout",
+      "content": "content/help/news.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The latest news, newest first, with paging.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, a list of articles with dates, paging",
+            "uses": "Hero, Card (row), Pagination"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "news-article",
+      "title": "News article",
+      "component": "SiteLayout",
+      "content": "content/help/news-article.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One news article: date, the news, what it means for customers.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, the article",
+            "uses": "Breadcrumbs, Hero, Text, List"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "careers",
+      "title": "Careers",
+      "component": "SiteLayout",
+      "content": "content/careers/careers.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Why work here, the open roles and what people get.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack.",
+        "notBuilt": [
+          "Filters for team and place over the roles (ChipGroup and Select exist).",
+          "A role’s own page with Apply."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places with this one current, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Opening",
+            "holds": "Title, lead, See open roles and a picture",
+            "uses": "Hero (split)"
+          },
+          {
+            "region": "Open roles",
+            "holds": "Four roles with team, place and hours",
+            "uses": "Section, Grid, Card (meta)"
+          },
+          {
+            "region": "Benefits",
+            "holds": "Four lines",
+            "uses": "Section, List"
+          },
+          {
+            "region": "A voice",
+            "holds": "An employee’s words",
+            "uses": "Quote"
+          },
+          {
+            "region": "Footer",
+            "holds": "Three link sections and the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "job",
+      "title": "Job opening",
+      "component": "SiteLayout",
+      "content": "content/careers/job.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One opening in full: the role, what it needs, what it offers and how to apply.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, opening, the job in three parts, call to apply",
+            "uses": "Breadcrumbs, Hero, DescriptionList, Button"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "apply",
+      "title": "Application",
+      "component": "SiteLayout",
+      "content": "content/careers/apply.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Five questions, each with why it’s asked where it isn’t obvious.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The application form",
+            "uses": "Form block: TextField, Select, TextArea, Button, Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "apply-error",
+      "title": "Missing answers",
+      "stateOf": "apply",
+      "component": "SiteLayout",
+      "content": "content/careers/apply-error.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "After sending with answers missing: the error names them and keeps the rest."
+      }
+    },
+    {
+      "id": "apply-sent",
+      "title": "Application sent",
+      "component": "SiteLayout",
+      "content": "content/careers/apply-sent.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What happens next and when, with the ways on.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status: what happened, who reads it, when",
+            "uses": "Status block: Hero (stacked), Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "apply"
+    },
+    {
+      "id": "contact",
+      "title": "Contact",
+      "component": "SiteLayout",
+      "content": "content/careers/contact.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A message form that checks itself when sent, and the offices.",
+        "narrow": "The places move behind Menu; openings stack the words over the picture; grids drop to one or two columns; the footer’s sections stack. The form keeps one column at every width.",
+        "try": [
+          "Press Send message with the form empty: each required field says what it needs.",
+          "Fill it in and send: a confirmation replaces the button."
+        ],
+        "notBuilt": [
+          "An error summary at the top of the form on send (ErrorSummary exists).",
+          "A map of the offices."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places with this one current, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Opening",
+            "holds": "Title and lead",
+            "uses": "Hero (stacked, no picture)"
+          },
+          {
+            "region": "Form",
+            "holds": "Name, email, phone (optional), topic, message; Send; then a confirmation",
+            "uses": "Section, TextField, Select, TextArea, Button, Alert"
+          },
+          {
+            "region": "Offices",
+            "holds": "Three offices with addresses and hours",
+            "uses": "Section, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Three link sections and the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "offices",
+      "title": "Offices",
+      "component": "SiteLayout",
+      "content": "content/careers/offices.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Where each office is, when it’s open and how to get there.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, three office cards",
+            "uses": "Hero, Card, Grid, Image"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-in",
+      "title": "Sign in",
+      "component": "SiteLayout",
+      "content": "content/account/sign-in.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sign in with email and password, with the ways on: forgot the password, or no account yet.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "The form: email, password, Sign in; two links on",
+            "uses": "Form block: Section, TextField (email, password with Show), Button, Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The reading column fills the window; the links wrap under the button.",
+        "try": [
+          "Press Sign in with the fields empty: each field says what to enter.",
+          "Fill both and press Sign in: the form confirms in place.",
+          "Open “Forgot your password?” to go on through the flow."
+        ],
+        "notBuilt": [
+          "Single sign-on with a work account.",
+          "Remember this device."
+        ]
+      }
+    },
+    {
+      "id": "forgot-password",
+      "title": "Forgot password",
+      "component": "SiteLayout",
+      "content": "content/account/forgot-password.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One field and one action: the address that gets the reset link.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "The form: email, Send reset link; back to sign in",
+            "uses": "Form block: Section, TextField, Button, Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The reading column fills the window.",
+        "try": [
+          "Press Send reset link with no address: the field says what to enter."
+        ]
+      }
+    },
+    {
+      "id": "reset-sent",
+      "title": "Reset link sent",
+      "component": "SiteLayout",
+      "content": "content/account/reset-sent.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What happened and what to do next, without saying whether the address has an account.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "Status: eyebrow, title, what happens, two ways on, a note",
+            "uses": "Status block: Hero (stacked), Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The words and links stack."
+      },
+      "stateOf": "forgot-password"
+    },
+    {
+      "id": "sign-in-error",
+      "title": "Wrong password",
+      "stateOf": "sign-in",
+      "component": "SiteLayout",
+      "content": "content/account/sign-in-error.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "After a failed attempt: an error above the fields says what went wrong and the way out, and the form stays as it was."
+      }
+    },
+    {
+      "id": "sign-up",
+      "title": "Create an account",
+      "component": "SiteLayout",
+      "content": "content/account/sign-up.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The five things an account needs, each with why or the format.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "The form: name, company, account number, email, password; Create account; sign in instead",
+            "uses": "Form block: Section, TextField, Button, Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The reading column fills the window.",
+        "try": [
+          "Press Create account with the fields empty: each says what to enter."
+        ],
+        "notBuilt": [
+          "Checking the account number as it’s typed."
+        ]
+      }
+    },
+    {
+      "id": "verify-email",
+      "title": "Check your email",
+      "component": "SiteLayout",
+      "content": "content/account/verify-email.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The account waits for the address to be confirmed: what to do, and how to fix a wrong address.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "Status: eyebrow, title, what to do, two ways on, how long the link works",
+            "uses": "Status block: Hero (stacked), Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The words and links stack."
+      },
+      "stateOf": "sign-up"
+    },
+    {
+      "id": "account-settings",
+      "title": "Account settings",
+      "component": "SiteLayout",
+      "content": "content/account/account-settings.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Change the account’s details; links to notifications and the password.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The details form, links on",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "notification-settings",
+      "title": "Notifications",
+      "component": "SiteLayout",
+      "content": "content/account/notification-settings.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What the company sends and how: switches for each kind, a choice of channel; each change saves at once.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Settings: two groups of switches and a choice",
+            "uses": "Settings block: Section, Switch, Select"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "search",
+      "title": "Search results",
+      "component": "SiteLayout",
+      "content": "content/help/search.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Results for the words searched, which the person can change: the list narrows to what matches.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "Search field with its button, the count, the results",
+            "uses": "Search block: Section, TextField (search, with action), Card (row), EmptyState"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The field and button stay on one line; results stack.",
+        "try": [
+          "Change the words to “ocean” and press Search: one result is left.",
+          "Search for “reefer”: the empty state says why and what to try."
+        ],
+        "notBuilt": [
+          "Filters by kind of page.",
+          "Paging past 20 results."
+        ]
+      }
+    },
+    {
+      "id": "search-empty",
+      "title": "Nothing found",
+      "stateOf": "search",
+      "component": "SiteLayout",
+      "content": "content/help/search-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Nothing matches: the empty state names the words, says what to try and offers two ways on, in the results’ own place."
+      }
+    },
+    {
+      "id": "not-found",
+      "title": "Page not found",
+      "component": "SiteLayout",
+      "content": "content/help/errors/not-found.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Where the person is, why, and three ways on; the header and footer stay, so nothing else is lost.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "Status: code, title, why, three links",
+            "uses": "Status block: Hero (stacked), Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The words and links stack."
+      }
+    },
+    {
+      "id": "server-error",
+      "title": "Something went wrong",
+      "component": "SiteLayout",
+      "content": "content/help/errors/server-error.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Our fault, said plainly, with a retry and another way to get help.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "Status: code, title, whose fault and what to do, two links, a phone number",
+            "uses": "Status block: Hero (stacked), Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The words and links stack."
+      }
+    },
+    {
+      "id": "maintenance",
+      "title": "Down for maintenance",
+      "component": "SiteLayout",
+      "content": "content/help/errors/maintenance.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "When it’s back, what still works, and who to ask meanwhile.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, the four places, Get a quote",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Main",
+            "holds": "Status: eyebrow, title with the end time, what still works, two links",
+            "uses": "Status block: Hero (stacked), Link"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "The words and links stack."
+      }
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy",
+      "component": "SiteLayout",
+      "content": "content/help/privacy.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The policy in plain words, by question.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the policy by heading",
+            "uses": "Hero, Heading, Text, List"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ]
+}

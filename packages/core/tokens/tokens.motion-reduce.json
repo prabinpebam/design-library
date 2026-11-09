@@ -1,0 +1,103 @@
+{
+  "duration": {
+    "fast": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion, legacy scale: still 0 until every component reads a role (Q65 migration, M2–M10), so nothing changes by surprise"
+    },
+    "medium": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion, legacy scale: still 0 until every component reads a role (Q65 migration, M2–M10)"
+    },
+    "slow": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion, legacy scale: still 0 until every component reads a role (Q65 migration, M2–M10)"
+    },
+    "quick": {
+      "$type": "duration",
+      "$value": {
+        "value": 100,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion keeps fades (Q65 G1): the same 100 ms, written as a value because the legacy scale above is 0 here"
+    },
+    "change": {
+      "$type": "duration",
+      "$value": {
+        "value": 200,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion keeps fades (Q65 G1): colour, fill, border and opacity still change over 200 ms; written as a value because the legacy scale above is 0 here"
+    },
+    "move": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion: nothing travels or resizes; it snaps"
+    },
+    "move-far": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion: nothing travels or resizes; it snaps"
+    },
+    "shared": {
+      "$type": "duration",
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      },
+      "$description": "Reduced motion: no shared-element travel; the views cross-fade at duration.change instead"
+    }
+  },
+  "motion": {
+    "press-scale": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "Reduced motion: no press scaling"
+    },
+    "enter-scale": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "Reduced motion: a popover only fades"
+    },
+    "mark-scale": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "Reduced motion: a mark appears at full size"
+    },
+    "zoom-scale": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "Reduced motion: zoom levels only cross-fade"
+    },
+    "dialog-scale": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "Reduced motion: a dialog only fades"
+    },
+    "enter-rise": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "rem"
+      },
+      "$description": "Reduced motion: an arriving surface doesn't travel; it fades in place"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "contact-sent",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading",
+    "state": "done"
+  }
+}

@@ -1,0 +1,117 @@
+/*
+ * Tier 2 compound: Navigation. Headed groups of pages and families of pages, the current page marked; a disclosure on
+ * narrow screens. Hierarchy by the cheapest cues: the largest space between groups, a heading's size and weight for each
+ * group, a label's weight for each family, and alignment for a family's pages (indented so their names line up under
+ * the family's name). No rules, stripes or boxes. The list owns the space between entries (gap), so the current item's
+ * fill and a hovered neighbour's fill never touch. Fills are the entry's whole shape; geometry never changes with
+ * hover, press, focus, current or open.
+ */
+@layer compounds {
+  /* Fills the space it's given, in a sidebar or any container, so every item's fill spans the same width. */
+  [data-dl='navigation'] {
+    inline-size: 100%;
+  }
+
+  [data-dl='navigation'] [data-dl-part='groups'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-navigation-group-gap);
+  }
+
+  [data-dl='navigation'] [data-dl-part='group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-navigation-title-gap);
+  }
+
+  /* The group's heading lines up with the words of its entries, not with their fills. */
+  [data-dl='navigation'] [data-dl-part='group'] > [data-dl='heading'] {
+    padding-inline: var(--c-navigation-item-padding-inline);
+  }
+
+  [data-dl='navigation'] [data-dl-part='items'],
+  [data-dl='navigation'] [data-dl-part='family'],
+  [data-dl='navigation'] [data-dl-part='family-items'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-navigation-item-gap);
+  }
+
+  [data-dl='navigation'] [data-dl-part='family-items'][hidden] {
+    display: none;
+  }
+
+  [data-dl='navigation'] [data-dl-part='item'],
+  [data-dl='navigation'] [data-dl-part='family-toggle'] {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--c-navigation-item-size);
+    padding-inline: var(--c-navigation-item-padding-inline);
+    border-radius: var(--c-navigation-item-radius);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  /* A family's name: a label's weight tells it from a page; the chevron says it opens. */
+  [data-dl='navigation'] [data-dl-part='family-toggle'] {
+    gap: var(--c-navigation-summary-gap);
+    inline-size: 100%;
+    margin: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-weight: var(--type-label-weight);
+    text-align: start;
+    cursor: pointer;
+  }
+
+  /* A family's pages: indented by the chevron and its gap, so their names start where the family's name starts. */
+  [data-dl='navigation'] [data-dl-part='family-items'] [data-dl-part='item'],
+  [data-dl='navigation'] [data-dl-part='family-items'] [data-dl-part='family-toggle'] {
+    padding-inline-start: calc(var(--c-navigation-item-padding-inline) + var(--c-navigation-chevron) + var(--c-navigation-summary-gap));
+  }
+
+  /* A family inside a family: one more step per level, so each level's names line up under its family's name. */
+  [data-dl='navigation'] [data-dl-part='family-items'] [data-dl-part='family-items'] [data-dl-part='item'],
+  [data-dl='navigation'] [data-dl-part='family-items'] [data-dl-part='family-items'] [data-dl-part='family-toggle'] {
+    padding-inline-start: calc(var(--c-navigation-item-padding-inline) + 2 * (var(--c-navigation-chevron) + var(--c-navigation-summary-gap)));
+  }
+
+  [data-dl='navigation'] [data-dl-part='family-items'] [data-dl-part='family-items'] [data-dl-part='family-items'] [data-dl-part='item'] {
+    padding-inline-start: calc(var(--c-navigation-item-padding-inline) + 3 * (var(--c-navigation-chevron) + var(--c-navigation-summary-gap)));
+  }
+
+  [data-dl='navigation'] [data-dl-part='item'][aria-current='page'] {
+    background-color: var(--state-selected);
+  }
+
+  @media (hover: hover) {
+    [data-dl='navigation'] [data-dl-part='item']:hover,
+    [data-dl='navigation'] [data-dl-part='family-toggle']:hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='navigation'] [data-dl-part='item']:active,
+  [data-dl='navigation'] [data-dl-part='family-toggle']:active {
+    background-color: var(--state-pressed);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='navigation'] [data-dl-part='item'][aria-current='page'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+
+  /* Collapsed: one native disclosure whose summary names the current page. */
+  [data-dl='navigation'] [data-dl-part='disclosure'] > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--c-navigation-summary-gap);
+    min-block-size: var(--c-navigation-item-size);
+    padding-inline: var(--c-navigation-item-padding-inline);
+    list-style: none;
+    font-weight: var(--type-label-weight);
+    cursor: pointer;
+  }
+}

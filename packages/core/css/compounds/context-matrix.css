@@ -1,0 +1,67 @@
+/*
+ * Tier 2 compound: ContextMatrix. One outline; row labels once at the start edge, held while the contexts scroll
+ * sideways inside the region; each context column on its own surface. Named escape: code in a cell stays whole.
+ */
+@layer compounds {
+  /* The outline's rounded corners crop what scrolls inside; the ScrollArea's content keeps rings inside its cells. */
+  [data-dl='context-matrix'] {
+    overflow: clip;
+    border: var(--c-context-matrix-outline-width) solid var(--c-context-matrix-outline);
+    border-radius: var(--c-context-matrix-radius);
+  }
+
+  /* Fixed layout: the label column keeps its width and the contexts share the rest equally. */
+  [data-dl='context-matrix'] table {
+    table-layout: fixed;
+    min-inline-size: var(--c-context-matrix-min-width);
+    /* Separate borders keep each cell's hairline under its own cell, so scrolled cells never paint across the held labels. */
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  [data-dl='context-matrix'] th,
+  [data-dl='context-matrix'] td {
+    vertical-align: middle;
+    padding-inline: var(--c-context-matrix-cell-inline);
+  }
+
+  /* Rows separate with one hairline drawn by each cell in its own context, not across contexts. */
+  [data-dl='context-matrix'] tbody tr {
+    border-block-start-width: 0;
+  }
+
+  [data-dl='context-matrix'] tbody th,
+  [data-dl='context-matrix'] tbody td {
+    border-block-start: var(--c-context-matrix-outline-width) solid var(--c-context-matrix-outline);
+  }
+
+  [data-dl='context-matrix'] [data-dl-part='label'] {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: var(--c-context-matrix-layer);
+    inline-size: var(--c-context-matrix-label-width);
+    min-inline-size: var(--c-context-matrix-label-width);
+    overflow-wrap: anywhere;
+    background-color: var(--c-context-matrix-label-bg);
+    color: var(--c-context-matrix-label-fg);
+    font-weight: var(--type-body-weight);
+  }
+
+  [data-dl='context-matrix'] thead [data-dl-part='label'] {
+    color: var(--c-context-matrix-head-fg);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='context-matrix'] td code {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 40rem) {
+    /* breakpoint.sm */
+    [data-dl='context-matrix'] [data-dl-part='label'] {
+      inline-size: var(--c-context-matrix-label-width-narrow);
+      min-inline-size: var(--c-context-matrix-label-width-narrow);
+      padding-inline: var(--c-context-matrix-cell-inline-narrow);
+    }
+  }
+}

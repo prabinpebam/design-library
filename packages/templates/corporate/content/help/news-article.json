@@ -1,0 +1,55 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "news-article",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "News",
+            "href": "/news"
+          },
+          {
+            "label": "A weekly sailing to Lagos"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Routes · 2 February 2027",
+        "title": "A weekly sailing to Lagos from March",
+        "lead": "Direct from Rotterdam in 14 days, with customs cleared before arrival.",
+        "layout": "split",
+        "picture": "harbour"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "text",
+            "text": "From 3 March, a weekly sailing leaves Rotterdam every Friday for Lagos, arriving 14 days later."
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Full and shared containers",
+              "Reefer space for food and medicine",
+              "Pre-clearance with Nigerian customs"
+            ]
+          },
+          {
+            "kind": "text",
+            "text": "Bookings open on 10 February in your account."
+          }
+        ]
+      }
+    ]
+  }
+}

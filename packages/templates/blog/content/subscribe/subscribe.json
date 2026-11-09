@@ -1,0 +1,60 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "subscribe",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Get new articles by email",
+        "intro": "One email when a new article is out, about twice a month. Leave whenever you like.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "name",
+            "label": "First name",
+            "kind": "text",
+            "optional": true
+          }
+        ],
+        "submit": "Subscribe",
+        "sent": "Nearly there: check your email to confirm.",
+        "links": [
+          {
+            "label": "Follow by feed instead",
+            "href": "/feeds"
+          }
+        ],
+        "error": "That doesn’t look like an email address. Check for a missing @ or a typo.",
+        "outcome": {
+          "eyebrow": "One more step",
+          "title": "Check your email to confirm",
+          "text": "We’ve sent a link to confirm the address. Nothing arrives until you press it.",
+          "links": [
+            {
+              "label": "Back to the articles",
+              "href": "/index"
+            },
+            {
+              "label": "Use a different address",
+              "href": "/subscribe"
+            }
+          ],
+          "note": "The link works for 48 hours."
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+/*
+ * Tier 2 compound: PageHeader. Eyebrow, title, lead and sources stacked on one readable measure.
+ */
+@layer compounds {
+  [data-dl='page-header'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-page-header-gap);
+    max-inline-size: var(--c-page-header-measure);
+  }
+
+  /* The eyebrow: a badge inside a full-height target; the link's state underlines the badge's words. */
+  [data-dl='page-header'] [data-dl-part='eyebrow'] {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--c-page-header-eyebrow-size);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    [data-dl='page-header'] [data-dl-part='eyebrow']:hover [data-dl='badge'] {
+      text-decoration: underline;
+    }
+  }
+
+  [data-dl='page-header'] [data-dl-part='eyebrow']:active [data-dl='badge'] {
+    text-decoration: underline;
+  }
+
+  [data-dl='page-header'] [data-dl-part='lead'] {
+    font-size: var(--c-page-header-lead-size);
+    line-height: var(--c-page-header-lead-leading);
+  }
+
+  [data-dl='page-header'] code {
+    overflow-wrap: anywhere;
+  }
+}

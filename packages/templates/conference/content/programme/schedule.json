@@ -1,0 +1,249 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "schedule",
+  "contentVersion": 1,
+  "settings": {
+    "current": "schedule"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "title": "Schedule",
+        "lead": "Two days in Lisbon: talks and a panel on Thursday, workshops on Friday. Times are in Lisbon time.",
+        "layout": "stacked"
+      },
+      {
+        "type": "schedule",
+        "daysLabel": "Days",
+        "days": [
+          {
+            "id": "thu",
+            "label": "Thursday 11",
+            "title": "Thursday 11 March",
+            "slots": [
+              {
+                "id": "doors",
+                "start": "08:30",
+                "end": "09:30",
+                "dateTime": "2027-03-11T08:30",
+                "sessions": [
+                  {
+                    "id": "reg",
+                    "title": "Registration and coffee",
+                    "place": "Foyer",
+                    "pause": true
+                  }
+                ]
+              },
+              {
+                "id": "open",
+                "start": "09:30",
+                "end": "10:15",
+                "dateTime": "2027-03-11T09:30",
+                "sessions": [
+                  {
+                    "id": "k1",
+                    "title": "Interfaces that explain themselves",
+                    "kind": "Keynote",
+                    "people": [
+                      "Ama Mensah"
+                    ],
+                    "place": "Main hall",
+                    "href": "/speaker"
+                  }
+                ]
+              },
+              {
+                "id": "am",
+                "start": "10:30",
+                "end": "11:15",
+                "dateTime": "2027-03-11T10:30",
+                "sessions": [
+                  {
+                    "id": "t1",
+                    "title": "One token, every list of rows",
+                    "kind": "Talk",
+                    "people": [
+                      "Mina Haddad"
+                    ],
+                    "place": "Main hall",
+                    "href": "/speaker"
+                  },
+                  {
+                    "id": "t2",
+                    "title": "Testing focus without a mouse",
+                    "kind": "Talk",
+                    "people": [
+                      "Luis Ortega"
+                    ],
+                    "place": "Room 2",
+                    "href": "/speaker"
+                  },
+                  {
+                    "id": "w1",
+                    "title": "Build a colour scale by hand",
+                    "kind": "Workshop",
+                    "people": [
+                      "Sana Iqbal"
+                    ],
+                    "place": "Studio",
+                    "description": "Bring a laptop. 20 places, first come.",
+                    "href": "/speaker"
+                  }
+                ]
+              },
+              {
+                "id": "late",
+                "start": "11:30",
+                "end": "12:15",
+                "dateTime": "2027-03-11T11:30",
+                "sessions": [
+                  {
+                    "id": "t3",
+                    "title": "Shipping a design system to 40 teams",
+                    "kind": "Talk",
+                    "people": [
+                      "Tom Becker"
+                    ],
+                    "place": "Main hall",
+                    "href": "/speaker"
+                  },
+                  {
+                    "id": "p1",
+                    "title": "What research can’t tell you",
+                    "kind": "Panel",
+                    "people": [
+                      "Priya Raman",
+                      "Jonas Lind",
+                      "Ama Mensah"
+                    ],
+                    "place": "Room 2",
+                    "href": "/speaker"
+                  }
+                ]
+              },
+              {
+                "id": "lunch",
+                "start": "12:30",
+                "end": "13:30",
+                "dateTime": "2027-03-11T12:30",
+                "sessions": [
+                  {
+                    "id": "l",
+                    "title": "Lunch",
+                    "place": "Terrace",
+                    "pause": true
+                  }
+                ]
+              },
+              {
+                "id": "pm",
+                "start": "13:30",
+                "end": "14:15",
+                "dateTime": "2027-03-11T13:30",
+                "sessions": [
+                  {
+                    "id": "t4",
+                    "title": "Motion that respects the reader",
+                    "kind": "Talk",
+                    "people": [
+                      "Keiko Arai"
+                    ],
+                    "place": "Main hall",
+                    "href": "/speaker"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "fri",
+            "label": "Friday 12",
+            "title": "Friday 12 March",
+            "slots": [
+              {
+                "id": "doors",
+                "start": "09:00",
+                "end": "09:30",
+                "dateTime": "2027-03-12T09:00",
+                "sessions": [
+                  {
+                    "id": "c",
+                    "title": "Coffee",
+                    "place": "Foyer",
+                    "pause": true
+                  }
+                ]
+              },
+              {
+                "id": "am",
+                "start": "09:30",
+                "end": "12:00",
+                "dateTime": "2027-03-12T09:30",
+                "sessions": [
+                  {
+                    "id": "w2",
+                    "title": "Tokens from scratch",
+                    "kind": "Workshop",
+                    "people": [
+                      "Mina Haddad",
+                      "Tom Becker"
+                    ],
+                    "place": "Studio",
+                    "description": "Half a day. Bring a laptop.",
+                    "href": "/speaker"
+                  },
+                  {
+                    "id": "w3",
+                    "title": "An afternoon with a screen reader",
+                    "kind": "Workshop",
+                    "people": [
+                      "Luis Ortega"
+                    ],
+                    "place": "Room 2",
+                    "description": "Half a day. Headphones provided.",
+                    "href": "/speaker"
+                  }
+                ]
+              },
+              {
+                "id": "lunch",
+                "start": "12:00",
+                "end": "13:00",
+                "dateTime": "2027-03-12T12:00",
+                "sessions": [
+                  {
+                    "id": "l",
+                    "title": "Lunch",
+                    "place": "Terrace",
+                    "pause": true
+                  }
+                ]
+              },
+              {
+                "id": "close",
+                "start": "16:00",
+                "end": "16:45",
+                "dateTime": "2027-03-12T16:00",
+                "sessions": [
+                  {
+                    "id": "k2",
+                    "title": "What we’ll build next",
+                    "kind": "Keynote",
+                    "people": [
+                      "Priya Raman"
+                    ],
+                    "place": "Main hall",
+                    "href": "/speaker"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

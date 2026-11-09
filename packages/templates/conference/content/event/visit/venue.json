@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "venue",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Venue",
+        "title": "Lisbon Congress Centre",
+        "lead": "Two minutes from Alcântara station, on the river.",
+        "layout": "split",
+        "picture": "harbour"
+      },
+      {
+        "type": "details",
+        "heading": "Getting in",
+        "items": [
+          {
+            "term": "Address",
+            "details": "Example Riverside 1, Lisbon"
+          },
+          {
+            "term": "Step-free",
+            "details": "Every room, with a lift from the station"
+          },
+          {
+            "term": "Quiet room",
+            "details": "Level 1, open all day"
+          }
+        ]
+      }
+    ]
+  }
+}

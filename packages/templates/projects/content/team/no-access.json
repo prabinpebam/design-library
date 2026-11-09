@@ -1,0 +1,52 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "no-access",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "No access",
+        "title": "You can’t open this project",
+        "text": "It’s private to its members. Ask an admin to invite you.",
+        "links": [
+          {
+            "label": "Go to your work",
+            "href": "/my-work"
+          }
+        ],
+        "note": "Admins: Ama Mensah."
+      }
+    ]
+  }
+}

@@ -1,0 +1,307 @@
+/*
+ * Tier 2 compound: TokenSpecimen. Draws one token by its kind; every value is the token itself (through
+ * --specimen) or the component's own tokens. Motion plays only when asked and never with reduced motion.
+ * The two outlines read their semantic roles directly: a more-contrast subtree (a context cell) re-declares the
+ * roles, not the component aliases resolved at the root, so an alias would keep the page's contrast.
+ */
+@layer compounds {
+  /* Colour: the colour over a checker, so a translucent one reads; also the background colour, so it can be measured. */
+  [data-dl='token-specimen'][data-kind='colour'],
+  [data-dl='token-specimen'][data-kind='ramp'] [data-dl-part='chip'] {
+    background-color: var(--specimen);
+    background-image:
+      linear-gradient(var(--specimen), var(--specimen)),
+      repeating-conic-gradient(var(--c-token-specimen-checker-dark) 0 25%, var(--c-token-specimen-checker-light) 0 50%);
+    background-size: auto, var(--c-token-specimen-checker) var(--c-token-specimen-checker);
+    border: var(--c-token-specimen-outline-width) solid var(--color-border);
+    border-radius: var(--c-token-specimen-colour-radius);
+  }
+
+  /* The swatch's text colour is the canvas of its context, so a reader can measure the colour's contrast against it. */
+  [data-dl='token-specimen'][data-kind='colour'] {
+    display: block;
+    flex: none;
+    inline-size: var(--c-token-specimen-swatch);
+    block-size: var(--c-token-specimen-swatch);
+    color: var(--color-bg);
+  }
+
+  /* A ramp and a duration's track take the room they're given, wherever they're placed. */
+  [data-dl='token-specimen'][data-kind='ramp'],
+  [data-dl='token-specimen'][data-kind='duration'] {
+    inline-size: 100%;
+  }
+
+  [data-dl='token-specimen'][data-kind='ramp'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--c-token-specimen-chip-min), 1fr));
+    gap: var(--c-token-specimen-ramp-row-gap) var(--c-token-specimen-ramp-column-gap);
+  }
+
+  [data-dl='token-specimen'][data-kind='ramp'] > li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-token-specimen-label-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='token-specimen'][data-kind='ramp'] [data-dl-part='chip'] {
+    block-size: var(--c-token-specimen-chip-height);
+  }
+
+  [data-dl='token-specimen'][data-kind='ramp'] [data-dl-part='name'] {
+    font-weight: var(--c-token-specimen-label-weight);
+  }
+
+  [data-dl='token-specimen'][data-kind='ramp'] code {
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='token-specimen'][data-kind='contrast'] {
+    display: inline-block;
+    padding-inline: var(--c-token-specimen-sample-inset);
+    border-radius: var(--c-token-specimen-sample-radius);
+    color: var(--specimen);
+    background-color: var(--specimen-on);
+    font-weight: var(--c-token-specimen-sample-weight);
+  }
+
+  [data-dl='token-specimen'][data-kind='type'] {
+    font-size: var(--specimen-size);
+    line-height: var(--specimen-leading);
+    font-weight: var(--specimen-weight);
+    letter-spacing: var(--specimen-tracking);
+  }
+
+  [data-dl='token-specimen'][data-kind='type'][data-family] {
+    font-family: var(--specimen-family);
+    font-variation-settings: var(--specimen-axes);
+  }
+
+  [data-dl='token-specimen'][data-kind='font'] {
+    display: block;
+    font-family: var(--specimen);
+    font-variation-settings: var(--specimen-axes);
+    font-size: var(--c-token-specimen-glyph-size);
+    line-height: var(--c-token-specimen-leading);
+    font-weight: var(--c-token-specimen-glyph-weight);
+    color: var(--c-token-specimen-mark);
+  }
+
+  /* A line set in the font: the text's own colour and weight, larger than body text. */
+  [data-dl='token-specimen'][data-kind='font'][data-line] {
+    font-size: var(--c-token-specimen-line-size);
+    font-weight: inherit;
+    color: inherit;
+  }
+
+  [data-dl='token-specimen'][data-kind='length'] {
+    display: block;
+    inline-size: var(--specimen);
+    block-size: var(--c-token-specimen-bar-thickness);
+    background-color: var(--c-token-specimen-mark);
+  }
+
+  [data-dl='token-specimen'][data-kind='size'] {
+    display: block;
+    inline-size: var(--specimen);
+    block-size: var(--specimen);
+    background-color: var(--c-token-specimen-mark);
+  }
+
+  [data-dl='token-specimen'][data-kind='radius'],
+  [data-dl='token-specimen'][data-kind='stroke'],
+  [data-dl='token-specimen'][data-kind='shadow'] {
+    display: block;
+    inline-size: var(--c-token-specimen-tile);
+    block-size: var(--c-token-specimen-tile);
+    background-color: var(--c-token-specimen-tile-surface);
+  }
+
+  /* Material (Q73): the hardest backdrop, stripes of text and canvas colour, under a surface of the material. */
+  [data-dl='token-specimen'][data-kind='material'] {
+    display: grid;
+    place-items: center;
+    inline-size: 100%;
+    block-size: var(--c-token-specimen-tile);
+    border-radius: var(--c-token-specimen-shadow-radius);
+    background-image: repeating-linear-gradient(135deg, var(--color-text) 0 var(--c-token-specimen-checker), var(--color-bg) 0 calc(2 * var(--c-token-specimen-checker)));
+  }
+
+  [data-dl='token-specimen'][data-kind='material'] > [data-dl-part='surface'] {
+    display: grid;
+    gap: var(--space-stack-pair);
+    padding: var(--c-token-specimen-sample-inset);
+    border-radius: var(--c-token-specimen-sample-radius);
+    background-color: var(--specimen);
+    -webkit-backdrop-filter: var(--specimen-filter, none);
+    backdrop-filter: var(--specimen-filter, none);
+    color: var(--color-text);
+    font-weight: var(--c-token-specimen-sample-weight);
+  }
+
+  [data-dl='token-specimen'][data-kind='material'] [data-dl-part='muted'] {
+    color: var(--color-text-muted);
+    font-weight: normal;
+  }
+
+  /* Elevation (Q78): one level as its cues only: a surface on what it sits on (a scrim is laid over the canvas). */
+  [data-dl='token-specimen'][data-kind='elevation'] {
+    display: grid;
+    place-items: center;
+    inline-size: 100%;
+    block-size: var(--c-token-specimen-tile);
+    border-radius: var(--c-token-specimen-shadow-radius);
+    background-color: var(--color-bg);
+    background-image: linear-gradient(var(--specimen-on), var(--specimen-on));
+  }
+
+  [data-dl='token-specimen'][data-kind='elevation'] > [data-dl-part='surface'] {
+    display: grid;
+    place-items: center;
+    inline-size: 60%;
+    block-size: 60%;
+    border: var(--c-token-specimen-outline-width) solid var(--specimen-edge, transparent);
+    border-radius: var(--c-token-specimen-sample-radius);
+    background-color: var(--specimen);
+    box-shadow: var(--specimen-shadow, none);
+    color: var(--color-text);
+    font-weight: var(--c-token-specimen-sample-weight);
+  }
+
+  [data-dl='token-specimen'][data-kind='radius'] {
+    border-radius: var(--specimen);
+    border: var(--c-token-specimen-outline-width) solid var(--color-border-strong);
+  }
+
+  [data-dl='token-specimen'][data-kind='stroke'] {
+    border: var(--specimen) solid var(--color-border-strong);
+  }
+
+  [data-dl='token-specimen'][data-kind='shadow'] {
+    border-radius: var(--c-token-specimen-shadow-radius);
+    box-shadow: var(--specimen);
+  }
+
+  /* Easing: its curve and its track are two parts that sit where the parent places them. */
+  [data-dl='token-specimen'][data-kind='easing'] {
+    display: contents;
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='curve'] {
+    inline-size: var(--c-token-specimen-tile);
+    block-size: var(--c-token-specimen-tile);
+    overflow: visible;
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='axis'],
+  [data-dl='token-specimen'] [data-dl-part='path'] {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='axis'] {
+    stroke: var(--color-border);
+    stroke-width: var(--c-token-specimen-outline-width);
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='path'] {
+    stroke: var(--c-token-specimen-mark);
+    stroke-width: var(--c-token-specimen-curve-width);
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='track'],
+  [data-dl='token-specimen'][data-kind='duration'] {
+    position: relative;
+    display: block;
+    block-size: var(--c-token-specimen-track-size);
+    border-radius: var(--c-token-specimen-track-radius);
+    background-color: var(--c-token-specimen-track);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='dot'] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: var(--c-token-specimen-track-size);
+    block-size: var(--c-token-specimen-track-size);
+    border-radius: var(--c-token-specimen-track-radius);
+    background-color: var(--c-token-specimen-mark);
+    translate: 0 0;
+    /* Q65 R1 (K-19): the easing's dot crosses the track by transform; the track is the query container. */
+    transition: translate var(--c-token-specimen-play) var(--specimen);
+  }
+
+  [data-dl='token-specimen'][data-played] [data-dl-part='dot'] {
+    translate: calc(100cqi - var(--c-token-specimen-track-size)) 0;
+  }
+
+  [data-dl='token-specimen'][data-played]:dir(rtl) [data-dl-part='dot'] {
+    translate: calc(var(--c-token-specimen-track-size) - 100cqi) 0;
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='fill'] {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    background-color: var(--c-token-specimen-mark);
+    scale: 0 1;
+    transform-origin: left center;
+    /* Q65 R1 (K-19): the duration's fill grows by transform, not width. */
+    transition: scale var(--specimen) var(--c-token-specimen-play-easing);
+  }
+
+  [data-dl='token-specimen'] [data-dl-part='fill']:dir(rtl) {
+    transform-origin: right center;
+  }
+
+  [data-dl='token-specimen'][data-played] [data-dl-part='fill'] {
+    scale: 1 1;
+  }
+
+  /* Motion roles (Q65): the role's own duration, so a reduced-motion subtree shows what its context keeps. Travel
+     moves by transform only (R1): the track is the query container, so the dot can cross it whatever its width. */
+  [data-dl='token-specimen'][data-kind='travel'] {
+    position: relative;
+    display: block;
+    block-size: var(--c-token-specimen-track-size);
+    border-radius: var(--c-token-specimen-track-radius);
+    background-color: var(--c-token-specimen-track);
+    container-type: inline-size;
+  }
+
+  [data-dl='token-specimen'][data-kind='travel'] [data-dl-part='dot'] {
+    translate: 0 0;
+    transition: translate var(--specimen) var(--easing-standard);
+  }
+
+  [data-dl='token-specimen'][data-kind='travel'][data-played] [data-dl-part='dot'] {
+    inset-inline-start: 0;
+    translate: calc(100cqi - var(--c-token-specimen-track-size)) 0;
+  }
+
+  [data-dl='token-specimen'][data-kind='travel'][data-played]:dir(rtl) [data-dl-part='dot'] {
+    translate: calc(var(--c-token-specimen-track-size) - 100cqi) 0;
+  }
+
+  [data-dl='token-specimen'][data-kind='fade'] {
+    display: block;
+    block-size: var(--c-token-specimen-track-size);
+    border-radius: var(--c-token-specimen-track-radius);
+    background-color: var(--c-token-specimen-track);
+    transition: background-color var(--specimen) var(--easing-standard);
+  }
+
+  [data-dl='token-specimen'][data-kind='fade'][data-played] {
+    background-color: var(--c-token-specimen-mark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='token-specimen'] [data-dl-part='dot'],
+    [data-dl='token-specimen'] [data-dl-part='fill'] {
+      transition: none;
+    }
+  }
+}

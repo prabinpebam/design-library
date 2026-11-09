@@ -1,0 +1,43 @@
+{
+  "name": "design-library",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/catalogue",
+    "packages/templates",
+    "apps/library",
+    "apps/example"
+  ],
+  "scripts": {
+    "tokens": "node ./tools/space-shape.mjs && node ./tools/colour.mjs && node ./tools/token-contexts.mjs && node ./agentic-craft/tools/build-tokens.mjs --src packages/core/tokens --css packages/core/css/tokens.css --json packages/core/tokens/generated/tokens.resolved.json && node ./tools/template-tokens.mjs",
+    "tokens:check": "node ./tools/space-shape.mjs --check && node ./tools/colour.mjs --check && node ./tools/token-contexts.mjs --check && node ./agentic-craft/tools/build-tokens.mjs --src packages/core/tokens --css packages/core/css/tokens.css --json packages/core/tokens/generated/tokens.resolved.json --check && node ./agentic-craft/tools/check-tokens.mjs --src packages/core/tokens --checks packages/core/tokens/checks.json && node ./tools/template-tokens.mjs --check",
+    "typecheck": "tsc -p apps/library --noEmit",
+    "dev": "npm run dev -w apps/library",
+    "build:library": "npm run tokens && npm run build -w apps/library",
+    "revisions": "node ./tools/library-revisions.mjs",
+    "check:views": "node ./tools/check-views.mjs",
+    "check:layers": "node ./tools/check-layers.mjs",
+    "check:motion": "node ./tools/check-motion.mjs",
+    "check:materials": "node ./tools/check-materials.mjs",
+    "check:clipping": "node ./tools/check-clipping.mjs",
+    "check:parts": "node ./tools/check-parts.mjs",
+    "test:revisions": "node --test apps/library/revisions/",
+    "check:content": "node ./tools/check-content.mjs",
+    "content:schemas": "node ./tools/content-schemas.mjs",
+    "agent:index": "node ./tools/agent-index.mjs",
+    "agent:index:check": "node ./tools/agent-index.mjs --check"
+  },
+  "devDependencies": {
+    "@fluentui/svg-icons": "^1.1.345",
+    "@material-symbols/svg-400": "^0.48.2",
+    "@phosphor-icons/core": "^2.1.1",
+    "@tabler/icons": "^3.50.0",
+    "ajv": "^8.20.0",
+    "bootstrap-icons": "^1.13.2",
+    "flag-icons": "^7.6.0",
+    "heroicons": "^2.2.0",
+    "iconoir": "^7.12.1"
+  }
+}

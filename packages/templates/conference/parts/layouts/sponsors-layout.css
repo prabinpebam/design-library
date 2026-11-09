@@ -1,0 +1,32 @@
+/*
+ * Conference template part, tier 3 layout: SponsorsLayout (F15.80, Q64). Two regions: the intro in a column of its own
+ * width and the levels beside it (not held in view: the intro is often taller than the window, and a held column would
+ * hide its own action); in a narrow container they stack, intro
+ * first. Space between regions is the layout's gap (spacing: the layout owns it). Its own tokens alias core roles.
+ */
+@layer templates {
+  [data-dl='conference-sponsors-layout'] {
+    container-type: inline-size;
+    box-sizing: border-box;
+    inline-size: 100%;
+    display: grid;
+    gap: var(--t-conference-sponsors-layout-column-gap);
+    grid-template-columns: var(--t-conference-sponsors-layout-intro-width) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  [data-dl='conference-sponsors-layout'] [data-dl-part='intro'] {
+    display: grid;
+    gap: var(--t-conference-sponsors-layout-stack-gap);
+  }
+
+  [data-dl='conference-sponsors-layout'] [data-dl-part='levels'] {
+    min-inline-size: 0;
+  }
+
+  @container (max-width: 48rem) {
+    [data-dl='conference-sponsors-layout'] > [data-dl-part] {
+      grid-column: 1 / -1;
+    }
+  }
+}

@@ -1,0 +1,262 @@
+/*
+ * Tier 2 compound: Carousel (F15.27, Q53). A scroll-snap track of slides (one or a few per view, or one with peeking
+ * neighbours), then one row of controls: rotation, previous, counter, next, and the picker (dots or thumbnails).
+ * The current dot draws out into a pill inside its own target, so the others never move; while rotating, the pill
+ * fills over the slide's time. Peek fades and shrinks the neighbours with a transform, so snap points never move.
+ * The track bleeds to the carousel's edges; the scrollbar is hidden because the controls and the picker replace it.
+ */
+@layer compounds {
+  [data-dl='carousel'] {
+    --carousel-per-view: 1;
+
+    display: grid;
+    gap: var(--c-carousel-gap);
+    /* Size containment gives it no width of its own, so it fills its container's line. */
+    inline-size: 100%;
+    min-inline-size: 0;
+    container-type: inline-size;
+  }
+
+  [data-dl='carousel'][data-per-view='2'] { --carousel-per-view: 2; }
+  [data-dl='carousel'][data-per-view='3'] { --carousel-per-view: 3; }
+  [data-dl='carousel'][data-per-view='4'] { --carousel-per-view: 4; }
+
+  [data-dl='carousel'] > [data-dl-part='track'] {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - (var(--carousel-per-view) - 1) * var(--c-carousel-gap)) / var(--carousel-per-view));
+    column-gap: var(--c-carousel-gap);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    border-radius: var(--c-carousel-radius);
+  }
+
+  [data-dl='carousel'] > [data-dl-part='track']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* Peek: each slide a share of the width, centred, so part of each neighbour shows on either side. */
+  [data-dl='carousel'][data-peek] > [data-dl-part='track'] {
+    grid-auto-columns: calc(100% * var(--c-carousel-peek-share));
+    padding-inline: calc(100% * (1 - var(--c-carousel-peek-share)) / 2);
+    border-radius: 0;
+  }
+
+  [data-dl='carousel'] [data-dl-part='slide'] {
+    display: grid;
+    align-content: start;
+    gap: var(--space-stack-item);
+    min-inline-size: 0;
+    scroll-snap-align: start;
+  }
+
+  [data-dl='carousel'][data-peek] [data-dl-part='slide'] {
+    scroll-snap-align: center;
+    transition:
+      opacity var(--duration-change) var(--easing-standard),
+      scale var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='carousel'][data-peek] [data-dl-part='slide']:not([data-current]) {
+    opacity: var(--c-carousel-peek-opacity);
+    scale: var(--c-carousel-peek-scale);
+    cursor: pointer;
+  }
+
+  [data-dl='carousel'] [data-dl-part='media'] {
+    display: grid;
+    overflow: hidden;
+    aspect-ratio: var(--c-carousel-ratio);
+    border-radius: var(--c-carousel-radius);
+    background-color: var(--color-bg-sunken);
+  }
+
+  /* Content slides (a card, a quote) take their own height and pad once, inside the slide's box. */
+  [data-dl='carousel'] [data-dl-part='media'][data-content] {
+    align-content: start;
+    aspect-ratio: auto;
+    padding: var(--space-inset-md);
+  }
+
+  [data-dl='carousel'] [data-dl-part='media'] > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    user-select: none;
+  }
+
+  [data-dl='carousel'] [data-dl-part='caption'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='carousel'] > [data-dl-part='controls'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='carousel'] [data-dl-part='moves'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='carousel'] [data-dl-part='counter'] {
+    min-inline-size: var(--size-target);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='carousel'] > [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    inline-size: var(--border-hairline);
+    block-size: var(--border-hairline);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Picker */
+  [data-dl='carousel'] [data-dl-part='pager'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-inline-size: 0;
+  }
+
+  [data-dl='carousel'] [data-dl-part='pager'][data-pager='thumbnails'] {
+    flex-wrap: nowrap;
+    gap: var(--space-stack-pair);
+    overflow-x: auto;
+    padding: var(--size-focus-width);
+  }
+
+  [data-dl='carousel'] [data-dl-part='dot'] {
+    display: inline-grid;
+    place-items: center;
+    inline-size: calc(var(--c-carousel-dot-active) + var(--c-carousel-dot));
+    block-size: var(--size-target-min);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: none;
+    cursor: pointer;
+  }
+
+  /* Every mark is the pill's size; a resting dot is clipped to a circle in its middle, so choosing one never moves anything. */
+  [data-dl='carousel'] [data-dl-part='dot'] > [data-dl-part='mark'] {
+    position: relative;
+    inline-size: var(--c-carousel-dot-active);
+    block-size: var(--c-carousel-dot);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-border-strong);
+    clip-path: inset(0 calc((var(--c-carousel-dot-active) - var(--c-carousel-dot)) / 2) round var(--radius-pill));
+    transition: clip-path var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='carousel'] [data-dl-part='dot'] > [data-dl-part='mark']::after {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-accent);
+    transform-origin: left center;
+  }
+
+  [data-dl='carousel'] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark'] {
+    background-color: var(--color-accent);
+    clip-path: inset(0 round var(--radius-pill));
+  }
+
+  /* While rotating: the pill is a track that fills over the slide's time. */
+  [data-dl='carousel'][data-playing] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark'] {
+    background-color: var(--color-accent-subtle);
+  }
+
+  [data-dl='carousel'][data-playing] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark']::after {
+    content: '';
+    animation: dl-carousel-fill var(--carousel-interval) var(--easing-linear) both;
+  }
+
+  [data-dl='carousel'][data-playing] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark']:dir(rtl)::after {
+    transform-origin: right center;
+  }
+
+  @keyframes dl-carousel-fill {
+    from { scale: 0 1; }
+    to { scale: 1 1; }
+  }
+
+  [data-dl='carousel'] :is([data-dl-part='dot'], [data-dl-part='thumb']):focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='carousel'] [data-dl-part='thumb'] {
+    display: inline-grid;
+    flex: none;
+    overflow: hidden;
+    inline-size: var(--c-carousel-thumb);
+    aspect-ratio: var(--c-carousel-ratio);
+    padding: 0;
+    border: var(--border-thick) solid transparent;
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-sunken);
+    opacity: var(--c-carousel-peek-opacity);
+    cursor: pointer;
+  }
+
+  [data-dl='carousel'] [data-dl-part='thumb'] > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  [data-dl='carousel'] [data-dl-part='thumb'][aria-selected='true'] {
+    border-color: var(--color-accent);
+    opacity: 1;
+  }
+
+  /* A narrow carousel shows one slide at a time. */
+  @container (max-width: 40rem) {
+    [data-dl='carousel'] > [data-dl-part='track'] {
+      --carousel-per-view: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='carousel'] :is([data-dl-part='slide'], [data-dl-part='mark']) {
+      transition: none;
+    }
+
+    [data-dl='carousel'] [data-dl-part='mark']::after {
+      animation: none;
+    }
+  }
+
+  [data-motion='reduce'] [data-dl='carousel'] :is([data-dl-part='slide'], [data-dl-part='mark']) {
+    transition: none;
+  }
+
+  [data-motion='reduce'] [data-dl='carousel'] [data-dl-part='mark']::after {
+    animation: none;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='carousel'] [data-dl-part='dot'] > [data-dl-part='mark'] {
+      background-color: CanvasText;
+    }
+
+    [data-dl='carousel'] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark'],
+    [data-dl='carousel'] [data-dl-part='mark']::after {
+      background-color: Highlight;
+    }
+  }
+}

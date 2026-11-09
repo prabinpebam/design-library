@@ -1,0 +1,171 @@
+/*
+ * Tier 2 compound: Board (F15.75, Q61/Q62; catalogue Data display "Board"). Columns are one quiet surface each (the
+ * sunken tone) and cards are the raised surface inside them: two levels, no borders. The columns scroll sideways inside
+ * the board, edge to edge. The drop target's accent outline and the dragged card's fade show only while dragging; a
+ * column at its limit says so in its count, never by colour alone. Motion (Q65 C23, M8): while a card is dragged over a
+ * column an empty slot opens where it would land and the cards after it slide (useFlipList); on drop the column it left
+ * closes up the same way; a card moved with its menu travels across the board. Reduced motion: nothing slides.
+ */
+@layer compounds {
+  [data-dl='board'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-board-column-gap);
+    min-inline-size: 0;
+    overflow-x: auto;
+    padding-block-end: var(--c-board-scroll-room);
+    outline: none;
+    color: var(--color-text);
+  }
+
+  [data-dl='board']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='board'] [data-dl-part='column'] {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    gap: var(--c-board-card-gap);
+    box-sizing: border-box;
+    inline-size: var(--c-board-column);
+    padding: var(--c-board-column-padding);
+    border-radius: var(--c-board-column-radius);
+    background-color: var(--c-board-column-fill);
+  }
+
+  [data-dl='board'] [data-dl-part='column'][data-over] {
+    outline: var(--border-thick) solid var(--c-board-drop);
+    outline-offset: calc(-1 * var(--border-thick));
+  }
+
+  [data-dl='board'] [data-dl-part='title'] {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-inline-pair);
+    margin: 0;
+    padding-inline: var(--c-board-card-padding);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    font-weight: var(--weight-semibold);
+  }
+
+  [data-dl='board'] [data-dl-part='count'] {
+    font-weight: var(--weight-regular);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='board'] [data-dl-part='column'][data-full] [data-dl-part='count'] {
+    color: var(--color-text);
+    font-weight: var(--weight-semibold);
+  }
+
+  [data-dl='board'] [data-dl-part='cards'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-board-card-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='board'] [data-dl-part='card'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-board-card-inner-gap);
+    padding: var(--c-board-card-padding);
+    border-radius: var(--c-board-card-radius);
+    background-color: var(--c-board-card-fill);
+    cursor: grab;
+  }
+
+  [data-dl='board'] [data-dl-part='card'][data-dragging] {
+    opacity: var(--c-board-dragging-opacity);
+    cursor: grabbing;
+  }
+
+  /* While dragging (Q65 C23): the room the card would land in, the dragged card's height; the cards after it slide. */
+  [data-dl='board'] [data-dl-part='slot'] {
+    block-size: var(--board-slot);
+  }
+
+  [data-dl='board'] [data-dl-part='top'],
+  [data-dl='board'] [data-dl-part='foot'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='board'] [data-dl-part='top'] {
+    justify-content: flex-end;
+    min-block-size: var(--size-target-dense);
+  }
+
+  [data-dl='board'] [data-dl-part='reference'] {
+    flex: 1;
+  }
+
+  [data-dl='board'] [data-dl-part='reference'],
+  [data-dl='board'] [data-dl-part='meta'] {
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='board'] [data-dl-part='name'] {
+    margin: 0;
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='board'] [data-dl-part='name'] a {
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+  }
+
+  [data-dl='board'] [data-dl-part='name'] a:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-width);
+  }
+
+  @media (hover: hover) {
+    [data-dl='board'] [data-dl-part='name'] a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  [data-dl='board'] [data-dl-part='name'] a:active {
+    text-decoration: underline;
+  }
+
+  [data-dl='board'] [data-dl-part='end'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  [data-dl='board'] [data-dl-part='empty'] {
+    margin: 0;
+    padding: var(--c-board-card-padding);
+    font-size: var(--type-body-sm-size);
+    color: var(--color-text-muted);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='board'] [data-dl-part='card'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+
+    [data-dl='board'] [data-dl-part='column'][data-over] {
+      outline-color: Highlight;
+    }
+  }
+}

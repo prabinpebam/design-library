@@ -1,0 +1,131 @@
+/*
+ * Library revisions (app layer, above core). Semantic tokens only; the layer never changes a block's geometry. The pane
+ * is built from core (Pane, Toolbar, Stack, Cluster); what's left here is the review tooling (picker, jump outline,
+ * print) and the comment list and archive disclosure, kept as they look until the owner decides (C6).
+ */
+@layer app {
+  [data-app='rev-targets'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Comments separate by one neutral hairline between them, not by cards. */
+  [data-app='rev-comments'] {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-app='rev-comments'] > li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-stack-pair);
+    padding-block: var(--space-inset-sm);
+  }
+
+  [data-app='rev-comments'] > li + li {
+    border-block-start: var(--border-hairline) solid var(--color-border);
+  }
+
+  /* Archived revisions: one native disclosure, collapsed by default. */
+  [data-app='rev-archived'] > summary {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--size-target);
+    color: var(--color-text);
+    font-weight: var(--type-label-weight);
+    cursor: pointer;
+  }
+
+  /* A comment link's block, until the next press: a full outline outside the block, so nothing inside it moves. */
+  [data-rev-jumped] {
+    outline: var(--border-thick) solid var(--color-accent);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /*
+   * The element picker (F4): a glass over the main region takes the pointer while picking, so specimens get no hover,
+   * press or click; boxes and the label sit in a fixed layer outside the page, from viewport geometry (layer.devtools): above the page and its
+   * popups, below the pane's sheet (layer.overlay), so the pane stays usable. Nothing here styles a specimen.
+   */
+  [data-app='pick-glass'],
+  [data-app='pick-box'],
+  [data-app='pick-label'] {
+    position: fixed;
+    z-index: var(--layer-devtools);
+    inset-block-start: var(--y);
+    inset-inline-start: var(--x);
+  }
+
+  [data-app='pick-glass'] {
+    inline-size: var(--w);
+    block-size: var(--h);
+    cursor: crosshair;
+  }
+
+  /* The glass holds keyboard focus while picking; its ring is drawn inside it, so no edge clips it. */
+  [data-app='pick-glass']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-app='pick-box'] {
+    inline-size: var(--w);
+    block-size: var(--h);
+    pointer-events: none;
+  }
+
+  /* The candidate: a full hairline outline and a light tint, devtools-style. Never a stripe on one side. */
+  [data-app='pick-box'][data-candidate] {
+    outline: var(--border-hairline) solid var(--color-accent);
+    background-color: var(--state-hover);
+  }
+
+  /* Selected: the selection's own cue, a thick outline and the selected tint. */
+  [data-app='pick-box'][data-selected] {
+    outline: var(--border-thick) solid var(--color-accent);
+    background-color: var(--state-selected);
+  }
+
+  /* The label floats above the candidate's start corner (below it near the top edge); it carries no outline of its own. */
+  [data-app='pick-label'] {
+    translate: 0 -100%;
+    max-inline-size: calc(100vw - var(--x));
+    padding-block: var(--space-stack-pair);
+    padding-inline: var(--space-inline-pair);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-raised);
+    color: var(--color-text);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+
+  [data-app='pick-label'][data-below] {
+    translate: 0 0;
+    inset-block-start: calc(var(--y) + var(--h));
+  }
+
+  /* Said, not shown: the candidate's announcement for screen readers. */
+  [data-app='pick-status'] {
+    position: fixed;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media print {
+    [data-print='hide'] {
+      display: none;
+    }
+  }
+}

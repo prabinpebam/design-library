@@ -1,0 +1,25 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "conference",
+  "layout": "not-found",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Error 404",
+        "title": "We can’t find that page",
+        "text": "It may have moved, or the address may have a typo.",
+        "links": [
+          {
+            "label": "Go to the home page",
+            "href": "/home"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+/*
+ * Conference template part, tier 2 compound: SponsorWall (F15.80, Q64). Levels stacked with section space; each level's
+ * tiles on a grid that fits as many as the width allows (fewer, larger tiles for higher levels). A tile is the one
+ * enclosure: a sunken surface, no border (visual-noise). Reads only core semantic roles and its own
+ * t.conference.sponsor-wall tokens; places core Heading and Link without restyling them.
+ */
+@layer templates {
+  [data-dl='conference-sponsor-wall'] {
+    display: grid;
+    gap: var(--t-conference-sponsor-wall-level-gap);
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-dl-part='level'] {
+    display: grid;
+    gap: var(--space-stack-item);
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-dl-part='tiles'] {
+    display: grid;
+    gap: var(--t-conference-sponsor-wall-tile-gap);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-column-min)), 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-dl-part='tiles'][data-size='l'] {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-pane-width)), 1fr));
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-dl-part='tile'] {
+    display: grid;
+    align-content: center;
+    gap: var(--space-stack-pair);
+    padding: var(--t-conference-sponsor-wall-tile-padding);
+    border-radius: var(--t-conference-sponsor-wall-tile-radius);
+    background: var(--t-conference-sponsor-wall-tile-surface);
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-dl-part='name'] {
+    font-family: var(--font-display);
+    font-size: var(--t-conference-sponsor-wall-name-m);
+    font-weight: var(--weight-bold);
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-size='l'] [data-dl-part='name'] {
+    font-size: var(--t-conference-sponsor-wall-name-l);
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-size='s'] [data-dl-part='name'] {
+    font-size: var(--t-conference-sponsor-wall-name-s);
+  }
+
+  [data-dl='conference-sponsor-wall'] [data-dl-part='note'] {
+    color: var(--color-text-muted);
+    font-size: var(--text-s);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='conference-sponsor-wall'] [data-dl-part='tile'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

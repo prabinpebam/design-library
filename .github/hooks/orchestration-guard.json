@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/orchestration-clock.mjs preToolUse",
+        "timeoutSec": 5,
+        "env": {
+          "AO_REVIEW_MIN": "30",
+          "AO_DELIVER_WARN_MIN": "40",
+          "AO_DELIVER_MIN": "60",
+          "AO_ROLLOVER_MIN": "90",
+          "AO_ROLLOVER_TOOLS": "300",
+          "AO_ROLLOVER_COMPACTIONS": "2",
+          "AO_CLOCK_CMD": "node .github/hooks/orchestration-clock.mjs"
+        }
+      }
+    ],
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/orchestration-clock.mjs userPromptSubmitted",
+        "timeoutSec": 5,
+        "env": {
+          "AO_REVIEW_MIN": "30",
+          "AO_DELIVER_WARN_MIN": "40",
+          "AO_DELIVER_MIN": "60",
+          "AO_ROLLOVER_MIN": "90",
+          "AO_ROLLOVER_TOOLS": "300",
+          "AO_ROLLOVER_COMPACTIONS": "2",
+          "AO_CLOCK_CMD": "node .github/hooks/orchestration-clock.mjs"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "design",
+  "layout": "editor-dev",
+  "contentVersion": 1,
+  "settings": {
+    "tab": "dev"
+  }
+}

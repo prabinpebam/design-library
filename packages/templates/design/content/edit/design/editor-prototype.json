@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "design",
+  "layout": "editor-prototype",
+  "contentVersion": 1,
+  "settings": {
+    "tab": "prototype"
+  }
+}

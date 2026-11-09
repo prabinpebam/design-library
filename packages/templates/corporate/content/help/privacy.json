@@ -1,0 +1,54 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "privacy",
+  "contentVersion": 1,
+  "settings": {
+    "current": "privacy",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Policies",
+        "title": "Privacy",
+        "lead": "What we keep about you, why, and how to have it deleted.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "What we keep"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Your name, company and contact details",
+              "Shipments you book and their documents",
+              "Calls and emails with planners, for 12 months"
+            ]
+          },
+          {
+            "kind": "heading",
+            "text": "Why"
+          },
+          {
+            "kind": "text",
+            "text": "To move your goods, to invoice you and to answer your questions. We never sell it."
+          },
+          {
+            "kind": "heading",
+            "text": "Your rights"
+          },
+          {
+            "kind": "text",
+            "text": "Ask for a copy, a correction or deletion at privacy@example.com; we answer within 30 days."
+          }
+        ]
+      }
+    ]
+  }
+}

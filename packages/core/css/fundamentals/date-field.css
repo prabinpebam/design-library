@@ -1,0 +1,105 @@
+/*
+ * Tier 1 fundamental: DateField (F15.61, catalogue Pickers "Date field, separate parts" and "Date field, segmented";
+ * GOV.UK date input). Separate: three boxes in the field box's look (c.field), each sized to what it holds, named by a
+ * small label above. Segmented: one field box with day, month and year parts, the same anatomy as TimeField.
+ */
+@layer fundamentals {
+  [data-dl='date-field'] {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+  }
+
+  [data-dl='date-field'] [data-dl-part='parts'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-date-field-parts-gap);
+  }
+
+  [data-dl='date-field'] [data-dl-part='part'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-date-field-label-gap);
+  }
+
+  [data-dl='date-field'] [data-dl-part='part-label'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='date-field'] [data-dl-part='part'] input {
+    inline-size: var(--c-date-field-part-width);
+    min-block-size: var(--c-field-size);
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='date-field'] [data-part='year'] input {
+    inline-size: var(--c-date-field-year-width);
+  }
+
+  [data-dl='date-field'] [data-dl-part='part'] input:disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+  }
+
+  [data-dl='date-field'][data-invalid] :is([data-dl-part='part'] input, [data-dl-part='box']) {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  /* Segmented: the field box sized to its parts; the focused part takes the accent's subtle fill. */
+  [data-dl='date-field'] [data-dl-part='box'] {
+    display: inline-flex;
+    align-items: center;
+    inline-size: max-content;
+    gap: var(--c-time-field-gap);
+    min-block-size: var(--c-field-size);
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='date-field'] [data-dl-part='segment-wrap'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-time-field-gap);
+  }
+
+  [data-dl='date-field'] [data-dl-part='segment'] {
+    padding-inline: var(--c-time-field-segment-padding);
+    border-radius: var(--c-time-field-segment-radius);
+    outline: none;
+    cursor: text;
+  }
+
+  [data-dl='date-field'] [data-dl-part='segment']:focus {
+    background-color: var(--color-accent-subtle);
+  }
+
+  [data-dl='date-field'] [data-dl-part='segment'][data-empty],
+  [data-dl='date-field'] [data-dl-part='separator'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='date-field'] [data-dl-part='box'][aria-disabled] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-muted);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='date-field'] [data-dl-part='segment']:focus {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

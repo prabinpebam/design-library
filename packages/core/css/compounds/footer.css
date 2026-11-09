@@ -1,0 +1,58 @@
+/*
+ * Tier 2 compound: Footer (F15.52, catalogue Navigation "Footer"; atiya SiteFooter adapted, GOV.UK footer pattern).
+ * One sunken surface the full width of its container, with the page margin and the section space inside it once (on
+ * the content, not on each part). Two groups: the link sections (a wrapping grid of columns) and the small print. The
+ * fill is the footer's one boundary: no rule above it, no lines between the groups; space alone separates them.
+ */
+@layer compounds {
+  [data-dl='footer'] {
+    inline-size: 100%;
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text);
+  }
+
+  [data-dl='footer'] > [data-dl-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-footer-gap);
+    padding: var(--c-footer-padding-block) var(--c-footer-padding-inline);
+  }
+
+  [data-dl='footer'] [data-dl-part='sections'] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--c-footer-column-min)), 1fr));
+    gap: var(--c-footer-column-gap);
+  }
+
+  [data-dl='footer'] [data-dl-part='section'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-footer-heading-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='footer'] [data-dl-part='links'],
+  [data-dl='footer'] [data-dl-part='meta-links'] {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='footer'] [data-dl-part='links'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-footer-link-gap);
+  }
+
+  [data-dl='footer'] [data-dl-part='meta'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-footer-meta-gap);
+  }
+
+  [data-dl='footer'] [data-dl-part='meta-links'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-footer-link-gap) var(--c-footer-meta-link-gap);
+  }
+}

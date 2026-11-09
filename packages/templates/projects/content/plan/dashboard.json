@@ -1,0 +1,76 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "dashboard",
+  "contentVersion": 1,
+  "settings": {
+    "current": "dashboard"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Reports",
+        "title": "Sprint 14 at a glance",
+        "lead": "Ends Friday 20 November.",
+        "layout": "stacked"
+      },
+      {
+        "type": "stats",
+        "heading": "This sprint",
+        "items": [
+          {
+            "label": "Points done",
+            "value": 4,
+            "description": "of 17"
+          },
+          {
+            "label": "Issues open",
+            "value": 9
+          },
+          {
+            "label": "Bugs found",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "See it over time",
+        "lead": "The burndown shows whether the sprint will finish.",
+        "actions": [
+          {
+            "label": "Open burndown",
+            "primary": true,
+            "says": "Use Burndown from the navigation of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

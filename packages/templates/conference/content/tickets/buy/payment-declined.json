@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "payment-declined",
+  "contentVersion": 1,
+  "settings": {
+    "current": "tickets",
+    "width": "reading",
+    "state": "failed"
+  }
+}

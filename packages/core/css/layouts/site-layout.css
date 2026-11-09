@@ -1,0 +1,57 @@
+/*
+ * Tier 3 layout: SiteLayout (F15.71, Q61; catalogue Layout "Marketing page"). Header, one centred column, footer.
+ * The page margin is set once, on each column; the column's parts are a section's space apart. The sticky header is
+ * the only thing that floats over content: it is chrome (MT6, FR1), the chrome material (frosted when the setting is
+ * on, the page's own surface when solid), with one hairline under it only while content is under it (AD2; the border
+ * is always there, transparent at rest, so nothing moves). The footer brings its own sunken fill.
+ */
+@layer layouts {
+  [data-dl='site-layout'] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100dvh;
+    background-color: var(--color-bg);
+  }
+
+  [data-dl='site-layout'] > [data-dl-part='header'] {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--layer-sticky);
+    background-color: var(--material-chrome-bg, var(--color-bg));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    border-block-end: var(--border-hairline) solid transparent;
+  }
+
+  [data-dl='site-layout'] > [data-dl-part='header'][data-under] {
+    border-block-end-color: var(--color-border);
+  }
+
+  [data-dl='site-layout'] [data-dl-part='column'] {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: calc(var(--c-site-layout-width) + 2 * var(--c-site-layout-margin));
+    margin-inline: auto;
+    padding-inline: var(--c-site-layout-margin);
+  }
+
+  [data-dl='site-layout'][data-width='reading'] > [data-dl-part='main'] > [data-dl-part='column'] {
+    max-inline-size: calc(var(--c-site-layout-reading) + 2 * var(--c-site-layout-margin));
+  }
+
+  [data-dl='site-layout'] > [data-dl-part='main'] {
+    flex: 1;
+  }
+
+  [data-dl='site-layout'] > [data-dl-part='main']:focus {
+    outline: none;
+  }
+
+  [data-dl='site-layout'] > [data-dl-part='main'] > [data-dl-part='column'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-site-layout-gap);
+    padding-block: var(--c-site-layout-padding-block);
+  }
+}

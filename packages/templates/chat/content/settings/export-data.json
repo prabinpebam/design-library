@@ -1,0 +1,82 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "export-data",
+  "contentVersion": 1,
+  "settings": {
+    "current": "settings-general",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Export your data",
+        "intro": "We’ll prepare one file with your chats, the files you shared and your settings, and email you a link to download it.",
+        "fields": [
+          {
+            "id": "what",
+            "label": "What to include",
+            "kind": "choice",
+            "options": [
+              "Everything",
+              "Chats only",
+              "Files only"
+            ]
+          },
+          {
+            "id": "format",
+            "label": "Format",
+            "kind": "choice",
+            "options": [
+              "JSON",
+              "HTML pages"
+            ]
+          }
+        ],
+        "submit": "Export",
+        "sent": "Export started.",
+        "error": "The export couldn’t start: too many requests today. Try again tomorrow.",
+        "outcome": {
+          "eyebrow": "Export started",
+          "title": "We’ll email you a link",
+          "text": "Large accounts can take up to an hour. The link works for 24 hours.",
+          "links": [
+            {
+              "label": "Back to data controls",
+              "href": "/settings-data"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

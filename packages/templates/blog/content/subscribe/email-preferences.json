@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "email-preferences",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "settings",
+        "heading": "Email preferences",
+        "intro": "Choose what arrives. Each change saves at once.",
+        "saved": "{setting} saved.",
+        "groups": [
+          {
+            "heading": "What we send",
+            "items": [
+              {
+                "id": "new",
+                "label": "New articles",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "series",
+                "label": "New parts of a series you follow",
+                "kind": "switch",
+                "on": true
+              },
+              {
+                "id": "digest",
+                "label": "A monthly round-up",
+                "kind": "switch",
+                "on": false
+              }
+            ]
+          },
+          {
+            "heading": "How often",
+            "items": [
+              {
+                "id": "often",
+                "label": "Send new articles",
+                "kind": "choice",
+                "options": [
+                  "As they’re published",
+                  "Once a week",
+                  "Once a month"
+                ],
+                "value": "As they’re published"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "label": "Unsubscribe from everything",
+            "href": "/unsubscribed"
+          }
+        ]
+      }
+    ]
+  }
+}

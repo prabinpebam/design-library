@@ -1,0 +1,6 @@
+{
+  "$schema": "./space-shape-config.schema.json",
+  "version": "space-shape-config/1",
+  "space": "normal",
+  "shape": "rounded"
+}

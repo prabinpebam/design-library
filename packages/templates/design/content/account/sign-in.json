@@ -1,0 +1,67 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "design",
+  "layout": "sign-in",
+  "contentVersion": 1,
+  "settings": {
+    "current": "files",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing design",
+        "mark": "frame",
+        "places": [
+          {
+            "label": "Files",
+            "href": "/files"
+          },
+          {
+            "label": "Drafts",
+            "href": "/drafts"
+          },
+          {
+            "label": "Search",
+            "href": "/file-search"
+          },
+          {
+            "label": "Editor",
+            "href": "/editor"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Sign in",
+        "intro": "With email, or your work account.",
+        "fields": [
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "password",
+            "label": "Password",
+            "kind": "password"
+          }
+        ],
+        "submit": "Sign in",
+        "sent": "Signed in.",
+        "links": [
+          {
+            "label": "New here? Get started",
+            "href": "/welcome"
+          }
+        ]
+      }
+    ]
+  }
+}

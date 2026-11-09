@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-library.local/templates/harbour/content/1",
+  "title": "Harbour Books content, version 1",
+  "description": "Every content file of this template: the core envelope and core blocks.",
+  "$ref": "https://design-library.local/core/content/1",
+  "$defs": {}
+}

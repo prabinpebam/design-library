@@ -1,0 +1,170 @@
+/*
+ * Tier 1 fundamental: List. Bulleted notes on a running-text line, or short names wrapping in a row.
+ */
+@layer fundamentals {
+  [data-dl='list'][data-variant='bulleted'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-list-gap);
+    padding-inline-start: var(--c-list-indent);
+    list-style: disc;
+    max-inline-size: var(--c-list-measure);
+  }
+
+  [data-dl='list'][data-variant='inline'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--c-list-inline-row-gap) var(--c-list-inline-gap);
+  }
+
+  /* F15.8c. Numbered: steps or a ranking. Plain: no marker, items spaced like a bulleted list. */
+  [data-dl='list'][data-variant='numbered'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-list-gap);
+    padding-inline-start: var(--c-list-indent);
+    list-style: decimal;
+    max-inline-size: var(--c-list-measure);
+  }
+
+  [data-dl='list'][data-variant='plain'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-list-gap);
+    list-style: none;
+    max-inline-size: var(--c-list-measure);
+  }
+
+  /* Select mode: a listbox of ListItems a pair apart, so neighbouring fills never touch. The option the keyboard is on
+   * draws the ring; the listbox itself draws none, so focus shows once. */
+  [data-dl='list'][data-mode='select'],
+  [data-dl='list'][data-mode='select'] > [data-dl-part='group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-list-option-gap);
+  }
+
+  [data-dl='list'][data-mode='select'] {
+    isolation: isolate;
+  }
+
+  [data-dl='list'][data-mode='select']:focus-visible {
+    outline: none;
+  }
+
+  /* Groups sit further apart than options: the list's own gap grows by the group gap when it holds groups. */
+  [data-dl='list'][data-mode='select']:has(> [data-dl-part='group']) {
+    gap: calc(var(--c-list-option-gap) + var(--c-list-group-gap));
+  }
+
+  [data-dl='list']:is([data-mode='select'], [data-mode='action']) [data-dl-part='group-heading'] {
+    padding-inline: var(--c-list-item-padding-inline);
+    padding-block: var(--c-list-item-padding-block);
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  /* Sticky headings sit on the list's surface so options scroll under them unseen: the canvas, or the raised tone of
+     the floating surface the list is in (materials F4), never a canvas strip across a popup. */
+  [data-dl='list'][data-mode='select'][data-sticky] [data-dl-part='group-heading'] {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--layer-raised);
+    background-color: var(--list-surface, var(--color-bg));
+  }
+
+  [data-material='floating'] [data-dl='list'] {
+    --list-surface: var(--color-bg-raised);
+  }
+
+  /* F15.8d. Action lists: ListItems as buttons in a column, the list owning the gap; groups under a heading. */
+  [data-dl='list'] {
+    --list-gap: var(--c-list-gap);
+  }
+
+  [data-dl='list'][data-mode='action'] {
+    --list-gap: var(--c-list-option-gap);
+  }
+
+  [data-dl='list'][data-mode='action']:is(ul),
+  [data-dl='list'][data-mode='action'] > [data-dl-part='group'] > ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--list-gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='list'][data-mode='action']:is(div) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-list-group-gap);
+  }
+
+  [data-dl='list'][data-mode='action'] > [data-dl-part='group'] {
+    position: relative;
+  }
+
+  /* Dividers sit in the gap the list already owns, so geometry is the same with or without them. One per boundary. */
+  [data-dl='list']:is([data-dividers='between'], [data-dividers='inset']) li {
+    position: relative;
+  }
+
+  [data-dl='list']:is([data-dividers='between'], [data-dividers='inset']) li + li::before,
+  [data-dl='list'][data-dividers='groups'] > [data-dl-part='group'] + [data-dl-part='group']::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc((var(--list-gap) + var(--border-hairline)) / -2);
+    block-size: var(--border-hairline);
+    background-color: var(--color-border);
+  }
+
+  [data-dl='list'][data-dividers='inset'] li + li::before {
+    /* Level with the words: the same semantic space and icon size ListItem's padding, icon and gap alias. */
+    inset-inline-start: calc(var(--space-inset-sm) + var(--size-icon-md) + var(--space-inline-pair));
+  }
+
+  [data-dl='list'][data-dividers='groups'] > [data-dl-part='group'] + [data-dl-part='group']::before {
+    inset-block-start: calc((var(--c-list-group-gap) + var(--border-hairline)) / -2);
+  }
+
+  /* F15.8e. Reorderable: each row is a Move handle (drag it, or open its menu) and the item's content. */
+  [data-dl='list'][data-reorder] > li > [data-dl-part='row'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    vertical-align: middle;
+  }
+
+  [data-dl='list'][data-reorder] [data-dl-part='handle'] {
+    display: inline-flex;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  /* The row being dragged lifts above its neighbours; nothing else moves until it passes one. */
+  [data-dl='list'][data-reorder] > li[data-dragging] {
+    position: relative;
+    z-index: var(--layer-raised);
+    border-radius: var(--radius-md);
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-raised);
+    cursor: grabbing;
+  }
+
+  [data-dl='list'][data-reorder] + [data-dl-part='reorder-announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* F15.8f. Grid list: ListItem rows in a column, the list owning the gap; the rows' controls sit in their trailing cell. */
+  [data-dl='list'][data-mode='grid'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-list-option-gap);
+  }}

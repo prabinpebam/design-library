@@ -1,0 +1,53 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "series",
+  "contentVersion": 1,
+  "settings": {
+    "current": "index"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Series · 4 parts",
+        "title": "The coast path, end to end",
+        "lead": "Six hundred miles in four summers.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "items": [
+          {
+            "eyebrow": "Part 1",
+            "title": "Minehead to Padstow",
+            "description": "One summer’s walking, day by day.",
+            "meta": "9 min",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Part 2",
+            "title": "Padstow to Penzance",
+            "description": "One summer’s walking, day by day.",
+            "meta": "10 min",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Part 3",
+            "title": "Penzance to Plymouth",
+            "description": "One summer’s walking, day by day.",
+            "meta": "11 min",
+            "href": "/article"
+          },
+          {
+            "eyebrow": "Part 4",
+            "title": "Plymouth to Poole",
+            "description": "One summer’s walking, day by day.",
+            "meta": "12 min",
+            "href": "/article"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,169 @@
+/* Tier 1 fundamentals: Text, Heading, Link, Icon. Semantic tokens and owned c.icon tokens only. */
+@layer fundamentals {
+  [data-dl='text'] {
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    font-weight: var(--type-body-weight);
+    max-inline-size: var(--size-measure);
+  }
+
+  /* Reading text sets in the text face; captions stay in the interface face they inherit. */
+  [data-dl='text'][data-variant='body'],
+  [data-dl='text'][data-variant='body-sm'] {
+    font-family: var(--font-text);
+    font-variation-settings: var(--axes-text);
+  }
+
+  [data-dl='text'][data-variant='body-sm'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  [data-dl='text'][data-variant='caption'] {
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='text'][data-tone='muted'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='text'][data-tone='success'] {
+    color: var(--color-status-success-fg);
+  }
+
+  [data-dl='text'][data-tone='danger'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='text'][data-tone='warning'] {
+    color: var(--color-status-warning-fg);
+  }
+
+  [data-dl='text'][data-tone='info'] {
+    color: var(--color-status-info-fg);
+  }
+
+  /* A long word in a large heading wraps rather than pushing the page sideways at 320 px (WCAG 1.4.10), even where
+     its container shrinks to fit it (anywhere, unlike break-word, lowers its min-content width). */
+  [data-dl='heading'] {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    font-family: var(--font-display);
+    font-variation-settings: var(--axes-display);
+  }
+
+  [data-dl='heading'][data-size='jumbo'] {
+    font-size: var(--type-jumbo-size);
+    line-height: var(--type-jumbo-leading);
+    font-weight: var(--type-jumbo-weight);
+    letter-spacing: var(--type-jumbo-tracking);
+  }
+
+  [data-dl='heading'][data-size='display'] {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-leading);
+    font-weight: var(--type-display-weight);
+    letter-spacing: var(--type-display-tracking);
+  }
+
+  [data-dl='heading'][data-size='1'] {
+    font-size: var(--type-heading-1-size);
+    line-height: var(--type-heading-1-leading);
+    font-weight: var(--type-heading-1-weight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  [data-dl='heading'][data-size='2'] {
+    font-size: var(--type-heading-2-size);
+    line-height: var(--type-heading-2-leading);
+    font-weight: var(--type-heading-2-weight);
+    letter-spacing: var(--tracking-tight);
+  }
+
+  [data-dl='heading'][data-size='3'] {
+    font-size: var(--type-heading-3-size);
+    line-height: var(--type-heading-3-leading);
+    font-weight: var(--type-heading-3-weight);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  [data-dl='heading'][data-size='4'] {
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+    font-weight: var(--type-heading-4-weight);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  /* Q68: a dense panel's group title, at the size of the rows it names (a design tool's inspector). */
+  [data-dl='heading'][data-size='label'] {
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-heading-4-weight);
+    letter-spacing: var(--tracking-normal);
+  }
+
+  [data-dl='link'] {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-inline-pair);
+    color: var(--color-text-link);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-hairline);
+  }
+
+  @media (hover: hover) {
+    [data-dl='link']:hover {
+      text-decoration-thickness: var(--border-thick);
+    }
+  }
+
+  [data-dl='link']:active {
+    text-decoration-thickness: var(--border-thick);
+  }
+
+  [data-dl='link'][aria-current='page'] {
+    color: var(--color-text);
+    text-decoration-line: none;
+  }
+
+  [data-dl='link'] [data-dl='icon'] {
+    align-self: center;
+  }
+
+  [data-dl='icon'] {
+    display: inline-block;
+    flex: none;
+    inline-size: var(--size-icon-md);
+    block-size: var(--size-icon-md);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--c-icon-stroke-width);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  [data-dl='icon'] > [data-dl-part='fill'] {
+    fill: currentColor;
+    stroke: none;
+  }
+
+  [data-dl='icon'][data-size='sm'] {
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+  }
+
+  [data-dl='icon'][data-size='lg'] {
+    inline-size: var(--size-icon-lg);
+    block-size: var(--size-icon-lg);
+  }
+
+  [data-dl='icon'][data-size='xl'] {
+    inline-size: var(--size-icon-xl);
+    block-size: var(--size-icon-xl);
+  }
+
+  [data-dl='icon'][data-flip]:dir(rtl) {
+    transform: scaleX(-1);
+  }
+}

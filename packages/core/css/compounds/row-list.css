@@ -1,0 +1,57 @@
+/*
+ * Tier 2 compound: RowList. Rows of named facts, one hairline above each and no enclosure; columns from the
+ * component's `--row-list-columns` (built from its own tokens), stacking below breakpoint.sm. Cell content rule
+ * (named escape): code in a cell may break anywhere, so a long token name never forces the list wider.
+ */
+@layer compounds {
+  [data-dl='row-list'] {
+    display: grid;
+  }
+
+  [data-dl='row-list'] > li {
+    display: grid;
+    grid-template-columns: var(--row-list-columns);
+    gap: var(--c-row-list-gap);
+    padding-block: var(--c-row-list-inset);
+    border-block-start: var(--c-row-list-divider-width) solid var(--c-row-list-divider);
+    min-inline-size: 0;
+  }
+
+  [data-dl='row-list'][data-specimen='large'] > li {
+    gap: var(--c-row-list-gap-large);
+    padding-block: var(--c-row-list-inset-large);
+  }
+
+  [data-dl='row-list'][data-align='baseline'] > li {
+    align-items: baseline;
+  }
+
+  [data-dl='row-list'][data-align='center'] > li {
+    align-items: center;
+  }
+
+  [data-dl='row-list'][data-align='stretch'] > li {
+    align-items: stretch;
+  }
+
+  [data-dl='row-list'] [data-dl-part='facts'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-row-list-facts-gap);
+    min-inline-size: 0;
+  }
+
+  [data-dl='row-list'] code {
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 40rem) {
+    /* breakpoint.sm: each row's cells stack in their order */
+    [data-dl='row-list'] > li,
+    [data-dl='row-list'][data-specimen='large'] > li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--c-row-list-stacked-gap);
+    }
+  }
+}

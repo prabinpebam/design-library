@@ -1,0 +1,349 @@
+/*
+ * Tier 1 fundamental: Badge. Label, count, dot, status (dot + words) and presence; tones only through the status roles
+ * (accent for a category with no status); subtle (tint) or strong (fill). Pinned to a host by the badge anchor.
+ */
+@layer fundamentals {
+  [data-dl='badge'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--c-badge-gap);
+    inline-size: fit-content;
+    min-block-size: var(--c-badge-size);
+    padding-inline: var(--c-badge-padding-inline);
+    border-radius: var(--c-badge-radius);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-weight: var(--type-label-weight);
+    white-space: nowrap;
+    /* Q65 M5: a badge whose tone or emphasis changes interpolates; its count changes at once (Z10). */
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard);
+  }
+
+  /* Q65 C24: a count that arrives after the page is drawn grows in from the mark scale and fades in; one that drops to
+     nothing shrinks and fades out where it is (Badge keeps it for the exit). Reduced motion: the scale is 1, fades only. */
+  [data-dl='badge'][data-kind='count'] {
+    transition:
+      background-color var(--duration-change) var(--easing-standard),
+      color var(--duration-change) var(--easing-standard),
+      opacity var(--duration-change) var(--easing-enter),
+      scale var(--duration-change) var(--easing-enter);
+  }
+
+  @starting-style {
+    [data-dl='badge'][data-appear] {
+      opacity: 0;
+      scale: var(--motion-mark-scale);
+    }
+  }
+
+  [data-dl='badge'][data-leaving] {
+    opacity: 0;
+    scale: var(--motion-mark-scale);
+    transition:
+      opacity var(--duration-quick) var(--easing-exit),
+      scale var(--duration-quick) var(--easing-exit);
+  }
+
+  [data-dl='badge'][data-size='s'] {
+    min-block-size: var(--c-badge-size-s);
+  }
+
+  /* Tones. Subtle: the role's tint with its text colour; strong: the role's fill with its on-fill text. */
+  [data-dl='badge'][data-tone='accent'][data-emphasis='subtle'] {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-text);
+  }
+
+  [data-dl='badge'][data-tone='accent'][data-emphasis='strong'] {
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='badge'][data-tone='neutral'][data-emphasis='subtle'] {
+    background-color: var(--color-status-neutral-bg);
+    color: var(--color-status-neutral-fg);
+  }
+
+  [data-dl='badge'][data-tone='neutral'][data-emphasis='strong'] {
+    background-color: var(--color-status-neutral-fill);
+    color: var(--color-status-neutral-on-fill);
+  }
+
+  [data-dl='badge'][data-tone='info'][data-emphasis='subtle'] {
+    background-color: var(--color-status-info-bg);
+    color: var(--color-status-info-fg);
+  }
+
+  [data-dl='badge'][data-tone='info'][data-emphasis='strong'] {
+    background-color: var(--color-status-info-fill);
+    color: var(--color-status-info-on-fill);
+  }
+
+  [data-dl='badge'][data-tone='success'][data-emphasis='subtle'] {
+    background-color: var(--color-status-success-bg);
+    color: var(--color-status-success-fg);
+  }
+
+  [data-dl='badge'][data-tone='success'][data-emphasis='strong'] {
+    background-color: var(--color-status-success-fill);
+    color: var(--color-status-success-on-fill);
+  }
+
+  [data-dl='badge'][data-tone='warning'][data-emphasis='subtle'] {
+    background-color: var(--color-status-warning-bg);
+    color: var(--color-status-warning-fg);
+  }
+
+  [data-dl='badge'][data-tone='warning'][data-emphasis='strong'] {
+    background-color: var(--color-status-warning-fill);
+    color: var(--color-status-warning-on-fill);
+  }
+
+  [data-dl='badge'][data-tone='danger'][data-emphasis='subtle'] {
+    background-color: var(--color-status-danger-bg);
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='badge'][data-tone='danger'][data-emphasis='strong'] {
+    background-color: var(--color-status-danger-fill);
+    color: var(--color-status-danger-on-fill);
+  }
+
+  /* Category (Q44): identity, not status. Subtle keeps the quiet neutral fill and puts the colour in a dot (or the
+   * icon); strong fills with the colour and its ink. Words always name the category. */
+  [data-dl='badge'][data-category='1'] { --badge-category: var(--color-category-1); --badge-category-on: var(--color-category-on-1); }
+  [data-dl='badge'][data-category='2'] { --badge-category: var(--color-category-2); --badge-category-on: var(--color-category-on-2); }
+  [data-dl='badge'][data-category='3'] { --badge-category: var(--color-category-3); --badge-category-on: var(--color-category-on-3); }
+  [data-dl='badge'][data-category='4'] { --badge-category: var(--color-category-4); --badge-category-on: var(--color-category-on-4); }
+  [data-dl='badge'][data-category='5'] { --badge-category: var(--color-category-5); --badge-category-on: var(--color-category-on-5); }
+  [data-dl='badge'][data-category='6'] { --badge-category: var(--color-category-6); --badge-category-on: var(--color-category-on-6); }
+  [data-dl='badge'][data-category='7'] { --badge-category: var(--color-category-7); --badge-category-on: var(--color-category-on-7); }
+  [data-dl='badge'][data-category='8'] { --badge-category: var(--color-category-8); --badge-category-on: var(--color-category-on-8); }
+
+  [data-dl='badge'][data-tone='category'][data-emphasis='subtle'] {
+    background-color: var(--color-status-neutral-bg);
+    color: var(--color-text);
+  }
+
+  [data-dl='badge'][data-tone='category'][data-emphasis='subtle'] > svg {
+    color: var(--badge-category);
+  }
+
+  [data-dl='badge'][data-kind='label'][data-tone='category'] > [data-dl-part='dot'] {
+    flex: none;
+    inline-size: var(--c-badge-dot-s);
+    block-size: var(--c-badge-dot-s);
+    border-radius: var(--radius-full);
+    background-color: var(--badge-category);
+  }
+
+  [data-dl='badge'][data-tone='category'][data-emphasis='strong'] {
+    background-color: var(--badge-category);
+    color: var(--badge-category-on);
+  }
+
+  /* Count: one digit in a circle, more digits in a pill. */
+  [data-dl='badge'][data-kind='count'] {
+    min-inline-size: var(--c-badge-size);
+    padding-inline: var(--c-badge-padding-inline-count);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='badge'][data-kind='count'][data-size='s'] {
+    min-inline-size: var(--c-badge-size-s);
+  }
+
+  /* Dot and presence: a shape with no words; the hidden label carries the meaning. */
+  [data-dl='badge']:is([data-kind='dot'], [data-kind='presence']) {
+    min-block-size: 0;
+    inline-size: var(--c-badge-dot);
+    block-size: var(--c-badge-dot);
+    padding: 0;
+    border-radius: var(--radius-full);
+  }
+
+  [data-dl='badge'][data-kind='dot'][data-size='s'] {
+    inline-size: var(--c-badge-dot-s);
+    block-size: var(--c-badge-dot-s);
+  }
+
+  [data-dl='badge'][data-kind='presence'] {
+    inline-size: var(--c-badge-presence);
+    block-size: var(--c-badge-presence);
+  }
+
+  [data-dl='badge'][data-kind='presence'] > svg {
+    inline-size: var(--c-badge-dot);
+    block-size: var(--c-badge-dot);
+  }
+
+  /* Icon: one glyph in a filled circle (verified, approved, declined), the same box as presence so the two share a corner. */
+  [data-dl='badge'][data-kind='icon'] {
+    min-block-size: 0;
+    inline-size: var(--c-badge-presence);
+    block-size: var(--c-badge-presence);
+    padding: 0;
+    border-radius: var(--radius-full);
+  }
+
+  [data-dl='badge'][data-kind='icon'] > svg {
+    inline-size: var(--c-badge-dot);
+    block-size: var(--c-badge-dot);
+  }
+
+  /* Sized by their host avatar: s is the shape alone, l carries a bigger glyph. */
+  [data-dl='badge']:is([data-kind='presence'], [data-kind='icon'])[data-size='s'] {
+    inline-size: var(--c-badge-presence-s);
+    block-size: var(--c-badge-presence-s);
+  }
+
+  [data-dl='badge']:is([data-kind='presence'], [data-kind='icon'])[data-size='l'] {
+    inline-size: var(--c-badge-presence-l);
+    block-size: var(--c-badge-presence-l);
+  }
+
+  [data-dl='badge']:is([data-kind='presence'], [data-kind='icon'])[data-size='l'] > svg {
+    inline-size: var(--c-badge-mark-l);
+    block-size: var(--c-badge-mark-l);
+  }
+
+  /* Away and offline are rings, not fills: shape tells them from busy and available without colour. */
+  [data-dl='badge'][data-kind='presence']:is([data-presence='away'], [data-presence='offline']) {
+    border: var(--border-thick) solid currentColor;
+    background-color: var(--color-bg);
+  }
+
+  [data-dl='badge'][data-kind='presence'][data-presence='away'] {
+    color: var(--color-status-warning-fill);
+  }
+
+  [data-dl='badge'][data-kind='presence'][data-presence='offline'] {
+    color: var(--color-status-neutral-fg);
+  }
+
+  /* Status: a dot then words, no fill, so dense tables stay quiet. */
+  [data-dl='badge'][data-kind='status'][data-emphasis] {
+    justify-content: flex-start;
+    min-block-size: 0;
+    padding-inline: 0;
+    background-color: transparent;
+    color: var(--color-text);
+    font-weight: var(--type-body-weight);
+  }
+
+  [data-dl='badge'][data-kind='status'] > [data-dl-part='dot'] {
+    flex: none;
+    inline-size: var(--c-badge-dot-s);
+    block-size: var(--c-badge-dot-s);
+    border-radius: var(--radius-full);
+    background-color: var(--color-status-neutral-fill);
+  }
+
+  [data-dl='badge'][data-kind='status'][data-tone='accent'] > [data-dl-part='dot'] {
+    background-color: var(--color-accent);
+  }
+
+  [data-dl='badge'][data-kind='status'][data-tone='info'] > [data-dl-part='dot'] {
+    background-color: var(--color-status-info-fill);
+  }
+
+  [data-dl='badge'][data-kind='status'][data-tone='success'] > [data-dl-part='dot'] {
+    background-color: var(--color-status-success-fill);
+  }
+
+  [data-dl='badge'][data-kind='status'][data-tone='warning'] > [data-dl-part='dot'] {
+    background-color: var(--color-status-warning-fill);
+  }
+
+  [data-dl='badge'][data-kind='status'][data-tone='danger'] > [data-dl-part='dot'] {
+    background-color: var(--color-status-danger-fill);
+  }
+
+  [data-dl='badge'][data-kind='status'][data-tone='category'] > [data-dl-part='dot'],
+  [data-dl='badge'][data-kind='dot'][data-tone='category'] {
+    background-color: var(--badge-category);
+  }
+
+  [data-dl='badge'] > [data-dl-part='announce'] {
+    position: absolute;
+    overflow: hidden;
+    inline-size: var(--border-hairline); /* the 1 px box screen readers still read */
+    block-size: var(--border-hairline);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Pinned to a host's top-end corner; round hosts pull it in to their curve. Nothing clips it. */
+  [data-dl='badge-anchor'] {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+  }
+
+  [data-dl='badge-anchor'] > [data-dl='badge'] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    translate: 50% -50%;
+    outline: var(--border-thick) solid var(--color-bg);
+  }
+
+  [data-dl='badge-anchor']:dir(rtl) > [data-dl='badge'] {
+    translate: -50% -50%;
+  }
+
+  [data-dl='badge-anchor'][data-overlap='round'] > [data-dl='badge'] {
+    inset-block-start: 14%;
+    inset-inline-end: 14%;
+  }
+
+  [data-dl='badge-anchor'][data-overlap='round'] > [data-dl='badge'][data-kind='presence'] {
+    inset-block-start: auto;
+    inset-block-end: 14%;
+    translate: 50% 50%;
+  }
+
+  [data-dl='badge-anchor'][data-overlap='round']:dir(rtl) > [data-dl='badge'][data-kind='presence'] {
+    translate: -50% 50%;
+  }
+
+  /* Presence and icon badges sit at the bottom-end corner of a square host (an organisation's avatar), level with the
+   * round host's position, so a count can take the top-end corner of the same host. */
+  [data-dl='badge-anchor'][data-overlap='round'] > [data-dl='badge'][data-kind='icon'] {
+    inset-block-start: auto;
+    inset-block-end: 14%;
+    translate: 50% 50%;
+  }
+
+  [data-dl='badge-anchor'][data-overlap='square'] > [data-dl='badge']:is([data-kind='presence'], [data-kind='icon']) {
+    inset-block-start: auto;
+    inset-block-end: 0;
+    translate: 25% 25%;
+  }
+
+  [data-dl='badge-anchor']:dir(rtl) > [data-dl='badge'][data-kind='icon'],
+  [data-dl='badge-anchor'][data-overlap='square']:dir(rtl) > [data-dl='badge'][data-kind='presence'] {
+    translate: -25% 25%;
+  }
+
+  [data-dl='badge-anchor'][data-overlap='round']:dir(rtl) > [data-dl='badge'][data-kind='icon'] {
+    translate: -50% 50%;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='badge'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+
+    [data-dl='badge']:is([data-kind='dot'], [data-kind='presence'], [data-kind='icon']),
+    [data-dl='badge'][data-kind='status'] > [data-dl-part='dot'] {
+      forced-color-adjust: none;
+      background-color: CanvasText;
+      color: Canvas;
+    }
+  }
+}

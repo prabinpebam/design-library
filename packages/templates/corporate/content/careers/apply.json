@@ -1,0 +1,81 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "apply",
+  "contentVersion": 1,
+  "settings": {
+    "current": "careers",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Apply: customs specialist",
+        "intro": "We reply to every application within two weeks.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "phone",
+            "label": "Phone number",
+            "kind": "tel",
+            "optional": true
+          },
+          {
+            "id": "licence",
+            "label": "Customs licence",
+            "kind": "choice",
+            "options": [
+              "Dutch",
+              "Other EU",
+              "None yet"
+            ]
+          },
+          {
+            "id": "why",
+            "label": "Why this job",
+            "kind": "long",
+            "hint": "A few sentences are enough."
+          }
+        ],
+        "submit": "Send application",
+        "sent": "Application sent. The next screen shows what happens.",
+        "links": [
+          {
+            "label": "Back to the job",
+            "href": "/job"
+          }
+        ],
+        "error": "Two answers are missing: your email address and why this job. Your other answers are kept.",
+        "outcome": {
+          "eyebrow": "Application sent",
+          "title": "Thanks, we’ve got it",
+          "text": "Ruth from our team reads every application and replies within two weeks, whatever the answer.",
+          "links": [
+            {
+              "label": "See other jobs",
+              "href": "/careers"
+            },
+            {
+              "label": "Go to the home page",
+              "href": "/home"
+            }
+          ],
+          "note": "A copy is in your email."
+        }
+      }
+    ]
+  }
+}

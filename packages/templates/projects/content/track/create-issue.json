@@ -1,0 +1,91 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "projects",
+  "layout": "create-issue",
+  "contentVersion": 1,
+  "settings": {
+    "current": "board",
+    "width": "reading"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Kitewing app",
+        "mark": "board",
+        "places": [
+          {
+            "label": "Board",
+            "href": "/board"
+          },
+          {
+            "label": "Backlog",
+            "href": "/backlog"
+          },
+          {
+            "label": "My work",
+            "href": "/my-work"
+          },
+          {
+            "label": "Reports",
+            "href": "/dashboard"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "New issue",
+        "intro": "In Kitewing app, Sprint 14.",
+        "fields": [
+          {
+            "id": "title",
+            "label": "Title",
+            "kind": "text"
+          },
+          {
+            "id": "type",
+            "label": "Type",
+            "kind": "choice",
+            "options": [
+              "Story",
+              "Bug",
+              "Task"
+            ]
+          },
+          {
+            "id": "assignee",
+            "label": "Assignee",
+            "kind": "choice",
+            "options": [
+              "Unassigned",
+              "Ama Mensah",
+              "Jonas Lind",
+              "Keiko Arai",
+              "Luis Ortega"
+            ]
+          },
+          {
+            "id": "description",
+            "label": "Description",
+            "kind": "long",
+            "hint": "What should happen, and how we’ll know it’s done."
+          }
+        ],
+        "submit": "Create issue",
+        "sent": "Saved.",
+        "links": [
+          {
+            "label": "Back to the board",
+            "href": "/board"
+          }
+        ],
+        "error": "Add a title so people can find this issue. Everything else you wrote is kept."
+      }
+    ]
+  }
+}

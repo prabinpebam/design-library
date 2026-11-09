@@ -1,0 +1,65 @@
+/*
+ * Tier 1 fundamental: TimeField (F15.60, catalogue Pickers "Time field"). The field box (c.field, shared with
+ * TextField and DatePicker) holding one spin part per hour, minute (second) and AM/PM. The box takes the focus ring;
+ * the part being typed into takes the accent's subtle fill, so the ring says "in this field" and the fill says "here".
+ */
+@layer fundamentals {
+  [data-dl='time-field'] {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: var(--size-measure);
+  }
+
+  [data-dl='time-field'] [data-dl-part='box'] {
+    display: inline-flex;
+    align-items: center;
+    inline-size: max-content;
+    gap: var(--c-time-field-gap);
+    min-block-size: var(--c-field-size);
+    padding-inline: var(--c-field-padding-inline);
+    border: var(--c-field-border-width) solid var(--color-border-control);
+    border-radius: var(--c-field-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+    transition: border-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='time-field'] [data-dl-part='segment-wrap'] {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  [data-dl='time-field'] [data-dl-part='segment'] {
+    padding-inline: var(--c-time-field-segment-padding);
+    border-radius: var(--c-time-field-segment-radius);
+    outline: none;
+    cursor: text;
+  }
+
+  [data-dl='time-field'] [data-dl-part='segment']:focus {
+    background-color: var(--color-accent-subtle);
+  }
+
+  [data-dl='time-field'] [data-dl-part='segment'][data-empty],
+  [data-dl='time-field'] [data-dl-part='separator'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='time-field'][data-invalid] [data-dl-part='box'] {
+    border-color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='time-field'] [data-dl-part='box'][aria-disabled] {
+    border-color: var(--color-border);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-muted);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='time-field'] [data-dl-part='segment']:focus {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

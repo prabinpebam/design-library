@@ -1,0 +1,75 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "chat",
+  "layout": "chat-project",
+  "contentVersion": 1,
+  "settings": {
+    "current": "chat"
+  },
+  "regions": {
+    "header": [
+      {
+        "type": "site-header",
+        "name": "Assistant",
+        "mark": "bot",
+        "places": [
+          {
+            "label": "Chats",
+            "href": "/chat"
+          },
+          {
+            "label": "Search",
+            "href": "/search-chats"
+          },
+          {
+            "label": "Images",
+            "href": "/images"
+          },
+          {
+            "label": "Settings",
+            "href": "/settings-general"
+          }
+        ]
+      }
+    ],
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Projects",
+            "href": "/chat-projects"
+          },
+          {
+            "label": "Lake District trip"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Project",
+        "title": "Lake District trip",
+        "lead": "Instructions: plan easy walks for two, with cafés and buses.",
+        "layout": "stacked"
+      },
+      {
+        "type": "posts",
+        "heading": "Chats",
+        "items": [
+          {
+            "title": "Plan a weekend walk",
+            "description": "A loop round Tarn Hows.",
+            "meta": "Today",
+            "href": "/chat"
+          },
+          {
+            "title": "Buses from Windermere",
+            "description": "The 505 timetable on Sundays.",
+            "meta": "Tuesday",
+            "href": "/chat"
+          }
+        ]
+      }
+    ]
+  }
+}

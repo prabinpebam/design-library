@@ -1,0 +1,9 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "chat",
+  "layout": "chat-error",
+  "contentVersion": 1,
+  "settings": {
+    "open": "notes"
+  }
+}

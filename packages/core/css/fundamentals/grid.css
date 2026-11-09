@@ -1,0 +1,31 @@
+/*
+ * Tier 1 fundamental (arrangement): Grid. Equal columns, as many as fit at size.column-min, a gutter apart; rows a group's
+ * space apart. A column is never wider than its container, so nothing scrolls sideways at 320 px.
+ */
+@layer fundamentals {
+  [data-dl='grid'] {
+    display: grid;
+    /* Fills its container's width even where siblings keep their own (a start-aligned column), so columns can form. */
+    align-self: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-column-min)), 1fr));
+    column-gap: var(--space-gutter);
+    row-gap: var(--space-stack-group);
+  }
+
+  /* At most N columns: each column is at least an Nth of the row, so four options read 2 × 2 rather than 3 + 1. */
+  [data-dl='grid'][data-max='2'] {
+    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - var(--space-gutter)) / 2)), 1fr));
+  }
+
+  [data-dl='grid'][data-max='3'] {
+    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - 2 * var(--space-gutter)) / 3)), 1fr));
+  }
+
+  [data-dl='grid'][data-max='4'] {
+    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - 3 * var(--space-gutter)) / 4)), 1fr));
+  }
+
+  [data-dl='grid'] > * {
+    min-inline-size: 0;
+  }
+}

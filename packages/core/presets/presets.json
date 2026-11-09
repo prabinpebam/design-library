@@ -1,0 +1,71 @@
+{
+  "version": "presets/1",
+  "description": "Built-in global presets (Q70): each names one preset per token category. \"theme\" means the category's own theme preset (what the token source declares). Category presets themselves live with their category: colour in tokens/colour-presets.json, type in fonts/registry.json, icons in icons/sets/index.json, space and shape in tokens/space-shape-options.json, material (frosted or solid, Q73) in the app's material store. Built-in presets are read-only; people's own presets are saved in the browser.",
+  "global": [
+    {
+      "id": "theme",
+      "name": "Theme default",
+      "for": "What a product gets with no choices made",
+      "presets": {
+        "colour": "theme",
+        "type": "theme",
+        "icons": "theme",
+        "space": "theme",
+        "shape": "theme",
+        "material": "theme"
+      }
+    },
+    {
+      "id": "editorial",
+      "name": "Editorial",
+      "for": "Reading first: magazines, blogs and long articles",
+      "presets": {
+        "colour": "terracotta",
+        "type": "editorial",
+        "icons": "phosphor",
+        "space": "loose",
+        "shape": "soft",
+        "material": "frosted"
+      }
+    },
+    {
+      "id": "tool",
+      "name": "Dense tool",
+      "for": "Tools and dashboards that show a lot at once",
+      "presets": {
+        "colour": "graphite",
+        "type": "technical",
+        "icons": "fluent",
+        "space": "compact",
+        "shape": "sharp",
+        "material": "solid"
+      }
+    },
+    {
+      "id": "friendly",
+      "name": "Friendly",
+      "for": "Consumer apps, sign-ups and onboarding",
+      "presets": {
+        "colour": "citrus",
+        "type": "flexible",
+        "icons": "tabler",
+        "space": "loose",
+        "shape": "super-soft",
+        "material": "frosted"
+      }
+    },
+    {
+      "id": "bookish",
+      "name": "Bookish",
+      "for": "Calm, literary sites with room to breathe",
+      "presets": {
+        "colour": "forest",
+        "type": "bookish",
+        "icons": "heroicons",
+        "space": "extra-loose",
+        "shape": "rounded",
+        "material": "solid"
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+/*
+ * Tier 2 compound: Composer (F15.68, Q57). The TextArea's box is the one enclosure: the tray's pictures and file tiles
+ * and the toolbar's quiet buttons sit inside it with no outline of their own (a file tile is a fill only). The tool
+ * chip is filled. Space inside the box comes from TextArea's tray and bar insets; the disclaimer is one group with it.
+ */
+@layer compounds {
+  [data-dl='composer'] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--c-composer-gap);
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='composer'] [data-dl-part='attachments'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--c-composer-tray-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='composer'] [data-dl-part='thumb'] {
+    position: relative;
+    inline-size: var(--c-composer-thumb);
+  }
+
+  /* Uploading: the arc on a small raised disc in the picture's centre; failed: Retry in the same place. */
+  [data-dl='composer'] [data-dl-part='thumb-state'] {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  [data-dl='composer'] [data-dl-part='mark'] {
+    display: inline-flex;
+    padding: var(--space-inset-sm);
+    border-radius: var(--radius-full);
+    background-color: var(--c-composer-mark-fill);
+    color: var(--color-text);
+  }
+
+  /* Remove sits on the picture's top end corner, inside it, on the same raised fill as the upload mark so it reads on
+     any picture. */
+  [data-dl='composer'] [data-dl-part='thumb'] > [data-dl-part='remove'] {
+    position: absolute;
+    inset-block-start: var(--space-inset-xs);
+    inset-inline-end: var(--space-inset-xs);
+    display: inline-flex;
+    border-radius: var(--radius-md);
+    background-color: var(--c-composer-mark-fill);
+  }
+
+  [data-dl='composer'] [data-dl-part='file'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    max-inline-size: var(--c-composer-file-max);
+    min-block-size: var(--c-composer-thumb);
+    padding-inline: var(--space-inset-sm) var(--space-inset-xs);
+    border-radius: var(--c-composer-tile-radius);
+    background-color: var(--c-composer-tile-fill);
+  }
+
+  [data-dl='composer'] [data-dl-part='file-icon'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--size-control-md);
+    block-size: var(--size-control-md);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='composer'] [data-dl-part='file'][data-state='failed'] [data-dl-part='file-icon'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='composer'] [data-dl-part='file-words'] {
+    display: grid;
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  [data-dl='composer'] [data-dl-part='file-words'] > * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* The toolbar: the add menu and the chosen tool at the start, dictation and Send at the end. */
+  [data-dl='composer'] :is([data-dl-part='start'], [data-dl-part='end']) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+  }
+
+  [data-dl='composer'] [data-dl-part='end'] {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  [data-dl='composer'] [data-dl-part='disclaimer'] {
+    text-align: center;
+  }
+
+  /* A transient cue: only while files are dragged over the composer, a full accent outline round it says "drop here". */
+  [data-dl='composer'][data-dropping] {
+    border-radius: var(--c-composer-drop-radius);
+    outline: var(--size-focus-width) dashed var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='composer'] [data-dl-part='file'] {
+      border: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

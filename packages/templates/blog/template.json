@@ -1,0 +1,1215 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "blog",
+  "version": "1.0.0",
+  "title": "Blog",
+  "summary": "Articles to read, one article, and its author.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "index",
+  "sections": [
+    {
+      "id": "read",
+      "title": "Read",
+      "summary": "Finding and reading articles.",
+      "flows": [
+        {
+          "id": "browse",
+          "title": "Browse articles",
+          "summary": "The latest articles and those on one topic.",
+          "screens": [
+            "index",
+            "topic"
+          ]
+        },
+        {
+          "id": "archive",
+          "title": "Browse the archive",
+          "summary": "Every article by month.",
+          "screens": [
+            "archive"
+          ]
+        },
+        {
+          "id": "series",
+          "title": "Follow a series",
+          "summary": "Read a series in order.",
+          "screens": [
+            "series"
+          ]
+        },
+        {
+          "id": "article",
+          "title": "Read an article",
+          "summary": "Read one article and meet its author.",
+          "screens": [
+            "article",
+            "author"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "subscribe",
+      "title": "Subscribe",
+      "summary": "Getting new articles by email or feed.",
+      "flows": [
+        {
+          "id": "newsletter",
+          "title": "Join the newsletter",
+          "summary": "Subscribe and confirm the address.",
+          "screens": [
+            "subscribe"
+          ]
+        },
+        {
+          "id": "manage",
+          "title": "Manage email",
+          "summary": "Choose what arrives, or stop it.",
+          "screens": [
+            "email-preferences",
+            "unsubscribed"
+          ]
+        },
+        {
+          "id": "feed",
+          "title": "Follow by feed",
+          "summary": "Add the blog to a feed reader.",
+          "screens": [
+            "feeds"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reader",
+      "title": "Reader account",
+      "summary": "Signing in to save and discuss articles.",
+      "flows": [
+        {
+          "id": "sign-in",
+          "title": "Sign in",
+          "summary": "Sign in with a link sent by email.",
+          "screens": [
+            "sign-in"
+          ]
+        },
+        {
+          "id": "comments",
+          "title": "Join the discussion",
+          "summary": "Read and write comments on an article.",
+          "screens": [
+            "comments"
+          ]
+        },
+        {
+          "id": "profile",
+          "title": "Manage your profile",
+          "summary": "Change name, picture and email.",
+          "screens": [
+            "reader-settings"
+          ]
+        },
+        {
+          "id": "report",
+          "title": "Report a comment",
+          "summary": "Tell the editors about a comment that breaks the house rules.",
+          "screens": [
+            "report-comment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "find",
+      "title": "Find",
+      "summary": "Search the articles, keep the ones to read later, and get back when a page is missing.",
+      "flows": [
+        {
+          "id": "search",
+          "title": "Search articles",
+          "summary": "Find an article by what it says.",
+          "screens": [
+            "search"
+          ]
+        },
+        {
+          "id": "saved",
+          "title": "Read later",
+          "summary": "Come back to saved articles.",
+          "screens": [
+            "saved"
+          ]
+        },
+        {
+          "id": "errors",
+          "title": "Recover from an error",
+          "summary": "Know what happened and the way back.",
+          "screens": [
+            "not-found"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "index",
+      "title": "Index",
+      "component": "SiteLayout",
+      "content": "content/index.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The latest articles as rows, with paging.",
+        "narrow": "The places move behind Menu; each row card stacks its picture over the words; paging shortens.",
+        "notBuilt": [
+          "Topic filters (ChipGroup exists).",
+          "Search."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name and mark, Articles and Authors, Subscribe",
+            "uses": "SiteHeader, Button, Icon"
+          },
+          {
+            "region": "Opening",
+            "holds": "The blog’s name and what it’s about",
+            "uses": "Hero (stacked)"
+          },
+          {
+            "region": "Articles",
+            "holds": "Three articles: topic, title, summary, date and reading time, picture",
+            "uses": "Section, Card (row, href), Image"
+          },
+          {
+            "region": "Paging",
+            "holds": "Page 1 of 6",
+            "uses": "Pagination"
+          },
+          {
+            "region": "Footer",
+            "holds": "Topics, about, the small print",
+            "uses": "Footer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "topic",
+      "title": "Topic",
+      "component": "SiteLayout",
+      "content": "content/read/topic.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every article on one topic, with paging.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, articles, paging",
+            "uses": "Hero, Card (row), Pagination"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "archive",
+      "title": "Archive",
+      "component": "SiteLayout",
+      "content": "content/read/archive.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The whole archive by year and month.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, one list per year",
+            "uses": "Hero, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "article",
+      "title": "Article",
+      "component": "SiteLayout",
+      "content": "content/read/article.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One article in a reading column: where it sits, title, byline, body and what to read next.",
+        "narrow": "The reading column takes the whole width; code scrolls inside its own box.",
+        "notBuilt": [
+          "A contents list for long articles (IndexList exists).",
+          "Comments.",
+          "Share actions."
+        ],
+        "regions": [
+          {
+            "region": "Where you are",
+            "holds": "Articles, the topic, the article",
+            "uses": "Breadcrumbs"
+          },
+          {
+            "region": "Title",
+            "holds": "Topic, title and standfirst",
+            "uses": "Hero (stacked)"
+          },
+          {
+            "region": "Byline",
+            "holds": "The author linking to their page, the date and reading time",
+            "uses": "Persona, Link"
+          },
+          {
+            "region": "Body",
+            "holds": "Paragraphs, headings, a picture with a caption, a quote, a list and code",
+            "uses": "Heading, Text, Image (caption), Quote, List, CodeBlock"
+          },
+          {
+            "region": "Read next",
+            "holds": "Two more articles",
+            "uses": "Section, Grid, Card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "author",
+      "title": "Author",
+      "component": "SiteLayout",
+      "content": "content/read/author.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A writer and their articles.",
+        "narrow": "The places move behind Menu; the row cards stack.",
+        "notBuilt": [
+          "Links to the author’s other profiles."
+        ],
+        "regions": [
+          {
+            "region": "Person",
+            "holds": "Role, name as the page’s title, and a few lines",
+            "uses": "Hero (stacked), Text"
+          },
+          {
+            "region": "Articles",
+            "holds": "Their articles as rows",
+            "uses": "Section, Card (row)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "series",
+      "title": "Series",
+      "component": "SiteLayout",
+      "content": "content/read/series.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "A series read in order.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the parts in order",
+            "uses": "Hero, Card (row)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "search",
+      "title": "Search results",
+      "component": "SiteLayout",
+      "content": "content/find/search.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Search results that narrow as the words change.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Search field, count, results",
+            "uses": "Search block: TextField, Card, EmptyState"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "search-empty",
+      "title": "Nothing found",
+      "stateOf": "search",
+      "component": "SiteLayout",
+      "content": "content/find/search-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "No articles match: why, and what to try."
+      }
+    },
+    {
+      "id": "subscribe",
+      "title": "Subscribe",
+      "component": "SiteLayout",
+      "content": "content/subscribe/subscribe.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Subscribe with an email address; a feed instead.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The subscribe form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "subscribe-error",
+      "title": "Address not valid",
+      "stateOf": "subscribe",
+      "component": "SiteLayout",
+      "content": "content/subscribe/subscribe-error.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "An address that isn’t valid: the error says how to fix it, and the form stays."
+      }
+    },
+    {
+      "id": "subscribe-confirm",
+      "title": "Confirm your email",
+      "component": "SiteLayout",
+      "content": "content/subscribe/subscribe-confirm.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Confirm the address before anything is sent.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "subscribe"
+    },
+    {
+      "id": "email-preferences",
+      "title": "Email preferences",
+      "component": "SiteLayout",
+      "content": "content/subscribe/email-preferences.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What arrives and how often; unsubscribe from everything.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Settings",
+            "uses": "Settings block: Switch, Select"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "unsubscribed",
+      "title": "Unsubscribed",
+      "component": "SiteLayout",
+      "content": "content/subscribe/unsubscribed.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Done, said plainly, with the way back.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "feeds",
+      "title": "Feeds",
+      "component": "SiteLayout",
+      "content": "content/subscribe/feeds.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The feed addresses to copy.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, feed addresses",
+            "uses": "Hero, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "sign-in",
+      "title": "Sign in",
+      "component": "SiteLayout",
+      "content": "content/reader/sign-in.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Sign in with a link by email.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The sign-in form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "magic-link-sent",
+      "title": "Check your email",
+      "component": "SiteLayout",
+      "content": "content/reader/magic-link-sent.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Where the link went and how long it works.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      },
+      "stateOf": "sign-in"
+    },
+    {
+      "id": "saved",
+      "title": "Saved",
+      "component": "SiteLayout",
+      "content": "content/find/saved.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Articles saved for later.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "A list of saved articles",
+            "uses": "Card (row)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "saved-empty",
+      "title": "Nothing saved yet",
+      "stateOf": "saved",
+      "component": "SiteLayout",
+      "content": "content/find/saved-empty.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Nothing saved yet: how saving works, and where to start."
+      }
+    },
+    {
+      "id": "comments",
+      "title": "Comments",
+      "component": "SiteLayout",
+      "content": "content/reader/comments.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Read and write comments on one article.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Breadcrumbs, comments, the comment form",
+            "uses": "Breadcrumbs, Accordion, Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "reader-settings",
+      "title": "Profile",
+      "component": "SiteLayout",
+      "content": "content/reader/reader-settings.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The reader’s name, email and a line about them.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The profile form",
+            "uses": "Form block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "report-comment",
+      "title": "Report a comment",
+      "component": "SiteLayout",
+      "content": "content/reader/report-comment.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Say what’s wrong with a comment; the form becomes what happens next.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "The form, then what happens next in its place",
+            "uses": "Form block, Morph"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "not-found",
+      "title": "Page not found",
+      "component": "SiteLayout",
+      "content": "content/find/not-found.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Not found, with home and search.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Status",
+            "uses": "Status block"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    }
+  ]
+}

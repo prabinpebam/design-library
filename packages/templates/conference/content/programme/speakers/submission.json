@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "submission",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Your submission",
+        "title": "Designing for the week before payday",
+        "lead": "Submitted 14 October 2026.",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "Where it stands",
+        "items": [
+          {
+            "term": "Received",
+            "details": "14 October"
+          },
+          {
+            "term": "In review",
+            "details": "Read by 3 of 5 reviewers"
+          },
+          {
+            "term": "Decision",
+            "details": "By 1 December"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "corporate",
+  "layout": "apply-error",
+  "contentVersion": 1,
+  "settings": {
+    "current": "careers",
+    "width": "reading",
+    "state": "failed"
+  }
+}

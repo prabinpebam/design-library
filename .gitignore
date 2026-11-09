@@ -1,0 +1,25 @@
+# Local upstream source checkouts are restored/updated using docs/setup.md.
+/agentic-craft/
+/agent-orchestration/
+/slate/
+
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Local owner review data, session state and secrets (docs/hosting.md); never published
+/.design-library/
+/.slate/
+/.agent-orchestration/
+.env
+.env.*
+*.pem
+*.key
+
+# Build output: the library app, the example app and the assembled Pages site (tools/publish-site.mjs)
+apps/library/dist/
+apps/example/dist/
+/.publish/
+
+# A local probe page, not product
+apps/library/public/zz-sync-probe.html

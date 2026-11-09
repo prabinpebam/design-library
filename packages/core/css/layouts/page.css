@@ -1,0 +1,11 @@
+/*
+ * Tier 3 layout: PageLayout. One page's reading column: header, then sections, each its own group.
+ */
+@layer layouts {
+  [data-dl='page-layout'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-page-layout-gap);
+    max-inline-size: var(--c-page-layout-max);
+  }
+}

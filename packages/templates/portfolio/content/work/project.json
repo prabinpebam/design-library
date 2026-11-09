@@ -1,0 +1,105 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "project",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "breadcrumbs",
+        "items": [
+          {
+            "label": "Work",
+            "href": "/home"
+          },
+          {
+            "label": "Harbour wayfinding"
+          }
+        ]
+      },
+      {
+        "type": "hero",
+        "eyebrow": "Wayfinding, 2025",
+        "title": "Harbour wayfinding",
+        "lead": "A working port opened its quays to visitors. Signs and maps had to guide them without slowing the cranes.",
+        "picture": "harbour",
+        "layout": "stacked"
+      },
+      {
+        "type": "details",
+        "heading": "The project",
+        "items": [
+          {
+            "term": "Client",
+            "details": "Example Port Authority"
+          },
+          {
+            "term": "Role",
+            "details": "Lead designer, with two engineers"
+          },
+          {
+            "term": "Scope",
+            "details": "120 signs, a printed map and an app map"
+          },
+          {
+            "term": "Year",
+            "details": "2025"
+          }
+        ]
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "The problem"
+          },
+          {
+            "kind": "text",
+            "text": "Visitors walked into working areas because the old signs were written for crews. Every route had to keep people on the public side of a yellow line."
+          },
+          {
+            "kind": "heading",
+            "text": "What we made"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "One colour for the public route, used nowhere else.",
+              "Distances in minutes, not metres.",
+              "A map at every gate, oriented to the way you face."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "gallery",
+        "heading": "Pictures",
+        "label": "Harbour wayfinding pictures",
+        "layout": "quilted",
+        "items": [
+          "harbour",
+          "dusk",
+          "frost",
+          "meadow",
+          "sand"
+        ]
+      },
+      {
+        "type": "cta",
+        "title": "Have a place people get lost in?",
+        "lead": "I take on two projects a year.",
+        "actions": [
+          {
+            "label": "Get in touch",
+            "primary": true,
+            "says": "Get in touch isn’t part of this example."
+          }
+        ]
+      }
+    ]
+  }
+}

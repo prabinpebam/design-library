@@ -1,0 +1,558 @@
+/*
+ * Tier 1 fundamentals: MenuButton (F7d) and Select's popup list. Semantic tokens and each component's own c.* group only.
+ * Geometry never changes with state: the trigger's outline is always drawn, and the menu sits over the page without
+ * moving anything. ColourField moved to compounds/colour-field.css (owner tier definitions, 2026-11-07 17:38).
+ */
+@layer fundamentals {
+  /* MenuButton: the trigger is drawn like a default Button; the menu is one raised enclosure below it. */
+  /* F15.1c: a flex box, not inline-block, so no text line box adds height or shifts the trigger off a Button's line;
+     in an attached group it stretches to the row like a Button. */
+  [data-dl='menu-button'] {
+    position: relative;
+    display: inline-flex;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'] {
+    display: inline-grid;
+    grid-template-areas: 'label';
+    place-items: center;
+    min-block-size: var(--c-menu-button-size);
+    min-inline-size: var(--c-menu-button-size);
+    padding-inline: var(--c-menu-button-padding-inline);
+    border: var(--c-menu-button-border-width) solid var(--c-menu-button-border);
+    border-radius: var(--c-menu-button-radius);
+    background-color: var(--color-bg-control);
+    color: var(--color-text);
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+    cursor: pointer;
+    transition: background-color var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xs'] {
+    min-block-size: var(--c-menu-button-size-xs);
+    min-inline-size: var(--c-menu-button-size-xs);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='s'] {
+    min-block-size: var(--c-menu-button-size-s);
+    min-inline-size: var(--c-menu-button-size-s);
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='m'] {
+    min-block-size: var(--c-menu-button-size-m);
+    min-inline-size: var(--c-menu-button-size-m);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='l'] {
+    min-block-size: var(--c-menu-button-size-l);
+    min-inline-size: var(--c-menu-button-size-l);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xl'] {
+    min-block-size: var(--c-menu-button-size-xl);
+    min-inline-size: var(--c-menu-button-size-xl);
+    font-size: var(--type-heading-4-size);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xxl'] {
+    min-block-size: var(--c-menu-button-size-xxl);
+    min-inline-size: var(--c-menu-button-size-xxl);
+    font-size: var(--type-heading-3-size);
+  }
+
+  /* Every layer (rest, busy) sits in one grid area, so the widest label fixes the width, as in Button. */
+  [data-dl='menu-button'] > [data-dl-part='trigger'] > [data-dl-part='layer'] {
+    grid-area: label;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--c-menu-button-gap);
+    visibility: hidden;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'] > [data-dl-part='layer'][data-shown] {
+    visibility: visible;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-icon-only] {
+    padding-inline: 0;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='quiet'] {
+    border-color: transparent;
+    background-color: transparent;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary'] {
+    border-color: transparent;
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][aria-busy='true'] {
+    cursor: progress;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger']:is([data-size='xs'], [data-size='s']) [data-dl='progress'] {
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][aria-expanded='true'] {
+    background-color: var(--state-selected);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger']:disabled {
+    border-color: var(--color-border);
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (hover: hover) {
+    [data-dl='menu-button'] > [data-dl-part='trigger']:enabled:not([aria-busy='true']):hover {
+      background-image: linear-gradient(var(--state-hover), var(--state-hover));
+    }
+
+    [data-dl='menu-button'] > [data-dl-part='trigger'][aria-expanded='true']:hover {
+      background-color: var(--state-selected);
+      background-image: none;
+    }
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary']:enabled:not([aria-busy='true']):active {
+    background-color: var(--color-accent-pressed);
+  }
+
+  @media (hover: hover) {
+    [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary']:enabled:not([aria-busy='true']):hover {
+      background-color: var(--color-accent-hover);
+      background-image: none;
+    }
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger']:enabled:not([aria-busy='true']):not([data-emphasis='primary']):active {
+    background-image: linear-gradient(var(--state-pressed), var(--state-pressed));
+  }
+
+  /*
+   * The popup list (shared by MenuButton and Select, F10): one raised enclosure in the top layer, placed by the popup
+   * behaviour under its anchor or above it near the window's end. Padding sits at the list layer; items are spaced by a
+   * gap, so adjacent hover and selected fills never touch. Long lists scroll inside it, edge to edge.
+   */
+  [data-dl='menu-button'] > [data-dl-part='popup'],
+  [data-dl='mentions'] > [data-dl-part='popup'],
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'] {
+    position: fixed;
+    z-index: var(--c-popup-layer);
+    inset: auto;
+    inset-block-start: calc(var(--popup-edge, 0px) + var(--c-popup-offset));
+    inset-inline-start: var(--popup-start, 0px);
+    margin: 0;
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    min-inline-size: var(--popup-min-inline, auto);
+    max-inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
+    max-block-size: min(var(--c-popup-height), calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset)));
+    padding: 0;
+    border: var(--c-popup-border-width) solid var(--c-popup-border);
+    border-radius: var(--c-popup-radius);
+    background-color: var(--material-floating-bg, var(--c-popup-bg));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-popup-shadow);
+    color: var(--color-text);
+  }
+
+  /*
+   * The list scrolls in the shared overlay scroll region (useOverlayScroll, F14): the bar is drawn over the list's end
+   * edge, shown while scrolling or on hover, so the list keeps the same width and inset whether it overflows or not.
+   * The scroll box takes the popup's inner radius; padding and the gap between items sit on the list inside it.
+   */
+  [data-dl-part='popup'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] {
+    border-radius: calc(var(--c-popup-radius) - var(--c-popup-border-width));
+  }
+
+  [data-dl-part='popup'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-popup-gap);
+    padding: var(--c-popup-inset);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='popup'] {
+    inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='popup'][data-placement='above'],
+  [data-dl='mentions'] > [data-dl-part='popup'][data-placement='above'],
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'][data-placement='above'] {
+    inset-block-start: auto;
+    inset-block-end: calc(100vh - var(--popup-edge, 0px) + var(--c-popup-offset));
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='popup'][hidden],
+  [data-dl='menu-button'] > [data-dl-part='popup']:not(:popover-open),
+  [data-dl='mentions'] > [data-dl-part='popup'][hidden],
+  [data-dl='mentions'] > [data-dl-part='popup']:not(:popover-open),
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'][hidden],
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup']:not(:popover-open) {
+    display: none;
+  }
+
+  /* ListItem: the one popup-list item. Icon or palette, words, then the selected check in a reserved column. */
+  [data-dl='list-item'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-list-item-gap);
+    min-block-size: var(--c-list-item-size);
+    padding-inline: var(--c-list-item-padding-inline);
+    border-radius: var(--c-list-item-radius);
+    cursor: pointer;
+  }
+
+  [data-dl='list-item'][aria-selected='true'] {
+    background-color: var(--state-selected);
+  }
+
+  /* With several chosen, the filled box is the one cue; a tint on every chosen row would only repeat it. */
+  [data-dl='list-item']:has(> [data-dl-part='item-mark'][data-kind='box'])[aria-selected='true'] {
+    background-color: transparent;
+  }
+
+  [data-dl='list-item']:focus-visible,
+  [data-dl='list-item'][data-active] {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  @media (hover: hover) {
+    [data-dl='list-item']:hover {
+      background-color: var(--state-hover);
+    }
+
+    [data-dl='list-item'][aria-selected='true']:hover {
+      background-color: var(--state-selected);
+    }
+
+    [data-dl='list-item']:has(> [data-dl-part='item-mark'][data-kind='box'])[aria-selected='true']:hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='list-item']:active {
+    background-color: var(--state-pressed);
+  }
+
+  /* F15.4: an unavailable option reads muted and takes no hover or press; the keyboard skips it. */
+  [data-dl='list-item'][aria-disabled='true'] {
+    color: var(--color-text-disabled);
+    background-color: transparent;
+    cursor: not-allowed;
+  }
+
+  [data-dl='list-item'][aria-disabled='true'] > [data-dl-part='item-words'] > [data-dl-part='item-description'] {
+    color: var(--color-text-disabled);
+  }
+
+  /* A group in a popup list: its heading, then its items, at the list's own gap; groups are told apart by the heading
+   * and the space above it, never a divider. */
+  [data-dl-part='popup'] [data-dl-part='group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-popup-gap);
+    padding-block-start: var(--space-stack-item);
+  }
+
+  [data-dl-part='popup'] [data-dl-part='group-heading'] {
+    padding-inline: var(--c-list-item-padding-inline);
+    padding-block-start: var(--c-list-item-padding-block);
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  /* Loading or empty: one line in the list's place, at an item's height, so the popup never opens blank. */
+  [data-dl-part='popup'] [data-dl-part='list-message'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--c-list-item-size);
+    padding-inline: var(--c-list-item-padding-inline);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-words'] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-inline-size: 0;
+    padding-block: var(--c-list-item-padding-block);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-words'] > [data-dl-part='item-description'] {
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-check'] {
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--size-icon-md);
+  }
+
+  /* A palette preview: square colours in one strip, four colours wide so every item's words line up; only the strip's
+   * outer ends round. */
+  [data-dl='list-item'] > [data-dl-part='item-palette'] {
+    display: flex;
+    flex: none;
+    inline-size: calc(4 * var(--c-list-item-preview));
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-palette'] > span {
+    inline-size: var(--c-list-item-preview);
+    block-size: var(--c-list-item-preview);
+    background-color: var(--list-item-preview);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-palette'] > span:first-child {
+    border-start-start-radius: var(--radius-sm);
+    border-end-start-radius: var(--radius-sm);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-palette'] > span:last-child {
+    border-start-end-radius: var(--radius-sm);
+    border-end-end-radius: var(--radius-sm);
+  }
+
+  /* F15.8 sizes. s is a written target exception for dense desktop menus; a coarse pointer gets the 44 px target back. */
+  [data-dl='list-item'][data-size='s'] {
+    min-block-size: var(--c-list-item-size-s);
+  }
+
+  @media (pointer: coarse) {
+    [data-dl='list-item'][data-size='s'] {
+      min-block-size: var(--c-list-item-size);
+    }
+  }
+
+  [data-dl='list-item'][data-size='l'] {
+    min-block-size: var(--c-list-item-size-l);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-words'] > [data-dl-part='item-description'] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  /* Leading selection mark, in its own column so every item's words line up: a check (menu checkbox), a box (an option
+   * in a listbox of several) or a dot (menu radio). Only the box has a resting outline: it is the control's boundary. */
+  [data-dl='list-item'] > [data-dl-part='item-mark'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--size-icon-md);
+    block-size: var(--size-icon-md);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-mark'][data-kind='box'] {
+    border: var(--border-thick) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-mark'][data-kind='box'][data-on] {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-mark'][data-kind='radio'][data-on]::before {
+    content: '';
+    inline-size: calc(var(--size-icon-md) / 2.5);
+    block-size: calc(var(--size-icon-md) / 2.5);
+    border-radius: var(--radius-full);
+    background-color: currentColor;
+  }
+
+  [data-dl='list-item'][aria-disabled='true'] > [data-dl-part='item-mark'][data-kind='box'] {
+    border-color: var(--color-text-disabled);
+  }
+
+  [data-dl='list-item'][aria-disabled='true'] > [data-dl-part='item-mark'][data-kind='box'][data-on] {
+    background-color: var(--color-text-disabled);
+  }
+
+  /* Holds the icon column for an item without an icon among items with icons. */
+  [data-dl='list-item'] > [data-dl-part='item-inset'] {
+    flex: none;
+    inline-size: var(--size-icon-md);
+  }
+
+  /* An avatar (round) or a picture (square corners at the small radius). Initials sit on the accent's subtle tint. */
+  [data-dl='list-item'] > :is([data-dl-part='item-avatar'], [data-dl-part='item-thumbnail']) {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--c-list-item-media);
+    block-size: var(--c-list-item-media);
+    overflow: hidden;
+  }
+
+  [data-dl='list-item'][data-size='l'] > :is([data-dl-part='item-avatar'], [data-dl-part='item-thumbnail']) {
+    inline-size: var(--c-list-item-media-l);
+    block-size: var(--c-list-item-media-l);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-avatar'] {
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent-subtle);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-thumbnail'] {
+    border-radius: var(--radius-sm);
+  }
+
+  [data-dl='list-item'] > :is([data-dl-part='item-avatar'], [data-dl-part='item-thumbnail']) > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* Trailing words: meta (a count, a state, a time) and the shortcut, muted so the name leads; no key boxes. A group's
+   * space separates them from the name. */
+  [data-dl='list-item'] > :is([data-dl-part='item-meta'], [data-dl-part='item-shortcut']) {
+    flex: none;
+    padding-inline-start: var(--space-inline-group);
+    color: var(--color-text-muted);
+    font-family: var(--font-ui);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-submenu'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--color-text-muted);
+  }
+
+  /* A destructive action: the word says it, the status colour adds to it. */
+  [data-dl='list-item'][data-tone='danger']:not([aria-disabled='true']) {
+    color: var(--color-status-danger-fg);
+  }
+
+  [data-dl='list-item'][aria-disabled='true'] > :is([data-dl-part='item-meta'], [data-dl-part='item-shortcut'], [data-dl-part='item-submenu']) {
+    color: var(--color-text-disabled);
+  }
+
+  /* F15.8b. A static list's item: not a target itself, so no pointer and no hover or press fill. */
+  [data-dl='list-item'][role='listitem'] {
+    cursor: auto;
+  }
+
+  @media (hover: hover) {
+    [data-dl='list-item'][role='listitem']:hover {
+      background-color: transparent;
+    }
+  }
+
+  [data-dl='list-item'][role='listitem']:active {
+    background-color: transparent;
+  }
+
+  /* A short qualifier beside the name instead of under it. */
+  [data-dl='list-item'][data-description='inline'] > [data-dl-part='item-words'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-inline-pair);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-busy'] {
+    display: inline-flex;
+    flex: none;
+    justify-content: center;
+    inline-size: var(--size-icon-md);
+  }
+
+  [data-dl='list-item'][aria-busy='true'] {
+    cursor: progress;
+  }
+
+  /* Unread: a heavier name and one accent dot at the end of the words; the name says "unread" to assistive tech. */
+  [data-dl='list-item'][data-unread] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
+    font-weight: var(--weight-bold);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-unread'] {
+    flex: none;
+    inline-size: calc(var(--size-icon-sm) / 2);
+    block-size: calc(var(--size-icon-sm) / 2);
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+  }
+
+  [data-dl='list-item'] [data-dl-part='item-announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-trailing'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+  }
+
+  /* Disclosure: down while collapsed, up while expanded; never sideways, which is the submenu's chevron. */
+  [data-dl='list-item'] > [data-dl-part='item-disclosure'] {
+    display: inline-flex;
+    flex: none;
+    color: var(--color-text-muted);
+    transition: rotate var(--duration-move) var(--easing-standard);
+  }
+
+  [data-dl='list-item'][aria-expanded='true'] > [data-dl-part='item-disclosure'] {
+    rotate: 180deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='list-item'] > [data-dl-part='item-disclosure'] {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='list-item'] > [data-dl-part='item-mark'][data-kind='box'][data-on] {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+
+    [data-dl='list-item'] > [data-dl-part='item-palette'] {
+      forced-color-adjust: none;
+    }
+
+    [data-dl='list-item'][aria-selected='true'] {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

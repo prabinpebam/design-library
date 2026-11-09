@@ -1,0 +1,25 @@
+/*
+ * Conference template part, tier 1 fundamental: Countdown (F15.80, Q64). Muted words, then the time left larger and in
+ * tabular figures so it doesn't jitter as it changes. Reads only core semantic roles and its own t.conference.countdown
+ * tokens; styles only its own markup.
+ */
+@layer templates {
+  [data-dl='conference-countdown'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--t-conference-countdown-gap);
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  [data-dl='conference-countdown'] [data-dl-part='label'] {
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='conference-countdown'] [data-dl-part='value'] {
+    font-size: var(--t-conference-countdown-value-size);
+    font-weight: var(--t-conference-countdown-value-weight);
+    font-variant-numeric: tabular-nums;
+  }
+}

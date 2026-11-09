@@ -1,0 +1,75 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "portfolio",
+  "layout": "booking",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "form",
+        "choose": "Choose one",
+        "enter": "Enter {field}.",
+        "pick": "Choose {field}.",
+        "heading": "Book a call",
+        "intro": "Thirty minutes to talk about your project. Times are in Lisbon time.",
+        "fields": [
+          {
+            "id": "name",
+            "label": "Your name",
+            "kind": "text"
+          },
+          {
+            "id": "email",
+            "label": "Email address",
+            "kind": "email"
+          },
+          {
+            "id": "slot",
+            "label": "Time",
+            "kind": "choice",
+            "options": [
+              "Tuesday 10:00",
+              "Tuesday 15:00",
+              "Thursday 11:00",
+              "Friday 09:30"
+            ]
+          },
+          {
+            "id": "about",
+            "label": "What you’d like to talk about",
+            "kind": "long",
+            "optional": true
+          }
+        ],
+        "submit": "Book the call",
+        "sent": "Booked. The next screen shows the details.",
+        "links": [
+          {
+            "label": "Send a message instead",
+            "href": "/contact"
+          }
+        ],
+        "outcome": {
+          "eyebrow": "Call booked",
+          "title": "Tuesday at 10:00, Lisbon time",
+          "text": "A calendar invitation with the video link is on its way to your email.",
+          "links": [
+            {
+              "label": "Pick another time",
+              "href": "/booking"
+            },
+            {
+              "label": "See the work",
+              "href": "/work"
+            }
+          ],
+          "note": "Can’t make it? Reply to the invitation to move it."
+        }
+      }
+    ]
+  }
+}

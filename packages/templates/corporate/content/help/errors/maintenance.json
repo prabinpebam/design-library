@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "corporate",
+  "layout": "maintenance",
+  "contentVersion": 1,
+  "settings": {
+    "current": "maintenance"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "status",
+        "eyebrow": "Planned maintenance",
+        "title": "Client accounts are down until 06:00",
+        "text": "We’re updating the shipment tracker tonight from 02:00 to 06:00 Central European Time. Shipments keep moving; only this site is paused.",
+        "links": [
+          {
+            "label": "Go to the home page",
+            "href": "/home"
+          },
+          {
+            "label": "Contact a planner",
+            "href": "/contact"
+          }
+        ]
+      }
+    ]
+  }
+}
