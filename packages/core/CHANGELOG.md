@@ -36,6 +36,7 @@ The first **Beta**: ready for early trials in separate projects (React 19 with V
 - ListItem's `busy` is locked (`aria-disabled`); Button and MenuButton pending spinners don't turn while hidden; ColourPicker's popup paints its own floating surface.
 - SiteLayout's sticky header is matched by scroll padding; AppLayout's view stays the widest region.
 - Found by the full probe sweep at the release, at the window's full width and at 320 px: a section's EmptyState holds its parts closer than the section's own; a peek stage keeps one and a half page levels to the next band; AppLayout's view and details sit one and a half page levels apart (the gutter token is now the page level); a stacked Hero steps its gaps down once (`c.hero.stacked-*`) and its note sits a group under the actions (`c.hero.doing-gap`); Agenda's slots sit a section apart; DescriptionList breaks a long word (an address) instead of pushing the page sideways. New tokens are additive; the changed values are spacing only.
+- Found by the separate-project proof's evaluator: a peek stage counts the band gap under it, so the next band still shows with the loose space preset (FR2, FR17); the noise probe treats an expanded toggle (ria-expanded="true") as a state, like a selected one (VN1); the Harbour template's header has no mark (the list icon read as a second menu, VR10) and its footer no longer repeats one link three times (VN10).
 
 ### Upgrading from 0.1.1
 

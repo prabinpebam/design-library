@@ -49,7 +49,7 @@ Noise is decided on the same [hierarchy tree](spacing.md#the-method-hierarchy-fi
 
 | ID | Passes when | How | Severity |
 | --- | --- | --- | --- |
-| VN1 | Members of an enclosed group carry no border, fill or shadow of their own at rest (fields, the selected or current member, an unavailable control and one accent action excepted) | DOM | N1 |
+| VN1 | Members of an enclosed group carry no border, fill or shadow of their own at rest (fields, the selected, current or expanded member, an unavailable control and one accent action excepted) | DOM | N1 |
 | VN2 | No border on one inline side only, wider than a hairline (a stripe) | DOM | N1 |
 | VN3 | At most two visible enclosures from the surface to anything in flow; floating surfaces start again; a status or accent fill (a badge) is a cue, not a level | DOM | N2 |
 | VN4 | At most three distinct stroke values in the view, status and accent excepted | DOM | N3 |

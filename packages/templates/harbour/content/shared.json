@@ -5,10 +5,10 @@
   "contentVersion": 1,
   "regions": {
     "header": [
-      { "type": "site-header", "name": "Harbour Books", "mark": "list", "places": [{ "label": "Shop", "href": "/home" }], "actions": [{ "label": "Reserve a book", "primary": true, "says": "Reserving opens here once it’s built." }] }
+      { "type": "site-header", "name": "Harbour Books", "places": [{ "label": "Shop", "href": "/home" }], "actions": [{ "label": "Reserve a book", "primary": true, "says": "Reserving opens here once it’s built." }] }
     ],
     "footer": [
-      { "type": "site-footer", "sectionsLabel": "More from the shop", "sections": [{ "id": "shop", "heading": "Shop", "links": [{ "label": "Home", "href": "/home" }] }], "links": [{ "label": "Home", "href": "/home" }], "identity": "Harbour Books, 4 Quay Street", "legal": "© 2027 Harbour Books" }
+      { "type": "site-footer", "sectionsLabel": "More from the shop", "sections": [{ "id": "shop", "heading": "Shop", "links": [{ "label": "Shop", "href": "/home" }] }], "links": [], "identity": "Harbour Books, 4 Quay Street", "legal": "© 2027 Harbour Books" }
     ]
   }
 }

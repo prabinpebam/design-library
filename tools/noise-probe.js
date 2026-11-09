@@ -83,7 +83,7 @@
       const bg = clear(cs.backgroundColor) ? parentBg : cs.backgroundColor;
       const filled = !clear(cs.backgroundColor) && cs.backgroundColor !== parentBg;
       const shadow = cs.boxShadow && cs.boxShadow !== 'none';
-      const selected = el.matches('[aria-pressed="true"],[aria-selected="true"],[aria-checked="true"],[aria-current]:not([aria-current="false"]),:checked,[data-selected],[data-current]');
+      const selected = el.matches('[aria-pressed="true"],[aria-expanded="true"],[aria-selected="true"],[aria-checked="true"],[aria-current]:not([aria-current="false"]),:checked,[data-selected],[data-current]');
       // An unavailable control's look is a fact about it (like selection), not a resting decoration.
       const unavailable = el.matches('[aria-disabled="true"],:disabled');
       const field = el.matches(FIELD);
