@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Badge } from '../fundamentals/Badge';
 import { Button } from '../fundamentals/Button';
+import { Image, type PictureTreatment } from '../fundamentals/Image';
 import { Link } from '../fundamentals/Link';
 import type { DataAttributes } from '../types';
 
@@ -37,6 +38,8 @@ export interface MediaPlayerProps extends DataAttributes {
   poster?: string;
   /** What the poster shows, for an embed's poster; leave it out when the title already says it. */
   posterAlt?: string;
+  /** A treatment for an embed's poster (IP31), as Image's `treatment`: `{ rest: 'greyscale', active: 'none' }` shows it in grey until the player is pointed at or focused. Without it the poster is drawn as before. */
+  posterTreatment?: PictureTreatment;
   /** The video's own width and height, so the player takes its shape before anything loads. A tall one narrows to fit the window. Default 16 by 9. */
   shape?: { width: number; height: number };
   /** Length in seconds, shown on an embed's poster (an embed can't tell before it loads). */
@@ -89,7 +92,7 @@ const embedSrc = (source: Extract<MediaSource, { from: 'youtube' | 'vimeo' }>) =
  * `aria-hidden` (the button says it). A transcript link follows the player when given.
  * @key Enter, Space: on an embed's poster, loads and plays the video
  */
-export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
+export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
   const [playing, setPlaying] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
 
@@ -121,7 +124,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, 
 
   return (
     <figure {...data} data-dl="media-player" data-kind="video" data-tall={shape.height > shape.width ? '' : undefined} style={style}>
-      <div data-dl-part="stage">
+      <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
         {source.from === 'file' ? (
           <video controls preload="metadata" playsInline poster={poster} aria-label={title}>
             {source.files.map((f) => (
@@ -142,7 +145,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, 
           />
         ) : (
           <>
-            {poster && <img data-dl-part="poster" src={poster} alt={posterAlt ?? ''} />}
+            {poster && (posterTreatment ? <Image data-dl-part="poster" src={poster} alt={posterAlt ?? ''} rounded={false} treatment={posterTreatment} /> : <img data-dl-part="poster" src={poster} alt={posterAlt ?? ''} />)}
             <span data-dl-part="play">
               <Button
                 label={`Play ${title}${duration ? `, ${spokenDuration(duration)}` : ''}`}

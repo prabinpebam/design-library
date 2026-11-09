@@ -28,7 +28,19 @@ export interface ImageProps extends DataAttributes {
   rounded?: boolean;
   /** `lazy` (default) loads it when it nears the window; `eager` for the first picture a page shows. */
   loading?: 'lazy' | 'eager';
+  /**
+   * A treatment (IP31), named as a picture entry's `treatment` in `assets.json` (DP3): `'greyscale'`, `'duotone'` (grey
+   * multiplied over `--c-image-duotone`, the accent by default) or `'none'`; or `{ rest, active }`, where `active` shows
+   * while the picture, or the link, button or card around it, is hovered or focused (`{ rest: 'greyscale', active:
+   * 'none' }`: grey until pointed at). More contrast and forced colours always show the picture as it is.
+   */
+  treatment?: PictureTreatment;
 }
+
+/** A picture tone (IP31, DP3). */
+export type PictureTone = 'none' | 'greyscale' | 'duotone';
+/** A tone, or one at rest and one while active (hovered or focused). */
+export type PictureTreatment = PictureTone | { rest?: PictureTone; active?: PictureTone };
 
 /**
  * A picture in a frame of a fixed shape that holds its space while it loads, shows a soft fill while it waits, and
@@ -54,10 +66,14 @@ export function Image({
   credit,
   rounded = true,
   loading = 'lazy',
+  treatment,
   ...data
 }: ImageProps) {
   const [state, setState] = useState<'loading' | 'loaded' | 'failed'>('loading');
   const img = useRef<HTMLImageElement>(null);
+  const tone = typeof treatment === 'string' ? { rest: treatment } : treatment;
+  const rest = tone ? tone.rest ?? 'none' : undefined;
+  const active = tone?.active && tone.active !== rest ? tone.active : undefined;
 
   useEffect(() => {
     const el = img.current;
@@ -72,7 +88,7 @@ export function Image({
         width && height || focal
           ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focal ? { '--image-focus': `${focal.x * 100}% ${focal.y * 100}%` } : {}) } as CSSProperties)
           : undefined
-      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined}>
+      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active}>
       {state === 'failed' ? (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
           <Icon name="image" size="lg" />

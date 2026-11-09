@@ -4,6 +4,7 @@ import { Button } from '../fundamentals/Button';
 import { Badge } from '../fundamentals/Badge';
 import { Cluster } from '../fundamentals/Cluster';
 import { Grid } from '../fundamentals/Grid';
+import { Image } from '../fundamentals/Image';
 import { Progress } from '../fundamentals/Progress';
 import { Stack } from '../fundamentals/Stack';
 import { scenes } from './scenes';
@@ -50,6 +51,18 @@ export default {
           <Card href="#/card" media={picture(0)} eyebrow="Walks" title="Morning over the hills" description="A two-hour loop that starts before sunrise and ends at the bakery." meta="12 Mar · 6 km" />
           <Card href="#/card" media={picture(1)} eyebrow="Drives" title="The desert in the last hour of light" description="Where to stop for the best of the evening." meta="3 Apr · 140 km" />
           <Card href="#/card" media={picture(3)} eyebrow="Swims" title="Low tide at the lagoon" description="Safe water, warm shallows." meta="18 Jul · 2 km" />
+        </Grid>
+      ),
+    },
+    {
+      title: 'Grey until pointed at',
+      description: 'A picture in a card can take a treatment: in grey at rest, in colour while the card is pointed at or has focus (Tab to a card to see it). The card’s link is the trigger, so the whole card counts. More contrast shows the colour picture.',
+      code: `<Card href="/trips/hills" media={<Image src={hills} alt="…" treatment={{ rest: 'greyscale', active: 'none' }} />} title="Morning over the hills" … />`,
+      render: () => (
+        <Grid max={3}>
+          {[0, 1, 3].map((i) => (
+            <Card key={i} href="#/card" media={<Image src={scenes[i].src} alt={scenes[i].alt} treatment={{ rest: 'greyscale', active: 'none' }} />} title={scenes[i].caption} meta={scenes[i].label} />
+          ))}
         </Grid>
       ),
     },

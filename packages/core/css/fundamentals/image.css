@@ -42,6 +42,72 @@
     object-fit: contain;
   }
 
+  /*
+   * Treatments (IP31, DP3's picture `treatment`): `data-tone` at rest, `data-tone-active` while the picture, or the link,
+   * button or card it sits in (or any element marked data-tone-area, such as a player's stage), is hovered or focused. Greyscale is a filter on the picture; duotone is the picture in
+   * grey under a multiply layer of `--c-image-duotone` (light parts take the colour, dark parts stay near black). Both
+   * fade on the change timing. More contrast draws every picture as it is.
+   */
+  [data-dl='image'] > img,
+  [data-dl='image'][data-tone]::after {
+    grid-area: 1 / 1;
+  }
+
+  [data-dl='image'][data-tone] > img {
+    transition: opacity var(--duration-change) var(--easing-standard), filter var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='image'][data-tone]::after {
+    content: '';
+    pointer-events: none;
+    background-color: var(--c-image-duotone);
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity var(--duration-change) var(--easing-standard);
+  }
+
+  [data-dl='image']:is([data-tone='greyscale'], [data-tone='duotone']) > img {
+    filter: grayscale(1);
+  }
+
+  [data-dl='image'][data-tone='duotone'][data-state='loaded']::after {
+    opacity: 1;
+  }
+
+  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-tone-active='none'] > img {
+    filter: none;
+  }
+
+  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-tone-active]:not([data-tone-active='duotone'])::after {
+    opacity: 0;
+  }
+
+  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image']):is([data-tone-active='greyscale'], [data-tone-active='duotone']) > img {
+    filter: grayscale(1);
+  }
+
+  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-tone-active='duotone'][data-state='loaded']::after {
+    opacity: 1;
+  }
+
+  [data-contrast='more'] [data-dl='image'][data-tone] > img {
+    filter: none;
+  }
+
+  [data-contrast='more'] [data-dl='image'][data-tone]::after {
+    display: none;
+  }
+
+  @media (prefers-contrast: more), (forced-colors: active) {
+    [data-dl='image'][data-tone] > img {
+      filter: none;
+    }
+
+    [data-dl='image'][data-tone]::after {
+      display: none;
+    }
+  }
+
   /* Waiting: the picture is transparent over the fill, which shimmers like a skeleton. */
   [data-dl='image'][data-state='loading'] > img {
     opacity: 0;

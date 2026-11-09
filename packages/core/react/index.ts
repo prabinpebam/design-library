@@ -236,7 +236,7 @@ export type { StatisticProps } from './compounds/Statistic';
 export { Accordion } from './compounds/Accordion';
 export type { AccordionProps, AccordionItem } from './compounds/Accordion';
 export { Image } from './fundamentals/Image';
-export type { ImageProps } from './fundamentals/Image';
+export type { ImageProps, PictureTone, PictureTreatment } from './fundamentals/Image';
 export { Tooltip, useHint } from './fundamentals/Tooltip';
 export type { TooltipProps, Hint } from './fundamentals/Tooltip';
 export { Popover } from './fundamentals/Popover';

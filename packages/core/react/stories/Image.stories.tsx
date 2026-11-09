@@ -39,6 +39,20 @@ export default {
       ),
     },
     {
+      title: 'Treatments',
+      description: 'treatment draws a picture in grey or in duotone (grey multiplied over the duotone colour, the accent by default), by prop or by a picture entry’s treatment field. With { rest, active } it changes while the picture, or the link or card around it, is pointed at or focused: grey until you point. More contrast and forced colours show every picture as it is.',
+      code: `<Image treatment="greyscale" … />
+<Image treatment="duotone" … />
+<Image treatment={{ rest: 'greyscale', active: 'none' }} … />  // colour on hover or focus`,
+      render: () => (
+        <Grid max={3}>
+          <Image ratio="square" treatment="greyscale" src={scenes[5].src} alt={scenes[5].alt} caption="Greyscale" />
+          <Image ratio="square" treatment="duotone" src={scenes[5].src} alt={scenes[5].alt} caption="Duotone" />
+          <Image ratio="square" treatment={{ rest: 'greyscale', active: 'none' }} src={scenes[5].src} alt={scenes[5].alt} caption="Grey, colour when pointed at" />
+        </Grid>
+      ),
+    },
+    {
       title: 'Focal point',
       description: 'When cover crops, focal keeps a point in view: x and y from 0 to 1, across from the start edge and down from the top (the same field as a picture entry’s focal). The same tall crop of one picture, centred (default), held on its left part, then on its right part.',
       code: `<Image ratio="portrait" focal={{ x: 0.1, y: 0.5 }} … />`,

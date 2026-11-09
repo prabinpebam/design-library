@@ -39,6 +39,14 @@ export default {
       ),
     },
     {
+      title: 'A poster in grey until pointed at',
+      description: 'posterTreatment takes the same treatment as Image: here the poster is grey at rest and turns to colour while the player is pointed at or its play button has focus. Without it the poster is drawn as it is.',
+      code: `<MediaPlayer source={{ from: 'youtube', id: '…' }} title="Big Buck Bunny" poster={poster} posterTreatment={{ rest: 'greyscale', active: 'none' }} duration={635} />`,
+      render: () => (
+        <MediaPlayer source={{ from: 'youtube', id: 'aqz-KE-bpKQ' }} title="Big Buck Bunny" poster={lagoon.src} posterAlt={lagoon.alt} posterTreatment={{ rest: 'greyscale', active: 'none' }} duration={635} caption="An open movie from the Blender Foundation." />
+      ),
+    },
+    {
       title: 'At its own shape',
       description: 'Given the video’s own width and height, the player takes exactly that shape: a wide loop stays wide. A tall one (a phone video) never grows taller than the window: it narrows and centres instead.',
       code: `<MediaPlayer source={{ from: 'vimeo', id: '76979871' }} title="A wide loop" poster={poster} shape={{ width: 1920, height: 720 }} />

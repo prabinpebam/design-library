@@ -913,6 +913,7 @@
   --c-image-credit-gap: var(--space-inline-item);
   --c-image-fallback-gap: var(--space-stack-pair);
   --c-image-fallback-padding: var(--space-inset-md);
+  --c-image-duotone: var(--color-accent);
   --c-media-player-radius: var(--radius-lg);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-media-player-badge-inset: var(--space-2);

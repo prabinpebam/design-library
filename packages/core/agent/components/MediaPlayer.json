@@ -51,6 +51,11 @@
           "description": "What the poster shows, for an embed's poster; leave it out when the title already says it."
         },
         {
+          "name": "posterTreatment",
+          "type": "PictureTreatment",
+          "description": "A treatment for an embed's poster (IP31), as Image's `treatment`: `{ rest: 'greyscale', active: 'none' }` shows it in grey until the player is pointed at or focused. Without it the poster is drawn as before."
+        },
+        {
           "name": "shape",
           "type": "{ width: number",
           "description": "The video's own width and height, so the player takes its shape before anything loads. A tall one narrows to fit the window. Default 16 by 9."
@@ -133,6 +138,7 @@
   "uses": [
     "Badge",
     "Button",
+    "Image",
     "Link"
   ],
   "tokens": [
