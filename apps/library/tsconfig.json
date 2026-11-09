@@ -25,6 +25,7 @@
     "src",
     "../../packages/core/react",
     "../../packages/core/render",
+    "../../packages/core/site",
     "../../packages/core/colour",
     "../../packages/core/presets",
     "../../packages/templates"

@@ -977,6 +977,7 @@
   --layer-dialog: 300;
   --layer-toast: 400;
   --layer-tooltip: 500;
+  --breakpoint-xs: 30rem;
   --breakpoint-sm: 40rem;
   --breakpoint-md: 64rem;
   --breakpoint-lg: 80rem;

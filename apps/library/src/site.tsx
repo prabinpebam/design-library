@@ -19,6 +19,7 @@ import { AppearanceContext, type Contrast, type Scheme } from './data/contexts';
 import { layoutOf, statesOf } from './data/templates';
 import { layoutScreens } from './views/templates';
 import { PresetSettings } from './inspectors/presets';
+import { RouterDemo } from './views/RouterDemo';
 
 const routeOf = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, '')).replace(/^app\//, '');
 
@@ -144,6 +145,7 @@ function TemplateSite() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <TemplateSite />
+    {/* The core router on a small site (IP27): `site.html?demo=router`, shown on the Routing page. */}
+    {query.get('demo') === 'router' ? <RouterDemo /> : <TemplateSite />}
   </StrictMode>,
 );

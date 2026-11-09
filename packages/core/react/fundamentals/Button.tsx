@@ -1,5 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type FocusEvent, type MouseEvent, type PointerEvent, type ReactNode, type RefObject } from 'react';
 import { useCommit } from '../behaviour/commit';
+import { useRouter } from '../behaviour/router';
 import { Icon } from './Icon';
 import { Progress } from './Progress';
 import { useHint } from './Tooltip';
@@ -152,6 +153,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  */
 export function Button(props: ButtonProps) {
   const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
   const valueId = useId();
@@ -202,7 +204,7 @@ export function Button(props: ButtonProps) {
       <a
         {...data}
         ref={self as RefObject<HTMLAnchorElement>}
-        href={href}
+        href={router ? router.href(href) : href}
         data-dl="button"
         data-emphasis={emphasis}
         data-icon-only={iconOnly ? '' : undefined}

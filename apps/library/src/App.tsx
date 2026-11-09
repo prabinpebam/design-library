@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useState, type ReactNode } from 'react';
 import { Button, CodeBlock, DataTable, familyPathOf, Grid, LibraryLayout, Link, List, Navigation, Notifications, PageHeader, PageLayout, ScreenPreview, Section, SegmentedControl, Stack, suspendMotion, Text, TitleBar, type SegmentedControlOption } from '@design-library/core/react';
 import { navGroups, pageById, sectionById, type Block, type Page, type PageBlock } from './data/pages';
-import { Borders, ColourRoles, ColourSets, ComponentTokens, ContrastPairs, Durations, Easings, Elevation, ElevationLadder, Layers, Materials, MotionRoles, Palette, Radii, SeparationCues, Sizes, SpaceRoles, SpaceScale, StackedBar, StatusRoles, TokenRows } from './inspectors/inspectors';
+import { Borders, ColourRoles, ColourSets, ComponentTokens, ContrastPairs, Durations, Easings, Elevation, ElevationLadder, Layers, ChangePoints, Materials, MotionRoles, Palette, Radii, SeparationCues, Sizes, SpaceRoles, SpaceScale, StackedBar, StatusRoles, TokenRows } from './inspectors/inspectors';
 import { TypeChooser, TypeFaceList, TypePlay, TypeRamp } from './inspectors/type';
 import { IconChooser, IconCoverage, IconSetList } from './inspectors/icons';
 import { Note, Overview, StoryExamples } from './inspectors/specimens';
@@ -68,6 +68,8 @@ function renderBlock(block: Block): ReactNode {
       return <SpaceRoles />;
     case 'layers':
       return <Layers />;
+    case 'change-points':
+      return <ChangePoints />;
     case 'space-options':
       return <SpaceOptions />;
     case 'shape-options':

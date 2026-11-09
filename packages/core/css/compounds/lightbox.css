@@ -114,6 +114,7 @@
   }
 
   /* A narrow window: the sides give their room to the picture; swipe or the keys move between pictures. */
+  /* breakpoint.xs */
   @media (max-width: 30rem) {
     [data-dl='lightbox'] [data-dl-part='side'] {
       min-inline-size: 0;

@@ -13,6 +13,9 @@ import { setMaterial, useMaterial } from '../data/material';
 import { catalogue } from '../data/catalogue';
 import { pages } from '../data/pages';
 import elevation from '../../../../packages/core/principles/elevation.json';
+import { changePoints } from '../../../../packages/core/tools/change-points.mjs';
+
+const coreCss = import.meta.glob('../../../../packages/core/css/{fundamentals,compounds,layouts}/*.css', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
 const tokenTarget = (t: TokenEntry) => ({ identity: { token: t.css }, sources: [...tokenFiles(t.path), INSPECTORS] });
 
@@ -705,6 +708,36 @@ export function Layers() {
           ],
         };
       })}
+    />
+  );
+}
+
+/**
+ * Every place core CSS changes at a window or container size (IP26), read from the CSS by the same scanner as
+ * `npm run check:breakpoints`: window widths use a breakpoint or say what they are tied to; containers follow the
+ * space a component is given.
+ */
+export function ChangePoints() {
+  const set = Object.fromEntries(tokensIn('breakpoint').map((t) => [t.path, Number.parseFloat(t.literal ?? '')]));
+  const files = Object.entries(coreCss).map(([path, text]) => ({ path: path.split('/packages/core/css/')[1], text: text.replace(/\r\n/g, '\n') }));
+  const points = changePoints(files, set).sort((a, b) => Number(a.scope === 'container') - Number(b.scope === 'container') || a.rem - b.rem);
+  return (
+    <RowList
+      columns={[1, 2, 2]}
+      rows={points.map((p) => ({
+        id: `${p.file}:${p.line}`,
+        cells: [
+          <Code>{p.file.replace(/^\w+\//, '').replace(/\.css$/, '')}</Code>,
+          <Code>{`${p.scope === 'window' ? '@media' : '@container'} (${p.edge}-${p.axis}: ${p.rem}rem)`}</Code>,
+          p.token ? (
+            <Code>{p.token}</Code>
+          ) : (
+            <Text as="span" variant="body-sm" tone="muted">
+              {p.reason ? p.reason.replace(/^tied to/i, 'Tied to') : p.scope === 'container' ? 'The space the component is given' : 'The window’s height'}
+            </Text>
+          ),
+        ],
+      }))}
     />
   );
 }

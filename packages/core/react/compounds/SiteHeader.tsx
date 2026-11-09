@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
 import { Reveal } from '../fundamentals/Reveal';
 import type { DataAttributes } from '../types';
+import { useRouter } from '../behaviour/router';
 
 /** One place in the site's main navigation. */
 export interface SiteHeaderLink {
@@ -40,6 +41,7 @@ export interface SiteHeaderProps extends DataAttributes {
  */
 export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, ...data }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const panelId = useId();
   const button = useRef<HTMLSpanElement>(null);
 
@@ -58,7 +60,7 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
     <ul data-dl-part="list">
       {links.map((l) => (
         <li key={l.href}>
-          <a href={l.href} data-dl-part="link" aria-current={l.current ? 'page' : undefined} onClick={() => setOpen(false)}>
+          <a href={router ? router.href(l.href) : l.href} data-dl-part="link" aria-current={l.current ? 'page' : undefined} onClick={() => setOpen(false)}>
             {l.label}
           </a>
         </li>
@@ -69,7 +71,7 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
   return (
     <div {...data} data-dl="site-header" data-open={open ? '' : undefined}>
       <div data-dl-part="bar">
-        <a href={href} data-dl-part="name">
+        <a href={router ? router.href(href) : href} data-dl-part="name">
           {mark && (
             <span data-dl-part="mark" aria-hidden="true">
               {mark}

@@ -27,7 +27,7 @@
           "name": "href",
           "type": "string",
           "required": true,
-          "description": "Where it goes: a URL or an in-app route."
+          "description": "Where it goes: a URL or an in-app route. Inside the core router (`@design-library/core/site`), a route (`/talks`) or an anchor (`#speakers`) is written for its mode and handled by it."
         },
         {
           "name": "children",

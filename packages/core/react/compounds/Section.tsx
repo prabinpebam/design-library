@@ -5,6 +5,8 @@ import type { DataAttributes } from '../types';
 export interface SectionProps extends DataAttributes {
   /** Names the section; the section is labelled by it. */
   heading?: string;
+  /** An in-page address for the section (IP27): its heading takes this id, so a link to `#anchor` lands on the heading. Letters, digits and hyphens. */
+  anchor?: string;
   /** Semantic level from the page outline. */
   level?: 2 | 3 | 4;
   /** Visual size, independent of level. */
@@ -38,8 +40,9 @@ export interface SectionProps extends DataAttributes {
  * @a11y Renders `section`, named by its heading through `aria-labelledby` when it has one. The heading level follows
  * the outline, never the visual size. An index numeral is decorative.
  */
-export function Section({ heading, level = 2, size, intro, index, nested = false, tone, bleed = false, children, headingData, introData, ...data }: SectionProps) {
-  const id = useId();
+export function Section({ heading, anchor, level = 2, size, intro, index, nested = false, tone, bleed = false, children, headingData, introData, ...data }: SectionProps) {
+  const generated = useId();
+  const id = anchor ?? generated;
   const head = (heading || intro) && (
     <div data-dl-part="head">
       {heading && (

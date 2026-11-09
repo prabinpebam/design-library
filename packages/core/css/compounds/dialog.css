@@ -117,6 +117,7 @@
   }
 
   /* A narrow window: the dialog fills it, square, so nothing peeks around it. */
+  /* breakpoint.xs */
   @media (max-width: 30rem) {
     [data-dl='dialog'][data-size] {
       inline-size: 100%;

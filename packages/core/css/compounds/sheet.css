@@ -52,6 +52,7 @@
   }
 
   /* AR11: a sheet covering more than about half the window goes solid (s 20, m 26, l 40 rem wide). */
+  /* tied to the sheet's own width: twice size m (26 rem), not a breakpoint */
   @media (max-width: 52rem) {
     [data-dl='sheet'][data-modal='false']:not([data-size='l']) {
       background-color: var(--color-bg-raised);
@@ -60,6 +61,7 @@
     }
   }
 
+  /* breakpoint.lg, which is also twice size l (40 rem) */
   @media (max-width: 80rem) {
     [data-dl='sheet'][data-modal='false'][data-size='l'] {
       background-color: var(--color-bg-raised);
@@ -190,6 +192,7 @@
   }
 
   /* A narrow window: a side sheet fills it, square, so nothing peeks around it. */
+  /* breakpoint.xs */
   @media (max-width: 30rem) {
     [data-dl='sheet'][data-size] {
       inline-size: 100%;

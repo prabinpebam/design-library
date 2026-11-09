@@ -24,6 +24,11 @@
           "description": "Names the section; the section is labelled by it."
         },
         {
+          "name": "anchor",
+          "type": "string",
+          "description": "An in-page address for the section (IP27): its heading takes this id, so a link to `#anchor` lands on the heading. Letters, digits and hyphens."
+        },
+        {
           "name": "level",
           "type": "2 | 3 | 4",
           "default": "2",

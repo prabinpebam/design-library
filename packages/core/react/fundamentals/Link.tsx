@@ -1,9 +1,10 @@
 import type { FocusEvent, PointerEvent, ReactNode } from 'react';
 import { Icon } from './Icon';
+import { useRouter } from '../behaviour/router';
 import type { DataAttributes } from '../types';
 
 export interface LinkProps extends DataAttributes {
-  /** Where it goes: a URL or an in-app route. */
+  /** Where it goes: a URL or an in-app route. Inside the core router (`@design-library/core/site`), a route (`/talks`) or an anchor (`#speakers`) is written for its mode and handled by it. */
   href: string;
   /** Link text that says where it goes; never "click here". */
   children: ReactNode;
@@ -33,8 +34,9 @@ export interface LinkProps extends DataAttributes {
  * @key Enter: follows the link
  */
 export function Link({ href, children, current = false, external = false, newTab = false, ...data }: LinkProps) {
+  const router = useRouter();
   return (
-    <a {...data} href={href} target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener' : undefined} data-dl="link" aria-current={current ? 'page' : undefined}>
+    <a {...data} href={router && !newTab ? router.href(href) : href} target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener' : undefined} data-dl="link" aria-current={current ? 'page' : undefined}>
       {children}
       {(external || newTab) && <Icon name="external" size="sm" label={newTab ? '(opens in a new tab)' : '(another site)'} />}
     </a>

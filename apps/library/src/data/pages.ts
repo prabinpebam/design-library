@@ -34,6 +34,7 @@ export type Block =
   | { type: 'space-roles' }
   | { type: 'space-options' }
   | { type: 'layers' }
+  | { type: 'change-points' }
   | { type: 'shape-options' }
   | { type: 'sizes' }
   | { type: 'radii' }
@@ -620,6 +621,12 @@ export const pages: Page[] = withDocs(withPrinciples([
       },
       { heading: 'Sizes', intro: 'Small sizes drawn at their size; widths drawn to scale against the widest.', block: { type: 'sizes' } },
       { heading: 'Breakpoints', intro: 'The widths layouts change at. CSS can’t read a custom property in a media query, so width queries use these values as written.', block: { type: 'token-rows', group: 'breakpoint' } },
+      {
+        heading: 'Change points',
+        minor: true,
+        intro: 'Every place a core component changes with the window or with its own container, read from its CSS. Window widths use a breakpoint above, or say what they’re tied to; npm run check:breakpoints fails on any other. Code reads the same set with breakpointQuery and useBreakpoint.',
+        block: { type: 'change-points' },
+      },
     ],
   },
   {
@@ -821,6 +828,35 @@ export const pages: Page[] = withDocs(withPrinciples([
             ...clipping.scrollRegions.filter((s) => 'bar' in s && s.bar !== 'ScrollArea').map((s) => `${s.selector}: ${s.bar}.`),
           ],
         },
+      },
+    ],
+  },
+  {
+    id: 'routing',
+    section: 'foundations',
+    title: 'Routing',
+    summary: 'One small router for sites: hash or history routes, in-page links that keep the route, focus and an announcement on every page change, and Back that returns to where you were. The site decides what each path shows.',
+    source: { label: 'The plan: data-driven sites', href: docsHref('improvement-plan.md') },
+    blocks: [
+      {
+        heading: 'The rules',
+        intro: 'Import Router, useRoute, useNavigate and matchPath from @design-library/core/site. Without a Router, links work as plain links.',
+        block: {
+          type: 'points',
+          items: [
+            'Wrap the site in Router (hash routes by default, so it works on any static host; history routes with mode="history" and a base). Read useRoute() to choose the view: its path, query and anchor.',
+            'Write routes as paths: Link href="/talks", Button href="/talks#venue". Inside a Router, Link, Button with href and SiteHeader write the address for the mode (#/talks) and the router handles the click; links in content are handled too.',
+            'A page change scrolls to the top, or to its anchor, moves focus to the new page’s main heading (focus prop, default main h1) and announces its words politely.',
+            'An in-page link (#venue) scrolls to the element with that id and focuses it, without replacing the route: in hash mode the address becomes #/talks#venue. Section takes anchor="venue" for its heading. The skip link works the same way.',
+            'Back and Forward return to the page and the place you left it. Scrolling within a page glides on the move timing; a new page and reduced motion jump at once.',
+            'The library never owns routes: matchPath("/talks/:id", path) reads a pattern’s parts, and a path nothing matches is the site’s own not-found page.',
+          ],
+        },
+      },
+      {
+        heading: 'A small site, live',
+        intro: 'Choose Talks, then Venue on its line of links: the page moves to the venue and the address keeps the route. Press About, then the browser’s Back: the talks page returns at the venue. Try an address that doesn’t exist.',
+        block: { type: 'screen', src: 'site.html?demo=router#/', title: 'A small site on the core router', width: 'fill' },
       },
     ],
   },
