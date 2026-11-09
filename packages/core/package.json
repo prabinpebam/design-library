@@ -33,6 +33,7 @@
     "./AGENTS.md": "./AGENTS.md",
     "./package.json": "./package.json",
     "./CHANGELOG.md": "./CHANGELOG.md",
+    "./UPGRADE.md": "./UPGRADE.md",
     "./guide/*": "./guide/*",
     "./tools/*": "./tools/*",
     "./probes/*": "./probes/*"
