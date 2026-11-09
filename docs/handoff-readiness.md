@@ -125,6 +125,17 @@ Owner's words, 2026-11-09 07:48 +05:30 ([DoD Q81](definition-of-done.md#owner-in
 | `npx vite build` | Built |
 | `npx vite`, opened at 800 px and 320 px | The café's own words and picture; headings in Fraunces (the `editorial` preset); `--p-brand-1-500` = `#0f766e`; `data-space="loose"`, `data-shape="super-soft"`; no sideways scroll (310 px of 320) |
 
+## Install matrix (IP1)
+
+The DesignUp beta reported `Cannot read properties of null (reading 'edgesOut')` on npm 9 and 10 ([Improvement plan](improvement-plan.md), F01). Checked 2026-11-10 about 01:50 +05:30 with `node .\tools\install-matrix.mjs --npm 9.6.7,10.8.2,11 --from https://github.com/prabinpebam/design-library/releases/download/v0.2.0-beta.1`: each npm installs the two 0.2.0-beta.1 tarballs with React, then the dev tools (Vite 8, `@vitejs/plugin-react` 6, TypeScript), then again from the lockfile with `node_modules` deleted, in an empty folder outside the repository, through the proxy.
+
+| npm | Libraries | Dev tools | From the lockfile |
+| --- | --- | --- | --- |
+| 9.6.7 | Pass | Pass | Pass |
+| 10.8.2 (Node 20.19's) | Pass | Pass | Pass |
+| 11.21.1 | Pass | Pass | Pass |
+
+A fresh install from a copy of DesignUp's `package.json` also passed on all three, and so did installing templates after core and installing the dev tools first. The crash didn't come back in any order we tried. The likeliest cause is a stale tree or cache from before the release files were re-uploaded under the same version (K7). Guide step 1 now says what each release is checked on and how to recover (clear `node_modules`, `package-lock.json` and the cache, then npm 11), and `npm run install:matrix` runs after `npm run pack` for every release (IV2).
 ## Beta audit (Q99)
 
 Owner's words, 2026-11-09 12:46 +05:30 ([DoD Q99](definition-of-done.md#owner-instructions)): *"When everything is done, I want a final audit for the readiness of the design library for being handed over to other projects for implementation in other projects. Complete anything pending and we will declare this as the Beta version ready for early trials."*

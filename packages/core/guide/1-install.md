@@ -5,7 +5,8 @@ Goal: a website or app that draws its UI with this library, follows the person's
 ## Before you start
 
 - **What you get:** two packages, `@design-library/core` and `@design-library/templates` (optional), as TypeScript and TSX source plus CSS, not a built bundle: your Vite build compiles them. They aren't on a package registry; each version is two tarballs attached to a [GitHub release](https://github.com/prabinpebam/design-library/releases). MIT licence.
-- **What you need:** Node 20.19 or later (Vite 8's floor) with **npm 10 or later** (npm 9 fails on these tarball installs with `Cannot read properties of null (reading 'edgesOut')`; `npm -v` tells you, and Node 20.19+ ships npm 10), React 19, Vite 8 with `@vitejs/plugin-react`, TypeScript.
+- **What you need:** Node 20.19 or later (Vite 8's floor) with npm 10 or later (Node 20.19+ ships npm 10; `npm -v` tells you), React 19, Vite 8 with `@vitejs/plugin-react`, TypeScript. Each release is installed in empty folders on npm 9.6.7, 10.8.2 and 11 before it ships, in the order below and again from the lockfile (`node tools/install-matrix.mjs` in the library repository).
+- **If the install stops with `Cannot read properties of null (reading 'edgesOut')`:** npm's tree is stale, often after a release's files were replaced or an install was interrupted. Delete `node_modules` and `package-lock.json`, run `npm cache verify`, then install again; if it still stops, run the same command with npm 11 (`npx -y npm@11 install …`). Never add `--force` or `--legacy-peer-deps` to get past it.
 - **Package sources:** install public packages from the registry your project is configured for. If your organisation requires a proxy or private feed, use it; never switch registries to get past a failure.
 
 ## Supported
