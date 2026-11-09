@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../core/schemas/page.schema.json",
+  "pageVersion": 1,
+  "id": "visit",
+  "route": "/visit",
+  "title": "Visit",
+  "description": "Opening hours, how to find the shop on Quay Street, and how to reserve a book to collect.",
+  "sections": [
+    {
+      "type": "hero",
+      "eyebrow": "4 Quay Street",
+      "title": "Visit the shop",
+      "lead": "On the quay between the ferry steps and the harbour master’s office, with the blue door."
+    },
+    {
+      "type": "details",
+      "anchor": "hours",
+      "heading": "Opening hours",
+      "items": [
+        { "term": "Monday to Friday", "details": "10:00 to 19:00" },
+        { "term": "Saturday", "details": "9:00 to 18:00" },
+        { "term": "Sunday", "details": "11:00 to 17:00" },
+        { "term": "Reading nights", "details": "Open until 21:00" }
+      ]
+    },
+    {
+      "type": "cta",
+      "anchor": "reserve",
+      "standalone": true,
+      "title": "Reserve a book to collect",
+      "lead": "Tell us the title; we keep it behind the counter for a week, or order it in within two days.",
+      "actions": [{ "label": "Email the shop", "primary": true, "href": "mailto:books@example.com" }],
+      "note": "We reply the same day."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../core/schemas/page.schema.json",
+  "pageVersion": 1,
+  "id": "readings",
+  "route": "/readings",
+  "title": "Readings",
+  "description": "Readings on the first Thursday of every month: the author, the book and a chair by the window.",
+  "sections": [
+    {
+      "type": "hero",
+      "eyebrow": "First Thursday of every month",
+      "title": "Readings",
+      "lead": "An author reads for half an hour, then we talk. Free, with tea; seats go to whoever comes first."
+    },
+    {
+      "type": "cards",
+      "anchor": "coming-up",
+      "heading": "Coming up",
+      "max": 3,
+      "items": [
+        { "title": "The Long Shore", "eyebrow": "Novel", "meta": "Thursday 4 March, 19:00", "description": "The author reads the keeper’s last three letters and answers questions.", "picture": "theLongShore" },
+        { "title": "Salt and Ink", "eyebrow": "Essays", "meta": "Thursday 1 April, 19:00", "description": "An evening of maps: the essayist brings the harbour charts behind the book.", "picture": "saltAndInk" },
+        { "title": "Small Boats", "eyebrow": "Children", "meta": "Thursday 6 May, 16:00", "description": "An afternoon reading for children, with paper boats to fold and take home.", "picture": "smallBoats" }
+      ]
+    },
+    {
+      "type": "questions",
+      "heading": "Before you come",
+      "items": [
+        { "title": "Do I need a ticket?", "text": "No. Readings are free; seats go to whoever comes first, and the doors open half an hour before." },
+        { "title": "Can I get my book signed?", "text": "Yes. Authors stay after the reading to sign books, bought here or brought from home." }
+      ]
+    }
+  ]
+}

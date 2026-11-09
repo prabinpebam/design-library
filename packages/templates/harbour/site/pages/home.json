@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../core/schemas/page.schema.json",
+  "pageVersion": 1,
+  "id": "home",
+  "route": "/",
+  "title": "Shop",
+  "description": "A small bookshop on the quay, with a reading chair by every window and a reading every month.",
+  "picture": "shopfront",
+  "current": "",
+  "sections": [
+    {
+      "type": "hero",
+      "standalone": true,
+      "eyebrow": "Open every day by the water",
+      "title": ["Books for ", { "text": "slow evenings", "mark": "accent" }],
+      "lead": "A small shop on the quay, with a reading chair by every window.",
+      "actions": [{ "label": "See this month’s readings", "primary": true, "href": "/readings" }, { "label": "Plan a visit", "href": "/visit" }],
+      "picture": "shopfront"
+    },
+    {
+      "type": "cards",
+      "anchor": "new",
+      "heading": "New this week",
+      "intro": "Three books our staff couldn’t put down.",
+      "max": 3,
+      "items": [
+        { "title": "The Long Shore", "eyebrow": "Novel", "description": "A lighthouse keeper’s last winter, told in letters.", "picture": "theLongShore" },
+        { "title": "Salt and Ink", "eyebrow": "Essays", "description": "Twelve short pieces on harbours, maps and the people who draw them.", "picture": "saltAndInk" },
+        { "title": "Small Boats", "eyebrow": "Children", "description": "A picture book about a rowing boat that wants to see the sea.", "picture": "smallBoats" }
+      ]
+    },
+    {
+      "type": "points",
+      "heading": "Why people come back",
+      "items": ["Every book on the front table is read by someone who works here.", "We order any book in print within two days.", "Readings on the first Thursday of every month."]
+    }
+  ]
+}

@@ -289,3 +289,65 @@ export interface Template {
   registry?: { // eslint-disable-next-line @typescript-eslint/no-explicit-any -- each entry narrows its own block
   blocks?: Record<string, BlockRenderer<any>>; layouts?: Record<string, LayoutBinding> };
 }
+
+/** A site's navigation place (site.schema.json `navigation`). */
+export interface SiteNavigationItem {
+  label: string;
+  /** A route: `/` or lowercase parts after a slash. */
+  href: string;
+}
+
+/** The site document, as site.schema.json (version 1) defines it (DP8): what every page shares. */
+export interface SiteDocument {
+  siteVersion: 1;
+  id?: string;
+  title: string;
+  /** `{page}` and `{site}`; default `{page} · {site}`. */
+  titlePattern?: string;
+  /** The id of the page at `/`. */
+  home: string;
+  /** The id of the page shown for an unknown address. */
+  notFound?: string;
+  navigation?: SiteNavigationItem[];
+  header?: Block[];
+  footer?: Block[];
+  layout?: { component?: string; settings?: Record<string, unknown> };
+  transition?: 'none' | 'fade';
+  /** Old or extra addresses → the route each opens. */
+  aliases?: Record<string, string>;
+  strings?: {
+    notFound?: { title: string; text: string; home: string };
+    unconfirmed?: Record<string, string>;
+    scheme?: Partial<Record<'light' | 'dark' | 'system' | 'switch' | 'toDark' | 'toLight', string>>;
+  };
+}
+
+/** A page section: a block with an optional anchor (page.schema.json `$defs.section`). */
+export type PageSection = Block & { anchor?: string };
+
+/** One page, as page.schema.json (version 1) defines it (DP9). */
+export interface PageDocument {
+  pageVersion: 1;
+  id: string;
+  route: string;
+  title: string;
+  windowTitle?: string;
+  description?: string;
+  /** An asset id for link previews. */
+  picture?: string;
+  canonical?: string;
+  hidden?: boolean;
+  /** The navigation place it belongs to (a route without its slash); defaults to the first part of its route. */
+  current?: string;
+  layout?: string;
+  settings?: Record<string, unknown>;
+  sections: PageSection[];
+}
+
+/** A data-driven site as `SiteView` reads it: the site document, its pages, its pictures and its own registry. */
+export interface Site {
+  site: SiteDocument;
+  pages: PageDocument[];
+  assets: Record<string, TemplateAsset>;
+  registry?: Template['registry'];
+}

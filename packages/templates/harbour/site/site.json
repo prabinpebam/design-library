@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../core/schemas/site.schema.json",
+  "siteVersion": 1,
+  "id": "harbour-books",
+  "title": "Harbour Books",
+  "titlePattern": "{page} · {site}",
+  "home": "home",
+  "navigation": [
+    { "label": "Shop", "href": "/" },
+    { "label": "Readings", "href": "/readings" },
+    { "label": "Visit", "href": "/visit" }
+  ],
+  "header": [
+    { "type": "site-header", "name": "Harbour Books", "actions": [{ "label": "Reserve a book", "primary": true, "href": "/visit#reserve" }] }
+  ],
+  "footer": [
+    {
+      "type": "site-footer",
+      "sectionsLabel": "More from the shop",
+      "sections": [
+        { "id": "shop", "heading": "Shop", "links": [{ "label": "New this week", "href": "/" }, { "label": "Readings", "href": "/readings" }] },
+        { "id": "visit", "heading": "Visit", "links": [{ "label": "Opening hours", "href": "/visit#hours" }, { "label": "Reserve a book", "href": "/visit#reserve" }] }
+      ],
+      "links": [],
+      "identity": "Harbour Books, 4 Quay Street",
+      "legal": "© 2027 Harbour Books"
+    }
+  ],
+  "layout": { "component": "SiteLayout", "settings": { "width": "wide" } },
+  "transition": "fade",
+  "aliases": { "/home": "/", "/events": "/readings" },
+  "strings": {
+    "notFound": { "title": "This page isn’t on our shelves", "text": "The address may be old or mistyped.", "home": "Back to the shop" }
+  }
+}

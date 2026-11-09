@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-library.local/core/site/1",
+  "title": "Site document, version 1",
+  "description": "What every page of a data-driven site shares (DP8, DR3): its name and title pattern, the home and not-found pages, the navigation, the header and footer blocks, the words no one page holds, the layout every page starts from, the page transition and old addresses that move. Pages are page documents (page.schema.json); `SiteView` from `@design-library/core/render` draws them. Pure data: no markup, styles or code.",
+  "type": "object",
+  "required": ["siteVersion", "title", "home"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "siteVersion": { "const": 1, "description": "The site document's shape version." },
+    "id": { "$ref": "#/$defs/id", "description": "A short name for the site, used where the renderer needs a key (stored choices, such as the colour scheme)." },
+    "title": { "type": "string", "minLength": 1, "description": "The site's name, as `{site}` in the title pattern." },
+    "titlePattern": {
+      "type": "string",
+      "pattern": "\\{page\\}",
+      "default": "{page} · {site}",
+      "description": "The window title of every page: `{page}` is the page's title and `{site}` the site's. The home page shows the site's title alone unless its page document sets `windowTitle`."
+    },
+    "home": { "$ref": "#/$defs/id", "description": "The id of the page at `/`." },
+    "notFound": { "$ref": "#/$defs/id", "description": "The id of the page shown for an address no page has. Without it, the renderer shows `strings.notFound` with a link home." },
+    "navigation": {
+      "type": "array",
+      "minItems": 1,
+      "description": "The site's places, in order. A `site-header` block without `places` takes them, and the place the current page belongs to (its `current`, else the first part of its route) is marked.",
+      "items": {
+        "type": "object",
+        "required": ["label", "href"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "href": { "$ref": "#/$defs/route" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "header": { "type": "array", "description": "Blocks in every page's header (usually one `site-header`).", "items": { "$ref": "#/$defs/block" } },
+    "footer": { "type": "array", "description": "Blocks in every page's footer (usually one `site-footer`).", "items": { "$ref": "#/$defs/block" } },
+    "layout": { "$ref": "#/$defs/layout", "description": "The layout every page starts from; a page's own `layout` and `settings` win." },
+    "transition": { "enum": ["none", "fade"], "default": "none", "description": "How one page replaces another (Router `transition`, IP30). Reduced motion always swaps at once." },
+    "aliases": {
+      "type": "object",
+      "description": "Old or extra addresses and the route each opens, such as { \"/home\": \"/\" }; the address is replaced, so Back skips it.",
+      "propertyNames": { "$ref": "#/$defs/route" },
+      "additionalProperties": { "$ref": "#/$defs/route" }
+    },
+    "strings": {
+      "type": "object",
+      "description": "Words the renderer needs that no one page holds.",
+      "properties": {
+        "notFound": {
+          "type": "object",
+          "description": "Shown for an unknown address when the site has no `notFound` page.",
+          "required": ["title", "text", "home"],
+          "properties": {
+            "title": { "type": "string", "minLength": 1 },
+            "text": { "type": "string", "minLength": 1 },
+            "home": { "type": "string", "minLength": 1, "description": "The link back to the home page." }
+          },
+          "additionalProperties": false
+        },
+        "unconfirmed": {
+          "type": "object",
+          "description": "The phrase shown for each kind of value not yet confirmed (DP4), such as { \"speaker\": \"Speaker to confirm\" }.",
+          "propertyNames": { "$ref": "#/$defs/id" },
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        },
+        "scheme": {
+          "type": "object",
+          "description": "Words for a colour scheme control (`SchemeControl` `words`).",
+          "properties": {
+            "light": { "type": "string" },
+            "dark": { "type": "string" },
+            "system": { "type": "string" },
+            "switch": { "type": "string" },
+            "toDark": { "type": "string" },
+            "toLight": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "route": { "type": "string", "pattern": "^/([a-z0-9-]+(/[a-z0-9-]+)*)?$", "description": "A site address: `/`, or lowercase parts after a slash." },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "component": { "type": "string", "default": "SiteLayout", "description": "A core layout (`SiteLayout`) or one the site registers." },
+        "settings": { "type": "object", "description": "The layout component's options; for SiteLayout `width` (`wide`, `reading`) and `opening` (`spaced`, `flush`)." }
+      },
+      "additionalProperties": false
+    },
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "description": "A core block (blocks.schema.json, by its `type`) or a site's own, namespaced (`shop.price-list`).",
+      "properties": {
+        "type": { "type": "string", "pattern": "^([a-z][a-z0-9-]*\\.)?[a-z][a-z0-9-]*$" }
+      }
+    }
+  }
+}

@@ -378,8 +378,14 @@
       const cs = getComputedStyle(f);
       const fr = doc(f.getBoundingClientRect());
       const cr = rectOf(f);
-      const prev = f.previousElementSibling && visible(f.previousElementSibling) ? f.previousElementSibling : null;
-      const next = f.nextElementSibling && visible(f.nextElementSibling) ? f.nextElementSibling : null;
+      // The neighbouring bands: the nearest siblings that draw something (a hidden anchor marker is no band).
+      const sibling = (el, step) => {
+        let s = el[step];
+        while (s && !visible(s) && getComputedStyle(s).display === 'none') s = s[step];
+        return s && visible(s) ? s : null;
+      };
+      const prev = sibling(f, 'previousElementSibling');
+      const next = sibling(f, 'nextElementSibling');
       const space = px(cs.paddingTop) + px(cs.paddingBottom);
       // FR1 isolation: content to the nearest content above and below.
       if (prev && cr.top - rectOf(prev).bottom < 1.5 * page - 1) fail('FR1', { where: where(f), above: Math.round(cr.top - rectOf(prev).bottom), needs: 1.5 * page });
