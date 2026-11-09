@@ -10,6 +10,7 @@
     },
     { "path": "brief.md", "title": "Design brief", "order": 1, "icon": "flag", "type": "page", "status": "draft", "updated": "2026-11-06" },
     { "path": "definition-of-done.md", "title": "Definitions of Done", "order": 2, "icon": "fact_check", "type": "page", "updated": "2026-11-06" },
+    { "path": "get-started.md", "title": "Get started (technical)", "order": 2.4, "icon": "rocket_launch", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "how-it-works.md", "title": "How the library works", "order": 2.5, "icon": "lightbulb", "type": "page", "status": "draft", "updated": "2026-11-09" },
     { "path": "foundation.md", "title": "Foundation", "order": 3, "icon": "foundation", "type": "page", "status": "draft", "updated": "2026-11-06" },
     { "path": "work-plan.md", "title": "Work plan", "order": 4, "icon": "route", "type": "page", "updated": "2026-11-06" },

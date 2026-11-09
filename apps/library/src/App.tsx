@@ -128,6 +128,8 @@ function renderBlock(block: Block): ReactNode {
       return <BuiltFrom component={block.component} />;
     case 'note':
       return <Note text={block.text} />;
+    case 'code':
+      return <CodeBlock label={block.label} code={block.code} wrap />;
     case 'links':
       return (
         <List

@@ -1,12 +1,19 @@
 {
   "$comment": "One place for links between the library and the Slate docs (DoD Q80, docs/hosting.md). Library pages read it through apps/library/src/data/site-links.ts; tools/publish-site.mjs rewrites `local` to `hosted` in the published docs and checks every pair links both ways. `pairs`: library page id -> Slate doc path (with an optional #anchor).",
-  "local": { "library": "http://127.0.0.1:8766/", "docs": "http://127.0.0.1:8765/" },
-  "hosted": { "library": "https://prabinpebam.github.io/design-library/", "docs": "https://prabinpebam.github.io/design-library/docs/" },
+  "local": {
+    "library": "http://127.0.0.1:8766/",
+    "docs": "http://127.0.0.1:8765/"
+  },
+  "hosted": {
+    "library": "https://prabinpebam.github.io/design-library/",
+    "docs": "https://prabinpebam.github.io/design-library/docs/"
+  },
   "pairs": {
     "overview": "how-it-works.md",
     "motion": "motion.md",
     "materials": "materials.md",
     "elevation": "materials.md",
-    "icon": "visual-representation.md#icons"
+    "icon": "visual-representation.md#icons",
+    "get-started": "get-started.md"
   }
 }

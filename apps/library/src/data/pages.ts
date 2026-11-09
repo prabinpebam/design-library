@@ -8,6 +8,7 @@ import principles from '../../../../packages/core/principles/principles.json';
 import { countsOf, placeOf, statesOf, templates, type Template, type TemplateLayout } from './templates';
 import { templateOf } from '@design-library/templates';
 import { docsHref, docsSource } from './site-links';
+import corePackage from '../../../../packages/core/package.json';
 import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories,  conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, linkStories, navigationStories, segmentedControlStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories, type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/react';
 
 export type Block =
@@ -59,6 +60,8 @@ export type Block =
   /** Rows of short facts under named columns. */
   | { type: 'table'; label: string; columns: { key: string; header: string }[]; rows: Record<string, string>[] }
   | { type: 'note'; text: string }
+  /** Code or a command to copy (Q83 Get started). */
+  | { type: 'code'; label: string; code: string }
   /** Links in a list; `newTab` opens each in a new browser tab (a standalone template, Q63). */
   | { type: 'links'; items: { label: string; href: string; newTab?: boolean }[] }
   /** A JSON template's layout (Q64): the screen in a phone-sized window beside the content file it renders from. */
@@ -130,6 +133,96 @@ export interface PageBlock {
   block: Block;
 }
 
+/** Q83: how to use the library in your own app, short and plain; the full technical version is its Slate page. */
+function getStarted(): Page {
+  const v = corePackage.version;
+  const release = `https://github.com/prabinpebam/design-library/releases/download/v${v}`;
+  return {
+    id: 'get-started',
+    section: 'start',
+    title: 'Get started',
+    summary: 'Use the library in your own React app: install two packages, import the styles once, build screens from components or JSON, then make it yours.',
+    source: docsSource('get-started', 'Every step and command, with troubleshooting: Get started (technical)'),
+    blocks: [
+      {
+        heading: 'What you need',
+        block: {
+          type: 'points',
+          items: [
+            'A React 19 app built with Vite 8. Other bundlers, server rendering and other frameworks aren’t supported yet.',
+            'Node 20.19 or later, with npm 10 or later.',
+            'Nothing else: no account and no package registry. Each version is two files on GitHub, free to use under the MIT licence.',
+          ],
+        },
+      },
+      {
+        heading: 'Install',
+        intro: `Version ${v}: the library and its templates, always together, then React and the build tools.`,
+        block: {
+          type: 'code',
+          label: 'Terminal',
+          code: `npm install ${release}/design-library-core-${v}.tgz ${release}/design-library-templates-${v}.tgz react@^19 react-dom@^19\nnpm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19`,
+        },
+      },
+      {
+        heading: 'Import the styles once',
+        intro: 'At your entry, before anything renders. Every token, context and component style comes with it.',
+        block: { type: 'code', label: 'src/main.tsx', code: "import '@design-library/core/css/index.css';" },
+      },
+      {
+        heading: 'Build a screen',
+        intro: 'From layouts and components, with no styles of your own. Words go in props.',
+        block: {
+          type: 'code',
+          label: 'src/App.tsx',
+          code: "import { Heading, SiteHeader, SiteLayout, Stack, Text } from '@design-library/core/react';\n\nexport function App() {\n  return (\n    <SiteLayout header={<SiteHeader name=\"Harbour Books\" href=\"/\" />}>\n      <Stack gap=\"section\">\n        <Heading level={1}>Books for slow evenings</Heading>\n        <Text>Open a book to read its first chapter.</Text>\n      </Stack>\n    </SiteLayout>\n  );\n}",
+        },
+      },
+      {
+        heading: 'Make it yours',
+        intro: 'Your brand colour, your fonts, your spacing and shape, set once at start-up. Every component follows, in light, dark and more contrast.',
+        block: {
+          type: 'code',
+          label: 'src/look.ts',
+          code: "import { applyBrand, applyFonts } from '@design-library/core/theme';\n\napplyBrand({ colours: { 1: { seed: '#0f766e' } } });\nvoid applyFonts({ preset: 'editorial' });\ndocument.body.dataset.space = 'loose';\ndocument.body.dataset.shape = 'soft';",
+        },
+      },
+      {
+        heading: 'Or start from a template',
+        intro: 'A whole site or app drawn from JSON content. Copy the nearest template into your project and change its words.',
+        block: {
+          type: 'points',
+          items: [
+            'Eight to start from: company site, portfolio, blog, conference, chat, design tool, project management, bookshop.',
+            'Render one with TemplateView from @design-library/core/render.',
+            'Check your content with npx design-library-check-content --templates src/templates.',
+          ],
+        },
+      },
+      {
+        heading: 'Working with an AI agent',
+        intro: 'The package carries its own guide for agents. Add these lines to your project’s AGENTS.md so every agent finds it.',
+        block: {
+          type: 'code',
+          label: 'AGENTS.md',
+          code: "## UI: Design Library\nThis project's UI uses @design-library/core. Before any UI work, read node_modules/@design-library/core/AGENTS.md\nand follow it: its Never rules, the seam ladder, and the task steps in its guide/ folder.",
+        },
+      },
+      {
+        heading: 'Next',
+        block: {
+          type: 'links',
+          items: [
+            { label: 'Get started, the technical version: every step, command and fix', href: docsHref('get-started.md') },
+            { label: `Release ${v} on GitHub`, href: `https://github.com/prabinpebam/design-library/releases/tag/v${v}`, newTab: true },
+            { label: 'How the library works', href: docsHref('how-it-works.md') },
+          ],
+        },
+      },
+    ],
+  };
+}
+
 const foundationSource = { label: 'Why these values: the foundation plan', href: docsHref('foundation.md') };
 
 const base = colourTheme.base;
@@ -180,7 +273,7 @@ function withPrinciples(list: Page[]): Page[] {
 function withDocs(list: Page[]): Page[] {
   return list.map((p) => {
     const source = docsSource(p.id);
-    return source ? { ...p, source } : p;
+    return source && p.source?.href !== source.href ? { ...p, source } : p;
   });
 }
 
@@ -383,6 +476,7 @@ export const pages: Page[] = withDocs(withPrinciples([
     summary: 'The library presenting itself: every token, component and layout rendered live from the code products use, in light, dark and more contrast. Work in progress; nothing is approved yet.',
     blocks: [{ block: { type: 'overview' } }],
   },
+  getStarted(),
   {
     id: 'colour',
     section: 'foundations',

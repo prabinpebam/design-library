@@ -102,6 +102,7 @@ Owner's words, 2026-11-09 07:48 +05:30 ([DoD Q81](definition-of-done.md#owner-in
 | F15.R4 | Consumer theming: C1, C3, C4 (`@design-library/core/theme`) | Done for review (about 09:05) |
 | F15.R5 | B1; push to the public repository (`1a6ac55`), the v0.1.0 release (D2), redeploy | Done for review (about 09:25) |
 | F15.R6 | Proof: a fresh project outside this repository, following only the shipped guide | Done for review (about 09:50): clean run on 0.1.1 |
+| F15.R7 | Q83: Get started in the library and the technical [Get started](get-started.md) in these docs | Done for review (about 10:10) |
 
 ## The proof (F15.R6)
 
