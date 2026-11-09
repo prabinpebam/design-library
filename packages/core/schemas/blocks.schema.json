@@ -1625,6 +1625,7 @@
     },
     "grid": {
       "description": "Blocks in equal columns: slot grid.items, taking the same content blocks as split.",
+      "examples": [{ "type": "grid", "heading": "Ways to visit", "max": 3, "items": [{ "type": "points", "items": ["Open every day from nine"] }, { "type": "points", "items": ["Step-free entrance on the side street"] }, { "type": "points", "items": ["Bicycle racks by the door"] }] }],
       "type": "object",
       "required": ["type", "items"],
       "properties": {
@@ -1638,6 +1639,7 @@
     },
     "alert": {
       "description": "A message about the screen or a part of it: what happened and what to do, in its tone. Errors that block the person, a warning before something lasting, a success that needs no page of its own.",
+      "examples": [{ "type": "alert", "tone": "warning", "title": "Your changes aren’t saved yet", "text": "Save before you leave this page, or they’ll be lost." }],
       "type": "object",
       "required": [
         "type",
@@ -1709,6 +1711,7 @@
     },
     "empty": {
       "description": "A list, search or place with nothing in it yet: why it's empty and what to do, in the content's own place.",
+      "examples": [{ "type": "empty", "reason": "first-use", "title": "No saved items yet", "text": "Save something you want to come back to and it appears here.", "silhouette": "list" }],
       "type": "object",
       "required": [
         "type",

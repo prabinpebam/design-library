@@ -40,6 +40,7 @@
     "./probes/*": "./probes/*"
   },
   "bin": {
+      "design-library-blocks": "./tools/blocks.mjs",
     "design-library-check-content": "./tools/check-content.mjs",
     "design-library-check": "./tools/check-project.mjs",
     "design-library-new-template": "./tools/new-template.mjs",

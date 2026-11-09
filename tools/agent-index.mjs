@@ -242,6 +242,35 @@ for (const [id, def] of Object.entries(blocksSchema.$defs)) {
   else valueTypes.push({ name: id, shape: shapeOf(def), ...(def.description ? { description: def.description } : {}) });
 }
 
+// Examples (DP10): each core block's schema `examples`, else the smallest real use (two or more fields first) in a shipped
+// template's content or site (references, item values, bindings and derived values left out, so it reads alone).
+const coreTypes = new Set(blocks.map((b) => b.type));
+const uses = new Map();
+const jsonFiles = (dir) => (existsSync(dir) ? readdirSync(dir, { withFileTypes: true }).flatMap((d) => (d.isDirectory() ? jsonFiles(join(dir, d.name)) : d.name.endsWith('.json') && !d.name.includes('schema') ? [join(dir, d.name)] : [])).sort() : []);
+for (const id of templateIds)
+  for (const file of [...jsonFiles(join(templatesDir, id, 'content')), ...jsonFiles(join(templatesDir, id, 'site'))]) {
+    const visit = (v) => {
+      if (Array.isArray(v)) return v.forEach(visit);
+      if (!v || typeof v !== 'object') return;
+      if (coreTypes.has(v.type)) {
+        const text = JSON.stringify(v);
+        const list = uses.get(v.type) ?? [];
+        list.push({ template: id, file: `@design-library/templates/${id}/${relative(join(templatesDir, id), file).split('\\').join('/')}`, text, plain: !/"(ref|item|from|derived)":/.test(text), rich: Object.keys(v).length > 2 });
+        uses.set(v.type, list);
+      }
+      Object.values(v).forEach(visit);
+    };
+    visit(json(file));
+  }
+for (const b of blocks) {
+  const def = blocksSchema.$defs[b.schema.split('/').pop()];
+  const found = uses.get(b.type) ?? [];
+  const best = found.filter((u) => u.plain).sort((x, y) => Number(y.rich) - Number(x.rich) || x.text.length - y.text.length)[0];
+  if (def?.examples?.[0]) Object.assign(b, { example: def.examples[0], exampleFrom: 'schema' });
+  else if (best) Object.assign(b, { example: JSON.parse(best.text), exampleFrom: best.file });
+  b.usedBy = [...new Set(found.map((u) => u.template))].sort();
+}
+
 // Layouts content may name: core bindings in the renderer, then each template's own.
 const tv = read(join(core, 'render/TemplateView.tsx'));
 const coreLayouts = [...(/export const LAYOUTS[^=]*=\s*\{([\s\S]*?)\n\};/.exec(tv)?.[1] ?? '').matchAll(/^ {2}(\w+):/gm)].map((m) => m[1]);
@@ -268,7 +297,17 @@ const templates = templateIds.map((id) => {
       site: `${LIBRARY}site.html#/app/${id}/${l.id}`,
     })),
     planned: (m.layouts ?? []).filter((l) => l.planned).length,
-    parts: m.parts ?? {},
+    // A part placed as a block (DP10, DP18) carries its one-line purpose from the template's content schema.
+    parts: (() => {
+      const parts = structuredClone(m.parts ?? {});
+      const schemaFile = join(templatesDir, id, 'content.schema.json');
+      const schema = existsSync(schemaFile) ? json(schemaFile) : {};
+      for (const b of parts.blocks ?? []) {
+        const def = String(b.schema ?? '').startsWith('#/$defs/') ? schema.$defs?.[b.schema.slice('#/$defs/'.length)] : undefined;
+        if (def?.description && !b.description) b.description = def.description;
+      }
+      return parts;
+    })(),
   };
 });
 
@@ -309,6 +348,8 @@ const consumerCommands = {
   'template:new': 'npx design-library-new-template <id> --templates src/templates',
   'template:tokens': 'npx design-library-template-tokens --templates src/templates',
   review: 'npx design-library-review <url>',
+  blocks: 'npx design-library-blocks "<the need>"',
+  'site:types': 'npx design-library-types',
   typecheck: 'npx tsc --noEmit',
   build: 'npx vite build',
 };

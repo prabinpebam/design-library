@@ -10,6 +10,7 @@ import { templateOf } from '@design-library/templates';
 import { partRoute } from '@design-library/core/render';
 import { docsHref, docsSource } from './site-links';
 import corePackage from '../../../../packages/core/package.json';
+import { blocks as registryBlocks, templates as registryTemplates } from '../../../../packages/core/agent/index.json';
 import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories,  conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, themeStories, fontsStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, linkStories, navigationStories, segmentedControlStories, schemeControlStories, tableOfContentsStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories, type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/react';
 
 export type Block =
@@ -497,6 +498,30 @@ const componentPage = (file: StoryFile): Page => {
     blocks: [{ heading: 'Examples', minor: true, block: { type: 'stories', file } }, ...contract(file.component)],
   };
 };
+/** DP10: the block registry (the agent index), the same list `npx design-library-blocks` searches. */
+type RegistryField = { name: string; required?: boolean };
+const fieldList = (fields: RegistryField[]) => {
+  const needed = fields.filter((f) => f.required).map((f) => f.name);
+  const optional = fields.filter((f) => !f.required).map((f) => f.name);
+  return [needed.join(', '), optional.length ? `optional: ${optional.join(', ')}` : ''].filter(Boolean).join('; ');
+};
+const templateTitle = (id: string) => registryTemplates.find((t) => t.id === id)?.title ?? id;
+const registryRows = () =>
+  registryBlocks.map((b) => ({
+    block: b.type,
+    purpose: b.description,
+    fields: fieldList(b.fields as RegistryField[]),
+    used: b.usedBy.length ? b.usedBy.map(templateTitle).join(', ') : 'Not yet in a template',
+  }));
+const partRows = () =>
+  registryTemplates.flatMap((t) =>
+    ((t.parts as { blocks?: { type: string; description?: string; renders?: string }[] }).blocks ?? []).map((b) => ({
+      block: b.type,
+      purpose: b.description ?? `Draws ${b.renders ?? b.type}.`,
+      template: t.title,
+    })),
+  );
+
 /** IP16 (F10, F15, F50, N10, N11): the needs brand-led sites rebuilt as custom parts, each met by a core part. */
 function coreFirst(): Page {
   const needs: [string, string, string, string, string][] = [
@@ -530,6 +555,35 @@ function coreFirst(): Page {
             { key: 'cant', header: 'It can’t' },
           ],
           rows: needs.map(([need, part, can, cant]) => ({ need, part, can, cant })),
+        },
+      },
+      {
+        heading: 'Blocks a page document can place',
+        intro: 'Every core block, what it’s for, its fields and the templates that use it. To search this list from a terminal, run npx design-library-blocks with the need in quotes, such as “a list of people with photos”.',
+        block: {
+          type: 'table',
+          label: 'Core blocks',
+          columns: [
+            { key: 'block', header: 'Block' },
+            { key: 'purpose', header: 'What it’s for' },
+            { key: 'fields', header: 'Fields' },
+            { key: 'used', header: 'In use in' },
+          ],
+          rows: registryRows(),
+        },
+      },
+      {
+        heading: 'Template parts placed as blocks',
+        intro: 'A template’s own part, placed the same way. Use one only when no core block fits.',
+        block: {
+          type: 'table',
+          label: 'Template parts',
+          columns: [
+            { key: 'block', header: 'Block' },
+            { key: 'purpose', header: 'What it’s for' },
+            { key: 'template', header: 'Template' },
+          ],
+          rows: partRows(),
         },
       },
       {
