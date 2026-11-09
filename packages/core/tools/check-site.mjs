@@ -184,6 +184,18 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
   const siteData = { pages: pages.map((p) => p.doc), collections: Object.fromEntries(Object.entries(byCollection).map(([k, c]) => [k, c.doc])) };
   // Derived values (DP14), worked out as `loadSite` does; a derivation that finds nothing is reported on site.json.
   if (lib?.deriveValues) siteData.derived = lib.deriveValues(site.derive, siteData, { missing: (what, path) => fail(files.site, `/${path.replace(/\./g, '/')}`, what, 'name a collection the site has') });
+  // Each derivation's `field` and `where` fields are fields its collection's items have (the first step of a dotted path).
+  for (const [name, d] of Object.entries(site.derive ?? {})) {
+    if (!isObject(d)) continue;
+    const coll = byCollection[d.count ?? d.distinct ?? d.group];
+    if (!coll) continue;
+    const known = new Set([...Object.keys(coll.doc.item?.properties ?? {}), ...(coll.doc.items ?? []).flatMap((it) => (isObject(it) ? Object.keys(it) : []))]);
+    const has = (path) => known.has(String(path).split('.')[0]);
+    const at = `/derive/${name.replace(/~/g, '~0').replace(/\//g, '~1')}`;
+    const fix = `use a field the items of "${coll.doc.id}" have: ${[...known].join(', ') || '(none)'}`;
+    if (d.field !== undefined && !has(d.field)) fail(files.site, `${at}/field`, `"${d.field}" isn't a field of the items in "${coll.doc.id}"`, fix);
+    for (const key of Object.keys(isObject(d.where) ? d.where : {})) if (!has(key)) fail(files.site, `${at}/where/${key}`, `"${key}" isn't a field of the items in "${coll.doc.id}", so nothing would match`, fix);
+  }
   const coreTypes = new Set(Object.entries(schemas.blocks.$defs).filter(([, d]) => d.properties?.type?.const).map(([k]) => k));
   const blockSchema = (type) => (coreTypes.has(type) ? strict.getSchema(`https://design-library.local/core/blocks/1#/$defs/${type}`) : undefined);
   // Where a block's values came from a reference, an item value or a binding: the renderer passes those items whole
@@ -205,6 +217,9 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
     const skip = (e) => (e.keyword === 'pattern' && /\/href$/.test(e.instancePath)) || (e.keyword === 'additionalProperties' && inData(e.instancePath));
     const v = blockSchema(b.type);
     if (v && !v(b)) report(file, v, at, skip);
+    // A type that is neither core nor a template's namespaced one draws nothing (the renderer leaves the section out).
+    else if (!v && !String(b.type ?? '').includes('.'))
+      fail(file, `${at}/type`, b.type === undefined ? 'has no "type"' : `"${b.type}" isn't a block type`, `use a core type (${[...coreTypes].join(', ')}) or a template's namespaced one (template.part)`);
     for (const [field, accepts] of Object.entries(slots[b.type] ?? {})) {
       const held = b[field];
       (Array.isArray(held) ? held : []).forEach((inner, i) => {
