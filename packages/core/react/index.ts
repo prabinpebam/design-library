@@ -94,6 +94,8 @@ export type { FileUploadProps, UploadItem } from './compounds/FileUpload';
 export { notify, dismissNotification } from './behaviour/notify';
 export type { NotificationInput, NotificationTone, NotificationAction } from './behaviour/notify';
 export { announce } from './behaviour/announce';
+export { useFilter, useDebouncedValue, matchText, filterDelay } from './behaviour/filter';
+export type { FilterOptions, Filtered } from './behaviour/filter';
 export { flip, boxOf, cancelFlip, durationOf, useSlidingIndicator } from './behaviour/flip';
 export type { FlipBox } from './behaviour/flip';
 export { usePresence, exitDuration } from './behaviour/presence';

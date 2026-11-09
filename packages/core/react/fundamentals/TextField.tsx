@@ -160,8 +160,9 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
 
   useEffect(() => {
     setStored(value);
-    if (document.activeElement !== input.current) setDraft(value);
-  }, [value]);
+    // In a form the value is the parent's: follow it even while focused (a Clear button beside a filter).
+    if (form || document.activeElement !== input.current) setDraft(value);
+  }, [value, form]);
 
   // The shortcut key focuses the field from anywhere, unless the person is typing somewhere else.
   useEffect(() => {
@@ -340,7 +341,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
   );
 
   return (
-    <span {...data} data-dl="text-field" data-size={size} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
+    <span {...data} data-dl="text-field" data-size={size} data-clearable={clearable ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
       <Field
         label={label}
         hint={hint}

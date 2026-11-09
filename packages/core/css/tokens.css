@@ -162,6 +162,7 @@
   --duration-indicator-min: 500ms;
   --duration-hint-delay: 500ms;
   --duration-commit-pause: 500ms;
+  --duration-filter-delay: 250ms;
   --duration-repeat-delay: 400ms;
   --duration-repeat: 60ms;
   --duration-notice: 6000ms;

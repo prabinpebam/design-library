@@ -6,6 +6,8 @@ import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
 import { TextField, type TextFieldProps } from '../fundamentals/TextField';
+import { EmptyState } from '../compounds/EmptyState';
+import { useFilter } from '../behaviour/filter';
 import type { StoryFile } from './story';
 
 /** A field backed by a save that takes `ms` and either stores the value or fails. */
@@ -98,6 +100,31 @@ function LiveFilter() {
         {shown.length === walks.length ? `${walks.length} walks` : `${shown.length} of ${walks.length} walks`}
       </Text>
       <List items={shown.map((w) => ({ id: w, content: w }))} />
+    </Stack>
+  );
+}
+
+/** IP29: the list narrows after a pause in typing and says its count once, politely, when it settles. */
+const talks = ['Designing for slow networks', 'Type on small screens', 'Colour that holds in dark mode', 'Forms people finish', 'Maps without the clutter', 'Motion that respects the reader', 'Writing error messages', 'Charts on a phone', 'Search that forgives typos', 'Accessible tables', 'Café menus as interfaces', 'Night mode for reading'];
+
+function FilterAsYouType() {
+  const [query, setQuery] = useState('');
+  const { shown, status, query: settled } = useFilter(talks, query, { count: (n, all) => (n === all ? `${all} talks` : `${n} of ${all} talks`) });
+  return (
+    <Stack gap="group">
+      <Stack gap="item">
+        <TextField label="Find a talk" type="search" icon="search" mode="form" value={query} onChange={setQuery} placeholder="screens" clearable />
+        <Text variant="body-sm" tone="muted">
+          {status}
+        </Text>
+      </Stack>
+      {shown.length ? (
+        <List items={shown.map((t) => ({ id: t, content: t }))} />
+      ) : (
+        <EmptyState reason="no-results" scope="component" headingLevel={3} title={`No talks match “${settled}”`} actions={<Button label="Clear the search" onClick={() => setQuery('')} />}>
+          Try one word, or fewer letters.
+        </EmptyState>
+      )}
     </Stack>
   );
 }
@@ -318,6 +345,21 @@ export default {
       description: 'onChange runs on every keystroke, so a list narrows while the person types; with mode="form" nothing is saved and nothing announces. The count under the field says how many are left.',
       code: `<TextField label="Find a walk" type="search" icon="search" mode="form" value={query} onChange={setQuery} clearable />`,
       render: () => <LiveFilter />,
+    },
+    {
+      title: 'Filter as you type',
+      description: 'useFilter narrows the list after a short pause in typing (the filter-delay token, 250 ms), matching every word and ignoring case and accents. The count under the field is said once, politely, when the list settles; clearing brings everything back at once. No results: an EmptyState in the list’s place with a way out.',
+      code: `const [query, setQuery] = useState('');
+const { shown, status } = useFilter(talks, query, { count: (n, all) => (n === all ? \`\${all} talks\` : \`\${n} of \${all} talks\`) });
+
+<Stack gap="group">
+  <Stack gap="item">
+    <TextField label="Find a talk" type="search" icon="search" mode="form" value={query} onChange={setQuery} clearable />
+    <Text variant="body-sm" tone="muted">{status}</Text>
+  </Stack>
+  <List items={shown.map((t) => ({ id: t, content: t }))} />
+</Stack>`,
+      render: () => <FilterAsYouType />,
     },
     {
       title: 'In a form',

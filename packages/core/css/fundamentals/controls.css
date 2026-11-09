@@ -781,6 +781,11 @@
     color: var(--color-text-muted);
   }
 
+  /* A clearable search field has the library's Clear button; the browser's own cancel mark would be a second cue. */
+  [data-dl='text-field'][data-clearable] input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
 
   [data-dl='text-field'] [data-dl-part='trailing'] {
     display: inline-flex;
