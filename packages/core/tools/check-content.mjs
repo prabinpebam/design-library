@@ -17,7 +17,8 @@
  * its manifest do.
  *
  * Content outside templates (IP39, DP7): `--content <folder>` (repeatable) checks every .json file under it that names
- * a `$schema` against that schema: a path relative to the file, a core schema's $id, or a template's content $id.
+ * a `$schema` against that schema: a path relative to the file, a core schema's $id or hosted address
+ * (https://prabinpebam.github.io/design-library/schemas/{name}/{version}.json, DP5), or a template's content $id.
  * Values not yet confirmed (DP4): `{ "unconfirmed": "speaker" }` in any core text field is counted by file; its key needs
  * a phrase in the template's shared file (`strings.unconfirmed`); `--release` fails while any remain.
  * Template-aware warnings (they don't fail the run during the Beta, Q105.3; `--strict` makes them fail): a part file
@@ -328,6 +329,7 @@ for (const id of folders) {
 
 // Any folder of content files that name a `$schema` (DP7): a site's own content outside templates gets the same check.
 const metaSchema = /^https?:\/\/json-schema\.org\//;
+const hostedSchema = /^https:\/\/prabinpebam\.github\.io\/design-library\/schemas\/([a-z]+)\/(\d+)\.json/;
 const coreIds = new Map(Object.values(schemas).map((s) => [s.$id, s.$id]));
 const walkJson = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? (e.name === 'node_modules' || e.name.startsWith('.') ? [] : walkJson(join(d, e.name))) : e.name.endsWith('.json') ? [join(d, e.name)] : []));
 for (const d of contentDirs) {
@@ -343,7 +345,9 @@ for (const d of contentDirs) {
       fail(file, '/', `isn't valid JSON (${e.message})`, 'fix the syntax; content is pure JSON');
       continue;
     }
-    const ref = data && typeof data === 'object' && !Array.isArray(data) ? data.$schema : undefined;
+    const written = data && typeof data === 'object' && !Array.isArray(data) ? data.$schema : undefined;
+    // A hosted schema address (DP5) is the same schema as the package's copy.
+    const ref = typeof written === 'string' ? written.replace(hostedSchema, (_, n, v) => `https://design-library.local/core/${n}/${v}`) : written;
     if (typeof ref !== 'string' || metaSchema.test(ref)) continue;
     let id = coreIds.get(ref.split('#')[0]) ?? (ajv.getSchema(ref.split('#')[0]) ? ref.split('#')[0] : undefined);
     if (!id && !/^[a-z]+:/i.test(ref)) {

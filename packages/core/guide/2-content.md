@@ -51,7 +51,19 @@ Pick the shape for each layout:
 5. **Shared regions** (a site's header and footer) go once in `content/shared.json` with `"shared": true` in place of `"layout"`, never in each page.
    **A value not yet confirmed** (a speaker, a room) is `{ "unconfirmed": "speaker" }` in any core text field, never a made-up value or a fallback in code. Its phrase is written once in the shared file, `"strings": { "unconfirmed": { "speaker": "Speaker to confirm" } }`, and the renderer shows it wherever the value goes. The check lists how many remain in each file; `--release` fails while any do.
 6. **Run `npx design-library-check-content --templates src/templates`** (library repository: `npm run check:content`) and fix every line it prints (`file · /json/pointer · what's wrong · how to fix`).
-7. **Content outside a template** (a site's own pages, talks or settings in JSON): give each file a `$schema` (a path relative to the file, or a core schema `$id`) and add `--content src/content` (repeat it for each folder). Every file under it that names a `$schema` is checked against it, with the same no-markup rule; files without one are skipped. Add `--src src` to also warn when a template's screens are never rendered (no file imports the template, or none uses `TemplateView`). Warnings don't fail the run during the Beta; `--strict` makes them fail.
+7. **Content outside a template** (a site's own pages, talks or settings in JSON): give each file a `$schema` (a path relative to the file, a core schema `$id`, or a core schema's hosted address) and add `--content src/content` (repeat it for each folder). Every file under it that names a `$schema` is checked against it, with the same no-markup rule; files without one are skipped. Add `--src src` to also warn when a template's screens are never rendered (no file imports the template, or none uses `TemplateView`). Warnings don't fail the run during the Beta; `--strict` makes them fail.
+
+   **Editors complete and check as you type** when `$schema` names a schema they can fetch. Each core schema has a stable versioned address, `https://prabinpebam.github.io/design-library/schemas/{name}/{version}.json` (`blocks`, `content`, `template`, `assets`); point at one block's shape with `#/$defs/{type}`:
+
+   ```json
+   {
+     "$schema": "https://prabinpebam.github.io/design-library/schemas/blocks/1.json#/$defs/hero",
+     "type": "hero",
+     "title": "Two days on interfaces that explain themselves"
+   }
+   ```
+
+   Offline, use the package's copy instead: `"$schema": "../node_modules/@design-library/core/schemas/blocks.schema.json#/$defs/hero"`. The content check reads both as the same schema.
 
 ## Write a template's content schema
 

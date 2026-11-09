@@ -6,6 +6,10 @@
  *   node ./tools/publish-site.mjs            check the pairs, build, assemble .publish/
  *   node ./tools/publish-site.mjs --check    check the pairs only
  *   node ./tools/publish-site.mjs --push     also commit .publish/ and force-push it to the gh-pages branch of origin
+ *
+ * Schema addresses (DP5): each core schema is also published at schemas/{name}/{version}.json, its `$id` (and any
+ * reference to another core schema) rewritten to that address, so a content file's `$schema` gives an editor
+ * completion and checking. The package's own copies keep their ids; the content check accepts both.
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
@@ -54,6 +58,19 @@ for (const file of walk(out)) {
     rewritten++;
   }
 }
+// Schema addresses (DP5): one file per core schema and version.
+const coreId = /https:\/\/design-library\.local\/core\/([a-z]+)\/(\d+)/g;
+const schemaDir = join(root, 'packages/core/schemas');
+let schemas = 0;
+for (const name of readdirSync(schemaDir).filter((n) => n.endsWith('.schema.json'))) {
+  const text = readFileSync(join(schemaDir, name), 'utf8');
+  const m = /\/core\/([a-z]+)\/(\d+)$/.exec(JSON.parse(text).$id ?? '');
+  if (!m) continue;
+  mkdirSync(join(out, 'schemas', m[1]), { recursive: true });
+  writeFileSync(join(out, 'schemas', m[1], `${m[2]}.json`), text.replace(coreId, (_, n, v) => `${links.hosted.library}schemas/${n}/${v}.json`));
+  schemas++;
+}
+console.log(`Schemas at ${links.hosted.library}schemas/{name}/{version}.json: ${schemas}.`);
 writeFileSync(join(out, '.nojekyll'), '');
 console.log(`Assembled ${relative(root, out)}: ${walk(out).length} files, local links rewritten in ${rewritten}.`);
 

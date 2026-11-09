@@ -11,6 +11,7 @@
 | `https://prabinpebam.github.io/design-library/` | The library (`index.html`, hash routes `#/page`) | `apps/library` with Vite, `base: './'` |
 | `…/design-library/site.html#/app/<template>/<layout>` | Template sites opened in their own tab | Same build (second entry) |
 | `…/design-library/docs/` | These docs (`#page.md`, `#page.md#anchor`) | The `docs` host as it is |
+| `…/design-library/schemas/{name}/{version}.json` | Each core schema at a stable versioned address (`blocks`, `content`, `template`, `assets`; DP5), for `$schema` in content files; a new version is a new file, never a changed one | `packages/core/schemas/*.schema.json`, `$id` rewritten to the address by `tools/publish-site.mjs` |
 
 - **Relative base.** The library builds with `base: './'`, so assets resolve under any sub-path; links inside it are relative (`site.html#…`, `diagnostic.html`), never root-absolute.
 - **Hash routing** on both sites: GitHub Pages serves only files, and every route lives after `#`, so deep links work without a `404.html` fallback.
