@@ -14,8 +14,10 @@
  * ScrollArea's own stylesheet, and in a region listed in `scrollRegions` whose own controls replace the bar (it carries
  * `data-scrollbar="none"`, e.g. Carousel's track). Anything else draws the browser's bar beside the content and fails
  * with the fix: wrap the region in ScrollArea. Checked in core, library, template and example stylesheets, and in
- * inline styles in their TSX. In the browser, tools/scroll-probe.js flags any element that scrolls outside a
- * ScrollArea (docs/scrolling.md).
+ * inline styles in their TSX. A screen shown in a frame is a region too (Q109): a raw `<iframe>` in that TSX fails
+ * with the fix: show it with ScreenPreview, which gives the framed document the library's bar. In the browser,
+ * tools/scroll-probe.js flags any element that scrolls outside a ScrollArea, in the page and inside its frames
+ * (docs/scrolling.md).
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -69,11 +71,20 @@ export function clips() {
     }
   }
   // Inline styles in components, templates and the library (Q96): no scroll region outside ScrollArea there either.
+  // A screen in a frame (Q109): its document is a region of the page, and only ScreenPreview gives it the library's bar.
+  const FRAME_HOME = 'packages/core/react/compounds/ScreenPreview.tsx';
+  /** Frames that hold no scrolling document, each with its reason. */
+  const FRAMES = [{ file: 'packages/core/react/compounds/MediaPlayer.tsx', reason: "a video host's player, sized to the video's ratio; it plays, it never scrolls" }];
   for (const file of ['packages/core/react', 'packages/templates', 'apps/library/src', 'apps/example/src'].flatMap((d) => walk(d, '.tsx'))) {
     const text = readFileSync(join(ROOT, file), 'utf8');
     for (const m of text.matchAll(/overflow(?:X|Y|Block|Inline)?\s*:\s*['"`](?:auto|scroll)['"`]/g)) {
       const line = text.slice(0, m.index).split('\n').length;
       problems.push(`${file}:${line}: an inline scroll region (${m[0]}) draws the browser's scrollbar: wrap the region in ScrollArea instead`);
+    }
+    if (file === FRAME_HOME || FRAMES.some((f) => f.file === file)) continue;
+    for (const m of text.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, (c) => c.replace(/[^\n]/g, ' ')).matchAll(/<iframe\b/g)) {
+      const line = text.slice(0, m.index).split('\n').length;
+      problems.push(`${file}:${line}: a raw <iframe> scrolls its document with the browser's scrollbar: show the screen with ScreenPreview (${FRAME_HOME}), which gives the framed document the library's bar`);
     }
   }
   for (const a of [...ALLOWED, ...SCROLL_REGIONS]) if (!used.has(a)) problems.push(`${a.file}: listed ${a.selector} no longer clips; remove it from the list`);

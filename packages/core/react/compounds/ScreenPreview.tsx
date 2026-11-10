@@ -1,4 +1,17 @@
+import type { SyntheticEvent } from 'react';
 import type { DataAttributes } from '../types';
+
+/**
+ * The framed screen is a region of the page around it, so its document scrolls with the library's bar, never the
+ * browser's (Q109): mark its root and scroll-area.css draws the library's thin bar on it. Same-origin screens only.
+ */
+const markFramed = (e: SyntheticEvent<HTMLIFrameElement>) => {
+  try {
+    e.currentTarget.contentDocument?.documentElement.setAttribute('data-dl-framed', '');
+  } catch {
+    // A screen from another origin can't be reached; ScreenPreview isn't for third-party content.
+  }
+};
 
 export interface ScreenPreviewProps extends DataAttributes {
   /** The screen to show: an address in this app that renders it on its own, e.g. "#/app/corporate". */
@@ -23,7 +36,7 @@ export interface ScreenPreviewProps extends DataAttributes {
 export function ScreenPreview({ src, title, width = 'fill', caption, ...data }: ScreenPreviewProps) {
   return (
     <figure {...data} data-dl="screen-preview" data-width={width}>
-      <iframe src={src} title={title} loading="lazy" data-dl-part="frame" />
+      <iframe src={src} title={title} loading="lazy" data-dl-part="frame" onLoad={markFramed} />
       {caption && <figcaption data-dl-part="caption">{caption}</figcaption>}
     </figure>
   );

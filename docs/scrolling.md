@@ -32,6 +32,26 @@ How every scroll region in the Design library scrolls, why the AI chat template 
 
 **Fixed (Q96.1):** each region is now a `ScrollArea` placed where it meets its surface's edge, with its padding moved to its content: ChatLayout (sidebar list, conversation), AppLayout (sidebar, view), Dialog and Sheet bodies, Canvas (both axes, its viewport is the named region), Board (across), Carousel's thumbnail row, AvatarGroup's list (also losing its padding inside padding), and FloatingBar, which now moves its padding onto a scrolling child so the editor's tools bar reaches the pill's edge. TextArea, which can't be wrapped because its text is the scroller, takes the library's thin bar in the library's colours from `scroll-area.css`, the only stylesheet allowed to style a bar. Behaviour kept: the chat stays pinned to the newest message, "Jump to newest" appears when scrolled away, and the sidebar footer's hairline shows only while the list runs under it.
 
+## What went wrong (Q109)
+
+**What the owner saw (2026-11-10):** the Typography page's two screen demos ("A brand's own faces": Harbour's home with a site-supplied display face, Corporate's home with label and numeral roles) scrolled with the browser's own 10 px bar, not the library's.
+
+**Which region:** the document inside each `ScreenPreview` frame. A ScreenPreview shows a whole screen (`site.html#/app/…`) in an `iframe`; the screen's page is taller than the frame, so the framed document scrolls, and a document scrolls with the browser's bar. The same held for every ScreenPreview in the library: every template layout's page (the screen, the narrow window, each state), the Colour, Layout, Routing and Site pages, and the parts demos.
+
+**Why the checklist, the check and the probe all missed it:**
+
+1. **The rule exempted it by wording.** SB1 and the probe said "the document itself is the only other scroller". That's right for the page a person opens, but a framed document is a region of the page around it, and nothing said so; the exemption covered it.
+2. **The probe never looked inside a frame.** `scroll-probe.js` walked the elements of one document; an `iframe` is one element with no overflow of its own, so the scrolling inside it was invisible. On the Typography page it reported 6 regions and no failures.
+3. **The static check can't see a document's scroll.** Nothing in the source says `overflow: auto`: a document scrolls by default. `check:clipping` looked for written scroll styles only, so a frame passed.
+4. **The sweep ran on screens one at a time.** Q96's sweep probed all 168 template layouts on their own (where the document's own bar is right) and the 265 library pages without their frames' insides, so a screen shown inside a page was never judged as a region of it.
+
+**Fixed (Q109.1):** at the seam that shows a screen in a frame. `ScreenPreview` marks the framed document's root `data-dl-framed` when it loads (same origin only; ScreenPreview isn't for third-party content), and `scroll-area.css`, the one stylesheet allowed to style a bar, gives a framed document the library's thin bar in the library's colours, as a TextArea's text has. The same screen opened on its own keeps the document's own bar. Before: a 10 px browser bar in both Typography demos; after: the 6 px library bar.
+
+**The gap closed (Q109.2):**
+
+- **Probe:** `scroll-probe.js` now descends into every same-origin frame, judges SB1–SB5 inside it (findings are prefixed with the frame's title), and adds **SB9**: a framed document takes the library's bar. A frame not loaded yet (lazy, far from view) is listed in `unloaded`, never passed silently. Before the fix it failed SB9 on both Typography frames; after, it passes.
+- **Static:** `check:clipping` fails any `<iframe>` in core, library, template or example TSX outside `ScreenPreview` ("show the screen with ScreenPreview, which gives the framed document the library's bar"). One frame is listed with its reason: MediaPlayer's video-host player, sized to the video, which never scrolls. A planted `<iframe>` in `apps/library/src` failed the check; it was removed and the check passes.
+
 ## Part 1: the framework
 
 ### The rules
@@ -46,6 +66,7 @@ How every scroll region in the Design library scrolls, why the AI chat template 
 8. **Name a region nothing inside can focus.** Give it `label`, so it becomes a named, focusable region that scrolls with the keys.
 9. **A control that scrolls its own text** (a TextArea) keeps the browser's scrolling and takes the library's thin bar in the library's colours; a TextArea that grows with its text (`grow`) scrolls only past its largest size.
 10. **Forced colours and touch screens** get the system's own bar back; that's ScrollArea's job, never a region's.
+11. **A screen shown in a frame is a region of the page** (Q109). Show it with `ScreenPreview`, never a raw `iframe`: its document then scrolls with the library's thin bar. Only the top document, the page a person opened, keeps its own bar.
 
 ### Choosing
 
@@ -63,14 +84,15 @@ Each row passes or fails on a measurement. **DOM** rows are measured by [`tools/
 
 | ID | Passes when | How | Severity |
 | --- | --- | --- | --- |
-| SB1 | Every element that can scroll is a ScrollArea's viewport, or a listed region whose own controls replace the bar (`data-scrollbar="none"`); the document is the only other scroller | DOM | S2 |
-| SB2 | No element but the document draws the browser's bar (one that takes width or height from the content) | DOM | S2 |
+| SB1 | Every element that can scroll, in the page and inside every frame in it, is a ScrollArea's viewport, or a listed region whose own controls replace the bar (`data-scrollbar="none"`); the top document is the only other scroller | DOM | S2 |
+| SB2 | No element but the top document draws the browser's bar (one that takes width or height from the content) | DOM | S2 |
 | SB3 | A ScrollArea that fills its region (no surface of its own) reaches the region's edge on the side its bar sits: the inline end for a region that scrolls down, the block end for one that scrolls across | DOM | S2 |
 | SB4 | No scroll box carries padding of its own; its padding is on the content inside | DOM | S3 |
 | SB5 | A control that scrolls its own text (TextArea) uses the library's thin bar in the library's colours | DOM | S2 |
-| SB6 | No `overflow: auto` or `scroll` outside `scroll-area.css` and the listed barless regions, in core, library, template or example CSS or inline TSX styles; no scrollbar styling outside `scroll-area.css` | static: `npm run check:clipping` | S2 |
+| SB6 | No `overflow: auto` or `scroll` outside `scroll-area.css` and the listed barless regions, in core, library, template or example CSS or inline TSX styles; no scrollbar styling outside `scroll-area.css`; no `<iframe>` outside ScreenPreview and the listed non-scrolling players | static: `npm run check:clipping` | S2 |
 | SB7 | A focused item at a region's edge shows its whole ring | DOM: [`tools/clipping-probe.js`](https://github.com/prabinpebam/design-library/blob/main/tools/clipping-probe.js) | S1 |
 | SB8 | The wheel scrolls the page at a region's end, except in a popup or modal | look: scroll to a region's end with the wheel | S2 |
+| SB9 | A document shown in a frame (ScreenPreview) takes the library's thin bar in the library's colours; no frame is left unprobed (`unloaded` is empty once every frame has been scrolled near) | DOM | S2 |
 
 ### How to run it
 
@@ -84,6 +106,12 @@ result.regions; // every scroller: 'chat-layout.scroll overflowing', 'textarea',
 `npm run check` runs SB6 with every other static check.
 
 ## Results
+
+### F15.SB2 (2026-11-10 about 08:20, owner Q109)
+
+- **Typography:** both screen demos drew the browser's 10 px bar before; after, the library's 6 px thin bar. The probe failed SB9 on both frames before the fix and passes after.
+- **Static:** a planted `<iframe>` in `apps/library/src` failed `npm run check:clipping`; removed, the check passes. `npm run check`, the type check and the library build pass.
+- **Sweep:** all 269 library pages at 1000 and 320 px, light and dark, with every framed screen loaded and probed inside (1,076 page probes, 1,388 framed screens, 10,372 scroll regions): no SB1–SB5 or SB9 row fails, no frame left unprobed. Template layouts are covered through their library pages' frames.
 
 ### F15.SB1 (2026-11-09 about 12:35, owner Q96)
 

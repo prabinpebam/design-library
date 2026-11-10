@@ -199,6 +199,20 @@
     scrollbar-color: var(--c-scroll-area-colour-active) transparent;
   }
 
+  /*
+   * A screen shown in a frame (ScreenPreview marks its document `data-dl-framed`) is a region of the page around it:
+   * its document scrolls with the library's thin bar in the library's colours, like a TextArea, never the browser's
+   * default bar (Q109). The same screen opened on its own keeps the document's own bar.
+   */
+  :root[data-dl-framed] {
+    scrollbar-width: thin;
+    scrollbar-color: var(--c-scroll-area-colour) transparent;
+  }
+
+  :root[data-dl-framed]:hover {
+    scrollbar-color: var(--c-scroll-area-colour-active) transparent;
+  }
+
   /* Touch screens draw their own overlay bar while scrolling: keep it, and draw none. */
   @media (hover: none) and (pointer: coarse) {
     [data-dl='scroll-area'] > [data-dl-part='viewport'] {
