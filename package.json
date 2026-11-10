@@ -34,6 +34,7 @@
     "agent:index:check": "node ./tools/agent-index.mjs --check",
     "check:names": "node ./tools/check-names.mjs",
     "check:generic": "node ./tools/check-generic.mjs",
+    "check:template-contrast": "node ./tools/check-template-contrast.mjs",
     "colour:types": "tsc packages/core/colour/index.mjs --allowJs --declaration --emitDeclarationOnly --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --outDir packages/core/colour",
     "pack": "node ./tools/pack.mjs",
     "install:matrix": "node ./tools/install-matrix.mjs",
