@@ -80,6 +80,9 @@ export type ProseItem =
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; label: string; code: string };
 
+/** A block's section title at the top steps of the type ramp (MP16); without it the usual section size. */
+export type SectionTitleSize = 'display' | 'jumbo';
+
 /** The core block set: one member per `$defs` entry of blocks.schema.json. Pictures are asset ids. */
 export type CoreBlock =
   | { type: 'site-header'; name: string; mark?: IconName; places: { label: string; href: string }[]; actions?: SiteAction[] }
@@ -102,16 +105,16 @@ export type CoreBlock =
       /** Lines of room kept for the title and the lead (MP7), so a series of pages keeps one opening height. */
       reserve?: { title?: number; lead?: number };
     }
-  | { type: 'stats'; heading: string; intro?: string; items: { label: string; value: number | string; unit?: string; description?: string }[] }
-  | { type: 'cards'; heading: string; intro?: string; max?: 2 | 3 | 4; items: { title: string; eyebrow?: string; description: string; picture?: string; meta?: string; href?: string }[]; empty?: SiteEmpty }
+  | { type: 'stats'; heading: string; size?: SectionTitleSize; intro?: string; items: { label: string; value: number | string; unit?: string; description?: string }[] }
+  | { type: 'cards'; heading: string; size?: SectionTitleSize; intro?: string; max?: 2 | 3 | 4; items: { title: string; eyebrow?: string; description: string; picture?: string; meta?: string; href?: string }[]; empty?: SiteEmpty }
   | { type: 'quote'; text: string; name: string; role: string }
-  | { type: 'points'; heading: string; intro?: string; items: string[] }
-  | { type: 'details'; heading: string; intro?: string; items: { term: string; details: string }[] }
-  | { type: 'form'; heading: string; intro?: string; error?: string; outcome?: SiteOutcome; fields: SiteField[]; submit: string; sent: string; choose: string; enter: string; pick: string; links?: SiteLink[] }
+  | { type: 'points'; heading: string; size?: SectionTitleSize; intro?: string; items: string[] }
+  | { type: 'details'; heading: string; size?: SectionTitleSize; intro?: string; items: { term: string; details: string }[] }
+  | { type: 'form'; heading: string; size?: SectionTitleSize; intro?: string; error?: string; outcome?: SiteOutcome; fields: SiteField[]; submit: string; sent: string; choose: string; enter: string; pick: string; links?: SiteLink[] }
   | { type: 'alert'; tone: 'info' | 'success' | 'warning' | 'error'; title?: string; text: string; links?: SiteLink[] }
   | { type: 'status'; eyebrow?: string; title: string; text: string; links: SiteLink[]; note?: string }
-  | { type: 'search'; heading: string; label: string; button: string; query: string; summary: string; results: { title: string; href: string; description: string; eyebrow?: string }[]; none: { title: string; text: string; links?: SiteLink[] } }
-  | { type: 'settings'; heading: string; intro?: string; saved: string; groups: { heading: string; items: { id: string; label: string; description?: string; kind: 'switch' | 'choice'; on?: boolean; value?: string; options?: string[] }[] }[]; links?: SiteLink[] }
+  | { type: 'search'; heading: string; size?: SectionTitleSize; label: string; button: string; query: string; summary: string; results: { title: string; href: string; description: string; eyebrow?: string }[]; none: { title: string; text: string; links?: SiteLink[] } }
+  | { type: 'settings'; heading: string; size?: SectionTitleSize; intro?: string; saved: string; groups: { heading: string; items: { id: string; label: string; description?: string; kind: 'switch' | 'choice'; on?: boolean; value?: string; options?: string[] }[] }[]; links?: SiteLink[] }
   | { type: 'empty'; reason: 'first-use' | 'cleared' | 'no-results' | 'no-access' | 'done'; title: string; text: string; silhouette?: 'list' | 'tiles' | 'table'; links?: SiteLink[] }
   | {
       type: 'cta';
@@ -122,21 +125,21 @@ export type CoreBlock =
       /** A closing invitation meant to stand on its own (a marketing or editorial page's last word), so the page frames it. Leave it out on task pages, where the action is one more step of the work (Q91). */
       standalone?: boolean;
     }
-  | { type: 'gallery'; heading?: string; label: string; layout?: 'standard' | 'quilted' | 'masonry'; items: string[] }
+  | { type: 'gallery'; heading?: string; size?: SectionTitleSize; label: string; layout?: 'standard' | 'quilted' | 'masonry'; items: string[] }
   | { type: 'breadcrumbs'; items: { label: string; href?: string }[] }
   | { type: 'byline'; name: string; href: string; date: string; read: string; picture?: string }
   | { type: 'person'; name: string; role: string; bio: string[]; portrait?: boolean; picture?: string }
   | { type: 'prose'; items: ProseItem[] }
-  | { type: 'posts'; heading?: string; items: { title: string; eyebrow?: string; description: string; meta: string; picture?: string; href: string }[]; page?: number; pages?: number; pagingLabel?: string; empty?: SiteEmpty }
-  | { type: 'people'; heading: string; intro?: string; items: { name: string; role: string; href?: string; picture?: string }[] }
-  | { type: 'schedule'; heading?: string; daysLabel: string; days: { id: string; label: string; title: string; slots: AgendaSlot[] }[] }
-  | { type: 'agenda'; heading: string; label: string; slots: AgendaSlot[]; empty?: SiteEmpty }
-  | { type: 'tickets'; heading: string; intro?: string; currency: string; options: { value: string; label: string; price: number; description: string; meta?: string }[]; submit: string; sent: string; labels: { ticket: string; count: string; tickets: string; total: string; line: string } }
-  | { type: 'questions'; heading: string; items: { title: string; text: string }[] }
+  | { type: 'posts'; heading?: string; size?: SectionTitleSize; items: { title: string; eyebrow?: string; description: string; meta: string; picture?: string; href: string }[]; page?: number; pages?: number; pagingLabel?: string; empty?: SiteEmpty }
+  | { type: 'people'; heading: string; size?: SectionTitleSize; intro?: string; items: { name: string; role: string; href?: string; picture?: string }[] }
+  | { type: 'schedule'; heading?: string; size?: SectionTitleSize; daysLabel: string; days: { id: string; label: string; title: string; slots: AgendaSlot[] }[] }
+  | { type: 'agenda'; heading: string; size?: SectionTitleSize; label: string; slots: AgendaSlot[]; empty?: SiteEmpty }
+  | { type: 'tickets'; heading: string; size?: SectionTitleSize; intro?: string; currency: string; options: { value: string; label: string; price: number; description: string; meta?: string }[]; submit: string; sent: string; labels: { ticket: string; count: string; tickets: string; total: string; line: string } }
+  | { type: 'questions'; heading: string; size?: SectionTitleSize; items: { title: string; text: string }[] }
   /** Two columns of blocks side by side (DP11 slots `split.start` and `split.end`), stacking when narrow. */
-  | { type: 'split'; heading?: string; intro?: string; ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside'; start: Block[]; end: Block[] }
+  | { type: 'split'; heading?: string; size?: SectionTitleSize; intro?: string; ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside'; start: Block[]; end: Block[] }
   /** Blocks in equal columns (DP11 slot `grid.items`). */
-  | { type: 'grid'; heading?: string; intro?: string; max?: 2 | 3 | 4; items: Block[] };
+  | { type: 'grid'; heading?: string; size?: SectionTitleSize; intro?: string; max?: 2 | 3 | 4; items: Block[] };
 
 /** Any block: a core one, or a template's own (`{template}.{name}`). */
 export interface Block {

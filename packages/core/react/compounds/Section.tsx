@@ -9,8 +9,11 @@ export interface SectionProps extends DataAttributes {
   anchor?: string;
   /** Semantic level from the page outline. */
   level?: 2 | 3 | 4;
-  /** Visual size, independent of level. */
-  size?: 2 | 3 | 4;
+  /**
+   * Visual size, independent of level. `display` and `jumbo` (MP16) set the title at the type ramp's top steps, for a
+   * brand page's section titles and its closing title; the level still follows the outline.
+   */
+  size?: 2 | 3 | 4 | 'display' | 'jumbo';
   /** One or two sentences that hold for everything in the section, on a shorter line than running text. */
   intro?: string;
   /** A number shown large in its own column beside the section, for a numbered sequence such as tiers. Hidden from assistive technology: the heading carries the meaning. */

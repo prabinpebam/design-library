@@ -36,8 +36,8 @@
         },
         {
           "name": "size",
-          "type": "2 | 3 | 4",
-          "description": "Visual size, independent of level."
+          "type": "2 | 3 | 4 | 'display' | 'jumbo'",
+          "description": "Visual size, independent of level. `display` and `jumbo` (MP16) set the title at the type ramp's top steps, for a brand page's section titles and its closing title; the level still follows the outline."
         },
         {
           "name": "intro",

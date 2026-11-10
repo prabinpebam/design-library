@@ -7,7 +7,7 @@ import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { Block, BlockRenderer, CoreBlock, RenderContext, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
+import type { Block, BlockRenderer, CoreBlock, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
 
 type Of<T extends CoreBlock['type']> = Extract<CoreBlock, { type: T }>;
 
@@ -83,7 +83,7 @@ function FormBlock({ block, named }: { block: Of<'form'>; named?: string }) {
   }
   return (
     <Morph state="form">
-      <Section heading={block.heading} intro={block.intro}>
+      <Section heading={block.heading} size={block.size} intro={block.intro}>
         <Stack gap="group">
           {block.error && (
             <Reveal open={state === 'failed'}>
@@ -151,7 +151,7 @@ function TicketsBlock({ block }: { block: Of<'tickets'> }) {
   const money = (n: number) => new Intl.NumberFormat(undefined, { style: 'currency', currency: block.currency, maximumFractionDigits: 0 }).format(n);
   const chosen = block.options.find((o) => o.value === choice) ?? block.options[0];
   return (
-    <Section heading={block.heading} intro={block.intro}>
+    <Section heading={block.heading} size={block.size} intro={block.intro}>
       <Stack gap="group">
         <RadioGroup
           label={block.labels.ticket}
@@ -191,7 +191,7 @@ function SearchBlock({ block }: { block: Of<'search'> }) {
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   const shown = block.results.filter((r) => words.every((w) => `${r.title} ${r.description} ${r.eyebrow ?? ''}`.toLowerCase().includes(w)));
   return (
-    <Section heading={block.heading}>
+    <Section heading={block.heading} size={block.size}>
       <Stack gap="group">
         <TextField label={block.label} type="search" icon="search" value={draft} onCommit={setDraft} action={{ label: block.button, onAction: (v) => (setDraft(v), setQuery(v)) }} />
         <Morph state={shown.length ? 'results' : 'none'}>
@@ -225,7 +225,7 @@ function SettingsBlock({ block }: { block: Of<'settings'> }) {
     notify({ message: fill(block.saved, { setting: label }) });
   };
   return (
-    <Section heading={block.heading} intro={block.intro}>
+    <Section heading={block.heading} size={block.size} intro={block.intro}>
       <>
         {block.groups.map((g) => (
           <Section key={g.heading} heading={g.heading} level={3} size={4} nested>
@@ -246,9 +246,9 @@ function SettingsBlock({ block }: { block: Of<'settings'> }) {
   );
 }
 
-const inSection = (key: number, heading: string | undefined, body: ReactNode) =>
+const inSection = (key: number, heading: string | undefined, body: ReactNode, size?: SectionTitleSize) =>
   heading ? (
-    <Section key={key} heading={heading}>
+    <Section key={key} heading={heading} size={size}>
       {body}
     </Section>
   ) : (
@@ -346,7 +346,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       />,
     ),
   stats: (b, _ctx, i) => (
-    <Section key={i} heading={b.heading} intro={b.intro}>
+    <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
       <Grid max={4}>
         {b.items.map((s) => (
           <Statistic key={s.label} label={s.label} value={s.value} unit={s.unit} description={s.description} />
@@ -355,7 +355,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     </Section>
   ),
   cards: (b, ctx, i) => (
-    <Section key={i} heading={b.heading} intro={b.intro}>
+    <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
       {listOrEmpty(ctx.state, b.empty, <Grid max={b.max ?? 3}>
         {b.items.map((c) => (
           <Card
@@ -382,12 +382,12 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       </Quote>,
     ),
   points: (b, _ctx, i) => (
-    <Section key={i} heading={b.heading} intro={b.intro}>
+    <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
       <List variant="bulleted" items={b.items.map((t, n) => ({ id: String(n), content: t }))} />
     </Section>
   ),
   details: (b, _ctx, i) => (
-    <Section key={i} heading={b.heading} intro={b.intro}>
+    <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
       <DescriptionList items={b.items} />
     </Section>
   ),
@@ -407,7 +407,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     </EmptyState>
   ),
   cta: (b, ctx, i) => frame(ctx, i, 'feature', <Hero level={2} layout="divided" title={richText(b.title)} lead={richText(b.lead)} actions={actionButtons(b.actions)} note={b.note} />),
-  gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />),
+  gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />, b.size),
   breadcrumbs: (b, _ctx, i) => <Breadcrumbs key={i} items={b.items} />,
   byline: (b, ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} src={b.picture ? ctx.picture(b.picture).src : undefined} />,
   person: (b, ctx, i) => (
@@ -475,7 +475,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     );
   },
   posts: (b, ctx, i) => (
-    <Section key={i} heading={b.heading}>
+    <Section key={i} heading={b.heading} size={b.size}>
       {listOrEmpty(ctx.state, b.empty, <Stack gap="group">
         {b.items.map((c) => (
           <Card
@@ -495,7 +495,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     </Section>
   ),
   people: (b, ctx, i) => (
-    <Section key={i} heading={b.heading} intro={b.intro}>
+    <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
       <Grid max={4}>
         {b.items.map((p) => (
           <Persona key={p.name} name={p.href ? <Link href={p.href}>{p.name}</Link> : p.name} nameText={p.name} secondary={p.role} size={56} src={p.picture ? ctx.picture(p.picture).src : undefined} />
@@ -503,9 +503,9 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       </Grid>
     </Section>
   ),
-  schedule: (b, _ctx, i) => inSection(i, b.heading, <Tabs label={b.daysLabel} items={b.days.map((d) => ({ id: d.id, label: d.label, panel: <Agenda label={d.title} slots={d.slots} headingLevel={b.heading ? 3 : 2} /> }))} />),
+  schedule: (b, _ctx, i) => inSection(i, b.heading, <Tabs label={b.daysLabel} items={b.days.map((d) => ({ id: d.id, label: d.label, panel: <Agenda label={d.title} slots={d.slots} headingLevel={b.heading ? 3 : 2} /> }))} />, b.size),
   agenda: (b, ctx, i) => (
-    <Section key={i} heading={b.heading}>
+    <Section key={i} heading={b.heading} size={b.size}>
       {listOrEmpty(ctx.state, b.empty, <Agenda label={b.label} slots={b.slots} />)}
     </Section>
   ),
@@ -518,7 +518,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       </Grid>
     );
     return b.heading ? (
-      <Section key={i} heading={b.heading} intro={b.intro}>
+      <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
         {columns}
       </Section>
     ) : (
@@ -532,7 +532,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       </Grid>
     );
     return b.heading ? (
-      <Section key={i} heading={b.heading} intro={b.intro}>
+      <Section key={i} heading={b.heading} size={b.size} intro={b.intro}>
         {cells}
       </Section>
     ) : (
@@ -540,7 +540,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
     );
   },
   questions: (b, _ctx, i) => (
-    <Section key={i} heading={b.heading}>
+    <Section key={i} heading={b.heading} size={b.size}>
       <Accordion headingLevel={3} items={b.items.map((q) => ({ id: q.title, title: q.title, content: <Text as="p">{q.text}</Text> }))} />
     </Section>
   ),

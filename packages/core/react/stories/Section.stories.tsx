@@ -1,4 +1,5 @@
 import { Section } from '../compounds/Section';
+import { ScreenPreview } from '../compounds/ScreenPreview';
 import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
 
@@ -55,6 +56,21 @@ export default {
         <Section heading="Compounds" index={2} nested>
           <Text tone="muted">Fundamentals combined for one recurring job.</Text>
         </Section>
+      ),
+    },
+    {
+      title: 'Display-size titles on a brand page',
+      description:
+        'size="display" sets a section’s title at the display step and size="jumbo" at the top one, for a brand page’s section titles and its closing title. The heading levels still follow the outline (each is an h2); only the look changes. From page data, every block with a heading takes the same "size" field. Without size, titles stay the usual section size. Shown in a phone and at full width.',
+      code: `<Section heading="The season in numbers" size="display" intro="…">…</Section>
+<Section heading="Walk with us" size="jumbo">…</Section>
+
+{ "type": "stats", "heading": "The season in numbers", "size": "display", "items": [ … ] }`,
+      render: () => (
+        <>
+          <ScreenPreview src="site.html?demo=display-titles" width="phone" title="A brand page with display-size section titles, in a phone" caption="At 320 px: the titles wrap and keep their spacing." />
+          <ScreenPreview src="site.html?demo=display-titles" title="A brand page with display-size section titles" caption="Section titles at the display step; the closing title at jumbo." />
+        </>
       ),
     },
   ],

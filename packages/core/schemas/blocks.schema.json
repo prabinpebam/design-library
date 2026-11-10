@@ -4,6 +4,10 @@
   "title": "Core block set, version 1",
   "description": "The standard block types every template may use (Q64). Each `$defs` entry named after a block type is that block's shape; `packages/core/render/blocks.tsx` maps each to core components. `settings.{Layout}` entries are the options of core layout components. Every word a person reads, including labels and messages, is in the block (Q64); words are plain text (backticks for inline code are the only mark); pictures are asset ids; `/layout` links point at a layout of the same template.",
   "$defs": {
+    "sectionTitleSize": {
+      "enum": ["display", "jumbo"],
+      "description": "The section title at the top steps of the type ramp (MP16), for a brand page's section and closing titles: `display` or `jumbo`. Without it the title is the usual section size; the heading level still follows the outline."
+    },
     "text": {
       "description": "Words a person reads: a non-empty string, or a value not yet confirmed (DP4).",
       "oneOf": [
@@ -522,6 +526,7 @@
         "type": {
           "const": "stats"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -571,6 +576,7 @@
         "type": {
           "const": "cards"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -695,6 +701,7 @@
         "type": {
           "const": "points"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -722,6 +729,7 @@
         "type": {
           "const": "details"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -767,6 +775,7 @@
         "type": {
           "const": "form"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -944,6 +953,7 @@
         "type": {
           "const": "gallery"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1217,6 +1227,7 @@
         "type": {
           "const": "posts"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1335,6 +1346,7 @@
         "type": {
           "const": "people"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1381,6 +1393,7 @@
         "type": {
           "const": "schedule"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1435,6 +1448,7 @@
         "type": {
           "const": "agenda"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1506,6 +1520,7 @@
         "type": {
           "const": "tickets"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1598,6 +1613,7 @@
         "type": {
           "const": "questions"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1640,6 +1656,7 @@
       "required": ["type", "start", "end"],
       "properties": {
         "type": { "const": "split" },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": { "$ref": "#/$defs/text" },
         "intro": { "$ref": "#/$defs/text" },
         "ratio": { "enum": ["2:1", "3:2", "1:2", "2:3", "aside"], "description": "The columns' shares (Grid ratio); equal without it." },
@@ -1655,6 +1672,7 @@
       "required": ["type", "items"],
       "properties": {
         "type": { "const": "grid" },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": { "$ref": "#/$defs/text" },
         "intro": { "$ref": "#/$defs/text" },
         "max": { "enum": [2, 3, 4], "description": "The most columns; 2 by default." },
@@ -1796,6 +1814,7 @@
         "type": {
           "const": "search"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
@@ -1879,6 +1898,7 @@
         "type": {
           "const": "settings"
         },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
         "heading": {
           "$ref": "#/$defs/text"
         },
