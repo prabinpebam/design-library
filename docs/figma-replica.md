@@ -241,7 +241,7 @@ Where an owner rule conflicts with Figma, the library keeps the rule (default, Q
 | OD4 | Targets | 24–32 px controls | 44 px targets, 36/24 px dense sizes by written exception | Dense sizes (24 px fields, 32 px rows) under the dense-surface exception | Same |
 | OD5 | Menus | Always dark menus and tooltips in light mode | Menus follow the scheme | Scheme-following menus | A template "inverse" surface token for menus, if allowed |
 | OD6 | Brand mark | Figma logo in the menu button | No Figma logos (Q118.6) | A neutral look-alike glyph | — |
-| OD7 | Secondary text contrast | 50 % black on white (about 3.9:1, below WCAG AA 4.5:1 for 11 px text) | WCAG 2.2 AA in every context | Builder set 50 % in the template theme; the evaluator flags it as failing AA | The darkest grey that passes 4.5:1 (about 54 % black, `#757575`), which looks the same at a glance; or the owner accepts the gap for this template |
+| OD7 | Secondary text contrast | 50 % black on white (3.95:1 on `#FFFFFF`, 3.62:1 on the `#F5F5F5` fields) | WCAG 2.2 AA in every context | **Decided ([DoD Q120](definition-of-done.md#owner-instructions), 2026-11-10 15:20):** "Keep AA contrast: slightly darker grey than Figma (hard to tell apart)". The template's `color.text-muted` is the closest grey to Figma's that meets 4.5:1 on every surface it sits on: **light `#707070`** (4.54:1 on the `#F5F5F5` fields, 4.95:1 on the `#FFFFFF` panel; `#767676` would pass on white but fail on the fields at 4.17:1); **dark: Figma's 70 % white already passes** (about `#C0C0C0`: 7.68:1 on `#2C2C2C`, 6.65:1 on `#383838`), so it stays | Decided |
 
 ## 6. The loop and when it ends
 
