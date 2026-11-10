@@ -36,6 +36,8 @@ interface ButtonBase extends DataAttributes {
   type?: 'button' | 'submit';
   /** xs 24, s 36, normal 44, m 48, l 56, xl 64, xxl 80 px high. `xs` and `s` are dense sizes (written exceptions to the 44 px target); `normal` everywhere else. */
   size?: ButtonSize;
+  /** Reserves at least the normal target and 44 CSS px in both axes, even under root font scaling. Keeps the selected size's icon and type. Default false preserves dense-surface exceptions. */
+  minimumTarget?: boolean;
   /** How an operation in progress shows: `inside` (a spinner in place of the icon), `ring` (an arc around the border, the content kept) or `fill` (the button fills up from its start edge as `value` grows). `fill` needs a known `value` and a `primary` or `danger` button with a label at least `c.button.fill-min-inline` wide; otherwise it shows `inside` (and warns in development). */
   progress?: ButtonProgress;
   /** How far the operation in progress is, 0 to 100, from a real total (bytes, items, steps). Only for `progress="fill"`; leave it out when the total isn't known. */
@@ -154,7 +156,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -211,6 +213,7 @@ export function Button(props: ButtonProps) {
         data-emphasis={emphasis}
         data-icon-only={iconOnly ? '' : undefined}
         data-size={size}
+        data-minimum-target={minimumTarget ? '' : undefined}
         data-unavailable={unavailable ? '' : undefined}
         aria-disabled={unavailable ? true : undefined}
         aria-label={iconOnly ? label : undefined}
@@ -248,6 +251,7 @@ export function Button(props: ButtonProps) {
       data-emphasis={emphasis}
       data-icon-only={iconOnly ? '' : undefined}
       data-size={size}
+      data-minimum-target={minimumTarget ? '' : undefined}
       data-progress={shownProgress}
       data-filling={filling ? '' : undefined}
       data-busy={pending ? 'on' : phase === 'rest' ? undefined : phase}

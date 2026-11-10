@@ -8,6 +8,8 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
+- **Fixed (G14; core):** Dialog's Close button enables Button's new optional `minimumTarget` prop: at least the normal rem target and a token-driven 44 CSS px floor in both axes, including under root font reduction. Its small icon, keyboard behaviour and focus ring remain. Other Buttons retain their existing sizes unless opted in.
+
 - **Fixed (G11; core):** a MenuButton's menu fits its widest item instead of always taking the full popup width (`c.popup.width`, 22rem), so two short actions no longer open a pane-wide menu. The existing maximum (`c.popup.width`, narrowed to the window) still caps it, and a longer label wraps. Select's listbox and Mentions are unchanged. Reported by DesignUp's header settings menu.
 
 - **Added (G60, Q128; core):** AlignmentPicker `flow` (`row` | `column`): the chosen point, and a hovered one, draw three alignment bars laid out along the flow and aligned to the point instead of a dot, previewing the arrangement; tokens `c.alignment-picker.bar` and `bar-gap`. The Design tool passes its frame's flow.

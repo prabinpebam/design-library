@@ -150,6 +150,12 @@ export default {
   summary: 'Triggers an action. One component for text, icon and text, and icon-only buttons.',
   stories: [
     {
+      title: 'Small icon, accessible target',
+      description: 'minimumTarget keeps the small icon and reserves at least 44 CSS px in both axes, even when the root font is reduced. Dialog uses this for Close. Dense buttons without it keep their existing sizes.',
+      code: `<Button size="s" minimumTarget icon="close" iconOnly emphasis="quiet" label="Close" />`,
+      render: () => <Button size="s" minimumTarget icon="close" iconOnly emphasis="quiet" label="Close" />,
+    },
+    {
       title: 'Sizes and types',
       description: 'Seven sizes, smallest first: text, icon and text, icon-only, dropdown, split and segmented at each. Size is per button; the theme’s space option changes the space around buttons, never their height.',
       code: `<Button size="xs" label="Add" />  // xs, s, normal (default), m, l, xl, xxl

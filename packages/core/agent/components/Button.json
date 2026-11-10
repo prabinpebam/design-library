@@ -80,6 +80,12 @@
           "description": "xs 24, s 36, normal 44, m 48, l 56, xl 64, xxl 80 px high. `xs` and `s` are dense sizes (written exceptions to the 44 px target); `normal` everywhere else."
         },
         {
+          "name": "minimumTarget",
+          "type": "boolean",
+          "default": "false",
+          "description": "Reserves at least the normal target and 44 CSS px in both axes, even under root font scaling. Keeps the selected size's icon and type. Default false preserves dense-surface exceptions."
+        },
+        {
           "name": "progress",
           "type": "ButtonProgress",
           "default": "'inside'",
@@ -258,6 +264,7 @@
     "--size-icon-md",
     "--size-icon-sm",
     "--size-icon-xl",
+    "--size-target",
     "--state-hover",
     "--state-pressed",
     "--state-selected",

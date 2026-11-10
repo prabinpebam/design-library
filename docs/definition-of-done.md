@@ -4,6 +4,17 @@
 
 ## Owner instructions
 
+### G14: Dialog close target (11 November 2026)
+
+Consumer request: "Do NOT override core with CSS or patch it in the app, and do NOT waive the 44px target."
+The Dialog Close control must be at least 44 by 44 CSS px on mobile and desktop,
+keyboard-focusable with an unclipped visible focus ring. Fix at source, preserve
+the G11 menu fix, test and document it, consume a local tarball; no push or publish.
+Button owns the optional `minimumTarget` seam, enabled by Dialog by default:
+its token-driven floor is in CSS px so root font reduction cannot shrink it,
+while the normal rem target still grows with larger text. Existing Button callers
+and Dialog props stay compatible; the small Close icon is retained.
+
 **The single home for every owner instruction** (owner, 2026-11-07 20:13: *"Define a DoD. Every time I give instructions, it should go in the DoD immediately."*). Each instruction becomes a row here in the same turn it arrives, before any build, and every packet is checked against these rows. Quotes are verbatim (the owner's spelling), times +05:30, mined from both main-chat logs on 2026-11-07. **Done** means delivered and awaiting the owner's judgement; nothing is approved unless the [ledger](work-plan.md#approval-ledger) says so. Workflow rules (roles, cadence, delegation) live in AGENTS.md and the work plan.
 
 **Open gaps (2026-11-07 20:42):** Q24 clipping is partial; Q25 loading delivered (F13c); Q26 scrollbars is partial (F14 delivered, F14b next after typography); Q35 typography is the next packet (F16); Q28 exhaustive components is starting with Button (F15.1); Q28's message is cut off after "We need to". The size framework (Q28, Q21) is written from the owner's words in [Button](#button-f151) for confirmation; no other size message exists in the logs.

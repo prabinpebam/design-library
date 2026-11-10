@@ -35,11 +35,12 @@
 
   /* Button: every layer (rest, pending, done) sits in one grid area, so the widest label fixes the width. */
   [data-dl='button'] {
+    --_dl-button-target: 0px;
     display: inline-grid;
     grid-template-areas: 'label';
     place-items: center;
-    min-block-size: var(--c-button-size);
-    min-inline-size: var(--c-button-size);
+    min-block-size: max(var(--c-button-size), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size), var(--_dl-button-target, 0px));
     padding-inline: var(--c-button-padding-inline);
     border: var(--c-button-border-width) solid transparent;
     border-radius: var(--c-button-radius);
@@ -57,6 +58,10 @@
       scale var(--duration-change) var(--easing-standard);
   }
 
+  [data-dl='button'][data-minimum-target] {
+    --_dl-button-target: max(var(--size-target), var(--c-button-target-floor));
+  }
+
   /* IP8: a Button with href is a link that looks like a button: the same box, no underline. */
   a[data-dl='button'] {
     box-sizing: border-box;
@@ -64,44 +69,44 @@
   }
 
   [data-dl='button'][data-size='xs'] {
-    min-block-size: var(--c-button-size-xs);
-    min-inline-size: var(--c-button-size-xs);
+    min-block-size: max(var(--c-button-size-xs), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size-xs), var(--_dl-button-target, 0px));
     padding-inline: var(--c-button-padding-inline-sm);
     border-radius: var(--c-button-radius-sm);
     font-size: var(--type-body-sm-size);
   }
 
   [data-dl='button'][data-size='s'] {
-    min-block-size: var(--c-button-size-s);
-    min-inline-size: var(--c-button-size-s);
+    min-block-size: max(var(--c-button-size-s), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size-s), var(--_dl-button-target, 0px));
     padding-inline: var(--c-button-padding-inline-sm);
     font-size: var(--type-body-sm-size);
   }
 
   [data-dl='button'][data-size='m'] {
-    min-block-size: var(--c-button-size-m);
-    min-inline-size: var(--c-button-size-m);
+    min-block-size: max(var(--c-button-size-m), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size-m), var(--_dl-button-target, 0px));
   }
 
   [data-dl='button'][data-size='l'] {
-    min-block-size: var(--c-button-size-l);
-    min-inline-size: var(--c-button-size-l);
+    min-block-size: max(var(--c-button-size-l), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size-l), var(--_dl-button-target, 0px));
     padding-inline: var(--c-button-padding-inline-lg);
     border-radius: var(--c-button-radius-lg);
     font-size: var(--type-heading-4-size);
   }
 
   [data-dl='button'][data-size='xl'] {
-    min-block-size: var(--c-button-size-xl);
-    min-inline-size: var(--c-button-size-xl);
+    min-block-size: max(var(--c-button-size-xl), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size-xl), var(--_dl-button-target, 0px));
     padding-inline: var(--c-button-padding-inline-lg);
     border-radius: var(--c-button-radius-lg);
     font-size: var(--type-heading-4-size);
   }
 
   [data-dl='button'][data-size='xxl'] {
-    min-block-size: var(--c-button-size-xxl);
-    min-inline-size: var(--c-button-size-xxl);
+    min-block-size: max(var(--c-button-size-xxl), var(--_dl-button-target, 0px));
+    min-inline-size: max(var(--c-button-size-xxl), var(--_dl-button-target, 0px));
     padding-inline: var(--c-button-padding-inline-lg);
     border-radius: var(--c-button-radius-lg);
     font-size: var(--type-heading-3-size);

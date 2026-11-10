@@ -43,7 +43,8 @@ export interface DialogProps extends DataAttributes {
  * @a11y The native `dialog` opened with `showModal()`: the page behind is inert, so focus stays inside and Tab cycles
  * through the dialog. Named by its title, described by its description; `role="alertdialog"` when `alert`. Focus
  * starts on the first field or control in the body (the title when there's none), on the first action in an alert
- * dialog, and returns to whatever opened it on close. The close button is named "Close". The body is a scroll region
+ * dialog, and returns to whatever opened it on close. The close button is named "Close", with a minimum 44 CSS px
+ * target in both axes even under root font scaling; its small icon is unchanged. The body is a scroll region
  * with its padding inside, so its scrollbar sits at the dialog's edge and focus rings are never clipped; the title and
  * the actions stay in place. Opening fades and grows a little and closing fades faster (Q65 C17); with reduced motion it
  * only fades. With state, a form becomes its result in the same box (C1, Morph).
@@ -87,7 +88,7 @@ export function Dialog({ open, onClose, title, description, children, actions, s
             </p>
           )}
         </div>
-        {!alert && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" onClick={() => close.current()} />}
+        {!alert && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" minimumTarget onClick={() => close.current()} />}
       </header>
       {children && (
         <ScrollArea data-dl-part="body" contain>
