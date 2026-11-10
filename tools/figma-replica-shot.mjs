@@ -120,6 +120,25 @@ for (const scheme of ['light', 'dark']) {
       const back = await page.evaluate(() => document.activeElement?.getAttribute('aria-label') || document.activeElement?.textContent?.trim());
       return { pass: open && /main menu/i.test(back || ''), menuOpened: open, focusReturnedTo: back };
     });
+    await step('FR46-49 inspector by selection', async () => {
+      const heads = () => page.evaluate(() => [...document.querySelectorAll('[data-dl="property-section"] [data-dl-part="head"]')].filter((h) => h.getClientRects().length).map((h) => h.textContent.trim().replace(/\s+/g, ' ').slice(0, 24)));
+      const res = {};
+      await page.getByRole('tab', { name: /^Design$/ }).first().click();
+      for (const [k, sel] of [['rectangle', '[aria-label^="Rectangle:"]'], ['text', '[aria-label^="Text:"]'], ['frame', '[aria-label^="Frame:"]']]) {
+        await page.locator(`[data-dl="canvas"] ${sel}`).first().evaluate((e) => e.click());
+        await page.waitForTimeout(200);
+        res[k] = await heads();
+      }
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(200);
+      res.none = await heads();
+      await page.getByRole('tab', { name: /^Prototype$/ }).first().click();
+      await page.waitForTimeout(200);
+      res.prototypeNone = await heads();
+      const want = { none: ['Page', 'Styles', 'Export'], rectangle: ['Position', 'Layout', 'Appearance', 'Fill', 'Stroke', 'Effects', 'Export'], text: ['Position', 'Layout', 'Appearance', 'Typography', 'Fill', 'Stroke', 'Effects', 'Export'], frame: ['Position', 'Auto layout', 'Appearance', 'Fill', 'Stroke', 'Effects', 'Selection colo', 'Layout guide', 'Export'], prototypeNone: ['Prototype settings'] };
+      const starts = (got, w) => w.every((name, i) => (got[i] || '').startsWith(name)) && got.length === w.length;
+      return { pass: Object.keys(want).every((k) => starts(res[k] || [], want[k])), got: res, want };
+    });
     writeFileSync(join(out, 'behaviour.json'), JSON.stringify(fb, null, 2));
     console.log('behaviour: ' + Object.entries(fb).map(([k, v]) => `${k} ${v.pass ? 'pass' : 'FAIL'}`).join(' · '));
     await bctx.close();
