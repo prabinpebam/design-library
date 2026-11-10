@@ -122,16 +122,21 @@ for (const scheme of ['light', 'dark']) {
     });
     await step('FR46-49 inspector by selection', async () => {
       const heads = () => page.evaluate(() => [...document.querySelectorAll('[data-dl="property-section"] [data-dl-part="head"]')].filter((h) => h.getClientRects().length).map((h) => h.textContent.trim().replace(/\s+/g, ' ').slice(0, 24)));
+      const visSw = () => page.evaluate(() => [...document.querySelectorAll('[role="switch"]')].filter((s) => s.getClientRects().length).map((s) => (s.getAttribute('aria-label') || s.closest('label')?.textContent || s.parentElement?.textContent || '').trim()).filter((n) => /\b(show|hide|hidden|visib)/i.test(n)));
+      const vis = {};
       const res = {};
       await page.getByRole('tab', { name: /^Design$/ }).first().click();
       for (const [k, sel] of [['rectangle', '[aria-label^="Rectangle:"]'], ['text', '[aria-label^="Text:"]'], ['frame', '[aria-label^="Frame:"]']]) {
         await page.locator(`[data-dl="canvas"] ${sel}`).first().evaluate((e) => e.click());
         await page.waitForTimeout(200);
         res[k] = await heads();
+        vis[k] = await visSw();
       }
       await page.keyboard.press('Escape');
       await page.waitForTimeout(200);
       res.none = await heads();
+      vis.none = await visSw();
+      fb['FR57 no visibility Switch'] = { pass: Object.values(vis).every((v) => v.length === 0), got: vis };
       await page.getByRole('tab', { name: /^Prototype$/ }).first().click();
       await page.waitForTimeout(200);
       res.prototypeNone = await heads();

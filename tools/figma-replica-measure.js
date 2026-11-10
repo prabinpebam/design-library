@@ -125,6 +125,13 @@
       tablist && selHead ? { tabsBottom: Math.round(box(tablist).bottom), selectionHeadTop: Math.round(box(selHead).top), text: selHead.textContent.trim().slice(0, 30) } : 'missing',
       'selection head below the tabs');
 
+    // Q125: showing or hiding an item is an eye toggle (VisibilityToggle), never a Switch.
+    const switchName = (s) => (s.getAttribute('aria-label') || (s.id && document.querySelector(`label[for="${s.id}"]`)?.textContent) || s.closest('label')?.textContent || s.parentElement?.textContent || '').trim();
+    const visSwitches = [...document.querySelectorAll('[role="switch"], input[type="checkbox"][data-dl-part="input"]')]
+      .filter((s) => s.closest('[data-dl="switch"]') || s.getAttribute('role') === 'switch')
+      .map(switchName).filter((n) => /\b(show|hide|hidden|visib)/i.test(n));
+    row('FR57', visSwitches.length === 0, { visibilitySwitches: visSwitches.slice(0, 8) }, { visibilitySwitches: 'none (VisibilityToggle instead)' });
+
     const fonts = {};
     root.querySelectorAll('[data-dl-part="panel"] *').forEach((e) => {
       if (![...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) return;

@@ -162,6 +162,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | FR53 | Tool flyout menu | R18 | Menu `#1E1E1E` with a `#272727` hairline, 8 px padding; 24 px items: ✓ column, 16 px icon, name, right-aligned shortcut (F, Shift+S, S); the current item `#0C8CE9` with white text; opens above the bar | library (MenuButton item icon, shortcut, checked: G43) + template | open |
 | FR54 | Help button | R17 | A 32 px round "?" button at the canvas's bottom-right corner, `#2C2C2C` with a hairline | template | open |
 | FR55 | Prototype tab, nothing selected | R15 | Prototype settings: device ▾ ("No device"), background swatch row; dismissible help cards ("Creating a connection", "Running your prototype": icon, text, ×) in our own words | template | open |
+| FR57 | No visibility Switch anywhere (Q125) | — | No Switch whose name shows or hides an item, in any inspector state (`figma-replica-shot`: rectangle, text, frame, none) or in library and template source (a static scan for a Switch labelled show, hide, hidden or visible); view settings such as "Show resolved" (comments) or "Show line numbers" stay Switches, as they filter a view rather than hide an item | template + library | **pass** 16:35: 0 in every state; source scan: only view settings remain; the Switch story's xs description still suggests a fill's visibility as an example (G52) |
 | FR56 | Canvas, text selected | R16 | Selection box with baselines (1 px accent lines), handles, size label; a small action button outside the top-right corner | template | open |
 ### Basic behaviour (Q118.2)
 
@@ -285,6 +286,7 @@ One row per shortcoming, appended by the evaluator, completed by the builder. A 
 | G49 | FR29, FR46, FR47 | Paint rows (Fill, Stroke, page colour) and Appearance use a Switch for visibility; Q125: an eye toggle everywhere | Earlier owner rule | `VisibilityToggle` in every paint row, Appearance's head and the page colour row; no visibility Switch left | template (+ library stories) | — | — |
 | G50 | FR3, FR14, FR21, FR53 | Filled blue with white text is `#0D99FF` (2.99:1) | OD8 decided (Q126) | Filled accent `#0A7ACB` light and dark (Share, selected tool, size label, current menu item); lines keep Figma's blue; `check:template-contrast` passes | template | — | — |
 | G51 | FR26 | Clip content is a Switch; Q124: a Checkbox with a reason | OD3 decided | Checkbox with `{/* binary-setting: … */}` (the check already flags `Inspector.tsx:144`) | template | — | — |
+| G52 | FR57 | `Switch.stories.tsx` "Sizes" description: "an xs switch can hide its label … as a fill's visibility beside its Remove" | Written before Q125 | Use a view setting as the example (e.g. property labels), and point visibility at `VisibilityToggle` | library (story copy) | — | — |
 
 ## 5. Owner decisions
 
