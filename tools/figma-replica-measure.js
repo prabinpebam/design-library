@@ -10,6 +10,16 @@
  */
 (function () {
   const hex = (c) => {
+    const ok = String(c).match(/oklab\(([-\d.e]+)\s+([-\d.e]+)\s+([-\d.e]+)(?:\s*\/\s*([\d.]+))?\)/);
+    if (ok) {
+      const [L, a, b] = ok.slice(1, 4).map(Number);
+      const al = ok[4] === undefined ? 1 : Number(ok[4]);
+      const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.291485548 * b) ** 3;
+      const lin = [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s];
+      const srgb = lin.map((v) => Math.round(255 * Math.min(1, Math.max(0, v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055))));
+      if (al === 0) return 'transparent';
+      return '#' + srgb.map((v) => v.toString(16).padStart(2, '0')).join('').toUpperCase() + (al < 1 ? `@${al}` : '');
+    }
     const m = String(c).match(/rgba?\(([^)]+)\)/);
     if (!m) return c;
     const [r, g, b, a = 1] = m[1].split(/[ ,/]+/).filter(Boolean).map(Number);
@@ -51,7 +61,9 @@
     row('FR6/FR8', rowBox && near(box(rowBox).height, 24) && near(parseFloat(cs(rowBox).borderTopLeftRadius), 5),
       rowBox ? { height: Math.round(box(rowBox).height), radius: cs(rowBox).borderTopLeftRadius, font: cs(rowBox).fontSize } : 'missing',
       { height: 24, radius: '5px', font: '11px (OD1)' });
-    const sel = root.querySelector('[role="treeitem"][aria-selected="true"]');
+    // The selected layer (a page row's current state is FR6's #F5F5F5): the last selected tree item.
+    const selAll = [...root.querySelectorAll('[role="treeitem"][aria-selected="true"]')];
+    const sel = selAll[selAll.length - 1];
     const selRow = sel && (sel.querySelector('[data-dl-part="row"]') || sel);
     row('FR10', selRow && opaqueBg(selRow) === (scheme === 'dark' ? '#2D3953' : '#E5F4FF'), selRow ? opaqueBg(selRow) : 'missing', scheme === 'dark' ? '#2D3953' : '#E5F4FF');
 
@@ -63,7 +75,7 @@
     // A selected segment may draw its fill on ::before (a sliding indicator); read that when the element itself is clear.
     const fillOf = (e) => { const own = hex(cs(e).backgroundColor); return own === 'transparent' ? hex(getComputedStyle(e, '::before').backgroundColor) : own; };
     const track = tool && tool.closest('[data-dl="segmented-control"]');
-    row('FR14', tool && near(box(tool).height, 32) && fillOf(tool) === L.accent && (!track || hex(cs(track).backgroundColor) === 'transparent'),
+    row('FR14', tool && near(box(tool).height, 32) && near(box(tool).width, 32) && fillOf(tool) === L.accent && (!track || hex(cs(track).backgroundColor) === 'transparent'),
       tool ? { size: `${Math.round(box(tool).width)}×${Math.round(box(tool).height)}`, bg: fillOf(tool), radius: cs(tool).borderTopLeftRadius, track: track ? hex(cs(track).backgroundColor) : 'none' } : 'missing',
       { size: '32×32', bg: L.accent, radius: '5px', track: 'transparent (tools sit on the bar; only the mode switcher has a track)' });
 
