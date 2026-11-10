@@ -97,6 +97,8 @@ export type CoreBlock =
       standalone?: boolean;
       /** Blocks in the picture's place (DP11 slot `hero.media`), when there's no `picture`. */
       media?: Block[];
+      /** Lines of room kept for the title and the lead (MP7), so a series of pages keeps one opening height. */
+      reserve?: { title?: number; lead?: number };
     }
   | { type: 'stats'; heading: string; intro?: string; items: { label: string; value: number | string; unit?: string; description?: string }[] }
   | { type: 'cards'; heading: string; intro?: string; max?: 2 | 3 | 4; items: { title: string; eyebrow?: string; description: string; picture?: string; meta?: string; href?: string }[]; empty?: SiteEmpty }

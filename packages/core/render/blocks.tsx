@@ -339,6 +339,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
         picture={b.picture ? ctx.picture(b.picture) : undefined}
         media={!b.picture && b.media?.length ? slot(ctx, 'hero.media', b.media) : undefined}
         layout={(b.picture || b.media?.length) && isFramed(ctx, i) ? 'split' : b.layout}
+        reserve={b.reserve}
       />,
     ),
   stats: (b, _ctx, i) => (

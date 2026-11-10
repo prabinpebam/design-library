@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Heading } from '../fundamentals/Heading';
 import { Image, type SchemeSources } from '../fundamentals/Image';
 import { Text } from '../fundamentals/Text';
@@ -33,6 +33,12 @@ interface HeroBase extends DataAttributes {
   trail?: ReactNode;
   /** `content` (default): as tall as its parts. `screen`: fills the first screen, the window's height less the sticky header and the layout's first space, with the opening centred in it; taller content grows it. */
   fit?: 'content' | 'screen';
+  /**
+   * Keeps room for this many lines of the title and of the lead (MP7), so a series of openings (a project's pages, a
+   * year's books) keeps one height and what follows one place. Longer text still grows the opening; it never clips.
+   * A reserved lead with no lead keeps its room empty.
+   */
+  reserve?: { title?: number; lead?: number };
 }
 
 export type HeroProps = HeroBase &
@@ -70,9 +76,12 @@ export type HeroProps = HeroBase &
  * comes last. The actions are
  * real Buttons or button-styled links; the note is plain text after them.
  */
-export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, media, trail, fit = 'content', layout, ...data }: HeroProps) {
+export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, media, trail, fit = 'content', reserve, layout, ...data }: HeroProps) {
   const visual = !!picture || (media != null && media !== false);
   const arrangement = layout ?? (visual ? 'split' : 'stacked');
+  const titleLines = reserve?.title && reserve.title > 0 ? reserve.title : undefined;
+  const leadLines = reserve?.lead && reserve.lead > 0 ? reserve.lead : undefined;
+  const lines = titleLines || leadLines ? ({ '--dl-hero-title-lines': titleLines, '--dl-hero-lead-lines': leadLines } as CSSProperties) : undefined;
   const doing = (actions || note) && (
     <div data-dl-part="doing">
       {actions && <div data-dl-part="actions">{actions}</div>}
@@ -84,7 +93,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
     </div>
   );
   return (
-    <header {...data} data-dl="hero" data-layout={arrangement} data-picture={visual ? '' : undefined} data-trail={trail ? '' : undefined} data-fit={fit === 'screen' ? 'screen' : undefined}>
+    <header {...data} data-dl="hero" data-layout={arrangement} data-picture={visual ? '' : undefined} data-trail={trail ? '' : undefined} data-fit={fit === 'screen' ? 'screen' : undefined} data-reserve-title={titleLines ? '' : undefined} data-reserve-lead={leadLines ? '' : undefined} style={lines}>
       <div data-dl-part="body">
         <div data-dl-part="words">
           <div data-dl-part="message">
@@ -98,7 +107,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
                 {title}
               </Heading>
             </div>
-            {lead && <p data-dl-part="lead">{lead}</p>}
+            {lead ? <p data-dl-part="lead">{lead}</p> : leadLines ? <div data-dl-part="lead" aria-hidden="true" /> : null}
           </div>
           {arrangement !== 'divided' && doing}
         </div>

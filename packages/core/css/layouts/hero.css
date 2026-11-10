@@ -50,6 +50,15 @@
     color: var(--color-text-muted);
   }
 
+  /* MP7: reserved lines keep a series of openings one height; longer text still grows (lh is the element's own line). */
+  [data-dl='hero'][data-reserve-title] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] > [data-dl-part='heading'] > [data-dl='heading'] {
+    min-block-size: calc(var(--dl-hero-title-lines) * 1lh);
+  }
+
+  [data-dl='hero'][data-reserve-lead] > [data-dl-part='body'] > [data-dl-part='words'] > [data-dl-part='message'] > [data-dl-part='lead'] {
+    min-block-size: calc(var(--dl-hero-lead-lines) * 1lh);
+  }
+
   [data-dl='hero'] [data-dl-part='doing'] {
     display: flex;
     flex-direction: column;

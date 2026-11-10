@@ -1,3 +1,8 @@
+import { useState } from 'react';
+import { Stack } from '../fundamentals/Stack';
+import { Cluster } from '../fundamentals/Cluster';
+import { Switch } from '../fundamentals/Switch';
+import { Text } from '../fundamentals/Text';
 import { Hero } from '../layouts/Hero';
 import { MediaPlayer } from '../compounds/MediaPlayer';
 import { Statistic } from '../compounds/Statistic';
@@ -13,6 +18,36 @@ import { richText } from '../../render/rich-text';
 import { ScreenPreview } from '../compounds/ScreenPreview';
 
 const go = () => undefined;
+const series = [
+  { title: 'Atlas', lead: 'A map of every room in a hospital.' },
+  { title: 'Paper trail', lead: 'Receipts that file themselves, for a team of four accountants who were tired of shoeboxes.' },
+  { title: 'The slow library', lead: 'Lending by appointment.' },
+  { title: 'Tide tables', lead: 'Harbour times for small boats, read at a glance from the quay, in sun or rain, with gloves on.' },
+  { title: 'Quiet hours', lead: 'Notifications that wait until you are ready for them.' },
+  { title: 'Birds of the park, drawn by walkers', lead: 'Forty species, one park.' },
+  { title: 'Ledger', lead: 'Shared costs for a house of five, settled every month without a spreadsheet or an argument.' },
+  { title: 'Night bus', lead: 'Where the last bus is, live.' },
+  { title: 'Seed swap', lead: 'Neighbours trading seeds by the season, with a calendar of what to sow this week and what to save for next year.' },
+  { title: 'Studio', lead: 'Booking a shared workshop by the hour.' },
+  { title: 'Common ground: a street party', lead: 'From the first idea to the last table folded away.' },
+];
+
+function SteadySeries() {
+  const [at, setAt] = useState(0);
+  const [steady, setSteady] = useState(true);
+  const p = series[at];
+  return (
+    <Stack gap="group">
+      <Cluster gap="item">
+        <Button label="Previous project" icon="chevron-start" disabled={at === 0} onClick={() => setAt(at - 1)} />
+        <Button label="Next project" icon="chevron-end" disabled={at === series.length - 1} onClick={() => setAt(at + 1)} />
+        <Switch label="Reserve three lines" checked={steady} onChange={setSteady} />
+      </Cluster>
+      <Hero eyebrow={`Project ${at + 1} of ${series.length}`} title={p.title} lead={p.lead} reserve={steady ? { title: 3, lead: 3 } : undefined} />
+      <Text tone="muted">What follows the opening: it stays in one place while the Switch is on.</Text>
+    </Stack>
+  );
+}
 
 export default {
   component: 'Hero',
@@ -156,5 +191,13 @@ import { richText } from '@design-library/core/render';
 </SiteLayout>`,
       render: () => <ScreenPreview src="site.html?demo=crumbs" title="A speaker page: breadcrumbs, then the opening" caption="Breadcrumbs as the part before a split opening, under the site header." />,
     },
+    {
+      title: 'A steady opening across a series',
+      description:
+        'reserve={{ title: 3, lead: 3 }} keeps room for three lines of each, so stepping through a series of pages (11 projects here, titles from one word to several lines) keeps the opening one height and what follows in one place. Turn the Switch off to see the opening jump. Text longer than the reserve still grows it; nothing clips. In a phone-sized window the display title and lead take more lines, so some openings here grow: reserve for the narrowest window that matters, or keep titles short.',
+      code: `<Hero eyebrow="Project 4 of 11" title={project.title} lead={project.lead} reserve={{ title: 3, lead: 3 }} />
+// From data: { "type": "hero", "title": "…", "lead": "…", "reserve": { "title": 3, "lead": 3 } }`,
+      render: () => <SteadySeries />,
+    },
   ],
-} satisfies StoryFile;
+} satisfies StoryFile;

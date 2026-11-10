@@ -59,6 +59,11 @@
           "type": "'content' | 'screen'",
           "default": "'content'",
           "description": "`content` (default): as tall as its parts. `screen`: fills the first screen, the window's height less the sticky header and the layout's first space, with the opening centred in it; taller content grows it."
+        },
+        {
+          "name": "reserve",
+          "type": "{ title?: number",
+          "description": "Keeps room for this many lines of the title and of the lead (MP7), so a series of openings (a project's pages, a year's books) keeps one height and what follows one place. Longer text still grows the opening; it never clips. A reserved lead with no lead keeps its room empty."
         }
       ]
     },

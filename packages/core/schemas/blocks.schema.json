@@ -485,6 +485,23 @@
         "media": {
           "description": "Slot hero.media (DP11): blocks in the picture's place when there's no picture. Takes gallery, or a template's own block.",
           "$ref": "#/$defs/slot"
+        },
+        "reserve": {
+          "description": "Lines of room kept for the title and the lead (MP7), so a series of pages (a project's, a year's) keeps one opening height. Longer text still grows the opening.",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            },
+            "lead": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
