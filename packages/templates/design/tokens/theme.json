@@ -16,9 +16,6 @@
   "color.accent-subtle": { "$value": { "light": "#e5f4ff", "dark": "#4a5878" }, "$description": "A selected layer row's fill" },
   "color.focus": { "$value": { "light": "#0d99ff", "dark": "#0c8ce9" }, "$description": "Focus rings and the resize line in the blue" },
   "state.hover": { "$value": { "light": "rgb(0 0 0 / 0.04)", "dark": "rgb(255 255 255 / 0.06)" }, "$description": "A hovered row or icon button: #f5f5f5 on white, #383838 on the dark panel" },
-  "text.xs": { "$value": "0.6875rem", "$description": "UI3 has one interface size: 11 px (an owner decision in the tracker: the library's 12 and 14 px floors)" },
-  "text.s": { "$value": "0.6875rem", "$description": "11 px: body and labels in the compact chrome" },
-  "text.m": { "$value": "0.8125rem", "$description": "13 px: the larger UI3 text (the file name)" },
   "radius.sm": { "$value": "0.3125rem", "$description": "5 px: fields, buttons, tool buttons, rows" },
   "radius.md": { "$value": "0.3125rem", "$description": "5 px: controls" },
   "radius.lg": { "$value": "0.8125rem", "$description": "13 px: the floating toolbar, menus and popovers" },
@@ -27,6 +24,11 @@
   "c.editor-layout.divider-width": { "$value": "1px", "$description": "UI3 draws a hairline between each panel and the canvas" },
   "c.tree-view.selected-fill": { "$value": "{color.accent-subtle}", "$description": "A selected layer is tinted blue" },
   "c.canvas.frame-shadow": { "$value": "none", "$description": "Frames sit flat on the canvas" },
+  "c.canvas.handle": { "$value": "0.375rem", "$description": "6 px selection handles" },
+  "c.canvas.handle-fill": { "$value": "#ffffff", "$description": "Handles are white in both schemes" },
+  "c.canvas.selection-width": { "$value": "1px", "$description": "A 1 px selection outline" },
+  "c.canvas.size-radius": { "$value": "0.125rem", "$description": "The size label: 2 px corners" },
+  "c.canvas.name-selected": { "$value": "{color.accent}", "$description": "A selected frame names itself in the blue" },
   "c.floating-bar.radius": { "$value": "0.8125rem", "$description": "13 px: the toolbar's corners, also in the compact chrome" },
   "c.floating-bar.padding": { "$value": "0.5rem", "$description": "8 px around the tool buttons" }
 }

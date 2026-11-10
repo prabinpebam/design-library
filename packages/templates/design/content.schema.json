@@ -61,6 +61,26 @@
           },
           "type": "array"
         },
+        "menu": {
+          "description": "The main menu at the top of the layers panel: its commands (none run in the example).",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "label"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "page": {
           "type": "string"
         },
@@ -146,6 +166,7 @@
       "required": [
         "file",
         "project",
+        "menu",
         "pages",
         "page",
         "people",
@@ -400,10 +421,17 @@
       "additionalProperties": false,
       "description": "Interface words (Q64: every word a person reads is content). `{name}` marks a value filled in.",
       "properties": {
+        "assetsTab": {
+          "type": "string"
+        },
         "canvas": {
           "type": "string"
         },
         "empty": {
+          "type": "string"
+        },
+        "fileTab": {
+          "description": "The left panel's tabs: \"File\" and \"Assets\".",
           "type": "string"
         },
         "fill": {
@@ -434,6 +462,14 @@
           "description": "A layer row's lock Switch: \"Lock {name}\".",
           "type": "string"
         },
+        "mainMenu": {
+          "description": "The main menu's icon button: \"Main menu\".",
+          "type": "string"
+        },
+        "noAssets": {
+          "description": "The Assets tab, empty in the example.",
+          "type": "string"
+        },
         "noColours": {
           "type": "string"
         },
@@ -444,6 +480,10 @@
           "type": "string"
         },
         "position": {
+          "type": "string"
+        },
+        "present": {
+          "description": "The play button beside Share: \"Present\".",
           "type": "string"
         },
         "propertyLabels": {
@@ -529,7 +569,12 @@
         "empty",
         "inspector",
         "noColours",
-        "canvas"
+        "canvas",
+        "mainMenu",
+        "fileTab",
+        "assetsTab",
+        "noAssets",
+        "present"
       ],
       "type": "object"
     },
@@ -611,6 +656,7 @@
         "menu",
         "scheme-light",
         "scheme-dark",
+        "scheme-system",
         "contrast-standard",
         "contrast-more",
         "settings",

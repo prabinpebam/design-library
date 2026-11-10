@@ -491,6 +491,10 @@
   --c-canvas-shape-radius: var(--radius-sm);
   --c-canvas-selection: var(--color-accent);
   --c-canvas-handle: var(--space-2);
+  --c-canvas-handle-fill: var(--color-bg);
+  --c-canvas-selection-width: var(--border-thick);
+  --c-canvas-size-radius: var(--radius-sm);
+  --c-canvas-name-selected: var(--color-text-muted);
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
   --c-canvas-text-size: var(--text-m);
@@ -1310,6 +1314,7 @@
     --color-bg-control: var(--p-standard-bg-control);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-canvas-name-selected: var(--color-text-muted);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1341,6 +1346,7 @@
   --color-bg-control: var(--p-standard-bg-control);
   --color-status-neutral-fg: var(--color-text-muted);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
+  --c-canvas-name-selected: var(--color-text-muted);
   --c-code-key-outline: var(--color-border-strong);
   --c-colour-field-border: var(--color-border-strong);
   --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1372,6 +1378,7 @@
     --color-bg-control: var(--color-bg-raised);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-canvas-name-selected: var(--color-text-muted);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1403,6 +1410,7 @@
   --color-bg-control: var(--color-bg-raised);
   --color-status-neutral-fg: var(--color-text-muted);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
+  --c-canvas-name-selected: var(--color-text-muted);
   --c-code-key-outline: var(--color-border-strong);
   --c-colour-field-border: var(--color-border-strong);
   --c-context-matrix-head-fg: var(--color-text-muted);
@@ -2613,6 +2621,7 @@
   --c-button-radius-lg: var(--radius-lg);
   --c-button-radius-sm: var(--radius-sm);
   --c-canvas-shape-radius: var(--radius-sm);
+  --c-canvas-size-radius: var(--radius-sm);
   --c-card-radius: var(--radius-lg);
   --c-carousel-radius: var(--radius-lg);
   --c-chat-message-bubble-radius: var(--radius-lg);
@@ -2678,6 +2687,7 @@
   --c-button-radius-lg: var(--radius-lg);
   --c-button-radius-sm: var(--radius-sm);
   --c-canvas-shape-radius: var(--radius-sm);
+  --c-canvas-size-radius: var(--radius-sm);
   --c-card-radius: var(--radius-lg);
   --c-carousel-radius: var(--radius-lg);
   --c-chat-message-bubble-radius: var(--radius-lg);
@@ -2743,6 +2753,7 @@
   --c-button-radius-lg: var(--radius-lg);
   --c-button-radius-sm: var(--radius-sm);
   --c-canvas-shape-radius: var(--radius-sm);
+  --c-canvas-size-radius: var(--radius-sm);
   --c-card-radius: var(--radius-lg);
   --c-carousel-radius: var(--radius-lg);
   --c-chat-message-bubble-radius: var(--radius-lg);
@@ -2808,6 +2819,7 @@
   --c-button-radius-lg: var(--radius-lg);
   --c-button-radius-sm: var(--radius-sm);
   --c-canvas-shape-radius: var(--radius-sm);
+  --c-canvas-size-radius: var(--radius-sm);
   --c-card-radius: var(--radius-lg);
   --c-carousel-radius: var(--radius-lg);
   --c-chat-message-bubble-radius: var(--radius-lg);
@@ -2873,6 +2885,7 @@
   --c-button-radius-lg: var(--radius-lg);
   --c-button-radius-sm: var(--radius-sm);
   --c-canvas-shape-radius: var(--radius-sm);
+  --c-canvas-size-radius: var(--radius-sm);
   --c-card-radius: var(--radius-lg);
   --c-carousel-radius: var(--radius-lg);
   --c-chat-message-bubble-radius: var(--radius-lg);

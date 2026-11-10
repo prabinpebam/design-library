@@ -125,6 +125,8 @@ export interface DesignTool {
 export interface DesignAppSpec {
   file: string;
   project: string;
+  /** The main menu at the top of the layers panel: its commands (none run in the example). */
+  menu: { value: string; label: string }[];
   pages: { id: string; label: string }[];
   page: string;
   people: { name: string; presence?: 'available' | 'away' }[];
@@ -252,4 +254,13 @@ export interface DesignStrings {
   inspector: string;
   noColours: string;
   canvas: string;
+  /** The main menu's icon button: "Main menu". */
+  mainMenu: string;
+  /** The left panel's tabs: "File" and "Assets". */
+  fileTab: string;
+  assetsTab: string;
+  /** The Assets tab, empty in the example. */
+  noAssets: string;
+  /** The play button beside Share: "Present". */
+  present: string;
 }

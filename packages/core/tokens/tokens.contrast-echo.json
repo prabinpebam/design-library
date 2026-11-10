@@ -11,6 +11,16 @@
         "$description": "A point at rest (echoed for contrast contexts)"
       }
     },
+    "canvas": {
+      "$extensions": {
+        "owner": "Canvas"
+      },
+      "name-selected": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "A frame's name while the frame is selected (the same as at rest by default; a theme may tint it) (echoed for contrast contexts)"
+      }
+    },
     "code": {
       "$extensions": {
         "owner": "Code"

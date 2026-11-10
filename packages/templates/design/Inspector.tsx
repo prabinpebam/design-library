@@ -17,6 +17,8 @@ const isOwn = (key: string): key is Own => (OWN as readonly string[]).includes(k
 
 export interface InspectorProps {
   tabs: InspectorTab[];
+  /** Beside the tabs, at their end: the zoom (UI3 keeps it on the tab row). */
+  extra?: ReactNode;
   /** The tab open at first (`design`, `prototype`, `dev`); the first when absent. */
   tab?: string;
   /** The selected layer, its props merged over the defaults. */
@@ -80,7 +82,7 @@ export function cssOf(shape: DesignShape & { props: ShapeProps }): string {
   return lines.join('\n');
 }
 
-export function Inspector({ tabs, tab, shape, parent, label, notInExample, noColours, colours, onChange, onReplaceColour, labels = false }: InspectorProps) {
+export function Inspector({ tabs, tab, shape, parent, label, notInExample, noColours, colours, onChange, onReplaceColour, labels = false, extra }: InspectorProps) {
   const p = shape.props;
   const own = (key: string): PropValue | PropItem[] | undefined => (isOwn(key) ? shape[key] : p[key]);
   const setOwn = (key: string, v: PropValue | PropItem[]) => (isOwn(key) ? onChange({ [key]: v }) : onChange({}, { [key]: v }));
@@ -261,5 +263,5 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
     );
   };
 
-  return <Tabs label={label} items={tabs.map((t) => ({ id: t.id, label: t.label, panel: <Stack gap="group">{t.sections.map(section)}</Stack> }))} defaultSelected={tab ?? tabs[0]?.id} size="xs" />;
+  return <Tabs label={label} items={tabs.map((t) => ({ id: t.id, label: t.label, panel: <Stack gap="group">{t.sections.map(section)}</Stack> }))} defaultSelected={tab ?? tabs[0]?.id} size="xs" extra={extra} />;
 }

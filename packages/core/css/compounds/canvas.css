@@ -174,8 +174,12 @@
   [data-dl='canvas'] [data-dl-part='selection'] {
     position: absolute;
     inset: 0;
-    outline: var(--border-thick) solid var(--c-canvas-selection);
+    outline: var(--c-canvas-selection-width) solid var(--c-canvas-selection);
     pointer-events: none;
+  }
+
+  [data-dl-part='place'] > [data-dl-part='name']:has(~ [data-dl-part='shape'][aria-pressed='true']) {
+    color: var(--c-canvas-name-selected);
   }
 
   [data-dl='canvas'] [data-dl-part='handle'] {
@@ -183,7 +187,7 @@
     inline-size: var(--c-canvas-handle);
     block-size: var(--c-canvas-handle);
     border: var(--border-hairline) solid var(--c-canvas-selection);
-    background-color: var(--color-bg);
+    background-color: var(--c-canvas-handle-fill);
     translate: -50% -50%;
   }
 
@@ -198,7 +202,7 @@
     left: 50%;
     translate: -50% 0;
     padding-inline: var(--c-canvas-size-padding);
-    border-radius: var(--radius-sm);
+    border-radius: var(--c-canvas-size-radius);
     background-color: var(--c-canvas-selection);
     color: var(--color-text-on-accent);
     font-size: var(--type-caption-size);

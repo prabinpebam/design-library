@@ -104,6 +104,11 @@
         "$type": "dimension",
         "$value": "{radius.sm}",
         "$description": "A rectangle's corners (echoed for shape contexts)"
+      },
+      "size-radius": {
+        "$type": "dimension",
+        "$value": "{radius.sm}",
+        "$description": "The size label's corners (echoed for shape contexts)"
       }
     },
     "card": {

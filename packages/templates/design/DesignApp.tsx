@@ -6,7 +6,7 @@
  * (Comments.tsx). No styles.
  */
 import { useState } from 'react';
-import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Text, Toolbar, TreeView, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
+import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Tabs, Text, Toolbar, TreeView, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import { DesignComments } from './Comments';
 import { Inspector } from './Inspector';
@@ -107,6 +107,8 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
     return !!layer && !!propsOf(view, layer).locked;
   };
 
+  const zoomMenu = <MenuButton label={fill(s.zoomValue, { percent: Number(zoom) * 100 })} menuLabel={s.zoom} size="xs" emphasis="quiet" onSelect={setZoom} items={view.zooms.map((z) => ({ value: String(z), label: fill(s.zoomTo, { percent: z * 100 }) }))} />;
+
   return (
     <EditorLayout
       data-template="design"
@@ -119,26 +121,34 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
       onEndToggle={() => setEndOpen((x) => !x)}
       toolsLabel={s.tool}
       tools={
-        <Cluster gap="item" wrap={false}>
-          <SegmentedControl label={s.tool} iconOnly size="s" value={tool} onChange={setTool} options={view.tools} />
-          <MenuButton label={fill(s.zoomValue, { percent: Number(zoom) * 100 })} menuLabel={s.zoom} size="s" emphasis="quiet" onSelect={setZoom} items={view.zooms.map((z) => ({ value: String(z), label: fill(s.zoomTo, { percent: z * 100 }) }))} />
-        </Cluster>
+        <SegmentedControl label={s.tool} iconOnly size="s" value={tool} onChange={setTool} options={view.tools} />
       }
       startHead={
-        <Text as="span" variant="body-sm">
-          {view.file}
-        </Text>
+        <Stack gap="pair">
+          <Cluster gap="item" wrap={false}>
+            <MenuButton label={s.mainMenu} icon="menu" iconOnly size="s" emphasis="quiet" items={view.menu} onSelect={(value) => notify({ message: fill(s.notInExample, { label: view.menu.find((m) => m.value === value)?.label ?? '' }) })} />
+          </Cluster>
+          <Heading level={1} size="label">
+            {view.file}
+          </Heading>
+          <Text as="span" variant="body-sm" tone="muted">
+            {view.project}
+          </Text>
+        </Stack>
       }
       endHead={
-        <Toolbar align="end" start={<AvatarGroup label={s.working} members={view.people} size={24} showPresence />}>
+        <Toolbar align="end" start={<AvatarGroup label={s.working} members={view.people} size={24} max={2} />}>
+          <Button label={s.present} icon="play" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: fill(s.notInExample, { label: s.present }) })} />
           <Popover trigger={{ label: s.viewOptions, icon: 'more', iconOnly: true, emphasis: 'quiet', size: 'xs' }} title={s.viewOptions}>
             <Switch label={s.propertyLabels} checked={labels} onChange={setLabels} />
           </Popover>
+          {(comments || !shape) && zoomMenu}
           <Button label={s.share} emphasis="primary" size="xs" onClick={() => notify({ message: fill(s.notInExample, { label: s.sharing }) })} />
         </Toolbar>
       }
       start={
-        <>
+        <Tabs label={s.layers} size="xs" items={[{ id: 'file', label: s.fileTab, panel: (
+        <Stack gap="group">
           <Stack gap="item">
             <Cluster gap="item" justify="between" wrap={false}>
               <Heading level={2} size="label">
@@ -173,7 +183,8 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
               }}
             />
           </Stack>
-        </>
+        </Stack>
+        ) }, { id: 'assets', label: s.assetsTab, panel: <Text variant="body-sm" tone="muted">{s.noAssets}</Text> }]} />
       }
       endLabel={comments ? view.comments.strings.heading : undefined}
       end={
@@ -201,6 +212,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
               onChange={change}
               onReplaceColour={(from, to) => setShapes((all) => recolour(all, from, to))}
               labels={labels}
+              extra={zoomMenu}
             />
           </>
         ) : (

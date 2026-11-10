@@ -6,6 +6,48 @@
   "record": {
     "file": "Sign-in flow",
     "project": "Kitewing app",
+    "menu": [
+      {
+        "value": "files",
+        "label": "Back to files"
+      },
+      {
+        "value": "actions",
+        "label": "Quick actions…"
+      },
+      {
+        "value": "file",
+        "label": "File"
+      },
+      {
+        "value": "edit",
+        "label": "Edit"
+      },
+      {
+        "value": "view",
+        "label": "View"
+      },
+      {
+        "value": "object",
+        "label": "Object"
+      },
+      {
+        "value": "text",
+        "label": "Text"
+      },
+      {
+        "value": "arrange",
+        "label": "Arrange"
+      },
+      {
+        "value": "preferences",
+        "label": "Preferences"
+      },
+      {
+        "value": "help",
+        "label": "Help and account"
+      }
+    ],
     "pages": [
       {
         "id": "flows",
@@ -659,8 +701,8 @@
       "kindText": "Text",
       "tool": "Tool",
       "zoom": "Zoom",
-      "zoomValue": "{percent} %",
-      "zoomTo": "Zoom to {percent} %",
+      "zoomValue": "{percent}%",
+      "zoomTo": "Zoom to {percent}%",
       "working": "Working on this file",
       "share": "Share",
       "viewOptions": "View options",
@@ -683,7 +725,12 @@
       "empty": "Select a layer to see and change its properties.",
       "canvas": "{file}, {page}",
       "inspector": "Properties",
-      "noColours": "No colours in this layer yet."
+      "noColours": "No colours in this layer yet.",
+      "mainMenu": "Main menu",
+      "fileTab": "File",
+      "assetsTab": "Assets",
+      "noAssets": "No assets in this file yet.",
+      "present": "Present"
     },
     "inspector": [
       {
