@@ -103,6 +103,43 @@
           "name": "treatment",
           "type": "PictureTreatment",
           "description": "A treatment (IP31), named as a picture entry's `treatment` in `assets.json` (DP3): `'greyscale'`, `'duotone'` (grey multiplied over `--c-image-duotone`, the accent by default) or `'none'`; or `{ rest, active }`, where `active` shows while the picture, or the link, button or card around it, is hovered or focused (`{ rest: 'greyscale', active: 'none' }`: grey until pointed at). More contrast and forced colours always show the picture as it is."
+        },
+        {
+          "name": "dark",
+          "type": "string | PictureSource",
+          "description": "The picture drawn in a dark scheme (MP17): another file of the same picture, at the same ratio, under the same `alt`. `src` stays the light (or only) file. It follows the nearest `data-scheme` (the page's, or a band's own), else the system's; swaps before the first paint and, later, only once the new file has loaded, so nothing flashes or moves. Only the file in use is fetched until the scheme changes. Raster or SVG alike."
+        },
+        {
+          "name": "contrast",
+          "type": "{ light?: string | PictureSource",
+          "description": "Files for more contrast (MP17), in light and in dark. Falls back: dark and more → `contrast.dark` → `dark` → `src`; light and more → `contrast.light` → `src`."
+        }
+      ]
+    },
+    {
+      "interface": "PictureSource",
+      "props": [
+        {
+          "name": "src",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "srcSet",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "interface": "SchemeSources",
+      "props": [
+        {
+          "name": "dark",
+          "type": "string | PictureSource"
+        },
+        {
+          "name": "contrast",
+          "type": "{ light?: string | PictureSource"
         }
       ]
     }
@@ -134,6 +171,7 @@
   "usedBy": [
     "ChatMessage",
     "Composer",
+    "EmptyState",
     "ImageGeneration",
     "ImageGrid",
     "Lightbox",

@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
 import { Heading } from '../fundamentals/Heading';
-import { Image } from '../fundamentals/Image';
+import { Image, type SchemeSources } from '../fundamentals/Image';
 import { Text } from '../fundamentals/Text';
 import type { DataAttributes } from '../types';
 
-export interface HeroPicture {
+export interface HeroPicture extends SchemeSources {
   src: string;
   /** What the picture shows, for people who can't see it; empty only if it adds nothing the words don't say. */
   alt: string;
@@ -106,7 +106,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
         {!picture && visual && <div data-dl-part="media">{media}</div>}
         {picture && (
           <div data-dl-part="picture">
-            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" priority={picture.priority} />
+            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} dark={picture.dark} contrast={picture.contrast} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" priority={picture.priority} />
           </div>
         )}
       </div>

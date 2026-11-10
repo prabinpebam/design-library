@@ -43,6 +43,27 @@
   }
 
   /*
+   * Files per scheme (MP17): every file sits in the frame's one cell under its one ratio. The file in use is drawn; the
+   * next one is laid out but unseen while it loads (so transparent art never shows through), and the swap is one frame
+   * with nothing moving; a file not in use isn't drawn and, being lazy, isn't fetched.
+   */
+  [data-dl='image'] > img[data-layer] {
+    grid-area: 1 / 1;
+  }
+
+  [data-dl='image'] > img[data-layer='next'] {
+    visibility: hidden;
+  }
+
+  [data-dl='image'] > img[data-layer='off'] {
+    display: none;
+  }
+
+  [data-dl='image'] > [data-dl-part='fallback'] {
+    grid-area: 1 / 1;
+  }
+
+  /*
    * Treatments (IP31, DP3's picture `treatment`): `data-tone` at rest, `data-tone-active` while the picture, or the link,
    * button or card it sits in (or any element marked data-tone-area, such as a player's stage), is hovered or focused. Greyscale is a filter on the picture; duotone is the picture in
    * grey under a multiply layer of `--c-image-duotone` (light parts take the colour, dark parts stay near black). Both

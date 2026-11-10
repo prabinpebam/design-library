@@ -1,7 +1,9 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { announce as say } from '../behaviour/announce';
 import { Heading } from '../fundamentals/Heading';
 import { Text } from '../fundamentals/Text';
+import { layerFor, pictureLayers, type SchemeSources } from '../fundamentals/Image';
+import { useRegionScheme } from '../behaviour/region-scheme';
 import type { DataAttributes } from '../types';
 
 export interface EmptyStateProps extends DataAttributes {
@@ -27,9 +29,10 @@ export interface EmptyStateProps extends DataAttributes {
   /**
    * **Under test (VS4, AF11): only the EmptyState review story uses it; no template does until the check passes.** A small
    * decorative spot illustration of what will appear, in the silhouette's place (it replaces the silhouette), at its own
-   * CSS size (`width` × `height`) and never wider than the silhouette; hidden from screen readers.
+   * CSS size (`width` × `height`) and never wider than the silhouette; hidden from screen readers. `dark` and
+   * `contrast` name the same art for a dark scheme and for more contrast (MP17), as `Image` takes them.
    */
-  illustration?: { src: string; width: number; height: number };
+  illustration?: { src: string; width: number; height: number } & SchemeSources;
   /** Says the title through the polite announcer when it appears: only when the person caused it (a search, a filter, clearing). */
   announce?: boolean;
 }
@@ -59,7 +62,7 @@ export function EmptyState({ reason, scope = 'section', title, headingLevel, chi
   return (
     <div {...data} data-dl="empty-state" data-reason={reason} data-scope={scope}>
       {illustration && reason !== 'no-access' && scope !== 'component' && (
-        <img data-dl-part="illustration" src={illustration.src} width={illustration.width} height={illustration.height} alt="" aria-hidden="true" />
+        <Illustration {...illustration} />
       )}
       {!illustration && silhouette && reason !== 'no-access' && scope !== 'component' && (
         <div data-dl-part="silhouette" data-shape={silhouette} aria-hidden="true">
@@ -85,4 +88,14 @@ export function EmptyState({ reason, scope = 'section', title, headingLevel, chi
       {actions && <div data-dl-part="actions">{actions}</div>}
     </div>
   );
+}
+
+/** The spot illustration, in the file for the scheme it's drawn in (MP17): one small decorative picture, swapped in place. */
+function Illustration({ src, width, height, dark, contrast }: NonNullable<EmptyStateProps['illustration']>) {
+  const ref = useRef<HTMLImageElement>(null);
+  const sources = { dark, contrast };
+  const layers = pictureLayers({ src }, sources);
+  const region = useRegionScheme(ref, layers.length > 1);
+  const shown = layers.find((l) => l.key === layerFor(layers, region, sources)) ?? layers[0];
+  return <img ref={ref} data-dl-part="illustration" src={shown.src} width={width} height={height} alt="" aria-hidden="true" />;
 }

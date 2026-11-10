@@ -59,7 +59,7 @@
         {
           "name": "illustration",
           "type": "{ src: string",
-          "description": "**Under test (VS4, AF11): only the EmptyState review story uses it; no template does until the check passes.** A small decorative spot illustration of what will appear, in the silhouette's place (it replaces the silhouette), at its own CSS size (`width` × `height`) and never wider than the silhouette; hidden from screen readers."
+          "description": "**Under test (VS4, AF11): only the EmptyState review story uses it; no template does until the check passes.** A small decorative spot illustration of what will appear, in the silhouette's place (it replaces the silhouette), at its own CSS size (`width` × `height`) and never wider than the silhouette; hidden from screen readers. `dark` and `contrast` name the same art for a dark scheme and for more contrast (MP17), as `Image` takes them."
         },
         {
           "name": "width",
@@ -68,7 +68,7 @@
         },
         {
           "name": "height",
-          "type": "number }",
+          "type": "number } & SchemeSources",
           "required": true
         },
         {
@@ -82,6 +82,7 @@
   ],
   "uses": [
     "Heading",
+    "Image",
     "Text"
   ],
   "tokens": [
