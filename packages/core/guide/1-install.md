@@ -23,10 +23,10 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 1. **Start a Vite + React + TypeScript app** if you don't have one (any folder; nothing from the library repository is needed). Your `package.json` needs `"type": "module"` and these scripts: `"dev": "vite"`, `"build": "vite build"`.
 
-2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.3.0-beta.1, the third Beta), with React and the build tools:
+2. **Install the packages**, both tarballs in one command, from the release for the version you want (here 0.4.0-beta.1, the fourth Beta), with React and the build tools:
 
    ```sh
-   npm install https://github.com/prabinpebam/design-library/releases/download/v0.3.0-beta.1/design-library-core-0.3.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.3.0-beta.1/design-library-templates-0.3.0-beta.1.tgz react@^19 react-dom@^19
+   npm install https://github.com/prabinpebam/design-library/releases/download/v0.4.0-beta.1/design-library-core-0.4.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.4.0-beta.1/design-library-templates-0.4.0-beta.1.tgz react@^19 react-dom@^19
    npm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19
    ```
 
@@ -120,7 +120,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
 
 ## Inside the library repository
 
-To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.3.0-beta.1"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
+To try the library or change it, an app can also live in [the library repository](https://github.com/prabinpebam/design-library) as `apps/{your-app}`, the way `apps/example` does: list it by name in the root `workspaces` (never a glob), depend on `"@design-library/core": "0.4.0-beta.1"`, and allow the repository root in Vite (`server: { fs: { allow: [root] } }`). Every check in the root `package.json` then runs on it.
 
 ## Do and don't
 

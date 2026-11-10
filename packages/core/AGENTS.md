@@ -2,7 +2,7 @@
 
 You're building a website or app with this library. This file tells you where everything is, the rules you must never break, and the steps for each task. It is for **using** the library; changing the library itself follows the root `AGENTS.md` of [the library repository](https://github.com/prabinpebam/design-library).
 
-**Version 0.3.0-beta.1** (Beta, for early trials; upgrading: `UPGRADE.md`) (this guide matches `package.json` beside it; what changed between versions is in `CHANGELOG.md`). MIT licence. Supported: React 19 in the browser, bundled by Vite 8 ([step 1, "Supported"](guide/1-install.md#supported)).
+**Version 0.4.0-beta.1** (Beta, for early trials; upgrading: `UPGRADE.md`) (this guide matches `package.json` beside it; what changed between versions is in `CHANGELOG.md`). MIT licence. Supported: React 19 in the browser, bundled by Vite 8 ([step 1, "Supported"](guide/1-install.md#supported)).
 
 **Where you are:** in your project this package is `node_modules/@design-library/core/`; every path below (`agent/index.json`, `guide/…`, `schemas/…`) is relative to it, and the index writes the same files as `@design-library/core/…`. Inside the library repository it is `packages/core/`.
 

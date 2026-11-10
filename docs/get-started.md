@@ -22,7 +22,7 @@ Owner, 2026-11-09 07:59 ([DoD Q83](definition-of-done.md#owner-instructions)): *
 - **Together:** templates depends on the core of the same version (`"@design-library/core": "{version}"`). Install both in one command from the same release.
 - **Versioning:** `MAJOR.MINOR.PATCH`. While the major is `0`, a minor release may break a public contract and says how to upgrade; a patch never breaks one. Contracts with their own version: the content schemas (`$id …/1`), the colour config (`colour-config/2`) and each template's `contentVersion`. Every change is in `node_modules/@design-library/core/CHANGELOG.md`.
 - **Without access to GitHub releases:** clone the repository and run `npm run pack` at its root (Node only, no install needed); the tarballs land in `.packages/`. Install those files by path.
-- **Current version:** 0.3.0-beta.1 (Beta, for early trials).
+- **Current version:** 0.4.0-beta.1 (Beta, for early trials).
 
 ## Step by step
 
@@ -33,7 +33,7 @@ Any folder. `package.json` needs `"type": "module"` and scripts `"dev": "vite"`,
 ### 2. Install
 
 ```sh
-npm install https://github.com/prabinpebam/design-library/releases/download/v0.3.0-beta.1/design-library-core-0.3.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.3.0-beta.1/design-library-templates-0.3.0-beta.1.tgz react@^19 react-dom@^19
+npm install https://github.com/prabinpebam/design-library/releases/download/v0.4.0-beta.1/design-library-core-0.4.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.4.0-beta.1/design-library-templates-0.4.0-beta.1.tgz react@^19 react-dom@^19
 npm install -D vite@^8 @vitejs/plugin-react@^6 typescript@~6.0 @types/react@^19 @types/react-dom@^19
 ```
 
