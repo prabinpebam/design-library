@@ -6,7 +6,8 @@
  * DescriptionList and CodeBlock. Every value lives on the layer (`props`), so the canvas and Dev mode follow each change
  * at once (zero latency: no transition on a value a person is setting). Fields may stack in one cell (`column`) or sit in a row's action column (`at: 'action'`); a `wide` first field takes two thirds of its row; a list may show each item as a summary row that opens a Popover (`summary`). No styles.
  */
-import { Button, Cluster, CodeBlock, DescriptionList, GradientEditor, MenuButton, NumberField, Popover, PropertyRow, PropertySection, SegmentedControl, Select, Slider, Stack, Switch, Tabs, Text, TextField, AlignmentPicker, notify, type AlignmentPoint, type GradientStop } from '@design-library/core/components';
+import { VisibilityToggle } from '@design-library/core/components';
+import { Button, Checkbox, Cluster, CodeBlock, DescriptionList, GradientEditor, MenuButton, NumberField, Popover, PropertyRow, PropertySection, SegmentedControl, Select, Slider, Stack, Switch, Tabs, Text, TextField, AlignmentPicker, notify, type AlignmentPoint, type GradientStop } from '@design-library/core/components';
 import type { ReactNode } from 'react';
 import { fill } from '@design-library/core/render';
 import type { DesignShape, InspectorField, InspectorSection, InspectorTab, PropItem, PropValue, ShapeProps } from './types';
@@ -136,6 +137,11 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
         ) : (
           <Switch key={key} label={f.label} size="s" checked={!!v} onChange={(x) => set(f.key, x)} />
         );
+      case 'visibility':
+        return <VisibilityToggle key={key} name="" verb={f.label} on={v !== false} onChange={(x) => set(f.key, x)} />;
+      case 'checkbox':
+        {/* binary-setting: Figma's own checkboxes (Clip content, Truncate text, Ignore auto layout), the owner's choice for this template's dense inspector (Q124 OD3) */}
+        return <Checkbox key={key} label={f.label} size="s" checked={!!v} onChange={(x) => set(f.key, x)} />;
       case 'colour':
         return <TextField key={key} label={labelled} hideLabel={!show} size="xs" value={String(v ?? '')} onCommit={(x) => set(f.key, x)} swatch={{ value: String(v ?? ''), onChange: (x) => set(f.key, x) }} />;
       case 'slider':
@@ -182,7 +188,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
         </>
       ) : undefined;
       first = false;
-      const columns = drawn.length === 1 || inRow.some((f) => f.kind === 'switch') ? 1 : drawn.length >= 3 ? 3 : 2;
+      const columns = drawn.length === 1 || inRow.some((f) => f.kind === 'switch' || f.kind === 'checkbox') ? 1 : drawn.length >= 3 ? 3 : 2;
       // One column holding several fields is several rows: each field is its own row of the section (Q93).
       if (columns === 1 && drawn.length > 1)
         return drawn.map((d, n) => (
@@ -218,7 +224,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
             const set = (k: string, v: PropValue | PropItem[]) => setItems(items.map((x, j) => (j === n ? { ...x, [k]: v } : x)));
             const itemActions = (
               <>
-                {l.visible && <Switch label={`${l.show ?? ''} ${name.toLowerCase()}`.trim()} hideLabel size="xs" checked={item[l.visible] !== false} onChange={(x) => set(l.visible!, x)} />}
+                {l.visible && <VisibilityToggle name={name.toLowerCase()} verb={l.show} on={item[l.visible] !== false} onChange={(x) => set(l.visible!, x)} />}
                 <Button label={`${l.remove} ${name.toLowerCase()}`} icon="minus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => setItems(items.filter((_, j) => j !== n))} />
               </>
             );

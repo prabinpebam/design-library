@@ -41,7 +41,7 @@ export interface InspectorWhen {
  */
 export interface InspectorField {
   key: string;
-  kind: 'number' | 'select' | 'segmented' | 'switch' | 'colour' | 'slider' | 'text' | 'alignment' | 'gradient' | 'align' | 'column' | 'menu';
+  kind: 'number' | 'select' | 'segmented' | 'switch' | 'checkbox' | 'visibility' | 'colour' | 'slider' | 'text' | 'alignment' | 'gradient' | 'align' | 'column' | 'menu';
   label: string;
   glyph?: string;
   icon?: IconName;
@@ -277,4 +277,7 @@ export interface DesignStrings {
   moreTools: string;
   /** The Pages heading's add button: "Add page". */
   addPage: string;
+  /** The verbs of a layer row's eye and padlock: "Show", "Lock". */
+  showVerb: string;
+  lockVerb: string;
 }

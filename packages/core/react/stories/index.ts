@@ -42,6 +42,7 @@ export { default as siteLayoutStories } from './SiteLayout.stories';
 export { default as siteHeaderStories } from './SiteHeader.stories';
 export { default as agendaStories } from './Agenda.stories';
 export { default as treeViewStories } from './TreeView.stories';
+export { default as visibilityToggleStories } from './VisibilityToggle.stories';
 export { default as canvasStories } from './Canvas.stories';
 export { default as editorLayoutStories } from './EditorLayout.stories';
 export { default as boardStories } from './Board.stories';

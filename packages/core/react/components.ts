@@ -79,6 +79,8 @@ export { Agenda } from './compounds/Agenda';
 export type { AgendaProps, AgendaSlot, AgendaSession } from './compounds/Agenda';
 export { TreeView } from './compounds/TreeView';
 export type { TreeViewProps, TreeItem } from './compounds/TreeView';
+export { VisibilityToggle } from './compounds/VisibilityToggle';
+export type { VisibilityToggleProps } from './compounds/VisibilityToggle';
 export { Canvas } from './compounds/Canvas';
 export type { CanvasProps, CanvasShape, CanvasLook } from './compounds/Canvas';
 export { EditorLayout } from './layouts/EditorLayout';

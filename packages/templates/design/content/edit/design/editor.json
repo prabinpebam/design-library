@@ -804,7 +804,9 @@
       "mode": "Mode",
       "searchLayers": "Search layers",
       "moreTools": "More {tool} tools",
-      "addPage": "Add page"
+      "addPage": "Add page",
+      "showVerb": "Show",
+      "lockVerb": "Lock"
     },
     "inspector": [
       {
@@ -1268,7 +1270,7 @@
               [
                 {
                   "key": "clip",
-                  "kind": "switch",
+                  "kind": "checkbox",
                   "label": "Clip content",
                   "when": {
                     "key": "clipAllowed",
@@ -1279,7 +1281,7 @@
                 },
                 {
                   "key": "absolute",
-                  "kind": "switch",
+                  "kind": "checkbox",
                   "label": "Ignore auto layout",
                   "when": {
                     "key": "inLayout",
@@ -1386,8 +1388,9 @@
               [
                 {
                   "key": "visible",
-                  "kind": "switch",
-                  "label": "Show in the document"
+                  "kind": "visibility",
+                  "label": "Show in the document",
+                  "at": "action"
                 }
               ],
               [
@@ -1717,7 +1720,7 @@
               [
                 {
                   "key": "truncate",
-                  "kind": "switch",
+                  "kind": "checkbox",
                   "label": "Truncate text"
                 },
                 {

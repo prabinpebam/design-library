@@ -457,6 +457,7 @@
   --c-site-header-name-size-large: var(--type-heading-2-size);
   --c-site-header-current-colour: var(--color-text-accent);
   --c-site-header-current-rule: var(--color-border-strong);
+  --c-visibility-toggle-pressed-fill: transparent;
   --c-tree-view-row-size: var(--size-target-dense);
   --c-tree-view-surface: var(--color-bg);
   --c-tree-view-current-fill: var(--color-bg-tint);

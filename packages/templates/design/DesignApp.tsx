@@ -6,7 +6,7 @@
  * (Comments.tsx). No styles.
  */
 import { useState } from 'react';
-import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Tabs, Text, Toolbar, TreeView, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
+import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Tabs, Text, Toolbar, TreeView, VisibilityToggle, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import { DesignComments } from './Comments';
 import { Inspector } from './Inspector';
@@ -202,10 +202,8 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
                 const set = (props: ShapeProps) => setShapes((all) => update(all, layer.id, {}, props));
                 return (
                   <>
-                    {/* toggle-button: a layer row's eye and lock, as the owner chose for this template (Q119 OD2); a Switch would crowd the 240 px row */}
-                    <Button label={fill(s.showLayer, { name: layer.label })} icon={p.visible !== false ? 'eye' : 'eye-off'} iconOnly tooltip emphasis="quiet" size="xs" pressed={p.visible !== false} onClick={() => set({ visible: p.visible === false })} />
-                    {/* toggle-button: as above */}
-                    <Button label={fill(s.lockLayer, { name: layer.label })} icon={p.locked ? 'lock' : 'unlock'} iconOnly tooltip emphasis="quiet" size="xs" pressed={!!p.locked} onClick={() => set({ locked: !p.locked })} />
+                    <VisibilityToggle name={layer.label} verb={s.showVerb} on={p.visible !== false} onChange={(x) => set({ visible: x })} />
+                    <VisibilityToggle name={layer.label} kind="lock" verb={s.lockVerb} on={!!p.locked} onChange={(x) => set({ locked: x })} />
                   </>
                 );
               }}

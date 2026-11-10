@@ -1,0 +1,11 @@
+/*
+ * Tier 2 compound: VisibilityToggle (Q125). The eye or padlock is the state, so the pressed Button inside draws no
+ * fill of its own: the compound re-decides the button's pressed fill for itself (a token, not a restyle).
+ */
+@layer compounds {
+  [data-dl='visibility-toggle'] {
+    display: inline-flex;
+    flex: none;
+    --c-button-pressed-fill: var(--c-visibility-toggle-pressed-fill);
+  }
+}

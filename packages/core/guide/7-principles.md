@@ -17,7 +17,7 @@ Goal: every decision you make with this library follows the frameworks behind it
 | A token in `material.*` | [Materials](#materials) |
 | A token in `duration.*`, `easing.*`, `motion.*`, `count.*` | [Motion](#motion) |
 | A component in the `arrangement` family (Cluster, Grid, ScrollArea, Stack) | [Spacing](#spacing) |
-| A component in the `buttons` family (Button, ButtonGroup, MenuButton) | [States](#ui-states) |
+| A component in the `buttons` family (Button, ButtonGroup, MenuButton, VisibilityToggle) | [States](#ui-states) |
 | A component in the `chat` family (ChatMessage, ChatThinking, Composer, ConversationList, ImageGeneration, MessageActions) | [Words](#ui-copy) |
 | A component in the `content` family (Carousel, CodeBlock, DescriptionList, ImageGrid, IndexList, Lightbox, MediaPlayer, Quote, Section) | [Visual noise](#visual-noise) |
 | A component in the `data` family (Accordion, Agenda, Board, Card, DataTable, RowList, StackedBar, Statistic) | [Showing information](#visual-representation) |
@@ -68,7 +68,7 @@ Full framework: Design constraints (docs/brief.md#design-constraints).
 **Rules**
 
 - Never a one-sided accent border (border-left stripe) on a card, button, callout or nav item; use a fill, tint, full outline, icon or badge.
-- A binary setting is a Switch by default; a Button with `pressed` (a toggle button) only where a Switch doesn't fit the surface, with its reason written above it (`toggle-button:` comment, Q121).
+- A binary setting is a Switch by default; a Button with `pressed` (a toggle button) or a Checkbox only where a Switch doesn't fit the surface, with its reason written above it (`binary-setting:` comment, Q121, Q124); visibility (eye) and lock are established toggle buttons and need no reason (Q125).
 - Inner segments of a stacked or segmented bar are square; only the outer ends of the whole bar may round.
 - Pad once at the right interior level (one or two levels below the visual wrapper), never all around a wrapper or per leaf; scroll regions bleed to the surface edge with the scrollbar at the edge; never clip a focus ring.
 - Every scroll region is a ScrollArea: never `overflow: auto` or `scroll` on any other element, in CSS or inline, since that draws the browser's bar beside the content. Put ScrollArea where the region meets its surface's edge, with its padding on the content inside (its `inset`, or a padded child). A TextArea scrolls its own text and already uses the library's bar.

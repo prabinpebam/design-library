@@ -1,9 +1,9 @@
+import { VisibilityToggle } from '../compounds/VisibilityToggle';
 import { useState } from 'react';
 import { Button } from '../fundamentals/Button';
 import { NumberField } from '../fundamentals/NumberField';
 import { Select } from '../fundamentals/Select';
 import { Stack } from '../fundamentals/Stack';
-import { Switch } from '../fundamentals/Switch';
 import { TextField } from '../fundamentals/TextField';
 import { PropertySection } from '../compounds/PropertySection';
 import { PropertyRow } from '../compounds/PropertyRow';
@@ -72,7 +72,7 @@ function Rows() {
           lead
           action={
             <>
-              <Switch label="Show fill 1" hideLabel size="xs" checked={shown} onChange={setShown} />
+              <VisibilityToggle name="fill 1" on={shown} onChange={setShown} />
               <Button label="Remove fill 1" icon="minus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => {}} />
             </>
           }
@@ -110,8 +110,8 @@ export default {
     },
     {
       title: 'A colour and its opacity, three short fields, and controls at the row’s end',
-      description: 'lead gives the first of two fields two thirds of the row (swatch and hex beside opacity, as Figma draws a fill); columns={3} fits three short fields (an export’s scale, suffix and format); the action column holds up to two xs controls (a fill’s Show switch and Remove), widening only its own row.',
-      code: `<PropertyRow lead action={<><Switch label="Show fill 1" hideLabel size="xs" … /><Button label="Remove fill 1" icon="minus" iconOnly size="xs" … /></>}>
+      description: 'lead gives the first of two fields two thirds of the row (swatch and hex beside opacity, as Figma draws a fill); columns={3} fits three short fields (an export’s scale, suffix and format); the action column holds up to two xs controls (a fill’s eye (VisibilityToggle) and Remove), widening only its own row.',
+      code: `<PropertyRow lead action={<><VisibilityToggle name="fill 1" on={shown} onChange={setShown} /><Button label="Remove fill 1" icon="minus" iconOnly size="xs" … /></>}>
   <TextField label="Fill 1, colour" hideLabel size="xs" swatch={…} … />
   <NumberField label="Fill 1, opacity" glyph="%" hideLabel size="xs" … />
 </PropertyRow>

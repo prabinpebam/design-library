@@ -303,6 +303,7 @@
     "Sheet",
     "SiteHeader",
     "TagInput",
+    "VisibilityToggle",
     "AppLayout",
     "ChatLayout",
     "EditorLayout",

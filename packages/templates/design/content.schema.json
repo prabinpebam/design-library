@@ -474,6 +474,9 @@
           "description": "A layer row's lock Switch: \"Lock {name}\".",
           "type": "string"
         },
+        "lockVerb": {
+          "type": "string"
+        },
         "mainMenu": {
           "description": "The main menu's icon button: \"Main menu\".",
           "type": "string"
@@ -522,6 +525,10 @@
         },
         "showLayer": {
           "description": "A layer row's visibility Switch; {name} is the layer: \"Show {name}\".",
+          "type": "string"
+        },
+        "showVerb": {
+          "description": "The verbs of a layer row's eye and padlock: \"Show\", \"Lock\".",
           "type": "string"
         },
         "size": {
@@ -602,7 +609,9 @@
         "mode",
         "searchLayers",
         "moreTools",
-        "addPage"
+        "addPage",
+        "showVerb",
+        "lockVerb"
       ],
       "type": "object"
     },
@@ -827,6 +836,8 @@
             "select",
             "segmented",
             "switch",
+            "checkbox",
+            "visibility",
             "colour",
             "slider",
             "text",

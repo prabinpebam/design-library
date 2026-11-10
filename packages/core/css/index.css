@@ -63,6 +63,7 @@
 @import url('./compounds/site-header.css');
 @import url('./compounds/agenda.css');
 @import url('./compounds/tree-view.css');
+@import url('./compounds/visibility-toggle.css');
 @import url('./compounds/canvas.css');
 @import url('./compounds/board.css');
 @import url('./compounds/floating-bar.css');

@@ -135,14 +135,11 @@ function Disclosure() {
 }
 
 function Toggles() {
-  const [shown, setShown] = useState(true);
-  const [locked, setLocked] = useState(false);
+  const [snap, setSnap] = useState(true);
   return (
     <>
-      {/* toggle-button: a list row's eye and lock, where a Switch would crowd the row (Q121) */}
-      <Button label="Show layer" icon={shown ? 'eye' : 'eye-off'} iconOnly emphasis="quiet" size="xs" pressed={shown} onClick={() => setShown(!shown)} />
-      {/* toggle-button: as above */}
-      <Button label="Lock layer" icon={locked ? 'lock' : 'unlock'} iconOnly emphasis="quiet" size="xs" pressed={locked} onClick={() => setLocked(!locked)} />
+      {/* toggle-button: a dense canvas toolbar's snapping, where a Switch would break the row of icon buttons (Q121) */}
+      <Button label="Snap to grid" icon="grid" iconOnly emphasis="quiet" size="s" pressed={snap} onClick={() => setSnap(!snap)} />
     </>
   );
 }
@@ -397,10 +394,9 @@ export default {
     },
     {
       title: 'Toggle button (pressed)',
-      description: 'On or off, announced as pressed. Switch is the default for a binary setting; a toggle button needs a written reason in a toggle-button comment where it is used (a dense toolbar, a list row’s eye and lock). Pair it with an icon that shows the state; a theme may clear the pressed fill (c.button.pressed-fill) when the icon alone shows it.',
+      description: 'On or off, announced as pressed, with the pressed fill. Switch is the default for a binary setting; a toggle button needs a written reason in a toggle-button comment just above it (a dense toolbar). Showing, hiding or locking one thing in a list is not this: use VisibilityToggle, the named eye and padlock pattern, which needs no reason.',
       arrangement: 'row',
-      code: `{/* toggle-button: a list row's eye, where a Switch would crowd the row */}
-<Button label="Show layer" icon={shown ? 'eye' : 'eye-off'} iconOnly emphasis="quiet" size="xs" pressed={shown} onClick={toggle} />`,
+      code: `{/* toggle-button: a dense canvas toolbar, where a Switch would break the row of icon buttons */}\n<Button label="Snap to grid" icon="grid" iconOnly emphasis="quiet" size="s" pressed={snap} onClick={toggle} />`,
       render: () => <Toggles />,
     },
     {
