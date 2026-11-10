@@ -1,6 +1,6 @@
 import { useId, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { glide, type GlideResult } from '../behaviour/glide';
+import { glide, type GlidePace, type GlideResult } from '../behaviour/glide';
 import { viewTransition, type SharedName } from '../behaviour/motion';
 import { Card } from '../compounds/Card';
 import { Button } from '../fundamentals/Button';
@@ -84,24 +84,33 @@ const ended: Record<GlideResult, string> = {
 };
 
 /** A scroll the page makes itself: a glide to a stop or back to the top, which the person's own scroll stops. */
-function GlideToStop() {
+function GlideToStop({ pace, label = 'The walk, stop by stop' }: { pace?: GlidePace; label?: string } = {}) {
   const id = useId();
   const viewport = useRef<HTMLDivElement>(null);
+  const at = useRef(0);
   const [status, setStatus] = useState('');
-  const go = (to: number | 'top') => {
-    setStatus('Gliding…');
-    const target = to === 'top' ? 0 : viewport.current?.querySelector(`[data-demo-stop="${id}-${to}"]`);
+  const go = (to: number | 'top' | 'next') => {
+    const region = viewport.current;
+    if (!region) return;
+    const top = region.getBoundingClientRect().top;
+    const next = [...region.querySelectorAll<HTMLElement>('[data-demo-stop]')].find((el) => el.getBoundingClientRect().top - top > 24);
+    const target = to === 'top' ? 0 : to === 'next' ? next : region.querySelector(`[data-demo-stop="${id}-${to}"]`);
     if (target === null || target === undefined) return;
-    glide(target, { container: viewport.current }).then((result) => setStatus(ended[result]));
+    setStatus('Gliding…');
+    const start = performance.now();
+    glide(target, { container: region, pace }).then((result) => {
+      at.current = Math.round((performance.now() - start) / 10) * 10;
+      setStatus(pace && result === 'landed' ? `Arrived in about ${at.current} ms.` : ended[result]);
+    });
   };
   return (
     <Stack gap="group">
       <Cluster gap="item">
-        <Button label="Go to the summit" onClick={() => go(stops.length - 1)} />
-        <Button label="Go to the stream" emphasis="quiet" onClick={() => go(2)} />
+        {pace ? <Button label="Next stop" onClick={() => go('next')} /> : <Button label="Go to the summit" onClick={() => go(stops.length - 1)} />}
+        {pace ? <Button label="Go to the summit" emphasis="quiet" onClick={() => go(stops.length - 1)} /> : <Button label="Go to the stream" emphasis="quiet" onClick={() => go(2)} />}
         <Button label="Back to the top" emphasis="quiet" onClick={() => go('top')} />
       </Cluster>
-      <ScrollArea maxSize="sm" surface="sunken" inset="md" label="The walk, stop by stop" viewportRef={viewport}>
+      <ScrollArea maxSize="sm" surface="sunken" inset="md" label={label} viewportRef={viewport}>
         <Stack gap="section">
           {stops.map((stop, i) => (
             <Stack key={stop} gap="pair" data-demo-stop={`${id}-${i}`}>
@@ -150,6 +159,19 @@ export default {
 glide(0, { container: region })                    // back to the top of a region
 glide(firstError, { block: 'center' }).then((how) => how) // 'landed' | 'stopped' | 'jumped'`,
       render: () => <GlideToStop />,
+    },
+    {
+      title: 'A short glide and a long one',
+      description:
+        'pace: ‘distance’ fits the time to the travel. Press Next stop in both: on the left (pace far, the default) the short hop takes 300 ms like any glide; on the right (pace distance) it takes 200 ms (duration.move), as quick as a change inside a component. Go to the summit travels far in both and takes 300 ms (duration.move-far). Far starts at 40rem (motion.glide-far). The router passes it to its own glides with glide={{ pace: ‘distance’ }}; reduced motion still jumps.',
+      code: `glide(nextSection, { pace: 'distance' })        // short: duration.move; from 40rem: duration.move-far
+<Router glide={{ pace: 'distance' }}>…</Router>  // the same for in-page links and again="top"`,
+      render: () => (
+        <Grid max={2}>
+          <GlideToStop pace="far" label="Pace far (the default)" />
+          <GlideToStop pace="distance" label="Pace distance" />
+        </Grid>
+      ),
     },
   ],
 } satisfies StoryFile;

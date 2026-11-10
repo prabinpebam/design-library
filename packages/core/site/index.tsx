@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { announce } from '../react/behaviour/announce';
 import { cssMs } from '../react/behaviour/anchor';
 import { viewTransition } from '../react/behaviour/motion';
-import { glide } from '../react/behaviour/glide';
+import { glide, type GlidePace } from '../react/behaviour/glide';
 import { RouterContext, useRouter, type Route, type RouterApi } from '../react/behaviour/router';
 
 export type { Route, RouterApi } from '../react/behaviour/router';
@@ -32,6 +32,11 @@ export interface RouterProps {
    * does on many sites. Links with an anchor are anchor links and always go to it.
    */
   again?: 'none' | 'top';
+  /**
+   * How the router's own glides (an anchor on the page, `again="top"`) take their time (MP13): `{ pace: 'distance' }`
+   * gives a short scroll `--duration-move` and a long one `--duration-move-far`. Default `{ pace: 'far' }`, as before.
+   */
+  glide?: { pace?: GlidePace };
   /** What is announced after a page change: the default says the focused heading's words; return `''` to say nothing. */
   announcement?: (route: Route, heading: string) => string;
   /** Links in the page (`<a href>` anywhere, such as rich text from content) are handled by the router too. Default `true`. */
@@ -120,7 +125,7 @@ function focusQuietly(el: HTMLElement) {
  * link to the shown page back to the top (MP1). Behaviour only: no styles, no views, no route table (the site decides
  * what each path shows).
  */
-export function Router({ mode = 'hash', base = '', focus = 'main h1', scroll = 'top', again = 'none', announcement, handleLinks = true, onChange, transition = 'none', prepare, wait, warm, children }: RouterProps) {
+export function Router({ mode = 'hash', base = '', focus = 'main h1', scroll = 'top', again = 'none', glide: glideWith, announcement, handleLinks = true, onChange, transition = 'none', prepare, wait, warm, children }: RouterProps) {
   const root = clean(base) === '/' ? '' : clean(base);
   const [entry, setEntry] = useState<Entry>(() => ({ route: readRoute(mode, root, null), how: 'first' }));
   const [pending, setPending] = useState<Route | null>(null);
@@ -131,8 +136,8 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', scroll = '
   const latest = useRef(0);
   const swapWith = useRef({ transition, prepare, wait });
   swapWith.current = { transition, prepare, wait };
-  const landWith = useRef({ scroll, focus, again });
-  landWith.current = { scroll, focus, again };
+  const landWith = useRef({ scroll, focus, again, pace: glideWith?.pace });
+  landWith.current = { scroll, focus, again, pace: glideWith?.pace };
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
@@ -189,7 +194,7 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', scroll = '
       const url = urlFor(to);
       // A link to the page already shown (no anchor): with `again="top"` it glides back to the top and stays one entry.
       if (landWith.current.again === 'top' && url === urlFor(`${current.current.path}${current.current.query.toString() ? `?${current.current.query}` : ''}`)) {
-        void glide(0);
+        void glide(0, { pace: landWith.current.pace });
         onChangeRef.current?.(current.current);
         return;
       }
@@ -290,7 +295,7 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', scroll = '
     if (keep) {
       // The place stays; nothing scrolls.
     } else if (how === 'pop' && scroll !== undefined && !target) glide(scroll, { behavior: 'instant' });
-    else glide(target ?? 0, { behavior });
+    else glide(target ?? 0, { behavior, pace: land.pace });
     if (target) focusQuietly(target);
     else if (newPage) {
       const heading = aim === false ? null : (document.querySelector<HTMLElement>(aim) ?? document.querySelector<HTMLElement>('main'));

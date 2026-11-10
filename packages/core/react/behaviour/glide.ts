@@ -16,7 +16,16 @@ export type GlideOptions = {
   block?: 'start' | 'center' | 'end' | 'nearest';
   /** `instant` jumps whatever the setting; `auto` (default) glides unless reduced motion asks otherwise. */
   behavior?: 'auto' | 'instant';
+  /**
+   * How long the glide takes (MP13): `far` (default, as before) always takes `--duration-move-far`; `distance` takes
+   * `--duration-move` for a short scroll and `--duration-move-far` from `--motion-glide-far` (40rem) on, so a hop to the
+   * next section feels as quick as one within a component.
+   */
+  pace?: GlidePace;
 };
+
+/** How a glide's duration is chosen: always the far duration, or by the distance it scrolls. */
+export type GlidePace = 'far' | 'distance';
 
 /** How a glide ended: it arrived, the person's own input stopped it (or a newer glide replaced it), or it jumped. */
 export type GlideResult = 'landed' | 'stopped' | 'jumped';
@@ -121,7 +130,11 @@ export function glide(to: Element | number, options: GlideOptions = {}): Promise
   const goal = typeof to === 'number' ? Math.max(0, Math.min(max, to)) : positionFor(to, region, options.block ?? 'start');
   if (goal === null || Math.abs(goal - from) < 1) return Promise.resolve('landed');
   const style = getComputedStyle(page ? document.documentElement : region);
-  const duration = ms(style.getPropertyValue('--duration-move-far'), 300);
+  const far = ms(style.getPropertyValue('--duration-move-far'), 300);
+  const rem = px(getComputedStyle(document.documentElement).fontSize) || 16;
+  const farFrom = style.getPropertyValue('--motion-glide-far').trim();
+  const threshold = farFrom.endsWith('rem') ? parseFloat(farFrom) * rem : px(farFrom) || 40 * rem;
+  const duration = options.pace === 'distance' && Math.abs(goal - from) < threshold ? ms(style.getPropertyValue('--duration-move'), 200) : far;
   if (options.behavior === 'instant' || prefersReducedMotion() || duration <= 0 || document.hidden) {
     set(goal);
     return Promise.resolve('jumped');

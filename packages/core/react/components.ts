@@ -105,7 +105,7 @@ export type { FlipBox } from './behaviour/flip';
 export { usePresence, exitDuration } from './behaviour/presence';
 export { suspendMotion, viewTransition, prefersReducedMotion } from './behaviour/motion';
 export { glide, stopGlide, scrollRegionOf } from './behaviour/glide';
-export type { GlideOptions, GlideResult } from './behaviour/glide';
+export type { GlideOptions, GlideResult, GlidePace } from './behaviour/glide';
 export { useScheme, readScheme, applyScheme, resolveScheme } from './behaviour/scheme';
 export type { SchemeChoice, SchemeOptions } from './behaviour/scheme';
 export { useRegionScheme, regionSchemeOf } from './behaviour/region-scheme';
