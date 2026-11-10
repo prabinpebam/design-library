@@ -125,6 +125,16 @@
           "name": "priority",
           "type": "boolean",
           "description": "The page's first and largest picture: loads ahead of the rest (`Image` `priority`)."
+        },
+        {
+          "name": "decoration",
+          "type": "ReactNode",
+          "description": "Shapes over the picture (MP9), as `Image` `decoration`: hidden from screen readers, never in the way, may spill past its edge."
+        },
+        {
+          "name": "under",
+          "type": "ReactNode",
+          "description": "Shapes behind the picture, as `Image` `under`."
         }
       ]
     }

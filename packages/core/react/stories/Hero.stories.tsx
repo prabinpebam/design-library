@@ -18,6 +18,18 @@ import { richText } from '../../render/rich-text';
 import { ScreenPreview } from '../compounds/ScreenPreview';
 
 const go = () => undefined;
+/** A brand's marks around an opening picture (MP9): the library's own shape art, in currentColor (the decoration colour). */
+const heroMarks = (
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+    <circle cx="96" cy="2" r="9" fill="currentColor" />
+    <circle cx="4" cy="98" r="14" fill="none" stroke="currentColor" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+  </svg>
+);
+const heroUnder = (
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+    <rect x="6" y="8" width="100" height="100" rx="4" fill="currentColor" opacity="0.25" />
+  </svg>
+);
 const series = [
   { title: 'Atlas', lead: 'A map of every room in a hospital.' },
   { title: 'Paper trail', lead: 'Receipts that file themselves, for a team of four accountants who were tired of shoeboxes.' },
@@ -199,5 +211,25 @@ import { richText } from '@design-library/core/render';
 // From data: { "type": "hero", "title": "…", "lead": "…", "reserve": { "title": 3, "lead": 3 } }`,
       render: () => <SteadySeries />,
     },
+    {
+      title: 'A decorated opening picture',
+      description:
+        'picture.decoration draws a brand’s marks over the opening’s picture and picture.under a shape behind it, offset so it shows past the edge: Image’s decoration layer, hidden from screen readers and never in the way. From data, a hero block’s decoration slot takes a template’s own block (a part that draws the shapes); core blocks are refused there.',
+      code: `<Hero title="Books for slow evenings" lead="…"
+  picture={{ src, alt: '…', decoration: <BrandMarks />, under: <BrandBackdrop /> }} />
+
+// hero block in a page document:
+{ "type": "hero", "title": "Books for slow evenings", "picture": "shopfront",
+  "decoration": [{ "type": "harbour.marks" }] }   // a template's own block`,
+      render: () => (
+        <Hero
+          eyebrow="Harbour Books"
+          title="Books for slow evenings"
+          lead="A small shop on the quay, open late."
+          actions={<Button label="See this week’s books" emphasis="primary" onClick={go} />}
+          picture={{ src: scenes[3].src, alt: scenes[3].alt, decoration: heroMarks, under: heroUnder }}
+        />
+      ),
+    },
   ],
-} satisfies StoryFile;
+} satisfies StoryFile;

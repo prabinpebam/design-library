@@ -289,6 +289,9 @@ const CONTENT = ['prose', 'points', 'details', 'quote', 'stats', 'cards', 'galle
  */
 export const SLOTS: Record<string, readonly string[]> = {
   'hero.media': ['gallery'],
+  // MP9: decoration is art, so only a template's own (namespaced) blocks; no core block draws shapes.
+  'hero.decoration': [],
+  'image.decoration': [],
   'split.start': CONTENT,
   'split.end': CONTENT,
   'grid.items': CONTENT,
@@ -299,7 +302,7 @@ function slot(ctx: RenderContext, name: string, blocks: Block[] | undefined): Re
   const accepts = SLOTS[name] ?? [];
   const taken = (blocks ?? []).filter((b) => {
     const ok = b.type.includes('.') || accepts.includes(b.type);
-    if (!ok) ctx.problem?.(`${name} doesn’t take a “${b.type}” block (it takes ${accepts.join(', ')})`);
+    if (!ok) ctx.problem?.(`${name} doesn’t take a “${b.type}” block (it takes ${accepts.length ? `${accepts.join(', ')} or ` : 'only '}a template’s own blocks)`);
     return ok;
   });
   return taken.length ? ctx.blocks(taken) : null;
@@ -336,7 +339,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
         lead={richText(b.lead)}
         actions={actionButtons(b.actions)}
         note={b.note}
-        picture={b.picture ? ctx.picture(b.picture) : undefined}
+        picture={b.picture ? { ...ctx.picture(b.picture), decoration: b.decoration?.length ? slot(ctx, 'hero.decoration', b.decoration) : undefined } : undefined}
         media={!b.picture && b.media?.length ? slot(ctx, 'hero.media', b.media) : undefined}
         layout={(b.picture || b.media?.length) && isFramed(ctx, i) ? 'split' : b.layout}
         reserve={b.reserve}
@@ -453,7 +456,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
               </Quote>
             );
           case 'picture':
-            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} dark={ctx.picture(item.picture).dark} contrast={ctx.picture(item.picture).contrast} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} rounded />;
+            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} dark={ctx.picture(item.picture).dark} contrast={ctx.picture(item.picture).contrast} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} decoration={item.decoration?.length ? slot(ctx, 'image.decoration', item.decoration) : undefined} rounded />;
           case 'list':
             return <List key={n} variant="bulleted" items={item.items.map((t, m) => ({ id: String(m), content: t }))} />;
           case 'code':

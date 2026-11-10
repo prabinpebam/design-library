@@ -486,6 +486,10 @@
           "description": "Slot hero.media (DP11): blocks in the picture's place when there's no picture. Takes gallery, or a template's own block.",
           "$ref": "#/$defs/slot"
         },
+        "decoration": {
+          "description": "Slot hero.decoration (MP9): a template's own blocks drawn over the opening's picture as decoration (shapes, marks), hidden from screen readers. Only with a picture.",
+          "$ref": "#/$defs/slot"
+        },
         "reserve": {
           "description": "Lines of room kept for the title and the lead (MP7), so a series of pages (a project's, a year's) keeps one opening height. Longer text still grows the opening.",
           "type": "object",
@@ -1149,6 +1153,10 @@
                   },
                   "caption": {
                     "$ref": "#/$defs/text"
+                  },
+                  "decoration": {
+                    "description": "Slot image.decoration (MP9): a template's own blocks drawn over the picture as decoration (shapes, marks), hidden from screen readers.",
+                    "$ref": "#/$defs/slot"
                   }
                 },
                 "required": [

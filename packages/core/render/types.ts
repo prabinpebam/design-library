@@ -76,7 +76,7 @@ export type ProseItem =
   | { kind: 'heading'; text: RichText }
   | { kind: 'text'; text: RichText }
   | { kind: 'quote'; text: string; name?: string }
-  | { kind: 'picture'; picture: string; caption: string }
+  | { kind: 'picture'; picture: string; caption: string; /** Slot image.decoration (MP9): a template's own blocks drawn over the picture. */ decoration?: Block[] }
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; label: string; code: string };
 
@@ -97,6 +97,8 @@ export type CoreBlock =
       standalone?: boolean;
       /** Blocks in the picture's place (DP11 slot `hero.media`), when there's no `picture`. */
       media?: Block[];
+      /** Slot hero.decoration (MP9): a template's own blocks drawn over the picture, as decoration. Only with picture. */
+      decoration?: Block[];
       /** Lines of room kept for the title and the lead (MP7), so a series of pages keeps one opening height. */
       reserve?: { title?: number; lead?: number };
     }

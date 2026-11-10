@@ -14,6 +14,10 @@ export interface HeroPicture extends SchemeSources {
   focal?: { x: number; y: number };
   /** The page's first and largest picture: loads ahead of the rest (`Image` `priority`). */
   priority?: boolean;
+  /** Shapes over the picture (MP9), as `Image` `decoration`: hidden from screen readers, never in the way, may spill past its edge. */
+  decoration?: ReactNode;
+  /** Shapes behind the picture, as `Image` `under`. */
+  under?: ReactNode;
 }
 
 interface HeroBase extends DataAttributes {
@@ -115,7 +119,7 @@ export function Hero({ title, level = 1, eyebrow, lead, actions, note, picture, 
         {!picture && visual && <div data-dl-part="media">{media}</div>}
         {picture && (
           <div data-dl-part="picture">
-            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} dark={picture.dark} contrast={picture.contrast} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" priority={picture.priority} />
+            <Image src={picture.src} alt={picture.alt} srcSet={picture.srcSet} sizes={picture.sizes} focal={picture.focal} dark={picture.dark} contrast={picture.contrast} ratio={arrangement === 'stacked' ? 'wide' : 'photo'} loading="eager" priority={picture.priority} decoration={picture.decoration} under={picture.under} />
           </div>
         )}
       </div>
