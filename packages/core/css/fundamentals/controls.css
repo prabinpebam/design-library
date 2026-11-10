@@ -1856,6 +1856,19 @@
     padding-inline: 0;
   }
 
+  /* A segment's trailing control (a flyout) sits after its icon, inside the chosen fill, and reads on that fill. */
+  [data-dl='segmented-control'] > [data-dl-part='segment']:has(> [data-dl-part='trailing']) {
+    padding-inline-start: var(--c-segmented-control-padding-inline);
+  }
+
+  [data-dl='segmented-control'] > [data-dl-part='segment'] > [data-dl-part='trailing'] {
+    display: inline-flex;
+  }
+
+  [data-dl='segmented-control']:not([data-emphasis]) > [data-dl-part='segment']:has(input:checked) > [data-dl-part='trailing'] {
+    --color-text: var(--color-text-on-accent);
+  }
+
   /* The fill: the same inset on every side, rounded to sit inside the group's corners. */
   [data-dl='segmented-control'] > [data-dl-part='segment']::before {
     content: '';

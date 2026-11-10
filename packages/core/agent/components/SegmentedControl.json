@@ -90,6 +90,11 @@
           "name": "icon",
           "type": "IconName",
           "description": "Icon from the active set; required when `iconOnly`."
+        },
+        {
+          "name": "trailing",
+          "type": "ReactNode",
+          "description": "A control at the segment's end, outside the choice: a design tool's flyout (a MenuButton listing the segment's other tools). Clicking it never chooses the segment."
         }
       ]
     }

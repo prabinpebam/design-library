@@ -89,6 +89,8 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
   const [page, setPage] = useState(view.page);
   const [tool, setTool] = useState(comments ? (view.tools.find((t) => t.value === 'comment')?.value ?? view.tools[0].value) : view.tools[0].value);
   const [zoom, setZoom] = useState('1');
+  /** Which tool of each flyout shows in its place in the bar: the last one picked. */
+  const [picked, setPicked] = useState<Record<string, string>>({});
   const [labels, setLabels] = useState(false);
   const [pagesOpen, setPagesOpen] = useState(true);
   const [startOpen, setStartOpen] = useState(wide);
@@ -107,6 +109,20 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
     return !!layer && !!propsOf(view, layer).locked;
   };
 
+  const toolOptions = view.tools.map((g) => {
+    const shown = g.menu?.find((m) => m.value === picked[g.value]) ?? g;
+    return {
+      value: shown.value,
+      label: shown.label,
+      icon: shown.icon,
+      trailing: g.menu && (
+        <MenuButton label={fill(s.moreTools, { tool: g.label })} icon="chevron-down" iconOnly size="xs" emphasis="quiet" items={g.menu.map((m) => ({ value: m.value, label: m.label }))} onSelect={(v) => {
+            setPicked((x) => ({ ...x, [g.value]: v }));
+            setTool(v);
+          }} />
+      ),
+    };
+  });
   const zoomMenu = <MenuButton label={fill(s.zoomValue, { percent: Number(zoom) * 100 })} menuLabel={s.zoom} size="xs" emphasis="quiet" onSelect={setZoom} items={view.zooms.map((z) => ({ value: String(z), label: fill(s.zoomTo, { percent: z * 100 }) }))} />;
 
   return (
@@ -122,7 +138,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
       toolsLabel={s.tool}
       tools={
         <Cluster gap="group" wrap={false}>
-          <SegmentedControl label={s.tool} iconOnly size="s" track={false} value={tool} onChange={setTool} options={view.tools} />
+          <SegmentedControl label={s.tool} iconOnly size="s" track={false} value={tool} onChange={setTool} options={toolOptions} />
           <SegmentedControl label={s.mode} iconOnly size="xs" emphasis="raised" value="design" onChange={(m) => m !== 'design' && notify({ message: fill(s.notInExample, { label: view.modes.find((x) => x.value === m)?.label ?? '' }) })} options={view.modes} />
         </Cluster>
       }
@@ -146,7 +162,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
             <Switch label={s.propertyLabels} checked={labels} onChange={setLabels} />
           </Popover>
           {(comments || !shape) && zoomMenu}
-          <Button label={s.share} emphasis="primary" size="xs" onClick={() => notify({ message: fill(s.notInExample, { label: s.sharing }) })} />
+          <Button label={s.share} emphasis="primary" size="s" onClick={() => notify({ message: fill(s.notInExample, { label: s.sharing }) })} />
         </Toolbar>
       }
       start={

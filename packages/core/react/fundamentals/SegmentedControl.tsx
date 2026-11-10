@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, type ReactNode } from 'react';
 import { useSlidingIndicator } from '../behaviour/flip';
 import { Icon } from './Icon';
 import type { ButtonSize } from './Button';
@@ -12,6 +12,8 @@ export interface SegmentedControlOption {
   label: string;
   /** Icon from the active set; required when `iconOnly`. */
   icon?: IconName;
+  /** A control at the segment's end, outside the choice: a design tool's flyout (a MenuButton listing the segment's other tools). Clicking it never chooses the segment. */
+  trailing?: ReactNode;
 }
 
 export interface SegmentedControlProps extends DataAttributes {
@@ -63,12 +65,13 @@ export function SegmentedControl({ label, options, value, onChange, iconOnly = f
     <div {...data} ref={slide.root} {...slide.input} data-dl="segmented-control" data-emphasis={emphasis === 'accent' ? undefined : emphasis} data-track={track ? undefined : 'none'} data-icon-only={iconOnly ? '' : undefined} data-size={size} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
       {options.map((option) => (
         <label key={option.value} data-dl-part="segment" data-chosen={option.value === value ? '' : undefined} title={iconOnly ? option.label : undefined}>
-          <input type="radio" name={name} value={option.value} checked={option.value === value} disabled={disabled} onChange={() => {
+          <input type="radio" name={name} value={option.value} aria-label={option.trailing ? option.label : undefined} checked={option.value === value} disabled={disabled} onChange={() => {
               slide.capture();
               onChange(option.value);
             }} />
           {option.icon && <Icon name={option.icon} size={iconSize[size]} />}
           <span data-dl-part="name">{option.label}</span>
+          {option.trailing && <span data-dl-part="trailing">{option.trailing}</span>}
         </label>
       ))}
     </div>

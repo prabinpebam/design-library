@@ -478,6 +478,10 @@
           "description": "Names the mode switch: \"Mode\".",
           "type": "string"
         },
+        "moreTools": {
+          "description": "A tool's flyout button: \"More {tool} tools\".",
+          "type": "string"
+        },
         "noAssets": {
           "description": "The Assets tab, empty in the example.",
           "type": "string"
@@ -592,7 +596,8 @@
         "noAssets",
         "present",
         "mode",
-        "searchLayers"
+        "searchLayers",
+        "moreTools"
       ],
       "type": "object"
     },
@@ -644,6 +649,13 @@
         },
         "label": {
           "type": "string"
+        },
+        "menu": {
+          "description": "The tool's flyout: the tools that share its place in the bar (the first is the tool itself).",
+          "items": {
+            "$ref": "#/$defs/DesignTool"
+          },
+          "type": "array"
         },
         "value": {
           "type": "string"

@@ -120,6 +120,8 @@ export interface DesignTool {
   value: string;
   label: string;
   icon: IconName;
+  /** The tool's flyout: the tools that share its place in the bar (the first is the tool itself). */
+  menu?: DesignTool[];
 }
 
 export interface DesignAppSpec {
@@ -269,4 +271,6 @@ export interface DesignStrings {
   mode: string;
   /** The search button at the end of the File and Assets tabs. */
   searchLayers: string;
+  /** A tool's flyout button: "More {tool} tools". */
+  moreTools: string;
 }

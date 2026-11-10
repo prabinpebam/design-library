@@ -34,5 +34,8 @@
   "c.tree-view.row-size-compact": { "$value": "1.5rem", "$description": "Page and layer rows: a 24 px highlight" },
   "c.property-section.head-compact": { "$value": "2.5rem", "$description": "Section title rows are 40 px" },
   "c.property-section.divider-width": { "$value": "1px", "$description": "A hairline between inspector sections" },
-  "c.segmented-control.raised-text": { "$value": "{color.accent}", "$description": "The mode switch's chosen mode: the blue glyph on a white segment" }
+  "c.segmented-control.raised-text": { "$value": "{color.accent}", "$description": "The mode switch's chosen mode: the blue glyph on a white segment" },
+  "c.button.size-s": { "$value": "2rem", "$description": "Share and other small buttons are 32 px tall" },
+  "c.menu-button.size-s": { "$value": "2rem", "$description": "Small menu buttons are 32 px, as the main menu" },
+  "c.segmented-control.size-s": { "$value": "2rem", "$description": "Tools are 32 px squares: with 8 px around them the bar is 48 px" }
 }

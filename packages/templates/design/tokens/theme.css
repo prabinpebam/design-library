@@ -36,6 +36,9 @@
     --c-property-section-head-compact: 2.5rem;
     --c-property-section-divider-width: 1px;
     --c-segmented-control-raised-text: var(--color-accent);
+    --c-button-size-s: 2rem;
+    --c-menu-button-size-s: 2rem;
+    --c-segmented-control-size-s: 2rem;
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--radius-md);
     --c-menu-button-border: var(--color-border-control);
