@@ -45,13 +45,17 @@ export const iconSets = index.sets as IconSetInfo[];
 export const iconSetNames = index.names as string[];
 export const excludedIconSets = index.excluded as { name: string; licence: string; reason: string }[];
 
-/** A brand's glyph (Q113): the curated sets' shape, with `g` (root paint) and `from` optional. */
+/**
+ * A brand's glyph (Q113): the curated sets' shape, with `g` (root paint) and `from` optional. A glyph from
+ * `design-library-icons` output (imported JSON) fits as is.
+ */
 export interface BrandGlyph {
   /** viewBox */
   v: string;
   /** The root's paint; draw in `currentColor` so the glyph takes the text colour around it. */
   g?: Record<string, string>;
-  c: IconNode[];
+  /** The shapes as `IconNode`s: `[tag, attributes, children?]`. Typed loosely so imported JSON needs no cast. */
+  c: readonly (IconNode | readonly unknown[])[];
   from?: string;
 }
 
@@ -59,6 +63,8 @@ export interface BrandGlyph {
 export interface BrandIconSet {
   id: string;
   name: string;
+  /** Ignored: `design-library-icons` writes it, so its output registers as is. */
+  $comment?: string;
   /** The licence the brand holds the glyphs under, recorded with the set. */
   licence: string;
   author?: string;
@@ -113,7 +119,7 @@ export function registerIconSet(set: BrandIconSet) {
   notify();
 }
 
-const asSetGlyph = (g: BrandGlyph, name: string): SetGlyph => ({ v: g.v, g: g.g ?? {}, c: g.c, from: g.from ?? name });
+const asSetGlyph = (g: BrandGlyph, name: string): SetGlyph => ({ v: g.v, g: g.g ?? {}, c: g.c as IconNode[], from: g.from ?? name });
 
 export const iconSetOf = (id: string | null | undefined) => iconSets.find((s) => s.id === id) ?? (id ? registered.get(id) : undefined);
 
