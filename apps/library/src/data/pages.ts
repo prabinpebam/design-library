@@ -990,6 +990,11 @@ export const pages: Page[] = withDocs(withPrinciples([
         intro: 'Choose Talks, then Venue on its line of links: the page moves to the venue and the address keeps the route. Press About, then the browser’s Back: the talks page returns at the venue. Choose Venue in the header: the old page stays until the hall’s picture is ready, then the two cross-fade; switch off “Fade between pages” to swap at once. Open Archive, scroll to the line of years and pick another: the page changes and keeps its place. Scroll down any page and choose its own header link: it glides back to the top. Try an address that doesn’t exist.',
         block: { type: 'screen', src: 'site.html?demo=router#/', title: 'A small site on the core router', width: 'fill' },
       },
+      {
+        heading: 'Keeping the place, from site data',
+        intro: 'The same from JSON (MP2): a collection page with "between": "keep" keeps the place when moving from one of its items to another, and "again": "top" in site.json glides a link to the shown page back to the top. Scroll down this reading to its list of other readings and pick one: the page changes and stays where it was. The breadcrumb to Readings, a different page, lands at the top.',
+        block: { type: 'screen', src: 'site.html?demo=site#/readings/the-long-shore', title: 'Harbour Books, a reading page from its page document', width: 'fill' },
+      },
     ],
   },
   {

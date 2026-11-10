@@ -36,6 +36,7 @@
     "footer": { "type": "array", "description": "Blocks in every page's footer (usually one `site-footer`).", "items": { "$ref": "#/$defs/block" } },
     "layout": { "$ref": "#/$defs/layout", "description": "The layout every page starts from; a page's own `layout` and `settings` win." },
     "transition": { "enum": ["none", "fade"], "default": "none", "description": "How one page replaces another (Router `transition`, IP30). Reduced motion always swaps at once." },
+    "again": { "enum": ["none", "top"], "default": "none", "description": "A link to the page already shown: does nothing (`none`, default) or glides back to the top (`top`), as a header link to the current page does on many sites (Router `again`, MP2)." },
     "aliases": {
       "type": "object",
       "description": "Old or extra addresses and where each goes (DP16), such as { \"/home\": \"/\" }. A `:name` part matches any one part and carries over (\"/events/:id\": \"/readings/:id\"); an `https://` target leaves the site. The address is replaced, so Back skips it.",

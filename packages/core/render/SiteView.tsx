@@ -170,7 +170,18 @@ export function SiteView({ site, mode = 'hash', base, development }: SiteViewPro
   const router = useRouter();
   if (!router)
     return (
-      <Router mode={mode} base={base} transition={(to, from) => (aliasFor(site.site, from.path) === to.path ? 'none' : (matchPage(site, to.path)?.page.transition ?? site.site.transition ?? 'none'))}>
+      <Router
+        mode={mode}
+        base={base}
+        transition={(to, from) => (aliasFor(site.site, from.path) === to.path ? 'none' : (matchPage(site, to.path)?.page.transition ?? site.site.transition ?? 'none'))}
+        scroll={(to, from) => {
+          // MP2: two items of one collection page whose `between` is `keep` (one year to the next) keep the place.
+          const a = matchPage(site, to.path);
+          const b = matchPage(site, from.path);
+          return a && b && a.page === b.page && a.page.collection && a.page.between === 'keep' ? 'keep' : 'top';
+        }}
+        again={site.site.again ?? 'none'}
+      >
         <SiteView site={site} development={development} />
       </Router>
     );

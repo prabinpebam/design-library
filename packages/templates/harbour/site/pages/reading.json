@@ -4,6 +4,7 @@
   "id": "reading",
   "route": "/readings/:id",
   "collection": "readings",
+  "between": "keep",
   "title": { "item": "title" },
   "description": { "item": "description" },
   "picture": { "item": "picture" },

@@ -24,6 +24,7 @@
     "layout": { "type": "string", "description": "A core layout (`SiteLayout`) or one the site registers; defaults to the site's." },
     "settings": { "type": "object", "description": "The layout's options for this page, over the site's (SiteLayout: `width`, `opening`)." },
     "transition": { "enum": ["none", "fade"], "description": "How this page replaces the one before it, over the site's `transition` (DP17). Reduced motion always swaps at once." },
+    "between": { "enum": ["top", "keep"], "default": "top", "description": "With `collection`: moving from one of this page's items to another (one year of an archive to the next) lands at the top (`top`, default) or keeps the place (`keep`): nothing scrolls, focus stays on the link used and the new page's heading is announced (Router `scroll`, MP2). Any other change lands at the top." },
     "sections": {
       "type": "array",
       "description": "The page's sections in order, top to bottom. Reordering them is reordering the page.",

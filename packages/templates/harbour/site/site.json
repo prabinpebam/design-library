@@ -28,6 +28,7 @@
   ],
   "layout": { "component": "SiteLayout", "settings": { "width": "wide" } },
   "transition": "fade",
+  "again": "top",
   "aliases": { "/home": "/", "/events": "/readings", "/events/:id": "/readings/:id" },
   "derive": {
     "book-count": { "count": "books" },

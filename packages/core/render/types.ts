@@ -335,6 +335,8 @@ export interface SiteDocument {
   footer?: Block[];
   layout?: { component?: string; settings?: Record<string, unknown> };
   transition?: 'none' | 'fade';
+  /** A link to the page already shown: nothing (`none`, default) or a glide back to the top (`top`, MP2). */
+  again?: 'none' | 'top';
   /** Old or extra addresses → the route each opens (`:name` parts carry over), or an `https://` address. */
   aliases?: Record<string, string>;
   /** Values worked out from the collections when the site loads (DP14), read in content as `{ "derived": name }`. */
@@ -398,6 +400,8 @@ export interface PageDocument {
   settings?: Record<string, unknown>;
   /** How this page replaces the one before it (over the site's `transition`). */
   transition?: 'none' | 'fade';
+  /** With `collection`: moving between two of its items lands at the top (default) or keeps the place (`keep`, MP2). */
+  between?: 'top' | 'keep';
   sections: PageSection[];
 }
 
