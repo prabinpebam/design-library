@@ -114,3 +114,4 @@ export { default as loadingStories } from './Loading.stories';
 export { default as motionStories } from './Motion.stories';
 export { default as themeStories } from './Theme.stories';
 export { default as fontsStories } from './Fonts.stories';
+export { default as picturesStories } from './Pictures.stories';

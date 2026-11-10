@@ -12,7 +12,7 @@ import { docsHref, docsSource } from './site-links';
 import corePackage from '../../../../packages/core/package.json';
 import { blocks as registryBlocks, templates as registryTemplates } from '../../../../packages/core/agent/index.json';
 import { type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/components';
-import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories, conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, themeStories, fontsStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, iconOverridesStories, linkStories, navigationStories, segmentedControlStories, schemeControlStories, tableOfContentsStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories } from '@design-library/core/stories';
+import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories, conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, themeStories, fontsStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, iconOverridesStories, picturesStories, linkStories, navigationStories, segmentedControlStories, schemeControlStories, tableOfContentsStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories } from '@design-library/core/stories';
 
 export type Block =
   /** Literal colour ramps shown once: primitives narrowed by `only`, the spectrum, or the custom sets. */
@@ -1134,6 +1134,98 @@ applySettings({
   componentPage(avatarGroupStories),
   componentPage(personaStories),
   componentPage(imageStories),
+  {
+    id: 'pictures',
+    section: 'fundamentals',
+    family: 'media',
+    title: 'Pictures',
+    summary: 'Every version of one picture: in colour or black and white, and with a file for light, dark and more contrast; what each is for, when it changes and how to set it.',
+    file: 'packages/core/react/fundamentals/Image.tsx',
+    blocks: [
+      {
+        heading: 'Two choices, made apart',
+        intro: 'A picture has a look and a file. You choose them separately, and every look works with every file.',
+        block: {
+          type: 'points',
+          items: [
+            'The look: in colour (the default), greyscale, duotone, or one look at rest and another while it’s pointed at or focused. One file does all of them.',
+            'The file: the picture as it is (the light file), and optionally the same picture drawn for a dark scheme and for more contrast. Each file is a separate picture you make.',
+            'The look applies to whichever file is showing, so a dark file can be greyscale too.',
+            'With more contrast, or with the system’s forced colours, every picture shows in full colour, whatever its look, so nothing is harder to make out.',
+          ],
+        },
+      },
+      { heading: 'See every version', block: { type: 'stories', file: picturesStories } },
+      {
+        heading: 'Every version at a glance',
+        intro: 'Image takes these as props; a picture entry in assets.json takes the same names, and every block that draws the picture passes them on.',
+        block: {
+          type: 'table',
+          label: 'Picture versions',
+          columns: [
+            { key: 'version', header: 'Version' },
+            { key: 'for', header: 'What it’s for' },
+            { key: 'when', header: 'When it shows' },
+            { key: 'code', header: 'In code (Image)' },
+            { key: 'json', header: 'In assets.json' },
+          ],
+          rows: [
+            { version: 'Colour', for: 'The picture as it is. Most pictures need nothing else.', when: 'Always, unless a look below is set.', code: 'No prop, or treatment="none"', json: 'No field, or "treatment": "none"' },
+            { version: 'Greyscale', for: 'Quieting pictures so they sit with the page, or giving a set of different photos one look.', when: 'Always, except with more contrast.', code: 'treatment="greyscale"', json: '"treatment": "greyscale"' },
+            { version: 'Duotone', for: 'Tying pictures to the brand: grey tinted with the accent colour.', when: 'Always, except with more contrast.', code: 'treatment="duotone"', json: '"treatment": "duotone"' },
+            { version: 'Grey until pointed at', for: 'A grid of covers or people that stays calm and shows colour on the one you’re looking at.', when: 'Colour while the picture, or the link, button or card around it, is hovered or has focus.', code: 'treatment={{ rest: \'greyscale\', active: \'none\' }}', json: '"treatment": { "rest": "greyscale", "active": "none" }' },
+            { version: 'Dark file', for: 'A picture that would glare or disappear on a dark page: a night scene, a dimmed photo, an illustration redrawn for dark.', when: 'In a dark scheme: the page’s, a dark band’s own (data-scheme="dark"), or the system’s.', code: 'dark={night}', json: '"dark": "assets/name-dark.webp"' },
+            { version: 'More contrast files', for: 'A drawing whose lines or colours are too faint for people who asked for more contrast.', when: 'With more contrast: the page’s setting or the system’s. Dark with more contrast uses contrast.dark, then the dark file, then the light one.', code: 'contrast={{ light: …, dark: … }}', json: '"contrast": { "light": "assets/…", "dark": "assets/…" }' },
+            { version: 'Dark file in greyscale', for: 'A greyscale set that also has dark files: the look and the file combine.', when: 'In a dark scheme, in the look you set.', code: 'dark={night} treatment="greyscale"', json: '"dark": "assets/…", "treatment": "greyscale"' },
+          ],
+        },
+      },
+      {
+        heading: 'One picture entry with every field',
+        intro: 'In a template’s or site’s assets.json. src stays the light (or only) file; the others are optional.',
+        block: {
+          type: 'code',
+          label: 'assets.json',
+          code: `"lighthouse": {
+  "src": "assets/lighthouse-day.webp",
+  "dark": "assets/lighthouse-night.webp",
+  "contrast": { "dark": "assets/lighthouse-night-more.webp" },
+  "treatment": { "rest": "greyscale", "active": "none" },
+  "alt": "A striped lighthouse on a green headland above the sea."
+}`,
+        },
+      },
+      {
+        heading: 'How it behaves',
+        minor: true,
+        block: {
+          type: 'points',
+          items: [
+            'Only the file in use is downloaded. Another file loads only when the scheme changes.',
+            'When the scheme changes, the old file stays until the new one has loaded, then they swap at once: nothing flashes and nothing moves.',
+            'Every file shares the picture’s shape and its description (alt), so the page doesn’t shift and screen readers hear the same words.',
+            'Photos and SVG drawings work the same way.',
+          ],
+        },
+      },
+      {
+        heading: 'What the checks hold',
+        minor: true,
+        block: {
+          type: 'table',
+          label: 'Picture checks',
+          columns: [
+            { key: 'check', header: 'Check' },
+            { key: 'fails', header: 'What fails it' },
+          ],
+          rows: [
+            { check: 'npx design-library-check-content', fails: 'A dark or contrast file that’s missing, or whose shape differs from the light file’s by more than 1%; a treatment value that isn’t one of the four; a picture with no alt that isn’t marked decorative.' },
+            { check: 'npx design-library-check-svg', fails: 'An SVG with a script, an event attribute, foreignObject, an embedded image, an outside link or @import, or with no viewBox.' },
+          ],
+        },
+      },
+    ],
+  },
   componentPage(tooltipStories),
   componentPage(popoverStories),
   componentPage(badgeStories),
