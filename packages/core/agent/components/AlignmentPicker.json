@@ -52,6 +52,11 @@
           "name": "disabled",
           "type": "boolean",
           "default": "false"
+        },
+        {
+          "name": "flow",
+          "type": "'row' | 'column'",
+          "description": "The direction the contents run (a design tool's auto layout flow): the chosen point, and a hovered one, then draw three bars laid out that way and aligned to the point, so the mark previews the result. Without it, points are dots."
         }
       ]
     },
@@ -77,6 +82,8 @@
   "uses": [],
   "tokens": [
     "--border-hairline",
+    "--c-alignment-picker-bar",
+    "--c-alignment-picker-bar-gap",
     "--c-alignment-picker-cell",
     "--c-alignment-picker-dot",
     "--c-alignment-picker-dot-colour",

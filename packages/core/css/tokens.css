@@ -479,6 +479,8 @@
   --c-alignment-picker-dot: var(--size-indicator-s);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
   --c-alignment-picker-mark-colour: var(--color-accent);
+  --c-alignment-picker-bar: var(--border-thick);
+  --c-alignment-picker-bar-gap: var(--border-thick);
   --c-alignment-picker-hover-fill: var(--state-hover);
   --c-alignment-picker-pressed-fill: var(--state-pressed);
   --c-property-section-head: var(--size-target-dense);

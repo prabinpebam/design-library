@@ -21,6 +21,8 @@ export interface AlignmentPickerProps extends DataAttributes {
    */
   names?: string[];
   disabled?: boolean;
+  /** The direction the contents run (a design tool's auto layout flow): the chosen point, and a hovered one, then draw three bars laid out that way and aligned to the point, so the mark previews the result. Without it, points are dots. */
+  flow?: 'row' | 'column';
 }
 
 const points: AlignmentPoint[] = ['start', 'center', 'end'];
@@ -40,7 +42,7 @@ const englishNames = ['Top left', 'Top centre', 'Top right', 'Centre left', 'Cen
  * @key Arrow keys: move to the neighbouring point and choose it
  * @key Home / End: the first or last point in the row
  */
-export function AlignmentPicker({ label, value, onChange, names = englishNames, disabled = false, ...data }: AlignmentPickerProps) {
+export function AlignmentPicker({ label, value, onChange, names = englishNames, disabled = false, flow, ...data }: AlignmentPickerProps) {
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const index = points.indexOf(value.y) * 3 + points.indexOf(value.x);
   const choose = (i: number) => {
@@ -65,7 +67,7 @@ export function AlignmentPicker({ label, value, onChange, names = englishNames, 
     if (next !== index) choose(next);
   };
   return (
-    <div {...data} data-dl="alignment-picker" role="radiogroup" aria-label={label} aria-disabled={disabled || undefined} onKeyDown={disabled ? undefined : onKeyDown}>
+    <div {...data} data-dl="alignment-picker" data-flow={flow} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined} onKeyDown={disabled ? undefined : onKeyDown}>
       {names.slice(0, 9).map((name, i) => (
         <button
           key={name}
@@ -79,8 +81,18 @@ export function AlignmentPicker({ label, value, onChange, names = englishNames, 
           tabIndex={i === index ? 0 : -1}
           disabled={disabled}
           data-dl-part="point"
+          data-x={points[i % 3]}
+          data-y={points[Math.floor(i / 3)]}
           onClick={() => choose(i)}
-        />
+        >
+          {flow && (
+            <span data-dl-part="bars" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          )}
+        </button>
       ))}
     </div>
   );

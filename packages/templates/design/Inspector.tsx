@@ -161,7 +161,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
         return <TextField key={key} label={labelled} hideLabel={!show && !!name} placeholder={f.placeholder} size="xs" value={String(v ?? '')} onCommit={(x) => set(f.key, x)} />;
       case 'alignment': {
         const [x, y] = String(v ?? 'start:start').split(':') as AlignmentPoint[];
-        return <AlignmentPicker key={key} label={labelled} value={{ x, y }} onChange={(a) => set(f.key, `${a.x}:${a.y}`)} names={f.options?.map((o) => o.label)} disabled={get('layout') === 'none'} />;
+        return <AlignmentPicker key={key} label={labelled} value={{ x, y }} onChange={(a) => set(f.key, `${a.x}:${a.y}`)} names={f.options?.map((o) => o.label)} disabled={get('layout') === 'none'} flow={get('layout') === 'horizontal' ? 'row' : get('layout') === 'vertical' ? 'column' : undefined} />;
       }
       case 'gradient':
         return <GradientEditor key={key} label={labelled} stops={((v as PropItem[]) ?? []) as unknown as GradientStop[]} onChange={(stops) => set(f.key, stops as unknown as PropItem[])} />;

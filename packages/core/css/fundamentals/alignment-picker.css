@@ -72,3 +72,60 @@
     }
   }
 }
+
+/* G60: with a flow, the chosen point (and a hovered one) draws three bars laid out along the flow and aligned to the point,
+   in place of its dot, as a design tool previews the arrangement. The bars are always laid out; only their visibility
+   changes, so nothing moves. */
+@layer fundamentals {
+  [data-dl='alignment-picker'] [data-dl-part='bars'] {
+    grid-area: 1 / 1;
+    display: flex;
+    gap: var(--c-alignment-picker-bar-gap);
+    inline-size: calc(var(--c-alignment-picker-cell) - 2 * var(--c-alignment-picker-padding));
+    block-size: calc(var(--c-alignment-picker-cell) - 2 * var(--c-alignment-picker-padding));
+    visibility: hidden;
+    color: var(--c-alignment-picker-mark-colour);
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='point']::before {
+    grid-area: 1 / 1;
+  }
+
+  [data-dl='alignment-picker'] [data-dl-part='bars'] > span {
+    flex: none;
+    border-radius: var(--c-alignment-picker-bar);
+    background-color: currentColor;
+  }
+
+  [data-dl='alignment-picker'][data-flow='row'] [data-dl-part='bars'] { flex-direction: row; justify-content: center; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-dl-part='bars'] { flex-direction: column; justify-content: center; }
+  [data-dl='alignment-picker'][data-flow='row'] [data-dl-part='bars'] > span { inline-size: var(--c-alignment-picker-bar); }
+  [data-dl='alignment-picker'][data-flow='row'] [data-dl-part='bars'] > span:nth-child(1) { block-size: 40%; }
+  [data-dl='alignment-picker'][data-flow='row'] [data-dl-part='bars'] > span:nth-child(2) { block-size: 70%; }
+  [data-dl='alignment-picker'][data-flow='row'] [data-dl-part='bars'] > span:nth-child(3) { block-size: 55%; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-dl-part='bars'] > span { block-size: var(--c-alignment-picker-bar); }
+  [data-dl='alignment-picker'][data-flow='column'] [data-dl-part='bars'] > span:nth-child(1) { inline-size: 40%; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-dl-part='bars'] > span:nth-child(2) { inline-size: 70%; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-dl-part='bars'] > span:nth-child(3) { inline-size: 55%; }
+
+  /* Across the flow, the bars line up with the point's own place. */
+  [data-dl='alignment-picker'][data-flow='row'] [data-y='start'] > [data-dl-part='bars'] { align-items: flex-start; }
+  [data-dl='alignment-picker'][data-flow='row'] [data-y='center'] > [data-dl-part='bars'] { align-items: center; }
+  [data-dl='alignment-picker'][data-flow='row'] [data-y='end'] > [data-dl-part='bars'] { align-items: flex-end; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-x='start'] > [data-dl-part='bars'] { align-items: flex-start; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-x='center'] > [data-dl-part='bars'] { align-items: center; }
+  [data-dl='alignment-picker'][data-flow='column'] [data-x='end'] > [data-dl-part='bars'] { align-items: flex-end; }
+
+  [data-dl='alignment-picker'][data-flow] [data-dl-part='point'][aria-checked='true'] > [data-dl-part='bars'] { visibility: visible; }
+  [data-dl='alignment-picker'][data-flow] [data-dl-part='point'][aria-checked='true']::before { visibility: hidden; }
+
+  @media (hover: hover) {
+    [data-dl='alignment-picker'][data-flow] [data-dl-part='point']:not(:disabled):hover > [data-dl-part='bars'] { visibility: visible; color: var(--c-alignment-picker-dot-colour); }
+    [data-dl='alignment-picker'][data-flow] [data-dl-part='point'][aria-checked='true']:hover > [data-dl-part='bars'] { color: var(--c-alignment-picker-mark-colour); }
+    [data-dl='alignment-picker'][data-flow] [data-dl-part='point']:not(:disabled):hover::before { visibility: hidden; }
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='alignment-picker'] [data-dl-part='bars'] { color: Highlight; }
+  }
+}
