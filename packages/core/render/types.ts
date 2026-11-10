@@ -253,6 +253,8 @@ export interface TemplateAsset {
   dark?: string;
   /** Files for more contrast, resolved to their addresses (MP18; `assets.json` `contrast`). */
   contrast?: { light?: string; dark?: string };
+  /** The paired picture shown while the picture is hovered or focused, resolved to its address (MP10; `assets.json` `alternate`). */
+  alternate?: string;
   /** Empty when the picture is decorative. */
   alt: string;
   /** The frame where the block doesn't fix one, as `Image` `ratio` (DP3). */

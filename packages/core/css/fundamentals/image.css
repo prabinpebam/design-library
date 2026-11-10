@@ -147,6 +147,20 @@
     opacity: 1;
   }
 
+  /*
+   * The paired picture (MP10): over the picture in the same cell, unseen at rest; it fades in on the change timing while
+   * the picture is active (the triggers above) and once its file has arrived. Reduced motion keeps the fade, as for
+   * every picture.
+   */
+  [data-dl='image'] > img[data-dl-part='alternate'] {
+    opacity: 0;
+    transition: opacity var(--duration-change) var(--easing-standard);
+  }
+
+  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-alternate] > img[data-dl-part='alternate'][data-ready] {
+    opacity: 1;
+  }
+
   [data-contrast='more'] [data-dl='image'][data-tone] > img {
     filter: none;
   }

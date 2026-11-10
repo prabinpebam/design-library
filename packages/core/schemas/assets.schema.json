@@ -16,6 +16,7 @@
         "properties": {
           "src": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" },
           "dark": { "$ref": "#/$defs/file", "description": "The same picture for a dark scheme (MP17, MP18): a file in the template's folder at the same ratio, under the same alt; drawn wherever the picture sits in a dark scheme (the page's or a band's own). Raster or SVG." },
+          "alternate": { "$ref": "#/$defs/file", "description": "A paired picture (MP10): an after to the src's before, at the same ratio, shown while the picture or the card or link around it is hovered or focused, and fetched only then. Say both in alt (\"Before and after: …\")." },
           "contrast": {
             "type": "object",
             "description": "Files for more contrast (MP18): `light` and `dark`. Dark with more contrast falls back to contrast.dark, then dark, then src; light with more contrast to contrast.light, then src.",

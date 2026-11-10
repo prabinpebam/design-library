@@ -218,5 +218,20 @@ export default {
         </Grid>
       ),
     },
+    {
+      title: 'Before and after',
+      description:
+        'alternate pairs a second picture with the first: it shows while the picture, or the card or link around it, is hovered or focused, fading in on the change timing, and it is fetched only the first time. Both share one shape; screen readers hear alt, so it names both. The same from data: a picture entry’s alternate in assets.json.',
+      code: `<Image src={day} alternate={night} alt="Before and after: the lighthouse by day, then lit at night." />
+
+// assets.json
+"lighthouse": { "src": "assets/day.webp", "alternate": "assets/night.webp", "alt": "Before and after: …" }`,
+      render: () => (
+        <Grid max={2}>
+          <Image src={lighthouseDay} alternate={lighthouseNight} alt="Before and after: the lighthouse by day, then lit at night." caption="Point at it, or move focus to the card beside it" />
+          <Card href="#/image" eyebrow="Lighthouses" title="The headland light, day and night" description="Point at the card or move focus to it to see it lit." media={<Image ratio="photo" rounded={false} src={lighthouseDay} alternate={lighthouseNight} alt="" />} />
+        </Grid>
+      ),
+    },
   ],
 } satisfies StoryFile;

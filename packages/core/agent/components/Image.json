@@ -123,6 +123,11 @@
           "name": "under",
           "type": "ReactNode",
           "description": "The same as `decoration`, drawn behind the picture: seen only where it spills past the picture's edge."
+        },
+        {
+          "name": "alternate",
+          "type": "string | PictureSource",
+          "description": "A paired picture (MP10): an after to `src`'s before, a product's other side. It shows while the picture, or the link, button or card around it, is hovered or focused (the same as `treatment`'s `active`), crossfading on the change duration (kept under reduced motion, as a fade). Fetched only on the first hover or focus. Same shape as the picture; screen readers keep `alt`, so say both there (\"Before and after: …\")."
         }
       ]
     },

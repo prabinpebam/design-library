@@ -32,11 +32,12 @@ export function loadTemplate(
 }
 
 /**
- * A picture entry with every file it names resolved to its address: src, and the scheme files dark and`n * `contrast` (MP18). A decorative picture has an empty alt.
+ * A picture entry with every file it names resolved to its address: src, the scheme files dark and
+ * `contrast` (MP18), and the paired `alternate` (MP10). A decorative picture has an empty alt.
  */
 function withFiles(a: TemplateAsset, url: (file: string) => string): TemplateAsset {
   const contrast = a.contrast && Object.fromEntries(Object.entries(a.contrast).filter(([, f]) => f).map(([k, f]) => [k, url(f as string)]));
-  return { ...a, src: url(a.src), ...(a.dark ? { dark: url(a.dark) } : {}), ...(contrast ? { contrast } : {}), alt: a.decorative ? '' : (a.alt ?? '') };
+  return { ...a, src: url(a.src), ...(a.dark ? { dark: url(a.dark) } : {}), ...(a.alternate ? { alternate: url(a.alternate) } : {}), ...(contrast ? { contrast } : {}), alt: a.decorative ? '' : (a.alt ?? '') };
 }
 
 /** Pictures from an assets file with their addresses (the same rules as a template's: a decorative picture has an empty alt). */

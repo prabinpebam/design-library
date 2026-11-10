@@ -56,6 +56,13 @@ export interface ImageProps extends DataAttributes {
   decoration?: ReactNode;
   /** The same as `decoration`, drawn behind the picture: seen only where it spills past the picture's edge. */
   under?: ReactNode;
+  /**
+   * A paired picture (MP10): an after to `src`'s before, a product's other side. It shows while the picture, or the
+   * link, button or card around it, is hovered or focused (the same as `treatment`'s `active`), crossfading on the
+   * change duration (kept under reduced motion, as a fade). Fetched only on the first hover or focus. Same shape as
+   * the picture; screen readers keep `alt`, so say both there ("Before and after: …").
+   */
+  alternate?: string | PictureSource;
 }
 
 /** One file of a picture: its address and, optionally, other widths of it. */
@@ -133,6 +140,7 @@ export function Image({
   contrast,
   decoration,
   under,
+  alternate,
   ...data
 }: ImageProps) {
   const frameRef = useRef<HTMLSpanElement>(null);
@@ -164,6 +172,23 @@ export function Image({
   const settle = (key: LayerKey, result: 'loaded' | 'failed') => setLoads((was) => (was[key] === result ? was : { ...was, [key]: result }));
   const state = loads[shown] ?? 'loading';
 
+  // MP10: the paired picture is fetched on the first hover or focus of the picture or the link, button or card around it.
+  const pair = asSource(alternate);
+  const [armed, setArmed] = useState(false);
+  const [pairReady, setPairReady] = useState(false);
+  useEffect(() => {
+    const frameEl = frameRef.current;
+    if (!pair || armed || !frameEl) return;
+    const area = frameEl.closest<HTMLElement>('a[href], button, [data-dl="card"], [data-tone-area]') ?? frameEl;
+    const arm = () => setArmed(true);
+    area.addEventListener('pointerenter', arm);
+    area.addEventListener('focusin', arm);
+    return () => {
+      area.removeEventListener('pointerenter', arm);
+      area.removeEventListener('focusin', arm);
+    };
+  }, [pair?.src, armed]);
+
   const frame = (attrs: DataAttributes) => (
     <span
       {...attrs}
@@ -173,7 +198,7 @@ export function Image({
         width && height || focal
           ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focal ? { '--image-focus': `${focal.x * 100}% ${focal.y * 100}%` } : {}) } as CSSProperties)
           : undefined
-      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active}>
+      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active} data-alternate={pair ? '' : undefined}>
       {state === 'failed' && (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
           <Icon name="image" size="lg" />
@@ -207,6 +232,9 @@ export function Image({
           />
         );
       })}
+      {pair && state !== 'failed' && (
+        <img data-dl-part="alternate" src={armed ? pair.src : undefined} srcSet={armed ? pair.srcSet : undefined} sizes={sizes} alt="" aria-hidden="true" width={width} height={height} decoding="async" data-ready={pairReady ? '' : undefined} onLoad={() => setPairReady(true)} />
+      )}
     </span>
   );
 
