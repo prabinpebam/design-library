@@ -50,5 +50,5 @@
   "c.tree-view.row-gap": { "$value": "0px", "$description": "Rows sit edge to edge: a 24 px pitch" },
   "c.editor-layout.panel-end": { "$value": "20.625rem", "$description": "The inspector is 330 px (owner Q122)" },
   "c.field.swatch": { "$value": "0.875rem", "$description": "14 px colour swatches in fields, centred with equal space around (Q127)" },
-  "c.button.pressed-fill": { "$value": "transparent", "$description": "Eye and lock show their state by icon alone (OD2)" }
+  "c.button.pressed-fill": { "$value": { "light": "#e6e6e6", "dark": "#444444" }, "$description": "An icon toggle that is on (independent corners, individual padding): a grey fill; eye and lock use VisibilityToggle, which has no fill (Q129)" }
 }

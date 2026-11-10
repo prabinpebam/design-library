@@ -1125,12 +1125,10 @@
                       }
                     }
                   ]
-                }
-              ],
-              [
+                },
                 {
                   "key": "padSides",
-                  "kind": "switch",
+                  "kind": "toggle",
                   "label": "Individual padding",
                   "when": {
                     "key": "layout",
@@ -1139,7 +1137,9 @@
                       "horizontal",
                       "wrap"
                     ]
-                  }
+                  },
+                  "icon": "sides",
+                  "at": "action"
                 }
               ],
               [
@@ -1351,16 +1351,6 @@
               ],
               [
                 {
-                  "key": "opacity",
-                  "kind": "slider",
-                  "label": "Opacity",
-                  "min": 0,
-                  "max": 100,
-                  "unit": "%"
-                }
-              ],
-              [
-                {
                   "key": "visible",
                   "kind": "visibility",
                   "label": "Show in the document",
@@ -1368,6 +1358,14 @@
                 }
               ],
               [
+                {
+                  "key": "opacity",
+                  "kind": "number",
+                  "label": "Opacity",
+                  "unit": "%",
+                  "min": 0,
+                  "max": 100
+                },
                 {
                   "key": "radius",
                   "kind": "number",
@@ -1383,15 +1381,16 @@
                 },
                 {
                   "key": "corners",
-                  "kind": "switch",
-                  "label": "Individual corners",
+                  "kind": "toggle",
+                  "label": "Independent corners",
                   "when": {
                     "key": "hasCorners",
                     "is": [
                       true
                     ]
                   },
-                  "at": "action"
+                  "at": "action",
+                  "icon": "corners"
                 }
               ],
               [
@@ -1453,17 +1452,25 @@
               [
                 {
                   "key": "smoothing",
-                  "kind": "slider",
+                  "kind": "number",
                   "label": "Corner smoothing",
                   "min": 0,
                   "max": 100,
                   "unit": "%",
-                  "when": {
-                    "key": "hasCorners",
-                    "is": [
-                      true
-                    ]
-                  }
+                  "when": [
+                    {
+                      "key": "hasCorners",
+                      "is": [
+                        true
+                      ]
+                    },
+                    {
+                      "key": "corners",
+                      "is": [
+                        true
+                      ]
+                    }
+                  ]
                 }
               ]
             ]
@@ -2447,7 +2454,7 @@
               [
                 {
                   "key": "variantIcon",
-                  "kind": "switch",
+                  "kind": "checkbox",
                   "label": "Leading icon"
                 },
                 {
@@ -2560,7 +2567,7 @@
               [
                 {
                   "key": "flowStart",
-                  "kind": "switch",
+                  "kind": "checkbox",
                   "label": "Starting point"
                 }
               ],

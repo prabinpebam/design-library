@@ -858,6 +858,7 @@
             "segmented",
             "switch",
             "checkbox",
+            "toggle",
             "visibility",
             "colour",
             "slider",

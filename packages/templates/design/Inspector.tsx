@@ -145,6 +145,9 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
       case 'checkbox':
         {/* binary-setting: Figma's own checkboxes (Clip content, Truncate text, Ignore auto layout), the owner's choice for this template's dense inspector (Q124 OD3) */}
         return <Checkbox key={key} label={f.label} size="s" checked={!!v} onChange={(x) => set(f.key, x)} />;
+      case 'toggle':
+        {/* toggle-button: Figma's own icon toggles beside a field (independent corners, individual padding); the owner asked for no Switch in this inspector (Q129) */}
+        return <Button key={key} label={f.label} icon={f.icon} iconOnly tooltip emphasis="quiet" size="xs" pressed={!!v} onClick={() => set(f.key, !v)} />;
       case 'colour':
         return <TextField key={key} label={labelled} hideLabel={!show} size="xs" value={String(v ?? '')} onCommit={(x) => set(f.key, x)} swatch={{ value: String(v ?? ''), onChange: (x) => set(f.key, x) }} />;
       case 'slider':

@@ -41,7 +41,7 @@ export interface InspectorWhen {
  */
 export interface InspectorField {
   key: string;
-  kind: 'number' | 'select' | 'segmented' | 'switch' | 'checkbox' | 'visibility' | 'colour' | 'slider' | 'text' | 'alignment' | 'gradient' | 'align' | 'column' | 'menu';
+  kind: 'number' | 'select' | 'segmented' | 'switch' | 'checkbox' | 'toggle' | 'visibility' | 'colour' | 'slider' | 'text' | 'alignment' | 'gradient' | 'align' | 'column' | 'menu';
   label: string;
   glyph?: string;
   icon?: IconName;

@@ -6,7 +6,7 @@
  * (Comments.tsx). No styles.
  */
 import { useEffect, useRef, useState } from 'react';
-import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Tabs, Text, Toolbar, TreeView, VisibilityToggle, notify, useRegionScheme, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
+import { AvatarGroup, Button, Canvas, Checkbox, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Stack, Tabs, Text, Toolbar, TreeView, VisibilityToggle, notify, useRegionScheme, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import { DesignComments } from './Comments';
 import { Inspector } from './Inspector';
@@ -179,7 +179,8 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
         <Toolbar align="end" start={<AvatarGroup label={s.working} members={view.people} size={24} max={2} />}>
           <Button label={s.present} icon="play" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: fill(s.notInExample, { label: s.present }) })} />
           <Popover trigger={{ label: s.viewOptions, icon: 'more', iconOnly: true, emphasis: 'quiet', size: 'xs' }} title={s.viewOptions}>
-            <Switch label={s.propertyLabels} checked={labels} onChange={setLabels} />
+            {/* binary-setting: a view option in Figma's own checkbox style, as the inspector's other on/off settings (Q124, Q129) */}
+            <Checkbox label={s.propertyLabels} checked={labels} onChange={setLabels} />
           </Popover>
           {comments && zoomMenu}
           <Button label={s.share} emphasis="primary" size="s" onClick={() => notify({ message: fill(s.notInExample, { label: s.sharing }) })} />
