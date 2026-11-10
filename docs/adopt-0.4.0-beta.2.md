@@ -2,13 +2,13 @@
 
 > **TL;DR:** 0.4.0-beta.2 is "Moving a site onto 0.4": small, additive pieces a site needs to move onto the library completely. The router keeps the place between sibling pages, from code or JSON. A template's parts can be used on their own. A theme can set the top type steps. A picture can have light, dark and more-contrast files. A brand can use its own icons. It's additive: a site on 0.2.0-beta.1 or later installs it and keeps working unchanged. Paste the block below into your agent to upgrade, then adopt each piece one at a time; the site works between steps.
 
-**Status: draft** (worker 64, 2026-11-10). Sections marked *(pending)* are filled when their packet lands; the proof is filled at release.
+**Status: released** (worker 65, 2026-11-10; drafted by worker 64).
 
 **Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."* Planned in [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110) (Q110, Q111, Q112, Q113).
 
 **Paste this into DesignUp's agent:** *"Upgrade the Design Library to 0.4.0-beta.2: follow node_modules/@design-library/core/UPGRADE.md, section → 0.4.0-beta.2, after running its install line; do steps 1–3 now and stop for review before step 4."*
 
-**Release:** v0.4.0-beta.2 *(pending)*. **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110), [Migration readiness](definition-of-done.md#migration-readiness-q110) rows BM.1–BM.15.
+**Release:** [v0.4.0-beta.2](https://github.com/prabinpebam/design-library/releases/tag/v0.4.0-beta.2). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110), [Migration readiness](definition-of-done.md#migration-readiness-q110) rows BM.1–BM.15.
 
 ## The brief for your agent
 
@@ -47,7 +47,7 @@ Parts and type
 - Theme settings for the top type steps: `--type-display-size`, `-weight`, `-leading`, `-tracking` and the same for
   `--type-jumbo-*`, through `applySettings` or `settingsCss` (a jumbo smaller than display is refused).
 
-Pictures per scheme *(`assets.json` half pending MP18)*
+Pictures per scheme
 - `Image`, `Hero` `picture` and `EmptyState` `illustration` take `dark` and `contrast: { light?, dark? }`, each a
   path or `{ src, srcSet? }`, raster or SVG; the file shown follows the scheme of the picture's own region (the page,
   the system, a `data-scheme` band, more contrast), with no flash or jump; one alt for all. More contrast falls back:
@@ -61,6 +61,12 @@ Brand icons
   `Rating`'s star is drawn by name (`star`), so a brand star reaches it; with nothing overridden it draws as before.
   In development, an unknown name or a glyph without a `viewBox` logs one warning.
 
+Lean builds
+- `@design-library/core/components`: every component, without the library's own stories. A page that imports one
+  `Button` from it builds to 238 KB of script; from `@design-library/core/react` (unchanged, still works) it also writes
+  about 8 MB of story pictures and fonts into the output. `@design-library/core/stories` has the stories. `render` and
+  every template already use `components`.
+
 Commands and checks
 - `npx design-library-icons <folder> --out icons.json`: SVG icons named by the icon they replace → icon data
   (`--names` lists the names; `--check` for CI).
@@ -71,6 +77,9 @@ Commands and checks
   roles, a face only parts use, root scaling's cost); step 6 "Use a part from another template".
 
 ## 4. Optional: move the rest of the site onto the library (in this order; the site works between steps)
+
+0. Lean build (one search and replace): change every `from '@design-library/core/react'` to
+   `from '@design-library/core/components'` (the same names). Keep `react` only where you import a story.
 
 Run `npx design-library-check --share` first and keep its output to compare after. Each step names the code it
 replaces; stop after any of them.
@@ -118,9 +127,20 @@ replaces; stop after any of them.
    link to the shown page: it glides to the top.
 ````
 
-## The proof *(pending, filled at release)*
+## The proof
 
-A copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 files, outside both repositories, every route in light, dark and at 320 px, type check, build and console errors (MP5, BM.5); the install matrix on npm 10 and 11; the probe sweep on the release build.
+At the release commit, outside both repositories (MP5, BM.5, Q114):
+
+| Check | 0.2.0-beta.1 → 0.4.0-beta.2 | 0.4.0-beta.1 → 0.4.0-beta.2 |
+| --- | --- | --- |
+| Install the two tarballs into a copy of DesignUp's `web/` with no other edit | Pass | Pass |
+| `tsc --noEmit` and `vite build` | Pass, Pass | Pass, Pass |
+| Every route (226), each element's box, colour, background, size, face, underline and opacity, light | 226 identical | 226 identical |
+| The same in dark | 226 identical | 226 identical |
+| The same at 320 px | 226 identical | 226 identical |
+| Console errors | 0 before, 0 after | 0 before, 0 after |
+
+Install matrix: npm 10.9.9 and 11.21.1 pass (the libraries, the dev tools, again from the lockfile). `npm run check` passes at the release commit. Probes ran on what changed (Q114): the Image page for MP17 and the Brand icons page for MP25 (clipping pass in light, dark, 1000 and 320 px; spacing findings only on the library's own page chrome); no full sweep for this release.
 
 ## What's in it, by plan packet
 
@@ -132,7 +152,7 @@ A copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 f
 | MP4 | Template registries on their own | BM.4 |
 | MP5 | Direct-jump proof from 0.2.0-beta.1 | BM.5 |
 | MP15 | Top type steps as theme settings | BM.7 |
-| MP17–MP19 | Pictures per scheme (MP17 code and MP19 docs built; MP18 from data pending) | BM.9–BM.11 |
+| MP17–MP19 | Pictures per scheme, in code and from `assets.json`; guide and checks | BM.9–BM.11 |
 | MP24–MP26 | Brand icons: the seam, the library page "Brand icons", the command and its guide | BM.12–BM.14 |
-| MP27 | Lean builds *(pending; stays in this release: the check found only the story re-exports and the fonts' lazy entry)* | BM.15 |
+| MP27 | Lean builds: `@design-library/core/components` and `/stories` | BM.15 |
 | MP6 | This release and brief | BM.6 |

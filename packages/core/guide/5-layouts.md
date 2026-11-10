@@ -34,7 +34,7 @@ All are in `@design-library/core/react`; props in `agent/components/{Name}.json`
 ## Use a layout in JSX
 
 ```tsx
-import { AppLayout, Navigation, PageHeader, Stack } from '@design-library/core/react';
+import { AppLayout, Navigation, PageHeader, Stack } from '@design-library/core/components';
 
 export function Orders() {
   const [open, setOpen] = useState(true);
