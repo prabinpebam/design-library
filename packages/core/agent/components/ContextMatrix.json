@@ -113,6 +113,7 @@
     "ScrollArea"
   ],
   "tokens": [
+    "--border-divider",
     "--c-context-matrix-cell-inline",
     "--c-context-matrix-cell-inline-narrow",
     "--c-context-matrix-head-fg",

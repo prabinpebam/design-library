@@ -136,6 +136,7 @@
     "ScrollArea"
   ],
   "tokens": [
+    "--border-divider",
     "--border-hairline",
     "--c-editor-layout-bar",
     "--c-editor-layout-bar-gap",

@@ -3,6 +3,7 @@ import { Button } from '../fundamentals/Button';
 import { Heading } from '../fundamentals/Heading';
 import { Morph } from '../fundamentals/Morph';
 import { ScrollArea } from '../fundamentals/ScrollArea';
+import { containTab, tabStops } from '../behaviour/focus';
 import type { DataAttributes } from '../types';
 
 export interface DialogProps extends DataAttributes {
@@ -41,7 +42,8 @@ export interface DialogProps extends DataAttributes {
  * @tier compound
  * @family overlays
  * @a11y The native `dialog` opened with `showModal()`: the page behind is inert, so focus stays inside and Tab cycles
- * through the dialog. Named by its title, described by its description; `role="alertdialog"` when `alert`. Focus
+ * through the dialog, with explicit boundary wrapping for browsers that otherwise focus the document at the end.
+ * The header and actions are non-landmark containers. Named by its title, described by its description; `role="alertdialog"` when `alert`. Focus
  * starts on the first field or control in the body (the title when there's none), on the first action in an alert
  * dialog, and returns to whatever opened it on close. The close button is named "Close", with a minimum 44 CSS px
  * target in both axes even under root font scaling; its small icon is unchanged. The body is a scroll region
@@ -66,8 +68,8 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       d.showModal();
       const body = d.querySelector<HTMLElement>('[data-dl-part="body"]');
       const actionsArea = d.querySelector<HTMLElement>('[data-dl-part="actions"]');
-      const focusable = 'input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])';
-      const first = alert ? actionsArea?.querySelector<HTMLElement>(focusable) : body?.querySelector<HTMLElement>(focusable);
+      const start = alert ? actionsArea : body;
+      const first = start ? tabStops(start)[0] : undefined;
       (first ?? d.querySelector<HTMLElement>('[data-dl-part="heading"]'))?.focus();
     } else if (!open && d.open) {
       d.close();
@@ -75,9 +77,17 @@ export function Dialog({ open, onClose, title, description, children, actions, s
     }
   }, [open, alert]);
 
+  useEffect(() => {
+    const d = ref.current;
+    return () => {
+      if (d?.open) d.close();
+      if (opener.current?.isConnected) opener.current.focus();
+    };
+  }, []);
+
   const surface = (
     <div data-dl-part="surface">
-      <header data-dl-part="header">
+      <div data-dl-part="header">
         <div data-dl-part="heading" tabIndex={-1} data-morph-focus="">
           <Heading level={2} size={3} id={`${id}-title`}>
             {title}
@@ -89,13 +99,13 @@ export function Dialog({ open, onClose, title, description, children, actions, s
           )}
         </div>
         {!alert && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" minimumTarget onClick={() => close.current()} />}
-      </header>
+      </div>
       {children && (
-        <ScrollArea data-dl-part="body" contain>
+        <ScrollArea data-dl-part="body" labelledBy={`${id}-title`} contain>
           {children}
         </ScrollArea>
       )}
-      {actions && <footer data-dl-part="actions">{actions}</footer>}
+      {actions && <div data-dl-part="actions">{actions}</div>}
     </div>
   );
 
@@ -106,8 +116,10 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       data-dl="dialog" data-material="modal" data-elevation="4"
       data-size={size}
       role={alert ? 'alertdialog' : undefined}
+      aria-modal="true"
       aria-labelledby={`${id}-title`}
       aria-describedby={description ? `${id}-description` : undefined}
+      onKeyDown={(e) => containTab(e.nativeEvent, e.currentTarget)}
       onCancel={(e) => {
         e.preventDefault();
         if (!alert) close.current();

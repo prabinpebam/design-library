@@ -166,7 +166,7 @@ export default {
   stories: [
     {
       title: 'A short form',
-      description: 'A quick edit that needs the page to wait. Focus starts in the field; Shift+Tab reaches Close, whose small icon has a minimum 44 CSS px target even with a scaled root font. Rename shows its progress, then the dialog closes and focus returns to the button.',
+      description: 'Focus starts in the field. Tab and Shift+Tab wrap inside the dialog, including at the boundary; Escape closes and returns to the opener. The header is not a banner landmark. Close keeps its small icon and minimum 44 CSS px target even with a scaled root font.',
       code: `<Dialog open={open} onClose={close} title="Rename the project" description="Everyone with access sees the new name." actions={<><Button label="Cancel" onClick={close} /><Button label="Rename" emphasis="primary" pendingLabel="Renaming…" doneLabel="Renamed" onCommit={rename} /></>}><TextField label="Project name" value={name} onCommit={setName} /></Dialog>`,
       render: () => <Rename />,
     },

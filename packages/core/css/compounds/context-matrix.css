@@ -32,7 +32,7 @@
 
   [data-dl='context-matrix'] tbody th,
   [data-dl='context-matrix'] tbody td {
-    border-block-start: var(--c-context-matrix-outline-width) solid var(--c-context-matrix-outline);
+    border-block-start: var(--border-divider) solid var(--c-context-matrix-outline);
   }
 
   [data-dl='context-matrix'] [data-dl-part='label'] {

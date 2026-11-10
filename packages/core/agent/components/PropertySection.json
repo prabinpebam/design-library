@@ -61,6 +61,13 @@
     "--c-property-section-head-compact",
     "--c-property-section-head-gap"
   ],
+  "settings": [
+    {
+      "var": "--c-property-section-divider-width",
+      "default": "0px",
+      "description": "Optional horizontal separator between sections, absent by default. Set 0px to remove one enabled by a template."
+    }
+  ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/propertysection",
   "principles": [
     "visual-noise"

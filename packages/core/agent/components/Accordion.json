@@ -102,7 +102,7 @@
     "Reveal"
   ],
   "tokens": [
-    "--border-hairline",
+    "--border-divider",
     "--c-accordion-controls-gap",
     "--c-accordion-panel-padding",
     "--c-accordion-radius",

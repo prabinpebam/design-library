@@ -23,7 +23,7 @@
     background-color: var(--material-chrome-bg, var(--color-bg));
     -webkit-backdrop-filter: var(--material-backdrop);
     backdrop-filter: var(--material-backdrop);
-    border-block-end: var(--border-hairline) solid transparent;
+    border-block-end: var(--border-divider) solid transparent;
   }
 
   [data-dl='site-layout'] > [data-dl-part='header'][data-under] {

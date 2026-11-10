@@ -57,7 +57,7 @@
   ],
   "uses": [],
   "tokens": [
-    "--border-hairline",
+    "--border-divider",
     "--c-frame-space-min",
     "--c-site-layout-gap",
     "--c-site-layout-margin",

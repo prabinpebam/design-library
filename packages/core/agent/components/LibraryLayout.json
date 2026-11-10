@@ -101,7 +101,7 @@
     "ScrollArea"
   ],
   "tokens": [
-    "--border-hairline",
+    "--border-divider",
     "--border-thick",
     "--color-bg-raised",
     "--color-bg-sunken",

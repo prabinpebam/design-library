@@ -31,7 +31,7 @@
   }
 
   [data-dl='data-table'] tbody tr {
-    border-block-start: var(--c-data-table-outline-width) solid var(--c-data-table-divider);
+    border-block-start: var(--border-divider) solid var(--c-data-table-divider);
   }
 
   [data-dl='data-table'] tbody [data-stacked] {

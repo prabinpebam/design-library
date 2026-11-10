@@ -53,7 +53,7 @@
   [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-footer'] {
     flex: none;
     padding: var(--c-chat-layout-inset);
-    border-block-start: var(--border-hairline) solid transparent;
+    border-block-start: var(--border-divider) solid transparent;
   }
 
   [data-dl='chat-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-footer'][data-under] {

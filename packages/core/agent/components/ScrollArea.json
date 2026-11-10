@@ -7,7 +7,7 @@
   "summary": "A scroll region whose scrollbar is drawn over the content, never beside it: the content has the same width and alignment whether it overflows or not. Native scrolling stays (wheel, touch, keys, find in page, anchors); only the bar is replaced, by a thin thumb at the region's end edge that can be dragged, with the track paging on a click. Use it for every scroll region. Not for the document itself on small screens, which keeps the browser's own bar.",
   "family": "arrangement",
   "a11y": [
-    "The drawn bar is hidden from assistive technology; the region scrolls with the keys whenever it or something inside it has focus. Give `label` when nothing inside can take focus, and the region becomes a named, focusable region.",
+    "The drawn bar is hidden from assistive technology. The viewport enters the Tab order only while its selected axis overflows, and keeps an inset token focus ring. Give label or labelledBy for its accessible name. An explicit tabIndex overrides automatic focusability; content that fits adds no default Tab stop.",
     "Forced colours and touch screens get the system's own scrollbar back."
   ],
   "keys": [
@@ -62,7 +62,12 @@
         {
           "name": "label",
           "type": "string",
-          "description": "Names the region; give one when the content has nothing focusable, so the region itself takes focus for the keys."
+          "description": "Accessible name of the region. Give label or labelledBy to every region that can overflow."
+        },
+        {
+          "name": "labelledBy",
+          "type": "string",
+          "description": "Id of the visible heading that names this region; preferred over repeating the heading as a label."
         },
         {
           "name": "id",
@@ -72,7 +77,7 @@
         {
           "name": "tabIndex",
           "type": "number",
-          "description": "Focus order of the scrolling element; `-1` for a skip link's target. Defaults to `0` when `label` is set."
+          "description": "Explicit focus order; `-1` for a skip link's target. By default, 0 only while the selected axis overflows."
         },
         {
           "name": "viewportRef",

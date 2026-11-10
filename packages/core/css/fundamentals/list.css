@@ -118,7 +118,7 @@
     position: absolute;
     inset-inline: 0;
     inset-block-start: calc((var(--list-gap) + var(--border-hairline)) / -2);
-    block-size: var(--border-hairline);
+    block-size: var(--border-divider);
     background-color: var(--color-border);
   }
 

@@ -1,5 +1,11 @@
 {
   "$comment": "Theme settings (ID4, IP4): the tokens a project may set from its theme, listed under the component that reads them. Set them with applySettings or settingsCss from @design-library/core/theme, or in your theme stylesheet on :root or a template's root. Every other --c-* token stays private. Values should read tokens (var(--space-…)) or be a length; the library keeps each default.",
+  "Shared": {
+    "--border-divider": "Horizontal separator width across lists, tables, accordions and layout headers/footers. Set 0px for no horizontal separators; field/control outlines, focus rings and selection indicators are unchanged. Dialog and MenuButton already use space, not dividers."
+  },
+  "PropertySection": {
+    "--c-property-section-divider-width": "Optional horizontal separator between sections, absent by default. Set 0px to remove one enabled by a template."
+  },
   "SiteLayout": {
     "--c-site-layout-width": "The wide column's width (default 72rem).",
     "--c-site-layout-reading": "The reading column's width (default the reading measure, 42rem).",

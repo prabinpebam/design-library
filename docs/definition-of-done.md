@@ -6,6 +6,14 @@
 
 ### G14: Dialog close target (11 November 2026)
 
+Follow-up acceptance: native Tab and Shift+Tab never leave the modal at their
+cycle boundary, and Escape restores the opener even when the Dialog unmounts.
+The header/actions are not page landmarks. Overflowing ScrollArea viewports
+are keyboard-focusable and named through label/labelledBy, with a token ring;
+fitting content adds no automatic Tab stop. Public theme settings remove
+horizontal separators without removing control outlines. Keep fixes at source,
+test and pack locally, and preserve the beta.2 consumer's dependency pairing.
+
 Consumer request: "Do NOT override core with CSS or patch it in the app, and do NOT waive the 44px target."
 The Dialog Close control must be at least 44 by 44 CSS px on mobile and desktop,
 keyboard-focusable with an unclipped visible focus ring. Fix at source, preserve

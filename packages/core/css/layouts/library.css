@@ -43,7 +43,7 @@
     padding-block: var(--space-inset-sm);
     padding-inline: var(--space-margin-page);
     /* The one rule between the header and everything below it; navigation and main separate by space alone. */
-    border-block-end: var(--border-hairline) solid var(--color-border);
+    border-block-end: var(--border-divider) solid var(--color-border);
   }
 
   [data-dl-region='nav'] {

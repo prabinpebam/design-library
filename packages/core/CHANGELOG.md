@@ -8,6 +8,9 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
+- **Fixed (G14 follow-up):** Dialog explicitly wraps native Tab/Shift+Tab at the modal boundary, restores focus on unmount, and uses non-landmark header/actions containers. ScrollArea joins the Tab order only while its selected axis overflows (unless tabIndex is explicit), with `label`/new `labelledBy` naming and its existing inset token focus ring.
+- **Added:** public shared theme setting `--border-divider`: `applySettings({ '--border-divider': '0px' })` removes standard horizontal separators without removing field outlines, enclosing borders, focus rings or selection indicators. PropertySection's opt-in separator also exposes `--c-property-section-divider-width` as a public setting. Defaults are unchanged. List retains `dividers="none"`; Dialog and MenuButton have no separator lines.
+
 - **Fixed (G14; core):** Dialog's Close button enables Button's new optional `minimumTarget` prop: at least the normal rem target and a token-driven 44 CSS px floor in both axes, including under root font reduction. Its small icon, keyboard behaviour and focus ring remain. Other Buttons retain their existing sizes unless opted in.
 
 - **Fixed (G11; core):** a MenuButton's menu fits its widest item instead of always taking the full popup width (`c.popup.width`, 22rem), so two short actions no longer open a pane-wide menu. The existing maximum (`c.popup.width`, narrowed to the window) still caps it, and a longer label wraps. Select's listbox and Mentions are unchanged. Reported by DesignUp's header settings menu.

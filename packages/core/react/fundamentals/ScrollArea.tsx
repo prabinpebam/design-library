@@ -1,5 +1,6 @@
 import type { ReactNode, Ref } from 'react';
 import { useOverlayScroll } from '../behaviour/scroll';
+import { scrollTabIndex } from '../behaviour/focus';
 import type { DataAttributes } from '../types';
 
 export interface ScrollAreaProps extends DataAttributes {
@@ -14,11 +15,13 @@ export interface ScrollAreaProps extends DataAttributes {
   inset?: 'none' | 'sm' | 'md';
   /** `sunken` shows the region's bounds with a sunken fill, for a region that doesn't fill a surface of its own (a list inside a page); `none` when its surface already shows them. */
   surface?: 'none' | 'sunken';
-  /** Names the region; give one when the content has nothing focusable, so the region itself takes focus for the keys. */
+  /** Accessible name of the region. Give label or labelledBy to every region that can overflow. */
   label?: string;
+  /** Id of the visible heading that names this region; preferred over repeating the heading as a label. */
+  labelledBy?: string;
   /** Id of the scrolling element, for a skip link or an anchor. */
   id?: string;
-  /** Focus order of the scrolling element; `-1` for a skip link's target. Defaults to `0` when `label` is set. */
+  /** Explicit focus order; `-1` for a skip link's target. By default, 0 only while the selected axis overflows. */
   tabIndex?: number;
   /** The scrolling element, for scrolling it from code. */
   viewportRef?: Ref<HTMLDivElement>;
@@ -33,12 +36,14 @@ export interface ScrollAreaProps extends DataAttributes {
  * Use it for every scroll region. Not for the document itself on small screens, which keeps the browser's own bar.
  * @tier fundamental
  * @family arrangement
- * @a11y The drawn bar is hidden from assistive technology; the region scrolls with the keys whenever it or something inside it has focus. Give `label` when nothing inside can take focus, and the region becomes a named, focusable region.
+ * @a11y The drawn bar is hidden from assistive technology. The viewport enters the Tab order only while its selected
+ * axis overflows, and keeps an inset token focus ring. Give label or labelledBy for its accessible name. An explicit
+ * tabIndex overrides automatic focusability; content that fits adds no default Tab stop.
  * @a11y Forced colours and touch screens get the system's own scrollbar back.
  * @key Arrow keys, Page Up, Page Down, Home, End, Space: scroll the region (native)
  */
-export function ScrollArea({ children, mode = 'auto', axis = 'block', maxSize = 'fill', inset = 'none', surface = 'none', label, id, tabIndex, viewportRef, contain = false, ...data }: ScrollAreaProps) {
-  const { root, setViewport, tracks } = useOverlayScroll(viewportRef);
+export function ScrollArea({ children, mode = 'auto', axis = 'block', maxSize = 'fill', inset = 'none', surface = 'none', label, labelledBy, id, tabIndex, viewportRef, contain = false, ...data }: ScrollAreaProps) {
+  const { root, setViewport, tracks, overflow } = useOverlayScroll(viewportRef);
 
   return (
     <div {...data} ref={root} data-dl="scroll-area" data-mode={mode} data-axis={axis} data-max={maxSize} data-surface={surface} data-contain={contain ? '' : undefined}>
@@ -46,9 +51,10 @@ export function ScrollArea({ children, mode = 'auto', axis = 'block', maxSize = 
         ref={setViewport}
         data-dl-part="viewport"
         id={id}
-        tabIndex={tabIndex ?? (label ? 0 : undefined)}
-        role={label ? 'region' : undefined}
+        tabIndex={scrollTabIndex(axis, overflow, tabIndex)}
+        role={label || labelledBy ? 'region' : undefined}
         aria-label={label}
+        aria-labelledby={labelledBy}
       >
         <div data-dl-part="content" data-inset={inset}>
           {children}

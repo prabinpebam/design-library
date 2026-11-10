@@ -23,6 +23,25 @@ In a separate project you use the first two. You can't run the library's token b
 
 ## Your product's theme
 
+### No horizontal separators
+
+Set the public shared theme setting once in your theme module:
+
+```ts
+import { applySettings } from '@design-library/core/theme';
+applySettings({ '--border-divider': '0px' });
+```
+
+It removes optional horizontal row, group, header and footer separators across
+core, including List, RowList, DataTable, ContextMatrix, Accordion and layouts.
+Field outlines, enclosing borders, selection indicators and focus rings stay.
+The default is the existing hairline. List also accepts `dividers="none"` per
+instance; Dialog and MenuButton already group their content without separators.
+
+PropertySection has no separator by default. If a template enables its optional
+line, reset it with the public setting
+`applySettings({ '--c-property-section-divider-width': '0px' })` as well.
+
 Put it in one module, imported once in your entry after the CSS (`import './look';`):
 
 ```ts

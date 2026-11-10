@@ -145,7 +145,7 @@
 
   /* One rule between rows: the cheapest cue that separates dense tabular rows. */
   tbody tr {
-    border-block-start: var(--border-hairline) solid var(--color-border);
+    border-block-start: var(--border-divider) solid var(--color-border);
   }
 
   :focus-visible {

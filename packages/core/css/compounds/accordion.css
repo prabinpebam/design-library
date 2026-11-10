@@ -19,11 +19,11 @@
 
   [data-dl='accordion'] > [data-dl-part='list'] {
     display: grid;
-    border-block: var(--border-hairline) solid var(--color-border);
+    border-block: var(--border-divider) solid var(--color-border);
   }
 
   [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] + [data-dl-part='item'] {
-    border-block-start: var(--border-hairline) solid var(--color-border);
+    border-block-start: var(--border-divider) solid var(--color-border);
   }
 
   [data-dl='accordion'] > [data-dl-part='list'] > [data-dl-part='item'] > [data-dl-part='heading'] {

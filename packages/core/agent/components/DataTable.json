@@ -94,6 +94,7 @@
     "ScrollArea"
   ],
   "tokens": [
+    "--border-divider",
     "--c-data-table-cell-block",
     "--c-data-table-cell-inline",
     "--c-data-table-divider",

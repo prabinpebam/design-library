@@ -96,6 +96,7 @@
     "ScrollArea"
   ],
   "tokens": [
+    "--border-divider",
     "--border-hairline",
     "--c-chat-layout-column",
     "--c-chat-layout-gap",

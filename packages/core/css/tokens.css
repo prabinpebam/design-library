@@ -141,6 +141,7 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-pill: 999px;
+  --border-divider: var(--border-hairline);
   --border-hairline: 1px;
   --border-thick: 2px;
   --link-decoration: underline;
@@ -271,7 +272,7 @@
   --c-row-list-facts-gap: var(--space-stack-pair);
   --c-row-list-stacked-gap: var(--space-stack-item);
   --c-row-list-divider: var(--color-border);
-  --c-row-list-divider-width: var(--border-hairline);
+  --c-row-list-divider-width: var(--border-divider);
   --c-stacked-bar-thickness: 0.75rem;
   --c-stacked-bar-measure: 32rem;
   --c-stacked-bar-radius: var(--radius-pill);

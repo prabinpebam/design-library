@@ -94,7 +94,7 @@ export default {
     },
     {
       title: 'Overflowing or not, nothing moves',
-      description: 'The bar is an overlay, not a column: the same content box with two lines and with sixteen. The width under them is measured live.',
+      description: 'The bar is an overlay, not a column: the same content box with two lines and with sixteen. Only the overflowing viewport enters the Tab order by default; its label names it and its inset focus ring stays visible. The fitting viewport adds no Tab stop. The width under them is measured live.',
       code: `<ScrollArea mode="always" maxSize="sm" inset="sm" surface="sunken">{twoLines}</ScrollArea>
 <ScrollArea mode="always" maxSize="sm" inset="sm" surface="sunken">{sixteenLines}</ScrollArea>`,
       render: () => <NoShift />,

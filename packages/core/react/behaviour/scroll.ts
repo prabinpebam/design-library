@@ -3,7 +3,7 @@
  * region draws the same bar: measure the thumb from the viewport, show it while scrolling, drag it, page on a track
  * press. Tier 0 behaviour, no styles: the markup it returns is styled by `scroll-area.css` through `data-dl="scroll-area"`.
  */
-import { createElement, useCallback, useEffect, useRef, type ReactNode, type Ref, type PointerEvent as ReactPointerEvent } from 'react';
+import { createElement, useCallback, useEffect, useRef, useState, type ReactNode, type Ref, type PointerEvent as ReactPointerEvent } from 'react';
 
 type Axis = 'x' | 'y';
 
@@ -22,6 +22,7 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
   const root = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement | null>(null);
   const idle = useRef(0);
+  const [overflow, setOverflow] = useState({ inline: false, block: false });
 
   const setViewport = useCallback(
     (node: HTMLDivElement | null) => {
@@ -43,6 +44,9 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       box.toggleAttribute(`data-overflow-${a}`, over);
       return { a, view, full, over };
     });
+    const inline = axes[0].over;
+    const block = axes[1].over;
+    setOverflow((current) => current.inline === inline && current.block === block ? current : { inline, block });
     for (const { a, view, full, over } of axes) {
       const bar = box.querySelector<HTMLElement>(`:scope > [data-dl-part='track'][data-axis='${a}']`);
       if (!over || !bar) continue;
@@ -79,7 +83,7 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       watchChildren();
       measure();
     });
-    changes.observe(el, { childList: true, subtree: true });
+    changes.observe(el, { childList: true, characterData: true, subtree: true });
     return () => {
       el.removeEventListener('scroll', onScroll);
       sizes.disconnect();
@@ -138,5 +142,5 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
         createElement('div', { key: a, 'data-dl-part': 'track', 'data-axis': a, 'aria-hidden': true, onPointerDown: onTrackDown(a) }, createElement('div', { 'data-dl-part': 'thumb' })),
       );
 
-  return { root, setViewport, tracks };
+  return { root, setViewport, tracks, overflow };
 }
