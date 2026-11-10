@@ -32,6 +32,10 @@ import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import { checkSite } from './check-site.mjs';
+import { checkSvg } from './check-svg.mjs';
+import { pictureSize } from './picture-size.mjs';
+
+
 
 const root = process.cwd();
 const core = fileURLToPath(new URL('..', import.meta.url));
@@ -156,7 +160,24 @@ for (const id of folders) {
   const assetsFile = join(dir, 'assets.json');
   const assetData = existsSync(assetsFile) ? read(assetsFile) : { assets: {} };
   if (assetData) check(assetsFile, 'https://design-library.local/core/assets/1', assetData);
-  for (const [name, a] of Object.entries(assetData?.assets ?? {})) if (a?.src && !existsSync(join(dir, a.src))) fail(assetsFile, `/assets/${name}/src`, `file ${a.src} doesn't exist`, `add the file under ${id}/assets/ or fix the path`);
+  for (const [name, a] of Object.entries(assetData?.assets ?? {})) {
+    if (a?.src && !existsSync(join(dir, a.src))) fail(assetsFile, `/assets/${name}/src`, `file ${a.src} doesn't exist`, `add the file under ${id}/assets/ or fix the path`);
+    // Pictures per scheme (MP18, Q112): each file exists, is a safe SVG when it's one, and shares the picture's ratio (ID39).
+    const sources = [['/src', a?.src], ['/dark', a?.dark], ['/contrast/light', a?.contrast?.light], ['/contrast/dark', a?.contrast?.dark]].filter(([, s]) => typeof s === 'string');
+    const base = a?.src && existsSync(join(dir, a.src)) ? pictureSize(join(dir, a.src)) : null;
+    for (const [at, s] of sources) {
+      const file = join(dir, s);
+      if (at !== '/src' && !existsSync(file)) {
+        fail(assetsFile, `/assets/${name}${at}`, `file ${s} doesn't exist`, `add the file under ${id}/assets/ or fix the path`);
+        continue;
+      }
+      if (s.endsWith('.svg') && existsSync(file)) for (const p of checkSvg(readFileSync(file, 'utf8'))) fail(assetsFile, `/assets/${name}${at}`, `${s}: ${p.where} ${p.problem}`, p.fix);
+      if (at === '/src' || !base) continue;
+      const size = pictureSize(file);
+      if (size && Math.abs(size.w / size.h - base.w / base.h) / (base.w / base.h) > 0.01)
+        fail(assetsFile, `/assets/${name}${at}`, `${s} is ${size.w} × ${size.h}, a different shape from ${a.src} (${base.w} × ${base.h})`, 'make every scheme’s file the same shape: they share one frame and one alt');
+    }
+  }
 
   const schemaFile = join(dir, 'content.schema.json');
   const schema = read(schemaFile);

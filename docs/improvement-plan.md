@@ -745,7 +745,7 @@ Root causes as in Part 1, plus **DesignUp** (a step on DesignUp's side; we never
 **Assumptions:**
 
 - **IA22:** choosing the layer by the region's scheme shows no flash and no layout shift on a `SchemeControl` switch, and fetches one file per picture until the scheme changes. Test: MP17's story in light, dark and more contrast, and a dark region inside a light page; a layout-shift observer and the network list while switching light → dark → light.
-- **IA23:** an allowlist keeps every library spot illustration intact while refusing scripts and external references. Test: the shipped spot illustrations (SS9) pass MP22's check and draw the same; planted bad files fail at their path.
+- **IA23:** an allowlist keeps every library spot illustration intact while refusing scripts and external references. Test: the shipped spot illustrations (SS9) pass MP22's check and draw the same; planted bad files fail at their path. **Note (worker 64, 09:50):** no SVG file ships in the repository today (every template and library picture is WebP), so the first illustrations are MP20's own; `check:svg` was proved on planted files (script, event attribute, external `href`, missing `viewBox`, `<animate>`, own `@keyframes`, literal colours and `<style>` in token art, unknown `data-size` and `data-motion`), and a clean token-art file passed.
 - **IA24:** one file on the five role tokens reads correctly in light, dark and more contrast (graphic parts at 3:1, WCAG 1.4.11). Test: MP20's story in the context matrix; the role pairs' contrast measured.
 
 #### Q112 packets

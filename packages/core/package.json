@@ -43,6 +43,7 @@
       "design-library-blocks": "./tools/blocks.mjs",
     "design-library-check-content": "./tools/check-content.mjs",
     "design-library-check": "./tools/check-project.mjs",
+    "design-library-check-svg": "./tools/check-svg.mjs",
     "design-library-generate": "./tools/generate.mjs",
     "design-library-icons": "./tools/icons.mjs",
     "design-library-new-template": "./tools/new-template.mjs",
