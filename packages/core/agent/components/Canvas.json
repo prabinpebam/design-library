@@ -61,6 +61,11 @@
           "type": "'fill' | 'md'",
           "default": "'fill'",
           "description": "`fill` takes the room its parent gives it (an editor's working area); `md` holds a set height (a demonstration)."
+        },
+        {
+          "name": "fill",
+          "type": "string",
+          "description": "The page colour the person chose (a design tool's page background); the canvas fill token when absent."
         }
       ]
     },
@@ -192,6 +197,7 @@
     "--c-canvas-selection-width",
     "--c-canvas-shape-fill",
     "--c-canvas-shape-radius",
+    "--c-canvas-size-fill",
     "--c-canvas-size-padding",
     "--c-canvas-size-radius",
     "--c-canvas-text-size",

@@ -15,7 +15,7 @@
     inline-size: 100%;
     block-size: 100%;
     min-block-size: 0;
-    background-color: var(--c-canvas-fill);
+    background-color: var(--doc-page, var(--c-canvas-fill));
   }
 
   [data-dl='canvas'][data-size='md'] {
@@ -203,7 +203,7 @@
     translate: -50% 0;
     padding-inline: var(--c-canvas-size-padding);
     border-radius: var(--c-canvas-size-radius);
-    background-color: var(--c-canvas-selection);
+    background-color: var(--c-canvas-size-fill);
     color: var(--color-text-on-accent);
     font-size: var(--type-caption-size);
     line-height: var(--type-caption-leading);

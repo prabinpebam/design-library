@@ -5,8 +5,8 @@
  * settings) opens it presenting the prototype (Present.tsx) or with the comment threads in the properties panel
  * (Comments.tsx). No styles.
  */
-import { useState } from 'react';
-import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Tabs, Text, Toolbar, TreeView, VisibilityToggle, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
+import { useEffect, useRef, useState } from 'react';
+import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Tabs, Text, Toolbar, TreeView, VisibilityToggle, notify, useRegionScheme, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import { DesignComments } from './Comments';
 import { Inspector } from './Inspector';
@@ -96,6 +96,22 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
   const [startOpen, setStartOpen] = useState(wide);
   const [endOpen, setEndOpen] = useState(wide);
   const shape = find(shapes, selected);
+  /** Nothing selected: the inspector shows the page's own values (Page colour, Styles, Export; Prototype settings and help). */
+  const [pageProps, setPageProps] = useState<ShapeProps>(() => ({ ...view.defaults.page }));
+  const doc = useRef(typeof document === 'undefined' ? null : document.documentElement);
+  const { scheme } = useRegionScheme(doc);
+  const pageColour = String(pageProps.pageColour || view.pageColour[scheme]);
+  const pageLabel = view.pages.find((p) => p.id === page)?.label ?? '';
+  // Escape lets go of the selection, as in a design tool; not while typing or inside a menu, dialog or popover.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || e.defaultPrevented) return;
+      if ((e.target as Element | null)?.closest?.('input, textarea, select, [contenteditable="true"], [role=dialog], [role=menu], [role=listbox], [popover]')) return;
+      setSelected(undefined);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
   const change = (c: Partial<DesignShape>, props?: ShapeProps) => shape && setShapes((all) => update(all, shape.id, c, props));
   const select = (id: string | undefined) => {
     setSelected(id);
@@ -165,7 +181,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
           <Popover trigger={{ label: s.viewOptions, icon: 'more', iconOnly: true, emphasis: 'quiet', size: 'xs' }} title={s.viewOptions}>
             <Switch label={s.propertyLabels} checked={labels} onChange={setLabels} />
           </Popover>
-          {(comments || !shape) && zoomMenu}
+          {comments && zoomMenu}
           <Button label={s.share} emphasis="primary" size="s" onClick={() => notify({ message: fill(s.notInExample, { label: s.sharing }) })} />
         </Toolbar>
       }
@@ -244,13 +260,24 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
             />
           </>
         ) : (
-          <Text variant="body-sm" tone="muted">
-            {s.empty}
-          </Text>
+          <Inspector
+            page
+            tabs={view.inspector.filter((t) => !t.mode || t.mode === mode)}
+            tab={tab}
+            shape={{ id: page, label: pageLabel, kind: 'frame', x: 0, y: 0, width: view.width, height: view.height, props: { ...pageProps, pageColour } }}
+            label={s.inspector}
+            notInExample={s.notInExample}
+            noColours={s.noColours}
+            colours={[]}
+            onChange={(_c, props) => props && setPageProps((x) => ({ ...x, ...props }))}
+            onReplaceColour={() => {}}
+            labels={labels}
+            extra={zoomMenu}
+          />
         )
       }
     >
-      <Canvas label={fill(s.canvas, { file: view.file, page: view.pages.find((p) => p.id === page)?.label ?? '' })} shapes={toCanvas(shapes)} width={view.width} height={view.height} zoom={Number(zoom)} selected={selected} onSelect={(id) => (locked(id) ? undefined : select(id))} />
+      <Canvas label={fill(s.canvas, { file: view.file, page: view.pages.find((p) => p.id === page)?.label ?? '' })} shapes={toCanvas(shapes)} fill={pageProps.pageColour && pageProps.pageVisible !== false ? String(pageProps.pageColour) : undefined} width={view.width} height={view.height} zoom={Number(zoom)} selected={selected} onSelect={(id) => (locked(id) ? undefined : select(id))} />
     </EditorLayout>
   );
 }

@@ -501,6 +501,7 @@
   --c-canvas-handle-fill: var(--color-bg);
   --c-canvas-selection-width: var(--border-thick);
   --c-canvas-size-radius: var(--radius-sm);
+  --c-canvas-size-fill: var(--c-canvas-selection);
   --c-canvas-name-selected: var(--color-text-muted);
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);

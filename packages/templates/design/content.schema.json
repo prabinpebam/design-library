@@ -25,6 +25,9 @@
             "frame": {
               "$ref": "#/$defs/ShapeProps"
             },
+            "page": {
+              "$ref": "#/$defs/ShapeProps"
+            },
             "rectangle": {
               "$ref": "#/$defs/ShapeProps"
             },
@@ -34,9 +37,9 @@
           },
           "required": [
             "all",
+            "ellipse",
             "frame",
             "rectangle",
-            "ellipse",
             "text"
           ],
           "type": "object"
@@ -90,6 +93,23 @@
         },
         "page": {
           "type": "string"
+        },
+        "pageColour": {
+          "additionalProperties": false,
+          "description": "The page colour by scheme until the person sets one (the canvas grey).",
+          "properties": {
+            "dark": {
+              "type": "string"
+            },
+            "light": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "light",
+            "dark"
+          ],
+          "type": "object"
         },
         "pages": {
           "items": {
@@ -176,6 +196,7 @@
         "menu",
         "pages",
         "page",
+        "pageColour",
         "people",
         "tools",
         "modes",
@@ -992,6 +1013,64 @@
           ],
           "type": "object"
         },
+        "add": {
+          "additionalProperties": false,
+          "description": "A head-only section whose add button says it isn't in the example (Styles +).",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "says": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "label",
+            "says"
+          ],
+          "type": "object"
+        },
+        "cards": {
+          "additionalProperties": false,
+          "description": "Dismissible help cards (Prototype, nothing selected): Alerts in the panel; with no heading, drawn without a section.",
+          "properties": {
+            "close": {
+              "type": "string"
+            },
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "icon": {
+                    "$ref": "#/$defs/IconName"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "icon",
+                  "title",
+                  "text"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "close",
+            "items"
+          ],
+          "type": "object"
+        },
         "code": {
           "description": "Dev tab: the layer's CSS, generated from its values, under this label.",
           "type": "string"
@@ -1010,17 +1089,37 @@
         "heading": {
           "type": "string"
         },
+        "headings": {
+          "additionalProperties": false,
+          "description": "The heading for one kind, where it differs (a frame's Layout is Auto layout).",
+          "properties": {
+            "ellipse": {
+              "type": "string"
+            },
+            "frame": {
+              "type": "string"
+            },
+            "rectangle": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "id": {
           "type": "string"
         },
         "kinds": {
-          "description": "Layer kinds it applies to; all when absent.",
+          "description": "Layer kinds it applies to; every layer kind when absent. `page` is the nothing-selected state (Escape, an empty-canvas click): only sections that list it show then.",
           "items": {
             "enum": [
               "frame",
               "rectangle",
               "ellipse",
-              "text"
+              "text",
+              "page"
             ],
             "type": "string"
           },

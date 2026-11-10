@@ -11,11 +11,13 @@
     --color-text: light-dark(rgb(0 0 0 / 0.9), #ffffff);
     --color-text-muted: light-dark(#6e6e6e, rgb(255 255 255 / 0.7));
     --color-text-on-accent: #ffffff;
-    --color-accent: #0d99ff;
-    --color-accent-hover: light-dark(#007be5, #0a6dc2);
-    --color-accent-pressed: light-dark(#0768cf, #085ba7);
+    --color-accent: #0a7acb;
+    --color-accent-hover: #0868b0;
+    --color-accent-pressed: #075a99;
     --color-accent-subtle: light-dark(#e5f4ff, #2d3953);
     --color-focus: #0d99ff;
+    --c-canvas-selection: #0d99ff;
+    --c-canvas-size-fill: var(--color-accent);
     --state-hover: light-dark(rgb(0 0 0 / 0.04), rgb(255 255 255 / 0.06));
     --radius-sm: 0.3125rem;
     --radius-md: 0.3125rem;
@@ -126,7 +128,6 @@
     --c-canvas-frame-fill: var(--color-bg);
     --c-canvas-shape-fill: var(--color-bg-raised);
     --c-canvas-shape-radius: var(--radius-sm);
-    --c-canvas-selection: var(--color-accent);
     --c-canvas-text-size: var(--text-m);
     --c-editor-layout-panel-start: var(--c-editor-layout-panel);
     --c-editor-layout-divider: var(--color-border);

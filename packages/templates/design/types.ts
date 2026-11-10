@@ -93,8 +93,14 @@ export interface InspectorFact {
 export interface InspectorSection {
   id: string;
   heading: string;
-  /** Layer kinds it applies to; all when absent. */
-  kinds?: ('frame' | 'rectangle' | 'ellipse' | 'text')[];
+  /** Layer kinds it applies to; every layer kind when absent. `page` is the nothing-selected state (Escape, an empty-canvas click): only sections that list it show then. */
+  kinds?: ('frame' | 'rectangle' | 'ellipse' | 'text' | 'page')[];
+  /** The heading for one kind, where it differs (a frame's Layout is Auto layout). */
+  headings?: Partial<Record<'frame' | 'rectangle' | 'ellipse' | 'text', string>>;
+  /** A head-only section whose add button says it isn't in the example (Styles +). */
+  add?: { label: string; says: string };
+  /** Dismissible help cards (Prototype, nothing selected): Alerts in the panel; with no heading, drawn without a section. */
+  cards?: { close: string; items: { id: string; icon: IconName; title: string; text: string }[] };
   when?: InspectorWhen;
   rows?: InspectorField[][];
   list?: InspectorList;
@@ -133,6 +139,8 @@ export interface DesignAppSpec {
   menu: { value: string; label: string }[];
   pages: { id: string; label: string }[];
   page: string;
+  /** The page colour by scheme until the person sets one (the canvas grey). */
+  pageColour: { light: string; dark: string };
   people: { name: string; presence?: 'available' | 'away' }[];
   tools: DesignTool[];
   /** The mode switch at the end of the tool bar: Draw, Design, Dev Mode (only Design is built). */
@@ -143,7 +151,7 @@ export interface DesignAppSpec {
   height: number;
   shapes: DesignShape[];
   /** Every layer's starting values, by kind (`all` first, then the kind's own); a layer's `props` override them. */
-  defaults: Record<'all' | 'frame' | 'rectangle' | 'ellipse' | 'text', ShapeProps>;
+  defaults: Record<'all' | 'frame' | 'rectangle' | 'ellipse' | 'text', ShapeProps> & { /** The page's own values, shown while nothing is selected (page colour, exports, prototype settings). */ page?: ShapeProps };
   /** The inspector's tabs (Design, Prototype, Dev), their sections and controls (Q66.3). */
   inspector: InspectorTab[];
   /** Selected when the editor opens. */

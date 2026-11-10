@@ -7,8 +7,8 @@
  * at once (zero latency: no transition on a value a person is setting). Fields may stack in one cell (`column`) or sit in a row's action column (`at: 'action'`); a `wide` first field takes two thirds of its row; a list may show each item as a summary row that opens a Popover (`summary`). No styles.
  */
 import { VisibilityToggle } from '@design-library/core/components';
-import { Button, Checkbox, Cluster, CodeBlock, DescriptionList, GradientEditor, MenuButton, NumberField, Popover, PropertyRow, PropertySection, SegmentedControl, Select, Slider, Stack, Switch, Tabs, Text, TextField, AlignmentPicker, notify, type AlignmentPoint, type GradientStop } from '@design-library/core/components';
-import type { ReactNode } from 'react';
+import { Alert, Button, Checkbox, Cluster, CodeBlock, DescriptionList, GradientEditor, MenuButton, NumberField, Popover, PropertyRow, PropertySection, SegmentedControl, Select, Slider, Stack, Switch, Tabs, Text, TextField, AlignmentPicker, notify, type AlignmentPoint, type GradientStop } from '@design-library/core/components';
+import { useState, type ReactNode } from 'react';
 import { fill } from '@design-library/core/render';
 import type { DesignShape, InspectorField, InspectorSection, InspectorTab, PropItem, PropValue, ShapeProps } from './types';
 
@@ -37,6 +37,8 @@ export interface InspectorProps {
   onReplaceColour: (from: string, to: string) => void;
   /** Property labels (the panel's view option): every field shows its label above it; off, glyphs and icons say what a field is, as Figma does by default. */
   labels?: boolean;
+  /** Nothing is selected: `shape` is the page, and only sections listing the `page` kind show. */
+  page?: boolean;
 }
 
 /** A layer's CSS, as Dev mode shows it: generated from its values. */
@@ -85,7 +87,8 @@ export function cssOf(shape: DesignShape & { props: ShapeProps }): string {
   return lines.join('\n');
 }
 
-export function Inspector({ tabs, tab, shape, parent, label, notInExample, noColours, colours, onChange, onReplaceColour, labels = false, extra, head }: InspectorProps) {
+export function Inspector({ tabs, tab, shape, parent, label, notInExample, noColours, colours, onChange, onReplaceColour, labels = false, extra, head, page = false }: InspectorProps) {
+  const [closed, setClosed] = useState<string[]>([]);
   const p = shape.props;
   const own = (key: string): PropValue | PropItem[] | undefined => (isOwn(key) ? shape[key] : p[key]);
   const setOwn = (key: string, v: PropValue | PropItem[]) => (isOwn(key) ? onChange({ [key]: v }) : onChange({}, { [key]: v }));
@@ -204,8 +207,15 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
     });
   };
 
-  const section = (s: InspectorSection) => {
-    if (s.kinds && !s.kinds.includes(shape.kind)) return null;
+  const section = (given: InspectorSection) => {
+    const s = !page && given.headings?.[shape.kind] ? { ...given, heading: given.headings[shape.kind]! } : given;
+    if (s.kinds ? !s.kinds.includes(page ? 'page' : shape.kind) : page) return null;
+    const cards = s.cards && s.cards.items.filter((c) => !closed.includes(c.id)).map((c) => (
+      <Alert key={c.id} tone="neutral" icon={c.icon} title={c.title} closeLabel={fill(s.cards!.close, { title: c.title })} onClose={() => setClosed((x) => [...x, c.id])}>
+        {c.text}
+      </Alert>
+    ));
+    if (cards && !s.heading) return cards.length ? <Stack key={s.id} gap="item">{cards}</Stack> : null;
     if (!shows(s.when, own)) return null;
     const l = s.list;
     const items = l ? ((p[l.key] as PropItem[] | undefined) ?? []) : [];
@@ -215,7 +225,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
         key={s.id}
         heading={s.heading}
         density="compact"
-        actions={l && <Button label={l.add} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => setItems([...items, { ...l.template }])} />}
+        actions={s.add ? <Button label={s.add.label} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: s.add!.says })} /> : l && <Button label={l.add} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => setItems([...items, { ...l.template }])} />}
       >
         {!s.listFirst && rows(s.rows, own, setOwn)}
         {l &&
@@ -262,7 +272,8 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
               {noColours}
             </Text>
           ))}
-        {s.action && (
+        {cards}
+        {s.action && (!l || items.length > 0) && (
           <Cluster gap="item">
             <Button label={fill(s.action.label, { name: shape.label })} size="xs" onClick={() => notify({ message: s.action!.says })} />
           </Cluster>

@@ -814,8 +814,49 @@
         "label": "Design",
         "sections": [
           {
-            "id": "alignment",
-            "heading": "Alignment",
+            "id": "page",
+            "heading": "Page",
+            "kinds": [
+              "page"
+            ],
+            "rows": [
+              [
+                {
+                  "key": "pageColour",
+                  "kind": "colour",
+                  "label": "Page colour"
+                },
+                {
+                  "key": "pageOpacity",
+                  "kind": "number",
+                  "label": "Page opacity",
+                  "unit": "%",
+                  "min": 0,
+                  "max": 100
+                },
+                {
+                  "key": "pageVisible",
+                  "kind": "visibility",
+                  "label": "Show the page colour",
+                  "at": "action"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "styles",
+            "heading": "Styles",
+            "kinds": [
+              "page"
+            ],
+            "add": {
+              "label": "Create a style",
+              "says": "Styles aren’t part of this example."
+            }
+          },
+          {
+            "id": "position",
+            "heading": "Position",
             "rows": [
               [
                 {
@@ -865,13 +906,7 @@
                     }
                   ]
                 }
-              ]
-            ]
-          },
-          {
-            "id": "position",
-            "heading": "Position",
-            "rows": [
+              ],
               [
                 {
                   "key": "x",
@@ -895,70 +930,6 @@
                   "unit": "°",
                   "min": -180,
                   "max": 180
-                }
-              ]
-            ]
-          },
-          {
-            "id": "constraints",
-            "heading": "Constraints",
-            "rows": [
-              [
-                {
-                  "key": "constraintH",
-                  "icon": "constraint-h",
-                  "kind": "select",
-                  "label": "Horizontal",
-                  "options": [
-                    {
-                      "value": "left",
-                      "label": "Left"
-                    },
-                    {
-                      "value": "right",
-                      "label": "Right"
-                    },
-                    {
-                      "value": "left-right",
-                      "label": "Left and right"
-                    },
-                    {
-                      "value": "center",
-                      "label": "Centre"
-                    },
-                    {
-                      "value": "scale",
-                      "label": "Scale"
-                    }
-                  ]
-                },
-                {
-                  "key": "constraintV",
-                  "icon": "constraint-v",
-                  "kind": "select",
-                  "label": "Vertical",
-                  "options": [
-                    {
-                      "value": "top",
-                      "label": "Top"
-                    },
-                    {
-                      "value": "bottom",
-                      "label": "Bottom"
-                    },
-                    {
-                      "value": "top-bottom",
-                      "label": "Top and bottom"
-                    },
-                    {
-                      "value": "center",
-                      "label": "Centre"
-                    },
-                    {
-                      "value": "scale",
-                      "label": "Scale"
-                    }
-                  ]
                 }
               ]
             ]
@@ -1291,7 +1262,10 @@
                   }
                 }
               ]
-            ]
+            ],
+            "headings": {
+              "frame": "Auto layout"
+            }
           },
           {
             "id": "appearance",
@@ -2275,8 +2249,16 @@
             }
           },
           {
+            "id": "selection-colours",
+            "heading": "Selection colours",
+            "kinds": [
+              "frame"
+            ],
+            "colours": true
+          },
+          {
             "id": "guides",
-            "heading": "Layout guides",
+            "heading": "Layout guide",
             "kinds": [
               "frame"
             ],
@@ -2386,14 +2368,6 @@
                 "visible": true
               }
             }
-          },
-          {
-            "id": "selection-colours",
-            "heading": "Selection colours",
-            "kinds": [
-              "frame"
-            ],
-            "colours": true
           },
           {
             "id": "instance",
@@ -2561,7 +2535,14 @@
             "action": {
               "label": "Export {name}",
               "says": "Exporting isn’t part of this example."
-            }
+            },
+            "kinds": [
+              "frame",
+              "rectangle",
+              "ellipse",
+              "text",
+              "page"
+            ]
           }
         ]
       },
@@ -2938,7 +2919,8 @@
             "id": "settings",
             "heading": "Prototype settings",
             "kinds": [
-              "frame"
+              "frame",
+              "page"
             ],
             "rows": [
               [
@@ -2949,7 +2931,7 @@
                   "options": [
                     {
                       "value": "none",
-                      "label": "None"
+                      "label": "No device"
                     },
                     {
                       "value": "phone",
@@ -2978,6 +2960,30 @@
                 }
               ]
             ]
+          },
+          {
+            "id": "help",
+            "heading": "",
+            "kinds": [
+              "page"
+            ],
+            "cards": {
+              "close": "Close {title}",
+              "items": [
+                {
+                  "id": "connect",
+                  "icon": "link",
+                  "title": "Creating a connection",
+                  "text": "Select a layer, then drag the circle on its edge to the frame it should open."
+                },
+                {
+                  "id": "run",
+                  "icon": "play",
+                  "title": "Running your prototype",
+                  "text": "Press Present to play the prototype from its starting frame."
+                }
+              ]
+            }
           }
         ]
       },
@@ -3235,7 +3241,19 @@
         "resizing": "height",
         "truncate": false,
         "maxLines": 2
+      },
+      "page": {
+        "pageColour": "",
+        "pageOpacity": 100,
+        "pageVisible": true,
+        "exports": [],
+        "device": "none",
+        "protoBg": "#000000"
       }
+    },
+    "pageColour": {
+      "light": "#F5F5F5",
+      "dark": "#1E1E1E"
     }
   }
 }

@@ -57,6 +57,8 @@ export interface CanvasProps extends DataAttributes {
   height: number;
   /** `fill` takes the room its parent gives it (an editor's working area); `md` holds a set height (a demonstration). */
   size?: 'fill' | 'md';
+  /** The page colour the person chose (a design tool's page background); the canvas fill token when absent. */
+  fill?: string;
 }
 
 const px = (n: number, zoom: number) => `${n * zoom}px`;
@@ -72,7 +74,7 @@ const px = (n: number, zoom: number) => `${n * zoom}px`;
  * `aria-pressed` for the selection, so it can be reached and chosen without a pointer; a frame's name above it is a
  * button for the frame. The size under a selection is text. Shapes' colours carry no meaning of their own.
  */
-export function Canvas({ label, shapes, selected, onSelect, zoom = 1, width, height, size = 'fill', ...data }: CanvasProps) {
+export function Canvas({ label, shapes, selected, onSelect, zoom = 1, width, height, size = 'fill', fill, ...data }: CanvasProps) {
   const draw = (list: CanvasShape[], depth: number) =>
     list.map((s) => {
       const isSelected = s.id === selected;
@@ -127,7 +129,7 @@ export function Canvas({ label, shapes, selected, onSelect, zoom = 1, width, hei
     });
 
   return (
-    <div {...data} data-dl="canvas" data-size={size} onClick={() => onSelect?.(undefined)}>
+    <div {...data} data-dl="canvas" data-size={size} style={fill ? ({ '--doc-page': fill } as CSSProperties) : undefined} onClick={() => onSelect?.(undefined)}>
       {/* The working area pans in a ScrollArea (Q96): the library's bars at the canvas's edges; it's the named region. */}
       <ScrollArea axis="both" label={label}>
         <div data-dl-part="document" style={{ '--w': px(width, zoom), '--h': px(height, zoom) } as CSSProperties}>
