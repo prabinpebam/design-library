@@ -85,8 +85,9 @@ for (const template of readdirSync(dir, { withFileTypes: true }).filter((d) => d
   const dependencies = new Map(tokens.map(({ path, node }) => [path, []]));
   const recordDependencies = (path, value) => {
     if (typeof value !== 'string') return;
+    const variables = new Set([...value.matchAll(/var\(\s*(--[\w-]+)/g)].map((match) => match[1]));
     for (const [other] of dependencies) {
-      if (value === `{${other}}` || value.includes(`var(--${other.replaceAll('.', '-')}`))
+      if (value === `{${other}}` || variables.has(`--${other.replaceAll('.', '-')}`))
         dependencies.get(path).push(other);
     }
   };

@@ -16,7 +16,7 @@ preserves the already-proved rendered contract.
 
 The shipped generator now supports documented per-token brand compositions,
 semantic/local aliases and selective ordered selector/media contexts. It
-validates all templates before writing any. Three focused regressions pass,
+validates all templates before writing any. Four focused regressions pass,
 including seven invalid-source cases; source packaging and the DesignUp web
 build/parity check pass. DesignUp's post-migration 78-context ledger has no
 overflow, clipped hero words or runtime errors. Its independent final visual

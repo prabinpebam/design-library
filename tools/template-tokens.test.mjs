@@ -38,6 +38,14 @@ test('brand decisions are explicit, context overrides are selective and ordered'
   assert.match(readFileSync(join(dir, 'tokens.css'), 'utf8'), /@media \(prefers-reduced-motion: reduce\)/);
   assert.equal(command('--check').status, 0);
 }));
+test('local CSS references match complete variable names, not prefixes', () => fixture(({ data, token, save, command }) => {
+  data.t.sample['radius-more'] = { $type: 'dimension', $value: '{radius.lg}', $description: 'Outer corners.' };
+  token.$value = 'max(0px, var(--t-sample-radius-more))';
+  token.$extensions = { 'org.design-library': { brand: 'A composed local alias.' } };
+  save();
+  const result = command();
+  assert.equal(result.status, 0, result.stderr);
+}));
 test('raw values, private references, unknown contexts, cycles and CSS injection fail without writing', () => {
   const cases = [
     ({ token }) => { token.$value = '10px'; },
