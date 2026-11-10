@@ -801,6 +801,16 @@ Each gives an openable result in 60 active minutes or less. Components, tokens, 
 
 **Breaking-change notes (Q105.3):** none. With nothing registered or overridden, every `Icon` and the `Rating` star draw exactly as today; `setIconSet` keeps its signature; the command and the warnings are new. Generic: the demo's glyphs are the library's own drawings with generic names.
 
+### Found while building MP4: story pictures and fonts in every build
+
+**Finding (worker 63, 2026-11-10 about 09:14, measured on a scratch Vite site, deleted):** any site that imports `@design-library/core/react` gets the library's story pictures (19 WebP files, about 1 MB) and about 100 font files written into its build output, though it never shows them. Cause: `react/index.ts` re-exports every `*.stories` module (`export { default as …Stories }`), and a bundler emits a file imported as an asset (`?url`, or a font's CSS) when it loads the module, even when tree-shaking then drops the code. They're written, not downloaded, so pages don't get slower, but every site's output and upload grow, and a site's own check of its output can't tell its files from ours.
+
+| Packet | What the owner opens | After | Release |
+| --- | --- | --- | --- |
+| MP27 | Lean builds: first a 30-minute check of which imports emit what (stories, the font picker's fonts, the icon sets), then a new entry **`@design-library/core/components`** that exports everything `@design-library/core/react` does except the stories and their pictures, and **`@design-library/core/stories`** for the stories (the library app moves to it); `react` stays as it is (ID50). Evidence: the same scratch site's output listed before and after (files and KB), the conference `Countdown` page again; `tools/pack.mjs` ships both entries | ID50 | 0.4.0-beta.2 if the check finds only the story re-exports and the fonts' entry; else 0.5.0-beta.1 |
+
+**Guard added now (worker 64):** `tools/pack.mjs` refuses to pack when any `exports` or `bin` target that exists in the source is missing from the tarball (so `templates/{id}/registry.tsx` always ships), and `--dry-run` runs every check without writing to `.packages`.
+
 ### What stays out, checked (ID6, Q105.2)
 
 The note's own split matches Part 2's out-of-scope list and Part 3's "what stays out": the shapes, hatch, collage, overprint, grain, stipple look, depth-motion weights, the year-list art and the 1 s reveal timing stay DesignUp's. Each new packet passes the ID6 bar with a second user named in its row: a real adopter plus a shipped template or reference product. None names DesignUp: every prop, field, story and example uses generic names and the library's own tokens and pictures. The note's withdrawals (MR6–MR10) are agreed; nothing is added for them.
@@ -900,3 +910,4 @@ Each gives an openable result in 60 active minutes or less (a story, a library p
 | ID47 | Added for Q113. How a brand's SVG files become icon data | **A command in core's `bin`, `design-library-icons`:** keeps `viewBox`, turns paint into `currentColor`, refuses scripts, events, external references and images, reports unknown names with the nearest ones; output is plain JSON a site imports |
 | ID48 | Added for Q113. Reporting a misnamed or broken icon | **A development-only console warning per bad name or glyph, and a `check-project` warning** (Q105.3: new project checks start as warnings); never an error at run time |
 | ID49 | Added for Q113. Extra icon names a brand invents | **No:** overrides and sets use the existing semantic names; a mark with no semantic name is an `Illustration` or `Image`. Revisit if a second product needs more names |
+| ID50 | Found in MP4. How a site's build stops carrying the library's story pictures and fonts | **An additive lean entry:** `@design-library/core/components` (everything but stories) and `@design-library/core/stories`; `@design-library/core/react` unchanged (Q105.3: no removal without an alias), and the guide's install step and the brief point new code at `components`. Rejected: dropping the story re-exports from `react` (breaks any code that imports a story) |
