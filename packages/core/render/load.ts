@@ -25,16 +25,24 @@ export function loadTemplate(
   const assets = Object.fromEntries(
     Object.entries(declared).map(([id, a]) => [
       id,
-      { ...a, src: String(assetUrls[`./${a.src}`] ?? ''), alt: a.decorative ? '' : (a.alt ?? '') },
+      withFiles(a, (file) => String(assetUrls[`./${file}`] ?? '')),
     ]),
   );
   return { manifest: manifest as TemplateManifest, content, shared, assets, registry, stories };
 }
 
+/**
+ * A picture entry with every file it names resolved to its address: src, and the scheme files dark and`n * `contrast` (MP18). A decorative picture has an empty alt.
+ */
+function withFiles(a: TemplateAsset, url: (file: string) => string): TemplateAsset {
+  const contrast = a.contrast && Object.fromEntries(Object.entries(a.contrast).filter(([, f]) => f).map(([k, f]) => [k, url(f as string)]));
+  return { ...a, src: url(a.src), ...(a.dark ? { dark: url(a.dark) } : {}), ...(contrast ? { contrast } : {}), alt: a.decorative ? '' : (a.alt ?? '') };
+}
+
 /** Pictures from an assets file with their addresses (the same rules as a template's: a decorative picture has an empty alt). */
 function resolveAssets(assetsFile: unknown, assetUrls: Record<string, unknown>): Record<string, TemplateAsset> {
   const declared = (assetsFile as { assets?: Record<string, TemplateAsset> })?.assets ?? {};
-  return Object.fromEntries(Object.entries(declared).map(([id, a]) => [id, { ...a, src: String(assetUrls[`./${a.src}`] ?? a.src), alt: a.decorative ? '' : (a.alt ?? '') }]));
+  return Object.fromEntries(Object.entries(declared).map(([id, a]) => [id, withFiles(a, (file) => String(assetUrls[`./${file}`] ?? file))]));
 }
 
 /** A data-driven site's files, for `loadSite`. */

@@ -362,7 +362,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
             description={c.description}
             meta={c.meta ? <Text as="span" variant="body-sm" tone="muted">{c.meta}</Text> : undefined}
             href={c.href}
-            media={c.picture ? <Image src={ctx.picture(c.picture).src} alt={ctx.picture(c.picture).alt} ratio={ctx.picture(c.picture).ratio ?? 'wide'} focal={ctx.picture(c.picture).focal} treatment={ctx.picture(c.picture).treatment} priority={ctx.picture(c.picture).priority} /> : undefined}
+            media={c.picture ? <Image src={ctx.picture(c.picture).src} alt={ctx.picture(c.picture).alt} ratio={ctx.picture(c.picture).ratio ?? 'wide'} focal={ctx.picture(c.picture).focal} dark={ctx.picture(c.picture).dark} contrast={ctx.picture(c.picture).contrast} treatment={ctx.picture(c.picture).treatment} priority={ctx.picture(c.picture).priority} /> : undefined}
           />
         ))}
       </Grid>)}
@@ -452,7 +452,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
               </Quote>
             );
           case 'picture':
-            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} rounded />;
+            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} dark={ctx.picture(item.picture).dark} contrast={ctx.picture(item.picture).contrast} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} rounded />;
           case 'list':
             return <List key={n} variant="bulleted" items={item.items.map((t, m) => ({ id: String(m), content: t }))} />;
           case 'code':
@@ -483,7 +483,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
             title={c.title}
             description={c.description}
             meta={<Text as="span" variant="body-sm" tone="muted">{c.meta}</Text>}
-            media={c.picture ? <Image src={ctx.picture(c.picture).src} alt="" ratio="photo" /> : undefined}
+            media={c.picture ? <Image src={ctx.picture(c.picture).src} dark={ctx.picture(c.picture).dark} contrast={ctx.picture(c.picture).contrast} alt="" ratio="photo" /> : undefined}
           />
         ))}
         {b.pages && b.pages > 1 && <Pagination page={b.page ?? 1} pages={b.pages} hrefFor={() => b.items[0].href.replace(/\/[^/]+$/, '/index')} label={b.pagingLabel ?? ''} />}

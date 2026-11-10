@@ -1,8 +1,8 @@
 import type { CSSProperties } from 'react';
-import { Image } from '../fundamentals/Image';
+import { Image, type SchemeSources } from '../fundamentals/Image';
 import type { DataAttributes } from '../types';
 
-export interface ImageGridItem {
+export interface ImageGridItem extends SchemeSources {
   /** Stable key. */
   id: string;
   /** The picture's address. */
@@ -52,6 +52,8 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         const picture = (
           <Image
             src={item.src}
+            dark={item.dark}
+            contrast={item.contrast}
             alt={onSelect ? '' : item.alt}
             width={item.width}
             height={item.height}

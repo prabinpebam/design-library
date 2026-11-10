@@ -3,6 +3,7 @@ import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
 import { ContextMatrix } from '../compounds/ContextMatrix';
 import { Section } from '../compounds/Section';
+import { ScreenPreview } from '../compounds/ScreenPreview';
 import { scenes } from './scenes';
 import type { StoryFile } from './story';
 import lighthouseDay from './media/scenes/lighthouse-day.webp?url';
@@ -156,6 +157,17 @@ export default {
           </Section>
         </Stack>
       ),
+    },
+    {
+      title: 'A dark file from assets.json',
+      description:
+        'A picture entry names its dark file (and contrast files) next to src, in the template’s or site’s assets.json (MP18); every block that draws the picture passes them on. Here Harbour Books’ opening picture has a dimmed file for the dark scheme: switch the preview’s scheme and the opening swaps with it.',
+      code: `"shopfront": {
+  "src": "assets/shopfront.webp",
+  "dark": "assets/shopfront-dark.webp",
+  "alt": "The shop’s lit window on a cobbled quay at dusk: …"
+}`,
+      render: () => <ScreenPreview src="site.html?demo=site#/" title="Harbour Books, whose opening picture has a dark file" caption="Harbour’s home: the opening picture follows the preview’s light or dark." />,
     },
   ],
 } satisfies StoryFile;

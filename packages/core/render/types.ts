@@ -245,6 +245,10 @@ export type PictureTone = 'none' | 'greyscale' | 'duotone';
 
 export interface TemplateAsset {
   src: string;
+  /** The same picture for a dark scheme, resolved to its address (MP18; `assets.json` `dark`). */
+  dark?: string;
+  /** Files for more contrast, resolved to their addresses (MP18; `assets.json` `contrast`). */
+  contrast?: { light?: string; dark?: string };
   /** Empty when the picture is decorative. */
   alt: string;
   /** The frame where the block doesn't fix one, as `Image` `ratio` (DP3). */

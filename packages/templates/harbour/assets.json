@@ -3,6 +3,7 @@
   "assets": {
     "shopfront": {
       "src": "assets/shopfront.webp",
+      "dark": "assets/shopfront-dark.webp",
       "alt": "The shop’s lit window on a cobbled quay at dusk: shelves of books, an armchair under a reading lamp, a rowing boat moored alongside."
     },
     "theLongShore": {

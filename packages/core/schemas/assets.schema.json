@@ -15,6 +15,13 @@
         "required": ["src"],
         "properties": {
           "src": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" },
+          "dark": { "$ref": "#/$defs/file", "description": "The same picture for a dark scheme (MP17, MP18): a file in the template's folder at the same ratio, under the same alt; drawn wherever the picture sits in a dark scheme (the page's or a band's own). Raster or SVG." },
+          "contrast": {
+            "type": "object",
+            "description": "Files for more contrast (MP18): `light` and `dark`. Dark with more contrast falls back to contrast.dark, then dark, then src; light with more contrast to contrast.light, then src.",
+            "properties": { "light": { "$ref": "#/$defs/file" }, "dark": { "$ref": "#/$defs/file" } },
+            "additionalProperties": false
+          },
           "alt": { "type": "string", "description": "What the picture shows, for people who can't see it. Required unless the picture is decorative." },
           "decorative": { "type": "boolean", "description": "The picture adds nothing the words beside it don't say: it is drawn with an empty alt and skipped by screen readers (DP3)." },
           "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frame it is drawn in where the block doesn't fix one, as Image ratio (DP3)." },
@@ -45,6 +52,7 @@
   },
   "additionalProperties": false,
   "$defs": {
-    "tone": { "enum": ["none", "greyscale", "duotone"] }
+    "tone": { "enum": ["none", "greyscale", "duotone"] },
+    "file": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" }
   }
 }

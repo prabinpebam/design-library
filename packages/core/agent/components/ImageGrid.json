@@ -60,6 +60,7 @@
     },
     {
       "interface": "ImageGridItem",
+      "extends": "SchemeSources",
       "props": [
         {
           "name": "id",
