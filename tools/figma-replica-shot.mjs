@@ -37,11 +37,20 @@ const launch = async () => {
 };
 
 const browser = await launch();
+// The dev server can serve a half-written module mid-edit (a blank page): reload until the editor renders, so a blank load is never scored.
+const load = async (page) => {
+  for (let i = 0; i < 4; i++) {
+    await page.goto(url, { waitUntil: 'networkidle' });
+    try { await page.waitForSelector('[data-dl="canvas"]', { timeout: 8000 }); return; } catch {}
+    await page.waitForTimeout(1500);
+  }
+  throw new Error(`figma-replica-shot: ${url} never rendered the editor (4 loads); check the dev server and the console`);
+};
 const ref = join(out, '5576781786647-2.png');
 for (const scheme of ['light', 'dark']) {
   const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, colorScheme: scheme });
   const page = await ctx.newPage();
-  await page.goto(url, { waitUntil: 'networkidle' });
+  await load(page);
   await page.evaluate((s) => document.documentElement.setAttribute('data-scheme', s), scheme);
   await page.waitForTimeout(800);
   await page.addScriptTag({ path: join(root, 'tools', 'figma-replica-measure.js') });
@@ -53,7 +62,7 @@ for (const scheme of ['light', 'dark']) {
   if (scheme === 'dark' && existsSync(insp)) {
     // R12: the owner's real Figma inspector (dark, 1×, 361 × 1124, panel 330 px). Ours: the right 361 px, same height.
     await page.setViewportSize({ width: W, height: 1124 });
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await load(page);
     await page.evaluate(() => document.documentElement.setAttribute('data-scheme', 'dark'));
     await page.waitForTimeout(800);
     const ours2 = join(out, 'ours-inspector-dark.png');
@@ -81,7 +90,7 @@ for (const scheme of ['light', 'dark']) {
     const bctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
     const page = await bctx.newPage();
     page.setDefaultTimeout(5000);
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await load(page);
     await page.waitForTimeout(800);
     const fb = {};
     const step = async (id, fn) => { try { fb[id] = await fn(); } catch (e) { fb[id] = { pass: false, error: String(e.message || e).split('\n')[0] }; } };
