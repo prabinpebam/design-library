@@ -85,7 +85,8 @@
       rows[id].findings.push({ severity, ...finding });
       if (severity !== 'S4') rows[id].pass = false;
     };
-    const all = [root, ...root.querySelectorAll('*')].filter(visible);
+    // Shapes inside an SVG are drawing, not layout: an illustration's groups are never stacks or gaps.
+    const all = [root, ...root.querySelectorAll('*')].filter((el) => visible(el) && !el.parentElement?.closest('svg'));
 
     // SC1 and SC8: values on the scale, no outer margins on components.
     for (const el of all) {

@@ -9,12 +9,12 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@design-library/core": "0.4.0-beta.2",
+    "@design-library/core": "0.5.0-beta.1",
     "@medv/finder": "4.0.2",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-grab": "0.2.0",
-    "@design-library/templates": "0.4.0-beta.2"
+    "@design-library/templates": "0.5.0-beta.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
