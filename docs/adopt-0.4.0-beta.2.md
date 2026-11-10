@@ -55,9 +55,11 @@ Pictures per scheme *(`assets.json` half pending MP18)*
   shows. In `assets.json`, a picture entry's `dark` and `contrast` files.
 - `useRegionScheme(ref)` tells any part which scheme (`light` or `dark`) and contrast its region is in.
 
-Brand icons *(pending MP24, MP25)*
+Brand icons
 - `registerIconSet` (a whole brand set, then `setIconSet(id)`), `setIconOverrides` (a few names, site-wide) and
   `<IconOverrides icons>` (a few names, for one part of the page); every other name falls back to the active set.
+  `Rating`'s star is drawn by name (`star`), so a brand star reaches it; with nothing overridden it draws as before.
+  In development, an unknown name or a glyph without a `viewBox` logs one warning.
 
 Commands and checks
 - `npx design-library-icons <folder> --out icons.json`: SVG icons named by the icon they replace → icon data
@@ -96,8 +98,10 @@ replaces; stop after any of them.
    around two `<img>`, a `prefers-color-scheme` `<picture>`, or CSS that hides one of two pictures). In code:
    `<Image src="/a/hero.webp" dark="/a/hero-dark.webp" alt="…" />`; from data, the picture entry's `"dark"` file.
    Run `npx design-library-check-content` (the pair must share a shape within 1%).
-7. Icons *(pending)*: if the brand draws its own icons, convert them with `npx design-library-icons` and pass them
-   to `setIconOverrides`, replacing any custom icon component.
+7. Icons: if the brand draws its own icons, name each SVG by the icon it replaces, convert the folder with
+   `npx design-library-icons src/brand/icons --out src/brand/icons.json --licence "Own work"` and pass the glyphs to
+   `setIconOverrides` (or `registerIconSet` for a whole set), replacing any custom icon component or hand-drawn `<svg>`.
+   Guide: `node_modules/@design-library/core/guide/3-tokens.md`, "Your own icons".
 
 ## 5. What to watch
 

@@ -281,5 +281,7 @@ Next:
   1. Register it in ${relative(root, templates).split('\\').join('/')}/index.ts: import ${camel(id.replace(/-([a-z])/g, (_, c) => c.toUpperCase()))} from './${id}';
   2. Prune and shape (guide Step 6): rename, remove or build the planned screens in template.json; keep 3–5 items per group.
   3. Write the home page in content/home.json and the header and footer in content/shared.json.
+     Pictures go in assets.json by id: { "hero": { "src": "assets/hero.webp", "alt": "…", "dark": "assets/hero-dark.webp" } }
+     ("dark" and "contrast" are optional files of the same picture, same shape, for those schemes).
   4. Check: npx design-library-check-content --templates ${relative(root, templates).split('\\').join('/')}
   5. After changing tokens/tokens.json: npx design-library-template-tokens --templates ${relative(root, templates).split('\\').join('/')}`);

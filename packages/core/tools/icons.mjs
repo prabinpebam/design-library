@@ -21,8 +21,8 @@ import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-// The library's semantic names, read from the package's own icon data.
-const NAMES = [...readFileSync(join(here, '..', 'icons', 'icons.ts'), 'utf8').matchAll(/^ {2}'?([a-z][a-z0-9-]*)'?: \{/gm)].map((m) => m[1]);
+// The library's semantic names, read from the package's own icon data, and star, Rating's mark (MP24).
+const NAMES = [...[...readFileSync(join(here, '..', 'icons', 'icons.ts'), 'utf8').matchAll(/^ {2}'?([a-z][a-z0-9-]*)'?: \{/gm)].map((m) => m[1]), 'star'];
 const args = process.argv.slice(2);
 if (args.includes('--names')) {
   console.log(NAMES.join('\n'));

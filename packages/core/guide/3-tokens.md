@@ -42,7 +42,7 @@ document.body.dataset.shape = 'soft';
 | **Space** | `data-space` on `body`: `compact`, `normal`, `loose`, `extra-loose` | Options re-map the semantic space roles only; the 4 px scale and 44 px targets never change |
 | **Shape** | `data-shape` on `body`: `sharp`, `rounded`, `soft`, `super-soft` | Inner segments of a stacked bar stay square in every shape |
 | **Material** | `data-material` on `<html>`: `frosted` (default) or `solid` | — |
-| **Icons** | `await setIconSet(id, style)` from `@design-library/core/icons` | The library's own outline set is the default; ids and styles in `presets.categories.icons` |
+| **Icons** | `await setIconSet(id, style)` from `@design-library/core/icons` | The library's own outline set is the default; ids and styles in `presets.categories.icons`. A brand's own icons: [Your own icons](#your-own-icons) |
 | **Motion** | Nothing to set: durations and easings are the library's, and reduced motion follows the person | Never a literal duration or easing in CSS |
 | **Theme settings** | `applySettings({ '--c-site-layout-gap': 'var(--space-stack-section)' })` from `@design-library/core/theme`, or `settingsCss(settings, selector)` for a stylesheet; `themeSettings` lists every name and `settingsErrors(settings)` names what's refused | Only the component tokens on the published allow-list `tokens/settings.json` (each component's `settings`, with defaults, in `agent/components/{Name}.json`); every other `--c-*` token is private. Today: SiteLayout's frame, `--c-site-layout-width`, `-reading`, `-margin`, `-gap`, `-padding-block` and `-padding-start` (space above the first band only; follows `-padding-block` when unset). For an opening that meets the header, use `SiteLayout` `opening="flush"` (content: `settings.SiteLayout.opening`). Link: `--link-decoration` (rest, `underline` by default) and `--link-decoration-hover` (hover and keyboard focus); with the rest line off, the line must come back on hover and focus, and your link colour owes 3:1 against the text around it (check it on the Colour page). Heading's top steps (0.4.0-beta.2): `--type-display-size`, `-weight`, `-leading`, `-tracking` (Hero and page titles, `Heading size="display"`, `Statistic`'s large value) and the same four for `--type-jumbo-*` (`Heading size="jumbo"`), each a token or a value; a display face with one weight sets `--type-display-weight: 400` (and jumbo's) so the browser doesn't fake bold; jumbo stays the larger step (`settingsErrors` refuses a jumbo length below display). Section titles stay at their steps; display-size section titles come in 0.5.0-beta.1 |
 | **A template's own parts** | `{template}/tokens/tokens.css`, `t.{template}.{part}.*` custom properties written by hand in your template, each `var(--a-semantic-role)` | Each value reads a **semantic** role (`var(--space-gutter)`, `var(--color-bg-sunken)`); raw values, primitives and core component tokens never. (In the library repository, templates write `tokens.json` and `npm run tokens` generates the CSS) |
@@ -55,6 +55,24 @@ document.body.dataset.shape = 'soft';
 | **Space**, **Shape** | `packages/core/tokens/space-shape.config.json` → `space`, `shape` | `npm run tokens`, `npm run tokens:check` |
 | **Type** | `packages/core/tokens/tokens.json` → `font.*`, `axes.*`, and the matching preset `"default": true` in `packages/core/fonts/registry.json` | `npm run tokens`, `npm run tokens:check` |
 | **Motion** | `packages/core/tokens/tokens.json` → `duration.*`, `easing.*`, `motion.*` | `npm run tokens`, `npm run tokens:check`, `npm run check:motion` |
+
+## Your own icons
+
+A brand's icons use the library's semantic names, so one glyph changes that icon everywhere a component or layout draws it: buttons, fields, menus, notifications, navigation, chevrons, close, and `star` for `Rating`. Never fork a component or draw an `<svg>` to change an icon.
+
+1. **Name the SVG files** by the icon each replaces: `close.svg`, `chevron-down.svg`. `npx design-library-icons --names` lists the names. A mark with no matching name (a logo) is an `Image`, not an icon.
+2. **Convert them:** `npx design-library-icons src/brand/icons --out src/brand/icons.json --id brand --name "Brand" --licence "Own work"`. Every paint becomes `currentColor`, so the icon follows the text colour in every scheme and in forced colours. A file with a script, event attribute, `foreignObject`, embedded image or external reference is refused; a misnamed file is reported with the nearest names (exit code 1; the rest are written). Add `--check` in CI to fail when the JSON is stale.
+3. **Use them**, from `@design-library/core/icons` (and `IconOverrides` from `@design-library/core/react`):
+
+| You have | Do | Every name you didn't draw |
+| --- | --- | --- |
+| A whole set | `registerIconSet(data)`, then `await setIconSet(data.id)` | Draws from the library's own |
+| A few icons, site-wide | `setIconOverrides(data.glyphs)` (`null` clears) | Draws from the active set |
+| A few icons, one part of the page | `<IconOverrides icons={data.glyphs}>…</IconOverrides>`; nested ones merge, the inner wins | Draws from the site-wide overrides, then the active set |
+
+For each name, `Icon` draws the first it finds: the nearest `IconOverrides` → `setIconOverrides` → the active set's style → that set's first style → the library's own. An `Icon`'s accessible name or `decorative` doesn't change.
+
+4. **Check:** in development, a glyph under a name no component draws, or without a `viewBox`, logs one warning; `npx design-library-check` warns on the same in your project's icon JSON (`icon-name`).
 
 ## Choice: pick an option at run time
 

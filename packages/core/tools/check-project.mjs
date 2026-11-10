@@ -289,7 +289,7 @@ for (const file of css) {
 }
 
 // ---- Brand icons (MP26, Q113, ID48): icon data under names that exist, each with a viewBox ----
-const iconNames = new Set([...readFileSync(join(PKG, 'icons/icons.ts'), 'utf8').matchAll(/^ {2}'?([a-z][a-z0-9-]*)'?: \{/gm)].map((m) => m[1]));
+const iconNames = new Set([...[...readFileSync(join(PKG, 'icons/icons.ts'), 'utf8').matchAll(/^ {2}'?([a-z][a-z0-9-]*)'?: \{/gm)].map((m) => m[1]), 'star']); // and Rating's mark
 for (const file of walk(SRC, /\.json$/)) {
   const text = readFileSync(file, 'utf8');
   if (!/"glyphs"\s*:/.test(text)) continue;
