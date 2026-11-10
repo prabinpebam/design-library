@@ -11,6 +11,16 @@
         "$description": "How long the fill takes to reach a new percentage (Q65 C26, the move role, linear); 0 under reduced motion: it snaps to each update (echoed for motion contexts)"
       }
     },
+    "illustration": {
+      "$extensions": {
+        "owner": "Illustration"
+      },
+      "float": {
+        "$type": "dimension",
+        "$value": "{motion.enter-rise}",
+        "$description": "MP21: how far a floating part rises; 0 with reduced motion (echoed for motion contexts)"
+      }
+    },
     "image-generation": {
       "$extensions": {
         "owner": "ImageGeneration"

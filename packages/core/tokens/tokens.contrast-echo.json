@@ -86,6 +86,16 @@
         "$description": "A read-only box: a quieter outline than an editable one (3:1 not required: it takes no input), on the page surface with no fill (echoed for contrast contexts)"
       }
     },
+    "illustration": {
+      "$extensions": {
+        "owner": "Illustration"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "MP20, ID41: the role class muted, secondary lines and shapes (3:1 or more on the surface) (echoed for contrast contexts)"
+      }
+    },
     "menu-button": {
       "$extensions": {
         "owner": "MenuButton"

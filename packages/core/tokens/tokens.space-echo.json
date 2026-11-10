@@ -891,6 +891,16 @@
         "$description": "Between the message (heading and lead) and what to do (actions and note): the section level (Q85) (echoed for space contexts)"
       }
     },
+    "illustration": {
+      "$extensions": {
+        "owner": "Illustration"
+      },
+      "control-inset": {
+        "$type": "dimension",
+        "$value": "{space.inset-sm}",
+        "$description": "MP21: from the illustration's corner to its Pause control (echoed for space contexts)"
+      }
+    },
     "image-generation": {
       "$extensions": {
         "owner": "ImageGeneration"
