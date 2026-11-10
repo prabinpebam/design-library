@@ -4,6 +4,26 @@
 
 ## Owner instructions
 
+### G14.5 template token sources (11 November 2026)
+
+DesignUp continuation: "If generic seam missing, implement at library source
+and rebuild package, never node_modules." The existing template generator
+could not represent a brand-led template's own compositions or re-resolve
+selected aliases at child contexts. Done when authoritative token data
+generates all template values/contexts, exact parity is checked in the consumer
+build, unsafe/private references and stale outputs fail, and the migration
+preserves the already-proved rendered contract.
+
+The shipped generator now supports documented per-token brand compositions,
+semantic/local aliases and selective ordered selector/media contexts. It
+validates all templates before writing any. Three focused regressions pass,
+including seven invalid-source cases; source packaging and the DesignUp web
+build/parity check pass. DesignUp's post-migration 78-context ledger has no
+overflow, clipped hero words or runtime errors. Its independent final visual
+gate is recorded in that consumer's Themes qualification, not claimed here.
+Local g14.5 retains beta.2 and all g14.4 runtime/timing behavior. No push or
+publication.
+
 ### G14.4 commit visibility (11 November 2026)
 
 The minimum pending visibility is measured from the first rendered commit/frame,

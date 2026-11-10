@@ -21,7 +21,7 @@ A token-driven, data-driven UI library. Four tiers sit on tokens, and screens ar
 
 | Tier | What it is | You use it by |
 | --- | --- | --- |
-| **Tokens** | Every design decision as data (colour, type, space, shape, motion, materials), generated into CSS custom properties | Choosing presets, and your brand colours and fonts with `@design-library/core/theme` (new token values are made in the library repository) |
+| **Tokens** | Every design decision as data (colour, type, space, shape, motion, materials), generated into CSS custom properties | Choosing presets, brand colours/fonts with `@design-library/core/theme`; template-owned brand compositions and selective contexts in `tokens.json` ([step 3](guide/3-tokens.md#context-dependent-template-tokens)); new core roles/scales in the library repository |
 | **Fundamentals** | Universal building blocks: text, buttons, fields, lists, Stack, Cluster, Grid… | Importing from `@design-library/core/components` (or `/react`, the same plus the library's stories) and passing props |
 | **Compounds** | Arrangements of fundamentals for a need: Card, Dialog, Toolbar, Navigation… | The same import; content through props and slots |
 | **Layouts** | A screen or section with named regions: SiteLayout, AppLayout, ChatLayout, EditorLayout… | The same import, or by name in a template manifest |

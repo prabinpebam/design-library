@@ -4,8 +4,10 @@
  *   npx design-library-template-tokens --templates src/templates [--check]
  * Each template's own component tokens, `{templates}/{template}/tokens/tokens.json` (W3C DTCG), become `tokens.css` in
  * the same folder as custom properties in `@layer templates`. Every token must be named `t.{template}.{part}.{name}`,
- * carry a `$description`, and alias a core **semantic** token (`{space.stack-item}`), never a primitive (`p.*`), a core
- * component's token (`c.*`) or a raw value, so a template's parts follow the theme, every context and every core change.
+ * carry a `$description`, and normally alias a core **semantic** token (`{space.stack-item}`), never a primitive (`p.*`)
+ * or a private core component token (`c.*`). Brand-led custom parts may document their own composition per token in
+ * `$extensions["org.design-library"].brand`. The root extension's ordered `contexts` re-resolve only named tokens:
+ * `{ selector, media?, description, values: { "t.template.part.name": value } }`.
  * An alias stays live: `--t-…: var(--space-stack-item)`. Rename a token in tokens.json, run this, and tokens.css follows.
  *
  *   --templates <folder>   the folder holding one folder per template (default packages/templates, this repository's)
@@ -28,8 +30,12 @@ if (!existsSync(dir)) {
   process.exit(1);
 }
 const coreTokens = new Set(Object.keys(JSON.parse(readFileSync(join(core, 'tokens/generated/tokens.resolved.json'), 'utf8')).light));
+// Optional public applyFonts roles are emitted at runtime rather than in the base token set.
+for (const role of ['label', 'numeral']) coreTokens.add(`font.${role}`);
+const settings = new Set(Object.values(JSON.parse(readFileSync(join(core, 'tokens/settings.json'), 'utf8'))).flatMap(Object.keys));
 const rel = (f) => relative(root, f).split('\\').join('/');
 const errors = [];
+const outputs = [];
 let written = 0;
 
 for (const template of readdirSync(dir, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name)) {
@@ -40,27 +46,89 @@ for (const template of readdirSync(dir, { withFileTypes: true }).filter((d) => d
     if (node && typeof node === 'object' && '$value' in node) return tokens.push({ path: path.join('.'), node });
     for (const [k, v] of Object.entries(node ?? {})) if (!k.startsWith('$')) walk(v, [...path, k]);
   };
-  walk(JSON.parse(readFileSync(source, 'utf8')), []);
+  const data = JSON.parse(readFileSync(source, 'utf8'));
+  walk(data, []);
+  const names = new Set(tokens.map(({ path }) => path));
+  const cssNames = new Set(tokens.map(({ path }) => `--${path.replaceAll('.', '-')}`));
+  const extension = data.$extensions?.['org.design-library'] ?? {};
+  const valueCss = (value, path, node) => {
+    const alias = typeof value === 'string' ? /^\{([a-z0-9.-]+)\}$/.exec(value)?.[1] : undefined;
+    if (alias) {
+      if (/^(p|c|spectrum|set)\./.test(alias) || (!coreTokens.has(alias) && !names.has(alias)))
+        errors.push(`${rel(source)} · ${path} · aliases ${alias}, which isn't a semantic or local template token`);
+      return `var(--${alias.replaceAll('.', '-')})`;
+    }
+    // Brand-led templates own measurements and compound CSS values, not new core roles.
+    // The opt-in is per token, with its reason in the source, never a global bypass.
+    if (typeof node.$extensions?.['org.design-library']?.brand !== 'string' || !node.$extensions['org.design-library'].brand.trim())
+      errors.push(`${rel(source)} · ${path} · is a raw value; alias a semantic token or document this token's brand decision in $extensions["org.design-library"].brand`);
+    if (typeof value !== 'string' && typeof value !== 'number') {
+      errors.push(`${rel(source)} · ${path} · brand values must be CSS strings or numbers`);
+      return '';
+    }
+    const css = String(value);
+    if (/[;{}]|\/\*|@|url\s*\(/i.test(css))
+      errors.push(`${rel(source)} · ${path} · isn't a single safe CSS value`);
+    for (const match of css.matchAll(/var\(\s*(--[\w-]+)/g)) {
+      const name = match[1];
+      if (!cssNames.has(name) && !settings.has(name) && !coreTokens.has(name.slice(2).replaceAll('-', '.'))) {
+        // Core token segments may themselves contain hyphens.
+        const semantic = [...coreTokens].some((token) => `--${token.replaceAll('.', '-')}` === name && !/^(p|c|spectrum|set)\./.test(token));
+        if (!semantic) errors.push(`${rel(source)} · ${path} · reads unknown/private ${name}`);
+      }
+      if (/^--(?:p|c|spectrum|set)-/.test(name) && !settings.has(name))
+        errors.push(`${rel(source)} · ${path} · reads private ${name}`);
+    }
+    return css;
+  };
   const lines = [];
+  const dependencies = new Map(tokens.map(({ path, node }) => [path, []]));
+  const recordDependencies = (path, value) => {
+    if (typeof value !== 'string') return;
+    for (const [other] of dependencies) {
+      if (value === `{${other}}` || value.includes(`var(--${other.replaceAll('.', '-')}`))
+        dependencies.get(path).push(other);
+    }
+  };
   for (const { path, node } of tokens) {
     if (!path.startsWith(`t.${template}.`)) errors.push(`${rel(source)} · ${path} · isn't named t.${template}.{part}.{name}`);
     if (!node.$description) errors.push(`${rel(source)} · ${path} · has no $description`);
-    const alias = typeof node.$value === 'string' ? /^\{([a-z0-9.-]+)\}$/.exec(node.$value)?.[1] : undefined;
-    if (!alias) {
-      errors.push(`${rel(source)} · ${path} · is a raw value (${JSON.stringify(node.$value)}); alias a core semantic token like {space.stack-item}`);
+    recordDependencies(path, node.$value);
+    lines.push(`    --${path.replaceAll('.', '-')}: ${valueCss(node.$value, path, node)};`);
+  }
+  const contexts = [];
+  for (const context of extension.contexts ?? []) {
+    if (!context.description || typeof context.selector !== 'string' || /[{};@]|data-dl|--c-/.test(context.selector) ||
+      (context.media !== undefined && (typeof context.media !== 'string' || /[{};@]/.test(context.media)))) {
+      errors.push(`${rel(source)} · invalid context; describe a context selector/media, never a core component selector`);
       continue;
     }
-    if (/^(p|c|spectrum|set)\./.test(alias)) errors.push(`${rel(source)} · ${path} · aliases ${alias}; template tokens alias semantic roles only`);
-    else if (!coreTokens.has(alias)) errors.push(`${rel(source)} · ${path} · aliases ${alias}, which isn't a core token`);
-    lines.push(`    --${path.replaceAll('.', '-')}: var(--${alias.replaceAll('.', '-')});`);
+    const declarations = [];
+    for (const [path, value] of Object.entries(context.values ?? {})) {
+      const node = tokens.find((token) => token.path === path)?.node;
+      if (!node) errors.push(`${rel(source)} · context names unknown token ${path}`);
+      else {
+        recordDependencies(path, value);
+        declarations.push(`    --${path.replaceAll('.', '-')}: ${valueCss(value, path, node)};`);
+      }
+    }
+    const block = `  ${context.selector} {\n${declarations.join('\n')}\n  }`;
+    contexts.push(context.media ? `  @media ${context.media} {\n${block.split('\n').map((line) => `  ${line}`).join('\n')}\n  }` : block);
   }
-  const css = `/* Generated by design-library-template-tokens from ${template}/tokens/tokens.json: do not edit. */\n@layer templates {\n  :root {\n${lines.join('\n')}\n  }\n}\n`;
+  const visit = (path, chain = []) => {
+    if (chain.includes(path)) {
+      errors.push(`${rel(source)} · circular template alias: ${[...chain, path].join(' -> ')}`);
+      return;
+    }
+    for (const next of dependencies.get(path) ?? []) visit(next, [...chain, path]);
+  };
+  for (const path of names) visit(path);
+  const css = `/* Generated by design-library-template-tokens from ${template}/tokens/tokens.json: do not edit. */\n@layer templates {\n  :root {\n${lines.join('\n')}\n  }\n${contexts.length ? `${contexts.join('\n')}\n` : ''}}\n`;
   const target = join(dir, template, 'tokens', 'tokens.css');
   if (check) {
     if (!existsSync(target) || readFileSync(target, 'utf8') !== css) errors.push(`${rel(target)} · is stale · run npx design-library-template-tokens --templates ${rel(dir)} (library repository: npm run tokens)`);
   } else {
-    writeFileSync(target, css);
-    written += 1;
+    outputs.push({ target, css });
   }
 }
 
@@ -141,4 +209,8 @@ if (errors.length) {
   console.error(`template-tokens: ${errors.length} problem${errors.length === 1 ? '' : 's'}\n${errors.map((e) => `  ${e}`).join('\n')}`);
   process.exit(1);
 }
-console.log(check ? 'template-tokens: every template token aliases a core semantic role; tokens.css current.' : `template-tokens: wrote ${written} tokens.css.`);
+for (const { target, css } of outputs) {
+  writeFileSync(target, css);
+  written += 1;
+}
+console.log(check ? 'template-tokens: token sources and contexts valid; tokens.css current.' : `template-tokens: wrote ${written} tokens.css.`);
