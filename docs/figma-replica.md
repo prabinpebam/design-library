@@ -6,7 +6,7 @@ Roles (Q85.3, the [adversarial loop](adversarial-loop.md)): worker 71 builds (co
 
 ## 1. References
 
-Public sources only (Q118.6). Pictures are captured into the git-ignored `.design-library/figma-ref/` (file names below, index in `index.txt` there) for side-by-side comparison; **nothing from them ships**: no Figma logo, icon files, pictures or copy in the product. The replica uses look-alikes from the library's own and licensed icon sets, and its own words.
+**The owner's own screenshots (R12–R18) live in `.design-library/figma-ref/owner/` with an index (`README.md` there): read them from there and never ask the owner for them again (Q123).** They and every capture stay git-ignored (Figma's UI, the owner's avatar). Public sources (Q118.6) are captured into the git-ignored `.design-library/figma-ref/` (file names below, index in `index.txt` there) for side-by-side comparison; **nothing from them ships**: no Figma logo, icon files, pictures or copy in the product. The replica uses look-alikes from the library's own and licensed icon sets, and its own words.
 
 | Ref | Source | Captured as | What it shows | Scale (image px per UI px) |
 | --- | --- | --- | --- | --- |
@@ -21,7 +21,13 @@ Public sources only (Q118.6). Pictures are captured into the git-ignored `.desig
 | R9 | [FD4B: Navigate Figma Design files](https://help.figma.com/hc/en-us/articles/30925881896727-FD4B-Navigate-Figma-Design-files) | `30925881896727-1..6.png` | Whole-editor views, file menu | — |
 | R10 | [Change themes in Figma](https://help.figma.com/hc/en-us/articles/5576781786647-Change-themes-in-Figma) | `5576781786647-1.png` (1920 × 1080) | Light and dark side by side, **UI2** (older layout); used only for dark colours until a UI3 dark capture exists: panel `#2C2C2C`, divider `#444444`, selected layer row `#2D3953` dark / `#E5F4FF` light | 2× |
 | R11 | same article | `5576781786647-2.png` (2878 × 1414; `-2-half.png` for viewing) | **The whole UI3 editor, light, empty file**: left head (menu ▾, panel toggle; "Untitled ▾" / "Drafts"), File / Assets pills + search, Pages +, Page 1, Layers; rulers; toolbar; right head (avatar ▾, Present ▾, Share), Design / Prototype + 100 % ▾, Page (colour field + eye), Variables, Styles, Export. **Primary layout reference** | 1.8× (24 px fields = 43 px, 32 px tools = 58 px) |
-| R12 | **The owner's own Figma**, Design tab with a frame selected, dark, 2026-11-10 (DoD [Q122](definition-of-done.md#owner-instructions)) | `R12-owner-inspector.png` (361 × 1124, 1×: 24 px fields measure 24 px) | **Primary inspector reference**: panel 330 px; head (avatar ▾, ▶ ▾, Share), Design / Prototype + 65 % ▾, `Frame ▾` with code, component and more; Position (labels above: Alignment, Position, Rotation), Auto layout (Flow, Resizing with Hug, Alignment grid + Gap, Padding, Clip content), Appearance (Opacity, Corner radius), Fill, Stroke, Effects, Selection colors, Layout guide, Export | 1× |
+| R12 | **The owner's own Figma**, Design tab with a frame selected, dark, 2026-11-10 (DoD [Q122](definition-of-done.md#owner-instructions)) | `owner/owner-07-frame-selected-inspector-dark.png` (361 × 1124, 1×: 24 px fields measure 24 px) | **Primary inspector reference**: panel 330 px; head (avatar ▾, ▶ ▾, Share), Design / Prototype + 65 % ▾, `Frame ▾` with code, component and more; Position (labels above: Alignment, Position, Rotation), Auto layout (Flow, Resizing with Hug, Alignment grid + Gap, Padding, Clip content), Appearance (Opacity, Corner radius), Fill, Stroke, Effects, Selection colors, Layout guide, Export | 1× |
+| R13 | Owner, Q123 | `owner/owner-01-rectangle-selected-dark.png` (768 × 1201, ≈ 0.94×) | Rectangle selected: canvas selection and size label; inspector Rectangle head, Position, Layout (Dimensions), Appearance, Fill, Stroke (Position, Weight), Effects (Drop shadow), Export (two rows, Export button), Preview | 0.94× |
+| R14 | Owner, Q123 | `owner/owner-02-nothing-selected-dark.png` (402 × 408, 1×) | Nothing selected: Page (canvas colour 1E1E1E), Styles +, Export + | 1× |
+| R15 | Owner, Q123 | `owner/owner-03-prototype-tab-dark.png` (392 × 539, 1×) | Prototype tab: Prototype settings (No device ▾, background), two dismissible help cards | 1× |
+| R16 | Owner, Q123 | `owner/owner-04-text-selected-fonts-popover-dark.png` (768 × 1063, ≈ 0.9×) | Text selected: Text head, Layout Resizing segmented, Typography; Fonts popover (search, All fonts ▾, names in their own fonts, ✓ current) | 0.9× |
+| R17 | Owner, Q123 | `owner/owner-05-colour-picker-popover-dark.png` (612 × 807, 1×) | Colour picker popover (Custom / Libraries, paint types, square, eyedropper, hue, opacity, Hex ▾, page swatches) and the help (?) button | 1× |
+| R18 | Owner, Q123 | `owner/owner-06-toolbar-frame-flyout-dark.png` (678 × 234, 1×) | Dark toolbar: tools with separate ▾, Frame flyout (✓, icon, name, shortcut), mode group (Draw, Design, Components, Dev Mode) | 1× |
 
 **Measured reference values (light).** Colours are pixel samples from R2, R4 and R5; sizes divide the image by its scale (± 1 px):
 
@@ -142,6 +148,21 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | FR44 | Icons: look-alikes at 16 px (24 px buttons) with 1 px-ish strokes | R4, R5 | Every inspector and toolbar glyph has a look-alike from the library's sets; none copied | template (icon choice) + library (icon set gaps) | open |
 | FR45 | Motion: menus and popovers appear without delay; hover is immediate | — | Motion probe: no transitions on hover in panels; popover ≤ 100 ms | template | open |
 
+### Selection-dependent inspector, popovers and toolbar (owner screenshots, Q123)
+
+| ID | Region / state | Ref | Done when (measured) | Level | State |
+| --- | --- | --- | --- | --- | --- |
+| FR46 | Inspector, nothing selected | R14 | Page (swatch with the canvas colour `1E1E1E`, 100 %, eye), Styles +, Export +; nothing else | template | open |
+| FR47 | Inspector, Rectangle selected | R13 | Head "Rectangle" with component, mask, boolean ▾ and select-matching icons; Position (Alignment, Position, Rotation, labels above); Layout (Dimensions W / H + resize action); Appearance (eye, blend; Opacity \| Corner radius + corners); Fill (styles, +; swatch, hex, %, eye, −); Stroke (row; Position ▾ \| Weight + settings, sides); Effects (Drop shadow row, eye, −); Export (scale ▾, format ▾, ⋯, − per row; full-width "Export Rectangle" button); Preview disclosure | template | open |
+| FR48 | Inspector, Text selected | R16 | Head "Text" with link, variable, component, mask, ⋯; Layout: Resizing 3-way segmented, Dimensions (disabled); Typography: font ▾ full width, weight ▾ \| size ▾, Line height \| Letter spacing, Alignment 3 + 3 segmented + settings | template | open |
+| FR49 | Inspector, Frame selected | R12 | As G40 | template | open |
+| FR50 | Fonts popover | R16 | About 216 px wide on `#2C2C2C`; title "Fonts" + settings + ×; search with clear; "All fonts ▾"; rows about 25 px, each name drawn in its own font (the library's curated licensed fonts, Q35; look-alikes, no Figma list), ✓ on the current font, highlighted row; scrolls in a ScrollArea | library (a searchable list popover, if not already) + template | open |
+| FR51 | Colour picker popover | R17 | About 240 px wide: Custom / Libraries pills, +, ×; paint-type icon row; square; eyedropper; hue and opacity (checkerboard) sliders; model ▾ \| hex \| % row; "On this page ▾" swatches. The library's ColourPicker (Q49: HSL default by owner, separate opacity) in this layout | library (ColourPicker layout options) + template | open |
+| FR52 | Toolbar, dark | R18 | Bar `#2C2C2C` with a hairline top edge and a soft shadow, 48 px; tools Move ▾, Frame ▾, Rectangle ▾, Pen ▾, Text ▾, Code ▾, Comment, Actions; the selected tool's fill `#0C8CE9` on the 32 px tool only; an open ▾ shows a pressed grey (`#383838`); mode group (Draw, Design, Components, Dev Mode) on a `#444444` 32 px track | template (+ library G31) | open |
+| FR53 | Tool flyout menu | R18 | Menu `#1E1E1E` with a `#272727` hairline, 8 px padding; 24 px items: ✓ column, 16 px icon, name, right-aligned shortcut (F, Shift+S, S); the current item `#0C8CE9` with white text; opens above the bar | library (MenuButton item icon, shortcut, checked: G43) + template | open |
+| FR54 | Help button | R17 | A 32 px round "?" button at the canvas's bottom-right corner, `#2C2C2C` with a hairline | template | open |
+| FR55 | Prototype tab, nothing selected | R15 | Prototype settings: device ▾ ("No device"), background swatch row; dismissible help cards ("Creating a connection", "Running your prototype": icon, text, ×) in our own words | template | open |
+| FR56 | Canvas, text selected | R16 | Selection box with baselines (1 px accent lines), handles, size label; a small action button outside the top-right corner | template | open |
 ### Basic behaviour (Q118.2)
 
 | ID | Behaviour | Done when (observed) | Level | State |

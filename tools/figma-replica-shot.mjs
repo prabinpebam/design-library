@@ -49,7 +49,7 @@ for (const scheme of ['light', 'dark']) {
   writeFileSync(join(out, `measure-${scheme}.json`), JSON.stringify(m, null, 2));
   const ours = join(out, `ours-${scheme}.png`);
   await page.screenshot({ path: ours });
-  const insp = join(out, 'R12-owner-inspector.png');
+  const insp = join(out, 'owner', 'owner-07-frame-selected-inspector-dark.png');
   if (scheme === 'dark' && existsSync(insp)) {
     // R12: the owner's real Figma inspector (dark, 1×, 361 × 1124, panel 330 px). Ours: the right 361 px, same height.
     await page.setViewportSize({ width: W, height: 1124 });
