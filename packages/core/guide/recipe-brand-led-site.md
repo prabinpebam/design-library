@@ -1,6 +1,6 @@
 # Recipe: a brand-led site
 
-Goal: a site with a strong look of its own (a conference, a launch, a studio, a festival) built mostly from core parts, with a few custom parts where the brand needs one, and none that redraw what core already draws. Read it before you write a part. Steps 3, 4 and 6 hold the detail; this page is the order to apply them in.
+Goal: a site with a strong look of its own (a conference, a launch, a studio, a festival) built mostly from core parts, with a few custom parts where the brand needs one, and none that redraw what core already draws. Read it before you write a part. Steps 3, 4 and 6 hold the detail; this page is the order to apply them in. Moving a site that already exists: [step 4](#4-moving-an-existing-site).
 
 ## 1. Find the core part first
 
@@ -17,7 +17,12 @@ Before any custom part, look the need up here, then in `agent/index.json` → `c
 | A status on a card (Ended, Coming up, Sold out) | `Card` `meta` with a `Badge` | A status in words and colour, in its own place | — |
 | Film or a picture that plays in place | `Reveal` around a `MediaPlayer` or `Image` | Swap the still for the film on request, with controls | Autoplay with sound |
 | Accent words in a heading | Rich text in content (`{ "text": "…", "mark": "accent" }`) or `Heading tone="accent"` | A brand colour that keeps 3:1 (display) or 4.5:1 (text) | A per-letter colour |
-| Two uneven columns, a heading beside its text | `Grid ratio="2:1" \| "aside"` | Collapse to one column when narrow | Overlap |
+| Two uneven columns, a heading beside its text | `Grid ratio="2:1" \| "3:2" \| "1:2" \| "2:3" \| "aside"` | Collapse to one column when narrow; space separates the columns | Overlap; a rule between columns; other ratios (`2:3` is the nearest to 5:7) |
+| A strip of big numbers (attendees, talks, years) | `Statistic` in a `Grid` (its figure reads the `numeral` font role) | Format each number in the reader's language, with its label | Count up as it scrolls in |
+| Names grouped by tier (sponsors, partners, donors) | A `List` or `DescriptionList` under a `Heading` per tier, in a `Section`; a template's tier sizes are its own template tokens | Any number of tiers, read in order, in every scheme | Logos sized by tier from core tokens (core has no tier sizes) |
+| Cards that sit picture-beside-words when wide | `Card` `layout="beside"` (stacks when the card is narrow) or `layout="row"` (a small square picture at the end) | Both in a `Grid` | — |
+| Breadcrumbs above the opening | `Breadcrumbs` as the section before the `Hero` (under a `SiteLayout opening="flush"` header) | A trail in reading order before the eyebrow | A slot inside the `Hero` (there's none) |
+| Moving between sibling pages (years, versions, items of one kind) without losing the place | `Router` `scroll` (`'keep'`, or a function per change), `focus` as a function, `again: 'top'`; from data, a collection page's `"between": "keep"` and `site.json` `"again": "top"` | Keep scroll and focus between siblings, land other links at the top, glide back to the top from a link to the shown page | — |
 
 ## 2. Set the brand through the seams, not CSS
 
@@ -49,7 +54,33 @@ They bring focus rings, accessible names, 44 px targets, link decoration, contra
 
 **Budget:** custom parts draw **about a third of a page's elements** at most. Over that, go back to step 1 and step 2: a part that redraws a core part, or a look a seam would give, is the usual cause. `npx design-library-check --share` prints the core and custom share for each view.
 
-## 4. Check it
+## 4. Moving an existing site
+
+When a site already exists with its own router, scroll helper, opening and frames, move it in this order, one step at a time, checking after each. Each step replaces site code with a library row; brand art that core doesn't draw stays as named parts of your template.
+
+| Step | Do | Replaces | Library rows |
+| --- | --- | --- | --- |
+| 1. Theme | `applyBrand`, `applyFonts`, `applySettings` (step 2 above) | Token overrides, root font-size scaling, CSS that restyles core parts | Step 2 |
+| 2. Content | Move words, pictures and lists into JSON ([content](2-content.md)); `npx design-library-check-content` lists screens a template ships but nothing shows, so each becomes a page or is removed | Words and lists inside components | `assets.json`, page and collection documents |
+| 3. Components | Each need from step 1's table; a part only where the table says it can't | Hand-built openings, quotes, number strips, index lists, bands | Step 1 |
+| 4. Router | Core `Router` with `scroll`, `focus`, `again`, `prepare` (load the next page's picture before it shows) | A hand router, `window.scrollTo` after a route change, a scroll helper | Step 1, last row |
+| 5. Site from data | `site.json`, `pages/`, `collections/`, `SiteView` (the window title from `titlePattern` and each page's `title`; the header's current place from the navigation) | Route lists and titles in code | [Content](2-content.md) |
+| 6. Brand parts | What's left: the brand's art, as named parts of your template on public seams (step 3) | Everything else that was custom | Step 3 |
+
+**On 0.4.0-beta.1** (before `scroll` and `again`): moving with a query (`/archive?year=2024`) keeps the place, because only a change of path lands at the top; and `onChange` can `glide(0)` for a link to the shown page. Drop both once on 0.4.0-beta.2.
+
+**Answers people ask when moving:**
+
+| Question | Answer |
+| --- | --- |
+| Page titles from data? | `site.json` `titlePattern` (`{page}` and `{site}`) and each page's `title`; `SiteView` sets the window title, description and picture |
+| Fonts: which face goes in which role? | Map by where the site uses each face, not by name: `display` for headings and big numbers, `text` and `ui` for body and controls, `label` and `numeral` often share one face, `code` another. Naming a `code` face replaces the library's default (JetBrains Mono); a site with no code shows neither |
+| A face only my template's parts use? | `applyFonts` loads only faces a role names. Load the extra face with your template's own `@font-face`, or write its rule with `fontFacesCss`, and read it from a template token; there's no extra named role |
+| My own font files? | `applyFonts({ faces: [{ family, sources, fallback }] })`: the site's files, with a metric-matched fallback so the page doesn't jump as the face arrives |
+| Can I scale the root font size with the window? | Don't: the library keeps the root at 16 px so zoom and every token keep working, and `check` warns on a root size. The cost of dropping root scaling: on big screens type is smaller than a window-scaled design (often 20–40%), and a small laptop no longer fits the whole opening in the first screen. `Hero fit="screen"` fills the first screen with a minimum height and grows with its content |
+| Serif years in an index? | `IndexList` shows each entry's title as a link and one line of summary in the text face; it has no number column. A list of years in a face of their own stays a template part for now |
+
+## 5. Check it
 
 | Check | Proves |
 | --- | --- |

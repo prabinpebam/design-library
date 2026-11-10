@@ -131,6 +131,7 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
     routes.set(route, p);
     if (collection && !byCollection[collection]) fail(p.file, '/collection', `"${collection}" isn't a collection`, `use one of: ${Object.keys(byCollection).join(', ') || '(none; add collections/*.json)'}`);
     if (collection && !String(route).includes(':id')) fail(p.file, '/route', `a page for each item of "${collection}" needs ":id" in its route`, `write it as "${route.replace(/\/$/, '')}/:id"`);
+    if (p.doc.between !== undefined && !collection) fail(p.file, '/between', '"between" keeps the place between items of one page, but this page shows no collection', 'remove "between", or add "collection" and ":id" to the route');
     if (!collection && /"item"\s*:/.test(JSON.stringify(p.doc))) {
       const where = JSON.stringify(p.doc.sections ?? []).includes('"item"') ? '/sections' : '/';
       fail(p.file, where, 'uses { "item": … } but shows no collection', 'add "collection" and ":id" to the route, or write the value');
