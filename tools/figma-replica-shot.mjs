@@ -49,6 +49,22 @@ for (const scheme of ['light', 'dark']) {
   writeFileSync(join(out, `measure-${scheme}.json`), JSON.stringify(m, null, 2));
   const ours = join(out, `ours-${scheme}.png`);
   await page.screenshot({ path: ours });
+  const insp = join(out, 'R12-owner-inspector.png');
+  if (scheme === 'dark' && existsSync(insp)) {
+    // R12: the owner's real Figma inspector (dark, 1×, 361 × 1124, panel 330 px). Ours: the right 361 px, same height.
+    await page.setViewportSize({ width: W, height: 1124 });
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.documentElement.setAttribute('data-scheme', 'dark'));
+    await page.waitForTimeout(800);
+    const ours2 = join(out, 'ours-inspector-dark.png');
+    await page.screenshot({ path: ours2, clip: { x: W - 361, y: 0, width: 361, height: 1124 } });
+    const img = (p) => 'data:image/png;base64,' + readFileSync(p).toString('base64');
+    await page.setViewportSize({ width: 361 * 2 + 16, height: 1124 + 24 });
+    await page.setContent(`<body style="margin:0;background:#888;font:12px system-ui;color:#fff"><div style="height:24px;line-height:24px;padding-left:8px">← R12 owner's Figma inspector (dark, 1×) · ours (dark) →</div>
+      <div style="display:flex;gap:16px"><img src="${img(insp)}" style="display:block"><img src="${img(ours2)}" style="display:block"></div></body>`);
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: join(out, 'compare-inspector-dark.png') });
+  }
   if (existsSync(ref)) {
     const img = (p) => 'data:image/png;base64,' + readFileSync(p).toString('base64');
     await page.setViewportSize({ width: W, height: H * 2 + 24 });

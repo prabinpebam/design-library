@@ -50,7 +50,8 @@
     const panels = [...root.querySelectorAll('[data-dl-part="panel"]')].filter((p) => box(p).width > 0 && p.parentElement.closest('[data-dl]') === root);
     const widths = panels.map((p) => Math.round(box(p).width));
     const panelBgs = panels.map((p) => opaqueBg(p));
-    row('FR4', panels.length === 2 && widths.every((w) => near(w, 240)) && panelBgs.every((b) => b === L.panel), { widths, bg: panelBgs }, { widths: [240, 240], bg: L.panel });
+    // Left panel 240 px (R11); the inspector 330 px (owner Q122, R12).
+    row('FR4', panels.length === 2 && near(widths[0], 240) && near(widths[1], 330) && panelBgs.every((b) => b === L.panel), { widths, bg: panelBgs }, { widths: [240, 330], bg: L.panel });
 
     const work = root.querySelector('[data-dl="canvas"]') || root.querySelector('[data-dl-part="work"]');
     row('FR17', work && opaqueBg(work) === L.canvas, work ? opaqueBg(work) : 'missing', L.canvas);

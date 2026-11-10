@@ -21,6 +21,7 @@ Public sources only (Q118.6). Pictures are captured into the git-ignored `.desig
 | R9 | [FD4B: Navigate Figma Design files](https://help.figma.com/hc/en-us/articles/30925881896727-FD4B-Navigate-Figma-Design-files) | `30925881896727-1..6.png` | Whole-editor views, file menu | — |
 | R10 | [Change themes in Figma](https://help.figma.com/hc/en-us/articles/5576781786647-Change-themes-in-Figma) | `5576781786647-1.png` (1920 × 1080) | Light and dark side by side, **UI2** (older layout); used only for dark colours until a UI3 dark capture exists: panel `#2C2C2C`, divider `#444444`, selected layer row `#2D3953` dark / `#E5F4FF` light | 2× |
 | R11 | same article | `5576781786647-2.png` (2878 × 1414; `-2-half.png` for viewing) | **The whole UI3 editor, light, empty file**: left head (menu ▾, panel toggle; "Untitled ▾" / "Drafts"), File / Assets pills + search, Pages +, Page 1, Layers; rulers; toolbar; right head (avatar ▾, Present ▾, Share), Design / Prototype + 100 % ▾, Page (colour field + eye), Variables, Styles, Export. **Primary layout reference** | 1.8× (24 px fields = 43 px, 32 px tools = 58 px) |
+| R12 | **The owner's own Figma**, Design tab with a frame selected, dark, 2026-11-10 (DoD [Q122](definition-of-done.md#owner-instructions)) | `R12-owner-inspector.png` (361 × 1124, 1×: 24 px fields measure 24 px) | **Primary inspector reference**: panel 330 px; head (avatar ▾, ▶ ▾, Share), Design / Prototype + 65 % ▾, `Frame ▾` with code, component and more; Position (labels above: Alignment, Position, Rotation), Auto layout (Flow, Resizing with Hug, Alignment grid + Gap, Padding, Clip content), Appearance (Opacity, Corner radius), Fill, Stroke, Effects, Selection colors, Layout guide, Export | 1× |
 
 **Measured reference values (light).** Colours are pixel samples from R2, R4 and R5; sizes divide the image by its scale (± 1 px):
 
@@ -33,18 +34,20 @@ Public sources only (Q118.6). Pictures are captured into the git-ignored `.desig
 | Accent (Share, selected tool, selection stroke, handles' stroke, size label) | `#0D99FF` |
 | Segmented selected segment | `#FFFFFF` on the `#F5F5F5` track, small shadow |
 | Type | Inter, 11 px for UI text; section titles 11 px semibold; secondary text about 50 % black |
-| Left and right panels | 240 px wide (R11: 430 px at 1.8×), docked, full height, 1 px divider `#E6E6E6` to the canvas |
+| Left and right panels | Left 240 px (R11: 430 px at 1.8×); **right (inspector) 330 px** (owner Q122, R12: 22 → 352 px); docked, full height, 1 px divider `#E6E6E6` / `#444444` to the canvas |
 | Left head | Menu row 48 px (menu glyph ▾ left, panel toggle right) then file name 11 px semibold with ▾ over "Drafts" 11 px secondary: 97 px to the first divider (R11) |
 | File / Assets row | 40 px row, 24 px pills (active `#F5F5F5`), search icon at the end; divider below (R11) |
 | Section title rows (Pages, Layers; Page, Variables, Styles, Export) | 40 px each, title 11 px semibold at a 16 px inset, trailing 24 px icon button; sections divided by 1 px `#E6E6E6` (R11) |
 | Page and layer rows | Highlight 24 px high, inset 8 px each side, radius 5 px, `#F5F5F5` (R11, R2); selected layer `#E5F4FF` (R10); row pitch and child indent 24 px (R2: confirm on a UI3 capture with deep layers) |
-| Fields | 24 px high, radius 5 px; two 88 px columns with an 8 px gap plus a 24 px action column; 16 px panel inset |
+| Fields | 24 px high, radius 5 px; in the 330 px inspector two 132 px columns with an 8 px gap, then an action column (icon buttons 24 px, centred in the last 41 px); 16 px panel inset (R12) |
 | Section | 1 px divider between sections; title row 40 px with trailing icon actions; 8 px between field rows |
 | Right head | 48 px: avatar 24 px with ▾, Present ▶ ▾, Share 32 px high filled accent, white 11 px medium, radius 5 px (R11) |
 | Tabs (Design, Prototype) | 33 px row under the head, 24 px pills radius 5 px, active `#F5F5F5`; zoom "100 % ▾" at the row's end; divider below (R11) |
 | Canvas | `#F5F5F5`; rulers optional (on in R11, off in R2) |
 | Floating toolbar | 48 px high (8 px padding around 32 px tools), white, radius about 13 px, soft wide shadow; tools: radius 5 px; selected = accent fill with white glyph; flyout chevrons 16 px; mode switcher at the end on a `#F5F5F5` track with the active mode white with an accent glyph (R4, R11) |
 | Selection | 1 px accent stroke; 6 px white square handles with an accent stroke at the corners; frame name label 11 px above the frame (accent when selected); size label below: accent fill, white 11 px, radius 2 px |
+
+**Measured from R12 (dark, 1×):** panel `#2C2C2C`, fields, active tab and segmented track `#383838`, the selected segment `#2C2C2C` with an outline, dividers `#444444`, Share `#0C8CE9` (so the dark accent is `#0C8CE9`, confirmed), titles and values white, labels above fields about `#BFBFBF` (70 % white), 11 px. Rows: head 48, tabs 33, divider; selection head `Frame ▾` 48 px with three 24 px icon buttons; a section is a 40 px title row, then per property a label row (16 px) and a 24 px field row, 8 px between, 16 px bottom padding, 1 px divider; empty sections (Fill, Stroke, Effects, Layout guide, Export) are 40 px title rows with `+`.
 
 **Viewport for comparison:** the evaluator compares at the same CSS size as the reference crop: panels at 240 px, the editor at **1440 × 900** (and 1280 × 800); the agent browser pane is 823 × 823, so whole-editor screenshots are taken with Playwright at 1440 × 900 when the pane allows it, otherwise region by region at native size. Reference pictures are compared after dividing by their scale.
 
@@ -61,7 +64,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | FR1 | Left panel head: menu button (look-alike glyph, not the Figma logo), file name, project ("Drafts") with ▾, hide-panel button | R1, R9 | 48 px menu row (menu glyph ▾, panel toggle at the end), then file name 11 px semibold ▾ over "Drafts" 11 px secondary; 97 px to the divider (R11); the menu button opens the main menu (FR40) | template | open |
 | FR2 | File / Assets tabs under the head | R9 | 40 px row: two 24 px pills (active `#F5F5F5`) and a search icon at the end (R11); switching shows Pages + Layers or Assets | template | open |
 | FR3 | Right panel head: avatars (24 px, overlapping), Present ▶ with ▾, Share | R5 | Avatar 24 px circle; Present 24 px icon button + 16 px chevron; Share filled `#0D99FF`, white 11 px medium, radius 5 px, height and width ± 1 px of R5 | template (accent via theme) | open |
-| FR4 | Panel widths and edges | R1, R2 | Left and right panels 240 px, docked full height, 1 px `#E6E6E6` inner edge, panel `#FFFFFF`; canvas fills the rest | library (EditorLayout width token) + template (value) | fail (256 px) |
+| FR4 | Panel widths and edges | R1, R2, R12 | Left 240 px, **inspector 330 px** (owner Q122), docked full height, 1 px inner edge `#E6E6E6` / `#444444`, panel `#FFFFFF` / `#2C2C2C`; canvas fills the rest | library (EditorLayout width token) + template (values) | fail (inspector 240 px, owner wants 330: G36) |
 
 ### Left panel: pages, layers, assets
 
@@ -134,7 +137,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | ID | Region / state | Ref | Done when (measured) | Level | State |
 | --- | --- | --- | --- | --- | --- |
 | FR41 | Light scheme: every surface and text colour equals the table in section 1 | R1–R5 | Probe reports each sampled colour within ΔE 2 | template (theme) | open |
-| FR42 | Dark scheme | R10 | Panel `#2C2C2C` and dividers `#444444` (R10, UI2 sample); canvas `#1E1E1E`, fields `#383838`, text white (*ref pending*: no public UI3 dark capture yet) | template (theme) | open |
+| FR42 | Dark scheme | R12, R10 | Panel `#2C2C2C`, fields `#383838`, dividers `#444444`, accent `#0C8CE9`, text white, labels 70 % white (R12, measured); canvas `#1E1E1E` (*canvas ref pending*) | template (theme) | open |
 | FR43 | UI type 11 px Inter, titles semibold | R2, R5 | Computed font sizes in panels and toolbar | template (OD1 decided) | open |
 | FR44 | Icons: look-alikes at 16 px (24 px buttons) with 1 px-ish strokes | R4, R5 | Every inspector and toolbar glyph has a look-alike from the library's sets; none copied | template (icon choice) + library (icon set gaps) | open |
 | FR45 | Motion: menus and popovers appear without delay; hover is immediate | — | Motion probe: no transitions on hover in panels; popover ≤ 100 ms | template | open |
@@ -235,6 +238,12 @@ One row per shortcoming, appended by the evaluator, completed by the builder. A 
 | G33 | FR31 | Section hairlines stop at the panel padding (inset 8 px each side); R5/R11 lines run the panel's full width | EditorLayout pads the panel content, so sections can't bleed | Sections own their inline inset (padding inside the section, the panel content unpadded) so dividers reach the edge; generic for any inspector | library | — | — |
 | G34 | FR6 | Page and layer names start 10 px from the panel edge; R11 about 16 px (8 px highlight inset + 8 px text inset) | Row inline padding | Row inline padding token, template value | library seam + template value | — | — |
 | G35 | FR1 | Menu ≡ still on its own row above the file name, the panel toggle at the head's start; R11: one 48 px row (menu glyph ▾ left, panel toggle right), then "Untitled ▾" over "Drafts" | EditorLayout places its panel toggle at the head's start | A toggle placement seam on EditorLayout (start or end of the head), generic for any app with collapsible panels | library seam + template | — | — |
+| G36 | FR4 | Inspector 240 px; owner: 330 px (Q122, R12) | Template value | `c.editor-layout.panel` (end panel) 330 px in the template theme, the left panel staying 240 (needs a per-side width seam if one value sets both) | template (+ library seam if per-side width is missing) | — | — |
+| G37 | FR3 | Head order: ours view-options icon, avatars, ▶, ⋯, Share; R12 avatar ▾ at the start, then ▶ ▾ and Share at the end, nothing else | Content order | Avatar ▾ first; ▶ ▾; Share; view options move into the main menu or the ⋯ of the selection head | template | — | — |
+| G38 | FR24 | Selection head: ours "Sign in button" over "Rectangle", no actions; R12 one 48 px row `Frame ▾` (type with a menu) and code, component and more icon buttons | Content and layout | One row: type name ▾ (MenuButton) + three 24 px icon buttons | template | — | — |
+| G39 | FR25 | Position: ours a separate Alignment section (8 bare buttons) and unlabelled X/Y and rotation; R12 one Position section with labels above (Alignment, Position, Rotation), alignment as two touching 3-button groups on the `#383838` track (132 px each), rotation beside a 3-button flip/rotate group | Content structure; labels above fields per property | Labels above fields (the Property labels option on by default in this template), touching groups on a track | template (+ library: SegmentedControl/Cluster track for action groups if missing) | — | — |
+| G40 | FR26–FR28 | Section set differs: ours Constraints, Layout (min/max, Ignore auto layout Switch), Appearance (blend Select, opacity slider, "Show in the document" Switch, radius with Switch, corner smoothing slider), Fill with a Switch; R12 Position, Auto layout (Flow 4-way + wrap; Resizing W/H with "Hug"; 3 × 3 alignment + Gap ▾; Padding pair; Clip content), Appearance (eye and blend icons in the head; Opacity and Corner radius fields side by side + corners action), Fill +, Stroke +, Effects +, Selection colors (swatch, hex, 100 %), Layout guide +, Export + | Content (built for the earlier audit, not UI3's current inspector) | Rebuild the inspector content for a selected frame in R12's order; visibility is the eye toggle in Appearance's head (OD2), not a Switch | template | — | — |
+| G41 | FR26 | Clip content: R12 a checkbox | Owner rule: Switch is the default for a binary setting (OD3); Q121 covers toggle buttons, not checkboxes | Ask the owner (OD3); meanwhile Switch | owner | — | — |
 
 ## 5. Owner decisions
 
