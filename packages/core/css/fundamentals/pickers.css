@@ -183,8 +183,9 @@
     padding: var(--c-popup-inset);
   }
 
+  /* A menu fits its widest item; the shared maximum above caps it, so a long label wraps rather than widening it. */
   [data-dl='menu-button'] > [data-dl-part='popup'] {
-    inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
+    inline-size: max-content;
   }
 
   [data-dl='menu-button'] > [data-dl-part='popup'][data-placement='above'],

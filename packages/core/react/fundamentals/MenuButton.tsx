@@ -59,7 +59,8 @@ export interface MenuButtonProps extends DataAttributes {
  * @a11y The WAI-ARIA APG menu button: a native `button` with `aria-haspopup="menu"` and `aria-expanded`, controlling a
  * `role="menu"` of `menuitem` ListItems named by `menuLabel`. Opening moves focus into the menu; choosing, Escape or a
  * click outside closes it and returns focus to the button; Tab closes it and moves on. The menu opens in the top layer
- * (the shared popup rule: under the button, flipping above near the window's end, never clipped) and its items are the one
+ * (the shared popup rule: under the button, flipping above near the window's end, never clipped), as wide as its widest
+ * item up to the shared popup maximum and the window (a longer label wraps), and its items are the one
  * ListItem every popup list uses. A 44 px target from `normal` (36 px at `s`, 24 px at `xs`, dense exceptions). Busy keeps the same focused
  * trigger, locked with `aria-disabled` and `aria-busy`, its present-tense label as the name, and the width of its widest label. Icon-only
  * is named by `label`, also its tooltip;
