@@ -126,7 +126,7 @@ To try the library or change it, an app can also live in [the library repository
 
 | Do | Don't |
 | --- | --- |
-| Import from the public entry points only: `@design-library/core/components` (every component; 0.4.0-beta.2), `/react` (the same plus the library's own stories, which put about 8 MB of story pictures and fonts in a build), `/stories`, `/render`, `/presets`, `/fonts`, `/icons`, `/colour`, `/css/index.css`, `/schemas/*`, `/motion/*` | Import a component's file directly (`…/react/fundamentals/Button`) or anything not in `exports` |
+| Import from the public entry points only: `@design-library/core/components` (every component; 0.4.0-beta.2), `/react` (the same plus the library's own stories, which put about 8 MB of story pictures and fonts in a build), `/stories`, `/render`, `/presets`, `/fonts`, `/icons`, `/colour`, `/effects` (drawing helpers with no React: the stipple `ImageGeneration` draws, for a site's own `Image` `reveal`; its contract is the comment at the top of `effects/index.ts`; 0.5.0-beta.1), `/css/index.css`, `/schemas/*`, `/motion/*` | Import a component's file directly (`…/react/fundamentals/Button`) or anything not in `exports` |
 | Arrange with layouts and `Stack`, `Cluster`, `Grid` | Write CSS, a `style` prop, a `className` or a wrapper `div` to space things |
 | Put words in props or content JSON | Hide meaning in colour, or use a button as an on/off toggle (use `Switch`) |
 | Use one of `SiteLayout`, `AppLayout`, `ChatLayout` or `EditorLayout` for the whole page | Nest one layout inside another |
