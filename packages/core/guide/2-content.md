@@ -108,11 +108,11 @@ src/site/
   collections/{id}.json  a list a site repeats: the item schema and the items (books, talks, people, offices)
 ```
 
-1. **`site.json`** (`schemas/site.schema.json`): `siteVersion`, `id`, `title`, `home` (a page id), `navigation` (`{ label, href }`, the header's places), `header` and `footer` blocks. A `site-header` here may leave out `places`; they come from `navigation`, with the current one marked.
+1. **`site.json`** (`schemas/site.schema.json`): `siteVersion`, `id`, `title`, `home` (a page id), `navigation` (`{ label, href }`, the header's places), `header` and `footer` blocks. A `site-header` here may leave out `places`; they come from `navigation`, with the current one marked. `"again": "top"` makes a link to the page already shown glide back to its top (default `"none"`).
 2. **A page** (`schemas/page.schema.json`): `pageVersion`, `id`, `route` (`/visit`), `title` and `sections`, each a block by its `type` with an optional `anchor` for `/visit#hours` links. To find the block for a need, run `npx design-library-blocks "opening hours and the address"`: core blocks first, each with its fields and an example in use. Blocks hold blocks in named slots: `split` (`start`, `end`), `grid` (`items`), `hero` (`media`).
 3. **A collection** (`schemas/collection.schema.json`): `collectionVersion`, `id`, `item` (the JSON schema each item meets) and `items`. Then, anywhere in a page:
    - `{ "ref": "books/the-long-shore" }` is that item, `{ "ref": "books/the-long-shore", "field": "title" }` one value of it;
-   - a page with `"route": "/readings/:id", "collection": "readings"` is each item's own page, reading the item with `{ "item": "title" }`; a reference to such an item links to its page;
+   - a page with `"route": "/readings/:id", "collection": "readings"` is each item's own page, reading the item with `{ "item": "title" }`; a reference to such an item links to its page; `"between": "keep"` on it keeps the scroll place and focus when moving from one item to the next (Router `scroll`, MP2), and any other link still lands at the top;
    - in place of a hand-written list, `{ "from": "readings", "where": { "date": { "after": "today" } }, "sort": "date", "limit": 3 }` lists the items that match (`where` by field: equal, or one of `in`, `has`, `not`, `before`, `after`; `"today"` is the reader's date);
    - `site.json` `derive` names a count, the distinct values or the groups of a collection (`"book-count": { "count": "books" }`), read anywhere with `{ "derived": "book-count" }`.
 4. **Old addresses** go in `site.json` `aliases` (`"/events/:id": "/readings/:id"`), never in code.
