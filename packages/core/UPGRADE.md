@@ -183,6 +183,8 @@ Run `npx design-library-check --share` first and keep its output to compare afte
 4. Typefaces: the `@font-face` rules and the custom parts that set Bebas Neue, IBM Plex Mono, Archivo and Figtree
    become one `applyFonts({ roles: { display: 'bebas', label: 'plex-mono', numeral: 'archivo', … }, faces: [...] })`
    in `look.ts`; core `Heading`, `Text`, `Hero`, `Card` and `Statistic` then carry them.
+   **Correction (0.4.0-beta.2):** map faces by where the site uses them: `label` and `numeral` both Archivo, `code`
+   IBM Plex Mono (`display` Bebas Neue, `text` and `ui` Figtree); see the 0.4.0-beta.2 block's step 4.
 5. Scheme: the `HeaderEnd` scheme button (`useState`, `dataset.scheme`, `localStorage`) becomes
    `<SchemeControl form="button" storageKey={…} words={{ toDark, toLight }} />`; the boot lines in `look.ts` become
    `applyScheme(readScheme(SCHEME_KEY) ?? 'system')`.
