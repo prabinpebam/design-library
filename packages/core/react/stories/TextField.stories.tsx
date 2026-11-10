@@ -11,6 +11,12 @@ import { useFilter } from '../behaviour/filter';
 import type { StoryFile } from './story';
 
 /** A field backed by a save that takes `ms` and either stores the value or fails. */
+/** A colour value with its swatch at the start (Q127: the swatch sits in a square cell, equal space above, before and below it). */
+function SwatchField({ size, name }: { size: TextFieldProps['size']; name: string }) {
+  const [c, setC] = useState('#4F5BD5');
+  return <TextField size={size} label={`Fill · ${name}`} value={c} onCommit={setC} swatch={{ value: c, onChange: setC }} />;
+}
+
 function Field({ initial = '', ms = 400, fails = false, ...rest }: Omit<TextFieldProps, 'value' | 'onCommit'> & { initial?: string; ms?: number; fails?: boolean }) {
   const [stored, setStored] = useState(initial);
   const save = (next: string) =>
@@ -174,14 +180,15 @@ export default {
   stories: [
     {
       title: 'Sizes',
-      description: 'Seven box heights on the Button scale, so a field sits level with the buttons beside it. The label and hint keep their size; xs and s are dense surfaces only.',
+      description: 'Seven box heights on the Button scale, so a field sits level with the buttons beside it. The label and hint keep their size; xs and s are dense surfaces only. A leading icon or colour swatch sits in a square cell as tall as the box’s inside, so the space above, before and below it is equal at every size.',
       code: `<TextField size="xs" label="Filter tokens" icon="search" clearable value={q} onCommit={setQ} />  // xs, s, normal (default), m, l, xl, xxl`,
       render: () => (
         <Stack gap="group">
           {sizes.map(([size, name]) => (
-            <Grid key={size} max={2}>
+            <Grid key={size} max={3}>
               <Field size={size} label={`Search · ${name}`} icon="search" clearable placeholder="Colour, space, radius…" initial="accent" />
               <Field size={size} label={`Weight · ${name}`} suffix="kg" initial="12.5" />
+              <SwatchField size={size} name={name} />
             </Grid>
           ))}
         </Stack>

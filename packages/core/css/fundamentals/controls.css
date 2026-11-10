@@ -1094,6 +1094,37 @@
   }
 
   /*
+   * A field's leading part (Q127): its first icon, colour swatch or scrub glyph sits in a square cell as tall as the box's
+   * inside, centred, with no start padding before it, so the space above, before and below it is equal at every size and
+   * density. The swatch's cell is the picker's root; its border and corners move to the colour itself.
+   */
+  :is([data-dl='text-field'], [data-dl='select'], [data-dl='number-field']) :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box']:has(> :is([data-dl-part='leading'], [data-dl-part='swatch'], [data-dl-part='scrub']):first-child) {
+    padding-block: 0;
+    padding-inline-start: 0;
+  }
+
+  :is([data-dl='text-field'], [data-dl='select'], [data-dl='number-field']) [data-dl-part='box'] > :is([data-dl-part='leading'], [data-dl-part='swatch'], [data-dl-part='scrub']):first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    aspect-ratio: 1;
+    inline-size: auto;
+    block-size: auto;
+    min-inline-size: 0;
+    border: none;
+    border-radius: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='box'] > [data-dl-part='swatch']:first-child > [data-dl-part='trigger'] {
+    flex: none;
+    inline-size: var(--c-field-swatch);
+    block-size: var(--c-field-swatch);
+    border: var(--border-hairline) solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  /*
    * NumberField (Q40 P2): the text field's label and box (c.field, shared) with a scrub handle before the number and
    * optional steppers after it. Tabular digits so a changing value never shifts.
    */

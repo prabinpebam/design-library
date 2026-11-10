@@ -399,6 +399,7 @@
   --c-field-padding-inline: var(--space-3);
   --c-field-padding-inline-sm: var(--space-2);
   --c-field-padding-inline-lg: var(--space-4);
+  --c-field-swatch: var(--size-icon-md);
   --c-field-radius: var(--radius-md);
   --c-field-border-width: var(--border-hairline);
   --c-field-gap: var(--space-stack-pair);

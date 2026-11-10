@@ -32,7 +32,7 @@ export default {
   stories: [
     {
       title: 'Sizes',
-      description: 'Four sizes, as Fluent, Spectrum and Carbon offer: xs for a dense panel’s row (a design tool’s inspector, the written dense-surface exception), s for dense settings lists, normal by default, l for touch-first settings. The knob keeps the same inset at each; the whole row is the target (24, 36, 44 and 48 px). In an inspector an xs switch can hide its label (hideLabel) where the row already names it, as a fill’s visibility beside its Remove; the label still names it.',
+      description: 'Four sizes, as Fluent, Spectrum and Carbon offer: xs for a dense panel’s row (a design tool’s inspector, the written dense-surface exception), s for dense settings lists, normal by default, l for touch-first settings. The knob keeps the same inset at each; the whole row is the target (24, 36, 44 and 48 px). In an inspector an xs switch can hide its label (hideLabel) where the row already names it, as a panel row’s “Snap to pixel grid” beside its heading; the label still names it. Showing or hiding an item is not a Switch: use VisibilityToggle (the eye).',
       code: `<Switch size="s" label="Email updates" checked={on} onChange={save} />  // xs, s, normal (default), l`,
       render: () => (
         <Stack gap="group">

@@ -49,5 +49,6 @@
   "text.m": { "$value": "0.8125rem", "$description": "13 px: UI3's larger text" },
   "c.tree-view.row-gap": { "$value": "0px", "$description": "Rows sit edge to edge: a 24 px pitch" },
   "c.editor-layout.panel-end": { "$value": "20.625rem", "$description": "The inspector is 330 px (owner Q122)" },
+  "c.field.swatch": { "$value": "0.875rem", "$description": "14 px colour swatches in fields, centred with equal space around (Q127)" },
   "c.button.pressed-fill": { "$value": "transparent", "$description": "Eye and lock show their state by icon alone (OD2)" }
 }

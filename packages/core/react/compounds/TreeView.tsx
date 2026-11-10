@@ -31,7 +31,7 @@ export interface TreeViewProps extends DataAttributes {
   expanded: string[];
   /** An item was expanded or collapsed: the new list. */
   onExpandedChange: (ids: string[]) => void;
-  /** Compact controls at a row's end that act on that item (a layer's visibility and lock, as xs Switches). Shown while the row is hovered or focused, and at rest with `pinActions`; their room is held so nothing moves. Only the focused row's actions are in the tab order: Tab from a row reaches its own. */
+  /** Compact controls at a row's end that act on that item (a layer's visibility and lock, as VisibilityToggles). Shown while the row is hovered or focused, and at rest with `pinActions`; their room is held so nothing moves. Only the focused row's actions are in the tab order: Tab from a row reaches its own. */
   actions?: (item: TreeItem) => ReactNode;
   /** Where the actions sit: `held` (default) keeps their room at every row's end, so labels are always that much shorter; `overlay` takes no room at rest and lays them over the label's end on the row's own surface while shown, so labels use the full width (a design tool's narrow layers panel). Nothing moves either way. */
   actionsRoom?: 'held' | 'overlay';

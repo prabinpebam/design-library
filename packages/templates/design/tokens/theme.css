@@ -50,6 +50,7 @@
     --text-m: 0.8125rem;
     --c-tree-view-row-gap: 0px;
     --c-editor-layout-panel-end: 20.625rem;
+    --c-field-swatch: 0.875rem;
     --c-button-pressed-fill: transparent;
     --type-body-size: var(--text-m);
     --type-body-sm-size: var(--text-s);

@@ -334,6 +334,7 @@
     "--c-field-size-xl",
     "--c-field-size-xs",
     "--c-field-size-xxl",
+    "--c-field-swatch",
     "--c-field-trailing",
     "--color-accent",
     "--color-bg-control",

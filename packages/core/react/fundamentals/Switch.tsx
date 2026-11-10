@@ -21,7 +21,7 @@ export interface SwitchProps extends DataAttributes {
   size?: SwitchSize;
   /** `end` (default): the label after the track. `start`: the label first and the track at the row's end, filling its container, as in a settings list. */
   labelPosition?: 'start' | 'end';
-  /** Hides the visible label where the row already says what the switch is (a fill's visibility beside its Remove). It still names the switch. */
+  /** Hides the visible label where the row already says what the switch is (a setting beside its row's heading). It still names the switch. */
   hideLabel?: boolean;
   /** The setting can't change here. Prefer explaining why nearby. */
   disabled?: boolean;

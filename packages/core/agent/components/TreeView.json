@@ -75,7 +75,7 @@
         {
           "name": "actions",
           "type": "(item: TreeItem) => ReactNode",
-          "description": "Compact controls at a row's end that act on that item (a layer's visibility and lock, as xs Switches). Shown while the row is hovered or focused, and at rest with `pinActions`; their room is held so nothing moves. Only the focused row's actions are in the tab order: Tab from a row reaches its own."
+          "description": "Compact controls at a row's end that act on that item (a layer's visibility and lock, as VisibilityToggles). Shown while the row is hovered or focused, and at rest with `pinActions`; their room is held so nothing moves. Only the focused row's actions are in the tab order: Tab from a row reaches its own."
         },
         {
           "name": "actionsRoom",
