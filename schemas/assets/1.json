@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prabinpebam.github.io/design-library/schemas/assets/1.json",
+  "title": "Template assets, version 1",
+  "description": "A template's pictures by id. Content names a picture by its id; `src` is a file in the template's own folder; `alt` says what it shows.",
+  "type": "object",
+  "required": ["assets"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "assets": {
+      "type": "object",
+      "propertyNames": { "pattern": "^[a-z][a-zA-Z0-9-]*$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["src"],
+        "properties": {
+          "src": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" },
+          "dark": { "$ref": "#/$defs/file", "description": "The same picture for a dark scheme (MP17, MP18): a file in the template's folder at the same ratio, under the same alt; drawn wherever the picture sits in a dark scheme (the page's or a band's own). Raster or SVG." },
+          "alternate": { "$ref": "#/$defs/file", "description": "A paired picture (MP10): an after to the src's before, at the same ratio, shown while the picture or the card or link around it is hovered or focused, and fetched only then. Say both in alt (\"Before and after: …\")." },
+          "contrast": {
+            "type": "object",
+            "description": "Files for more contrast (MP18): `light` and `dark`. Dark with more contrast falls back to contrast.dark, then dark, then src; light with more contrast to contrast.light, then src.",
+            "properties": { "light": { "$ref": "#/$defs/file" }, "dark": { "$ref": "#/$defs/file" } },
+            "additionalProperties": false
+          },
+          "alt": { "type": "string", "description": "What the picture shows, for people who can't see it. Required unless the picture is decorative." },
+          "decorative": { "type": "boolean", "description": "The picture adds nothing the words beside it don't say: it is drawn with an empty alt and skipped by screen readers (DP3)." },
+          "illustration": {
+            "type": "object",
+            "description": "Draw this SVG inline as an Illustration (MP22, Q112): its role classes (ink, muted, fill, surface, accent) take the token colours in every scheme, its data-size groups follow its own width, and its data-motion parts move as `play` says. `src` must be an .svg that passes design-library-check-svg. Without it an SVG is drawn as a picture (Image).",
+            "properties": {
+              "play": { "enum": ["once", "hover", "loop"], "description": "When its motion parts move: `once` (default) the first time it's seen, `hover` while it or its card or link is pointed at or focused, `loop` while on screen with a Pause control. Never under reduced motion." }
+            },
+            "additionalProperties": false
+          },
+          "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frame it is drawn in where the block doesn't fix one, as Image ratio (DP3)." },
+          "focal": {
+            "type": "object",
+            "description": "The point to keep in view when the frame crops, from 0 to 1 across and down, as Image focal (DP3, IP12).",
+            "required": ["x", "y"],
+            "properties": { "x": { "type": "number", "minimum": 0, "maximum": 1 }, "y": { "type": "number", "minimum": 0, "maximum": 1 } },
+            "additionalProperties": false
+          },
+          "treatment": {
+            "description": "How the picture is toned (DP3; drawn by the picture treatments, IP31): one value for always, or one at rest and one when its card or link is hovered or focused.",
+            "oneOf": [
+              { "$ref": "#/$defs/tone" },
+              {
+                "type": "object",
+                "properties": { "rest": { "$ref": "#/$defs/tone" }, "active": { "$ref": "#/$defs/tone" } },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "if": { "not": { "properties": { "decorative": { "const": true } }, "required": ["decorative"] } },
+        "then": { "required": ["alt"] },
+        "dependentSchemas": { "illustration": { "properties": { "src": { "pattern": "^assets/[a-z0-9-]+\\.svg$" } } } },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "tone": { "enum": ["none", "greyscale", "duotone"] },
+    "file": { "type": "string", "pattern": "^assets/[a-z0-9-]+\\.(svg|png|jpg|jpeg|webp|avif)$" }
+  }
+}

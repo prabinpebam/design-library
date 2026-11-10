@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prabinpebam.github.io/design-library/schemas/content/1.json",
+  "title": "Template content envelope, version 1",
+  "description": "What every content file of every template shares (Q64). A layout's file has `layout` and either `regions` (documents: regions of blocks) or `record` (applications: one record the layout's schema defines), never both; an application layout that shows only the shared record has neither. A template's shared file has `shared: true` and the regions every layout shares. Pure data: no markup, styles or code.",
+  "type": "object",
+  "required": ["template", "contentVersion"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "template": { "$ref": "#/$defs/id", "description": "The template's id; must match the folder's manifest." },
+    "layout": { "$ref": "#/$defs/id", "description": "The layout of the manifest this file is the content of." },
+    "shared": { "const": true, "description": "Holds the regions every layout of the template shares." },
+    "contentVersion": { "type": "integer", "minimum": 1, "description": "The content shape's version; must equal the manifest's `contentVersion`." },
+    "settings": { "type": "object", "description": "Options of the layout component (for SiteLayout: which place is current, the column width); checked against the component's settings schema." },
+    "regions": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/id" },
+      "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/block" } }
+    },
+    "strings": {
+      "type": "object",
+      "description": "Words the renderer needs that no one block holds (shared file only). `unconfirmed`: the phrase shown for each kind of value not yet confirmed (DP4), such as { \"speaker\": \"Speaker to confirm\" }.",
+      "properties": {
+        "unconfirmed": { "type": "object", "propertyNames": { "$ref": "#/$defs/id" }, "additionalProperties": { "type": "string", "minLength": 1 } }
+      },
+      "additionalProperties": false
+    },
+    "record": { "type": "object", "description": "An application layout's data; checked against the template's `#/$defs/record.{layout}` (`record.shared` in the shared file)." }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    { "oneOf": [{ "required": ["layout"], "not": { "required": ["shared"] } }, { "required": ["shared"], "not": { "required": ["layout"] } }] },
+    { "not": { "required": ["regions", "record"] } }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "pattern": "^([a-z][a-z0-9-]*\\.)?[a-z][a-z0-9-]*$", "description": "A core block type (`hero`), or a template's own, namespaced (`conference.sponsor-wall`)." }
+      }
+    }
+  }
+}

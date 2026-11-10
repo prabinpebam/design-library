@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prabinpebam.github.io/design-library/schemas/collection/1.json",
+  "title": "Collection, version 1",
+  "description": "A typed list of like things a site shows in many places (DP12, DR21, DR22): talks, people, books, offices. Each item has an id unique in the collection; `item` is the JSON schema every item meets. Page documents and other collections point at an item with { \"ref\": \"books/the-long-shore\" } (the whole item) or { \"ref\": \"books/the-long-shore\", \"field\": \"title\" } (one value, a dotted path that follows references); a page whose route has `:id` and names the collection is each item's own page, and reads the item it shows with { \"item\": \"title\" }. Pure data: no markup, styles or code.",
+  "type": "object",
+  "required": ["collectionVersion", "id", "items"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "collectionVersion": { "const": 1, "description": "The collection document's shape version." },
+    "id": { "$ref": "#/$defs/id", "description": "The collection's name: the first part of a reference (`books` in `books/the-long-shore`)." },
+    "title": { "type": "string", "minLength": 1, "description": "What the items are, for people (\"Books\")." },
+    "idField": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$", "default": "id", "description": "The item field that holds its id." },
+    "item": { "type": "object", "description": "The JSON schema every item meets (its fields, types and which are required); the content check validates each item against it. A field that points at another collection's item holds a reference." },
+    "items": {
+      "type": "array",
+      "description": "The items, in their default order.",
+      "items": { "type": "object" }
+    },
+    "generated": {
+      "type": "object",
+      "description": "Provenance, when a command wrote this collection from another source (DP14) rather than a person: what wrote it, from what and when. A generated collection is rebuilt, not edited by hand; the content check still validates its items.",
+      "required": ["by", "from"],
+      "properties": {
+        "by": { "type": "string", "minLength": 1, "description": "The command or script that writes it." },
+        "from": { "type": "string", "minLength": 1, "description": "Its source: a file, a folder or an address." },
+        "at": { "type": "string", "format": "date-time", "description": "When it was last written." }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "ref": {
+      "type": "object",
+      "description": "A reference to a collection's item, or to one value of it.",
+      "required": ["ref"],
+      "properties": {
+        "ref": { "type": "string", "pattern": "^[a-z][a-z0-9-]*/[a-z0-9][a-z0-9-]*$", "description": "`{collection}/{item id}`." },
+        "field": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$", "description": "One value of the item, by a dotted path; a reference along the way is followed." }
+      },
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "description": "On an item's own page: one value of the item shown, by a dotted path that follows references.",
+      "required": ["item"],
+      "properties": {
+        "item": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
+      },
+      "additionalProperties": false
+    },
+    "binding": {
+      "type": "object",
+      "description": "A list from a collection (DP13), in place of a hand-written list (a block's `items`), or as one entry of it (its items take that place). Fields are dotted paths that follow references.",
+      "required": ["from"],
+      "properties": {
+        "from": { "$ref": "#/$defs/id", "description": "The collection." },
+        "where": {
+          "type": "object",
+          "description": "Conditions every item meets, by field. A plain value is equality (a reference field compares by item id); else one test: in, has (a list field holds it), not, before, after (ISO dates; \"today\" is the reader's date). A value may be { \"item\": … } on an item's page.",
+          "additionalProperties": {
+            "anyOf": [
+              { "type": ["string", "number", "boolean"] },
+              { "$ref": "#/$defs/item" },
+              {
+                "type": "object",
+                "minProperties": 1,
+                "maxProperties": 1,
+                "properties": {
+                  "in": { "type": "array" },
+                  "has": {},
+                  "not": {},
+                  "before": { "type": "string" },
+                  "after": { "type": "string" }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "sort": {
+          "description": "A field, or several, to sort by; `-` first for descending.",
+          "oneOf": [{ "$ref": "#/$defs/sortField" }, { "type": "array", "items": { "$ref": "#/$defs/sortField" }, "minItems": 1 }]
+        },
+        "limit": { "type": "integer", "minimum": 1 },
+        "select": {
+          "type": "object",
+          "description": "The fields the block needs, each from an item path: { \"title\": \"name\", \"meta\": \"book.title\" }. Without it, the whole item (with `href` when the collection has item pages).",
+          "additionalProperties": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sortField": { "type": "string", "pattern": "^-?[a-zA-Z][a-zA-Z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$" },
+    "derived": {
+      "type": "object",
+      "description": "A value the site document derives from its collections (DP14, site.schema.json `derive`), by name: { \"derived\": \"book-count\" }. Allowed wherever content takes a value; it is worked out when the site loads.",
+      "required": ["derived"],
+      "properties": {
+        "derived": { "$ref": "#/$defs/id" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

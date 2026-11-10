@@ -1,0 +1,2008 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prabinpebam.github.io/design-library/schemas/blocks/1.json",
+  "title": "Core block set, version 1",
+  "description": "The standard block types every template may use (Q64). Each `$defs` entry named after a block type is that block's shape; `packages/core/render/blocks.tsx` maps each to core components. `settings.{Layout}` entries are the options of core layout components. Every word a person reads, including labels and messages, is in the block (Q64); words are plain text (backticks for inline code are the only mark); pictures are asset ids; `/layout` links point at a layout of the same template.",
+  "$defs": {
+    "sectionTitleSize": {
+      "enum": ["display", "jumbo"],
+      "description": "The section title at the top steps of the type ramp (MP16), for a brand page's section and closing titles: `display` or `jumbo`. Without it the title is the usual section size; the heading level still follows the outline."
+    },
+    "text": {
+      "description": "Words a person reads: a non-empty string, or a value not yet confirmed (DP4).",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "$ref": "#/$defs/unconfirmed"
+        }
+      ]
+    },
+    "words": {
+      "description": "Words that may be empty: a string, or a value not yet confirmed (DP4).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/unconfirmed"
+        }
+      ]
+    },
+    "unconfirmed": {
+      "description": "A value not yet confirmed (DP4): { \"unconfirmed\": \"speaker\" }. The renderer shows the template's phrase for the key (the shared file's `strings.unconfirmed`, such as \"Speaker to confirm\"); the content check counts them by file and `--release` fails on any.",
+      "type": "object",
+      "required": [
+        "unconfirmed"
+      ],
+      "properties": {
+        "unconfirmed": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "richText": {
+      "description": "Rich inline text (DP1): a plain string, or a list of strings and marked runs ({ \"text\", \"mark\" }). Marks: emphasis, strong, accent (the brand colour, Text tone accent), code, link (with href) and break (a new line, { \"mark\": \"break\" }). No markup.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/text"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/text"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "text",
+                  "mark"
+                ],
+                "properties": {
+                  "text": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "mark": {
+                    "enum": [
+                      "emphasis",
+                      "strong",
+                      "accent",
+                      "code"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "text",
+                  "mark",
+                  "href"
+                ],
+                "properties": {
+                  "text": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "mark": {
+                    "const": "link"
+                  },
+                  "href": {
+                    "$ref": "#/$defs/href"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "mark"
+                ],
+                "properties": {
+                  "mark": {
+                    "const": "break"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "richHeading": {
+      "description": "Rich inline text for a title (DP1): a plain string, or a list of strings and runs marked emphasis, accent or break. No markup.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/text"
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/text"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "text",
+                  "mark"
+                ],
+                "properties": {
+                  "text": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "mark": {
+                    "enum": [
+                      "emphasis",
+                      "accent"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "mark"
+                ],
+                "properties": {
+                  "mark": {
+                    "const": "break"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "asset": {
+      "type": "string",
+      "pattern": "^[a-z][a-zA-Z0-9-]*$",
+      "description": "A picture's id in the template's assets.json."
+    },
+    "href": {
+      "type": "string",
+      "pattern": "^(/[a-z0-9-]*(#[a-z0-9-]+)?|https://\\S+|mailto:\\S+|#[a-z0-9-]*)$",
+      "description": "`/layout` (this template), `https://…`, `mailto:…` or `#anchor`."
+    },
+    "icon": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "action": {
+      "type": "object",
+      "description": "A button in a block. It goes somewhere (`href`: a layout as \"/layout\", an anchor as \"#id\", or an address) or, in an example that leads nowhere yet, says something when pressed (`says`). At least one; with both, it goes.",
+      "required": [
+        "label"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "primary": {
+          "type": "boolean",
+          "description": "The main action: one per part at most."
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where it goes: \"/layout\" for a layout of this template (checked), \"#id\" for a heading on the page, or an address. Drawn as a link that looks like a button."
+        },
+        "says": {
+          "$ref": "#/$defs/text",
+          "description": "What the page says when the action is pressed, while it leads nowhere in an example: \"Quotes aren’t part of this example.\""
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "href"
+          ]
+        },
+        {
+          "required": [
+            "says"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": [
+        "label",
+        "href"
+      ],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "href": {
+          "$ref": "#/$defs/href"
+        },
+        "external": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "agendaSlot": {
+      "type": "object",
+      "required": [
+        "id",
+        "start",
+        "sessions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "string"
+        },
+        "dateTime": {
+          "type": "string"
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "href": {
+                "$ref": "#/$defs/href"
+              },
+              "kind": {
+                "$ref": "#/$defs/words"
+              },
+              "people": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/words"
+                }
+              },
+              "place": {
+                "$ref": "#/$defs/words"
+              },
+              "description": {
+                "$ref": "#/$defs/words"
+              },
+              "pause": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings.SiteLayout": {
+      "type": "object",
+      "required": [
+        "current"
+      ],
+      "properties": {
+        "current": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "The layout id marked current in the header."
+        },
+        "width": {
+          "enum": [
+            "wide",
+            "reading"
+          ],
+          "description": "The main column: wide (default) or a reading column."
+        },
+        "opening": {
+          "enum": [
+            "spaced",
+            "flush"
+          ],
+          "description": "Spaced (default): the page's space above the first band; flush: the first band meets the header, for an opening picture or tinted band."
+        },
+        "state": {
+          "enum": [
+            "failed",
+            "done",
+            "empty"
+          ],
+          "description": "A state layout's screen state (Q65 TP2–TP3). A state file with only settings inherits its screen's regions; blocks that know the state draw it in their own box: a form `failed` or `done`, a list `empty`."
+        }
+      },
+      "additionalProperties": false
+    },
+    "site-header": {
+      "description": "A site's header: name, mark, the places (layouts) and actions.",
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "places"
+      ],
+      "properties": {
+        "type": {
+          "const": "site-header"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "mark": {
+          "$ref": "#/$defs/icon"
+        },
+        "places": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "href"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "href": {
+                "type": "string",
+                "pattern": "^/[a-z0-9-]+$"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "actions": {
+          "$ref": "#/$defs/actions"
+        }
+      },
+      "additionalProperties": false
+    },
+    "site-footer": {
+      "description": "A site's footer: titled link sections and the small print.",
+      "type": "object",
+      "required": [
+        "type",
+        "sectionsLabel",
+        "sections",
+        "links",
+        "identity",
+        "legal"
+      ],
+      "properties": {
+        "type": {
+          "const": "site-footer"
+        },
+        "sectionsLabel": {
+          "$ref": "#/$defs/text"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "heading",
+              "links"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "heading": {
+                "$ref": "#/$defs/text"
+              },
+              "links": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/link"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        },
+        "identity": {
+          "$ref": "#/$defs/text"
+        },
+        "legal": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "hero": {
+      "description": "An opening: eyebrow, title, lead, actions, a note and a picture.",
+      "type": "object",
+      "required": [
+        "type",
+        "title"
+      ],
+      "properties": {
+        "type": {
+          "const": "hero"
+        },
+        "eyebrow": {
+          "$ref": "#/$defs/text"
+        },
+        "title": {
+          "$ref": "#/$defs/richHeading"
+        },
+        "lead": {
+          "$ref": "#/$defs/richText"
+        },
+        "actions": {
+          "$ref": "#/$defs/actions"
+        },
+        "note": {
+          "$ref": "#/$defs/text"
+        },
+        "picture": {
+          "$ref": "#/$defs/asset"
+        },
+        "layout": {
+          "enum": [
+            "split",
+            "stacked"
+          ]
+        },
+        "standalone": {
+          "description": "A statement meant to be read on its own (a brand opening): the page presents it framed. Leave it out on task and reference pages, whose title and intro sit with their content (Q91).",
+          "type": "boolean"
+        },
+        "media": {
+          "description": "Slot hero.media (DP11): blocks in the picture's place when there's no picture. Takes gallery, or a template's own block.",
+          "$ref": "#/$defs/slot"
+        },
+        "decoration": {
+          "description": "Slot hero.decoration (MP9): a template's own blocks drawn over the opening's picture as decoration (shapes, marks), hidden from screen readers. Only with a picture.",
+          "$ref": "#/$defs/slot"
+        },
+        "reserve": {
+          "description": "Lines of room kept for the title and the lead (MP7), so a series of pages (a project's, a year's) keeps one opening height. Longer text still grows the opening.",
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            },
+            "lead": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "stats": {
+      "description": "Figures in a grid under a heading.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "stats"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "value": {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "unit": {
+                "$ref": "#/$defs/words"
+              },
+              "description": {
+                "$ref": "#/$defs/words"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cards": {
+      "description": "Cards in a grid under a heading.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "cards"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "max": {
+          "enum": [
+            2,
+            3,
+            4
+          ]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "description"
+            ],
+            "properties": {
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "eyebrow": {
+                "$ref": "#/$defs/words"
+              },
+              "description": {
+                "$ref": "#/$defs/text"
+              },
+              "picture": {
+                "$ref": "#/$defs/asset"
+              },
+              "meta": {
+                "$ref": "#/$defs/words"
+              },
+              "href": {
+                "$ref": "#/$defs/href"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "empty": {
+          "type": "object",
+          "description": "The list with nothing in it (Q65 TP3): why it is empty and what to do, drawn in the list's own box in the screen state `empty`.",
+          "required": [
+            "reason",
+            "title",
+            "text"
+          ],
+          "properties": {
+            "reason": {
+              "enum": [
+                "first-use",
+                "cleared",
+                "no-results",
+                "no-access",
+                "done"
+              ]
+            },
+            "title": {
+              "$ref": "#/$defs/text"
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            },
+            "silhouette": {
+              "enum": [
+                "list",
+                "tiles",
+                "table"
+              ]
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/link"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "quote": {
+      "description": "Someone's words, large and centred.",
+      "type": "object",
+      "required": [
+        "type",
+        "text",
+        "name",
+        "role"
+      ],
+      "properties": {
+        "type": {
+          "const": "quote"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "role": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "points": {
+      "description": "A bulleted list under a heading.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "points"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "details": {
+      "description": "Terms and their details under a heading.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "details"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "term",
+              "details"
+            ],
+            "properties": {
+              "term": {
+                "$ref": "#/$defs/text"
+              },
+              "details": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "form": {
+      "description": "A form that sends once, then says what happens next.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "fields",
+        "submit",
+        "sent",
+        "choose",
+        "enter",
+        "pick"
+      ],
+      "properties": {
+        "type": {
+          "const": "form"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "kind"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "kind": {
+                "enum": [
+                  "text",
+                  "email",
+                  "tel",
+                  "password",
+                  "search",
+                  "long",
+                  "choice"
+                ]
+              },
+              "hint": {
+                "$ref": "#/$defs/words"
+              },
+              "optional": {
+                "type": "boolean"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/text"
+                }
+              },
+              "answer": {
+                "description": "The failed screen state's kept answer: shown in the field when the form failed; required fields without one are marked at fault.",
+                "type": "string"
+              },
+              "invalid": {
+                "description": "With answer: the words under the field when that kept answer is the fault.",
+                "$ref": "#/$defs/text"
+              }
+            },
+            "additionalProperties": false,
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "choice"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "options"
+              ]
+            }
+          }
+        },
+        "submit": {
+          "$ref": "#/$defs/text"
+        },
+        "sent": {
+          "$ref": "#/$defs/text"
+        },
+        "choose": {
+          "$ref": "#/$defs/text",
+          "description": "The prompt in an empty choice: \"Choose one\"."
+        },
+        "enter": {
+          "$ref": "#/$defs/text",
+          "description": "The message for an empty required text field; {field} is its label in lower case: \"Enter {field}.\""
+        },
+        "pick": {
+          "$ref": "#/$defs/text",
+          "description": "The message for an empty required choice: \"Choose {field}.\""
+        },
+        "links": {
+          "type": "array",
+          "description": "Links under the button: another way through the flow (\"Forgot your password?\", \"Create an account\").",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        },
+        "error": {
+          "$ref": "#/$defs/text",
+          "description": "Why a send was refused and how to fix it: revealed above the fields, which keep their values, in the screen state `failed` (Q65 TP2)."
+        },
+        "outcome": {
+          "type": "object",
+          "description": "What the form becomes in its own box once it is sent (Q65 TP2): shown in place of the form, through Morph, and as the screen state `done`. Without it, a confirmation takes the button's place.",
+          "required": [
+            "title",
+            "text",
+            "links"
+          ],
+          "properties": {
+            "eyebrow": {
+              "$ref": "#/$defs/text"
+            },
+            "title": {
+              "$ref": "#/$defs/text"
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            },
+            "links": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/link"
+              }
+            },
+            "note": {
+              "$ref": "#/$defs/text"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "cta": {
+      "description": "A closing call to action: the words and the actions side by side.",
+      "type": "object",
+      "required": [
+        "type",
+        "title",
+        "lead",
+        "actions"
+      ],
+      "properties": {
+        "type": {
+          "const": "cta"
+        },
+        "title": {
+          "$ref": "#/$defs/richHeading"
+        },
+        "lead": {
+          "$ref": "#/$defs/richText"
+        },
+        "actions": {
+          "$ref": "#/$defs/actions"
+        },
+        "note": {
+          "$ref": "#/$defs/text"
+        },
+        "standalone": {
+          "description": "A closing invitation meant to stand on its own (a marketing or editorial page's last word): the page frames it. Leave it out on task pages (Q91).",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gallery": {
+      "description": "Pictures in a grid.",
+      "type": "object",
+      "required": [
+        "type",
+        "label",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "gallery"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "layout": {
+          "enum": [
+            "standard",
+            "quilted",
+            "masonry"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/asset"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "illustration": {
+      "description": "Drawn art from the template's assets (MP22): an asset marked `illustration` drawn inline by Illustration, its colours from tokens in every scheme, its size groups by its own width, its motion as the asset's `play` says. Its `alt` names it; a decorative asset is skipped by screen readers.",
+      "type": "object",
+      "required": ["type", "picture"],
+      "properties": {
+        "type": { "const": "illustration" },
+        "picture": { "$ref": "#/$defs/asset" },
+        "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frame, over the asset's own ratio; `natural` takes the drawing's viewBox." }
+      },
+      "additionalProperties": false
+    },
+    "breadcrumbs": {
+      "description": "Where the page sits: home, each level, the page itself last without a link.",
+      "type": "object",
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "breadcrumbs"
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "label"
+            ],
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "href": {
+                "$ref": "#/$defs/href"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "byline": {
+      "description": "Who wrote it and when, under an article's title; `picture` names the author's portrait in assets.json.",
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "href",
+        "date",
+        "read"
+      ],
+      "properties": {
+        "type": {
+          "const": "byline"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "href": {
+          "$ref": "#/$defs/href"
+        },
+        "date": {
+          "$ref": "#/$defs/text"
+        },
+        "read": {
+          "$ref": "#/$defs/text"
+        },
+        "picture": {
+          "$ref": "#/$defs/asset"
+        }
+      },
+      "additionalProperties": false
+    },
+    "person": {
+      "description": "A person, large: name, role and a few lines; `picture` names their portrait in assets.json, `portrait` alone shows their initials.",
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "role",
+        "bio"
+      ],
+      "properties": {
+        "type": {
+          "const": "person"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "role": {
+          "$ref": "#/$defs/text"
+        },
+        "bio": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "portrait": {
+          "type": "boolean"
+        },
+        "picture": {
+          "$ref": "#/$defs/asset"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prose": {
+      "description": "An article's body as structured items: no markup.",
+      "type": "object",
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "prose"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "heading",
+                  "text",
+                  "quote",
+                  "picture",
+                  "list",
+                  "code"
+                ]
+              }
+            },
+            "oneOf": [
+              {
+                "properties": {
+                  "kind": {
+                    "const": "heading"
+                  },
+                  "text": {
+                    "$ref": "#/$defs/richHeading"
+                  }
+                },
+                "required": [
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "text"
+                  },
+                  "text": {
+                    "$ref": "#/$defs/richText"
+                  }
+                },
+                "required": [
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "quote"
+                  },
+                  "text": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "name": {
+                    "$ref": "#/$defs/words"
+                  }
+                },
+                "required": [
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "picture"
+                  },
+                  "picture": {
+                    "$ref": "#/$defs/asset"
+                  },
+                  "caption": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "decoration": {
+                    "description": "Slot image.decoration (MP9): a template's own blocks drawn over the picture as decoration (shapes, marks), hidden from screen readers.",
+                    "$ref": "#/$defs/slot"
+                  }
+                },
+                "required": [
+                  "picture",
+                  "caption"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "list"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/text"
+                    }
+                  }
+                },
+                "required": [
+                  "items"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "code"
+                  },
+                  "label": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "code"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "posts": {
+      "description": "A list of posts, newest first, each a row card, with paging.",
+      "type": "object",
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "posts"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "description",
+              "meta",
+              "href"
+            ],
+            "properties": {
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "eyebrow": {
+                "$ref": "#/$defs/words"
+              },
+              "description": {
+                "$ref": "#/$defs/text"
+              },
+              "meta": {
+                "$ref": "#/$defs/text"
+              },
+              "picture": {
+                "$ref": "#/$defs/asset"
+              },
+              "href": {
+                "$ref": "#/$defs/href"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pages": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pagingLabel": {
+          "$ref": "#/$defs/text",
+          "description": "Names the paging: \"Older articles\". Required with more than one page."
+        },
+        "empty": {
+          "type": "object",
+          "description": "The list with nothing in it (Q65 TP3): why it is empty and what to do, drawn in the list's own box in the screen state `empty`.",
+          "required": [
+            "reason",
+            "title",
+            "text"
+          ],
+          "properties": {
+            "reason": {
+              "enum": [
+                "first-use",
+                "cleared",
+                "no-results",
+                "no-access",
+                "done"
+              ]
+            },
+            "title": {
+              "$ref": "#/$defs/text"
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            },
+            "silhouette": {
+              "enum": [
+                "list",
+                "tiles",
+                "table"
+              ]
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/link"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "required": [
+          "pages"
+        ],
+        "properties": {
+          "pages": {
+            "minimum": 2
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "pagingLabel"
+        ]
+      }
+    },
+    "people": {
+      "description": "People as a grid of portraits with name and role; each item's `picture` names its portrait in assets.json (initials when there's none).",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "people"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "role"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/text"
+              },
+              "role": {
+                "$ref": "#/$defs/text"
+              },
+              "href": {
+                "$ref": "#/$defs/href"
+              },
+              "picture": {
+                "$ref": "#/$defs/asset"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "schedule": {
+      "description": "A programme over one or more days: a tab per day, each an agenda.",
+      "type": "object",
+      "required": [
+        "type",
+        "days",
+        "daysLabel"
+      ],
+      "properties": {
+        "type": {
+          "const": "schedule"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "days": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "title",
+              "slots"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "slots": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/agendaSlot"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "daysLabel": {
+          "$ref": "#/$defs/text",
+          "description": "Names the day tabs: \"Days\"."
+        }
+      },
+      "additionalProperties": false
+    },
+    "agenda": {
+      "description": "One agenda under a heading.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "label",
+        "slots"
+      ],
+      "properties": {
+        "type": {
+          "const": "agenda"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "label": {
+          "$ref": "#/$defs/text"
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/agendaSlot"
+          }
+        },
+        "empty": {
+          "type": "object",
+          "description": "The list with nothing in it (Q65 TP3): why it is empty and what to do, drawn in the list's own box in the screen state `empty`.",
+          "required": [
+            "reason",
+            "title",
+            "text"
+          ],
+          "properties": {
+            "reason": {
+              "enum": [
+                "first-use",
+                "cleared",
+                "no-results",
+                "no-access",
+                "done"
+              ]
+            },
+            "title": {
+              "$ref": "#/$defs/text"
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            },
+            "silhouette": {
+              "enum": [
+                "list",
+                "tiles",
+                "table"
+              ]
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/link"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "tickets": {
+      "description": "Choose a ticket and how many; the total follows; then a hold is confirmed in place.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "currency",
+        "options",
+        "submit",
+        "sent",
+        "labels"
+      ],
+      "properties": {
+        "type": {
+          "const": "tickets"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "options": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "value",
+              "label",
+              "price",
+              "description"
+            ],
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "$ref": "#/$defs/text"
+              },
+              "price": {
+                "type": "number",
+                "minimum": 0
+              },
+              "description": {
+                "$ref": "#/$defs/text"
+              },
+              "meta": {
+                "$ref": "#/$defs/words"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "submit": {
+          "$ref": "#/$defs/text"
+        },
+        "sent": {
+          "$ref": "#/$defs/text"
+        },
+        "labels": {
+          "type": "object",
+          "required": [
+            "ticket",
+            "count",
+            "tickets",
+            "total",
+            "line"
+          ],
+          "properties": {
+            "ticket": {
+              "$ref": "#/$defs/text"
+            },
+            "count": {
+              "$ref": "#/$defs/text"
+            },
+            "tickets": {
+              "$ref": "#/$defs/text"
+            },
+            "total": {
+              "$ref": "#/$defs/text"
+            },
+            "line": {
+              "$ref": "#/$defs/text",
+              "description": "One line of the order: \"{count} × {ticket}\"."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "questions": {
+      "description": "Common questions, each opened on its own.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "questions"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "text"
+            ],
+            "properties": {
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "text": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "slot": {
+      "description": "Blocks a block holds (DP11 named slots). Each is a block by its type; which types a slot takes is listed with the slot, and a template's own (namespaced) block types are taken in every slot.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string", "pattern": "^([a-z][a-z0-9-]*\\.)?[a-z][a-z0-9-]*$" }
+        }
+      }
+    },
+    "split": {
+      "description": "Two columns of blocks side by side, stacking when narrow: slots split.start and split.end. Each takes content blocks (prose, points, details, quote, stats, cards, gallery, people, questions, agenda, schedule, posts, person, byline, alert, empty, form, search, settings, tickets) or a template's own.",
+      "type": "object",
+      "required": ["type", "start", "end"],
+      "properties": {
+        "type": { "const": "split" },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": { "$ref": "#/$defs/text" },
+        "intro": { "$ref": "#/$defs/text" },
+        "ratio": { "enum": ["2:1", "3:2", "1:2", "2:3", "aside"], "description": "The columns' shares (Grid ratio); equal without it." },
+        "start": { "$ref": "#/$defs/slot" },
+        "end": { "$ref": "#/$defs/slot" }
+      },
+      "additionalProperties": false
+    },
+    "grid": {
+      "description": "Blocks in equal columns: slot grid.items, taking the same content blocks as split.",
+      "examples": [{ "type": "grid", "heading": "Ways to visit", "max": 3, "items": [{ "type": "points", "items": ["Open every day from nine"] }, { "type": "points", "items": ["Step-free entrance on the side street"] }, { "type": "points", "items": ["Bicycle racks by the door"] }] }],
+      "type": "object",
+      "required": ["type", "items"],
+      "properties": {
+        "type": { "const": "grid" },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": { "$ref": "#/$defs/text" },
+        "intro": { "$ref": "#/$defs/text" },
+        "max": { "enum": [2, 3, 4], "description": "The most columns; 2 by default." },
+        "items": { "$ref": "#/$defs/slot" }
+      },
+      "additionalProperties": false
+    },
+    "alert": {
+      "description": "A message about the screen or a part of it: what happened and what to do, in its tone. Errors that block the person, a warning before something lasting, a success that needs no page of its own.",
+      "examples": [{ "type": "alert", "tone": "warning", "title": "Your changes aren’t saved yet", "text": "Save before you leave this page, or they’ll be lost." }],
+      "type": "object",
+      "required": [
+        "type",
+        "tone",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "alert"
+        },
+        "tone": {
+          "enum": [
+            "info",
+            "success",
+            "warning",
+            "error"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "description": "A whole page that says where the person is when the screen they wanted can't be shown: not found, an error on our side, down for maintenance, sold out, sent. A code or eyebrow, a title, why, and the ways on.",
+      "type": "object",
+      "required": [
+        "type",
+        "title",
+        "text",
+        "links"
+      ],
+      "properties": {
+        "type": {
+          "const": "status"
+        },
+        "eyebrow": {
+          "$ref": "#/$defs/text",
+          "description": "A short label above the title: \"Error 404\", \"Order 4417\"."
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "links": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        },
+        "note": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "additionalProperties": false
+    },
+    "empty": {
+      "description": "A list, search or place with nothing in it yet: why it's empty and what to do, in the content's own place.",
+      "examples": [{ "type": "empty", "reason": "first-use", "title": "No saved items yet", "text": "Save something you want to come back to and it appears here.", "silhouette": "list" }],
+      "type": "object",
+      "required": [
+        "type",
+        "reason",
+        "title",
+        "text"
+      ],
+      "properties": {
+        "type": {
+          "const": "empty"
+        },
+        "reason": {
+          "enum": [
+            "first-use",
+            "cleared",
+            "no-results",
+            "no-access",
+            "done"
+          ]
+        },
+        "title": {
+          "$ref": "#/$defs/text"
+        },
+        "text": {
+          "$ref": "#/$defs/text"
+        },
+        "silhouette": {
+          "enum": [
+            "list",
+            "tiles",
+            "table"
+          ]
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "search": {
+      "description": "Search results with their query: the person can change the words and the list narrows to the results that match; when none do, an empty state says why and what to try.",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "label",
+        "button",
+        "query",
+        "summary",
+        "results",
+        "none"
+      ],
+      "properties": {
+        "type": {
+          "const": "search"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "label": {
+          "$ref": "#/$defs/text",
+          "description": "The search field's label: \"Search the site\"."
+        },
+        "button": {
+          "$ref": "#/$defs/text"
+        },
+        "query": {
+          "type": "string",
+          "description": "The words already searched for."
+        },
+        "summary": {
+          "$ref": "#/$defs/text",
+          "description": "Above the results; {count} and {query} are filled in: \"{count} results for “{query}”\"."
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title",
+              "href",
+              "description"
+            ],
+            "properties": {
+              "title": {
+                "$ref": "#/$defs/text"
+              },
+              "href": {
+                "$ref": "#/$defs/href"
+              },
+              "description": {
+                "$ref": "#/$defs/text"
+              },
+              "eyebrow": {
+                "$ref": "#/$defs/text"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "none": {
+          "type": "object",
+          "required": [
+            "title",
+            "text"
+          ],
+          "description": "What shows when nothing matches; {query} is filled in.",
+          "properties": {
+            "title": {
+              "$ref": "#/$defs/text"
+            },
+            "text": {
+              "$ref": "#/$defs/text"
+            },
+            "links": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/link"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "settings": {
+      "description": "Settings in named groups: on/off settings as switches and one-of-several settings as choices, each saved as soon as it changes (one confirmation per change).",
+      "type": "object",
+      "required": [
+        "type",
+        "heading",
+        "groups",
+        "saved"
+      ],
+      "properties": {
+        "type": {
+          "const": "settings"
+        },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": {
+          "$ref": "#/$defs/text"
+        },
+        "intro": {
+          "$ref": "#/$defs/text"
+        },
+        "saved": {
+          "$ref": "#/$defs/text",
+          "description": "Said after each change; {setting} is its label: \"{setting} saved.\""
+        },
+        "groups": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "heading",
+              "items"
+            ],
+            "properties": {
+              "heading": {
+                "$ref": "#/$defs/text"
+              },
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "label",
+                    "kind"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9-]*$"
+                    },
+                    "label": {
+                      "$ref": "#/$defs/text"
+                    },
+                    "description": {
+                      "$ref": "#/$defs/text"
+                    },
+                    "kind": {
+                      "enum": [
+                        "switch",
+                        "choice"
+                      ]
+                    },
+                    "on": {
+                      "type": "boolean",
+                      "description": "A switch: on to start with."
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "A choice: the option chosen to start with."
+                    },
+                    "options": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/$defs/text"
+                      }
+                    }
+                  },
+                  "additionalProperties": false,
+                  "if": {
+                    "properties": {
+                      "kind": {
+                        "const": "choice"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "options",
+                      "value"
+                    ]
+                  }
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

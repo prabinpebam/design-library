@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://prabinpebam.github.io/design-library/schemas/page/1.json",
+  "title": "Page document, version 1",
+  "description": "One page of a data-driven site (DP9, DR1, DR2, DR4; ID12): its address, what the window and search engines read about it, its layout and its ordered sections, each a block (blocks.schema.json, by its `type`) with an optional `anchor`. The site document (site.schema.json) holds what pages share. A template layout's content file stays valid as it is; this is a separate document. Pure data: no markup, styles or code.",
+  "type": "object",
+  "required": ["pageVersion", "id", "route", "title", "sections"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "pageVersion": { "const": 1, "description": "The page document's shape version." },
+    "id": { "$ref": "#/$defs/id", "description": "Unique in the site; the site document names pages by it (`home`, `notFound`)." },
+    "route": { "type": "string", "pattern": "^/(([a-z0-9-]+|:id)(/([a-z0-9-]+|:id))*)?$", "description": "The page's address: `/` for home, else lowercase parts after a slash. With `collection`, one part is `:id` (`/readings/:id`): the page is each item's own, at the item's id." },
+    "collection": { "$ref": "#/$defs/id", "description": "The collection whose items this page shows one at a time; its route holds `:id`. Values in the page read the item with { \"item\": \"title\" }, and a reference to one of its items gets the item's address as `href`." },
+    "title": {
+      "description": "The page's name: `{page}` in the site's title pattern. On an item's page, the item's own value: { \"item\": \"title\" }.",
+      "oneOf": [{ "type": "string", "minLength": 1 }, { "$ref": "https://prabinpebam.github.io/design-library/schemas/collection/1.json#/$defs/item" }]
+    },
+    "windowTitle": { "type": "string", "minLength": 1, "description": "The whole window title, when the pattern doesn't fit (the home page's)." },
+    "description": { "description": "One or two sentences for search results and link previews (`meta name=description`); on an item's page it may read the item.", "oneOf": [{ "type": "string", "minLength": 1 }, { "$ref": "https://prabinpebam.github.io/design-library/schemas/collection/1.json#/$defs/item" }] },
+    "picture": { "description": "The picture (an asset id) a link preview shows; on an item's page it may read the item.", "oneOf": [{ "type": "string", "pattern": "^[a-z][a-zA-Z0-9-]*$" }, { "$ref": "https://prabinpebam.github.io/design-library/schemas/collection/1.json#/$defs/item" }] },
+    "canonical": { "type": "string", "minLength": 1, "description": "The address search engines should treat as this page's own, when it's reachable at more than one." },
+    "hidden": { "type": "boolean", "default": false, "description": "Kept out of search engines (`noindex`); still reachable by its address." },
+    "current": { "type": "string", "pattern": "^[a-z0-9-]*$", "description": "Which navigation place this page belongs to, by the place's route without its slash (`readings`); defaults to the first part of the page's route." },
+    "layout": { "type": "string", "description": "A core layout (`SiteLayout`) or one the site registers; defaults to the site's." },
+    "settings": { "type": "object", "description": "The layout's options for this page, over the site's (SiteLayout: `width`, `opening`)." },
+    "transition": { "enum": ["none", "fade"], "description": "How this page replaces the one before it, over the site's `transition` (DP17). Reduced motion always swaps at once." },
+    "between": { "enum": ["top", "keep"], "default": "top", "description": "With `collection`: moving from one of this page's items to another (one year of an archive to the next) lands at the top (`top`, default) or keeps the place (`keep`): nothing scrolls, focus stays on the link used and the new page's heading is announced (Router `scroll`, MP2). Any other change lands at the top." },
+    "sections": {
+      "type": "array",
+      "description": "The page's sections in order, top to bottom. Reordering them is reordering the page.",
+      "items": { "$ref": "#/$defs/section" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "section": {
+      "type": "object",
+      "required": ["type"],
+      "description": "A block, as blocks.schema.json defines its `type` (or a site's own, namespaced), plus an optional `anchor`: the id a link such as `/visit#hours` lands on. The block is checked without `anchor`.",
+      "properties": {
+        "type": { "type": "string", "pattern": "^([a-z][a-z0-9-]*\\.)?[a-z][a-z0-9-]*$" },
+        "anchor": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}
