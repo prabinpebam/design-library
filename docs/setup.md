@@ -231,6 +231,8 @@ Template sites (Q63, F15.76): the same server serves a second entry, `site.html`
 
 Templates as JSON (Q64, F15.78): the website templates live in the workspace `packages/templates` (listed explicitly in the root `package.json`; `tools/validate-setup.mjs` asserts the list), one folder per template with `template.json`, `content.schema.json`, `content/*.json`, `assets.json` and `assets/`. They render through `@design-library/core/render` (`TemplateView`). `npm run check:content` validates them with the `ajv` dev dependency (JSON Schema 2020-12, installed 2026-11-08 through the approved npm proxy). A new template folder or core file needs a library server restart. Template tokens (`packages/templates/{template}/tokens/tokens.json`) are built into `tokens.css` by `node ./tools/template-tokens.mjs`, part of `npm run tokens` and `tokens:check`; `npm run content:schemas` regenerates the application templates' content schemas from their `types.ts` (ts-json-schema-generator through npx).
 
+**Stale module (worker 66, 2026-11-10):** the dev server's file watcher can miss an edit and keep serving the old module (seen on `Rating.tsx`). If a change doesn't show after a reload, touch the file (`(Get-Item path).LastWriteTime = Get-Date`) before suspecting the code; restart the server only when a new file was added.
+
 | Lifecycle field | Current evidence |
 | --- | --- |
 | Review URL | `http://127.0.0.1:8766/` |
