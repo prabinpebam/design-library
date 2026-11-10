@@ -64,6 +64,42 @@
   }
 
   /*
+   * Decoration and under layers (MP8, ID26): one cell holds under, the frame and decoration, painted in that order
+   * (all positioned, no z-index). Each layer is the picture's size and never sizes the cell (size containment); it
+   * isn't clipped, so its shapes may spill past the picture's edge while the frame keeps its own clip. It takes no
+   * pointer, so hover and focus reach the picture and the link or card around it.
+   */
+  [data-dl='image-layers'] {
+    display: grid;
+    grid-template-rows: 100%;
+    inline-size: 100%;
+  }
+
+  /* When a container sizes the picture (a card's media), the frame fills the cell like an undecorated picture would. */
+  [data-dl='image-layers'] > [data-dl='image'] {
+    block-size: 100%;
+  }
+
+  [data-dl='image-layers'] > * {
+    grid-area: 1 / 1;
+    position: relative;
+  }
+
+  [data-dl='image-layers'] > :is([data-dl-part='decoration'], [data-dl-part='under']) {
+    contain: size;
+    pointer-events: none;
+    color: var(--c-image-decoration);
+  }
+
+  [data-dl='image-layers'] > :is([data-dl-part='decoration'], [data-dl-part='under']) > svg {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+  }
+
+  /*
    * Treatments (IP31, DP3's picture `treatment`): `data-tone` at rest, `data-tone-active` while the picture, or the link,
    * button or card it sits in (or any element marked data-tone-area, such as a player's stage), is hovered or focused. Greyscale is a filter on the picture; duotone is the picture in
    * grey under a multiply layer of `--c-image-duotone` (light parts take the colour, dark parts stay near black). Both

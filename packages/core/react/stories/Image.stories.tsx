@@ -1,3 +1,4 @@
+import { Card } from '../compounds/Card';
 import { Image } from '../fundamentals/Image';
 import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
@@ -13,6 +14,28 @@ import seedlingDark from './media/spot/seedling-dark.svg?url';
 import seedlingDarkMore from './media/spot/seedling-dark-more.svg?url';
 
 const lighthouseAlt = 'A striped lighthouse on a green headland above the sea.';
+/** A generic shape set (MP8), the library's own art: drawn in currentColor on a 100-unit square, spilling past it. */
+const dots = (
+  <svg viewBox="0 0 100 100" focusable="false">
+    {Array.from({ length: 16 }, (_, i) => (
+      <circle key={i} cx={78 + (i % 4) * 7} cy={-8 + Math.floor(i / 4) * 7} r="1.8" fill="currentColor" />
+    ))}
+    <circle cx="8" cy="92" r="10" fill="none" stroke="currentColor" strokeWidth="2.5" />
+  </svg>
+);
+const dotsInside = (
+  <svg viewBox="0 0 100 100" preserveAspectRatio="xMaxYMin meet" focusable="false">
+    {Array.from({ length: 16 }, (_, i) => (
+      <circle key={i} cx={74 + (i % 4) * 6} cy={8 + Math.floor(i / 4) * 6} r="1.6" fill="currentColor" />
+    ))}
+  </svg>
+);
+const blob = (
+  <svg viewBox="0 0 100 100" focusable="false">
+    <circle cx="-2" cy="104" r="26" fill="currentColor" opacity="0.35" />
+    <rect x="80" y="-8" width="26" height="26" rx="6" fill="currentColor" opacity="0.2" />
+  </svg>
+);
 
 export default {
   component: 'Image',
@@ -168,6 +191,32 @@ export default {
   "alt": "The shop’s lit window on a cobbled quay at dusk: …"
 }`,
       render: () => <ScreenPreview src="site.html?demo=site#/" title="Harbour Books, whose opening picture has a dark file" caption="Harbour’s home: the opening picture follows the preview’s light or dark." />,
+    },
+    {
+      title: 'Shapes over and under a picture',
+      description:
+        'decoration draws shapes over the picture and under draws them behind it, both the picture’s own size: an SVG in either fills it, and shapes drawn outside its 0–100 box spill past the edge while the picture keeps its corners. Shapes in currentColor take the decoration colour (the accent, a brand setting). Screen readers skip them, the pointer passes through them, and the layout around the picture doesn’t move.',
+      code: `<Image ratio="square" src={…} alt="…"
+  under={<svg viewBox="0 0 100 100"><circle cx="-2" cy="104" r="26" fill="currentColor" opacity="0.35" /></svg>}
+  decoration={<svg viewBox="0 0 100 100">{/* dots at the top corner, a ring at the bottom */}</svg>} />`,
+      render: () => (
+        <Grid max={3}>
+          <Image ratio="square" src={scenes[2].src} alt={scenes[2].alt} caption="Under: shapes behind" under={blob} />
+          <Image ratio="square" src={scenes[2].src} alt={scenes[2].alt} caption="Decoration: shapes over" decoration={dots} />
+          <Image ratio="square" src={scenes[2].src} alt={scenes[2].alt} caption="Both" under={blob} decoration={dots} />
+        </Grid>
+      ),
+    },
+    {
+      title: 'Decorated, inside a card you can focus',
+      description:
+        'The same picture as a card’s media: the card stays one link, its focus ring stays whole, and the grey-until-pointed-at look still turns to colour on hover or focus, through the shapes. A card keeps its own corners, so here the shapes stay inside it.',
+      code: `<Card href="/walks/hills" title="Morning over the hills" media={<Image ratio="wide" treatment={{ rest: 'greyscale', active: 'none' }} decoration={dots} src={…} alt="" />} />`,
+      render: () => (
+        <Grid max={2}>
+          <Card href="#/image" eyebrow="Walks" title="Morning over the hills" description="A two-hour loop that starts before sunrise." media={<Image ratio="wide" rounded={false} treatment={{ rest: 'greyscale', active: 'none' }} decoration={dotsInside} src={scenes[0].src} alt="" />} />
+        </Grid>
+      ),
     },
   ],
 } satisfies StoryFile;

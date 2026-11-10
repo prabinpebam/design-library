@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { Icon } from './Icon';
 import { useRegionScheme, type RegionScheme } from '../behaviour/region-scheme';
 import type { DataAttributes } from '../types';
@@ -47,6 +47,15 @@ export interface ImageProps extends DataAttributes {
   dark?: string | PictureSource;
   /** Files for more contrast (MP17), in light and in dark. Falls back: dark and more → `contrast.dark` → `dark` → `src`; light and more → `contrast.light` → `src`. */
   contrast?: { light?: string | PictureSource; dark?: string | PictureSource };
+  /**
+   * Shapes drawn over the picture (MP8): a brand's marks, dots or a frame. The layer is the picture's own size; an SVG
+   * in it fills it, and shapes drawn outside its viewBox spill past the picture's edge (the picture keeps its corners).
+   * Shapes in `currentColor` take `--c-image-decoration` (the accent). Hidden from screen readers, never takes the
+   * pointer or focus, and never changes the layout; describe the picture in `alt` as before.
+   */
+  decoration?: ReactNode;
+  /** The same as `decoration`, drawn behind the picture: seen only where it spills past the picture's edge. */
+  under?: ReactNode;
 }
 
 /** One file of a picture: its address and, optionally, other widths of it. */
@@ -122,6 +131,8 @@ export function Image({
   treatment,
   dark,
   contrast,
+  decoration,
+  under,
   ...data
 }: ImageProps) {
   const frameRef = useRef<HTMLSpanElement>(null);
@@ -199,11 +210,32 @@ export function Image({
     </span>
   );
 
-  if (!caption && !credit) return frame(data);
+  // MP8: without layers the frame is the root, as before; with them, one cell holds under, frame and decoration in that order.
+  const layered = (decoration != null && decoration !== false) || (under != null && under !== false);
+  const decorated = (attrs: DataAttributes) =>
+    layered ? (
+      <span {...attrs} data-dl="image-layers">
+        {under != null && under !== false && (
+          <span data-dl-part="under" aria-hidden="true">
+            {under}
+          </span>
+        )}
+        {frame({})}
+        {decoration != null && decoration !== false && (
+          <span data-dl-part="decoration" aria-hidden="true">
+            {decoration}
+          </span>
+        )}
+      </span>
+    ) : (
+      frame(attrs)
+    );
+
+  if (!caption && !credit) return decorated(data);
 
   return (
     <figure {...data} data-dl="figure">
-      {frame({})}
+      {decorated({})}
       <figcaption data-dl-part="caption">
         {caption}
         {credit && <span data-dl-part="credit">{credit}</span>}

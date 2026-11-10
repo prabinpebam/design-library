@@ -113,6 +113,16 @@
           "name": "contrast",
           "type": "{ light?: string | PictureSource",
           "description": "Files for more contrast (MP17), in light and in dark. Falls back: dark and more → `contrast.dark` → `dark` → `src`; light and more → `contrast.light` → `src`."
+        },
+        {
+          "name": "decoration",
+          "type": "ReactNode",
+          "description": "Shapes drawn over the picture (MP8): a brand's marks, dots or a frame. The layer is the picture's own size; an SVG in it fills it, and shapes drawn outside its viewBox spill past the picture's edge (the picture keeps its corners). Shapes in `currentColor` take `--c-image-decoration` (the accent). Hidden from screen readers, never takes the pointer or focus, and never changes the layout; describe the picture in `alt` as before."
+        },
+        {
+          "name": "under",
+          "type": "ReactNode",
+          "description": "The same as `decoration`, drawn behind the picture: seen only where it spills past the picture's edge."
         }
       ]
     },
