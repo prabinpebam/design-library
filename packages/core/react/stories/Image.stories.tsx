@@ -1,5 +1,6 @@
 import { Card } from '../compounds/Card';
 import { Image } from '../fundamentals/Image';
+import type { PictureReveal } from '../behaviour/reveal';
 import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
 import { ContextMatrix } from '../compounds/ContextMatrix';
@@ -14,6 +15,38 @@ import seedlingDark from './media/spot/seedling-dark.svg?url';
 import seedlingDarkMore from './media/spot/seedling-dark-more.svg?url';
 
 const lighthouseAlt = 'A striped lighthouse on a green headland above the sea.';
+/** MP11: two reveals drawn with the one hook. A wipe from the start edge… */
+const wipe: PictureReveal = ({ context, width, height, progress, paint }) => {
+  paint('picture');
+  context.save();
+  context.beginPath();
+  context.rect(0, 0, width * progress, height);
+  context.clip();
+  paint('alternate');
+  context.restore();
+};
+/** …and a stipple: dots of the pair grow in a scattered order until they cover the picture. */
+const hash = (i: number) => {
+  const s = Math.sin(i * 127.1) * 43758.5453;
+  return s - Math.floor(s);
+};
+const stipple: PictureReveal = ({ context, width, height, progress, paint }) => {
+  paint('picture');
+  const cell = 14;
+  context.save();
+  context.beginPath();
+  for (let y = 0, i = 0; y < height + cell; y += cell)
+    for (let x = 0; x < width + cell; x += cell, i++) {
+      const grow = Math.min(1, Math.max(0, (progress * 1.6 - hash(i) * 0.6) / 1));
+      if (grow > 0) {
+        context.moveTo(x + cell * 0.75 * grow, y);
+        context.arc(x, y, cell * 0.75 * grow, 0, Math.PI * 2);
+      }
+    }
+  context.clip();
+  paint('alternate');
+  context.restore();
+};
 /** A generic shape set (MP8), the library's own art: drawn in currentColor on a 100-unit square, spilling past it. */
 const dots = (
   <svg viewBox="0 0 100 100" focusable="false">
@@ -230,6 +263,24 @@ export default {
         <Grid max={2}>
           <Image src={lighthouseDay} alternate={lighthouseNight} alt="Before and after: the lighthouse by day, then lit at night." caption="Point at it, or move focus to the card beside it" />
           <Card href="#/image" eyebrow="Lighthouses" title="The headland light, day and night" description="Point at the card or move focus to it to see it lit." media={<Image ratio="photo" rounded={false} src={lighthouseDay} alternate={lighthouseNight} alt="" />} />
+        </Grid>
+      ),
+    },
+    {
+      title: 'Your own reveal: a wipe and a stipple',
+      description:
+        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows. Left, a wipe from the start edge; right, a stipple whose dots grow in a scattered order. Same hook, different drawing.',
+      code: `const wipe: PictureReveal = ({ context, width, height, progress, paint }) => {
+  paint('picture');
+  context.save(); context.beginPath(); context.rect(0, 0, width * progress, height); context.clip();
+  paint('alternate');
+  context.restore();
+};
+<Image src={day} alternate={night} reveal={wipe} alt="Before and after: …" />`,
+      render: () => (
+        <Grid max={2}>
+          <Image src={lighthouseDay} alternate={lighthouseNight} reveal={wipe} alt="Before and after: the lighthouse by day, then lit at night." caption="A wipe" />
+          <Image src={lighthouseDay} alternate={lighthouseNight} reveal={stipple} alt="Before and after: the lighthouse by day, then lit at night." caption="A stipple" />
         </Grid>
       ),
     },

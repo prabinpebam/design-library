@@ -110,6 +110,7 @@ export { useScheme, readScheme, applyScheme, resolveScheme } from './behaviour/s
 export type { SchemeChoice, SchemeOptions } from './behaviour/scheme';
 export { useRegionScheme, regionSchemeOf } from './behaviour/region-scheme';
 export type { RegionScheme } from './behaviour/region-scheme';
+export type { PictureReveal, PictureRevealFrame } from './behaviour/reveal';
 export { breakpointQuery, useBreakpoint } from './behaviour/breakpoints';
 export type { BreakpointName } from './behaviour/breakpoints';
 export { useRouter, RouterContext } from './behaviour/router';

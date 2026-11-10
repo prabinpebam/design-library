@@ -920,6 +920,7 @@
   --c-image-fallback-padding: var(--space-inset-md);
   --c-image-duotone: var(--color-accent);
   --c-image-decoration: var(--color-accent);
+  --c-image-reveal-duration: var(--duration-xslow);
   --c-media-player-radius: var(--radius-lg);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-media-player-badge-inset: var(--space-2);

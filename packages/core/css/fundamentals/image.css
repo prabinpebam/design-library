@@ -152,12 +152,26 @@
    * the picture is active (the triggers above) and once its file has arrived. Reduced motion keeps the fade, as for
    * every picture.
    */
+  /* MP11: a reveal draws on a canvas over the cell, seen only while it runs; the crossfade above is off while it draws. */
+  [data-dl='image'] > canvas[data-dl-part='reveal'] {
+    grid-area: 1 / 1;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  [data-dl='image'] > canvas[data-dl-part='reveal'][data-on] {
+    visibility: visible;
+  }
+
   [data-dl='image'] > img[data-dl-part='alternate'] {
     opacity: 0;
     transition: opacity var(--duration-change) var(--easing-standard);
   }
 
-  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-alternate] > img[data-dl-part='alternate'][data-ready] {
+  :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-alternate=''] > img[data-dl-part='alternate'][data-ready] {
     opacity: 1;
   }
 

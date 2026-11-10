@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { Icon } from './Icon';
 import { useRegionScheme, type RegionScheme } from '../behaviour/region-scheme';
+import { useReveal, type PictureReveal } from '../behaviour/reveal';
 import type { DataAttributes } from '../types';
 
 export interface ImageProps extends DataAttributes {
@@ -63,6 +64,13 @@ export interface ImageProps extends DataAttributes {
    * the picture; screen readers keep `alt`, so say both there ("Before and after: …").
    */
   alternate?: string | PictureSource;
+  /**
+   * Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs
+   * with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame
+   * fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced
+   * motion, where it isn't called and the crossfade shows instead. Needs `alternate`.
+   */
+  reveal?: PictureReveal;
 }
 
 /** One file of a picture: its address and, optionally, other widths of it. */
@@ -141,6 +149,7 @@ export function Image({
   decoration,
   under,
   alternate,
+  reveal,
   ...data
 }: ImageProps) {
   const frameRef = useRef<HTMLSpanElement>(null);
@@ -188,6 +197,9 @@ export function Image({
       area.removeEventListener('focusin', arm);
     };
   }, [pair?.src, armed]);
+  const altRef = useRef<HTMLImageElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const drawing = useReveal(frameRef, canvasRef, { reveal: pair ? reveal : undefined, picture: () => imgs.current[shown] ?? null, alternate: () => altRef.current, ready: pairReady && state === 'loaded', fit, focal });
 
   const frame = (attrs: DataAttributes) => (
     <span
@@ -198,7 +210,7 @@ export function Image({
         width && height || focal
           ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focal ? { '--image-focus': `${focal.x * 100}% ${focal.y * 100}%` } : {}) } as CSSProperties)
           : undefined
-      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active} data-alternate={pair ? '' : undefined}>
+      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined}>
       {state === 'failed' && (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
           <Icon name="image" size="lg" />
@@ -233,9 +245,10 @@ export function Image({
         );
       })}
       {pair && state !== 'failed' && (
-        <img data-dl-part="alternate" src={armed ? pair.src : undefined} srcSet={armed ? pair.srcSet : undefined} sizes={sizes} alt="" aria-hidden="true" width={width} height={height} decoding="async" data-ready={pairReady ? '' : undefined} onLoad={() => setPairReady(true)} />
+        <img ref={altRef} data-dl-part="alternate" src={armed ? pair.src : undefined} srcSet={armed ? pair.srcSet : undefined} sizes={sizes} alt="" aria-hidden="true" width={width} height={height} decoding="async" data-ready={pairReady ? '' : undefined} onLoad={() => setPairReady(true)} />
       )}
-    </span>
+              {pair && reveal && state !== 'failed' && <canvas ref={canvasRef} data-dl-part="reveal" aria-hidden="true" />}
+            </span>
   );
 
   // MP8: without layers the frame is the root, as before; with them, one cell holds under, frame and decoration in that order.

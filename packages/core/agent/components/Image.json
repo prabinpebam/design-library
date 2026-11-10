@@ -128,6 +128,11 @@
           "name": "alternate",
           "type": "string | PictureSource",
           "description": "A paired picture (MP10): an after to `src`'s before, a product's other side. It shows while the picture, or the link, button or card around it, is hovered or focused (the same as `treatment`'s `active`), crossfading on the change duration (kept under reduced motion, as a fade). Fetched only on the first hover or focus. Same shape as the picture; screen readers keep `alt`, so say both there (\"Before and after: …\")."
+        },
+        {
+          "name": "reveal",
+          "type": "PictureReveal",
+          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the crossfade shows instead. Needs `alternate`."
         }
       ]
     },
