@@ -19,6 +19,7 @@
   },
   "exports": {
     ".": "./index.ts",
+    "./*/registry": "./*/registry.tsx",
     "./*": "./*/index.ts",
     "./package.json": "./package.json"
   },

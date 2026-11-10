@@ -8,3 +8,6 @@ export const registry: Template['registry'] = {
     ChatLayout: ({ content, ctx }) => <ChatApp view={content.record as unknown as ChatAppView} picture={ctx.picture} open={typeof content.settings?.open === 'string' ? content.settings.open : undefined} height="screen" />,
   },
 };
+
+/** MP4: the template's own app, for a site that places it in its own views (`@design-library/templates/chat/registry`: no content or pictures). */
+export { ChatApp };

@@ -448,6 +448,27 @@ const partsPage = (t: Template): Page[] => {
   if (!stories.length && !placed.length) return [];
   // A block whose part has no stories yet gets a stub from its example (DP18, DR37): the same placed section, said so.
   const storied = new Set(stories.map((f) => f.component));
+  // MP4: every template with its own parts can lend them to another site through its registry entry alone.
+  const reuse: PageBlock[] = [
+    {
+      heading: 'Use these parts in another site',
+      intro: `Import @design-library/templates/${t.id}/registry: it brings ${t.title}’s registry, its parts and its token CSS, and none of its content or pictures. Place a part in your own views, or merge the registry into your site’s so page documents can name its blocks.`,
+      block: {
+        type: 'code',
+        label: 'Import a part on its own',
+        code: `import { ${[...new Set([...stories.map((f) => f.component), ...placed.map((b) => b.renders)].map((n) => n.split('.').pop()))].join(', ') || 'registry'} } from '@design-library/templates/${t.id}/registry';\n// For blocks in page documents: loadSite({ …, registry: { blocks: { ...mine.blocks, ...registry.blocks } } })\nimport { registry } from '@design-library/templates/${t.id}/registry';`,
+      },
+    },
+    ...(t.id === 'conference'
+      ? [
+          {
+            heading: 'A part in a site that isn’t a conference',
+            intro: 'A product-launch page drawn from the core with the conference Countdown placed by hand. Built on its own (Vite, 2026-11-10), the page is 305 KB of script and styles with this import, against 442 KB with the whole template’s entry, which also brings its 23 pictures and every content file.',
+            block: { type: 'screen', src: 'site.html?demo=reuse', title: 'A product launch using the conference Countdown', width: 'fill' },
+          } satisfies PageBlock,
+        ]
+      : []),
+  ];
   return [
     {
       id: `${t.id}-parts`,
@@ -455,7 +476,7 @@ const partsPage = (t: Template): Page[] => {
       family: t.id,
       title: `${t.title}: Own parts`,
       summary: `What ${t.title} adds in its own scope (packages/templates/${t.id}/parts): never in the core, named under “${t.id}.”, reading core semantic tokens through its own t.${t.id}.* tokens, documented like a core component.`,
-      blocks: [...stories]
+      blocks: [...reuse, ...[...stories]
         .sort((a, b) => order[a.tier] - order[b.tier])
         .flatMap((file): PageBlock[] => [
           { heading: `${file.component} (${file.tier})`, intro: file.summary, block: { type: 'stories', file } },
@@ -473,7 +494,7 @@ const partsPage = (t: Template): Page[] => {
             },
             { heading: `${b.type}: the section`, minor: true, block: { type: 'code', label: `${b.type} example`, code: JSON.stringify(b.example, null, 2) } },
           ]),
-        ),
+        )],
     },
   ];
 };

@@ -20,3 +20,6 @@ export const registry: Template['registry'] = {
     ),
   },
 };
+
+/** MP4: the template's own app, for a site that places it in its own views (`@design-library/templates/projects/registry`: no content or pictures). */
+export { ProjectsApp };

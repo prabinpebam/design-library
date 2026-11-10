@@ -46,3 +46,14 @@ export const registry: Template['registry'] = {
     ),
   },
 };
+
+/**
+ * MP4: the template's parts on their own. `@design-library/templates/conference/registry` brings the registry, these
+ * parts and the template's token CSS, and none of its content or pictures; another site registers the blocks or
+ * places the parts in its own views.
+ */
+export { Countdown, SponsorWall, SponsorsLayout };
+export type { Sponsor, SponsorLevel };
+export type { CountdownProps } from './parts/fundamentals/Countdown';
+export type { SponsorWallProps } from './parts/compounds/SponsorWall';
+export type { SponsorsLayoutProps } from './parts/layouts/SponsorsLayout';
