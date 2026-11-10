@@ -106,7 +106,18 @@ first and keep their output to compare after. Each step is optional; stop after 
 
 ## Proof: nothing breaks
 
-To be run before the release (Q105.5): two copies of the DesignUp site's `web/` folder outside both repositories, one on 0.3.0-beta.1 and one on the 0.4.0-beta.1 tarballs; type check, build, every route compared in light, dark and at 320 px, console errors; and the install matrix on npm 10 and 11. The results replace this paragraph.
+Run 2026-11-10 about 05:33–06:05 +05:30 by worker 59 (Q105.5). Two copies of the DesignUp site's `web/` folder were made in the system temp folder, outside both repositories (no `node_modules`, `dist` or review files); nothing was written in the DesignUp project. Only their two library dependencies changed: one to the 0.3.0-beta.1 release files, the other to the 0.4.0-beta.1 tarballs packed from a clean worktree at the release commit (the same files uploaded to the release, checked by hash). Both were deleted afterwards.
+
+| Step | 0.3.0-beta.1 copy | 0.4.0-beta.1 copy |
+| --- | --- | --- |
+| `npm install` (npm 11, through the proxy) | Pass | Pass; `@design-library/core` and `templates` at 0.4.0-beta.1 |
+| `npx tsc --noEmit` | Pass | Pass, no edits to the site |
+| `npx vite build` | Pass | Pass |
+| Routes found by following every `#/` link from Home | 226 | 226 |
+| DOM compared per route (position and size of every element, colour, background, font size and family, underline, opacity), production builds, reduced motion | — | **226 of 226 identical** at 1280 × 800 light, 1280 × 800 dark and 320 × 667 light |
+| Console errors | 0 | 0 |
+
+**Result:** the site installs 0.4.0-beta.1, type-checks, builds and renders every route unchanged in light, dark and on a phone, with no new console errors and no edits. **Install matrix** on the 0.4.0-beta.1 tarballs: npm 10.9.9 and 11.21.1 pass (libraries, dev tools, from the lockfile). **Probe sweep** on the release build: 174 pages (the 168 of 0.3.0-beta.1 plus the Harbour Books site and the parts preview) at 1000 and 320 px in light and dark, every probe, 49,416 rows; 4 fail, all the known K9 (spacing FR14, S2, at 320 px on the blog's unsubscribed and not-found pages, both schemes), unchanged from 0.3.0-beta.1; the new pages pass every row.
 
 ## The reference site and the acceptance test
 
