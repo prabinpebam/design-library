@@ -4,6 +4,14 @@
 
 ## Owner instructions
 
+### G14.4 commit visibility (11 November 2026)
+
+The minimum pending visibility is measured from the first rendered commit/frame,
+not the click. Both pending and confirmation hold their token-defined minimum,
+including early timer callbacks, instant work and reduced motion. A monotonic
+deadline regression and the consumer's DOM timing measurements prove the strict
+200 ms floor. Work and error handling remain immediate; no app-specific delay.
+
 ### G14: Dialog close target (11 November 2026)
 
 Follow-up acceptance: native modality keeps the page inert; browser chrome
