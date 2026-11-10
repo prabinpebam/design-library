@@ -237,6 +237,7 @@
     "--c-button-size-xl",
     "--c-button-size-xs",
     "--c-button-size-xxl",
+    "--c-button-target-floor",
     "--c-field-border-width",
     "--c-field-size-xs",
     "--color-accent",

@@ -12,6 +12,8 @@ test('accessible floor survives a reduced root font and grows with larger text',
   const floor = tokens.size['target-floor'].$value;
   assert.deepEqual(floor, { value: 44, unit: 'px' });
   assert.equal(tokens.c.button['target-floor'].$value, '{size.target-floor}');
+  assert.match(read('packages/core/css/tokens.css'), /--size-target-floor: 44px;/);
+  assert.match(read('packages/core/css/tokens.css'), /--c-button-target-floor: var\(--size-target-floor\);/);
   for (const root of [10, 12.5, 16, 20, 32]) {
     assert.ok(Math.max(tokens.size.target.$value.value * root, floor.value) >= 44);
   }
