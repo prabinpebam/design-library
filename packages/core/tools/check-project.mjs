@@ -188,6 +188,29 @@ for (const file of tsx) {
     if (!wordsAllowed(m[1], file)) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `"${m[1]}" is written in code: put it in content JSON or a prop (Never 8)`);
   for (const m of text.matchAll(/\b(label|title|alt|placeholder|hint|aria-label|description)\s*=\s*"([^"{}]*[A-Za-z]{2,}[^"{}]*)"/g))
     if ((/\s/.test(m[2]) || /^[A-Z]/.test(m[2])) && !wordsAllowed(m[2], file)) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `${m[1]}="${m[2]}" is written in code: read it from content (Never 8)`);
+  // A toggle button (Button or IconButton with `pressed` / aria-pressed) needs a written reason (Q121): Switch is the
+  // default for a binary setting. The reason is a comment within the three lines above the element:
+  // `// toggle-button: <why a Switch doesn't fit>` or `{/* toggle-button: … */}`.
+  const lines = text.split('\n');
+  for (const m of text.matchAll(/<(Button|IconButton)\b/g)) {
+    let i = (m.index ?? 0) + m[0].length;
+    let depth = 0;
+    let quote = '';
+    for (; i < text.length; i++) {
+      const c = text[i];
+      if (quote) { if (c === quote && text[i - 1] !== '\\') quote = ''; continue; }
+      if (c === '"' || c === "'" || c === '`') quote = c;
+      else if (c === '{') depth++;
+      else if (c === '}') depth--;
+      else if (c === '>' && depth === 0) break;
+    }
+    const attrs = text.slice((m.index ?? 0) + m[0].length, i);
+    if (!/(^|\s)(pressed|aria-pressed)(\s*=|\s|\/?$)/.test(attrs)) continue;
+    const line = lineAt(text, m.index ?? 0);
+    const above = lines.slice(Math.max(0, line - 4), line).join('\n');
+    if (!/toggle-button:\s*[^\s*/}][^\n]{9,}/.test(above))
+      add('error', 'toggle-justification', file, line, `a toggle button (${m[1]} with pressed) without a reason: Switch is the default for a binary setting; if a toggle button fits better (a toolbar or a dense row's affordance), write why in a comment on the line above: {/* toggle-button: <why a Switch doesn't fit> */}`);
+  }
 }
 // Page-specific code (DP19, DR35): with a site document, a route compared in code is a page the data can't describe.
 if (sites.length)
