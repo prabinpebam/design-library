@@ -67,7 +67,7 @@
         {
           "name": "thumbnail",
           "type": "string",
-          "description": "A square picture of the item (a file, a product, a place). Decorative: the label names it."
+          "description": "A lazy square picture of the item. On failure its fixed slot shows `icon`, or the image icon. Decorative: the label names it."
         },
         {
           "name": "preview",

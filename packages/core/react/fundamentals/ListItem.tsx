@@ -1,4 +1,4 @@
-import type { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import { useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import { Icon } from './Icon';
 import { Progress } from './Progress';
 import type { IconName } from '../../icons/icons';
@@ -29,7 +29,7 @@ export interface ListItemProps extends DataAttributes {
   inset?: boolean;
   /** A person or team: a round picture, or the initials of `name` when there's no picture. Decorative: the label names it. */
   avatar?: { name: string; src?: string };
-  /** A square picture of the item (a file, a product, a place). Decorative: the label names it. */
+  /** A lazy square picture of the item. On failure its fixed slot shows `icon`, or the image icon. Decorative: the label names it. */
   thumbnail?: string;
   /** Up to four #rrggbb colours shown as a strip before the name, for items that are palettes. Decorative. */
   preview?: string[];
@@ -81,6 +81,15 @@ function initials(name: string) {
     .slice(0, 2)
     .map((word) => word[0]!.toUpperCase())
     .join('');
+}
+
+function Thumbnail({ src, icon }: { src: string; icon?: IconName }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    <span data-dl-part="item-thumbnail" aria-hidden="true">
+      {failed ? <Icon name={icon ?? 'image'} /> : <img src={src} alt="" loading="lazy" decoding="async" onError={() => setFailed(true)} />}
+    </span>
+  );
 }
 
 /**
@@ -154,9 +163,7 @@ export function ListItem({
       {avatar.src ? <img src={avatar.src} alt="" /> : initials(avatar.name)}
     </span>
   ) : thumbnail ? (
-    <span data-dl-part="item-thumbnail" aria-hidden="true">
-      <img src={thumbnail} alt="" />
-    </span>
+    <Thumbnail key={thumbnail} src={thumbnail} icon={icon} />
   ) : icon ? (
     <Icon name={icon} />
   ) : (

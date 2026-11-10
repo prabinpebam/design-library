@@ -7,6 +7,7 @@
 @layer fundamentals {
   [data-dl='image'] {
     display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     overflow: hidden;
     inline-size: 100%;
     aspect-ratio: 3 / 2;
@@ -29,6 +30,8 @@
 
   [data-dl='image'] > img {
     display: block;
+    min-inline-size: 0;
+    min-block-size: 0;
     inline-size: 100%;
     block-size: 100%;
     object-fit: cover;
@@ -212,6 +215,8 @@
 
   [data-dl='image'] > [data-dl-part='fallback'] {
     display: grid;
+    min-inline-size: 0;
+    min-block-size: 0;
     place-content: center;
     justify-items: center;
     gap: var(--c-image-fallback-gap);
@@ -221,6 +226,10 @@
     font-size: var(--type-body-sm-size);
     line-height: var(--type-body-sm-leading);
     overflow-wrap: anywhere;
+  }
+
+  [data-dl='image'][data-fallback-layout='label'] > [data-dl-part='fallback'] {
+    padding: var(--space-inset-sm);
   }
 
   [data-dl='figure'] {

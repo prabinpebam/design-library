@@ -71,12 +71,25 @@ const blob = (
     <rect x="80" y="-8" width="26" height="26" rx="6" fill="currentColor" opacity="0.2" />
   </svg>
 );
+const squareMark = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#345678"/></svg>')}`;
 
 export default {
   component: 'Image',
   tier: 'fundamental',
   summary: 'A picture in a frame of a fixed shape that holds its space while it loads and says what it was when it can’t load.',
   stories: [
+    {
+      title: 'Shallow contained media and readable labels',
+      description: 'A square picture fits wholly inside an ultrawide frame. A missing short name uses the label fallback without an icon competing for its height. The frame keeps exactly the same shape.',
+      code: `<Image ratio="ultrawide" fit="contain" src={squareMark} alt="Square mark" />
+<Image ratio="ultrawide" fallbackLayout="label" src="/missing.jpg" alt="Example organisation" />`,
+      render: () => (
+        <Grid max={2}>
+          <Image ratio="ultrawide" fit="contain" src={squareMark} alt="Square mark" />
+          <Image ratio="ultrawide" fallbackLayout="label" src="/missing-shallow-picture.jpg" alt="Example organisation" />
+        </Grid>
+      ),
+    },
     {
       title: 'A picture',
       description: 'In a 3:2 frame, rounded, loaded when it nears the window. The frame keeps its space, so the words under it never jump.',

@@ -39,6 +39,18 @@ export default {
   summary: 'One item of a list a person chooses from: the same item in every menu and select.',
   stories: [
     {
+      title: 'Lazy thumbnails and kind-icon recovery',
+      description: 'The picture is lazy and decorative. A missing picture keeps the same square slot and shows its supplied kind icon; changing the thumbnail address retries the new picture.',
+      code: `<ListItem role="option" thumbnail={picture} icon="image" label="Picture" />
+<ListItem role="option" thumbnail="/missing.jpg" icon="code" label="Source file" />`,
+      render: () => (
+        <Items role="listbox" aria-label="Media recovery">
+          <ListItem role="option" thumbnail={picture('#bae6fd', '#0e7490')} icon="image" label="Picture" />
+          <ListItem role="option" thumbnail="/missing-list-thumbnail.jpg" icon="code" label="Source file" />
+        </Items>
+      ),
+    },
+    {
       title: 'Mild proxy-focus tint',
       description: 'For an aria-activedescendant owner: hover and active use the same mild token fill, not a row outline. The optional fixed-slot chevron adds a non-border cue when the tint alone lacks 3:1. Native keyboard focus still has its ring; selection semantics are unchanged.',
       code: `<ListItem role="option" label="Talks" active activeAppearance="tint" activeIndicator />`,
@@ -250,7 +262,5 @@ export default {
     },
   ],
 } satisfies StoryFile;
-
-
 
 

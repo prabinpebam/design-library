@@ -7,7 +7,7 @@
   "summary": "A picture in a frame of a fixed shape that holds its space while it loads, shows a soft fill while it waits, and says what it was when it can't load. With a caption or a credit it becomes a figure.",
   "family": "media",
   "a11y": [
-    "A native `img` with its alternative text; `alt=\"\"` hides a decorative picture from screen readers. With a caption it is a `figure` and its `figcaption`, so the caption is read with it. A picture that can't load shows an icon and its alternative text as words in the frame, so nothing is silently missing. Lazy by default; the frame's ratio (or `width` and `height`) reserves its space, so the page doesn't shift as it arrives."
+    "A native `img` with its alternative text; `alt=\"\"` hides a decorative picture from screen readers. With a caption it is a `figure` and its `figcaption`, so the caption is read with it. A picture that can't load shows an alternative text as words in the frame, with an icon by default, so nothing is silently missing. Lazy by default; the frame's ratio (or `width` and `height`) reserves its space, so the page doesn't shift as it arrives."
   ],
   "keys": [],
   "sealed": true,
@@ -61,6 +61,12 @@
           "type": "'cover' | 'contain'",
           "default": "'cover'",
           "description": "`cover` fills the frame and crops the edges (default); `contain` shows the whole picture inside the frame."
+        },
+        {
+          "name": "fallbackLayout",
+          "type": "'stack' | 'label'",
+          "default": "'stack'",
+          "description": "`stack` (default) shows an icon and the alt text on failure. `label` uses the full alt text alone with a smaller inset, for short names in shallow frames; reserve enough space for the label. An empty alt still shows the decorative icon."
         },
         {
           "name": "width",
@@ -183,6 +189,7 @@
     "--duration-shimmer",
     "--easing-linear",
     "--easing-standard",
+    "--space-inset-sm",
     "--state-hover",
     "--type-body-sm-leading",
     "--type-body-sm-size"

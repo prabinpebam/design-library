@@ -6,6 +6,21 @@
 
 **Status:** F15.I1 (the skill and the trim tool) and F15.I2 (this audit) for review, strict design. Shaped by `visual-noise`, `ui-copy`, `design-system`, `performance` (proposed budgets only) and the [visual representation](visual-representation.md) framework (IM1–IM10, IL1–IL8). Stable IDs: slot classes **SC**, style sets **SS**, slots **IA** (template pictures), **IB** (library pictures), **IS** (slots that need a new seam), packets **IP**.
 
+## Fixed media frames and failure labels
+
+`Image fit="contain"` sizes its actual image to the constrained grid cell,
+not the source's intrinsic square height. Its ratio reserves the same space
+before load, after load and on failure. For a short name in a shallow frame,
+`fallbackLayout="label"` shows the complete alt text without the stacked icon
+and uses the smaller semantic inset. Keep enough frame space for that text;
+this is not an ellipsis, hidden-text or image-rewriting workaround. The default
+stacked failure and empty-alt decorative icon remain available unchanged.
+
+`ListItem thumbnail` is lazy and decorative. If it fails, its original fixed
+slot shows the supplied `icon` (otherwise the image icon); its words and
+selection semantics stay in place. A new thumbnail address resets the failure
+by mounting a new keyed media slot.
+
 ## Production rules
 
 The project skill `.github/skills/image-prompting/SKILL.md` holds the researched method with its sources (OpenAI's GPT Image 2.5 prompting and generation guides, the transparent-assets cookbook, W3C WAI, web.dev). In short:

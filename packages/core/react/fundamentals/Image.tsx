@@ -19,6 +19,8 @@ export interface ImageProps extends DataAttributes {
   focal?: { x: number; y: number };
   /** `cover` fills the frame and crops the edges (default); `contain` shows the whole picture inside the frame. */
   fit?: 'cover' | 'contain';
+  /** `stack` (default) shows an icon and the alt text on failure. `label` uses the full alt text alone with a smaller inset, for short names in shallow frames; reserve enough space for the label. An empty alt still shows the decorative icon. */
+  fallbackLayout?: 'stack' | 'label';
   /** The picture's own width and height in pixels: they reserve its space before it loads, so nothing below it jumps. */
   width?: number;
   height?: number;
@@ -125,7 +127,7 @@ export type PictureTreatment = PictureTone | { rest?: PictureTone; active?: Pict
  * @family media
  * @a11y A native `img` with its alternative text; `alt=""` hides a decorative picture from screen readers. With a
  * caption it is a `figure` and its `figcaption`, so the caption is read with it. A picture that can't load shows an
- * icon and its alternative text as words in the frame, so nothing is silently missing. Lazy by default; the frame's
+ * alternative text as words in the frame, with an icon by default, so nothing is silently missing. Lazy by default; the frame's
  * ratio (or `width` and `height`) reserves its space, so the page doesn't shift as it arrives.
  */
 export function Image({
@@ -135,6 +137,7 @@ export function Image({
   sizes,
   ratio = 'photo',
   fit = 'cover',
+  fallbackLayout = 'stack',
   focal,
   width,
   height,
@@ -210,10 +213,10 @@ export function Image({
         width && height || focal
           ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focal ? { '--image-focus': `${focal.x * 100}% ${focal.y * 100}%` } : {}) } as CSSProperties)
           : undefined
-      } data-ratio={ratio} data-fit={fit} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined}>
+      } data-ratio={ratio} data-fit={fit} data-fallback-layout={fallbackLayout === 'label' ? 'label' : undefined} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined}>
       {state === 'failed' && (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
-          <Icon name="image" size="lg" />
+          {(fallbackLayout !== 'label' || !alt) && <Icon name="image" size="lg" />}
           {alt && <span data-dl-part="fallback-text" aria-hidden="true">{alt}</span>}
         </span>
       )}
