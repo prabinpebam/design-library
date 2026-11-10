@@ -113,6 +113,8 @@ export interface InspectorSection {
 export interface InspectorTab {
   id: string;
   label: string;
+  /** Shown only in this mode of the tool bar's switch ("dev": Dev Mode's tab); every mode when absent. */
+  mode?: string;
   sections: InspectorSection[];
 }
 
@@ -273,4 +275,6 @@ export interface DesignStrings {
   searchLayers: string;
   /** A tool's flyout button: "More {tool} tools". */
   moreTools: string;
+  /** The Pages heading's add button: "Add page". */
+  addPage: string;
 }

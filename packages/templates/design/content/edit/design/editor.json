@@ -140,6 +140,23 @@
         ]
       },
       {
+        "value": "pen",
+        "label": "Pen",
+        "icon": "edit",
+        "menu": [
+          {
+            "value": "pen",
+            "label": "Pen",
+            "icon": "edit"
+          },
+          {
+            "value": "pencil",
+            "label": "Pencil",
+            "icon": "stroke-position"
+          }
+        ]
+      },
+      {
         "value": "text",
         "label": "Text",
         "icon": "text"
@@ -786,7 +803,8 @@
       "present": "Present",
       "mode": "Mode",
       "searchLayers": "Search layers",
-      "moreTools": "More {tool} tools"
+      "moreTools": "More {tool} tools",
+      "addPage": "Add page"
     },
     "inspector": [
       {
@@ -857,15 +875,13 @@
                   "key": "x",
                   "kind": "number",
                   "label": "X position",
-                  "glyph": "X",
-                  "unit": "px"
+                  "glyph": "X"
                 },
                 {
                   "key": "y",
                   "kind": "number",
                   "label": "Y position",
-                  "glyph": "Y",
-                  "unit": "px"
+                  "glyph": "Y"
                 }
               ],
               [
@@ -985,7 +1001,6 @@
                   "kind": "number",
                   "label": "Width",
                   "glyph": "W",
-                  "unit": "px",
                   "min": 1
                 },
                 {
@@ -993,7 +1008,6 @@
                   "kind": "number",
                   "label": "Height",
                   "glyph": "H",
-                  "unit": "px",
                   "min": 1
                 }
               ],
@@ -1045,7 +1059,6 @@
                   "kind": "number",
                   "label": "Minimum width",
                   "glyph": "≥W",
-                  "unit": "px",
                   "min": 0
                 },
                 {
@@ -1053,7 +1066,6 @@
                   "kind": "number",
                   "label": "Maximum width",
                   "glyph": "≤W",
-                  "unit": "px",
                   "min": 0
                 }
               ],
@@ -1063,7 +1075,6 @@
                   "kind": "number",
                   "label": "Minimum height",
                   "glyph": "≥H",
-                  "unit": "px",
                   "min": 0
                 },
                 {
@@ -1071,7 +1082,6 @@
                   "kind": "number",
                   "label": "Maximum height",
                   "glyph": "≤H",
-                  "unit": "px",
                   "min": 0
                 }
               ],
@@ -1107,13 +1117,11 @@
                       "kind": "number",
                       "label": "Gap between items",
                       "icon": "distribute-h",
-                      "unit": "px",
                       "min": 0
                     },
                     {
                       "key": "padLeft",
                       "kind": "number",
-                      "unit": "px",
                       "min": 0,
                       "label": "Horizontal padding",
                       "glyph": "↔",
@@ -1130,7 +1138,6 @@
                     {
                       "key": "padTop",
                       "kind": "number",
-                      "unit": "px",
                       "min": 0,
                       "label": "Vertical padding",
                       "glyph": "↕",
@@ -1168,7 +1175,6 @@
                   "kind": "number",
                   "label": "Top padding",
                   "glyph": "↑",
-                  "unit": "px",
                   "min": 0,
                   "when": [
                     {
@@ -1192,7 +1198,6 @@
                   "kind": "number",
                   "label": "Right padding",
                   "glyph": "→",
-                  "unit": "px",
                   "min": 0,
                   "when": [
                     {
@@ -1218,7 +1223,6 @@
                   "kind": "number",
                   "label": "Bottom padding",
                   "glyph": "↓",
-                  "unit": "px",
                   "min": 0,
                   "when": [
                     {
@@ -1242,7 +1246,6 @@
                   "kind": "number",
                   "label": "Left padding",
                   "glyph": "←",
-                  "unit": "px",
                   "min": 0,
                   "when": [
                     {
@@ -1393,7 +1396,6 @@
                   "kind": "number",
                   "label": "Corner radius",
                   "icon": "corners",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "corners",
@@ -1421,7 +1423,6 @@
                   "kind": "number",
                   "label": "Top left radius",
                   "glyph": "◜",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "corners",
@@ -1435,7 +1436,6 @@
                   "kind": "number",
                   "label": "Top right radius",
                   "glyph": "◝",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "corners",
@@ -1451,7 +1451,6 @@
                   "kind": "number",
                   "label": "Bottom left radius",
                   "glyph": "◟",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "corners",
@@ -1465,7 +1464,6 @@
                   "kind": "number",
                   "label": "Bottom right radius",
                   "glyph": "◞",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "corners",
@@ -1573,7 +1571,6 @@
                   "kind": "number",
                   "label": "Font size",
                   "glyph": "Aa",
-                  "unit": "px",
                   "min": 1
                 }
               ],
@@ -1944,7 +1941,6 @@
                   "kind": "number",
                   "label": "Weight",
                   "glyph": "≡",
-                  "unit": "px",
                   "min": 0
                 },
                 {
@@ -1987,7 +1983,6 @@
                   "kind": "number",
                   "label": "Top weight",
                   "glyph": "↑",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "strokeSides",
@@ -2001,7 +1996,6 @@
                   "kind": "number",
                   "label": "Right weight",
                   "glyph": "→",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "strokeSides",
@@ -2017,7 +2011,6 @@
                   "kind": "number",
                   "label": "Bottom weight",
                   "glyph": "↓",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "strokeSides",
@@ -2031,7 +2024,6 @@
                   "kind": "number",
                   "label": "Left weight",
                   "glyph": "←",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "strokeSides",
@@ -2064,7 +2056,6 @@
                   "kind": "number",
                   "label": "Dash",
                   "glyph": "–",
-                  "unit": "px",
                   "min": 1,
                   "when": {
                     "key": "strokeStyle",
@@ -2078,7 +2069,6 @@
                   "kind": "number",
                   "label": "Gap",
                   "glyph": "·",
-                  "unit": "px",
                   "min": 0,
                   "when": {
                     "key": "strokeStyle",
@@ -2211,7 +2201,6 @@
                     "kind": "number",
                     "label": "X offset",
                     "glyph": "X",
-                    "unit": "px",
                     "when": {
                       "key": "type",
                       "is": [
@@ -2225,7 +2214,6 @@
                     "kind": "number",
                     "label": "Y offset",
                     "glyph": "Y",
-                    "unit": "px",
                     "when": {
                       "key": "type",
                       "is": [
@@ -2241,7 +2229,6 @@
                     "kind": "number",
                     "label": "Blur",
                     "glyph": "B",
-                    "unit": "px",
                     "min": 0
                   },
                   {
@@ -2249,7 +2236,6 @@
                     "kind": "number",
                     "label": "Spread",
                     "glyph": "S",
-                    "unit": "px",
                     "when": {
                       "key": "type",
                       "is": [
@@ -2326,7 +2312,6 @@
                     "kind": "number",
                     "label": "Size",
                     "glyph": "#",
-                    "unit": "px",
                     "min": 1,
                     "when": {
                       "key": "type",
@@ -2356,7 +2341,6 @@
                     "kind": "number",
                     "label": "Gutter",
                     "glyph": "⇹",
-                    "unit": "px",
                     "min": 0,
                     "when": {
                       "key": "type",
@@ -2371,7 +2355,6 @@
                     "kind": "number",
                     "label": "Margin",
                     "glyph": "⇤",
-                    "unit": "px",
                     "min": 0,
                     "when": {
                       "key": "type",
@@ -3156,7 +3139,8 @@
               "says": "Exporting isn’t part of this example."
             }
           }
-        ]
+        ],
+        "mode": "dev"
       }
     ],
     "defaults": {

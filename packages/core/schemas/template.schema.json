@@ -58,6 +58,7 @@
     },
     "theme": {
       "type": "object",
+      "description": "The template's space and shape choices. Colour, type, radius and component-token values for the template's own screens live in tokens/theme.json (core semantic roles and c.* tokens, raw or { light, dark }), which npx design-library-template-tokens writes to tokens/theme.css under [data-template=\"{id}\"]; import theme.css in the registry (F15.FR1).",
       "properties": {
         "space": {
           "enum": [

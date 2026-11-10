@@ -121,6 +121,12 @@
           "type": "boolean",
           "default": "false",
           "description": "Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). Not while the panels float in a narrow window."
+        },
+        {
+          "name": "toggles",
+          "type": "'outer' | 'inner'",
+          "default": "'outer'",
+          "description": "With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle)."
         }
       ]
     }

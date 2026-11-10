@@ -33,6 +33,8 @@ export interface EditorLayoutProps extends DataAttributes {
   height?: 'fill' | 'screen' | 'lg';
   /** Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). Not while the panels float in a narrow window. */
   resizable?: boolean;
+  /** With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle). */
+  toggles?: 'outer' | 'inner';
 }
 
 type Side = 'start' | 'end';
@@ -53,7 +55,7 @@ const STEP = 8;
  * @key Home / End (on a resize handle): the narrowest or the widest
  * @key Enter (on a resize handle): back to the default width
  */
-export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, ...data }: EditorLayoutProps) {
+export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, toggles = 'outer', ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
   const [dragging, setDragging] = useState<Side | null>(null);
   const startId = useId();
@@ -181,7 +183,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   );
 
   return (
-    <div ref={root} {...data} data-dl="editor-layout" data-height={height} data-bar={floating ? 'none' : undefined}>
+    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'inner' ? 'inner' : undefined} data-height={height} data-bar={floating ? 'none' : undefined}>
       {!floating && (
         <header data-dl-part="bar">
           {startTogglePart('toggle')}

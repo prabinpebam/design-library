@@ -123,6 +123,8 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
       ),
     };
   });
+  /** The tool bar's mode: Dev Mode when the screen opens on Dev Mode's tab, else Design. */
+  const mode = view.inspector.find((t) => t.id === tab)?.mode ?? 'design';
   const zoomMenu = <MenuButton label={fill(s.zoomValue, { percent: Number(zoom) * 100 })} menuLabel={s.zoom} size="xs" emphasis="quiet" onSelect={setZoom} items={view.zooms.map((z) => ({ value: String(z), label: fill(s.zoomTo, { percent: z * 100 }) }))} />;
 
   return (
@@ -131,6 +133,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
       data-material="solid"
       data-density="compact"
       resizable
+      toggles="inner"
       height={height}
       startOpen={startOpen}
       onStartToggle={() => setStartOpen((x) => !x)}
@@ -140,7 +143,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
       tools={
         <Cluster gap="group" wrap={false}>
           <SegmentedControl label={s.tool} iconOnly size="s" track={false} value={tool} onChange={setTool} options={toolOptions} />
-          <SegmentedControl label={s.mode} iconOnly size="xs" emphasis="raised" value="design" onChange={(m) => m !== 'design' && notify({ message: fill(s.notInExample, { label: view.modes.find((x) => x.value === m)?.label ?? '' }) })} options={view.modes} />
+          <SegmentedControl label={s.mode} iconOnly size="xs" emphasis="raised" value={mode} onChange={(m) => m !== mode && notify({ message: fill(s.notInExample, { label: view.modes.find((x) => x.value === m)?.label ?? '' }) })} options={view.modes} />
         </Cluster>
       }
       startHead={
@@ -174,7 +177,10 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
               <Heading level={2} size="label">
                 {s.pages}
               </Heading>
-              <Button label={s.pages} icon={pagesOpen ? 'chevron-down' : 'chevron-end'} iconOnly tooltip emphasis="quiet" size="xs" expanded={pagesOpen} onClick={() => setPagesOpen((x) => !x)} />
+              <Cluster gap="pair" wrap={false}>
+                <Button label={s.addPage} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: fill(s.notInExample, { label: s.addPage }) })} />
+                <Button label={s.pages} icon={pagesOpen ? 'chevron-down' : 'chevron-end'} iconOnly tooltip emphasis="quiet" size="xs" expanded={pagesOpen} onClick={() => setPagesOpen((x) => !x)} />
+              </Cluster>
             </Cluster>
             <Reveal open={pagesOpen}>
               <TreeView label={s.pages} mark="current" items={view.pages.map((p) => ({ id: p.id, label: p.label }))} expanded={[]} onExpandedChange={() => {}} selected={page} onSelect={setPage} />
@@ -223,7 +229,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
               </Text>
             </Stack>
               }
-              tabs={view.inspector}
+              tabs={view.inspector.filter((t) => !t.mode || t.mode === mode)}
               tab={tab}
               shape={{ ...shape, props: propsOf(view, shape) }}
               parent={find(shapes, parentOf(shapes, shape.id))}

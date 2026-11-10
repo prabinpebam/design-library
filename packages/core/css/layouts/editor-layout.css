@@ -140,6 +140,19 @@
     flex: none;
   }
 
+  /* toggles="inner": an open panel's toggle sits at its head's edge beside the working area, level with the first row. */
+  [data-dl='editor-layout'][data-toggles='inner'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='panel-head'] {
+    align-items: flex-start;
+  }
+
+  [data-dl='editor-layout'][data-toggles='inner'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] > [data-dl-part='panel-head'] > [data-dl-part='toggle'] {
+    order: 1;
+  }
+
+  [data-dl='editor-layout'][data-toggles='inner'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] > [data-dl-part='panel-head'] > [data-dl-part='toggle'] {
+    order: -1;
+  }
+
   /* No bar: a closed panel's toggle floats at the working area's top corner (an open one sits in its panel's head). */
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='corner'] {
     position: absolute;

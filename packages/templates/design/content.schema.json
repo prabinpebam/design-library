@@ -429,6 +429,10 @@
       "additionalProperties": false,
       "description": "Interface words (Q64: every word a person reads is content). `{name}` marks a value filled in.",
       "properties": {
+        "addPage": {
+          "description": "The Pages heading's add button: \"Add page\".",
+          "type": "string"
+        },
         "assetsTab": {
           "type": "string"
         },
@@ -597,7 +601,8 @@
         "present",
         "mode",
         "searchLayers",
-        "moreTools"
+        "moreTools",
+        "addPage"
       ],
       "type": "object"
     },
@@ -1040,6 +1045,10 @@
           "type": "string"
         },
         "label": {
+          "type": "string"
+        },
+        "mode": {
+          "description": "Shown only in this mode of the tool bar's switch (\"dev\": Dev Mode's tab); every mode when absent.",
           "type": "string"
         },
         "sections": {
