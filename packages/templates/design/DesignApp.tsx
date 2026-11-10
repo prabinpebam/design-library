@@ -109,6 +109,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
 
   return (
     <EditorLayout
+      data-template="design"
       data-density="compact"
       resizable
       height={height}

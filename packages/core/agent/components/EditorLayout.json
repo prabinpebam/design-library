@@ -133,6 +133,8 @@
     "--border-hairline",
     "--c-editor-layout-bar",
     "--c-editor-layout-bar-gap",
+    "--c-editor-layout-divider",
+    "--c-editor-layout-divider-width",
     "--c-editor-layout-height-lg",
     "--c-editor-layout-inset",
     "--c-editor-layout-layer",

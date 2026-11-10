@@ -66,6 +66,16 @@
         "$description": "Colour of the enclosure (echoed for contrast contexts)"
       }
     },
+    "editor-layout": {
+      "$extensions": {
+        "owner": "EditorLayout"
+      },
+      "divider": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "The divider's colour, when a theme draws one (echoed for contrast contexts)"
+      }
+    },
     "example": {
       "$extensions": {
         "owner": "Example"

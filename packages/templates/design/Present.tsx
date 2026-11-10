@@ -42,6 +42,7 @@ export function DesignPresent({ view, toCanvas, editorHref, height, wide }: { vi
 
   return (
     <EditorLayout
+      data-template="design"
       data-density="compact"
       height={height}
       startLabel={s.frames}

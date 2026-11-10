@@ -3,6 +3,7 @@
  * screen with no record of its own (Prototype, Dev mode) shows the editor's, opened on the inspector tab its settings name, or in the mode they name (`present`, `comments`).
  */
 import type { Template } from '@design-library/core/render';
+import './tokens/theme.css';
 import { DesignApp } from './DesignApp';
 import type { DesignAppSpec } from './types';
 

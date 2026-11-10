@@ -5,7 +5,7 @@
  * block set, then the template's namespaced types). Content is checked by `npm run check:content` before it ships;
  * here an unknown block type or layout shows what's wrong in place instead of drawing half a part. No styles.
  */
-import { Fragment, type ReactNode } from 'react';
+import { cloneElement, Fragment, isValidElement, type ReactElement, type ReactNode } from 'react';
 import { Alert, SiteLayout, Text } from '../react/components';
 import { BLOCKS } from './blocks';
 import type { Block, BlockRenderer, LayoutBinding, RenderContext, Template, TemplateContent } from './types';
@@ -97,5 +97,8 @@ export function TemplateView({ template, layout, hrefFor = defaultHref }: Templa
   };
   const component = entry.component ?? '';
   const binding = template.registry?.layouts?.[component] ?? LAYOUTS[component];
-  return binding ? binding({ content, shared, contentOf: (id) => (template.content[id] ? resolve(template.content[id]) : undefined), ctx, region }) : problem('layout', `${manifest.title}’s “${entry.title}” names layout “${component}”, which isn’t a core layout or one the template registers.`);
+  if (!binding) return problem('layout', `${manifest.title}’s “${entry.title}” names layout “${component}”, which isn’t a core layout or one the template registers.`);
+  // The template's scope: its theme (tokens/theme.css) re-decides core tokens under the layout's root (F15.FR1).
+  const screen = binding({ content, shared, contentOf: (id) => (template.content[id] ? resolve(template.content[id]) : undefined), ctx, region });
+  return isValidElement(screen) ? cloneElement(screen as ReactElement<Record<string, unknown>>, { 'data-template': manifest.id }) : screen;
 }

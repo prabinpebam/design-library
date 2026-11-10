@@ -501,6 +501,8 @@
   --c-editor-layout-panel-min: 15rem;
   --c-editor-layout-panel-max: 30rem;
   --c-editor-layout-resize: 0.5rem;
+  --c-editor-layout-divider-width: 0px;
+  --c-editor-layout-divider: var(--color-border);
   --c-editor-layout-resize-line: var(--color-focus);
   --c-editor-layout-panel-gap: var(--space-stack-group);
   --c-editor-layout-tools-offset: var(--space-inset-md);
@@ -1315,6 +1317,7 @@
     --c-data-table-divider: var(--color-border);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-data-table-outline: var(--color-border);
+    --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
@@ -1345,6 +1348,7 @@
   --c-data-table-divider: var(--color-border);
   --c-data-table-head-fg: var(--color-text-muted);
   --c-data-table-outline: var(--color-border);
+  --c-editor-layout-divider: var(--color-border);
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
@@ -1375,6 +1379,7 @@
     --c-data-table-divider: var(--color-border);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-data-table-outline: var(--color-border);
+    --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
@@ -1405,6 +1410,7 @@
   --c-data-table-divider: var(--color-border);
   --c-data-table-head-fg: var(--color-text-muted);
   --c-data-table-outline: var(--color-border);
+  --c-editor-layout-divider: var(--color-border);
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);

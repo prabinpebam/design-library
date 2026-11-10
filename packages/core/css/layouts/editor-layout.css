@@ -74,6 +74,10 @@
     background-color: var(--color-bg);
   }
 
+  /* A theme may draw a hairline between a docked panel and the working area (none by default: tone sets them apart). */
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+
   /* The resize handle: a hit strip centred on the panel's inner edge. Nothing is drawn at rest; a line shows only while it
      is hovered, focused or dragged (a transient cue), so the panels stay set apart by tone alone. */
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize'] {
