@@ -6,7 +6,7 @@
  * DescriptionList and CodeBlock. Every value lives on the layer (`props`), so the canvas and Dev mode follow each change
  * at once (zero latency: no transition on a value a person is setting). Fields may stack in one cell (`column`) or sit in a row's action column (`at: 'action'`); a `wide` first field takes two thirds of its row; a list may show each item as a summary row that opens a Popover (`summary`). No styles.
  */
-import { Button, Cluster, CodeBlock, DescriptionList, GradientEditor, MenuButton, NumberField, Popover, PropertyRow, PropertySection, SegmentedControl, Select, Slider, Stack, Switch, Tabs, Text, TextField, AlignmentPicker, notify, type AlignmentPoint, type GradientStop } from '@design-library/core/react';
+import { Button, Cluster, CodeBlock, DescriptionList, GradientEditor, MenuButton, NumberField, Popover, PropertyRow, PropertySection, SegmentedControl, Select, Slider, Stack, Switch, Tabs, Text, TextField, AlignmentPicker, notify, type AlignmentPoint, type GradientStop } from '@design-library/core/components';
 import type { ReactNode } from 'react';
 import { fill } from '@design-library/core/render';
 import type { DesignShape, InspectorField, InspectorSection, InspectorTab, PropItem, PropValue, ShapeProps } from './types';

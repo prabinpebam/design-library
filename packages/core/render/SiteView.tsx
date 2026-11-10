@@ -8,7 +8,7 @@
  * window title, description, preview picture, canonical address and `noindex` come from the page. No styles.
  */
 import { Component, Fragment, useEffect, type ReactNode } from 'react';
-import { Alert, Text } from '../react';
+import { Alert, Text } from '../react/components';
 import { useRouter } from '../react/behaviour/router';
 import { SectionAnchor } from '../react/behaviour/section-anchor';
 import { matchPath, Router } from '../site';

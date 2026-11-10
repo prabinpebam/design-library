@@ -1,4 +1,4 @@
-import { Button, Heading, Text, type StoryFile } from '@design-library/core/react';
+import { Button, Heading, Text, type StoryFile } from '@design-library/core/components';
 import { Countdown } from '../fundamentals/Countdown';
 import { SponsorWall } from '../compounds/SponsorWall';
 import { SponsorsLayout } from './SponsorsLayout';

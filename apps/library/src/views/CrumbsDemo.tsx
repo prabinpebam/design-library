@@ -3,7 +3,7 @@
  * under the site header, at the layout's band gap; `&opening=flush` makes the first band meet the header (the trail
  * then touches it, which the spacing probe flags). No slot in Hero. View data only; no styles. Shown on Hero's page.
  */
-import { Breadcrumbs, Hero, SiteHeader, SiteLayout } from '@design-library/core/react';
+import { Breadcrumbs, Hero, SiteHeader, SiteLayout } from '@design-library/core/components';
 import hall from '../../../../packages/templates/conference/assets/main-hall.webp?url';
 
 export function CrumbsDemo() {

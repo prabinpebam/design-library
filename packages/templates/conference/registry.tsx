@@ -2,7 +2,7 @@
  * The Conference template's registry (Q64): its own block types and its own layout, each mapped to its own parts
  * (parts/), all under the `conference` namespace. Core blocks and core layouts need no entry here.
  */
-import { SiteLayout } from '@design-library/core/react';
+import { SiteLayout } from '@design-library/core/components';
 import type { BlockRenderer, Template } from '@design-library/core/render';
 import { Countdown } from './parts/fundamentals/Countdown';
 import { SponsorWall, type Sponsor, type SponsorLevel } from './parts/compounds/SponsorWall';

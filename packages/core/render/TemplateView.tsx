@@ -6,7 +6,7 @@
  * here an unknown block type or layout shows what's wrong in place instead of drawing half a part. No styles.
  */
 import { Fragment, type ReactNode } from 'react';
-import { Alert, SiteLayout, Text } from '../react';
+import { Alert, SiteLayout, Text } from '../react/components';
 import { BLOCKS } from './blocks';
 import type { Block, BlockRenderer, LayoutBinding, RenderContext, Template, TemplateContent } from './types';
 import { resolveUnconfirmed } from './unconfirmed';

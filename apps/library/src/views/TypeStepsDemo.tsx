@@ -4,7 +4,7 @@
  * with one weight, through the same `applySettings` and `applyFonts` a site calls. View data only; no styles. Shown on
  * the Typography page.
  */
-import { Grid, Heading, Hero, Section, SiteHeader, SiteLayout, Stack, Statistic, Text } from '@design-library/core/react';
+import { Grid, Heading, Hero, Section, SiteHeader, SiteLayout, Stack, Statistic, Text } from '@design-library/core/components';
 
 export function TypeStepsDemo() {
   return (

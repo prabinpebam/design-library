@@ -1,4 +1,4 @@
-import { Heading, Link, type DataAttributes } from '@design-library/core/react';
+import { Heading, Link, type DataAttributes } from '@design-library/core/components';
 
 export interface Sponsor {
   name: string;

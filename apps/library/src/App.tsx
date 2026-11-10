@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useState, type ReactNode } from 'react';
-import { Button, CodeBlock, DataTable, familyPathOf, Grid, LibraryLayout, Link, List, Navigation, Notifications, PageHeader, PageLayout, ScreenPreview, Section, SegmentedControl, Stack, suspendMotion, Text, TitleBar, type SegmentedControlOption } from '@design-library/core/react';
+import { Button, CodeBlock, DataTable, familyPathOf, Grid, LibraryLayout, Link, List, Navigation, Notifications, PageHeader, PageLayout, ScreenPreview, Section, SegmentedControl, Stack, suspendMotion, Text, TitleBar, type SegmentedControlOption } from '@design-library/core/components';
 import { navGroups, pageById, sectionById, type Block, type Page, type PageBlock } from './data/pages';
 import { Borders, ColourRoles, ColourSets, ComponentTokens, ContrastPairs, Durations, Easings, Elevation, ElevationLadder, Layers, ChangePoints, Materials, MotionRoles, Palette, Radii, SeparationCues, Sizes, SpaceRoles, SpaceScale, StackedBar, StatusRoles, TokenRows } from './inspectors/inspectors';
 import { TypeChooser, TypeFaceList, TypePlay, TypeRamp } from './inspectors/type';

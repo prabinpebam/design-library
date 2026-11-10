@@ -4,7 +4,7 @@
  * foot says where things are saved; a failure or conflict stays until it's resolved and always offers a way out.
  */
 import { useEffect, useState, type MouseEvent } from 'react';
-import { Button, Cluster, Code, Heading, Link, Pane, Progress, Select, Stack, Switch, Text, TextArea, TextField, Toolbar } from '@design-library/core/react';
+import { Button, Cluster, Code, Heading, Link, Pane, Progress, Select, Stack, Switch, Text, TextArea, TextField, Toolbar } from '@design-library/core/components';
 import { STORAGE_PATH, type Revision } from '../../revisions/contract.js';
 import { pageById } from '../data/pages';
 import { describe } from './capture';

@@ -6,7 +6,7 @@
  * Next and Restart move through the frames from the bar; arrow keys don't animate (Z8). No styles.
  */
 import { useState } from 'react';
-import { Button, Canvas, EditorLayout, Link, List, Morph, Text, Toolbar, TreeView, notify, type CanvasShape } from '@design-library/core/react';
+import { Button, Canvas, EditorLayout, Link, List, Morph, Text, Toolbar, TreeView, notify, type CanvasShape } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import type { DesignAppSpec, DesignShape, PropItem } from './types';
 

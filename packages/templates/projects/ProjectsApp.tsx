@@ -31,7 +31,7 @@ import {
   announce,
   moveCard,
   notify,
-} from '@design-library/core/react';
+} from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import type { Issue, IssueDetail, ProjectRecord } from './types';
 

@@ -3,7 +3,7 @@
  * library: a head (title and one line), a canvas in the library's own context, and the source behind "Show the code".
  */
 import { type ReactNode } from 'react';
-import { CodeBlock, ContextMatrix as CoreMatrix, Example as CoreExample, IndexList, Link, Section, Stack, Text, type DataAttributes, type StoryFile } from '@design-library/core/react';
+import { CodeBlock, ContextMatrix as CoreMatrix, Example as CoreExample, IndexList, Link, Section, Stack, Text, type DataAttributes, type StoryFile } from '@design-library/core/components';
 import { contextOf, contexts, useAppearance, type SpecimenContext } from '../data/contexts';
 import { pagesIn } from '../data/pages';
 import { tokenCount } from '../data/tokens';

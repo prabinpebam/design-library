@@ -1,5 +1,5 @@
 /** Harbour Books (Q76 worked example): built by following only packages/core/AGENTS.md and its guide, Step 6 "Start a template from nothing". */
-import type { StoryFile } from '@design-library/core/react';
+import type { StoryFile } from '@design-library/core/components';
 import manifest from './template.json';
 import assets from './assets.json';
 import { loadTemplate } from '../load';

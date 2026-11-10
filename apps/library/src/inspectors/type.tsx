@@ -4,7 +4,7 @@
  * the whole library in this browser and are never written to source.
  */
 import { useState } from 'react';
-import { Button, Cluster, Code, Grid, Heading, RowList, SegmentedControl, Select, Slider, Stack, Switch, Text, TokenSpecimen } from '@design-library/core/react';
+import { Button, Cluster, Code, Grid, Heading, RowList, SegmentedControl, Select, Slider, Stack, Switch, Text, TokenSpecimen } from '@design-library/core/components';
 import { fontFaces, fontPresets, fontRoles, isBinaryAxis, type FontFace, type FontRoleId } from '@design-library/core/fonts';
 import { sourceRole, themePreset, useType } from '../data/type';
 import { resolveLiteral } from '../data/tokens';

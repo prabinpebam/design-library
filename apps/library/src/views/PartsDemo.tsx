@@ -4,7 +4,7 @@
  * View data only; no styles.
  */
 import { useMemo } from 'react';
-import { FloatingBar, SchemeControl, Text } from '@design-library/core/react';
+import { FloatingBar, SchemeControl, Text } from '@design-library/core/components';
 import { partsSite, SiteView } from '@design-library/core/render';
 import { templateOf } from '@design-library/templates';
 

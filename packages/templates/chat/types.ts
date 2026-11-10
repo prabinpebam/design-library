@@ -2,7 +2,7 @@
  * The AI chat template's record (Q57.3, Q64): what content/chat.json holds, checked by content.schema.json
  * (generated from these types). Pictures are asset ids in assets.json.
  */
-import type { ChatAttachment, ComposerTool, ConversationGroup, MenuButtonItem } from '@design-library/core/react';
+import type { ChatAttachment, ComposerTool, ConversationGroup, MenuButtonItem } from '@design-library/core/components';
 
 /** One block of a message, in order. Words may hold `inline code` between backticks. */
 export type ChatBlock =

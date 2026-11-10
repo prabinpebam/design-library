@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { DataAttributes } from '@design-library/core/react';
+import type { DataAttributes } from '@design-library/core/components';
 
 export interface SponsorsLayoutProps extends DataAttributes {
   /** Region `intro`: why sponsor, the time until the event, the way to become one. Beside the levels in a wide window, above them in a narrow one. */

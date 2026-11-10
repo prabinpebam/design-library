@@ -34,7 +34,7 @@ import {
   notify,
   type ComposerAttachment,
   type ConversationGroup,
-} from '@design-library/core/react';
+} from '@design-library/core/components';
 import { fill, type TemplateAsset } from '@design-library/core/render';
 import type { ChatAppView, ChatBlock, ChatStrings, ChatTurn } from './types';
 

@@ -4,7 +4,7 @@
  * which brings the registry, the parts and the template's token CSS and none of its content or pictures. View data
  * only; no styles. Shown on the conference template's Own parts page.
  */
-import { PageHeader, SiteLayout, SiteHeader, Stack, Text } from '@design-library/core/react';
+import { PageHeader, SiteLayout, SiteHeader, Stack, Text } from '@design-library/core/components';
 import { Countdown } from '@design-library/templates/conference/registry';
 
 export function ReuseDemo() {

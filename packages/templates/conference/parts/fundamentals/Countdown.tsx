@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { DataAttributes } from '@design-library/core/react';
+import type { DataAttributes } from '@design-library/core/components';
 
 export interface CountdownProps extends DataAttributes {
   /** What the time counts to, before the figure: "Doors open in". */

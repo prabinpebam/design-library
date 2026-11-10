@@ -11,7 +11,7 @@ import { createRoot } from 'react-dom/client';
 import '@design-library/core/css/index.css';
 // Q70: the library's global token choices (colour, type, icons, space, shape) apply here too and follow live.
 import './data/presets';
-import { FloatingBar, Notifications, SegmentedControl, suspendMotion, Text } from '@design-library/core/react';
+import { FloatingBar, Notifications, SegmentedControl, suspendMotion, Text } from '@design-library/core/components';
 import { applyBrand, applyFonts, applySettings, type BaseColours } from '@design-library/core/theme';
 import siteFaceUrl from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
 import { themeBrand } from './data/brand';

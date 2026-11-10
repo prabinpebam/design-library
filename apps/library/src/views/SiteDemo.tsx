@@ -3,7 +3,7 @@
  * alone, drawn by `SiteView` on the core router; addresses, titles, navigation, anchors, the old addresses and the
  * not-found page all come from the JSON. View data only; no styles.
  */
-import { FloatingBar, SchemeControl } from '@design-library/core/react';
+import { FloatingBar, SchemeControl } from '@design-library/core/components';
 import { SiteView } from '@design-library/core/render';
 import harbour from '@design-library/templates/harbour/site';
 

@@ -21,6 +21,8 @@
     "./css/*": "./css/*",
     "./tokens/*": "./tokens/*",
     "./react": "./react/index.ts",
+    "./components": "./react/components.ts",
+    "./stories": "./react/stories/index.ts",
     "./fonts": "./fonts/loader.ts",
     "./icons": "./icons/sets.ts",
     "./colour": "./colour/index.mjs",

@@ -4,7 +4,7 @@
  * and holds the block registry equal to them).
  */
 import type { ReactNode } from 'react';
-import type { AgendaSlot, FooterLink, FooterSection, IconName, StoryFile } from '../react';
+import type { AgendaSlot, FooterLink, FooterSection, IconName, StoryFile } from '../react/components';
 
 export type SiteAction = {
   label: string;

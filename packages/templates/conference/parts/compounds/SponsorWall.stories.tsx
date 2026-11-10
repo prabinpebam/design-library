@@ -1,4 +1,4 @@
-import type { StoryFile } from '@design-library/core/react';
+import type { StoryFile } from '@design-library/core/components';
 import { SponsorWall, type SponsorLevel } from './SponsorWall';
 
 const levels: SponsorLevel[] = [

@@ -168,7 +168,7 @@ const components = sources.map(({ file, tier, name, template }) => {
   else if (layout) css = list(join(core, 'css/layouts'), (f) => f === `${kebab(name).replace(/-layout$/, '')}.css` || f === `${kebab(name)}.css`).map(read).join('\n');
   else css = coreCss[tier];
   const uses = template
-    ? [...source.matchAll(/import \{([^}]*)\} from '@design-library\/core\/react'/g)].flatMap((m) => m[1].split(',').map((x) => x.trim())).filter((x) => coreNames.has(x))
+    ? [...source.matchAll(/import \{([^}]*)\} from '@design-library\/core\/(?:react|components)'/g)].flatMap((m) => m[1].split(',').map((x) => x.trim())).filter((x) => coreNames.has(x))
     : [...source.matchAll(/from '\.\.?\/(?:fundamentals\/)?(\w+)'/g)].map((m) => m[1]).filter((u) => coreNames.has(u) && u !== name);
   const slug = template ? `${template}-${kebab(name)}` : kebab(name);
   const aliases = Object.fromEntries([...source.matchAll(/export type (\w+)(?:<[^>]*>)? = ([^;\n]+);/g)].map((m) => [m[1], m[2].trim().replace(/\s+/g, ' ')]));
@@ -201,8 +201,8 @@ for (const c of components) {
   if (usedBy.length) c.usedBy = usedBy;
 }
 
-// Exports of the React adapter: values and types, as written in react/index.ts.
-const reactIndex = read(join(core, 'react/index.ts'));
+// Exports of the React adapter: values and types, as written in react/components.ts (MP27: react/index.ts re-exports it and the stories).
+const reactIndex = read(join(core, 'react/components.ts')) + read(join(core, 'react/stories/index.ts'));
 const values = new Set();
 const types = new Set();
 for (const m of reactIndex.matchAll(/export (type )?\{([^}]*)\}/g))

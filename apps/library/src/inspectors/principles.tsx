@@ -1,5 +1,5 @@
 /** Q78.2/Q79: the frameworks behind a page, in short plain points, each linking to its full framework. */
-import { Grid, Heading, Link, List, Stack, Text } from '@design-library/core/react';
+import { Grid, Heading, Link, List, Stack, Text } from '@design-library/core/components';
 import { docsHref } from '../data/site-links';
 import principles from '../../../../packages/core/principles/principles.json';
 

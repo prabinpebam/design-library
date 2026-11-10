@@ -2,7 +2,7 @@
  * Space and shape options (F12, O53-O55): the four options of each side by side, each preview switched with
  * data-space or data-shape, their values in one table, and the control that previews the whole library in one.
  */
-import { Badge, Button, Checkbox, Cluster, Code, DataTable, Grid, Heading, SegmentedControl, Select, Stack, Switch, Text, TextField } from '@design-library/core/react';
+import { Badge, Button, Checkbox, Cluster, Code, DataTable, Grid, Heading, SegmentedControl, Select, Stack, Switch, Text, TextField } from '@design-library/core/components';
 import { useSpaceShape } from '../data/contexts';
 import { shapeOptions, spaceOptions, themeSpaceShape, type ShapeOption, type SpaceOption, type ThemeOption } from '../data/tokens';
 import { rev } from '../revisions/target';

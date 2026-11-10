@@ -5,7 +5,7 @@
  * contrast, forced colours) still force solid.
  */
 import { useSyncExternalStore } from 'react';
-import { suspendMotion } from '@design-library/core/react';
+import { suspendMotion } from '@design-library/core/components';
 import { watchStored } from '@design-library/core/presets';
 
 export type MaterialFinish = 'frosted' | 'solid';

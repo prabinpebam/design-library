@@ -4,9 +4,9 @@
  * its gaps. Reads core's generated index (packages/core/icons/sets/index.json); choices are kept in this browser only.
  */
 import { useEffect } from 'react';
-import { Button, Cluster, Code, DataTable, Grid, Heading, Icon, Link, RowList, SegmentedControl, Select, Stack, Text } from '@design-library/core/react';
+import { Button, Cluster, Code, DataTable, Grid, Heading, Icon, Link, RowList, SegmentedControl, Select, Stack, Text } from '@design-library/core/components';
 import { excludedIconSets, glyphFor, iconSetNames, isIconSetLoaded, iconSetOf, iconSets, loadIconSet, useIconSetVersion, type IconSetInfo } from '@design-library/core/icons';
-import type { IconName } from '@design-library/core/react';
+import type { IconName } from '@design-library/core/components';
 import { chooseIcons, useIcons } from '../data/icons';
 
 const names = iconSetNames as IconName[];

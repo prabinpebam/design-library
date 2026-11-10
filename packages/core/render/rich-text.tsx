@@ -6,7 +6,7 @@
  *   "title": ["Make ", { "text": "better things", "mark": "accent" }, ", together"]
  */
 import { Fragment, type ReactNode } from 'react';
-import { Code, Link, Text } from '../react';
+import { Code, Link, Text } from '../react/components';
 import type { RichText as RichValue } from './types';
 
 /** Draws a rich text value: plain strings as they are, each marked run through the core part for its mark. */

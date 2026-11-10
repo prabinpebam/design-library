@@ -2,7 +2,7 @@
  * A component page's contract sections, all read from the component's source by the catalogue: its props, its
  * accessibility notes and keys, and what it's built from. Library-app tooling (above core, O21).
  */
-import { Code, DataTable, DescriptionList, Heading, Link, List, Stack, Text } from '@design-library/core/react';
+import { Code, DataTable, DescriptionList, Heading, Link, List, Stack, Text } from '@design-library/core/components';
 import { Fragment, type ReactNode } from 'react';
 import { catalogue, entryOf, type PropDoc } from '../data/catalogue';
 import { pages } from '../data/pages';

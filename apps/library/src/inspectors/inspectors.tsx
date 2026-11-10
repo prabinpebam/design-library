@@ -3,7 +3,7 @@
  * only data custom properties; core never imports them.
  */
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Button, Cluster, Code, Heading, Icon, Link, RowList, Stack, StackedBar as CoreStackedBar, Switch, Text, TokenSpecimen } from '@design-library/core/react';
+import { Button, Cluster, Code, Heading, Icon, Link, RowList, Stack, StackedBar as CoreStackedBar, Switch, Text, TokenSpecimen } from '@design-library/core/components';
 import { colourRoles, contrastPairs, palette, primitiveIn, readable, reducedLiteral, resolveLiteral, statuses, tokenFiles, tokensIn, valueOf, type TokenEntry } from '../data/tokens';
 import type { SpecimenContext } from '../data/contexts';
 import { ContextMatrix } from './specimens';

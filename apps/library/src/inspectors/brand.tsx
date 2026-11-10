@@ -2,7 +2,7 @@
  * The Colour page's brand editor (owner, F7d): four numbered swatches, the accent choice, presets and the draft's
  * state. Above-core tooling made only of core components; the draft itself lives in data/brand.ts.
  */
-import { Button, Cluster, Code, CodeBlock, ColourField, Heading, Icon, MenuButton, SegmentedControl, Stack, Text, TokenSpecimen } from '@design-library/core/react';
+import { Button, Cluster, Code, CodeBlock, ColourField, Heading, Icon, MenuButton, SegmentedControl, Stack, Text, TokenSpecimen } from '@design-library/core/components';
 import { applyPreset, clearColour, configText, discardDraft, nameOf, pickColour, presets, setAccent, slots, undoBrand, useBrand, type Slot } from '../data/brand';
 import { INSPECTORS, rev } from '../revisions/target';
 

@@ -1,5 +1,5 @@
 /** The Design tool template's record (Q61, Q62, Q64): what content/editor.json holds. */
-import type { CanvasShape, IconName } from '@design-library/core/react';
+import type { CanvasShape, IconName } from '@design-library/core/components';
 
 /** One value of a layer's property: a number, words, a choice's value or on/off. */
 export type PropValue = string | number | boolean;

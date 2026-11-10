@@ -5,7 +5,7 @@
  * styles. Shown on the library's Routing page in a ScreenPreview.
  */
 import { useState } from 'react';
-import { Cluster, Image, Link, PageHeader, SchemeControl, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/react';
+import { Cluster, Image, Link, PageHeader, SchemeControl, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/components';
 import { loadPicture, matchPath, Router, useRoute, type Route } from '@design-library/core/site';
 import hall from '../../../../packages/templates/conference/assets/main-hall.webp?url';
 

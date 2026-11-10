@@ -4,7 +4,7 @@
  * and data-shape attributes on body, the public seam the generated space and shape tokens read.
  */
 import { useSyncExternalStore } from 'react';
-import { suspendMotion } from '@design-library/core/react';
+import { suspendMotion } from '@design-library/core/components';
 import { watchStored } from '@design-library/core/presets';
 import { shapeOptions, spaceOptions, themeSpaceShape, type ShapeOption, type SpaceOption } from './tokens';
 

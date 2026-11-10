@@ -6,7 +6,7 @@
  * own presets can be renamed and deleted (with Undo). Built-in presets are read-only.
  */
 import { useState, useSyncExternalStore } from 'react';
-import { Button, Cluster, Dialog, Heading, notify, RadioGroup, Select, Stack, TextField, type ButtonSize } from '@design-library/core/react';
+import { Button, Cluster, Dialog, Heading, notify, RadioGroup, Select, Stack, TextField, type ButtonSize } from '@design-library/core/components';
 import {
   applyCategoryPreset,
   applyGlobalPreset,

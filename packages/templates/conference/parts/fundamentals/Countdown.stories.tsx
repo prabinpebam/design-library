@@ -1,4 +1,4 @@
-import type { StoryFile } from '@design-library/core/react';
+import type { StoryFile } from '@design-library/core/components';
 import { Countdown } from './Countdown';
 
 export default {

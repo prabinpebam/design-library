@@ -5,7 +5,7 @@
  * away in place (Reveal) unless resolved threads are shown. Words and threads come from the record. No styles.
  */
 import { useState } from 'react';
-import { Button, Cluster, Heading, Persona, Reveal, Stack, Switch, Text, TextArea, notify } from '@design-library/core/react';
+import { Button, Cluster, Heading, Persona, Reveal, Stack, Switch, Text, TextArea, notify } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import type { DesignCommentsSpec, DesignShape, DesignThread } from './types';
 

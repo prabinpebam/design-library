@@ -6,7 +6,7 @@
  * (Comments.tsx). No styles.
  */
 import { useState } from 'react';
-import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Text, Toolbar, TreeView, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/react';
+import { AvatarGroup, Button, Canvas, Cluster, EditorLayout, Heading, MenuButton, Popover, Reveal, SegmentedControl, Switch, Stack, Text, Toolbar, TreeView, notify, type CanvasLook, type CanvasShape, type TreeItem } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
 import { DesignComments } from './Comments';
 import { Inspector } from './Inspector';

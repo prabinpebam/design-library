@@ -1,5 +1,5 @@
 /** The Project management template's records (Q61, Q62, Q64): the project (content/shared.json) and one issue in full (content/issue.json). */
-import type { BadgeTone } from '@design-library/core/react';
+import type { BadgeTone } from '@design-library/core/components';
 
 export type IssueType = 'Story' | 'Bug' | 'Task';
 

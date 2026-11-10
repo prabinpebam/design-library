@@ -1,5 +1,5 @@
 /** The conference template: its manifest, content JSON, pictures, registry and its own parts' stories (Q64). */
-import type { StoryFile } from '@design-library/core/react';
+import type { StoryFile } from '@design-library/core/components';
 import manifest from './template.json';
 import assets from './assets.json';
 import { loadTemplate } from '../load';
