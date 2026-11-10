@@ -3,7 +3,6 @@ import { Button } from '../fundamentals/Button';
 import { Heading } from '../fundamentals/Heading';
 import { Morph } from '../fundamentals/Morph';
 import { ScrollArea } from '../fundamentals/ScrollArea';
-import { containTab, tabStops } from '../behaviour/focus';
 import type { DataAttributes } from '../types';
 
 export interface DialogProps extends DataAttributes {
@@ -41,8 +40,8 @@ export interface DialogProps extends DataAttributes {
  * with an undo in an auto-dismissing notification (owner rule).
  * @tier compound
  * @family overlays
- * @a11y The native `dialog` opened with `showModal()`: the page behind is inert, so focus stays inside and Tab cycles
- * through the dialog, with explicit boundary wrapping for browsers that otherwise focus the document at the end.
+ * @a11y The native `dialog` opened with `showModal()`: the page behind is inert. Native Tab order may include browser
+ * chrome; BODY while the document has no focus is not a page-focus escape and needs no competing JavaScript trap.
  * The header and actions are non-landmark containers. Named by its title, described by its description; `role="alertdialog"` when `alert`. Focus
  * starts on the first field or control in the body (the title when there's none), on the first action in an alert
  * dialog, and returns to whatever opened it on close. The close button is named "Close", with a minimum 44 CSS px
@@ -69,7 +68,7 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       const body = d.querySelector<HTMLElement>('[data-dl-part="body"]');
       const actionsArea = d.querySelector<HTMLElement>('[data-dl-part="actions"]');
       const start = alert ? actionsArea : body;
-      const first = start ? tabStops(start)[0] : undefined;
+      const first = start?.querySelector<HTMLElement>('input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
       (first ?? d.querySelector<HTMLElement>('[data-dl-part="heading"]'))?.focus();
     } else if (!open && d.open) {
       d.close();
@@ -80,7 +79,8 @@ export function Dialog({ open, onClose, title, description, children, actions, s
   useEffect(() => {
     const d = ref.current;
     return () => {
-      if (d?.open) d.close();
+      if (!d?.open) return;
+      d.close();
       if (opener.current?.isConnected) opener.current.focus();
     };
   }, []);
@@ -119,7 +119,6 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       aria-modal="true"
       aria-labelledby={`${id}-title`}
       aria-describedby={description ? `${id}-description` : undefined}
-      onKeyDown={(e) => containTab(e.nativeEvent, e.currentTarget)}
       onCancel={(e) => {
         e.preventDefault();
         if (!alert) close.current();

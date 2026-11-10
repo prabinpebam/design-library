@@ -8,7 +8,8 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
-- **Fixed (G14 follow-up):** Dialog explicitly wraps native Tab/Shift+Tab at the modal boundary, restores focus on unmount, and uses non-landmark header/actions containers. ScrollArea joins the Tab order only while its selected axis overflows (unless tabIndex is explicit), with `label`/new `labelledBy` naming and its existing inset token focus ring.
+- **Corrected:** keep native Dialog Tab order: browser chrome (BODY with document.hasFocus=false) is not a modal escape. No custom focus trap. An open Dialog restores its opener on unmount; an already-closed one preserves current focus. Only a named overflowing ScrollArea gains an automatic tab stop; explicit tabIndex wins.
+- **Added:** ListItem `activeAppearance="tint"` uses the same mild hover/active token fill without a proxy-focus outline. Optional `activeIndicator` reserves a non-border chevron cue for 3:1 qualification; native focus rings and selection semantics remain.
 - **Added:** public shared theme setting `--border-divider`: `applySettings({ '--border-divider': '0px' })` removes standard horizontal separators without removing field outlines, enclosing borders, focus rings or selection indicators. PropertySection's opt-in separator also exposes `--c-property-section-divider-width` as a public setting. Defaults are unchanged. List retains `dividers="none"`; Dialog and MenuButton have no separator lines.
 
 - **Fixed (G14; core):** Dialog's Close button enables Button's new optional `minimumTarget` prop: at least the normal rem target and a token-driven 44 CSS px floor in both axes, including under root font reduction. Its small icon, keyboard behaviour and focus ring remain. Other Buttons retain their existing sizes unless opted in.

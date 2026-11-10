@@ -6,10 +6,14 @@
 
 ### G14: Dialog close target (11 November 2026)
 
-Follow-up acceptance: native Tab and Shift+Tab never leave the modal at their
-cycle boundary, and Escape restores the opener even when the Dialog unmounts.
+Follow-up acceptance: native modality keeps the page inert; browser chrome
+(BODY with document.hasFocus=false) is not a page-focus escape and must not
+be bespoke-trapped. Escape restores the opener when an open Dialog unmounts;
+unmounting an already-closed one preserves current focus. ListItem exposes
+optional same-as-hover active tint without a proxy-focus outline and an
+optional stable non-border cue for 3:1 qualification.
 The header/actions are not page landmarks. Overflowing ScrollArea viewports
-are keyboard-focusable and named through label/labelledBy, with a token ring;
+are keyboard-focusable when named through label/labelledBy, with a token ring;
 fitting content adds no automatic Tab stop. Public theme settings remove
 horizontal separators without removing control outlines. Keep fixes at source,
 test and pack locally, and preserve the beta.2 consumer's dependency pairing.

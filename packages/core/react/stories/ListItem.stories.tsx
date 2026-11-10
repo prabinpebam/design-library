@@ -39,6 +39,18 @@ export default {
   summary: 'One item of a list a person chooses from: the same item in every menu and select.',
   stories: [
     {
+      title: 'Mild proxy-focus tint',
+      description: 'For an aria-activedescendant owner: hover and active use the same mild token fill, not a row outline. The optional fixed-slot chevron adds a non-border cue when the tint alone lacks 3:1. Native keyboard focus still has its ring; selection semantics are unchanged.',
+      code: `<ListItem role="option" label="Talks" active activeAppearance="tint" activeIndicator />`,
+      render: () => (
+        <Items role="listbox" aria-label="Search destinations">
+          <ListItem role="option" label="Talks" active activeAppearance="tint" activeIndicator />
+          <ListItem role="option" label="Speakers" activeAppearance="tint" activeIndicator />
+          <ListItem role="option" label="Editions" activeAppearance="tint" activeIndicator disabled />
+        </Items>
+      ),
+    },
+    {
       title: 'Options in a listbox',
       description: 'As a Select draws them: the chosen option is checked and tinted; the keyboard’s option has the focus ring. Items sit a gap apart, so fills never touch.',
       code: `<ListItem role="option" label="Button copy review" selected />
@@ -238,7 +250,6 @@ export default {
     },
   ],
 } satisfies StoryFile;
-
 
 
 

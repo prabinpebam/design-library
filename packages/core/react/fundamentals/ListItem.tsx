@@ -49,6 +49,10 @@ export interface ListItemProps extends DataAttributes {
   multiple?: boolean;
   /** The keyboard is on it while focus stays on the control (`aria-activedescendant`); shows the focus ring. */
   active?: boolean;
+  /** Proxy focus from aria-activedescendant: the existing ring, or the same mild fill as hover. Native focus keeps its ring. */
+  activeAppearance?: 'ring' | 'tint';
+  /** Reserve a trailing chevron that shows only on the active item: a non-border cue when a mild tint alone lacks 3:1 contrast. */
+  activeIndicator?: boolean;
   /** Shown but can't be chosen now (`aria-disabled`); the keyboard skips it. Use when the reason is obvious. */
   disabled?: boolean;
   /** Looks unavailable, but the keyboard still reaches it so its reason (the description) is read: an outage, a missing permission. */
@@ -90,7 +94,9 @@ function initials(name: string) {
  * @tier fundamental
  * @family selection
  * @a11y A `div` with the list's role, never focusable by Tab: a menu moves focus onto it, a listbox points at it with
- * `aria-activedescendant` and `active` draws the focus ring. Chosen and on are carried by `aria-selected` or
+ * `aria-activedescendant` and `active` draws the focus ring, or the hover tint with `activeAppearance="tint"`.
+ * Add `activeIndicator` when that mild fill alone lacks 3:1 contrast: its fixed-slot trailing chevron uses the text
+ * token; verify that cue against the actual surface. Native focus still draws its ring. Chosen and on are carried by `aria-selected` or
  * `aria-checked` and a mark (check, box or dot), never colour alone. A shortcut sets `aria-keyshortcuts`; a submenu sets
  * `aria-haspopup="menu"`. Size s is a written target exception (32 px, above the 24 px minimum) that returns to 44 px on
  * a coarse pointer. The fills reach the item's edges and never touch a neighbour's: the list owns a gap between items.
@@ -118,6 +124,8 @@ export function ListItem({
   selected,
   multiple,
   active,
+  activeAppearance = 'ring',
+  activeIndicator = false,
   disabled,
   inactive,
   busy,
@@ -165,6 +173,7 @@ export function ListItem({
       data-size={size === 'normal' ? undefined : size}
       data-tone={tone}
       data-active={active ? '' : undefined}
+      data-active-appearance={activeAppearance === 'tint' ? 'tint' : undefined}
       data-inactive={inactive ? '' : undefined}
       data-unread={unread ? '' : undefined}
       data-description={description && descriptionPosition === 'inline' ? 'inline' : undefined}
@@ -203,6 +212,11 @@ export function ListItem({
         </span>
         {description && <span data-dl-part="item-description">{description}</span>}
       </span>
+      {activeIndicator && (
+        <span data-dl-part="item-active" data-on={active ? '' : undefined} aria-hidden="true">
+          <Icon name="chevron-end" />
+        </span>
+      )}
       {unread && <span data-dl-part="item-unread" aria-hidden="true" />}
       {meta && (
         <span data-dl-part="item-meta" role={cell}>

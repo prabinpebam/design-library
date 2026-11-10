@@ -226,7 +226,7 @@
   }
 
   [data-dl='list-item']:focus-visible,
-  [data-dl='list-item'][data-active] {
+  [data-dl='list-item'][data-active]:not([data-active-appearance='tint']) {
     outline: var(--size-focus-width) solid var(--color-focus);
     outline-offset: calc(-1 * var(--size-focus-width));
   }
@@ -243,6 +243,20 @@
     [data-dl='list-item']:has(> [data-dl-part='item-mark'][data-kind='box'])[aria-selected='true']:hover {
       background-color: var(--state-hover);
     }
+  }
+
+  [data-dl='list-item'][data-active][data-active-appearance='tint']:not([aria-disabled='true']) {
+    background-color: var(--state-hover);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-active'] {
+    display: inline-flex;
+    color: var(--color-text);
+    visibility: hidden;
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-active'][data-on] {
+    visibility: visible;
   }
 
   [data-dl='list-item']:active {

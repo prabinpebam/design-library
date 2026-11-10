@@ -7,7 +7,7 @@
   "summary": "A scroll region whose scrollbar is drawn over the content, never beside it: the content has the same width and alignment whether it overflows or not. Native scrolling stays (wheel, touch, keys, find in page, anchors); only the bar is replaced, by a thin thumb at the region's end edge that can be dragged, with the track paging on a click. Use it for every scroll region. Not for the document itself on small screens, which keeps the browser's own bar.",
   "family": "arrangement",
   "a11y": [
-    "The drawn bar is hidden from assistive technology. The viewport enters the Tab order only while its selected axis overflows, and keeps an inset token focus ring. Give label or labelledBy for its accessible name. An explicit tabIndex overrides automatic focusability; content that fits adds no default Tab stop.",
+    "The drawn bar is hidden from assistive technology. A named viewport enters the Tab order only while its selected axis overflows, and keeps an inset token focus ring. Give label or labelledBy to opt in with an accessible name. An explicit tabIndex overrides automatic focusability; content that fits adds no default Tab stop.",
     "Forced colours and touch screens get the system's own scrollbar back."
   ],
   "keys": [
@@ -77,7 +77,7 @@
         {
           "name": "tabIndex",
           "type": "number",
-          "description": "Explicit focus order; `-1` for a skip link's target. By default, 0 only while the selected axis overflows."
+          "description": "Explicit focus order; `-1` when an APG owner already controls keyboard access. By default, 0 only for a named region while the selected axis overflows."
         },
         {
           "name": "viewportRef",
