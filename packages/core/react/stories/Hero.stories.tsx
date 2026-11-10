@@ -10,6 +10,7 @@ import driftPoster from './media/drift-poster.jpg?url';
 import driftCaptions from './media/drift.en.vtt?url';
 import type { StoryFile } from './story';
 import { richText } from '../../render/rich-text';
+import { ScreenPreview } from '../compounds/ScreenPreview';
 
 const go = () => undefined;
 
@@ -144,6 +145,16 @@ import { richText } from '@design-library/core/render';
           lead={richText(['A small shop on the quay. ', { text: 'Open late', mark: 'strong' }, ' on Fridays, ', { text: 'see the hours', mark: 'link', href: '#/hero' }, '.'])}
         />
       ),
+    },
+    {
+      title: 'Breadcrumbs before the opening',
+      description:
+        'A trail of where the page sits goes before the opening as its own part, not inside it: Breadcrumbs, then Hero, at the layout’s band gap (ID30). It keeps the spacing rules at every width. With opening="flush" the first band meets the header, so the trail would touch it: keep the spaced opening when a trail leads.',
+      code: `<SiteLayout header={…}>
+  <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Speakers', href: '/speakers' }, { label: 'Mira Okafor' }]} />
+  <Hero eyebrow="Speaker" title="Mira Okafor on maps people can read" lead="…" picture={…} />
+</SiteLayout>`,
+      render: () => <ScreenPreview src="site.html?demo=crumbs" title="A speaker page: breadcrumbs, then the opening" caption="Breadcrumbs as the part before a split opening, under the site header." />,
     },
   ],
 } satisfies StoryFile;
