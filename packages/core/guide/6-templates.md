@@ -30,6 +30,23 @@ Goal: a whole product's screens from a template: first by using one as it is, wi
 
 A copy that keeps the library's id stays a copy of that template; to make it yours, adapt it as below.
 
+## Use a part from another template
+
+A template's own parts (a countdown, a sponsor wall, an app screen) can go into any site without the rest of that template. Import its registry alone: `@design-library/templates/{id}/registry` brings the template's parts, its registry and its token CSS, and none of its content or pictures (templates with parts: `conference`, `chat`, `design`, `projects`).
+
+```tsx
+import { Countdown } from '@design-library/templates/conference/registry';
+
+<Countdown label="Doors open in" until="2027-04-20T09:00:00Z" passed="Doors are open" />
+```
+
+- **In code:** import the part by name, as above; its props are typed (`CountdownProps`, `SponsorWallProps`).
+- **From JSON:** pass the registry to `loadTemplate` or `loadSite` (`registry`), then place the part as a block by its namespaced type (`"type": "conference.countdown"`).
+- **Size:** a page placing the conference `Countdown` this way was 305 KB of script and styles, against 442 KB through the template's full entry (`@design-library/templates/conference`), which also brings its pictures and content.
+- **Look:** the part reads its own template tokens (`t.conference.*`); set them in your theme like any template token, never by selecting the part in CSS.
+
+Copy a part into your own template only when you need to change what it draws; then it's yours (`npx design-library-new-template {id} --part compounds/{Name}`).
+
 ## Your own pictures
 
 Every picture a template shows is a file in its `assets/` folder and an entry in its `assets.json`; content names it by id (`"picture": "shopfront"`).
