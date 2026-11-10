@@ -14,8 +14,24 @@ export interface RouterProps {
   mode?: 'hash' | 'history';
   /** History mode only: the path the site is served under, such as `/design`. */
   base?: string;
-  /** Where focus goes after a page change: a selector inside the new page (default `main h1`, else `main`). `false` leaves focus alone. */
-  focus?: string | false;
+  /**
+   * Where focus goes after a page change: a selector inside the new page (default `main h1`, else `main`). `false` leaves
+   * focus alone. A function picks per change (MP1): `(to, from) => selector | false`.
+   */
+  focus?: string | false | ((to: Route, from: Route) => string | false);
+  /**
+   * Where a new page lands (MP1): `'top'` (default, as before) scrolls to the top, or to its anchor; `'keep'` keeps the
+   * place, so moving between sibling pages (one year to the next) leaves the page where it was, and focus stays where
+   * it is unless `focus` is a function; the new page's heading is still announced. A function picks per change, such
+   * as `'keep'` between two pages of one archive and `'top'` for any other link. An anchor always wins.
+   */
+  scroll?: PageScroll | ((to: Route, from: Route) => PageScroll);
+  /**
+   * A link to the page already shown (MP1): `'none'` (default, as before) does nothing but call `onChange`; `'top'`
+   * glides back to the top on the motion tokens (at once under reduced motion), as a header link to the current page
+   * does on many sites. Links with an anchor are anchor links and always go to it.
+   */
+  again?: 'none' | 'top';
   /** What is announced after a page change: the default says the focused heading's words; return `''` to say nothing. */
   announcement?: (route: Route, heading: string) => string;
   /** Links in the page (`<a href>` anywhere, such as rich text from content) are handled by the router too. Default `true`. */
@@ -42,6 +58,9 @@ export interface RouterProps {
 
 /** The page transitions a router can run by name. */
 export type PageTransition = 'none' | 'fade';
+
+/** Where a new page lands: at the top (or its anchor), or where the old page was. */
+export type PageScroll = 'top' | 'keep';
 
 /** Loads and decodes a picture: resolves when it can be drawn at once, or when it fails. For `Router` `prepare` and `warm`. */
 export function loadPicture(src: string): Promise<void> {
@@ -97,9 +116,11 @@ function focusQuietly(el: HTMLElement) {
  * it. A page change scrolls to the top (or to its anchor), moves focus to the new page's heading and announces it; an
  * anchor link scrolls to its target and focuses it without replacing the route; Back and Forward return to where the
  * person was. With `prepare` the old page stays until the new one is ready (IP30), and `transition="fade"` swaps them
- * in one cross-fade. Behaviour only: no styles, no views, no route table (the site decides what each path shows).
+ * in one cross-fade. `scroll="keep"` (or a function) keeps the place between sibling pages, and `again="top"` glides a
+ * link to the shown page back to the top (MP1). Behaviour only: no styles, no views, no route table (the site decides
+ * what each path shows).
  */
-export function Router({ mode = 'hash', base = '', focus = 'main h1', announcement, handleLinks = true, onChange, transition = 'none', prepare, wait, warm, children }: RouterProps) {
+export function Router({ mode = 'hash', base = '', focus = 'main h1', scroll = 'top', again = 'none', announcement, handleLinks = true, onChange, transition = 'none', prepare, wait, warm, children }: RouterProps) {
   const root = clean(base) === '/' ? '' : clean(base);
   const [entry, setEntry] = useState<Entry>(() => ({ route: readRoute(mode, root, null), how: 'first' }));
   const [pending, setPending] = useState<Route | null>(null);
@@ -110,6 +131,10 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
   const latest = useRef(0);
   const swapWith = useRef({ transition, prepare, wait });
   swapWith.current = { transition, prepare, wait };
+  const landWith = useRef({ scroll, focus, again });
+  landWith.current = { scroll, focus, again };
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
   const show = useCallback(async (next: Entry) => {
     const from = current.current;
@@ -162,6 +187,12 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
         return;
       }
       const url = urlFor(to);
+      // A link to the page already shown (no anchor): with `again="top"` it glides back to the top and stays one entry.
+      if (landWith.current.again === 'top' && url === urlFor(`${current.current.path}${current.current.query.toString() ? `?${current.current.query}` : ''}`)) {
+        void glide(0);
+        onChangeRef.current?.(current.current);
+        return;
+      }
       // Remember where this page was scrolled to, so Back returns there.
       history.replaceState({ ...(history.state ?? {}), dlScroll: window.scrollY }, '');
       if (options?.replace) history.replaceState({ dlScroll: 0 }, '', url);
@@ -251,21 +282,29 @@ export function Router({ mode = 'hash', base = '', focus = 'main h1', announceme
       return;
     }
     // A new page lands at once; an anchor on the same page glides (IP17), stopping if the person scrolls.
+    const land = landWith.current;
+    const where = newPage ? (typeof land.scroll === 'function' ? land.scroll(route, before) : land.scroll) : 'top';
+    const keep = where === 'keep' && !target;
+    const aim = typeof land.focus === 'function' ? land.focus(route, before) : keep ? false : land.focus;
     const behavior = newPage ? 'instant' : 'auto';
-    if (how === 'pop' && scroll !== undefined && !target) glide(scroll, { behavior: 'instant' });
+    if (keep) {
+      // The place stays; nothing scrolls.
+    } else if (how === 'pop' && scroll !== undefined && !target) glide(scroll, { behavior: 'instant' });
     else glide(target ?? 0, { behavior });
     if (target) focusQuietly(target);
-    else if (newPage && focus !== false) {
-      const heading = document.querySelector<HTMLElement>(focus) ?? document.querySelector<HTMLElement>('main');
-      if (heading) {
-        focusQuietly(heading);
-        const words = (heading.textContent ?? '').trim();
+    else if (newPage) {
+      const heading = aim === false ? null : (document.querySelector<HTMLElement>(aim) ?? document.querySelector<HTMLElement>('main'));
+      if (heading) focusQuietly(heading);
+      // Kept in place, focus stays on the link that was used, but the new page is still named.
+      const named = heading ?? (keep && focus !== false ? document.querySelector<HTMLElement>(typeof focus === 'string' ? focus : 'main h1') : null);
+      if (named) {
+        const words = (named.textContent ?? '').trim();
         const said = announcement ? announcement(route, words) : words;
         if (said) announce(said);
       }
     }
     onChange?.(route);
-  }, [entry, focus, announcement, onChange]);
+  }, [entry, announcement, onChange]);
 
   const api = useMemo<RouterApi>(() => ({ route: entry.route, pending, href: (to) => (owns(to) ? urlFor(to) : to), navigate, owns }), [entry.route, pending, owns, urlFor, navigate]);
   return <RouterContext.Provider value={api}>{children}</RouterContext.Provider>;

@@ -12,9 +12,23 @@ import hall from '../../../../packages/templates/conference/assets/main-hall.web
 const pages = [
   { href: '/', label: 'Home' },
   { href: '/talks', label: 'Talks' },
+  { href: '/archive/2025', label: 'Archive' },
   { href: '/venue', label: 'Venue' },
   { href: '/about', label: 'About' },
 ];
+
+const years = ['2021', '2022', '2023', '2024', '2025'];
+const yearTheme: Record<string, string> = {
+  '2021': 'Small tools, shared well',
+  '2022': 'Designing for slow networks',
+  '2023': 'Words in interfaces',
+  '2024': 'Maps, places and wayfinding',
+  '2025': 'Repair over replace',
+};
+
+/** MP1: two pages of the archive are siblings, so moving between them keeps the place; any other link lands at the top. */
+const inArchive = (r: Route) => r.path.startsWith('/archive/');
+const scrollFor = (to: Route, from: Route) => (inArchive(to) && inArchive(from) ? 'keep' : 'top');
 
 const talks = [
   { id: 'schedule', heading: 'Schedule', text: 'Doors open at nine. Talks run from half past nine until five, with lunch at one.' },
@@ -59,6 +73,32 @@ function View() {
         <Image src={hall} alt="The main hall just before the first talk: a lit stage with a blank screen, rows of people seated, the river and a suspension bridge through tall windows." ratio="wide" rounded />
       </Stack>
     );
+  const year = matchPath('/archive/:year', path)?.year;
+  if (year && years.includes(year))
+    return (
+      <Stack gap="section">
+        <PageHeader title={`${year}: ${yearTheme[year]}`} lead="Scroll down to the line of years and pick another: the page changes and stays where it was. Any other link lands at the top." />
+        <Stack gap="item">
+          {Array.from({ length: 5 }, (_, i) => (
+            <Text key={i}>{`The ${year} day opened with a short welcome, then talks on ${yearTheme[year].toLowerCase()}. ${filler}`}</Text>
+          ))}
+        </Stack>
+        <Section heading="Every year" intro="Moving between years keeps your place on this line.">
+          <Cluster gap="item">
+            {years.map((y) => (
+              <Link key={y} href={`/archive/${y}`} current={y === year}>
+                {y}
+              </Link>
+            ))}
+          </Cluster>
+        </Section>
+        <Stack gap="item">
+          {Array.from({ length: 4 }, (_, i) => (
+            <Text key={i}>{filler}</Text>
+          ))}
+        </Stack>
+      </Stack>
+    );
   if (matchPath('/about', path))
     return <PageHeader title="About" lead="A yearly day of talks, run by volunteers. The router moved focus to this page’s heading and said its name." />;
   return (
@@ -79,7 +119,7 @@ function Shell({ fade, onFade }: { fade: boolean; onFade: (next: boolean) => voi
         <SiteHeader
           name="Talks on design"
           href="/"
-          links={pages.map((p) => ({ ...p, current: p.href === path }))}
+          links={pages.map((p) => ({ ...p, current: p.href === path || (p.label === 'Archive' && path.startsWith('/archive/')) }))}
           narrow={row ? 'row' : undefined}
           tools={<SchemeControl form="button" storageKey="design-library.router-demo.scheme" />}
           actions={<Switch label="Fade between pages" checked={fade} onChange={onFade} />}
@@ -97,7 +137,7 @@ const prepare = (to: Route) => (to.path === '/venue' ? loadPicture(hall) : undef
 export function RouterDemo() {
   const [fade, setFade] = useState(true);
   return (
-    <Router transition={fade ? 'fade' : 'none'} prepare={prepare} warm={prepare}>
+    <Router transition={fade ? 'fade' : 'none'} prepare={prepare} warm={prepare} scroll={scrollFor} again="top">
       <Shell fade={fade} onFade={setFade} />
     </Router>
   );

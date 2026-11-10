@@ -8,6 +8,8 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
+- **Added (MP1; 0.4.0-beta.2):** `Router` keeps the place between sibling pages. New props: `scroll` (`'top'`, the default and today's behaviour, or `'keep'`, or `(to, from) => 'top' | 'keep'`): kept in place, a new page doesn't scroll, focus stays on the link used and the new page's heading is still announced, and an anchor always wins; `again` (`'none'`, the default and today's behaviour, or `'top'`): a link to the page already shown glides back to the top on the motion tokens without a new history entry; `focus` also takes `(to, from) => selector | false`. New type `PageScroll`. Routing page story: an archive by year whose year links keep the place. **Adopt:** optional. A site that keeps its own place between sibling routes (a hand router, or a year in the query as a stopgap) passes `scroll={(to, from) => sameSet(to, from) ? 'keep' : 'top'}` and `again="top"`, and drops the hand code.
+
 ## 0.4.0-beta.1 (2026-11-10): data-driven sites
 
 A whole site as JSON: a site document, page documents and collections, drawn by one `SiteView` on the core router, with commands to find blocks, check the site, write its types and rebuild generated collections. Every change is an addition: `TemplateView`, `loadTemplate`, content files and every component keep their output, and the new checks only warn. Upgrading: `UPGRADE.md`, section 0.3.0-beta.1 → 0.4.0-beta.1.

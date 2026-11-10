@@ -978,6 +978,8 @@ export const pages: Page[] = withDocs(withPrinciples([
             'A page change scrolls to the top, or to its anchor, moves focus to the new page’s main heading (focus prop, default main h1) and announces its words politely.',
             'An in-page link (#venue) scrolls to the element with that id and focuses it, without replacing the route: in hash mode the address becomes #/talks#venue. Section takes anchor="venue" for its heading. The skip link works the same way.',
             'Back and Forward return to the page and the place you left it. Scrolling within a page glides on the move timing; a new page and reduced motion jump at once.',
+            'Sibling pages keep the place (MP1): scroll="keep", or a function (to, from) => "keep" | "top", leaves the page where it was on a change between two pages of one set (one year of an archive to the next); focus stays on the link used and the new page’s heading is still announced. The default, "top", is as before, and an anchor always wins. focus also takes a function (to, from) => selector | false.',
+            'A link to the page already shown does nothing by default; again="top" glides back to the top, as a header link to the current page does on many sites.',
             'A page change can wait and fade (IP30): prepare(to, from) gets the new page ready (loadPicture(src) for its picture) while the old page stays, at most wait ms (default the indicator delay, 300 ms, so no loading indicator is ever needed); transition="fade" then swaps the two in one cross-fade on the motion tokens, and reduced motion swaps at once. The default, "none", swaps at once as before. warm(to) runs when the pointer or focus reaches a link to another page, so its picture starts early.',
             'The library never owns routes: matchPath("/talks/:id", path) reads a pattern’s parts, and a path nothing matches is the site’s own not-found page.',
           ],
@@ -985,7 +987,7 @@ export const pages: Page[] = withDocs(withPrinciples([
       },
       {
         heading: 'A small site, live',
-        intro: 'Choose Talks, then Venue on its line of links: the page moves to the venue and the address keeps the route. Press About, then the browser’s Back: the talks page returns at the venue. Choose Venue in the header: the old page stays until the hall’s picture is ready, then the two cross-fade; switch off “Fade between pages” to swap at once. Try an address that doesn’t exist.',
+        intro: 'Choose Talks, then Venue on its line of links: the page moves to the venue and the address keeps the route. Press About, then the browser’s Back: the talks page returns at the venue. Choose Venue in the header: the old page stays until the hall’s picture is ready, then the two cross-fade; switch off “Fade between pages” to swap at once. Open Archive, scroll to the line of years and pick another: the page changes and keeps its place. Scroll down any page and choose its own header link: it glides back to the top. Try an address that doesn’t exist.',
         block: { type: 'screen', src: 'site.html?demo=router#/', title: 'A small site on the core router', width: 'fill' },
       },
     ],
