@@ -977,6 +977,17 @@
       },
       "additionalProperties": false
     },
+    "illustration": {
+      "description": "Drawn art from the template's assets (MP22): an asset marked `illustration` drawn inline by Illustration, its colours from tokens in every scheme, its size groups by its own width, its motion as the asset's `play` says. Its `alt` names it; a decorative asset is skipped by screen readers.",
+      "type": "object",
+      "required": ["type", "picture"],
+      "properties": {
+        "type": { "const": "illustration" },
+        "picture": { "$ref": "#/$defs/asset" },
+        "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frame, over the asset's own ratio; `natural` takes the drawing's viewBox." }
+      },
+      "additionalProperties": false
+    },
     "breadcrumbs": {
       "description": "Where the page sits: home, each level, the page itself last without a link.",
       "type": "object",

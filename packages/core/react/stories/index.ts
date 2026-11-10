@@ -103,6 +103,7 @@ export { default as cardStories } from './Card.stories';
 export { default as statisticStories } from './Statistic.stories';
 export { default as accordionStories } from './Accordion.stories';
 export { default as imageStories } from './Image.stories';
+export { default as illustrationStories } from './Illustration.stories';
 export { default as tooltipStories } from './Tooltip.stories';
 export { default as popoverStories } from './Popover.stories';
 export { default as imageGridStories } from './ImageGrid.stories';

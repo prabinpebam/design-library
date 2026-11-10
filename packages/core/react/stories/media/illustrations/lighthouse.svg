@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270">
+  <title>A lighthouse on the shore, its beam sweeping the sea</title>
+  <rect class="fill" x="0" y="0" width="480" height="270" />
+  <g data-size="wide">
+    <path class="muted" d="M0 210 L0 150 Q34 136 62 152 Q92 168 118 210 Z" />
+    <path class="muted" d="M480 210 L480 166 Q450 150 420 168 Q396 184 380 210 Z" />
+    <g class="ink" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" data-motion="float">
+      <path d="M86 70 q9 -9 18 0 q9 -9 18 0" />
+      <path d="M128 98 q7 -7 14 0 q7 -7 14 0" />
+      <path d="M352 62 q8 -8 16 0 q8 -8 16 0" />
+    </g>
+  </g>
+  <g class="accent" data-motion="fade">
+    <polygon points="252,84 480,46 480,122" opacity="0.28" />
+    <polygon points="228,84 0,46 0,122" opacity="0.28" />
+  </g>
+  <rect class="surface" x="0" y="210" width="480" height="60" />
+  <g data-size="compact">
+    <path class="muted" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" d="M150 232 q22 -10 44 0 t44 0 t44 0 t44 0" data-motion="draw" />
+  </g>
+  <g data-size="regular">
+    <path class="muted" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M60 228 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" data-motion="draw" />
+    <path class="muted" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M120 250 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0" data-motion="draw" />
+  </g>
+  <g data-size="wide">
+    <path class="muted" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M20 228 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" data-motion="draw" />
+    <path class="muted" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M60 250 q20 -10 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" data-motion="draw" />
+  </g>
+  <path class="ink" d="M212 210 L268 210 L262 200 L218 200 Z" />
+  <polygon class="surface" points="222,200 258,200 250,92 230,92" />
+  <polygon class="accent" points="224.5,168 255.5,168 254,148 226,148" />
+  <polygon class="accent" points="227.5,128 252.5,128 251.3,112 228.7,112" />
+  <polygon class="ink" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" points="222,200 258,200 250,92 230,92" />
+  <rect class="ink" x="226" y="86" width="28" height="6" rx="1" />
+  <rect class="accent" x="231" y="70" width="18" height="16" data-motion="pulse" />
+  <rect class="ink" fill="none" stroke="currentColor" stroke-width="3" x="231" y="70" width="18" height="16" />
+  <path class="ink" d="M226 70 L240 54 L254 70 Z" />
+</svg>

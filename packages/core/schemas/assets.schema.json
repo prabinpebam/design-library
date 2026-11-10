@@ -25,6 +25,14 @@
           },
           "alt": { "type": "string", "description": "What the picture shows, for people who can't see it. Required unless the picture is decorative." },
           "decorative": { "type": "boolean", "description": "The picture adds nothing the words beside it don't say: it is drawn with an empty alt and skipped by screen readers (DP3)." },
+          "illustration": {
+            "type": "object",
+            "description": "Draw this SVG inline as an Illustration (MP22, Q112): its role classes (ink, muted, fill, surface, accent) take the token colours in every scheme, its data-size groups follow its own width, and its data-motion parts move as `play` says. `src` must be an .svg that passes design-library-check-svg. Without it an SVG is drawn as a picture (Image).",
+            "properties": {
+              "play": { "enum": ["once", "hover", "loop"], "description": "When its motion parts move: `once` (default) the first time it's seen, `hover` while it or its card or link is pointed at or focused, `loop` while on screen with a Pause control. Never under reduced motion." }
+            },
+            "additionalProperties": false
+          },
           "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frame it is drawn in where the block doesn't fix one, as Image ratio (DP3)." },
           "focal": {
             "type": "object",
@@ -47,6 +55,7 @@
         },
         "if": { "not": { "properties": { "decorative": { "const": true } }, "required": ["decorative"] } },
         "then": { "required": ["alt"] },
+        "dependentSchemas": { "illustration": { "properties": { "src": { "pattern": "^assets/[a-z0-9-]+\\.svg$" } } } },
         "additionalProperties": false
       }
     }

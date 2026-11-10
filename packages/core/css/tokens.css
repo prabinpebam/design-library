@@ -921,6 +921,15 @@
   --c-image-duotone: var(--color-accent);
   --c-image-decoration: var(--color-accent);
   --c-image-reveal-duration: var(--duration-xslow);
+  --c-illustration-ink: var(--color-text);
+  --c-illustration-muted: var(--color-text-muted);
+  --c-illustration-fill: var(--color-bg-sunken);
+  --c-illustration-surface: var(--color-bg);
+  --c-illustration-accent: var(--color-accent);
+  --c-illustration-play-duration: var(--duration-xslow);
+  --c-illustration-loop-duration: var(--duration-ai-turn);
+  --c-illustration-float: var(--motion-enter-rise);
+  --c-illustration-control-inset: var(--space-inset-sm);
   --c-media-player-radius: var(--radius-lg);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-media-player-badge-inset: var(--space-2);
@@ -1308,6 +1317,7 @@
     --c-data-table-outline: var(--color-border);
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
+    --c-illustration-muted: var(--color-text-muted);
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
@@ -1337,6 +1347,7 @@
   --c-data-table-outline: var(--color-border);
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
+  --c-illustration-muted: var(--color-text-muted);
   --c-menu-button-border: var(--color-border-control);
   --c-popup-border: var(--color-border);
   --c-progress-bar-track: var(--color-border-group);
@@ -1366,6 +1377,7 @@
     --c-data-table-outline: var(--color-border);
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
+    --c-illustration-muted: var(--color-text-muted);
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
@@ -1395,6 +1407,7 @@
   --c-data-table-outline: var(--color-border);
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
+  --c-illustration-muted: var(--color-text-muted);
   --c-menu-button-border: var(--color-border-control);
   --c-popup-border: var(--color-border);
   --c-progress-bar-track: var(--color-border-group);
@@ -1424,6 +1437,7 @@
     --motion-dialog-scale: 1;
     --motion-enter-rise: 0rem;
     --c-button-fill-move: var(--duration-move);
+    --c-illustration-float: var(--motion-enter-rise);
     --c-image-generation-fade: var(--duration-change);
     --c-scroll-area-fade: var(--duration-medium);
   }
@@ -1447,6 +1461,7 @@
   --motion-dialog-scale: 1;
   --motion-enter-rise: 0rem;
   --c-button-fill-move: var(--duration-move);
+  --c-illustration-float: var(--motion-enter-rise);
   --c-image-generation-fade: var(--duration-change);
   --c-scroll-area-fade: var(--duration-medium);
 }
@@ -1605,6 +1620,7 @@
   --c-hero-stacked-message-gap: var(--space-stack-item);
   --c-hero-stacked-words-gap: var(--space-stack-group);
   --c-hero-words-gap: var(--space-stack-section);
+  --c-illustration-control-inset: var(--space-inset-sm);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -1885,6 +1901,7 @@
   --c-hero-stacked-message-gap: var(--space-stack-item);
   --c-hero-stacked-words-gap: var(--space-stack-group);
   --c-hero-words-gap: var(--space-stack-section);
+  --c-illustration-control-inset: var(--space-inset-sm);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -2165,6 +2182,7 @@
   --c-hero-stacked-message-gap: var(--space-stack-item);
   --c-hero-stacked-words-gap: var(--space-stack-group);
   --c-hero-words-gap: var(--space-stack-section);
+  --c-illustration-control-inset: var(--space-inset-sm);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);
@@ -2445,6 +2463,7 @@
   --c-hero-stacked-message-gap: var(--space-stack-item);
   --c-hero-stacked-words-gap: var(--space-stack-group);
   --c-hero-words-gap: var(--space-stack-section);
+  --c-illustration-control-inset: var(--space-inset-sm);
   --c-image-generation-status-gap: var(--space-inline-pair);
   --c-image-generation-status-padding-block: var(--space-inset-sm);
   --c-image-generation-status-padding-inline: var(--space-inset-md);

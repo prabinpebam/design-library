@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <title>A sun turning slowly behind a drifting cloud</title>
+  <g class="accent" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" data-motion="spin">
+    <path d="M100 18 V38" />
+    <path d="M100 162 V182" />
+    <path d="M18 100 H38" />
+    <path d="M162 100 H182" />
+    <path d="M42 42 L56 56" />
+    <path d="M144 144 L158 158" />
+    <path d="M158 42 L144 56" />
+    <path d="M56 144 L42 158" />
+  </g>
+  <circle class="accent" cx="100" cy="100" r="44" data-motion="pulse" />
+  <g data-motion="float">
+    <path class="surface" d="M64 150 a22 22 0 0 1 8 -42 a30 30 0 0 1 56 6 a20 20 0 0 1 8 36 Z" />
+    <path class="ink" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" d="M64 150 a22 22 0 0 1 8 -42 a30 30 0 0 1 56 6 a20 20 0 0 1 8 36 Z" />
+  </g>
+</svg>

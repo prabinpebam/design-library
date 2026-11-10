@@ -4,7 +4,7 @@
  * and holds the block registry equal to them).
  */
 import type { ReactNode } from 'react';
-import type { AgendaSlot, FooterLink, FooterSection, IconName, StoryFile } from '../react/components';
+import type { AgendaSlot, FooterLink, FooterSection, IconName, IllustrationPlay, StoryFile } from '../react/components';
 
 export type SiteAction = {
   label: string;
@@ -127,6 +127,7 @@ export type CoreBlock =
     }
   | { type: 'gallery'; heading?: string; size?: SectionTitleSize; label: string; layout?: 'standard' | 'quilted' | 'masonry'; items: string[] }
   | { type: 'breadcrumbs'; items: { label: string; href?: string }[] }
+  | { type: 'illustration'; picture: string; ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural' }
   | { type: 'byline'; name: string; href: string; date: string; read: string; picture?: string }
   | { type: 'person'; name: string; role: string; bio: string[]; portrait?: boolean; picture?: string }
   | { type: 'prose'; items: ProseItem[] }
@@ -270,6 +271,8 @@ export interface TemplateAsset {
   decorative?: boolean;
   /** Set by the renderer on the page's first picture (DR44): it loads at once, ahead of the rest (`Image` `priority`). */
   priority?: boolean;
+  /** Drawn inline as an `Illustration` (MP22; `assets.json` `illustration`): token colours, size groups, motion parts. */
+  illustration?: { play?: IllustrationPlay };
 }
 
 /** What a block or layout renderer is given besides its data. */

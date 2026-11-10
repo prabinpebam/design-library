@@ -246,6 +246,8 @@ export { Image } from './fundamentals/Image';
 export { IconOverrides, useIconOverride } from './fundamentals/IconOverrides';
 export type { IconOverridesProps } from './fundamentals/IconOverrides';
 export type { ImageProps, PictureTone, PictureTreatment, PictureSource, SchemeSources } from './fundamentals/Image';
+export { Illustration } from './fundamentals/Illustration';
+export type { IllustrationProps, IllustrationSize, IllustrationFiles, IllustrationPlay } from './fundamentals/Illustration';
 export { Tooltip, useHint } from './fundamentals/Tooltip';
 export type { TooltipProps, Hint } from './fundamentals/Tooltip';
 export { Popover } from './fundamentals/Popover';

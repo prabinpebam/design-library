@@ -4,10 +4,18 @@
  * its own (namespaced) types in its registry; it never replaces these.
  */
 import { Fragment, useEffect, useState, type ReactNode } from 'react';
-import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
+import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { Block, BlockRenderer, CoreBlock, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink } from './types';
+import type { Block, BlockRenderer, CoreBlock, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
+
+/** A picture from assets drawn inline as an Illustration, when its asset says so (MP22); null for any other picture. */
+const illustrationOf = (ctx: RenderContext, id: string, ratio?: TemplateAsset['ratio']) => {
+  const a = ctx.picture(id);
+  if (!a.illustration) return null;
+  const named = a.decorative || !a.alt ? { decorative: true as const } : { label: a.alt };
+  return <Illustration src={a.src} dark={a.dark} ratio={ratio ?? a.ratio ?? 'natural'} play={a.illustration.play} {...named} />;
+};
 
 type Of<T extends CoreBlock['type']> = Extract<CoreBlock, { type: T }>;
 
@@ -281,14 +289,14 @@ function frame(ctx: RenderContext, i: number, kind: 'stage' | 'feature', body: R
   );
 }
 /** Content blocks that sit in a column: what a slot takes (no page chrome, openings, closings or framed messages). */
-const CONTENT = ['prose', 'points', 'details', 'quote', 'stats', 'cards', 'gallery', 'people', 'questions', 'agenda', 'schedule', 'posts', 'person', 'byline', 'alert', 'empty', 'form', 'search', 'settings', 'tickets'];
+const CONTENT = ['illustration', 'prose', 'points', 'details', 'quote', 'stats', 'cards', 'gallery', 'people', 'questions', 'agenda', 'schedule', 'posts', 'person', 'byline', 'alert', 'empty', 'form', 'search', 'settings', 'tickets'];
 
 /**
  * Named slots (DP11): where a block holds other blocks, and the core block types each accepts. A template's own
  * (namespaced) block types are accepted in every slot. A block a slot doesn't accept is left out and reported.
  */
 export const SLOTS: Record<string, readonly string[]> = {
-  'hero.media': ['gallery'],
+  'hero.media': ['gallery', 'illustration'],
   // MP9: decoration is art, so only a template's own (namespaced) blocks; no core block draws shapes.
   'hero.decoration': [],
   'image.decoration': [],
@@ -366,7 +374,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
             description={c.description}
             meta={c.meta ? <Text as="span" variant="body-sm" tone="muted">{c.meta}</Text> : undefined}
             href={c.href}
-            media={c.picture ? <Image src={ctx.picture(c.picture).src} alt={ctx.picture(c.picture).alt} ratio={ctx.picture(c.picture).ratio ?? 'wide'} focal={ctx.picture(c.picture).focal} dark={ctx.picture(c.picture).dark} contrast={ctx.picture(c.picture).contrast} alternate={ctx.picture(c.picture).alternate} treatment={ctx.picture(c.picture).treatment} priority={ctx.picture(c.picture).priority} /> : undefined}
+            media={c.picture ? illustrationOf(ctx, c.picture, ctx.picture(c.picture).ratio ?? 'wide') ?? <Image src={ctx.picture(c.picture).src} alt={ctx.picture(c.picture).alt} ratio={ctx.picture(c.picture).ratio ?? 'wide'} focal={ctx.picture(c.picture).focal} dark={ctx.picture(c.picture).dark} contrast={ctx.picture(c.picture).contrast} alternate={ctx.picture(c.picture).alternate} treatment={ctx.picture(c.picture).treatment} priority={ctx.picture(c.picture).priority} /> : undefined}
           />
         ))}
       </Grid>)}
@@ -409,6 +417,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
   cta: (b, ctx, i) => frame(ctx, i, 'feature', <Hero level={2} layout="divided" title={richText(b.title)} lead={richText(b.lead)} actions={actionButtons(b.actions)} note={b.note} />),
   gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />, b.size),
   breadcrumbs: (b, _ctx, i) => <Breadcrumbs key={i} items={b.items} />,
+  illustration: (b, ctx, i) => <Fragment key={i}>{illustrationOf(ctx, b.picture, b.ratio)}</Fragment>,
   byline: (b, ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} src={b.picture ? ctx.picture(b.picture).src : undefined} />,
   person: (b, ctx, i) => (
     <Stack key={i} gap="section">
@@ -456,6 +465,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
               </Quote>
             );
           case 'picture':
+            if (ctx.picture(item.picture).illustration) return <Fragment key={n}>{illustrationOf(ctx, item.picture)}</Fragment>;
             return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} dark={ctx.picture(item.picture).dark} contrast={ctx.picture(item.picture).contrast} alternate={ctx.picture(item.picture).alternate} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} decoration={item.decoration?.length ? slot(ctx, 'image.decoration', item.decoration) : undefined} rounded />;
           case 'list':
             return <List key={n} variant="bulleted" items={item.items.map((t, m) => ({ id: String(m), content: t }))} />;

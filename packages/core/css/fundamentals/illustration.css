@@ -1,0 +1,142 @@
+/*
+ * Illustration (MP20–MP21, ID40–ID43): drawn art inline. The frame holds the art's shape (its viewBox, or a ratio
+ * given for a file); groups marked data-size show by the illustration's own width, which the component measures and
+ * writes as data-width (a container query would give the frame no width of its own in a row that sizes by content).
+ * Colours come from the five role classes on component tokens, so one file follows every scheme; forced colours map
+ * them to system colours. Parts marked data-motion move on the motion tokens only while data-state="run"; at rest
+ * (and always under reduced motion) every part shows its resting frame.
+ */
+[data-dl='illustration'] {
+  display: grid;
+  /* Fills its container's width even in a start-aligned column (as Grid does): the art has no width of its own. */
+  align-self: stretch;
+  inline-size: 100%;
+  min-inline-size: 0;
+  aspect-ratio: var(--illustration-ratio, auto);
+}
+
+[data-dl='illustration'][data-ratio='ultrawide'] { aspect-ratio: 21 / 9; }
+[data-dl='illustration'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+[data-dl='illustration'][data-ratio='photo'] { aspect-ratio: 3 / 2; }
+[data-dl='illustration'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
+[data-dl='illustration'][data-ratio='square'] { aspect-ratio: 1; }
+[data-dl='illustration'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
+
+[data-dl='illustration'] > :is([data-dl-part='art'], [data-dl-part='control']) {
+  grid-area: 1 / 1;
+  min-inline-size: 0;
+  min-block-size: 0;
+}
+
+[data-dl='illustration'] > [data-dl-part='art'] {
+  display: block;
+}
+
+[data-dl='illustration'] > [data-dl-part='art'] > svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+
+/* The Pause control of a loop sits in the art's end corner, over it. */
+[data-dl='illustration'] > [data-dl-part='control'] {
+  align-self: end;
+  justify-self: end;
+  padding: var(--c-illustration-control-inset);
+}
+
+/* Role classes: a shape takes its role's colour as its fill (unless it names its own, such as none) and as currentColor. */
+[data-dl='illustration'] .ink { color: var(--c-illustration-ink); }
+[data-dl='illustration'] .muted { color: var(--c-illustration-muted); }
+[data-dl='illustration'] .fill { color: var(--c-illustration-fill); }
+[data-dl='illustration'] .surface { color: var(--c-illustration-surface); }
+[data-dl='illustration'] .accent { color: var(--c-illustration-accent); }
+[data-dl='illustration'] :is(.ink, .muted, .fill, .surface, .accent):not([fill]) { fill: currentColor; }
+
+@media (forced-colors: active) {
+  [data-dl='illustration'] :is(.ink, .accent) { color: CanvasText; }
+  [data-dl='illustration'] .muted { color: GrayText; }
+  [data-dl='illustration'] :is(.fill, .surface) { color: Canvas; }
+}
+
+/* Art per size (ID42): below 24rem compact, 24 to 48rem regular, from 48rem wide. */
+[data-dl='illustration'] [data-size] { display: none; }
+[data-dl='illustration'][data-width='compact'] [data-size='compact'],
+[data-dl='illustration'][data-width='regular'] [data-size='regular'],
+[data-dl='illustration'][data-width='wide'] [data-size='wide'] {
+  display: inline;
+}
+
+/* Motion parts (ID43): transforms turn about each part's own box. */
+[data-dl='illustration'] [data-motion] {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+[data-dl='illustration']:is([data-state='run'], [data-state='paused']) [data-motion='draw'],
+[data-dl='illustration']:is([data-state='run'], [data-state='paused']) [data-motion='draw'] :is(path, circle, ellipse, rect, line, polyline, polygon) {
+  stroke-dasharray: 1;
+  animation: dl-illustration-draw var(--c-illustration-play-duration) var(--easing-standard) both;
+}
+[data-dl='illustration']:is([data-state='run'], [data-state='paused']) [data-motion='fade'] {
+  animation: dl-illustration-fade var(--c-illustration-play-duration) var(--easing-standard) both;
+}
+[data-dl='illustration']:is([data-state='run'], [data-state='paused']) [data-motion='float'] {
+  animation: dl-illustration-float calc(var(--c-illustration-loop-duration) / 2) var(--easing-standard) 2 alternate both;
+}
+[data-dl='illustration']:is([data-state='run'], [data-state='paused']) [data-motion='pulse'] {
+  animation: dl-illustration-pulse calc(var(--c-illustration-loop-duration) / 2) var(--easing-standard) 2 alternate both;
+}
+[data-dl='illustration']:is([data-state='run'], [data-state='paused']) [data-motion='spin'] {
+  animation: dl-illustration-spin var(--c-illustration-loop-duration) var(--easing-linear) both;
+}
+
+/* A `once` illustration before its first view: parts that draw or fade wait at their start. */
+[data-dl='illustration'][data-state='ready'] [data-motion='draw'],
+[data-dl='illustration'][data-state='ready'] [data-motion='draw'] :is(path, circle, ellipse, rect, line, polyline, polygon) {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+[data-dl='illustration'][data-state='ready'] [data-motion='fade'] {
+  opacity: 0;
+}
+
+/* A loop, and hover while pointed at, repeat; a paused loop holds where it is. */
+[data-dl='illustration']:is([data-play='loop'], [data-play='hover'])[data-state] :is([data-motion='float'], [data-motion='pulse'], [data-motion='spin']) {
+  animation-iteration-count: infinite;
+}
+[data-dl='illustration'][data-state='paused'] [data-motion] {
+  animation-play-state: paused;
+}
+@keyframes dl-illustration-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes dl-illustration-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes dl-illustration-float {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-1 * var(--c-illustration-float))); }
+}
+@keyframes dl-illustration-pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+@keyframes dl-illustration-spin {
+  from { transform: rotate(0turn); }
+  to { transform: rotate(1turn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-dl='illustration'] [data-motion],
+  [data-dl='illustration'] [data-motion] * {
+    animation: none !important;
+  }
+}
+[data-motion='reduce'] [data-dl='illustration'] [data-motion],
+[data-motion='reduce'] [data-dl='illustration'] [data-motion] * {
+  animation: none !important;
+}
