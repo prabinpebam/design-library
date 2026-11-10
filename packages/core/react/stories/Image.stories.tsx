@@ -1,6 +1,7 @@
 import { Card } from '../compounds/Card';
 import { Image } from '../fundamentals/Image';
 import type { PictureReveal } from '../behaviour/reveal';
+import { layoutStipple, perlin2, stippleRadius, stippleSettings, stippleTime, type StipplePoint } from '../../effects';
 import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
 import { ContextMatrix } from '../compounds/ContextMatrix';
@@ -25,24 +26,25 @@ const wipe: PictureReveal = ({ context, width, height, progress, paint }) => {
   paint('alternate');
   context.restore();
 };
-/** …and a stipple: dots of the pair grow in a scattered order until they cover the picture. */
-const hash = (i: number) => {
-  const s = Math.sin(i * 127.1) * 43758.5453;
-  return s - Math.floor(s);
-};
-const stipple: PictureReveal = ({ context, width, height, progress, paint }) => {
+/** …and a stipple on the library's own field (MP12, `@design-library/core/effects`): the stipple dots of the pair grow, the
+ * darker noise first, drifting as they go, until they cover the picture. */
+let field = { width: 0, height: 0, points: [] as StipplePoint[] };
+const stipple: PictureReveal = ({ context, width, height, progress, time, paint }) => {
+  if (progress >= 1) return paint('alternate');
   paint('picture');
-  const cell = 14;
+  if (field.width !== width || field.height !== height) field = { width, height, points: layoutStipple(width, height) };
+  const t = stippleTime(time);
+  const cover = stippleSettings.spacing * 1.25;
   context.save();
   context.beginPath();
-  for (let y = 0, i = 0; y < height + cell; y += cell)
-    for (let x = 0; x < width + cell; x += cell, i++) {
-      const grow = Math.min(1, Math.max(0, (progress * 1.6 - hash(i) * 0.6) / 1));
-      if (grow > 0) {
-        context.moveTo(x + cell * 0.75 * grow, y);
-        context.arc(x, y, cell * 0.75 * grow, 0, Math.PI * 2);
-      }
-    }
+  for (const point of field.points) {
+    const order = (perlin2(point.n[0] * 4, point.n[1] * 4) + 1) / 2;
+    const grow = Math.min(1, Math.max(0, progress * 1.6 - order * 0.6));
+    if (grow <= 0) continue;
+    const r = grow * (cover + stippleRadius(point, t));
+    context.moveTo(point.x + r, point.y);
+    context.arc(point.x, point.y, r, 0, Math.PI * 2);
+  }
   context.clip();
   paint('alternate');
   context.restore();
@@ -269,14 +271,27 @@ export default {
     {
       title: 'Your own reveal: a wipe and a stipple',
       description:
-        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows. Left, a wipe from the start edge; right, a stipple whose dots grow in a scattered order. Same hook, different drawing.',
+        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows. Left, a wipe from the start edge; right, a stipple built on the library’s own field from @design-library/core/effects (the dots ImageGeneration draws), growing darker noise first. Same hook, different drawing.',
       code: `const wipe: PictureReveal = ({ context, width, height, progress, paint }) => {
   paint('picture');
   context.save(); context.beginPath(); context.rect(0, 0, width * progress, height); context.clip();
   paint('alternate');
   context.restore();
 };
-<Image src={day} alternate={night} reveal={wipe} alt="Before and after: …" />`,
+<Image src={day} alternate={night} reveal={wipe} alt="Before and after: …" />
+
+import { layoutStipple, perlin2, stippleRadius, stippleSettings, stippleTime } from '@design-library/core/effects';
+const stipple: PictureReveal = ({ context, width, height, progress, time, paint }) => {
+  paint('picture');
+  const points = layoutStipple(width, height); // keep these for the size
+  context.save(); context.beginPath();
+  for (const p of points) {
+    const grow = Math.min(1, Math.max(0, progress * 1.6 - ((perlin2(p.n[0] * 4, p.n[1] * 4) + 1) / 2) * 0.6));
+    const r = grow * (stippleSettings.spacing * 1.25 + stippleRadius(p, stippleTime(time)));
+    if (r > 0) { context.moveTo(p.x + r, p.y); context.arc(p.x, p.y, r, 0, Math.PI * 2); }
+  }
+  context.clip(); paint('alternate'); context.restore();
+};`,
       render: () => (
         <Grid max={2}>
           <Image src={lighthouseDay} alternate={lighthouseNight} reveal={wipe} alt="Before and after: the lighthouse by day, then lit at night." caption="A wipe" />

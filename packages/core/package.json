@@ -30,6 +30,7 @@
     "./presets": "./presets/index.ts",
     "./theme": "./theme/index.ts",
     "./site": "./site/index.tsx",
+    "./effects": "./effects/index.ts",
     "./schemas/*": "./schemas/*",
     "./motion/*": "./motion/*",
     "./agent/*": "./agent/*",
