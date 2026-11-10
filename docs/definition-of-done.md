@@ -68,6 +68,7 @@
 | Q58 | 11-08 10:55 | "We want some image generation generating state. - I've used a specific generating image state in this project, use that and have a few more variants. - https://github.com/prabinpebam/watai.git" | Read the generating-image state in the owner's watai repository (source read-only, not added to this workspace) and rebuild it here on this library's tokens as an image-generation loading state, plus a few more variants (for example progressive blur/reveal, shimmer, noise, progress), usable inside a chat message (Q57) and standalone; reduced motion respected; announced status | Image generation state page/story | F15.68a | **Done for review** (about 12:55, design): [ImageGeneration](http://127.0.0.1:8766/#/imagegeneration), rebuilt from watai's stipple generating state (read-only via `gh api`) on this library's tokens, with `aurora`, `reveal` (sharpening partial preview with a share) and `shimmer` variants, a failed state with Try again; standalone and inside ChatMessage; reduced motion holds it still; start, done and failure announced |
 | Q59 | 11-08 12:03 | "Dropdown, padding is bad, chevron alomost touching the right edge. Dropdown list should be custom, else it clashes in style." (screenshot: Field page, "Label beside the control", Time zone shows a native `<select>` with the browser's own list) | **Q59.1** No native `<select>` anywhere in the library app or core: every dropdown (including Field's "Label beside the control" Time zone and any other story or view) uses the custom Select whose list is built from ListItem (Q19); a check (static scan) finds zero `<select>` elements in core components and views. **Q59.2** The Select trigger's chevron sits inside the same end inset as the text start inset (token-driven, never touching the edge), in every size | [Field](http://127.0.0.1:8766/#/field) "Label beside the control"; [Select](http://127.0.0.1:8766/#/select) | F15.64a | **Done for review** (about 12:20, design): native selects 1 before, 0 after (scan of core and the library app); the Field story uses Select (new `orientation` prop); `check:views` fails on any native select; Select chevron end inset = start inset in every size (9/13/17 px, `c.field.padding-inline-*`), measured |
 | Q60 | 11-08 12:57 | "Therre should be gap between items else the active and hover touch" (screenshot: ConversationList "Grouped by when", the open row's tint and the hovered row's fill touch with no space between) | **Q60.1** ConversationList rows sit apart by the same token gap as the navigation list (Q13, about 4 px), so active, hover and focus fills never touch. **Q60.2** The rule is owned once, by the shared list/ListItem layout, and applies to every list of selectable rows with fills (ConversationList, Navigation, Select/Menu lists, ListDetail, sidebar in ChatLayout and the chat app view); scan them and fix any that touch | [ConversationList](http://127.0.0.1:8766/#/conversationlist), [ChatLayout](http://127.0.0.1:8766/#/chatlayout) | F15.69a | **Done for review** (about 13:03, design): ConversationList rows now sit `space.stack-row` apart (4 px, was 0); the one role every list of filled rows reads (Navigation, Select and menu popups, List select/action/grid rows, ListDetail, ConversationList; List's option gap moved from `stack-pair` to it). Measured 4 px between consecutive rows in each, including the ChatLayout sidebar and open Select and menu lists |
+| Q110 | 11-10 08:24 | "Refer this and start planning for addressing these. No coding yhet. Only planning. E:\Projects\designup-project\designup\docs\research\library-migration-readiness.md" | A plan, no code: every finding in DesignUp's library-migration-readiness note (read-only) is checked against the library source and the released 0.4.0-beta.1 (and the DesignUp code, read-only), given a root cause, its owning files and an action (library change, guide/brief change, a DesignUp-side step, or out of scope with the reason), and mapped to existing IP/DP packets where they overlap. New sliced packets (each reviewable within 60 minutes) are proposed with a release placement, plus open owner decisions with defaults. Q105's rules apply (generic, non-breaking for DesignUp, adoption brief per release). Lives in docs/improvement-plan.md as a new part, with matching DoD rows and a coverage matrix (0 unmapped). No source, component, check or template changes until the owner says build | docs/improvement-plan.md (new part); DoD stage rows | F15.IMP | Recorded by main 08:24; handed to a planning worker. **Plan delivered for review** (worker 61, F15.IMP4, 2026-11-10 about 08:40): [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110): the note checked against the library source, 0.4.0-beta.1 and DesignUp's code (read-only): asks MR1–MR24, every "to confirm" answered (TC1–TC12), corrections MC1–MC7; workstream W15; 14 packets: MP1–MP6 in 0.4.0-beta.2 (keep the place on page switches, its data form, guide answers, a template's parts reusable alone, a direct 0.2.0-beta.1 → 0.4 proof, the release) and MP7–MP14 in 0.5.0-beta.1 (steady opening, decoration layer on Image and Hero, paired source, reveal hook, exported stipple helper, glide pace, the release); IP40 and IP41 reshaped; brief changes per release; decisions ID21–ID31 with defaults. DoD: DUP7, U13–U14, BM.1–BM.6, B5.1–B5.8, BS.9–BS.10, [coverage matrix](#migration-readiness-note-q110) 120 items, 0 unmapped. No code changed |
 | Q109 | 11-10 07:50 | "You keep missing scrollbars even after I told you to have an explicit checklist. The demo in the typography page don't use the custom scroolbar." | **Q109.1** The Typography page's demos scroll with the library's bar (ScrollArea or the library's scrollbar styles), fixed at the owning source (story, demo part or component), never with a page-level override. **Q109.2** Root cause on record: which scroll region it is, why the Q96 checklist (SB1–SB8), `check:clipping` and `tools/scroll-probe.js` all missed it (for example `overflow-x`, a scroll set in a component or story style, a native element such as `pre` or `textarea` scrolling by default, or library pages not swept), and the check or probe gap closed so this class fails `npm run check` or the probe. **Q109.3** Sweep every library page, story, template and example for the same class with the fixed check and probe at 1000 and 320 px; fix each find at its source. Evidence: before/after on Typography, the check failing on a planted case, the sweep result | Typography page demos; check:clipping, scroll-probe, Rules agents miss | F15.SB2 | Recorded by main 07:50; handed to worker 60. **F15.SB2 (about 08:20, worker 60):** Q109.1 the two demos are ScreenPreview frames whose documents scrolled with the browser's 10 px bar; ScreenPreview now marks the framed document `data-dl-framed` and `scroll-area.css` gives it the library's thin bar (6 px, library colours), as TextArea has; the same screen on its own keeps the document's bar. Q109.2 root cause in [Scrolling](scrolling.md#what-went-wrong-q109): SB1 exempted "the document", the probe never looked inside a frame, a document scrolls without any `overflow` in source, and Q96's sweep probed screens on their own. Closed: `scroll-probe.js` descends into same-origin frames and adds SB9 (before the fix: SB9 failed on both Typography frames; after: pass); `check:clipping` fails any `<iframe>` outside ScreenPreview (MediaPlayer's video player listed with its reason); a planted `<iframe>` in `apps/library/src` failed it, removed. Rule wording updated (Never 9, Rules agents miss, SB1/SB2/SB6/SB9, framework rule 11). Q109.3 sweep: all 269 library pages at 1000 and 320 px, light and dark (1,076 page probes, 1,388 framed screens judged inside, 10,372 scroll regions): 0 SB fails, 0 unprobed frames. `npm run check`, typecheck and the library build pass |
 | Q108 | 11-10 02:08 | "Create a proper DoD and make sure everything is covered from the notes from the DesignUp site." | A proper Definition of Done for the DesignUp improvement work, written with the definition-of-done skill: promises → user-can statements → observable rows, each with its evidence and a "Try it", per release (0.2.0-beta.2, 0.3.0-beta.1, later) and for the whole stage. A coverage matrix maps every item in both DesignUp notes to a DoD row or to a recorded out-of-scope decision with its reason, with zero unmapped. The notes are the beta report (F01–F60 and its recommendations, roadmap and sections 6–8), the data-driven requirement (D1–D8, all 45 changes, the acceptance test and open questions), the plan's own findings N01–N18 and Beta known issues K1–K7. It includes the Q105 rows (generic, non-breaking, adoption brief, upgrade proof on a DesignUp copy) and DesignUp's re-run (ID11) as the stage's final evidence. It lives in docs/definition-of-done.md as a stage section, linked from docs/improvement-plan.md | docs/definition-of-done.md stage section | F15.IMP | Recorded by main 02:08; worker 50, after the Q107 plan update. **Delivered for review** (worker 50, 2026-11-10 about 02:13): [Stage: DesignUp improvements](#stage-designup-improvements): promises DUP1–DUP6, user-can U1–U12, rows B2.1–B2.15, B3.1–B3.28, B4.1–B4.15, BL.1–BL.9 and BS.1–BS.8 with evidence and Try it; coverage matrix of 258 items (231 to rows, 22 out of scope with reasons, 5 no action), 0 unmapped; linked from the improvement plan |
 | Q107 | 11-10 01:52 | "Here's another input from the DesignUp site implementation, account for it in the Design library improvement. E:\Projects\designup-project\designup\docs\research\design-library-data-driven-requirement.md" | The data-driven requirement (D1–D8; 45 changes: 22 must, 20 should, 3 could) is folded into docs/improvement-plan.md. Each change is:<br>• checked against the DesignUp code (read-only) and the library source;<br>• mapped to existing IP packets where they overlap (routing IP27/IP30, checks IP37–IP39, content IP39, motion IP3);<br>• given a root cause, owning files and an action.<br>The plan gains new sliced packets (page/site document, part registry, renderer, collections and references, rich inline text, behaviour as data, routing as data, validation, authoring/preview), a release placement and open owner decisions with defaults. Q105's rules apply: generic for any site, never DesignUp-specific (validate against the requirement's "stays out" section); non-breaking for DesignUp; each release's adoption brief includes the data-driven migration steps. Building those packets follows the updated plan | docs/improvement-plan.md; later releases | F15.IMP | Recorded by main 01:52; worker 50 updates the plan first. **Plan updated for review** (worker 50, 2026-11-10 about 02:08): [Part 3: data-driven sites](http://127.0.0.1:8765/#improvement-plan.md): DR1–DR45 checked against both codebases (corrections DC1–DC5, the nine open questions answered), workstream W14, packets DP1–DP7 into 0.3.0-beta.1 and DP8–DP20 as 0.4.0-beta.1 "Data-driven sites", later DP21–DP24; IP27, IP30, IP12, IP31, IP19, IP22 and IP35–IP39 reshaped so nothing is built twice; acceptance test AT1–AT6; decisions ID12–ID20 with defaults |
@@ -412,7 +413,7 @@ Self-presentation and its known-good recovery are now specified, not built. Rapi
 
 ## Stage: DesignUp improvements
 
-> **TL;DR:** The Definition of Done for the work that comes out of the first real adoption (owner Q104, Q105, Q107, Q108): six promises, twelve things a person can do, and observable rows per release (0.2.0-beta.2, 0.3.0-beta.1, 0.4.0-beta.1 "Data-driven sites", later) plus rows for the stage as a whole. The plan behind it is the [improvement plan](improvement-plan.md). The coverage matrix below maps every item in both DesignUp notes, the plan's own findings and the Beta known issues to a row here or to a recorded out-of-scope decision, with **0 unmapped**. The stage's final evidence is DesignUp's own re-run (BS.8).
+> **TL;DR:** The Definition of Done for the work that comes out of the first real adoption (owner Q104, Q105, Q107, Q108): six promises, twelve things a person can do, and observable rows per release (0.2.0-beta.2, 0.3.0-beta.1, 0.4.0-beta.1 "Data-driven sites", later) plus rows for the stage as a whole. The plan behind it is the [improvement plan](improvement-plan.md). The coverage matrix below maps every item in both DesignUp notes, the plan's own findings and the Beta known issues to a row here or to a recorded out-of-scope decision, with **0 unmapped**. The stage's final evidence is DesignUp's own re-run (BS.8). **Q110 adds** promise DUP7, user-can U13–U14, [Migration readiness](#migration-readiness-q110) rows BM.1–BM.6 (0.4.0-beta.2) and B5.1–B5.8 (0.5.0-beta.1), stage rows BS.9–BS.10, and a second matrix for DesignUp's migration-readiness note: 120 items, 100 to rows, 20 out of scope with reasons, **0 unmapped**.
 
 **Owner, 2026-11-10 02:08 (verbatim, [Q108](#owner-instructions)):** *"Create a proper DoD and make sure everything is covered from the notes from the DesignUp site."*
 
@@ -428,6 +429,7 @@ Self-presentation and its known-good recovery are now specified, not built. Rapi
 | DUP4 | An agent gets it right from the guide: names that exist, core parts first | The names check passes; the next proof's share and workaround counts drop | B2.2, B3.27, B3.1, B3.2, BS.5 |
 | DUP5 | A site can be strictly data-driven (D1–D8) | AT1–AT6 pass on the reference site | B4.14 |
 | DUP6 | Upgrading never breaks a site, and each release says how to adopt it | The upgrade proof on a DesignUp copy shows no change; each release ships a brief | BS.2, BS.3, BS.4 |
+| DUP7 | A site moves onto the library completely, keeping only its brand art as named template parts on public extension points (Q110) | DesignUp reports 43 or more of its 51 custom items on core or tokens and the rest inside its six named parts, with no other custom component code | BS.9; BM.1–BM.6, B5.1–B5.8 |
 
 ### What a person can do
 
@@ -445,6 +447,8 @@ Self-presentation and its known-good recovery are now specified, not built. Rapi
 | U10 | Start an empty template of their own |
 | U11 | Add a page, reorder sections, change words or add a collection item by editing JSON alone |
 | U12 | Upgrade by following one brief, with nothing breaking |
+| U13 | Move between sibling pages (years, versions, items of one kind) without losing their place, and go back to the top of the page they're on from its link |
+| U14 | Put brand shapes over or around a core picture, reveal a paired picture in the site's own way, and keep a series of openings the same height, without a custom frame or opening component |
 
 ### 0.2.0-beta.2: quick wins
 
@@ -525,6 +529,38 @@ Self-presentation and its known-good recovery are now specified, not built. Rapi
 | B4.14 | The acceptance test AT1–AT6 passes on the reference site, each step a JSON edit only with the check at 0 errors after each (U11) | Six screenshots and six check outputs in Handoff readiness | Repeat AT1–AT6 from the plan | AT1–AT6 | **Run on Harbour Books** (worker 58, 2026-11-10 05:07–05:09, JSON edits in a fresh page on 8766, all reverted byte-exact): AT1 pass (a new `pages/gifts.json` opened at `#/gifts` titled "Gifts · Harbour Books", no code); AT2 pass (moving the stats section reordered Home's headings); AT3 pass (a hero title with an accent span); AT4 pass (a new book took the derived counts from 3 to 4 in place); AT5 renderer pass (an unknown type `pointz` shows one development notice and the section's alert, and is left out in production) but the check said "all valid": **fixed** by worker 59 (check-site now reports `"pointz" isn't a block type` at `/sections/1/type`; planted copy fails, the reference site passes); AT6 pass (`check:project` 0 errors, 0 page-specific findings on Harbour). Screenshots and per-step check outputs not yet filed in Handoff readiness |
 | B4.15 | Release 0.4.0-beta.1 "Data-driven sites" ships as B2.15, its brief giving the 0.4 migration order (U12) | As B2.15; `docs/adopt-0.4.0-beta.1.md` | Open the release and the brief | Release | **Brief drafted for review** (worker 59, about 06:10): [Adopt 0.4.0-beta.1](adopt-0.4.0-beta.1.md) and the same block in `packages/core/UPGRADE.md`, with the paste-in line and the 0.4 migration order (site document and routes, parts as blocks, collections, pages simple first and Home last, then the gate); **proof run** (worker 59, 05:33–06:05): DesignUp copies 0.3.0-beta.1 vs 0.4.0-beta.1, 226 of 226 routes identical in light, dark and 320 px, 0 console errors, tsc and build pass with no edits; install matrix npm 10.9.9 and 11.21.1 pass; sweep 49,416 rows, 4 fails all K9 (FR14 S2), new pages clean. **Shipped:** [v0.4.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.4.0-beta.1) at a9149ad, Pages from the same commit, [the brief hosted](https://prabinpebam.github.io/design-library/docs/#adopt-0.4.0-beta.1.md) |
 
+### Migration readiness (Q110)
+
+**Source:** DesignUp's `docs/research/library-migration-readiness.md` (read-only), planned in [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110). Two releases: 0.4.0-beta.2 (the must, the guide answers, part reuse, the direct-jump proof) and 0.5.0-beta.1 (brand media on extension points), per ID21.
+
+#### 0.4.0-beta.2: moving a site onto 0.4
+
+**Delivers:** U9 (answers where agents read), U10 (part reuse), U11 and U13 (keep the place), U12.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| BM.1 | Moving between sibling pages keeps the scroll place and focus when the site asks (`scroll` and `focus` per change); a link to the page already shown glides to the top with `again: 'top'`; with neither set, every route behaves exactly as in 0.4.0-beta.1 (U13) | Routing page story; a headless run: year to year keeps `scrollY` within 1 px and focus on the strip, other links land at 0 with focus on `main h1`; the default run equals 0.4.0-beta.1's | Routing page: scroll down, pick another year, then press the header link to the page you're on | MP1 | Planned |
+| BM.2 | A data-driven site keeps the place between items of one page by a JSON edit (`"between": "keep"`), and takes `again` in `site.json`; a wrong value fails the content check at its JSON path; generated types include both (U11, U13) | Harbour story; check output on a wrong value; `design-library-types` output | Add `between` to Harbour's reading page, then switch readings | MP2 | Planned |
+| BM.3 | An agent moving an existing site finds, where it reads, the order of steps, the stopgaps until MP1 (the year as a query, a glide in `onChange`) and an answer to each "to confirm": titles from data, names by tier, narrow cards, uneven columns, breadcrumbs, copied screens, site faces; Core first lists a strip of big numbers as `Statistic` (U9) | Recipe section "Moving an existing site"; Core first rows; a Hero page story with `Breadcrumbs` as the section before the opening, passing the spacing probe at 320 and 1000 px | Open Core first and look up "a strip of big numbers" | MP3 | Planned |
+| BM.4 | A site places a shipped template's part (for example `conference.countdown`) by importing that template's registry alone, without its content or pictures; existing imports work unchanged (U10) | A scratch site's build output: bundle size with the registry import beside the full template import; guide step 6 section | Import `@design-library/templates/conference/registry` in a scratch site | MP4 | Planned |
+| BM.5 | A site on 0.2.0-beta.1 jumps straight to 0.4.0-beta.2 with no edits: type check and build pass, every route is identical in light, dark and at 320 px, no new console errors (U12, Q105.5) | Proof table in the brief (226 routes); the copies deleted afterwards; nothing written in DesignUp | Read the brief's proof | MP5 | Planned |
+| BM.6 | Release 0.4.0-beta.2 ships with B2.15's steps; its brief installs from 0.2.0-beta.1 directly, lists the new options, maps the note's steps 4–9 to library rows naming the DesignUp code each replaces (`App.tsx` year logic and `again`, `lib/scroll.ts`, `look.ts`, the frame overrides, root scaling, `designup.css` sizes as template tokens), answers TC2–TC6, TC8 and TC11, and endorses the note's freeze list (U12) | As B2.15; `docs/adopt-0.4.0-beta.2.md`; the `UPGRADE.md` block | Open the brief and follow its step 1 | MP6 | Planned |
+
+#### 0.5.0-beta.1: brand media on extension points
+
+**Delivers:** U3, U5 (reveals and glides under reduce), U11 (decoration slots), U12, U14.
+
+| # | Done when | Evidence | Try it | Packet | State |
+| --- | --- | --- | --- | --- | --- |
+| B5.1 | A series of openings keeps one height: `Hero` `reserve` holds room for the given lines of title and lead; a longer title grows and never clips (U14) | A Hero story stepping through 11 openings at 320, 1000 and 1440 px: height constant within 1 px while lines stay within the reserve; spacing and clipping probes pass | Hero page: step through the series | MP7 | Planned |
+| B5.2 | Shapes sit over and around a core picture through `Image` `decoration`, with no frame component: hidden from assistive technology, no pointer events or focus, no layout change; the clipping probe passes with a focusable card around it (U14) | Image page stories in light, dark and more contrast; the accessibility tree shows only the image's name; clipping probe rows | Image page: tab to the card with a decorated picture | MP8 | Planned |
+| B5.3 | The same layer on `Hero`, and placed from JSON through `image.decoration` and `hero.decoration` slots that accept template parts; a wrong type fails at its JSON path (U11, U14) | Hero story; check output on a wrong type | Add a decoration block to a page document | MP9 | Planned |
+| B5.4 | A picture shows its paired picture while active (hovered or focused, or the link, button or card around it), crossfading; the second file loads only on first intent; more contrast shows the first picture as it is (U3, U14) | Image story "Before and after"; the network log | Image page: hover and tab to the pair | MP10 | Planned |
+| B5.5 | A site draws its own reveal through `reveal`; the library runs the triggers and timing, and swaps to a crossfade under reduced motion with no site code (U5, U14) | Two stories (a wipe and a stipple) on one hook; the motion probe with reduce on | Image page: turn on reduced motion and hover | MP11 | Planned |
+| B5.6 | The stipple helper is public at `@design-library/core/effects`, documented in its contract, and `ImageGeneration` reads it from there unchanged (U14) | `agent/` contract; package `exports`; ImageGeneration rows in the sweep unchanged | Import it in a scratch file | MP12 | Planned |
+| B5.7 | A glide's time follows its distance when asked (`pace: 'distance'`) and stays as today otherwise; instant under reduce (U5) | Motion story timings: a short glide near `move`, a long one near `move-far` | Motion page: start a short and a long glide | MP13 | Planned |
+| B5.8 | Release 0.5.0-beta.1 ships with B2.15's steps; its brief rebuilds the six template parts on the new layers, names each DesignUp file replaced, and sets the reveal timing in the template's tokens (ID25); the DesignUp-copy proof is identical with nothing opted in (U12) | As B2.15; `docs/adopt-0.5.0-beta.1.md` | Open the brief | MP14 | Planned |
+
 ### Later
 
 **Delivers:** the "could" items and the larger data features; each row gets a release when it is scheduled.
@@ -555,6 +591,8 @@ Self-presentation and its known-good recovery are now specified, not built. Rapi
 | BS.6 | Every owner decision (ID1–ID20) is recorded with its default or the owner's choice before the packet that depends on it | The decision tables in [the plan](improvement-plan.md#open-owner-decisions) and Part 3; the owner instructions rows | Read the decision tables | ID1–ID20 | Planned |
 | BS.7 | What stays in the consuming project stays there: no packet adds a brand face, palette, collage, pixel match, root scaling, site-specific effect, importer, route list or content to the library | Both out-of-scope lists; release reviews against them | Compare the release notes with the lists | Plan out of scope | Planned |
 | BS.8 | Final evidence: DesignUp re-runs on 0.3.0-beta.1 (and 0.4.0-beta.1) and reports, in the same appendix shape, a higher library share on its expressive pages, fewer workarounds and overrides, and every real gap closed or explained (ID11) | DesignUp's new report, written by DesignUp's team or agent; we never write in that project | Read the new report's share table and appendix | ID11 | Planned |
+| BS.9 | Final evidence for Q110: DesignUp reports its move in the note's own shape: 43 or more of its 51 custom items on core or tokens, the rest inside the six named template parts on public extension points, and no other custom component code | DesignUp's own report (we never write in that project) | Read the report's counts table | ID11 | Planned |
+| BS.10 | Every Part 4 packet names its second user and passes ID6; no DesignUp shape, look, timing, picture or name enters core or templates (Q105.2) | `Select-String -Pattern designup` over `packages/` finds nothing outside `UPGRADE.md` and `CHANGELOG.md` (which name the site each proof ran on); the plan's "Second user" column | Search the packages for "designup" | MP1–MP14 | Planned |
 
 ### Coverage matrix
 
@@ -915,6 +953,147 @@ Every item in the two DesignUp notes, the plan's own findings N01–N18 and the 
 | **Total** | **258** |
 
 **Result:** 258 items: 231 mapped to a row, 22 recorded out of scope with a reason, 5 no action (the note says it isn't a gap, or no such item), **0 unmapped**. Every row ID used above exists in this section.
+
+#### Migration-readiness note (Q110)
+
+Every item of DesignUp's `docs/research/library-migration-readiness.md` (2026-11-10), in its order, mapped to a row above or to a recorded out-of-scope decision. IDs MR, TC and MC are the [plan's Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110); the rest are numbered here.
+
+**Asks: the five requests, withdrawals, template parts, looks and dropped code (MR1–MR24)**
+
+| Item | Ask | Maps to |
+| --- | --- | --- |
+| MR1 | Keep the place on page switches; same-page link glides to the top | BM.1, BM.2 |
+| MR2 | Steady opening section | B5.1 |
+| MR3 | Paired source, pluggable reveal, exported stipple helper | B5.4, B5.5, B5.6 |
+| MR4 | Decoration slot on Image and Hero media | B5.2, B5.3 |
+| MR5 | Glide by distance, and a long duration | B5.7; the token BS.6 (ID25) |
+| MR6 | Withdrawn: `--blend-overprint` library token | Out of scope: the note withdraws it; a template token |
+| MR7 | Withdrawn: layered composition block | Out of scope: withdrawn; the generic part is B5.2 |
+| MR8 | Withdrawn: stipple reveal as a library treatment | Out of scope: the look is DesignUp's; the mechanism is B5.5, B5.6 |
+| MR9 | Downgraded: `data-depth` primitive | BL.5, BL.8 |
+| MR10 | Not needed: fluid type scale for root scaling | BL.5 (the library's call, later) |
+| MR11 | Hero slot before the eyebrow | BM.3, BS.6 (ID30) |
+| MR12 | Template part: brand photo frame | Out of scope: brand art (generic part: B5.2) |
+| MR13 | Template part: quote frame | Out of scope: brand art (generic part: B5.2, B5.3) |
+| MR14 | Template part: Home collage | Out of scope: brand art (generic part: B5.2) |
+| MR15 | Template part: stipple reveal look | Out of scope: brand look (generic part: B5.5, B5.6) |
+| MR16 | Template part: depth motion | Out of scope: site tuning on its own layers (generic part: B5.2; primitives BL.5) |
+| MR17 | Template part: year-list preview, only if core can't | BL.1 (core can't in 0.4; custom meanwhile) |
+| MR18 | Overprint as a template token | Out of scope: a template token; BM.6 names the token command |
+| MR19 | Paper grain as a template token or asset | Out of scope now: a template token (a texture material later, BL.4) |
+| MR20 | Dropped: root text scaling | BM.6, B3.5, B3.20 |
+| MR21 | Dropped: the hand router | BM.6, BM.1, B3.12, B4.9 |
+| MR22 | Dropped: `scroll.ts` | BM.6, B3.3, B5.7 |
+| MR23 | Dropped: the custom Hero layout | BM.6, B3.5 |
+| MR24 | Dropped: the extended MorePage band sections | BM.6, B2.10 |
+
+**The inventory (MI01–MI51, the note's section 1 in order)**
+
+| Item | Custom item | Maps to |
+| --- | --- | --- |
+| MI01 | Hand-written hash router and route table | BM.6, B3.12, B4.9 |
+| MI02 | Page cross-fade | B3.14, B2.3 |
+| MI03 | Preload of the next page's pictures | B3.14 |
+| MI04 | Year change keeps the scroll place and focus | BM.1, BM.2 |
+| MI05 | Header link to the current page glides to the top | BM.1, BM.2 |
+| MI06 | Page title and section | BM.3, B4.1, B4.2 |
+| MI07 | Programmatic scrolls by distance | B3.3, B5.7 |
+| MI08 | Paper ramp and brand | B2.6, B3.7 |
+| MI09 | Fonts | B3.9 |
+| MI10 | Scheme boot | B3.10 |
+| MI11 | Data helpers | B4.5, B4.6, B4.7 |
+| MI12 | Grey and colour photo pairs | B5.4 |
+| MI13 | Call | B2.8 |
+| MI14 | ColorReveal | B5.5, B5.6 (the look stays DesignUp's, MR15) |
+| MI15 | Countdown | BM.4 |
+| MI16 | Display | B2.11, B3.8, B3.22 |
+| MI17 | Grain | Out of scope now: a template token (MR19); BL.4 later |
+| MI18 | HeaderEnd | B3.16, B3.10 |
+| MI19 | Label | B2.7, B3.9 |
+| MI20 | Logo | B3.16 |
+| MI21 | LogoShape | Out of scope: brand art (MR12) (generic part: B5.2) |
+| MI22 | PhotoFrame | B5.2 (its shapes stay DesignUp's, MR12) |
+| MI23 | Collage | Out of scope: brand art (MR14) (generic part: B5.2) |
+| MI24 | NameWall | BM.3, BM.4 |
+| MI25 | NumberStrip | BM.3 (`Statistic`, MC2) |
+| MI26 | PhotoTiles | B2.12, B3.15 |
+| MI27 | QuoteBand | B3.6, B5.2, B5.3 |
+| MI28 | Rows | B3.2 (DescriptionList and IndexList in the finder) |
+| MI29 | Speakers | B2.10, BM.3 |
+| MI30 | SponsorWall | BM.4 |
+| MI31 | TalkGrid | B3.15, BM.3 |
+| MI32 | TalkShelf | B2.10, B3.6 |
+| MI33 | TalkFinder | B2.14, B3.13 |
+| MI34 | YearList | BL.1 (custom meanwhile, MR17) |
+| MI35 | Band | B2.10 |
+| MI36 | Split | B3.6, BS.6 (ID29) |
+| MI37 | Hero | B3.5, BM.3 |
+| MI38 | Steady year hero | B5.1 |
+| MI39 | SponsorsLayout | BM.4 |
+| MI40 | depthMotion | Out of scope: site tuning (MR16); primitives BL.5 later |
+| MI41 | No link underlines | B2.5 |
+| MI42 | Overprint blend | Out of scope: a template token (MR18) |
+| MI43 | Hatch pattern | Out of scope: brand art (MR12) |
+| MI44 | Per-part sizes in `designup.css` | BM.6, B3.18 |
+| MI45 | Site-layout overrides | B2.4 |
+| MI46 | Root scaling | BM.6, B3.20 |
+| MI47 | Template tokens | B3.18 |
+| MI48 | 11 hand-written views | B4.8, B4.11, BM.6 |
+| MI49 | Content JSON | B3.22, B3.23, B3.24, B3.25, B3.26 |
+| MI50 | About 31 copied conference screens | B3.21, BM.6 |
+| MI51 | Template registry, `template.json`, `content.schema.json` | B4.3, B4.11, B4.12 |
+
+**The rest of the note**
+
+| Item | From the note | Maps to |
+| --- | --- | --- |
+| KF1 | Key fact: `Router` always scrolls to the top and moves focus on a path change | BM.1 |
+| KF2 | Key fact: `Image treatment` is a 200 ms greyscale fade, not a stipple reveal | B5.4, B5.5 |
+| NB1 | Not blocking: facade video player | B3.15 (`posterTreatment`) |
+| NB2 | Not blocking: talks gallery and finder | B2.14, B3.13, B3.15 |
+| NB3 | Not blocking: tiles and name lists | B2.12, BM.3 |
+| NB4 | Not blocking: no underlines, icon theme toggle | B2.5, B3.10 |
+| NB5 | Not blocking: no one-sided accents | BS.10 (no packet adds one; the brief's design constraints) |
+| NB6 | Not blocking: Bebas display, quote line breaks, supplied faces | B3.9, B3.22 |
+| FZ1 | Freeze: no custom parts beyond the six | BM.6 (the brief endorses the freeze list) |
+| FZ2 | Freeze: don't extend code being dropped | BM.6 |
+| FZ3 | Freeze: don't extend ColorReveal or depthMotion | BM.6, B5.8 |
+| FZ4 | Freeze: no new hand-written views, routes or copied screens | BM.6 |
+| FZ5 | Freeze: no new CSS beyond token values | BM.6 |
+| FZ6 | Freeze: no pixel tuning of frames, collage, year hero | BM.6, B5.8 |
+| FZ7 | Freeze: go straight to 0.4, not via 0.2.0-beta.2 or 0.3 | BM.5 |
+| SK1 | Safe: content in JSON, `{accent}` to rich text later | BM.6, B3.22 |
+| SK2 | Safe: keep both grey and colour files | B5.4 |
+| SK3 | Safe: token values, decisions, docs, gap log | BM.6 |
+| OS1 | Order 1: library must (request 1) | BM.1, BM.2 |
+| OS2 | Order 2: library should (requests 2–4) | B5.1, B5.2, B5.3, B5.4, B5.5, B5.6 |
+| OS3 | Order 3: freeze | BM.6 |
+| OS4 | Order 4: install and theme | BM.5, BM.6 |
+| OS5 | Order 5: content | BM.6, B3.22, B3.24 |
+| OS6 | Order 6: components with full replacements | BM.3, BM.6 |
+| OS7 | Order 7: router | BM.1, BM.2, BM.6 |
+| OS8 | Order 8: template parts | B5.8 |
+| OS9 | Order 9: site from data | BM.6, B4.8 |
+| DD1 | Dependency: theme and content don't wait | BM.6 |
+| DD2 | Dependency: router before site from data | BM.6 |
+| DD3 | Dependency: requests 3 and 4 before template parts | B5.8 |
+| DD4 | Dependency: year hero settled before page documents | B5.1, BM.6 |
+| DD5 | Dependency: collections before the pages that list them | BM.6, B4.5 |
+| CT1 | The counts: 33 core, 10 tokens, 8 custom of 51 | BS.9 |
+| TC1 | To confirm: speaker portraits in the brand frame | Out of scope: DesignUp's design choice |
+| TC2 | To confirm: titles from page data | BM.3 |
+| TC3 | To confirm: NameWall tier sizes as tokens | BM.3, BM.4 |
+| TC4 | To confirm: TalkGrid `beside` or `row` when narrow | BM.3 |
+| TC5 | To confirm: Split rule between columns | BM.3, BS.6 (ID29) |
+| TC6 | To confirm: breadcrumbs above the eyebrow | BM.3, BS.6 (ID30) |
+| TC7 | To confirm: Speakers portrait shapes | Out of scope: DesignUp's brand art (MR12) |
+| TC8 | To confirm: fit of the 31 copied screens | BM.6, B3.21 |
+| TC9 | To confirm: request 2's fallback accepted | Out of scope: DesignUp's owner decides; B5.1 removes the need |
+| TC10 | To confirm: no long duration token in 0.4 | BS.6 (ID25) |
+| TC11 | To confirm: `faces` loads a site-supplied face | BM.3 |
+| TC12 | To confirm: template parts effort | Out of scope: DesignUp's own estimate |
+
+**Totals:** 24 asks + 51 inventory rows + 2 key facts + 6 not blocking + 7 freeze + 3 safe + 9 order steps + 5 dependencies + 1 count + 12 to confirm = **120 items**: 100 mapped to a row, 20 recorded out of scope with a reason, **0 unmapped**. Every row ID used here exists in this section.
 
 ### Against the promise
 

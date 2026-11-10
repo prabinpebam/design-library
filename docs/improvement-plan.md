@@ -1,6 +1,6 @@
 # Improvement plan from the DesignUp beta
 
-> **TL;DR:** The first real adoption, the DesignUp site (about 55 routes on 0.2.0-beta.1), confirms the library's model: sealed parts, tokens, context attributes, the seam ladder and exact agent contracts. Plain pages came out 65–88% library elements with no styles in views. Expressive pages left the library: Home is 19% library elements and the Editions index is 22%. We checked the report against both codebases. It holds, with five corrections: Card's `meta` already takes a `Badge`, `Hero` already has `eyebrow`, `lead` and `note`, the probes do ship, the reduced-motion fade was a documented choice, and the guide itself sends people to copy a demo template. We also found 18 issues of our own, among them a core `TextField` that hard-codes "Saved" and a Beta proof that never ran on the npm the guide promises. **Six themes:** (1) brand-safe theming (contrast, base colour, link decoration, own fonts); (2) an open page frame and opening (frame settings, `Hero` media, uneven `Grid`); (3) site plumbing (router-aware links, page transitions, scrolling, live text fields); (4) project-side checks that ship; (5) guidance that sends agents to core first; (6) a proof that behaves like a real brand-led project. **Proposed releases:** **0.2.0-beta.2**, quick wins with no breaking changes (14 packets); **0.3.0-beta.1**, the capabilities that keep a brand-led site inside the library (25 packets, with three changes that can break or shift existing projects noted); **later**, the "could" items. **Data-driven sites (Q107)** are in [Part 3](#part-3-data-driven-sites-q107): foundations in 0.3.0-beta.1, the page and site documents, collections, router and renderer in 0.4.0-beta.1. Build started on 2026-11-10 (Q105); every build packet starts in strict design.
+> **TL;DR:** The first real adoption, the DesignUp site (about 55 routes on 0.2.0-beta.1), confirms the library's model: sealed parts, tokens, context attributes, the seam ladder and exact agent contracts. Plain pages came out 65–88% library elements with no styles in views. Expressive pages left the library: Home is 19% library elements and the Editions index is 22%. We checked the report against both codebases. It holds, with five corrections: Card's `meta` already takes a `Badge`, `Hero` already has `eyebrow`, `lead` and `note`, the probes do ship, the reduced-motion fade was a documented choice, and the guide itself sends people to copy a demo template. We also found 18 issues of our own, among them a core `TextField` that hard-codes "Saved" and a Beta proof that never ran on the npm the guide promises. **Six themes:** (1) brand-safe theming (contrast, base colour, link decoration, own fonts); (2) an open page frame and opening (frame settings, `Hero` media, uneven `Grid`); (3) site plumbing (router-aware links, page transitions, scrolling, live text fields); (4) project-side checks that ship; (5) guidance that sends agents to core first; (6) a proof that behaves like a real brand-led project. **Proposed releases:** **0.2.0-beta.2**, quick wins with no breaking changes (14 packets); **0.3.0-beta.1**, the capabilities that keep a brand-led site inside the library (25 packets, with three changes that can break or shift existing projects noted); **later**, the "could" items. **Data-driven sites (Q107)** are in [Part 3](#part-3-data-driven-sites-q107): foundations in 0.3.0-beta.1, the page and site documents, collections, router and renderer in 0.4.0-beta.1. **Moving a site completely onto the library (Q110)** is [Part 4](#part-4-moving-a-site-completely-onto-the-library-q110): DesignUp's migration-readiness note checked (MR1–MR24), packets MP1–MP14 in 0.4.0-beta.2 and 0.5.0-beta.1. Build started on 2026-11-10 (Q105); every build packet starts in strict design.
 
 **Owner, 2026-11-09 23:55 (verbatim, [DoD Q104](definition-of-done.md#owner-instructions)):** *"I've tried implementing this library in a real proejct and here's the report from that. E:\Projects\designup-project\designup\docs\research\design-library-beta-report.md This is the project. E:\Projects\designup-project\designup Use the learnings from this and create an extensive plan on how to improve the Design Library. No coding yet."*
 
@@ -8,7 +8,7 @@
 
 **Definition of Done:** [Stage: DesignUp improvements](definition-of-done.md#stage-designup-improvements) (Q108): promises, user-can statements and observable rows per release, and a coverage matrix that maps all 258 items of both DesignUp notes, N01–N18 and K1–K7 to a row or a recorded out-of-scope decision (0 unmapped).
 
-**Stable IDs on this page:** Part 3 (data-driven sites) has its own list. Findings **F01–F60** (the report's appendix, in its order) and **N01–N18** (our own), workstreams **W1–W13**, packets **IP1–IP44**, assumptions **IA**, validation changes **IV**, owner decisions **ID**.
+**Stable IDs on this page:** Part 3 (data-driven sites) and Part 4 (moving a site onto the library) have their own lists. Findings **F01–F60** (the report's appendix, in its order) and **N01–N18** (our own), workstreams **W1–W13**, packets **IP1–IP44**, assumptions **IA**, validation changes **IV**, owner decisions **ID**.
 
 ## Part 1: what we learned
 
@@ -557,3 +557,160 @@ The 0.3 brief lists what a site can do with no library change and with 0.3's fou
 | ID18 | Release placement | **Foundations in 0.3.0-beta.1, the data-driven site in 0.4.0-beta.1** |
 | ID19 | Reference site for the acceptance test | **A shipped template extended with one collection** (harbour's events), not a new template |
 | ID20 | Words-in-code: warning or error? | **Warning in 0.3 and 0.4** (Q105.3); an error only when a site opts in with `--strict` |
+
+## Part 4: moving a site completely onto the library (Q110)
+
+**Owner, 2026-11-10 08:24 (verbatim, [DoD Q110](definition-of-done.md#owner-instructions)):** *"Refer this and start planning for addressing these. No coding yhet. Only planning. E:\Projects\designup-project\designup\docs\research\library-migration-readiness.md"*
+
+> **TL;DR:** DesignUp's migration-readiness note (2026-11-10, a desk analysis of 0.4.0-beta.1) plans to move the whole site onto the library: of 51 custom items, 43 become core or tokens and 8 stay as six brand template parts on public extension points. It asks the library for **five generic things**: keep the place on page switches (must), a steady-height `Hero`, a paired picture source with a pluggable reveal and the stipple helper exported, a decoration layer on `Image` and `Hero` media (should), and glide by distance with a long duration (could). We checked every claim against the library source, the released 0.4.0-beta.1 and DesignUp's code (read-only). **The note is accurate**: its two key facts about 0.4 hold exactly (`Router` always lands at the top and focuses `main h1` on a path change; `Image` `treatment` is a 200 ms filter on one picture). We add **seven corrections or refinements** (MC1–MC7), answer all **twelve "to confirm" items** (TC1–TC12) and number its asks **MR1–MR24**. The plan adds **workstream W15**, **14 packets MP1–MP14** in two releases and **decisions ID21–ID31**: **0.4.0-beta.2** (6 packets: the must, the guide answers, reuse of a shipped template's parts, a direct 0.2.0-beta.1 → 0.4 upgrade proof, the release) and **0.5.0-beta.1** (8 packets: steady opening, decoration layer, paired source, reveal hook, the exported stipple helper, glide pace, the release). Two existing packets change shape (IP40's held-height half becomes MP7; IP41 becomes MP12); the year-list preview and depth motion stay with IP40 and IP44/DP23. Everything is additive and opt-in; DesignUp keeps working with no edits.
+
+**Status:** strict design, planning only (F15.IMP4, worker 61). No code, token, component, check, template or package changed; nothing was written in the DesignUp project. **Shaped by** `ground` (each request traced to a person's need on any site), `assumptions` (IA17–IA20), `definition-of-done` (rows in [Stage: DesignUp improvements](definition-of-done.md#migration-readiness-q110)), `design-system`, `visual-noise`, `ui-states` and `perceived-performance` (the reveal and the keep-the-place behaviour), and the [motion framework](motion.md) (the 400 ms ceiling in MC5).
+
+**Stable IDs:** asks **MR1–MR24** (the note's requests, withdrawn requests, template parts, looks and dropped items, in its order), "to confirm" answers **TC1–TC12**, corrections **MC1–MC7**, workstream **W15**, packets **MP1–MP14**, assumptions **IA17–IA20**, decisions **ID21–ID31**. The note's 51 inventory rows (MI01–MI51) and its other lists are mapped one by one in the DoD's [coverage matrix](definition-of-done.md#migration-readiness-note-q110).
+
+### Checked against the code
+
+| The note says | Checked (read-only) | Result |
+| --- | --- | --- |
+| A path change always scrolls to the top (or the anchor) and focuses `main h1` | `packages/core/site/index.tsx:236–268`: `newPage` → `glide(target ?? 0)`, then `focus` (default `main h1`) | **Confirmed** |
+| `focus={false}` turns focus off for every page, not one change | `RouterProps.focus?: string \| false`, read once per `Router` | **Confirmed** |
+| A same-path link does nothing but call `onChange` | `show()` returns early for the same path; the effect calls `onChange` and returns when path and anchor are unchanged | **Confirmed** |
+| A query change keeps the place (the fallback) | `newPage` compares paths only; a query-only change calls `onChange` and doesn't scroll or move focus | **Confirmed**: the year-as-query fallback works on 0.4.0-beta.1 today |
+| `Image treatment` is a 200 ms greyscale or duotone fade of one picture | `css/fundamentals/image.css:46–108`: `filter` and a multiply `::after`, both on `--duration-change` (200 ms); one `src` | **Confirmed**; triggers are the picture, or a link, button, card or `[data-tone-area]` around it, hovered or focused |
+| The stipple geometry isn't a public export | `react/behaviour/stipple.ts` exports `perlin2`, `poissonPoints`, `layoutStipple`, `paintStipple`…; none are in `react/index.ts` or the package's `exports` | **Confirmed**; DesignUp's `ColorReveal.tsx:6` says it adapted them |
+| `glide` always eases on `duration.move-far` | `react/behaviour/glide.ts:124` | **Confirmed** (300 ms) |
+| 0.4 has no token for about 1 s | `tokens.json` `duration`: motion roles stop at `shared` (400 ms), "the ceiling for anything a person triggers"; longer values are timing only (`confirm-read`, `notice`, `scrollbar-idle`) | **Confirmed**, and see MC5 |
+| `Hero fit="screen"` grows with its content | `layouts/Hero.tsx:34`: "taller content…" grows; no reserved lines | **Confirmed** |
+| No slot before the eyebrow | `Hero` `eyebrow?: string`; nothing before it; core `Breadcrumbs` exists | **Confirmed** (TC6) |
+| DesignUp's own code | `web/src/App.tsx:44–90`: the hand router keeps the place between `/\d{4}` routes, preloads the year's photo, and glides to the top for a header link to the shown page (`again`, skipped inside `main` and for `?` links); `lib/scroll.ts` 99 lines; `ColorReveal.tsx` 235 lines; `depthMotion.ts` 369 lines; `web/package.json` still on the 0.2.0-beta.1 tarballs | **Confirmed** |
+| The 51 rows and the counts (33 core, 10 tokens, 8 custom) | Re-counted the five tables: 12 + 10 + 12 + 5 + 8 + 4 = 51 | **Confirmed** |
+
+**Corrections and refinements:**
+
+| ID | The note says | What we found | Action |
+| --- | --- | --- | --- |
+| MC1 | Countdown, SponsorWall and SponsorsLayout: "Full: the conference template's" | They're reachable only through `@design-library/templates/conference`, whose entry eagerly loads the whole template's content, pictures and stories; the templates package exports `./*/index.ts` only, so `conference/registry` can't be imported alone | MP4 |
+| MC2 | NumberStrip: "Grid with Text `statement` and the `numeral` font role" | Core `Statistic` is the closer part: the `numeral` role exists for its figure (`theme/index.ts:308`) | MP3 (guide) |
+| MC3 | "Go straight to 0.4: 226 of 226 routes identical on a copy" | Every proof was one step (0.2.0-beta.1 → beta.2, beta.2 → 0.3, 0.3 → 0.4); the jump DesignUp will make, 0.2.0-beta.1 → 0.4, was never run as one step | MP5 |
+| MC4 | The header link can't glide to the top | It can, with site code: `Router` calls `onChange` for a same-path link, so a site can `glide(0)` there; but that's site code, and it can't tell a link from a query change | MP1 adds `again`; MP3 documents the stopgap |
+| MC5 | Request 5: "a long motion duration token, about 1 s" | The motion framework (Q65 T8) makes 400 ms the ceiling for anything a person triggers; a 1 s reveal on hover is past it, so this is a rule decision, not a missing token | ID25 |
+| MC6 | Request 1's shape: `scroll: (to, from) => 'top' \| 'keep'` | `Router` `transition` already takes `(to, from) => name`; the same form for `scroll` and `focus` is consistent and small | MP1 |
+| MC7 | Requests 3 and 4 as separate features | `Image` already stacks the picture and an overlay in one grid cell (`image.css:51`); a second source and a decoration layer are more layers in the same cell, so the two packets share one structure | MP8, MP10 |
+
+### Findings register: migration readiness
+
+Root causes as in Part 1, plus **DesignUp** (a step on DesignUp's side; we never write there). "Shipped" means 0.4.0-beta.1 already does it; the fix is in the guide or the brief.
+
+| ID | Ask (the note) | Verdict | Root cause | Owning files | Action |
+| --- | --- | --- | --- | --- | --- |
+| MR1 | Keep the place on page switches between sibling pages, and a link to the current page glides to the top (must, small) | Real gap; a query fallback works today | Library | `site/index.tsx`, `schemas/page.schema.json`, `schemas/site.schema.json`, `render/SiteView.tsx`, `tools/check-site.mjs`, `tools/types.mjs`, the Routing page | Build MP1 (component), MP2 (data); stopgap in MP3 |
+| MR2 | A steady opening: a `Hero` that reserves its lines so a series keeps one height (should, medium) | Real gap | Library | `layouts/Hero.tsx`, `css/layouts/hero.css`, `schemas/blocks.schema.json` (`hero`), `agent/` | Build MP7 (**IP40's held-height half**, F47) |
+| MR3 | A paired source and a pluggable reveal on `Image`, and the stipple helper exported (should, medium) | Real gap (three parts) | Library | `fundamentals/Image.tsx`, `css/fundamentals/image.css`, `schemas/assets.schema.json`, `render/` picture fields, `react/behaviour/stipple.ts`, `package.json` `exports` | Build MP10 (source), MP11 (hook), MP12 (helper; **IP41 reshaped**) |
+| MR4 | A decoration layer on `Image` and on `Hero` media (should, medium) | Real gap; `Hero` `media` already takes any node, so a site can wrap its own frame today, but `Image` has no layer | Library | `fundamentals/Image.tsx`, `css/fundamentals/image.css`, `layouts/Hero.tsx`, `render/blocks.tsx` `SLOTS`, [Clipping](clipping.md) list | Build MP8 (Image), MP9 (Hero and data) |
+| MR5 | Glide speed by distance, and a long duration token (could, small) | Gap (pace); the token is a rule question (MC5) | Library + Decide | `react/behaviour/glide.ts`, `site/index.tsx`, `tokens/tokens.json` | Build MP13 (opt-in pace); ID25 for the token |
+| MR6 | Withdrawn: `--blend-overprint` library token | Agreed | — | — | No action: a template token in DesignUp's `tokens.json` |
+| MR7 | Withdrawn: a layered composition block | Agreed: MR4 is the generic part | — | — | No action |
+| MR8 | Withdrawn: the stipple reveal as a library treatment | Agreed: MR3 is the mechanism, the look is DesignUp's | — | — | No action; MP12's library story uses the library's own tokens |
+| MR9 | Downgraded: a `data-depth` motion primitive (could) | Agreed | Library (later) | — | Stays with IP44 and DP23 (Later) |
+| MR10 | Not needed: a fluid type scale for root scaling | Agreed; root scaling is dropped | — | — | Stays IP44 (Later), the library's call |
+| MR11 | To confirm: a `Hero` slot before the eyebrow for breadcrumbs | Not in 0.4 (TC6) | Docs + Decide | `layouts/Hero.tsx`, `guide/5-layouts.md`, Hero stories | MP3: `Breadcrumbs` as the section before the opening; a slot only if that fails (ID30) |
+| MR12 | Template part: brand photo frame (shapes around a photo) | DesignUp's art | DesignUp | DesignUp's template | Out of scope (art); built on MP8 |
+| MR13 | Template part: quote frame | DesignUp's art | DesignUp | — | Out of scope (art); built on MP8, MP9 |
+| MR14 | Template part: Home collage | DesignUp's art | DesignUp | — | Out of scope (art); built on MP8 and core lists |
+| MR15 | Template part: stipple reveal look, 1 s each way | DesignUp's look | DesignUp | — | Out of scope (look); built on MP10–MP12; duration per ID25 |
+| MR16 | Template part: depth motion on decoration layers | DesignUp's tuning | DesignUp | — | Out of scope; MP8's layer is its target; must honour `prefersReducedMotion` (exported) |
+| MR17 | Template part: year-list preview, only if core can't | Core can't in 0.4 (`IndexList` items have no picture or preview) | Library (later) | `compounds/IndexList.tsx` | Keep custom now; **IP40's preview half** (BL.1) replaces it later; F02 handlers (shipped) make the part easy |
+| MR18 | Overprint look: multiply in light, screen in dark, as a template token | Agreed | DesignUp | DesignUp's `tokens.json` | Out of scope (template token); the brief names `design-library-template-tokens` |
+| MR19 | Paper grain: a template token or background asset | Agreed | DesignUp | — | Out of scope now; a generic texture material stays IP43 (BL.4) |
+| MR20 | Dropped: root text scaling, for `Hero fit="screen"` and the library's scale | Shipped (`fit="screen"`, B3.5); `check` warns on root size | DesignUp | — | Brief step (MP6) |
+| MR21 | Dropped: the hand router, for core `Router` | Shipped (B3.12, B3.14, B4.9) except MR1 | DesignUp | — | Brief step after MP1/MP2 |
+| MR22 | Dropped: `scroll.ts`, for `glide` | Shipped (B3.3); pace is MR5 | DesignUp | — | Brief step |
+| MR23 | Dropped: the custom Hero layout, for core `Hero` | Shipped (B3.5) | DesignUp | — | Brief step |
+| MR24 | Dropped: the extended MorePage band sections, for core `Section` bands | Shipped (`Section` `tone`, `bleed`, B2.10) | DesignUp | — | Brief step |
+
+**The "to confirm" items, answered:**
+
+| ID | The note asks | Answer (checked) | Where it goes |
+| --- | --- | --- | --- |
+| TC1 | Do speaker portraits use the brand photo frame? | DesignUp's design choice; either way it's the MR12 part on MP8 | DesignUp |
+| TC2 | Page titles from page data (`titleFor`, `sectionOf`)? | Yes: `site.json` `titlePattern` and each page's `title`; `SiteView` sets the window title, description and picture (B4.1, B4.2). `sectionOf` is the header's `current` from navigation | MP3 guide, MP6 brief |
+| TC3 | NameWall tier sizes as tokens? | No core tier sizes; a grouped core list (`List` or `DescriptionList` with headings) and the sizes as template tokens, or the conference `SponsorWall`'s levels (MC1) | MP3, MP4 |
+| TC4 | TalkGrid: `Card` `beside` or `row` when narrow? | Both exist: `beside` stacks when the card is narrow, `row` puts a small square picture at the end (`Card.tsx:26`) | MP3 |
+| TC5 | Split: a rule between columns, and 5:7? | `Grid` has `2:1`, `3:2`, `1:2`, `2:3`, `aside`; no 5:7 and no rule between columns | ID29 (default: space, and `2:3`) |
+| TC6 | Breadcrumbs above the eyebrow? | No slot; `Breadcrumbs` exists | MP3, ID30 |
+| TC7 | Speakers: portrait shapes? | DesignUp's art (MR12); the band is core `Card`, `Grid`, `Section` `tone` | DesignUp |
+| TC8 | The 31 copied conference screens: fit per screen? | The content check already lists the 31 unrendered screens on a read-only run (B3.21); each becomes a page document or is pruned | MP6 brief |
+| TC9 | Request 2's fallback: does DesignUp's owner accept a varying height? | DesignUp's owner decides; MP7 removes the need | DesignUp |
+| TC10 | No long duration token in 0.4? | Confirmed; see MC5 | ID25 |
+| TC11 | Does `applyFonts` `faces` load a face the site supplies? | Yes: `SiteFace` with `sources` (URLs) or an existing face rule, a metric-matched `fallback` (`theme/index.ts:284`, IP23, B3.9) | MP3 |
+| TC12 | Step 8 (template parts) effort | DesignUp's estimate; it waits on MP8–MP12 | DesignUp |
+
+### What stays out, checked (ID6, Q105.2)
+
+The note's own split matches Part 2's out-of-scope list and Part 3's "what stays out": the shapes, hatch, collage, overprint, grain, stipple look, depth-motion weights, the year-list art and the 1 s reveal timing stay DesignUp's. Each new packet passes the ID6 bar with a second user named in its row: a real adopter plus a shipped template or reference product. None names DesignUp: every prop, field, story and example uses generic names and the library's own tokens and pictures. The note's withdrawals (MR6–MR10) are agreed; nothing is added for them.
+
+### W15 Moving a site completely onto the library
+
+- **Goal (promise → user-can):** the library promises a team builds its product from the library's parts without forking. For a site that already exists: **a team moves its site onto the library completely, keeping only its brand art as named template parts on public extension points** (U13, U14 in the DoD).
+- **Items:** MP1–MP14 below.
+- **Done when:** DesignUp's own re-run (ID11, BS.8) reports 43 or more of its 51 items on core or tokens and the rest inside the six named parts, with no other custom component code; each release's DesignUp-copy proof shows no change with nothing opted in.
+- **Risks and assumptions:**
+  - **IA17:** keeping the place is a per-change choice, not a per-site one. Test: the Routing page story with years and a non-sibling link in one site, before MP2.
+  - **IA18:** reserving lines (`min-block-size` in `lh`) holds a series' height at every width without clipping. Test: 11 titles of 1–3 lines at 320, 1000 and 1440 px in MP7's story; a longer title grows, never clips.
+  - **IA19:** a decoration layer that may extend past the picture doesn't break the clipping rules or overlap focus rings. Test: the clipping probe on MP8's story, with a focusable card around the image.
+  - **IA20:** a render hook is enough for any reveal (canvas mask, SVG, CSS) while the library owns reduced motion and the triggers. Test: MP11's story implements a plain wipe and the stipple with the same hook.
+
+### Packets
+
+Each gives an openable result in 60 active minutes or less (a story, a library page section, a check output or a transcript). Strict design: every visual packet ships its screens for review first; tests only after the owner approves the design.
+
+#### 0.4.0-beta.2: moving a site onto 0.4 (fixes, docs, the must)
+
+| Packet | What the owner opens | Findings | After | Second user (ID6) |
+| --- | --- | --- | --- | --- |
+| MP1 | `Router` keeps the place: `scroll?: 'top' \| 'keep' \| ((to, from) => 'top' \| 'keep')` and `focus` also as `(to, from) => selector \| false` (MC6), and `again?: 'none' \| 'top'` (a link to the shown page glides to the top; `none`, today's behaviour, is the default). Routing page story "Sibling pages keep the place": year links keep scroll and focus on the strip, other links land at the top | MR1, MI04, MI05 | ID22, ID23 | The blog template's archive pages; the design template's version history |
+| MP2 | The same from data: a page document with `"collection"` takes `"between": "keep"` (moving between two items of that page keeps the place); `site.json` takes `"again": "top"`; the content check and `design-library-types` know both. Harbour story: two readings, scroll, switch | MR1 | MP1 | Harbour's readings |
+| MP3 | Guide and Core first answers: a "Moving an existing site" section in the brand-led recipe (the order of the note's steps 4–9 against library rows; the query stopgap and the `onChange` glide until MP1); TC2–TC6, TC8 and TC11 answered where agents read them; Core first rows for "a strip of big numbers" (`Statistic`, MC2), "names grouped by tier" and "a heading beside its content"; a Hero page story with `Breadcrumbs` as the section before the opening, under a flush header | MR11, MC2, MC4, TC2–TC6, TC8, TC11 | — | Any site |
+| MP4 | Reuse a shipped template's parts: each template's registry importable alone (`@design-library/templates/{id}/registry`), with its token CSS and none of its content; guide step 6 "Use a part from another template"; a scratch site placing `conference.countdown` with its bundle size beside the full import | MC1, MI15, MI30, MI39, TC3 | ID31 | Any site using a template part |
+| MP5 | Direct-jump proof: a copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 files (outside both repositories), 226 routes in light, dark and 320 px, type check, build and console errors; recorded in the brief | MC3 | MP1, MP2, MP4 | — |
+| MP6 | Release 0.4.0-beta.2 (B2.15's steps) and `docs/adopt-0.4.0-beta.2.md` with its `UPGRADE.md` block (see the brief changes below). Push and publish only on the owner's request | MR20–MR24, TC8 | MP1–MP5 | — |
+
+#### 0.5.0-beta.1: brand media on extension points
+
+| Packet | What the owner opens | Findings | After | Second user (ID6) |
+| --- | --- | --- | --- | --- |
+| MP7 | Steady opening: `Hero` `reserve={{ title: n, lead: n }}` keeps room for that many lines, so a series keeps one height and the trail one place; also the `hero` block's `reserve` field. Hero page story: one opening stepping through 11 titles and leads of different lengths, at 320, 1000 and 1440 px (**IP40's held-height half**) | MR2, MI38, F47 | ID24 | Portfolio project pages; Harbour's reading pages |
+| MP8 | Decoration layer on `Image`: `decoration` (and `under`) draw in the picture's own cell, positioned against the picture, `aria-hidden`, no pointer events, no effect on layout or the accessible name, may extend past the picture's edge (ID26); Image page stories with a generic shape set from the library's own art and a focusable card around it | MR4, MI22, MC7 | ID26 | Portfolio covers; conference speaker portraits |
+| MP9 | The layer on `Hero` and in data: `Hero` `picture.decoration`; data slots `image.decoration` and `hero.decoration` that accept template parts (DP11's `SLOTS`); Hero page story | MR4 | MP8 | Any brand opening |
+| MP10 | Paired source: `Image` `alternate={{ src, srcSet? }}` and the picture entry's `alternate`, shown while active (the same triggers as `treatment`), crossfading on `duration.change` (kept under reduced motion, as a fade is today), loaded only on first intent; Image page story "Before and after" | MR3, MI12 | MP8 | Portfolio before-and-after; product shots |
+| MP11 | Reveal hook: `Image` `reveal` is a function the library calls with the two pictures, the active state and a progress value; the library owns the triggers, the timing and reduced motion (a crossfade instead), the site owns the drawing. Image page stories: a wipe and a stipple drawn with the same hook | MR3, MI14 | MP10, ID27 | Any brand reveal |
+| MP12 | The stipple helper exported: `@design-library/core/effects` with `perlin2`, `poissonPoints`, `layoutStipple`, `paintStipple`, `stippleTime`, `stippleRadius` and `stippleSettings` (the code `ImageGeneration` already uses), documented in its own contract; MP11's stipple story built on it in the library's tokens (**IP41 reshaped**, BL.2) | MR3, F22 | MP11, ID28 | ImageGeneration (in core) |
+| MP13 | Glide pace: `glide(to, { pace: 'distance' })` picks `move` for short travel and `move-far` for long (threshold a token), and `Router` `glide={{ pace }}` passes it; default unchanged. Motion page story: a short and a long glide side by side | MR5, MI07 | ID25 | The library app's own anchors |
+| MP14 | Release 0.5.0-beta.1 and `docs/adopt-0.5.0-beta.1.md`, with the DesignUp-copy proof (nothing opted in: identical) and the install matrix | MR12–MR16 | MP7–MP13 | — |
+
+**Unchanged, Later:** IP40's preview half (BL.1) replaces the year-list preview (MR17); IP44 and DP23 carry the depth primitive (MR9) and named effects, and register MP11's hook by name when the catalogue lands (ID27); IP43 (BL.4) carries a texture material (MR19). K9, B4.8's skeletons (DP24) and the rest of Part 3's Later list are untouched by this note.
+
+**Breaking-change notes:** none. Every prop and field is optional and defaults to today's output; `again` defaults to `none`, `scroll` to `top`, `pace` to today's; `reserve`, `decoration`, `alternate` and `reveal` draw nothing until set. MP4 adds export paths and changes no existing one. The proofs (MP5, MP14) show it.
+
+### Adoption brief changes per release (Q105.4)
+
+| Release | The brief adds |
+| --- | --- |
+| 0.4.0-beta.2 | **Install** from 0.2.0-beta.1 directly, with MP5's proof. **New:** `Router` `scroll`, `focus` as a function and `again`; page `between` and site `again`; template registries on their own. **Steps**, in the note's order: theme and content (steps 4–5) need nothing new; components (step 6) with the TC answers and `Statistic` for the number strip; the router (step 7) with `between: "keep"` on the year page, `again: "top"`, and `prepare` for the year photo; then site from data. Each step names the DesignUp code it replaces (`App.tsx` year logic and `again`, `lib/scroll.ts`, `look.ts`, the frame overrides, root scaling). **Watch:** keep the query stopgap out once `between` is on. **Endorses** the note's freeze list (FZ1–FZ7) as the way to avoid building twice |
+| 0.5.0-beta.1 | **New:** `Hero` `reserve`, `Image` `decoration`, `alternate` and `reveal`, `@design-library/core/effects`, glide pace. **Steps:** rebuild the brand photo frame, quote frame and collage on `decoration`; the stipple reveal on `reveal` with the exported helper and its timing in the template's `tokens.json` (ID25); the year opening on `reserve`; register each part as a `designup.*` block placed through the new slots. Each step names the DesignUp file it replaces (`PhotoFrame.tsx`, `ColorReveal.tsx`, the year hero CSS, `images.ts` pairs). **Watch:** depth motion reads `prefersReducedMotion` and moves only decoration layers |
+
+### Open owner decisions: migration readiness
+
+| ID | Decision | Recommended default |
+| --- | --- | --- |
+| ID21 | Release placement and names | **0.4.0-beta.2** for MP1–MP6 (as 0.2.0-beta.2 shipped small additive props after 0.2.0-beta.1); **0.5.0-beta.1** for MP7–MP14 |
+| ID22 | Keep the place: a `Router` option, a page-document field, or both? | **Both:** the option for hand-written views (MP1), the field for data-driven sites (MP2); the field compiles to the option |
+| ID23 | A link to the page already shown | **Default stays as today (`none`)**; `again: 'top'` is opt-in, and glides on the motion tokens (instant under reduce) |
+| ID24 | Steady opening: reserved lines or a `fit="steady"` mode? | **Reserved lines** (`reserve`): it works with `fit="content"` and `fit="screen"`, needs no fixed height, and a longer title still grows rather than clips |
+| ID25 | A core duration of about 1 s? | **No core token now.** Q65 keeps 400 ms as the ceiling for anything a person triggers; a template sets its reveal timing in its own `tokens.json`. Revisit with DP23's effects catalogue, where effects that don't gate interaction may justify an "effect" role |
+| ID26 | May a decoration extend past the picture's edge? | **Yes, the layer only:** the picture keeps its own clip; the layer is never clipped, never takes pointer or focus, and the clipping probe must still pass (no focus ring hidden) |
+| ID27 | Reveal: a render function now, or a named effect? | **A render function now** (MP11); DP23 later lets a template register the same function by name |
+| ID28 | Where the stipple helper lives | **A new `@design-library/core/effects` entry** (no React, tree-shaken), not the React entry |
+| ID29 | `Grid`: a rule between columns, and a 5:7 ratio? | **Neither:** space separates columns (the visual-noise cue order) and `2:3` is close to 5:7 (no redundant variants); revisit only if a second product asks |
+| ID30 | A `Hero` slot before the eyebrow for breadcrumbs? | **No slot:** `Breadcrumbs` as the section before the opening (MP3's story); add a slot only if that story fails the spacing probe |
+| ID31 | Export each template's registry on its own? | **Yes** (MP4): templates are meant to be reused, and the full entry costs a site every picture and content file |
