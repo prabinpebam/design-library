@@ -334,6 +334,7 @@
   --c-description-list-gap: var(--space-stack-item);
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
+  --c-button-pressed-fill: var(--state-selected);
   --c-button-expanded-fill: var(--state-selected);
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-gap: var(--space-inline-pair);
@@ -507,6 +508,8 @@
   --c-editor-layout-bar-gap: var(--space-inline-pair);
   --c-editor-layout-inset: var(--space-inset-sm);
   --c-editor-layout-panel: var(--size-column-min);
+  --c-editor-layout-panel-start: var(--c-editor-layout-panel);
+  --c-editor-layout-panel-end: var(--c-editor-layout-panel);
   --c-editor-layout-panel-min: 15rem;
   --c-editor-layout-panel-max: 30rem;
   --c-editor-layout-resize: 0.5rem;

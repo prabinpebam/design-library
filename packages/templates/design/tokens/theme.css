@@ -9,7 +9,7 @@
     --color-border-control: light-dark(#f5f5f5, #383838);
     --color-border: light-dark(#e6e6e6, #444444);
     --color-text: light-dark(rgb(0 0 0 / 0.9), #ffffff);
-    --color-text-muted: light-dark(rgb(0 0 0 / 0.5), rgb(255 255 255 / 0.7));
+    --color-text-muted: light-dark(#6e6e6e, rgb(255 255 255 / 0.7));
     --color-text-on-accent: #ffffff;
     --color-accent: #0d99ff;
     --color-accent-hover: light-dark(#007be5, #0a6dc2);
@@ -43,6 +43,18 @@
     --c-tree-view-current-fill: light-dark(#f5f5f5, #383838);
     --c-tabs-selected-fill: light-dark(#f5f5f5, #383838);
     --c-tabs-indicator-fill: transparent;
+    --text-xs: 0.6875rem;
+    --text-s: 0.6875rem;
+    --text-m: 0.8125rem;
+    --c-tree-view-row-gap: 0px;
+    --c-editor-layout-panel-end: 20.625rem;
+    --c-button-pressed-fill: transparent;
+    --type-body-size: var(--text-m);
+    --type-body-sm-size: var(--text-s);
+    --type-label-size: var(--text-m);
+    --type-label-compact-size: var(--text-xs);
+    --type-caption-size: var(--text-s);
+    --type-code-size: var(--text-s);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--radius-md);
     --c-menu-button-border: var(--color-border-control);
@@ -115,6 +127,8 @@
     --c-canvas-shape-fill: var(--color-bg-raised);
     --c-canvas-shape-radius: var(--radius-sm);
     --c-canvas-selection: var(--color-accent);
+    --c-canvas-text-size: var(--text-m);
+    --c-editor-layout-panel-start: var(--c-editor-layout-panel);
     --c-editor-layout-divider: var(--color-border);
     --c-editor-layout-resize-line: var(--color-focus);
     --c-board-column-radius: var(--radius-lg);
@@ -144,6 +158,7 @@
     --c-allocation-slider-radius: var(--radius-md);
     --c-gradient-editor-radius: var(--radius-md);
     --c-carousel-radius: var(--radius-lg);
+    --c-breadcrumbs-size: var(--type-body-sm-size);
     --c-tabs-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-dialog-radius: var(--radius-lg);
@@ -163,6 +178,7 @@
     --c-illustration-surface: var(--color-bg);
     --c-illustration-accent: var(--color-accent);
     --c-media-player-radius: var(--radius-lg);
+    --c-quote-text-size-s: var(--type-body-size);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-surface: var(--color-bg-sunken);
     --c-scroll-area-surface-radius: var(--radius-md);
@@ -531,6 +547,8 @@
     --c-tree-view-radius: var(--radius-md);
   }
   [data-density='compact'] [data-template='design'], [data-template='design'][data-density='compact'] {
+    --type-body-size: var(--text-s);
+    --type-label-size: var(--text-s);
     --c-accordion-radius: var(--radius-md);
     --c-agenda-session-radius: var(--radius-md);
     --c-alert-radius: var(--radius-md);
@@ -563,6 +581,7 @@
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
+    --c-quote-text-size-s: var(--type-body-size);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);

@@ -142,17 +142,17 @@
       {
         "value": "pen",
         "label": "Pen",
-        "icon": "edit",
+        "icon": "pen",
         "menu": [
           {
             "value": "pen",
             "label": "Pen",
-            "icon": "edit"
+            "icon": "pen"
           },
           {
             "value": "pencil",
             "label": "Pencil",
-            "icon": "stroke-position"
+            "icon": "edit"
           }
         ]
       },

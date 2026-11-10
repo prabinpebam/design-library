@@ -67,16 +67,16 @@
     position: relative;
     flex: none;
     /* Q68 DT6: a resizable panel's dragged width (set by the layout), held between the tokens' least and most. */
-    inline-size: var(--dl-panel-size, var(--c-editor-layout-panel));
-    min-inline-size: min(var(--c-editor-layout-panel-min), var(--c-editor-layout-panel));
+    inline-size: var(--dl-panel-size, var(--dl-panel-default, var(--c-editor-layout-panel)));
+    min-inline-size: min(var(--c-editor-layout-panel-min), var(--dl-panel-default, var(--c-editor-layout-panel)));
     max-inline-size: var(--c-editor-layout-panel-max);
     min-block-size: 0;
     background-color: var(--color-bg);
   }
 
   /* A theme may draw a hairline between a docked panel and the working area (none by default: tone sets them apart). */
-  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
-  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { --dl-panel-default: var(--c-editor-layout-panel-start); border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { --dl-panel-default: var(--c-editor-layout-panel-end); border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
 
   /* The resize handle: a hit strip centred on the panel's inner edge. Nothing is drawn at rest; a line shows only while it
      is hovered, focused or dragged (a transient cue), so the panels stay set apart by tone alone. */

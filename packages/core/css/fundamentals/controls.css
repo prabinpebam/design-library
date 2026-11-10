@@ -132,6 +132,11 @@
     background-color: var(--c-button-expanded-fill);
   }
 
+  /* A toggle button that's on (Q121): the pressed fill; its icon shows the state too. */
+  [data-dl='button'][aria-pressed='true'] {
+    background-color: var(--c-button-pressed-fill);
+  }
+
   /*
    * Q65 C2 (same-wrapper morph): the layers cross-fade in the button's held width. The leaving label clears over quick
    * (it has been decided); the arriving one fades in over change. Visibility follows the fade, so a hidden layer is

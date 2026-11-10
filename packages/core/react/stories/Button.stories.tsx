@@ -134,6 +134,19 @@ function Disclosure() {
   return <Button label="Notes" icon="comment" iconOnly emphasis="quiet" size="s" expanded={open} controls="notes-pane" onClick={() => setOpen(!open)} />;
 }
 
+function Toggles() {
+  const [shown, setShown] = useState(true);
+  const [locked, setLocked] = useState(false);
+  return (
+    <>
+      {/* toggle-button: a list row's eye and lock, where a Switch would crowd the row (Q121) */}
+      <Button label="Show layer" icon={shown ? 'eye' : 'eye-off'} iconOnly emphasis="quiet" size="xs" pressed={shown} onClick={() => setShown(!shown)} />
+      {/* toggle-button: as above */}
+      <Button label="Lock layer" icon={locked ? 'lock' : 'unlock'} iconOnly emphasis="quiet" size="xs" pressed={locked} onClick={() => setLocked(!locked)} />
+    </>
+  );
+}
+
 export default {
   component: 'Button',
   tier: 'fundamental',
@@ -381,6 +394,14 @@ export default {
       description: 'Opens and closes a pane, as in the title bar. The s size, on dense surfaces only; the selected tint shows it’s open. Hover or focus it for its name.',
       code: `<Button label="Notes" icon="comment" iconOnly emphasis="quiet" size="s" expanded={open} controls="notes-pane" onClick={toggle} />`,
       render: () => <Disclosure />,
+    },
+    {
+      title: 'Toggle button (pressed)',
+      description: 'On or off, announced as pressed. Switch is the default for a binary setting; a toggle button needs a written reason in a toggle-button comment where it is used (a dense toolbar, a list row’s eye and lock). Pair it with an icon that shows the state; a theme may clear the pressed fill (c.button.pressed-fill) when the icon alone shows it.',
+      arrangement: 'row',
+      code: `{/* toggle-button: a list row's eye, where a Switch would crowd the row */}
+<Button label="Show layer" icon={shown ? 'eye' : 'eye-off'} iconOnly emphasis="quiet" size="xs" pressed={shown} onClick={toggle} />`,
+      render: () => <Toggles />,
     },
     {
       title: 'Goes somewhere',

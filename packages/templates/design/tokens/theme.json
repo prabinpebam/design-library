@@ -8,7 +8,7 @@
   "color.border-control": { "$value": { "light": "#f5f5f5", "dark": "#383838" }, "$description": "A field's outline at rest matches its fill (UI3 draws none until hover or focus)" },
   "color.border": { "$value": { "light": "#e6e6e6", "dark": "#444444" }, "$description": "Hairlines: panel edges and section dividers" },
   "color.text": { "$value": { "light": "rgb(0 0 0 / 0.9)", "dark": "#ffffff" }, "$description": "Primary text and icons" },
-  "color.text-muted": { "$value": { "light": "rgb(0 0 0 / 0.5)", "dark": "rgb(255 255 255 / 0.7)" }, "$description": "Secondary text: field labels, frame names, the layer kind" },
+  "color.text-muted": { "$value": { "light": "#6e6e6e", "dark": "rgb(255 255 255 / 0.7)" }, "$description": "Secondary text: field labels, frame names, the layer kind" },
   "color.text-on-accent": { "$value": "#ffffff", "$description": "Text and icons on the blue" },
   "color.accent": { "$value": "#0d99ff", "$description": "Figma's blue: the selected tool, Share, selection on the canvas" },
   "color.accent-hover": { "$value": { "light": "#007be5", "dark": "#0a6dc2" }, "$description": "The blue, hovered" },
@@ -41,5 +41,11 @@
   "c.button.expanded-fill": { "$value": "transparent", "$description": "Open disclosures show it by their chevron or their panel, never a tint (the panel toggles, the Pages collapse)" },
   "c.tree-view.current-fill": { "$value": { "light": "#f5f5f5", "dark": "#383838" }, "$description": "The current page: a grey fill" },
   "c.tabs.selected-fill": { "$value": { "light": "#f5f5f5", "dark": "#383838" }, "$description": "Tabs are pills: the selected one grey-filled" },
-  "c.tabs.indicator-fill": { "$value": "transparent", "$description": "No underline under the selected tab" }
+  "c.tabs.indicator-fill": { "$value": "transparent", "$description": "No underline under the selected tab" },
+  "text.xs": { "$value": "0.6875rem", "$description": "11 px: UI3's one interface size (owner OD1, Q119: this template only; the library stays 14 px)" },
+  "text.s": { "$value": "0.6875rem", "$description": "11 px: body and labels in the compact chrome (OD1)" },
+  "text.m": { "$value": "0.8125rem", "$description": "13 px: UI3's larger text" },
+  "c.tree-view.row-gap": { "$value": "0px", "$description": "Rows sit edge to edge: a 24 px pitch" },
+  "c.editor-layout.panel-end": { "$value": "20.625rem", "$description": "The inspector is 330 px (owner Q122)" },
+  "c.button.pressed-fill": { "$value": "transparent", "$description": "Eye and lock show their state by icon alone (OD2)" }
 }
