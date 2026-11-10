@@ -18,6 +18,7 @@ The project skill `.github/skills/image-prompting/SKILL.md` holds the researched
 - **Files:** WebP (quality 82), in `packages/templates/<template>/assets/`; provenance (prompt, model, size, reference, date, alt) in `assets-src/<set>/`; raw PNGs in the ignored `.design-library/image-raw/`.
 - **Alt:** written from the finished picture; empty where the render already treats the picture as decorative (post lists) or the title says it all.
 - **Stand-ins:** these are example pictures for example content (IM3): the fictional firms, venues and people are made up, so a generated picture is a placeholder a real site replaces with its own photographs (IM2). Provenance files make that explicit.
+- **Per scheme (Q112, MP17–MP19):** a picture that reads wrong on a dark page gets a dark file of the **same picture**: generated as an edit of the light file (Image 1) with only the light changed ("the same scene at night", "the same diagram on a dark ground"), at the same size and crop, so both share one ratio, one focal point and one alt. More-contrast files only where the scheme's file fails contrast. Never a filter, an inverted photo or a different subject. Stored as `assets/{name}-dark.webp` beside the light file, named in the entry's `dark`; `check:content` fails a file of another shape. A drawing that should follow the theme's colours is one SVG on colour roles (`Illustration`, 0.5.0-beta.1), not two files.
 
 ## Slot classes
 
