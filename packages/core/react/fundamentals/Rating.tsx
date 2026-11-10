@@ -1,4 +1,6 @@
-import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react';
+import { createElement, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
+import { useIconOverride } from './IconOverrides';
+import type { IconNode } from '../../icons/sets';
 import type { DataAttributes } from '../types';
 
 export interface RatingProps extends DataAttributes {
@@ -47,6 +49,11 @@ const say = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1).repla
  */
 export function Rating({ label, hideLabel = false, value, onChange, max = 5, precision = 1, words, showValue = false, clearable = true, size = 'normal', readOnly = false, disabled = false, ...data }: RatingProps) {
   const id = useId();
+  // Q113: a brand's `star` glyph (IconOverrides or setIconOverrides) draws the mark; the rating still paints it, outlined when empty and solid when filled.
+  const brandStar = useIconOverride('star');
+  const draw = (nodes: IconNode[]): ReactNode[] => nodes.map(([tag, attrs, kids], i) => createElement(tag, { key: i, ...attrs }, kids ? draw(kids) : undefined));
+  const starBox = brandStar?.v ?? '0 0 24 24';
+  const starShape = brandStar ? draw(brandStar.c) : <path d={STAR} />;
   const [preview, setPreview] = useState<number | null>(null);
   const steps = Array.from({ length: Math.round(max / precision) }, (_, i) => Number(((i + 1) * precision).toFixed(1)));
   const refs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -86,12 +93,12 @@ export function Rating({ label, hideLabel = false, value, onChange, max = 5, pre
         const fill = Math.max(0, Math.min(1, shown - s));
         return (
           <span key={s} data-dl-part="star" style={{ '--fill': String(fill) } as CSSProperties}>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-dl-part="star-empty">
-              <path d={STAR} />
+            <svg viewBox={starBox} aria-hidden="true" focusable="false" data-dl-part="star-empty">
+              {starShape}
             </svg>
             <span data-dl-part="star-full" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false">
-                <path d={STAR} />
+              <svg viewBox={starBox} focusable="false">
+                {starShape}
               </svg>
             </span>
             {input &&

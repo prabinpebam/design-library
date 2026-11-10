@@ -6,6 +6,7 @@
  */
 import { useSyncExternalStore } from 'react';
 import index from './sets/index.json';
+import { icons as ownIcons } from './icons';
 
 /** One SVG element as data: tag, attributes (React names), children for a group. */
 export type IconNode = [string, Record<string, string>, IconNode[]?];
@@ -43,7 +44,97 @@ export interface IconSetInfo {
 export const iconSets = index.sets as IconSetInfo[];
 export const iconSetNames = index.names as string[];
 export const excludedIconSets = index.excluded as { name: string; licence: string; reason: string }[];
-export const iconSetOf = (id: string | null | undefined) => iconSets.find((s) => s.id === id);
+
+/** A brand's glyph (Q113): the curated sets' shape, with `g` (root paint) and `from` optional. */
+export interface BrandGlyph {
+  /** viewBox */
+  v: string;
+  /** The root's paint; draw in `currentColor` so the glyph takes the text colour around it. */
+  g?: Record<string, string>;
+  c: IconNode[];
+  from?: string;
+}
+
+/** A brand's own icon set (MP24): drawn by name like a curated set, chosen with `setIconSet(id)`. */
+export interface BrandIconSet {
+  id: string;
+  name: string;
+  /** The licence the brand holds the glyphs under, recorded with the set. */
+  licence: string;
+  author?: string;
+  /** One style's glyphs by semantic name; or use `styles`. */
+  glyphs?: Record<string, BrandGlyph>;
+  /** Several styles, each glyphs by name; the first is the fallback for the others. */
+  styles?: Record<string, Record<string, BrandGlyph>>;
+}
+
+/** The names a brand may draw: every Icon name, and `star`, Rating's mark. */
+const known = () => new Set([...Object.keys(ownIcons), 'star']);
+const development = () => Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
+
+/** In development, warns once per problem: a name no component draws, or a glyph without a viewBox (ID48). */
+const warned = new Set<string>();
+export function checkGlyphs(where: string, glyphs: Record<string, BrandGlyph | undefined>) {
+  if (!development()) return;
+  const names = known();
+  for (const [name, glyph] of Object.entries(glyphs)) {
+    const problem = !names.has(name) ? `"${name}" isn't an icon name; it draws nowhere (names: ${[...names].join(', ')})` : !glyph?.v ? `"${name}" has no viewBox (v)` : null;
+    if (problem && !warned.has(`${where}:${problem}`)) {
+      warned.add(`${where}:${problem}`);
+      console.warn(`[design-library] ${where}: ${problem}`);
+    }
+  }
+}
+
+const registered = new Map<string, IconSetInfo>();
+
+/**
+ * Registers a brand's own icon set (MP24, Q113): its glyphs by the library's semantic names, under the brand's licence.
+ * Then `setIconSet(id)` draws every Icon from it, and a name it lacks falls back to the library's own. Not added to the
+ * curated picker list.
+ */
+export function registerIconSet(set: BrandIconSet) {
+  const styles = set.styles ?? { default: set.glyphs ?? {} };
+  for (const [style, glyphs] of Object.entries(styles)) checkGlyphs(`registerIconSet(${set.id}/${style})`, glyphs);
+  const info: IconSetInfo = {
+    id: set.id,
+    name: set.name,
+    author: set.author ?? '',
+    licence: set.licence,
+    licenceUrl: '',
+    package: '',
+    version: '',
+    description: '',
+    styles: Object.entries(styles).map(([id, glyphs]) => ({ id, label: id, covered: Object.keys(glyphs).length, gaps: [] })),
+    bytes: 0,
+  };
+  registered.set(set.id, info);
+  loaded.set(set.id, { id: set.id, styles: Object.fromEntries(Object.entries(styles).map(([id, glyphs]) => [id, Object.fromEntries(Object.entries(glyphs).map(([n, g]) => [n, asSetGlyph(g, n)]))])) });
+  notify();
+}
+
+const asSetGlyph = (g: BrandGlyph, name: string): SetGlyph => ({ v: g.v, g: g.g ?? {}, c: g.c, from: g.from ?? name });
+
+export const iconSetOf = (id: string | null | undefined) => iconSets.find((s) => s.id === id) ?? (id ? registered.get(id) : undefined);
+
+let siteOverrides: Record<string, SetGlyph> = {};
+
+/**
+ * A few brand icons over the active set, site-wide (MP24, Q113): each name given draws the brand's glyph in every
+ * component and layout that draws that name (and `star` in Rating); every other name stays as it was. `null` clears
+ * them. A subtree takes its own with `<IconOverrides>`, which wins over these.
+ */
+export function setIconOverrides(glyphs: Record<string, BrandGlyph> | null) {
+  checkGlyphs('setIconOverrides', glyphs ?? {});
+  siteOverrides = Object.fromEntries(Object.entries(glyphs ?? {}).map(([n, g]) => [n, asSetGlyph(g, n)]));
+  notify();
+}
+
+/** The site-wide overrides now. */
+export const getIconOverrides = () => siteOverrides;
+
+/** A brand glyph as the Icon draws it. */
+export const toSetGlyph = asSetGlyph;
 
 type SetData = { id: string; styles: Record<string, Record<string, SetGlyph>> };
 

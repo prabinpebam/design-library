@@ -99,7 +99,9 @@
       ]
     }
   ],
-  "uses": [],
+  "uses": [
+    "IconOverrides"
+  ],
   "tokens": [
     "--c-rating-gap",
     "--c-rating-star",

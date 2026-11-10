@@ -1,6 +1,7 @@
 import { createElement, type ReactNode } from 'react';
 import { icons, type IconName } from '../../icons/icons';
 import { glyphFor, useIconSetVersion, type IconChoice, type IconNode } from '../../icons/sets';
+import { useIconOverride } from './IconOverrides';
 import type { DataAttributes } from '../types';
 
 export interface IconProps extends DataAttributes {
@@ -29,7 +30,9 @@ const draw = (nodes: IconNode[]): ReactNode[] => nodes.map(([tag, attrs, kids], 
 export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
   useIconSetVersion();
   const icon: { d: string; flipInRtl?: boolean; fill?: string } = icons[name];
-  const set = glyphFor(name, from);
+  // Q113: a brand's glyph for this name (nearest IconOverrides, then site-wide) wins over the set; `from` shows a set as it is.
+  const brand = useIconOverride(name);
+  const set = !from && brand ? { glyph: brand, fallback: false } : glyphFor(name, from);
   const common = {
     ...data,
     'data-dl': 'icon',

@@ -49,7 +49,7 @@
     block-size: 100%;
   }
 
-  [data-dl='rating'] [data-dl-part='star-empty'] path {
+  [data-dl='rating'] [data-dl-part='star-empty'] :is(path, polygon, circle, ellipse, rect) {
     fill: none;
     stroke: var(--color-border-strong);
     stroke-width: var(--c-rating-stroke);
@@ -68,7 +68,7 @@
     clip-path: inset(0 0 0 calc((1 - var(--fill)) * 100%));
   }
 
-  [data-dl='rating'] [data-dl-part='star-full'] path {
+  [data-dl='rating'] [data-dl-part='star-full'] :is(path, polygon, circle, ellipse, rect) {
     fill: currentColor;
     stroke: currentColor;
     stroke-width: var(--c-rating-stroke);
@@ -122,7 +122,7 @@
   }
 
   @media (forced-colors: active) {
-    [data-dl='rating'] [data-dl-part='star-empty'] path {
+    [data-dl='rating'] [data-dl-part='star-empty'] :is(path, polygon, circle, ellipse, rect) {
       stroke: CanvasText;
     }
 

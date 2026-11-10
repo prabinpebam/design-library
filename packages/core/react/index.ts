@@ -238,6 +238,8 @@ export type { StatisticProps } from './compounds/Statistic';
 export { Accordion } from './compounds/Accordion';
 export type { AccordionProps, AccordionItem } from './compounds/Accordion';
 export { Image } from './fundamentals/Image';
+export { IconOverrides, useIconOverride } from './fundamentals/IconOverrides';
+export type { IconOverridesProps } from './fundamentals/IconOverrides';
 export type { ImageProps, PictureTone, PictureTreatment, PictureSource, SchemeSources } from './fundamentals/Image';
 export { Tooltip, useHint } from './fundamentals/Tooltip';
 export type { TooltipProps, Hint } from './fundamentals/Tooltip';

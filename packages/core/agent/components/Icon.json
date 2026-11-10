@@ -43,7 +43,9 @@
       ]
     }
   ],
-  "uses": [],
+  "uses": [
+    "IconOverrides"
+  ],
   "tokens": [
     "--c-icon-stroke-width",
     "--size-icon-lg",
