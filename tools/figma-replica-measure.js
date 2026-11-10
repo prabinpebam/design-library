@@ -37,12 +37,13 @@
     return '#FFFFFF';
   };
 
+  // Filled blue with white text is the closest AA blue (owner Q126, OD8); lines keep Figma's blue.
   window.replicaMeasure = function replicaMeasure() {
     const root = document.querySelector('[data-dl="editor-layout"]');
     const scheme = document.documentElement.getAttribute('data-scheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     const L = scheme === 'dark'
-      ? { panel: '#2C2C2C', divider: '#444444', fill: '#383838', canvas: '#1E1E1E', accent: '#0C8CE9' }
-      : { panel: '#FFFFFF', divider: '#E6E6E6', fill: '#F5F5F5', canvas: '#F5F5F5', accent: '#0D99FF' };
+      ? { panel: '#2C2C2C', divider: '#444444', fill: '#383838', canvas: '#1E1E1E', accent: '#0A7ACB', line: '#0C8CE9' }
+      : { panel: '#FFFFFF', divider: '#E6E6E6', fill: '#F5F5F5', canvas: '#F5F5F5', accent: '#0A7ACB', line: '#0D99FF' };
     const rows = {};
     const row = (id, pass, got, want) => { rows[id] = { pass: !!pass, got, want }; };
     if (!root) return { scheme, rows: { FR0: { pass: false, got: 'missing', want: 'editor-layout' } }, fails: ['FR0'] };
