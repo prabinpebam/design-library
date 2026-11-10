@@ -47,11 +47,13 @@ Parts and type
 - Theme settings for the top type steps: `--type-display-size`, `-weight`, `-leading`, `-tracking` and the same for
   `--type-jumbo-*`, through `applySettings` or `settingsCss` (a jumbo smaller than display is refused).
 
-Pictures per scheme *(pending MP17, MP18)*
-- `Image`, `Hero` `picture` and `EmptyState` `illustration` take `dark` and `contrast: { light?, dark? }`; the file
-  shown follows the scheme of the picture's own region (the page, the system, a `data-scheme` band, more contrast),
-  with no flash or jump; one alt for all. In `assets.json`, a picture entry's `dark` and `contrast` files.
-- `useRegionScheme(ref)` tells any part which scheme its region is in.
+Pictures per scheme *(`assets.json` half pending MP18)*
+- `Image`, `Hero` `picture` and `EmptyState` `illustration` take `dark` and `contrast: { light?, dark? }`, each a
+  path or `{ src, srcSet? }`, raster or SVG; the file shown follows the scheme of the picture's own region (the page,
+  the system, a `data-scheme` band, more contrast), with no flash or jump; one alt for all. More contrast falls back:
+  in dark `contrast.dark` → `dark` → `src`; in light `contrast.light` → `src`. A layer is fetched only when it first
+  shows. In `assets.json`, a picture entry's `dark` and `contrast` files.
+- `useRegionScheme(ref)` tells any part which scheme (`light` or `dark`) and contrast its region is in.
 
 Brand icons *(pending MP24, MP25)*
 - `registerIconSet` (a whole brand set, then `setIconSet(id)`), `setIconOverrides` (a few names, site-wide) and
@@ -89,8 +91,11 @@ replaces; stop after any of them.
    header link to the shown page), and `prepare` to load the year's photo first. Delete `lib/scroll.ts` (core `glide`
    does it). If you used a year in the query as a stopgap, drop it.
 5. Site from data: on the year page document, `"between": "keep"`; in `site.json`, `"again": "top"`.
-6. Pictures per scheme *(pending)*: a picture drawn for light that looks wrong in dark gets a `dark` file (same
-   shape, same alt), replacing any code that swaps pictures on the scheme.
+6. Pictures per scheme: a picture drawn for light that looks wrong in dark gets a `dark` file (same shape, same
+   alt; never the light file inverted), replacing any code that swaps pictures on the scheme (a `useScheme` check
+   around two `<img>`, a `prefers-color-scheme` `<picture>`, or CSS that hides one of two pictures). In code:
+   `<Image src="/a/hero.webp" dark="/a/hero-dark.webp" alt="…" />`; from data, the picture entry's `"dark"` file.
+   Run `npx design-library-check-content` (the pair must share a shape within 1%).
 7. Icons *(pending)*: if the brand draws its own icons, convert them with `npx design-library-icons` and pass them
    to `setIconOverrides`, replacing any custom icon component.
 
@@ -123,7 +128,7 @@ A copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 f
 | MP4 | Template registries on their own | BM.4 |
 | MP5 | Direct-jump proof from 0.2.0-beta.1 | BM.5 |
 | MP15 | Top type steps as theme settings | BM.7 |
-| MP17–MP19 | Pictures per scheme *(pending)* | BM.9–BM.11 |
+| MP17–MP19 | Pictures per scheme (MP17 code and MP19 docs built; MP18 from data pending) | BM.9–BM.11 |
 | MP24–MP26 | Brand icons *(pending)* | BM.12–BM.14 |
 | MP27 | Lean builds *(pending; stays in this release: the check found only the story re-exports and the fonts' lazy entry)* | BM.15 |
 | MP6 | This release and brief | BM.6 |
