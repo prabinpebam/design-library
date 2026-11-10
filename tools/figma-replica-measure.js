@@ -41,7 +41,7 @@
     const root = document.querySelector('[data-dl="editor-layout"]');
     const scheme = document.documentElement.getAttribute('data-scheme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     const L = scheme === 'dark'
-      ? { panel: '#2C2C2C', divider: '#444444', fill: '#383838', canvas: '#1E1E1E', accent: '#0D99FF' }
+      ? { panel: '#2C2C2C', divider: '#444444', fill: '#383838', canvas: '#1E1E1E', accent: '#0C8CE9' }
       : { panel: '#FFFFFF', divider: '#E6E6E6', fill: '#F5F5F5', canvas: '#F5F5F5', accent: '#0D99FF' };
     const rows = {};
     const row = (id, pass, got, want) => { rows[id] = { pass: !!pass, got, want }; };
@@ -127,6 +127,7 @@
     const fonts = {};
     root.querySelectorAll('[data-dl-part="panel"] *').forEach((e) => {
       if (![...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) return;
+      if (e.closest('[data-dl="avatar"], [data-dl="avatar-group"]') || !e.getClientRects().length || e.closest('[popover]:not(:popover-open)')) return;
       const k = cs(e).fontSize;
       fonts[k] = (fonts[k] || 0) + 1;
     });
