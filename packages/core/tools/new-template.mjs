@@ -148,7 +148,7 @@ write('tokens/tokens.json', json(tokens));
 for (const p of parts) {
   const tag = `${id}-${p.tag}`;
   const tsx = p.block
-    ? `import type { DataAttributes } from '@design-library/core/react';
+    ? `import type { DataAttributes } from '@design-library/core/components';
 
 export interface ${p.name}Props extends DataAttributes {
   /** The words it shows. */
@@ -170,7 +170,7 @@ export function ${p.name}({ text, ...data }: ${p.name}Props) {
 }
 `
     : `import type { ReactNode } from 'react';
-import type { DataAttributes } from '@design-library/core/react';
+import type { DataAttributes } from '@design-library/core/components';
 
 export interface ${p.name}Props extends DataAttributes {
   /** The region's content. */
@@ -206,7 +206,7 @@ ${p.block ? `
 ` : ''}}
 `);
   const sample = p.block ? `<${p.name} text="What the ${p.name} says." />` : `<${p.name}>The region's content.</${p.name}>`;
-  write(`parts/${p.kind}/${p.name}.stories.tsx`, `import type { StoryFile } from '@design-library/core/react';
+  write(`parts/${p.kind}/${p.name}.stories.tsx`, `import type { StoryFile } from '@design-library/core/components';
 import { ${p.name} } from './${p.name}';
 
 export default {
@@ -236,7 +236,7 @@ if (parts.length) {
  * The ${title} template's registry: its own block types${layoutParts.length ? ' and layouts' : ''}, each mapped to its own parts, all under the
  * \`${id}\` namespace. Core blocks and core layouts need no entry here.
  */
-${layoutParts.length ? "import { SiteLayout } from '@design-library/core/react';\n" : ''}import type { ${blocks.length ? 'BlockRenderer, ' : ''}Template } from '@design-library/core/render';
+${layoutParts.length ? "import { SiteLayout } from '@design-library/core/components';\n" : ''}import type { ${blocks.length ? 'BlockRenderer, ' : ''}Template } from '@design-library/core/render';
 ${imports}
 ${css}
 ${types ? `\n${types}\n` : ''}
@@ -258,7 +258,7 @@ ${layoutParts.map((p) => `    '${id}.${p.name}': ({ region }) => (
 }
 
 write('index.ts', `/** ${title}: started with design-library-new-template. */
-import type { StoryFile } from '@design-library/core/react';
+import type { StoryFile } from '@design-library/core/components';
 import { loadTemplate } from '@design-library/core/render';
 import manifest from './template.json';
 import assets from './assets.json';

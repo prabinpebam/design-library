@@ -69,7 +69,7 @@ Steps (worked example: `node_modules/@design-library/templates/conference/parts/
    - A doc comment on the exported function: what it's for, "Not for …" with the alternative, then `@tier`, `@family`, `@a11y` lines and a `@key` line per key it handles.
    - Root element `data-dl="{template}-{part}"` (kebab case); inner pieces `data-dl-part="…"`; spread `...data` on the root.
    - Native elements first (a `button` is a `button`), 44 px targets, a visible focus ring from the core focus tokens, reduced motion honoured.
-   - Import only from `@design-library/core/react` (and `/render` for a layout binding) and from parts of a lower tier in the same template.
+   - Import only from `@design-library/core/components` (and `/render` for a layout binding) and from parts of a lower tier in the same template.
 2. **CSS** `parts/{tier}/{name}.css`: everything inside `@layer templates { … }`, selectors start with your own `[data-dl='{template}-{part}']` and reach inner pieces by child paths (`> [data-dl-part='…']`), values only from semantic roles and your `--t-{template}-{part}-*` tokens.
 3. **Tokens** in the template's `tokens/tokens.css`, as `--t-{template}-{part}-*` custom properties inside `@layer templates { :root { … } }`, each `var(--a-semantic-role)` ([Step 3](3-tokens.md)); import it from the template's `registry.tsx` with the parts' CSS. (In the library repository they're written as `tokens.json` under `t.{template}.{part}` and `npm run tokens` generates the CSS.)
 4. **Stories** `parts/{tier}/{Name}.stories.tsx`: a `StoryFile` with `component: '{template}.{Name}'`, `tier`, `summary` and one story per variant and state, in real words.

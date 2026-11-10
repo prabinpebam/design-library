@@ -6,7 +6,7 @@ Goal: every screen built on one layout that owns its regions, spacing and scroll
 
 ## Pick a layout
 
-All are in `@design-library/core/react`; props in `agent/components/{Name}.json`.
+All are in `@design-library/core/components`; props in `agent/components/{Name}.json`.
 
 | Layout | For | Regions (props) | Not for |
 | --- | --- | --- | --- |

@@ -14,7 +14,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
 | Stack | Status |
 | --- | --- |
 | React 19 in the browser, bundled by **Vite 8** (`@vitejs/plugin-react`), TypeScript with `moduleResolution: "Bundler"` | Supported and proven (this repository's apps, and a separate project in [Handoff readiness](https://prabinpebam.github.io/design-library/docs/#handoff-readiness.md)) |
-| Other bundlers (webpack, Next.js with `transpilePackages`, Parcel, Rspack) | Not supported in 0.2: `@design-library/templates` loads content with `import.meta.glob`, and `@design-library/core/react` also exports the component stories, whose media use Vite's `?url` imports |
+| Other bundlers (webpack, Next.js with `transpilePackages`, Parcel, Rspack) | Not supported in 0.2: `@design-library/templates` loads content with `import.meta.glob`, and `@design-library/core/react` also exports the component stories, whose media use Vite's `?url` imports (`@design-library/core/components` leaves the stories out) |
 | Server rendering (Next.js, Remix, Vite SSR) | Not proven: modules guard browser globals, but nothing has been rendered on a server |
 | Other frameworks (Vue, Svelte, Angular, plain HTML) | Not supported: the components are React. The CSS (`css/index.css`) and tokens work anywhere, but the markup contract is the React components' |
 | React 18 or earlier | Not supported (`peerDependencies` `react` `^19.0.0`) |
@@ -115,7 +115,7 @@ Goal: a website or app that draws its UI with this library, follows the person's
    void applyFonts(); // the theme's font preset; pass { preset: 'bookish' } for another (Step 3)
    ```
 
-11. **Let contexts follow the person.** By default the CSS follows the system's light or dark, more contrast and reduced motion. To offer a choice, set attributes on `<html>` (or any subtree): `data-scheme="light|dark"`, `data-contrast="standard|more"`, `data-motion="reduce"`. Wrap a scheme change in `suspendMotion(() => …)` from `@design-library/core/react` so colours change in one frame.
+11. **Let contexts follow the person.** By default the CSS follows the system's light or dark, more contrast and reduced motion. To offer a choice, set attributes on `<html>` (or any subtree): `data-scheme="light|dark"`, `data-contrast="standard|more"`, `data-motion="reduce"`. Wrap a scheme change in `suspendMotion(() => …)` from `@design-library/core/components` so colours change in one frame.
 
 
 ## Inside the library repository

@@ -101,7 +101,7 @@ The test for each tier, applied to every component before it is filed:
 | Example, ContextMatrix, TokenSpecimen | Compound | Compound | Arrangements a design library or documentation site needs; kept in core so the library presents itself, marked library-specific here. |
 | LibraryLayout, PageLayout | Layout | Layout | Reusable views: the documentation shell and its reading page. |
 
-Imports are unchanged for consumers: everything is still exported from `@design-library/core/react`. The library's navigation groups pages by these three tiers, after Tokens; the generated catalogue reads each tier from the source folder.
+Imports are unchanged for consumers: everything is still exported from `@design-library/core/react` (and, without the library's stories, from `@design-library/core/components`, which new code imports; 0.4.0-beta.2). The library's navigation groups pages by these three tiers, after Tokens; the generated catalogue reads each tier from the source folder.
 
 **Planned fundamentals (F15.1, not built):** the button types the owner asked for (sizes xs to xxl, icon button, dropdown button, segmented button, in-progress variants) and **ButtonGroup**.
 
@@ -301,7 +301,7 @@ To customize, first define a template (or take an existing one as yours), then c
 
 | A custom part may | A custom part may not |
 | --- | --- |
-| Import core public exports (`@design-library/core/react`, `/render`) and its own template's parts below its tier | Import core internals, another template's parts, or a part of its own tier (compounds never import compounds) |
+| Import core public exports (`@design-library/core/components`, `/render`) and its own template's parts below its tier | Import core internals, another template's parts, or a part of its own tier (compounds never import compounds) |
 | Read core semantic tokens and its own `t.{template}.{part}.*` tokens, which alias semantic roles | Read primitives, another component's tokens, or a raw value (colour, size, duration) |
 | Style only its own markup, in `@layer templates`, under `[data-dl="{template}-{part}"]` | Select or restyle a core component's `data-dl` markup, use `!important`, or set global styles |
 | Take content through typed props and core parts through slots | Hard-code words a person reads (they come from content or props) |

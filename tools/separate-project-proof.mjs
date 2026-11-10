@@ -54,7 +54,7 @@ const files = {
   'tsconfig.json': JSON.stringify({ compilerOptions: { target: 'ES2022', module: 'ESNext', moduleResolution: 'Bundler', jsx: 'react-jsx', lib: ['ES2022', 'DOM', 'DOM.Iterable'], types: ['vite/client'], resolveJsonModule: true, allowJs: true, isolatedModules: true, skipLibCheck: true, strict: true, noEmit: true }, include: ['src'] }, null, 2),
   'index.html': '<!doctype html>\n<html lang="en">\n  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Proof</title></head>\n  <body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body>\n</html>\n',
   'src/main.tsx': "import { StrictMode } from 'react';\nimport { createRoot } from 'react-dom/client';\nimport '@design-library/core/css/index.css';\nimport { applyFonts } from '@design-library/core/theme';\nimport { App } from './App';\n\nvoid applyFonts();\ncreateRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>);\n",
-  'src/App.tsx': `import { Heading, Notifications, Section, SiteHeader, SiteLayout, Stack, Text } from '@design-library/core/react';
+  'src/App.tsx': `import { Heading, Notifications, Section, SiteHeader, SiteLayout, Stack, Text } from '@design-library/core/components';
 import { TemplateView } from '@design-library/core/render';
 import corporate from '@design-library/templates/corporate';
 

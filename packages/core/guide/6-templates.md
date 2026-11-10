@@ -49,7 +49,7 @@ Copy a part into your own template only when you need to change what it draws; t
 
 ## Your own pictures
 
-Every picture a template shows is a file in its `assets/` folder and an entry in its `assets.json`; content names it by id (`"picture": "shopfront"`).
+Every picture a template shows is a file in its `assets/` folder and an entry in its `assets.json`; content names it by id (`"picture": "shopfront"`). Every version of one picture the library supports (colour, greyscale or duotone, at rest and on hover; the light, dark and more-contrast files; and how they combine) is shown live, with its props and its `assets.json` entry, on the library's [Pictures](https://prabinpebam.github.io/design-library/#/pictures) page.
 
 1. **Size it for where it shows:** twice the largest width it is drawn at (a split hero or card picture about 1200 × 800, a wide hero 2304 × 1296, a square 960 × 960, a portrait 192 × 192). The component reserves its box from the ratio, so the page never jumps while it loads.
 2. **Ship WebP** (about quality 82); SVG for drawn marks. File names are lower-case kebab case (`assets/the-long-shore.webp`), the only form `assets.schema.json` accepts.
@@ -142,7 +142,7 @@ The files it writes, by hand: the same as adapting, starting from an empty folde
 Then `content.schema.json` (Step 2), `content/home.json` and `content/shared.json` (Step 2), `assets.json` (`{ "$schema": "../../../node_modules/@design-library/core/schemas/assets.schema.json", "assets": {} }`, pictures in `assets/`) and `index.ts`:
 
 ```ts
-import type { StoryFile } from '@design-library/core/react';
+import type { StoryFile } from '@design-library/core/components';
 import manifest from './template.json';
 import assets from './assets.json';
 import { loadTemplate } from '@design-library/core/render';

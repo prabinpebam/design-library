@@ -87,7 +87,7 @@ createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictM
 
 ```tsx
 // src/App.tsx
-import { Heading, Notifications, Section, SiteHeader, SiteLayout, Stack, Text } from '@design-library/core/react';
+import { Heading, Notifications, Section, SiteHeader, SiteLayout, Stack, Text } from '@design-library/core/components';
 
 export function App() {
   return (

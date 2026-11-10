@@ -62,7 +62,7 @@ A brand's icons use the library's semantic names, so one glyph changes that icon
 
 1. **Name the SVG files** by the icon each replaces: `close.svg`, `chevron-down.svg`. `npx design-library-icons --names` lists the names. A mark with no matching name (a logo) is an `Image`, not an icon.
 2. **Convert them:** `npx design-library-icons src/brand/icons --out src/brand/icons.json --id brand --name "Brand" --licence "Own work"`. Every paint becomes `currentColor`, so the icon follows the text colour in every scheme and in forced colours. A file with a script, event attribute, `foreignObject`, embedded image or external reference is refused; a misnamed file is reported with the nearest names (exit code 1; the rest are written). Add `--check` in CI to fail when the JSON is stale.
-3. **Use them**, from `@design-library/core/icons` (and `IconOverrides` from `@design-library/core/react`):
+3. **Use them**, from `@design-library/core/icons` (and `IconOverrides` from `@design-library/core/components`):
 
 | You have | Do | Every name you didn't draw |
 | --- | --- | --- |

@@ -175,7 +175,7 @@ const components = sources.map(({ file, tier, name, template }) => {
   return {
     name: template ? `${template}.${name}` : name,
     tier: tierOf(tier),
-    ...(template ? { template, import: `packages/templates/${template}/parts/${tier}/${name}` } : { import: '@design-library/core/react' }),
+    ...(template ? { template, import: `packages/templates/${template}/parts/${tier}/${name}` } : { import: '@design-library/core/components' }),
     file: rel(file),
     ...docOf(source, name),
     sealed: !/className\??:/.test(source),

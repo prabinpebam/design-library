@@ -180,7 +180,7 @@ for (const file of views) {
 }
 for (const file of tsx) {
   const text = readFileSync(file, 'utf8');
-  for (const m of text.matchAll(/<select\b/g)) add('error', 'native-select', file, lineAt(text, m.index ?? 0), 'a native <select>: use Select from @design-library/core/react');
+  for (const m of text.matchAll(/<select\b/g)) add('error', 'native-select', file, lineAt(text, m.index ?? 0), 'a native <select>: use Select from @design-library/core/components');
   for (const m of text.matchAll(/overflow(?:X|Y|Block|Inline)?\s*:\s*['"`](?:auto|scroll)['"`]/g))
     add('error', 'scroll-region', file, lineAt(text, m.index ?? 0), `an inline scroll region (${m[0]}): wrap the region in ScrollArea (Never 9)`);
   // Words a person reads, written in code (Never 8): text between tags and literal label-like props.
