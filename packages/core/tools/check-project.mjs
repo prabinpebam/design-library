@@ -21,7 +21,8 @@
  * outside the material token, literal or "all" transitions, the private duration scale.
  * Warnings count what usually means a missing seam: core tokens set outside the
  * theme-settings allow-list, !important, primitive reads, raw sizes, a scaled root font size, global selectors, raw
- * interactive markup in custom parts, words written in code, unexplained clips, and, when the project has a site
+ * interactive markup in custom parts, words written in code, unexplained clips, icon data under a name no component
+ * draws (`icon-name`, MP26), and, when the project has a site
  * document, page-specific code (a literal route compared in TSX, DP19). Each finding names a file, a line and the fix.
  *
  * Exceptions (DP19) are declared, never silent: design-library-check.json in the project folder.
@@ -285,6 +286,25 @@ for (const file of css) {
     }
   }
   if (rawSizes) add('warning', 'raw-size', file, firstRaw, `${rawSizes} raw sizes (px, rem, em): read space, size and type roles (var(--space-…)); a template token aliases a semantic role`);
+}
+
+// ---- Brand icons (MP26, Q113, ID48): icon data under names that exist, each with a viewBox ----
+const iconNames = new Set([...readFileSync(join(PKG, 'icons/icons.ts'), 'utf8').matchAll(/^ {2}'?([a-z][a-z0-9-]*)'?: \{/gm)].map((m) => m[1]));
+for (const file of walk(SRC, /\.json$/)) {
+  const text = readFileSync(file, 'utf8');
+  if (!/"glyphs"\s*:/.test(text)) continue;
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    continue;
+  }
+  if (!data || typeof data.glyphs !== 'object' || Array.isArray(data.glyphs)) continue;
+  for (const [name, glyph] of Object.entries(data.glyphs)) {
+    const line = lineAt(text, text.indexOf(`"${name}"`));
+    if (!iconNames.has(name)) add('warning', 'icon-name', file, line, `"${name}" isn't an icon name, so no component draws it: rename it to the semantic name it replaces (npx design-library-icons --names)`);
+    else if (!glyph || typeof glyph.v !== 'string' || !Array.isArray(glyph.c)) add('warning', 'icon-name', file, line, `"${name}" has no viewBox or shapes: make the file again with npx design-library-icons`);
+  }
 }
 
 // ---- Share (IV4): library vs custom elements placed by each view ----
