@@ -51,6 +51,8 @@ if (base && BASES[base]) applyBrand({ ...themeBrand, base: BASES[base] });
  * bright accent (pinned at step 500 with `pin`), with or without `contrast: 'guard'`.
  */
 const query = new URLSearchParams(window.location.search);
+/** A screen without the preview bar (G27): `site.html?chrome=none#/app/…`, for same-size comparisons and screenshots. */
+const bare = query.get('chrome') === 'none';
 /**
  * A site-supplied face on the Typography page (IP23): `site.html?face=site#/app/…` sets the display role to a face the
  * site serves itself (an open-licence file, registered under the site's own family name), with a metric-matched fallback.
@@ -148,7 +150,7 @@ function TemplateSite() {
   return (
     <AppearanceContext.Provider value={appearance}>
       {screen ? screen() : <Text as="p">There’s no template layout called “{route}”. Open a template from the library’s Templates section.</Text>}
-      <FloatingBar label="Preview">
+      {!bare && <FloatingBar label="Preview">
         {shown && states.length > 0 && (
           <SegmentedControl
             label="Screen state"
@@ -161,7 +163,7 @@ function TemplateSite() {
         <SegmentedControl label="Colour scheme" iconOnly size="s" value={scheme} onChange={(v) => setScheme(v as Scheme)} options={[{ value: 'light', label: 'Light', icon: 'scheme-light' }, { value: 'dark', label: 'Dark', icon: 'scheme-dark' }]} />
         <SegmentedControl label="Contrast" iconOnly size="s" value={contrast} onChange={(v) => setContrast(v as Contrast)} options={[{ value: 'standard', label: 'Standard contrast', icon: 'contrast-standard' }, { value: 'more', label: 'More contrast', icon: 'contrast-more' }]} />
         <PresetSettings />
-      </FloatingBar>
+      </FloatingBar>}
       <Notifications />
     </AppearanceContext.Provider>
   );

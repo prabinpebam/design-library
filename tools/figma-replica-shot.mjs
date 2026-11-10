@@ -16,7 +16,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, '.design-library', 'figma-ref');
 const arg = (n, d) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : d; };
-const url = arg('--url', 'http://127.0.0.1:8766/site.html#/app/design/editor');
+const url = arg('--url', 'http://127.0.0.1:8766/site.html?chrome=none#/app/design/editor');
 const W = 1599, H = 786;
 
 let chromium;
