@@ -76,6 +76,18 @@
           "name": "actions",
           "type": "(item: TreeItem) => ReactNode",
           "description": "Compact controls at a row's end that act on that item (a layer's visibility and lock, as xs Switches). Shown while the row is hovered or focused, and at rest with `pinActions`; their room is held so nothing moves. Only the focused row's actions are in the tab order: Tab from a row reaches its own."
+        },
+        {
+          "name": "actionsRoom",
+          "type": "'held' | 'overlay'",
+          "default": "'held'",
+          "description": "Where the actions sit: `held` (default) keeps their room at every row's end, so labels are always that much shorter; `overlay` takes no room at rest and lays them over the label's end on the row's own surface while shown, so labels use the full width (a design tool's narrow layers panel). Nothing moves either way."
+        },
+        {
+          "name": "mark",
+          "type": "'selection' | 'current'",
+          "default": "'selection'",
+          "description": "What the chosen row means: `selection` (default) the selection's fill; `current` where you are (a list of pages), a neutral fill (`c.tree-view.current-fill`)."
         }
       ]
     },
@@ -155,6 +167,7 @@
   ],
   "tokens": [
     "--border-hairline",
+    "--c-tree-view-current-fill",
     "--c-tree-view-gap",
     "--c-tree-view-hover-fill",
     "--c-tree-view-indent",
@@ -165,6 +178,7 @@
     "--c-tree-view-row-size",
     "--c-tree-view-row-size-compact",
     "--c-tree-view-selected-fill",
+    "--c-tree-view-surface",
     "--c-tree-view-twisty",
     "--color-focus",
     "--color-text",

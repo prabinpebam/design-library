@@ -108,10 +108,13 @@
 
   [data-dl='tabs'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page']) {
     color: var(--color-text);
+    /* A theme may mark the selected tab with a quiet fill as well as (or instead of) the indicator (F15.FR5). */
+    border-radius: var(--c-tabs-radius);
+    background-color: var(--c-tabs-selected-fill);
   }
 
   [data-dl='tabs'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page'])::after {
-    background-color: var(--color-accent);
+    background-color: var(--c-tabs-indicator-fill);
   }
 
   [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='tab'] {

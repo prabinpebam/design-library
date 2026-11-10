@@ -11,11 +11,11 @@
     --color-text: light-dark(rgb(0 0 0 / 0.9), #ffffff);
     --color-text-muted: light-dark(rgb(0 0 0 / 0.5), rgb(255 255 255 / 0.7));
     --color-text-on-accent: #ffffff;
-    --color-accent: light-dark(#0d99ff, #0c8ce9);
+    --color-accent: #0d99ff;
     --color-accent-hover: light-dark(#007be5, #0a6dc2);
     --color-accent-pressed: light-dark(#0768cf, #085ba7);
     --color-accent-subtle: light-dark(#e5f4ff, #2d3953);
-    --color-focus: light-dark(#0d99ff, #0c8ce9);
+    --color-focus: #0d99ff;
     --state-hover: light-dark(rgb(0 0 0 / 0.04), rgb(255 255 255 / 0.06));
     --radius-sm: 0.3125rem;
     --radius-md: 0.3125rem;
@@ -39,6 +39,10 @@
     --c-button-size-s: 2rem;
     --c-menu-button-size-s: 2rem;
     --c-segmented-control-size-s: 2rem;
+    --c-button-expanded-fill: transparent;
+    --c-tree-view-current-fill: light-dark(#f5f5f5, #383838);
+    --c-tabs-selected-fill: light-dark(#f5f5f5, #383838);
+    --c-tabs-indicator-fill: transparent;
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--radius-md);
     --c-menu-button-border: var(--color-border-control);
@@ -97,6 +101,7 @@
     --c-site-header-link-radius: var(--radius-md);
     --c-site-header-current-fill: var(--color-bg-tint);
     --c-site-header-hover-fill: var(--state-hover);
+    --c-tree-view-surface: var(--color-bg);
     --c-tree-view-radius: var(--radius-md);
     --c-tree-view-hover-fill: var(--state-hover);
     --c-alignment-picker-fill: var(--color-bg-sunken);

@@ -203,6 +203,7 @@
   ],
   "tokens": [
     "--c-button-border-width",
+    "--c-button-expanded-fill",
     "--c-button-fill-min-inline",
     "--c-button-fill-move",
     "--c-button-fill-track",

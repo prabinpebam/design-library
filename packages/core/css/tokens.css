@@ -334,6 +334,7 @@
   --c-description-list-gap: var(--space-stack-item);
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
+  --c-button-expanded-fill: var(--state-selected);
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-gap: var(--space-inline-pair);
   --c-button-size: var(--size-target);
@@ -456,6 +457,8 @@
   --c-site-header-current-colour: var(--color-text-accent);
   --c-site-header-current-rule: var(--color-border-strong);
   --c-tree-view-row-size: var(--size-target-dense);
+  --c-tree-view-surface: var(--color-bg);
+  --c-tree-view-current-fill: var(--color-bg-tint);
   --c-tree-view-row-size-compact: var(--size-control-sm);
   --c-tree-view-row-gap: var(--space-stack-row);
   --c-tree-view-gap: var(--space-inline-pair);
@@ -796,6 +799,8 @@
   --c-tabs-item-gap: var(--space-inline-pair);
   --c-tabs-radius: var(--radius-md);
   --c-tabs-indicator: var(--border-thick);
+  --c-tabs-indicator-fill: var(--color-accent);
+  --c-tabs-selected-fill: transparent;
   --c-tabs-panel-gap: var(--space-stack-group);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-pagination-gap: var(--space-inline-pair);

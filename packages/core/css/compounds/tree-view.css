@@ -46,6 +46,7 @@
   }
 
   [data-dl='tree-view'] [role='treeitem'][aria-selected='true'] > [data-dl-part='row'] {
+    --dl-row-fill: var(--c-tree-view-selected-fill);
     background-color: var(--c-tree-view-selected-fill);
     font-weight: var(--weight-semibold);
   }
@@ -57,6 +58,7 @@
 
   @media (hover: hover) {
     [data-dl='tree-view'] [role='treeitem']:not([aria-selected='true']) > [data-dl-part='row']:hover {
+      --dl-row-fill: var(--c-tree-view-hover-fill);
       background-color: var(--c-tree-view-hover-fill);
     }
   }
@@ -126,6 +128,39 @@
   [data-dl='tree-view'] [role='treeitem']:focus-visible > [data-dl-part='row'] > [data-dl-part='actions'],
   [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='actions']:is([data-pinned], :focus-within) {
     opacity: 1;
+  }
+
+  /* mark="current": the chosen row is where you are (a page list), a neutral fill rather than the selection's. */
+  [data-dl='tree-view'][data-mark='current'] [role='treeitem'][aria-selected='true'] > [data-dl-part='row'] {
+    --dl-row-fill: var(--c-tree-view-current-fill);
+    background-color: var(--c-tree-view-current-fill);
+  }
+
+  /* A flat tree (no item has children) is a list: no twisty column, so names start at the row's inset. */
+  [data-dl='tree-view'][data-flat] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='twisty'] {
+    display: none;
+  }
+
+  /* actionsRoom="overlay": the actions take no room; while shown they lie over the label's end on the row's own surface
+     (the tree's surface under the row's fill), so the label uses the full width at rest and nothing moves. */
+  [data-dl='tree-view'][data-actions='overlay'] [role='treeitem'] > [data-dl-part='row'] {
+    position: relative;
+  }
+
+  [data-dl='tree-view'][data-actions='overlay'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='actions'] {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: var(--c-tree-view-padding);
+    padding-inline-start: var(--c-tree-view-gap);
+    background: linear-gradient(var(--dl-row-fill, transparent), var(--dl-row-fill, transparent)), var(--c-tree-view-surface);
+  }
+
+  [data-dl='tree-view'][data-actions='overlay'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='actions']:not([data-pinned], :focus-within) {
+    pointer-events: none;
+  }
+
+  [data-dl='tree-view'][data-actions='overlay'] [role='treeitem'] > [data-dl-part='row']:hover > [data-dl-part='actions'] {
+    pointer-events: auto;
   }
 
   /* A row drawn faded (a hidden layer): its icon and label take the muted text. */

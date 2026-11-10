@@ -10,11 +10,11 @@
   "color.text": { "$value": { "light": "rgb(0 0 0 / 0.9)", "dark": "#ffffff" }, "$description": "Primary text and icons" },
   "color.text-muted": { "$value": { "light": "rgb(0 0 0 / 0.5)", "dark": "rgb(255 255 255 / 0.7)" }, "$description": "Secondary text: field labels, frame names, the layer kind" },
   "color.text-on-accent": { "$value": "#ffffff", "$description": "Text and icons on the blue" },
-  "color.accent": { "$value": { "light": "#0d99ff", "dark": "#0c8ce9" }, "$description": "Figma's blue: the selected tool, Share, selection on the canvas" },
+  "color.accent": { "$value": "#0d99ff", "$description": "Figma's blue: the selected tool, Share, selection on the canvas" },
   "color.accent-hover": { "$value": { "light": "#007be5", "dark": "#0a6dc2" }, "$description": "The blue, hovered" },
   "color.accent-pressed": { "$value": { "light": "#0768cf", "dark": "#085ba7" }, "$description": "The blue, pressed" },
   "color.accent-subtle": { "$value": { "light": "#e5f4ff", "dark": "#2d3953" }, "$description": "A selected layer row's fill" },
-  "color.focus": { "$value": { "light": "#0d99ff", "dark": "#0c8ce9" }, "$description": "Focus rings and the resize line in the blue" },
+  "color.focus": { "$value": "#0d99ff", "$description": "Focus rings and the resize line in the blue" },
   "state.hover": { "$value": { "light": "rgb(0 0 0 / 0.04)", "dark": "rgb(255 255 255 / 0.06)" }, "$description": "A hovered row or icon button: #f5f5f5 on white, #383838 on the dark panel" },
   "radius.sm": { "$value": "0.3125rem", "$description": "5 px: fields, buttons, tool buttons, rows" },
   "radius.md": { "$value": "0.3125rem", "$description": "5 px: controls" },
@@ -37,5 +37,9 @@
   "c.segmented-control.raised-text": { "$value": "{color.accent}", "$description": "The mode switch's chosen mode: the blue glyph on a white segment" },
   "c.button.size-s": { "$value": "2rem", "$description": "Share and other small buttons are 32 px tall" },
   "c.menu-button.size-s": { "$value": "2rem", "$description": "Small menu buttons are 32 px, as the main menu" },
-  "c.segmented-control.size-s": { "$value": "2rem", "$description": "Tools are 32 px squares: with 8 px around them the bar is 48 px" }
+  "c.segmented-control.size-s": { "$value": "2rem", "$description": "Tools are 32 px squares: with 8 px around them the bar is 48 px" },
+  "c.button.expanded-fill": { "$value": "transparent", "$description": "Open disclosures show it by their chevron or their panel, never a tint (the panel toggles, the Pages collapse)" },
+  "c.tree-view.current-fill": { "$value": { "light": "#f5f5f5", "dark": "#383838" }, "$description": "The current page: a grey fill" },
+  "c.tabs.selected-fill": { "$value": { "light": "#f5f5f5", "dark": "#383838" }, "$description": "Tabs are pills: the selected one grey-filled" },
+  "c.tabs.indicator-fill": { "$value": "transparent", "$description": "No underline under the selected tab" }
 }

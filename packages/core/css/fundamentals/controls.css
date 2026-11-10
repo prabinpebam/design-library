@@ -129,7 +129,7 @@
 
   /* A disclosure that's open: the selected tint, the one cue for "open". */
   [data-dl='button'][aria-expanded='true'] {
-    background-color: var(--state-selected);
+    background-color: var(--c-button-expanded-fill);
   }
 
   /*

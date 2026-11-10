@@ -128,6 +128,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
   return (
     <EditorLayout
       data-template="design"
+      data-material="solid"
       data-density="compact"
       resizable
       height={height}
@@ -176,14 +177,14 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
               <Button label={s.pages} icon={pagesOpen ? 'chevron-down' : 'chevron-end'} iconOnly tooltip emphasis="quiet" size="xs" expanded={pagesOpen} onClick={() => setPagesOpen((x) => !x)} />
             </Cluster>
             <Reveal open={pagesOpen}>
-              <TreeView label={s.pages} items={view.pages.map((p) => ({ id: p.id, label: p.label }))} expanded={[]} onExpandedChange={() => {}} selected={page} onSelect={setPage} />
+              <TreeView label={s.pages} mark="current" items={view.pages.map((p) => ({ id: p.id, label: p.label }))} expanded={[]} onExpandedChange={() => {}} selected={page} onSelect={setPage} />
             </Reveal>
           </Stack>
           <Stack gap="item">
             <Heading level={2} size="label">
               {s.layers}
             </Heading>
-            <TreeView label={s.layers} items={toLayers(view, shapes)}
+            <TreeView label={s.layers} actionsRoom="overlay" items={toLayers(view, shapes)}
               expanded={expanded}
               onExpandedChange={setExpanded}
               selected={selected}
@@ -211,7 +212,9 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
           <DesignComments spec={view.comments} layerOf={(id) => find(shapes, id)} selected={selected} onShow={select} />
         ) : shape ? (
           <>
-            <Stack gap="pair" data-dl-part="head">
+            <Inspector
+              head={
+                <Stack gap="pair" data-dl-part="head">
               <Heading level={2} size="label">
                 {shape.label}
               </Heading>
@@ -219,7 +222,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
                 {kinds[shape.kind]}
               </Text>
             </Stack>
-            <Inspector
+              }
               tabs={view.inspector}
               tab={tab}
               shape={{ ...shape, props: propsOf(view, shape) }}

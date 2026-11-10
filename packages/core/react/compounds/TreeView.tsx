@@ -33,6 +33,10 @@ export interface TreeViewProps extends DataAttributes {
   onExpandedChange: (ids: string[]) => void;
   /** Compact controls at a row's end that act on that item (a layer's visibility and lock, as xs Switches). Shown while the row is hovered or focused, and at rest with `pinActions`; their room is held so nothing moves. Only the focused row's actions are in the tab order: Tab from a row reaches its own. */
   actions?: (item: TreeItem) => ReactNode;
+  /** Where the actions sit: `held` (default) keeps their room at every row's end, so labels are always that much shorter; `overlay` takes no room at rest and lays them over the label's end on the row's own surface while shown, so labels use the full width (a design tool's narrow layers panel). Nothing moves either way. */
+  actionsRoom?: 'held' | 'overlay';
+  /** What the chosen row means: `selection` (default) the selection's fill; `current` where you are (a list of pages), a neutral fill (`c.tree-view.current-fill`). */
+  mark?: 'selection' | 'current';
 }
 
 interface Row {
@@ -66,7 +70,7 @@ function visibleRows(items: TreeItem[], open: Set<string>, level = 1, parent?: s
  * @key Home / End: the first or last visible row
  * @key Enter / Space: selects the row
  */
-export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, ...data }: TreeViewProps) {
+export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', ...data }: TreeViewProps) {
   const open = new Set(expanded);
   const rows = visibleRows(items, open);
   const [active, setActive] = useState<string | undefined>(undefined);
@@ -169,7 +173,7 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     });
 
   return (
-    <ul {...data} data-dl="tree-view" role="tree" aria-label={label}>
+    <ul {...data} data-dl="tree-view" data-actions={actionsRoom === 'overlay' ? 'overlay' : undefined} data-mark={mark === 'current' ? 'current' : undefined} data-flat={items.some((i) => i.children?.length) ? undefined : ''} role="tree" aria-label={label}>
       {render(items, 1)}
     </ul>
   );
