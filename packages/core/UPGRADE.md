@@ -2,6 +2,122 @@
 
 How to move a project to a newer version of `@design-library/core` and `@design-library/templates`, newest first. Each version has one block you can paste into your agent as it is. What changed in detail is in `CHANGELOG.md`; the proof that nothing breaks is on the hosted page each block links.
 
+## 0.4.0-beta.2 (or 0.2.0-beta.1 and later) → 0.5.0-beta.1
+
+Proof and the same brief for people: [Adopt 0.5.0-beta.1](https://prabinpebam.github.io/design-library/docs/#adopt-0.5.0-beta.1.md). From 0.2.0-beta.1 or later, the install line below is all you need.
+
+````markdown
+# Upgrade the Design Library to 0.5.0-beta.1
+
+## 1. Install (nothing else changes)
+
+npm install https://github.com/prabinpebam/design-library/releases/download/v0.5.0-beta.1/design-library-core-0.5.0-beta.1.tgz https://github.com/prabinpebam/design-library/releases/download/v0.5.0-beta.1/design-library-templates-0.5.0-beta.1.tgz
+
+Then run your type check and build. Install both together; templates needs the core of the same version. Coming
+from 0.4.0-beta.2 or earlier: this one install line is all you need. The older blocks' adoption steps still apply, in
+any order with these.
+
+## 2. Nothing breaks
+
+Every change is an addition. With nothing set, `Hero` grows with its words as before, `Image` draws only its picture,
+nothing fetches a second file, section titles keep their size, and glides keep their time. Nothing draws an
+`Illustration` until you place one.
+Proof: a copy of a real site on 0.4.0-beta.2 installs this version with no edits; type check, build, every route's
+render in light, dark and at 320 px, and console errors are compared (record on the hosted page).
+
+## 3. What's new
+
+Openings
+- `Hero` `reserve={{ title, lead }}`: room for that many lines of the title and the lead, so a series of pages keeps
+  one opening height and the links under it stay in one place; longer words still grow it. From data, the `hero`
+  block's `"reserve": { "title": 3, "lead": 3 }`.
+
+Pictures
+- `Image` `decoration` (over the picture) and `under` (behind it): picture-sized layers for brand shapes, an SVG that
+  fills the box and may spill past its edge; hidden from screen readers, never take the pointer, never move the
+  layout. Colour `--c-image-decoration` (the accent; `applySettings`). `Hero` `picture.decoration` and `picture.under`.
+  From data: the `hero` block's `decoration` slot and a prose picture's `decoration` slot hold the template's own
+  blocks (core blocks are refused).
+- `Image` `alternate` (an address or `{ src, srcSet }`): a second picture that fades in while the picture, or the
+  link, button or card around it, is hovered or focused; fetched only on the first hover or focus. In `assets.json`, a
+  picture entry's `alternate` file (card and prose pictures pass it).
+- `Image` `reveal(frame)`: your own drawing of the change to `alternate` on a canvas over the picture. Each frame gets
+  `context`, `width`, `height`, the eased `progress`, `active`, `time` and `paint('picture' | 'alternate')`. The library
+  keeps the triggers, the timing (`--c-image-reveal-duration`, the standard easing) and reduced motion (your drawing
+  isn't called; the fade shows). Types `PictureReveal`, `PictureRevealFrame`.
+- `@design-library/core/effects` (no React): `perlin2`, `poissonPoints`, `layoutStipple`, `stippleTime`,
+  `stippleRadius`, `paintStipple`, `stippleSettings`, type `StipplePoint`: the stipple the library's own
+  `ImageGeneration` draws, for a reveal or a field of your own.
+
+Titles and glides
+- `Section` `size="display"` or `"jumbo"`: section and closing titles at the type ramp's top steps (themed through
+  `--type-display-*` and `--type-jumbo-*`); the level still follows the outline. From data, the optional `size` field
+  on every block with a `heading`. Type `SectionTitleSize`.
+- `glide(to, { pace: 'distance' })`: a short glide on `duration.move`, from `motion.glide-far` (40rem) on `move-far`;
+  `Router` `glide={{ pace: 'distance' }}` for its own glides. Type `GlidePace`. The default is as before.
+
+Illustrations
+- `Illustration`: drawn art inline, from `children` (an `<svg>`) or `src` (a same-origin `.svg`, or one per size
+  `{ compact, regular, wide }`), cleaned before it's drawn. Colours from the role classes `ink`, `muted`, `fill`,
+  `surface`, `accent` (`--c-illustration-*`), so one file follows light, dark and more contrast; `dark` only for art
+  that can't. Groups marked `data-size="compact" | "regular" | "wide"` show by its own width. Parts marked
+  `data-motion="draw" | "fade" | "float" | "pulse" | "spin"` move with `play` `once` (default), `hover` or `loop`
+  (with a Pause control); nothing moves under reduced motion. `label` or `decorative`.
+- From data: an `assets.json` entry's `illustration: { play }` (its `src` an `.svg`), the `illustration` block
+  (`picture`, `ratio`; in `split`, `grid` and `hero.media`), and card and prose pictures whose asset is one.
+
+Checks
+- The content check also checks a picture's `alternate` file (it exists, is a safe SVG when it's one, and has the
+  picture's shape).
+- `npx design-library-check-svg` also refuses unknown `data-size` and `data-motion` names in illustration files.
+- Guide: step 6 "Illustrations"; the brand-led recipe's step 1 rows for each piece above.
+
+## 4. Optional: move the rest of the site onto the library (in this order; the site works between steps)
+
+Run `npx design-library-check --share` first and keep its output to compare after. Each step names the code it
+replaces; stop after any of them.
+
+1. Opening height: on the year pages, `Hero` `reserve={{ title: 3, lead: 3 }}` (or the `hero` block's `reserve`),
+   replacing any fixed height the year hero sets for itself (`layouts/Hero.tsx` and its rules in `designup.css`).
+2. Colour on hover: a photo with a colour version gets the colour file as `alternate` (in `content/images.json` →
+   the template's `assets.json`, `"alternate": "assets/{name}-colour.webp"`; in code `<Image src={grey}
+   alternate={colour} … />`), replacing `lib/images.ts`'s `colorSrc` pairs.
+3. The stipple reveal: `Image` `reveal={stipple}` where `stipple` is drawn with `layoutStipple` and `paintStipple`
+   from `@design-library/core/effects`, replacing `parts/fundamentals/ColorReveal.tsx` (its copied Perlin and
+   Poisson code) and `color-reveal.css`. Its timing goes in the template's `tokens.json` as a value for
+   `--c-image-reveal-duration`, replacing `--t-designup-reveal-duration` and `--t-designup-reveal-reduced-duration`
+   (reduced motion is the library's now). The Image page's "Your own reveal" story is a working stipple to start from.
+4. Brand frames: `parts/fundamentals/PhotoFrame.tsx`'s shapes become the template's own decoration blocks
+   (`designup.*`, registered in `registry.tsx`) placed in `Image` `decoration` / `under`, or from data in the `hero`
+   block's and prose pictures' `decoration` slots; the quote band (`compounds/QuoteBand.tsx`) and the collage
+   (`compounds/Collage.tsx`) frames follow the same way. Delete `PhotoFrame` when nothing uses it.
+5. Section titles: big section and closing titles take `Section` `size="display"` (or `"jumbo"`), or the block's
+   `"size": "display"` in content, replacing the `--t-designup-display-*` sizes in `designup.css` that set them.
+6. Glides (optional): `Router` `glide={{ pace: 'distance' }}` so a jump to a nearby anchor is quicker than one down
+   the page.
+7. Illustrations (optional): drawn art that should follow the scheme, fit its space or move (empty states, a
+   loader, an opening drawing) becomes an `Illustration` with role classes, replacing hand-placed `<svg>` and per-scheme
+   copies of the same drawing. Run `npx design-library-check-svg` on the files. Guide:
+   `node_modules/@design-library/core/guide/6-templates.md`, "Illustrations".
+
+## 5. What to watch
+
+- Decoration is decoration: it's hidden from screen readers, so anything it means goes into words.
+- `alternate` needs both pictures in `alt` ("Before and after: …") and the same shape as the picture; the content
+  check fails a different shape.
+- A reveal draws only while it runs: never start your own timer, and don't read reduced motion yourself.
+- Depth motion on decoration layers reads `prefersReducedMotion` and moves only the decoration.
+- An illustration that loops always shows its Pause control; draw every motion's resting frame complete, since
+  reduced motion holds it there.
+
+## 6. Verify
+
+1. `npx tsc --noEmit` and `npx vite build` pass.
+2. Open every route in light and dark: nothing moved (compare with screenshots taken before the upgrade).
+3. After step 1: step through the year pages: the opening and the links under it stay in one place.
+4. After step 3: hover and tab to a photo: the stipple runs; with reduced motion on, it fades.
+````
+
 ## 0.4.0-beta.1 (or 0.2.0-beta.1 and later) → 0.4.0-beta.2
 
 Proof and the same brief for people: [Adopt 0.4.0-beta.2](https://prabinpebam.github.io/design-library/docs/#adopt-0.4.0-beta.2.md). From 0.2.0-beta.1 or later, the install line below is all you need (proved as one step).
