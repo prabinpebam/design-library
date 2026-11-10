@@ -19,7 +19,8 @@ Public sources only (Q118.6). Pictures are captured into the git-ignored `.desig
 | R7 | [Select layers and objects](https://help.figma.com/hc/en-us/articles/360040449873-Select-layers-and-objects) | `360040449873-1..6` (GIF and PNG) | Selection, hover outline, multi-select, deep select | — |
 | R8 | [Update fills using the color picker](https://help.figma.com/hc/en-us/articles/360041003774-Update-fills-using-the-color-picker) | `360041003774-1..6.png` | Colour picker popover | — |
 | R9 | [FD4B: Navigate Figma Design files](https://help.figma.com/hc/en-us/articles/30925881896727-FD4B-Navigate-Figma-Design-files) | `30925881896727-1..6.png` | Whole-editor views, file menu | — |
-| R10 | Dark mode | **pending capture** (no public dark UI3 screenshot found yet); values below marked *ref pending* until one is captured | — | — |
+| R10 | [Change themes in Figma](https://help.figma.com/hc/en-us/articles/5576781786647-Change-themes-in-Figma) | `5576781786647-1.png` (1920 × 1080) | Light and dark side by side, **UI2** (older layout); used only for dark colours until a UI3 dark capture exists: panel `#2C2C2C`, divider `#444444`, selected layer row `#2D3953` dark / `#E5F4FF` light | 2× |
+| R11 | same article | `5576781786647-2.png` (2878 × 1414; `-2-half.png` for viewing) | **The whole UI3 editor, light, empty file**: left head (menu ▾, panel toggle; "Untitled ▾" / "Drafts"), File / Assets pills + search, Pages +, Page 1, Layers; rulers; toolbar; right head (avatar ▾, Present ▾, Share), Design / Prototype + 100 % ▾, Page (colour field + eye), Variables, Styles, Export. **Primary layout reference** | 1.8× (24 px fields = 43 px, 32 px tools = 58 px) |
 
 **Measured reference values (light).** Colours are pixel samples from R2, R4 and R5; sizes divide the image by its scale (± 1 px):
 
@@ -32,13 +33,17 @@ Public sources only (Q118.6). Pictures are captured into the git-ignored `.desig
 | Accent (Share, selected tool, selection stroke, handles' stroke, size label) | `#0D99FF` |
 | Segmented selected segment | `#FFFFFF` on the `#F5F5F5` track, small shadow |
 | Type | Inter, 11 px for UI text; section titles 11 px semibold; secondary text about 50 % black |
-| Left and right panels | 240 px wide, docked, full height |
-| Rows (pages, layers) | 32 px; row highlight inset 8 px each side, radius 5 px; child indent 24 px |
+| Left and right panels | 240 px wide (R11: 430 px at 1.8×), docked, full height, 1 px divider `#E6E6E6` to the canvas |
+| Left head | Menu row 48 px (menu glyph ▾ left, panel toggle right) then file name 11 px semibold with ▾ over "Drafts" 11 px secondary: 97 px to the first divider (R11) |
+| File / Assets row | 40 px row, 24 px pills (active `#F5F5F5`), search icon at the end; divider below (R11) |
+| Section title rows (Pages, Layers; Page, Variables, Styles, Export) | 40 px each, title 11 px semibold at a 16 px inset, trailing 24 px icon button; sections divided by 1 px `#E6E6E6` (R11) |
+| Page and layer rows | Highlight 24 px high, inset 8 px each side, radius 5 px, `#F5F5F5` (R11, R2); selected layer `#E5F4FF` (R10); row pitch and child indent 24 px (R2: confirm on a UI3 capture with deep layers) |
 | Fields | 24 px high, radius 5 px; two 88 px columns with an 8 px gap plus a 24 px action column; 16 px panel inset |
-| Section | 1 px divider between sections; title row with trailing icon actions; 8 px between field rows |
-| Tabs (Design, Prototype) | 24 px pill, radius 5 px; zoom % at the row's end |
-| Right panel head | avatar 24 px with ▾, Present ▶ ▾, Share filled accent (about 32 × 55 px) |
-| Floating toolbar | 48 px high, white, radius about 13 px, soft shadow; tool buttons 32 px, radius 5 px; selected = accent fill with white glyph; flyout chevrons 16 px wide |
+| Section | 1 px divider between sections; title row 40 px with trailing icon actions; 8 px between field rows |
+| Right head | 48 px: avatar 24 px with ▾, Present ▶ ▾, Share 32 px high filled accent, white 11 px medium, radius 5 px (R11) |
+| Tabs (Design, Prototype) | 33 px row under the head, 24 px pills radius 5 px, active `#F5F5F5`; zoom "100 % ▾" at the row's end; divider below (R11) |
+| Canvas | `#F5F5F5`; rulers optional (on in R11, off in R2) |
+| Floating toolbar | 48 px high (8 px padding around 32 px tools), white, radius about 13 px, soft wide shadow; tools: radius 5 px; selected = accent fill with white glyph; flyout chevrons 16 px; mode switcher at the end on a `#F5F5F5` track with the active mode white with an accent glyph (R4, R11) |
 | Selection | 1 px accent stroke; 6 px white square handles with an accent stroke at the corners; frame name label 11 px above the frame (accent when selected); size label below: accent fill, white 11 px, radius 2 px |
 
 **Viewport for comparison:** the evaluator compares at the same CSS size as the reference crop: panels at 240 px, the editor at **1440 × 900** (and 1280 × 800); the agent browser pane is 823 × 823, so whole-editor screenshots are taken with Playwright at 1440 × 900 when the pane allows it, otherwise region by region at native size. Reference pictures are compared after dividing by their scale.
@@ -47,14 +52,14 @@ Public sources only (Q118.6). Pictures are captured into the git-ignored `.desig
 
 Each row passes only with evidence: a measured value (probe output or computed style), a side-by-side screenshot at the same size, or both. **Level**: `library` (a generic gap any dense app would hit), `template` (the Design template's theme, tokens, parts or content), `owner` (an owner rule conflicts; see section 5). States: `open`, `building`, `review` (builder says done), `pass` (evaluator measured), `fail` (evaluator found a gap; see the gap log), `decision` (waits on the owner; the default applies meanwhile).
 
-Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI text 14 px, tool bar 45 px high with radius 4 px and 7 tools plus zoom, no left-panel head, no File/Assets tabs, fields without fill, dark surface `rgb(24, 24, 28)`, rows 32 px, tabs 24 px, fields 24 px.
+Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI text 14 px, tool bar 45 px high with radius 4 px and 7 tools plus zoom, no left-panel head, no File/Assets tabs, fields without fill, dark surface `rgb(24, 24, 28)`, layer rows 32 px (R11: 24 px), tabs 24 px, fields 24 px.
 
 ### File and panel heads
 
 | ID | Region / state | Ref | Done when (measured) | Level | State |
 | --- | --- | --- | --- | --- | --- |
-| FR1 | Left panel head: menu button (look-alike glyph, not the Figma logo), file name, project ("Drafts") with ▾, hide-panel button | R1, R9 | One 48 px-ish head row (measure R9), file name 11 px semibold, project 11 px secondary; menu button opens the main menu (FR40) | template | open |
-| FR2 | File / Assets tabs under the head | R9 | Two 24 px pill tabs as FR30; switching shows Pages + Layers or Assets | template | open |
+| FR1 | Left panel head: menu button (look-alike glyph, not the Figma logo), file name, project ("Drafts") with ▾, hide-panel button | R1, R9 | 48 px menu row (menu glyph ▾, panel toggle at the end), then file name 11 px semibold ▾ over "Drafts" 11 px secondary; 97 px to the divider (R11); the menu button opens the main menu (FR40) | template | open |
+| FR2 | File / Assets tabs under the head | R9 | 40 px row: two 24 px pills (active `#F5F5F5`) and a search icon at the end (R11); switching shows Pages + Layers or Assets | template | open |
 | FR3 | Right panel head: avatars (24 px, overlapping), Present ▶ with ▾, Share | R5 | Avatar 24 px circle; Present 24 px icon button + 16 px chevron; Share filled `#0D99FF`, white 11 px medium, radius 5 px, height and width ± 1 px of R5 | template (accent via theme) | open |
 | FR4 | Panel widths and edges | R1, R2 | Left and right panels 240 px, docked full height, 1 px `#E6E6E6` inner edge, panel `#FFFFFF`; canvas fills the rest | library (EditorLayout width token) + template (value) | fail (256 px) |
 
@@ -62,12 +67,12 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 
 | ID | Region / state | Ref | Done when (measured) | Level | State |
 | --- | --- | --- | --- | --- | --- |
-| FR5 | Pages section title row with "+" and collapse | R2 | Title 11 px semibold, 32 px row, + 24 px icon button; collapse hides the list | template | open |
-| FR6 | Page rows: rest, hover, selected | R2 | 32 px rows, highlight inset 8 px, radius 5 px, hover and selected `#F5F5F5`, 11 px text; selected weight as R2 | library (TreeView/ListItem dense row) + template (values) | open |
+| FR5 | Pages section title row with "+" and collapse | R2 | Title 11 px semibold, 40 px row, + 24 px icon button; collapse hides the list (R11) | template | open |
+| FR6 | Page rows: rest, hover, selected | R2 | 24 px row highlight, inset 8 px, radius 5 px, hover and current page `#F5F5F5`, 11 px text (R11) | library (TreeView/ListItem dense row) + template (values) | open |
 | FR7 | Layers section title and divider | R2 | 1 px divider above, title 11 px semibold | template | open |
-| FR8 | Layer rows: icon per type (frame #, text T, image, rectangle, ellipse, group, component), name, expand chevron | R2, R6 | 32 px rows, 16 px icons, 24 px indent per level, chevron outside the icon column | library (TreeView indent token) + template | open |
+| FR8 | Layer rows: icon per type (frame #, text T, image, rectangle, ellipse, group, component), name, expand chevron | R2, R6 | 24 px rows (R11; pitch to confirm), 16 px icons, 24 px indent per level, chevron outside the icon column | library (TreeView indent token) + template | open |
 | FR9 | Layer hover: lock and eye actions at the row end | R2 | Actions appear on hover and focus only, 16 px glyphs, stay while on; see OD2 | owner | decision |
-| FR10 | Layer selected: accent-tinted row; children of selected lightly tinted | R7 | Measure R7 colours; selected row tint, child rows a lighter tint | template | open |
+| FR10 | Layer selected: accent-tinted row; children of selected lightly tinted | R7 | Selected row `#E5F4FF` light, `#2D3953` dark (R10); children of the selection a lighter tint (R7) | template | open |
 | FR11 | Assets tab: search, libraries, component tiles | R9 | Search 24 px field, tile grid; no proprietary thumbnails | template | open |
 
 ### Floating toolbar
@@ -84,7 +89,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 
 | ID | Region / state | Ref | Done when (measured) | Level | State |
 | --- | --- | --- | --- | --- | --- |
-| FR17 | Canvas surface | R1 | `#F5F5F5` light; no rulers; no grid | template | open |
+| FR17 | Canvas surface | R1 | `#F5F5F5` light; rulers off by default (R2), optional (R11); no grid | template | open |
 | FR18 | Frame name labels | R2 | 11 px secondary above each frame's top-left; accent when selected | template | open |
 | FR19 | Hover outline | R7 | 1 px accent outline on hover of an unselected layer (2 px for frames per R7 if measured) | template | open |
 | FR20 | Selection box and handles | R2 | 1 px `#0D99FF` stroke; 6 px white handles with accent stroke at four corners | template | open |
@@ -129,7 +134,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | ID | Region / state | Ref | Done when (measured) | Level | State |
 | --- | --- | --- | --- | --- | --- |
 | FR41 | Light scheme: every surface and text colour equals the table in section 1 | R1–R5 | Probe reports each sampled colour within ΔE 2 | template (theme) | open |
-| FR42 | Dark scheme | R10 | Panel `#2C2C2C`, canvas `#1E1E1E`, fields `#383838`, dividers `#444444`, text white (*ref pending*: confirm on a capture) | template (theme) | open |
+| FR42 | Dark scheme | R10 | Panel `#2C2C2C` and dividers `#444444` (R10, UI2 sample); canvas `#1E1E1E`, fields `#383838`, text white (*ref pending*: no public UI3 dark capture yet) | template (theme) | open |
 | FR43 | UI type 11 px Inter, titles semibold | R2, R5 | Computed font sizes in panels and toolbar | owner | decision |
 | FR44 | Icons: look-alikes at 16 px (24 px buttons) with 1 px-ish strokes | R4, R5 | Every inspector and toolbar glyph has a look-alike from the library's sets; none copied | template (icon choice) + library (icon set gaps) | open |
 | FR45 | Motion: menus and popovers appear without delay; hover is immediate | — | Motion probe: no transitions on hover in panels; popover ≤ 100 ms | template | open |
@@ -191,6 +196,8 @@ One row per shortcoming, appended by the evaluator, completed by the builder. A 
 | G7 | FR1, FR2 | No left panel head (menu, file name, project) and no File/Assets tabs | Template content | Add head and tabs | template | — | — |
 | G8 | FR42 | Dark surfaces `rgb(24, 24, 28)`; ref `#2C2C2C` panels, `#1E1E1E` canvas | Template uses core dark theme | Template theme dark values | template | — | — |
 | G9 | FR3 | Right panel head order differs (people, zoom, Share, Hide) | DT29/DT33 layout | Avatar ▾, Present ▾, Share; zoom moves to the tabs row (FR23) | template | — | — |
+| G10 | FR6, FR8 | Page and layer rows 32 px; R11 highlight 24 px | TreeView `size="s"` is the smallest row (DT9 chose 32 from an unscaled reading) | A 24 px dense row, as a TreeView size or row-size token the template sets | library seam + template value | — | — |
+| G11 | FR5, FR28 | Section title rows: ours a 24 px head row (DT13; first field row 32 px below the section top in the baseline); R11 40 px with 16 px inset | PropertySection compact head sized for the old reading | Head row height as a PropertySection token; template value 40 | library seam + template value | — | — |
 
 ## 5. Owner decisions
 
