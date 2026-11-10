@@ -4,6 +4,23 @@
 
 ## Owner instructions
 
+### G14.6 floating-surface qualification (11 November 2026)
+
+DesignUp's final independent Themes review requires the existing identifying
+field boundary to reach 3:1 on its floating material, and the popup shell to
+delegate actual scrolling solely to ScrollArea. Keep ordinary Q71 soft controls
+unchanged: the stronger semantic boundary is scoped to floating material only.
+Fix core source, never consumer selectors or probes. The consumer separately
+owns registered custom-part placement, semantic duration and eliminating the
+unnecessary whole-page rerender when its tool opens. Re-score actual contrast,
+short-popup scrolling and clean 4x-CPU open frames before acceptance.
+The scroll behavior now relies on ResizeObserver's guaranteed initial
+post-layout notification instead of synchronously forcing layout in React's
+discrete-event effect, and reads both axes before writing overflow flags.
+The lifecycle regression covers initial observation, read/write ordering and
+cleanup. Consumer opening script cost fell substantially, but intermittent
+over-50ms rendering frames remain unaccepted; do not claim MV4 complete.
+
 ### G14.5 template token sources (11 November 2026)
 
 DesignUp continuation: "If generic seam missing, implement at library source

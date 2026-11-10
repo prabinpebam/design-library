@@ -60,6 +60,12 @@
     --material-backdrop: none;
   }
 
+  /* A translucent floating surface can erase the ordinary soft control fill;
+     its identifying boundary uses the readable foreground role instead. */
+  [data-material='floating'] {
+    --color-border-control: var(--color-text-muted);
+  }
+
   :root,
   [data-material],
   [data-contrast] {

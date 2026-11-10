@@ -154,6 +154,7 @@
     margin: 0;
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    overflow: visible;
     min-inline-size: var(--popup-min-inline, auto);
     max-inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
     max-block-size: min(var(--c-popup-height), calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset)));

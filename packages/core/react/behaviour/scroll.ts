@@ -41,9 +41,9 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       const view = a === 'y' ? el.clientHeight : el.clientWidth;
       const full = a === 'y' ? el.scrollHeight : el.scrollWidth;
       const over = full - view > 1;
-      box.toggleAttribute(`data-overflow-${a}`, over);
       return { a, view, full, over };
     });
+    for (const { a, over } of axes) box.toggleAttribute(`data-overflow-${a}`, over);
     const inline = axes[0].over;
     const block = axes[1].over;
     setOverflow((current) => current.inline === inline && current.block === block ? current : { inline, block });
@@ -65,7 +65,6 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
     const el = viewport.current;
     const box = root.current;
     if (!el || !box || !active) return;
-    measure();
     const onScroll = () => {
       measure();
       box.setAttribute('data-scrolling', '');
@@ -73,6 +72,7 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       idle.current = window.setTimeout(() => box.removeAttribute('data-scrolling'), ms(getComputedStyle(box).getPropertyValue('--c-scroll-area-idle'), 1000));
     };
     el.addEventListener('scroll', onScroll, { passive: true });
+    // Its initial notification measures after layout, rather than forcing layout in a discrete React commit.
     const sizes = new ResizeObserver(measure);
     sizes.observe(el);
     const watchChildren = () => {
