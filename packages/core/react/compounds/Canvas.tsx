@@ -94,7 +94,10 @@ export function Canvas({ label, shapes, selected, onSelect, zoom = 1, width, hei
       return (
         <div key={s.id} data-dl-part="place" data-kind={s.kind} data-hidden={l.hidden || undefined} style={box}>
           {s.kind === 'frame' && depth === 0 && (
-            <button type="button" data-dl-part="name" tabIndex={-1} onClick={() => onSelect?.(s.id)}>
+            <button type="button" data-dl-part="name" tabIndex={-1} onClick={(e) => {
+              e.stopPropagation();
+              onSelect?.(s.id);
+            }}>
               {s.label}
             </button>
           )}

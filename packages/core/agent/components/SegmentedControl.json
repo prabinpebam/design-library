@@ -68,6 +68,12 @@
           "type": "boolean",
           "default": "true",
           "description": "The group's own track (fill and outline). Turn it off where a surrounding bar already encloses the segments (a floating tool bar): one enclosure per boundary."
+        },
+        {
+          "name": "fill",
+          "type": "boolean",
+          "default": "false",
+          "description": "The group takes its row's width and the options share it equally (an inspector's choice that lines up with the fields under it)."
         }
       ]
     },

@@ -1227,6 +1227,26 @@
     min-inline-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
   }
 
+  /* The choice at the box's end (Hug, Fixed, Fill): a quiet word and chevron that opens its menu. Choosing applies at once,
+     so it needs no room for a pending state; it stays as narrow as its word and leaves the rest to the number. */
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='choice'] {
+    flex: none;
+  }
+
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='choice'] > [data-dl-part='trigger'] {
+    padding-inline: var(--space-inline-pair);
+  }
+
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='choice'] > [data-dl-part='trigger'] > [data-dl-part='layer']:not([data-shown]) {
+    display: none;
+  }
+
+  /* The word alone names the choice at rest (aria-haspopup says it opens a menu); the chevron isn't drawn, and the trigger's
+     hover fill shows it's pressable. */
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='choice'] > [data-dl-part='trigger'] [data-dl='icon'] {
+    display: none;
+  }
+
   /* A value from a variable: its name on a tint (not an outline: one enclosure inside the box), with Detach after it. */
   [data-dl='number-field'][data-variable] input {
     flex: 0 1 auto;
@@ -1830,6 +1850,16 @@
     /* The group, not each segment, holds the fills' stacking: a fill travelling past a neighbour (Q65 C6) stays under
        every segment's text. */
     isolation: isolate;
+  }
+
+  /* fill: the group spans its row and the options share it equally. */
+  [data-dl='segmented-control'][data-fill] {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  [data-dl='segmented-control'][data-fill] > [data-dl-part='segment'] {
+    flex: 1 1 0;
   }
 
   [data-dl='segmented-control'] > [data-dl-part='segment'] {

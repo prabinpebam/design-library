@@ -783,6 +783,12 @@
         "wrap",
         "corners",
         "sides",
+        "layout-free",
+        "layout-stack",
+        "padding-horizontal",
+        "padding-vertical",
+        "resize-fit",
+        "opacity",
         "link",
         "rotate",
         "code",
@@ -832,12 +838,44 @@
           "description": "`action`: drawn in the row's action column, after the fields (a stroke's sides menu).",
           "type": "string"
         },
+        "choice": {
+          "additionalProperties": false,
+          "description": "A number's word at its end that opens the alternatives (Hug, Fixed, Fill): the key it sets and its options.",
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "options": {
+              "items": {
+                "$ref": "#/$defs/InspectorOption"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "key",
+            "options"
+          ],
+          "type": "object"
+        },
+        "emphasis": {
+          "const": "raised",
+          "description": "A segmented choice's chosen option raised rather than filled.",
+          "type": "string"
+        },
         "fields": {
           "description": "A column's fields, stacked.",
           "items": {
             "$ref": "#/$defs/InspectorField"
           },
           "type": "array"
+        },
+        "fill": {
+          "description": "A segmented choice spans its row, its options equal (Flow).",
+          "type": "boolean"
         },
         "glyph": {
           "type": "string"
@@ -859,6 +897,8 @@
             "switch",
             "checkbox",
             "toggle",
+            "caption",
+            "button",
             "visibility",
             "colour",
             "slider",
@@ -889,6 +929,13 @@
         "placeholder": {
           "description": "A text field's hint while empty (an export's \"Suffix\").",
           "type": "string"
+        },
+        "presets": {
+          "description": "A number's common values, in a list at its end (a gap's).",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
         },
         "step": {
           "type": "number"
@@ -1141,6 +1188,47 @@
             "type": "array"
           },
           "type": "array"
+        },
+        "toggle": {
+          "additionalProperties": false,
+          "description": "An icon toggle in the head that turns the section's feature on or off (Auto layout): it writes `on` or `off` to `key`; only for `kinds`.",
+          "properties": {
+            "icon": {
+              "$ref": "#/$defs/IconName"
+            },
+            "key": {
+              "type": "string"
+            },
+            "kinds": {
+              "items": {
+                "enum": [
+                  "frame",
+                  "rectangle",
+                  "ellipse",
+                  "text"
+                ],
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "label": {
+              "type": "string"
+            },
+            "off": {
+              "$ref": "#/$defs/PropValue"
+            },
+            "on": {
+              "$ref": "#/$defs/PropValue"
+            }
+          },
+          "required": [
+            "key",
+            "label",
+            "icon",
+            "on",
+            "off"
+          ],
+          "type": "object"
         },
         "when": {
           "$ref": "#/$defs/InspectorWhen"

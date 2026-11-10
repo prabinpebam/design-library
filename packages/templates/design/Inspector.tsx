@@ -47,8 +47,9 @@ export function cssOf(shape: DesignShape & { props: ShapeProps }): string {
   const lines: string[] = [`width: ${shape.width}px;`, `height: ${shape.height}px;`];
   const items = (k: string) => ((p[k] as PropItem[] | undefined) ?? []).filter((i) => i.visible !== false);
   if (p.layout && p.layout !== 'none') {
-    lines.push('display: flex;', `flex-direction: ${p.layout === 'horizontal' || p.layout === 'wrap' ? 'row' : 'column'};`);
-    if (p.layout === 'wrap') lines.push('flex-wrap: wrap;');
+    if (p.layout === 'grid') lines.push('display: grid;');
+    else lines.push('display: flex;', `flex-direction: ${p.layout === 'horizontal' ? 'row' : 'column'};`);
+    if (p.layout === 'horizontal' && p.wrap) lines.push('flex-wrap: wrap;');
     lines.push(`gap: ${p.gap}px;`, `padding: ${p.padTop}px ${p.padRight}px ${p.padBottom}px ${p.padLeft}px;`);
   }
   if (Number(p.rotation)) lines.push(`transform: rotate(${p.rotation}deg);`);
@@ -118,7 +119,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
       case 'number': {
         const keys = [f.key, ...(f.also ?? [])];
         const same = keys.every((k) => Number(get(k) ?? 0) === Number(v ?? 0));
-        return <NumberField key={key} label={labelled} hideLabel={!show} glyph={f.glyph} icon={f.icon} unit={f.unit} min={f.min} max={f.max} step={f.step} size="xs" value={same ? Number(v ?? 0) : 'mixed'} onCommit={(n) => keys.forEach((k) => set(k, n))} />;
+        return <NumberField key={key} label={labelled} hideLabel={!show} glyph={f.glyph} icon={f.icon} unit={f.unit} min={f.min} max={f.max} step={f.step} size="xs" presets={f.presets} choice={f.choice && { value: String(get(f.choice.key) ?? ''), options: f.choice.options, label: f.choice.label, onChange: (x) => set(f.choice!.key, x) }} value={same ? Number(v ?? 0) : 'mixed'} onCommit={(n) => keys.forEach((k) => set(k, n))} />;
       }
       case 'menu': {
         const chosen = f.options?.find((o) => o.value === String(v ?? ''))?.label ?? '';
@@ -133,7 +134,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
       case 'select':
         return <Select key={key} label={labelled} hideLabel={!show && (!!name || !!f.icon)} icon={f.icon} size="xs" options={f.options ?? []} value={String(v ?? '')} onChange={(x) => set(f.key, x)} />;
       case 'segmented':
-        return <SegmentedControl key={key} label={labelled} iconOnly={f.iconOnly} size="xs" options={(f.options ?? []).map((o) => ({ value: o.value, label: o.label, icon: o.icon }))} value={String(v ?? '')} onChange={(x) => set(f.key, x)} />;
+        return <SegmentedControl key={key} label={labelled} iconOnly={f.iconOnly} fill={f.fill} emphasis={f.emphasis} size="xs" options={(f.options ?? []).map((o) => ({ value: o.value, label: o.label, icon: o.icon }))} value={String(v ?? '')} onChange={(x) => set(f.key, x)} />;
       case 'switch':
         return f.at === 'action' ? (
           <Switch key={key} label={f.label} hideLabel={!show} size="xs" checked={!!v} onChange={(x) => set(f.key, x)} />
@@ -148,6 +149,10 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
       case 'toggle':
         {/* toggle-button: Figma's own icon toggles beside a field (independent corners, individual padding); the owner asked for no Switch in this inspector (Q129) */}
         return <Button key={key} label={f.label} icon={f.icon} iconOnly tooltip emphasis="quiet" size="xs" pressed={!!v} onClick={() => set(f.key, !v)} />;
+      case 'caption':
+        return <Text key={key} variant="body-sm" tone="muted">{f.label}</Text>;
+      case 'button':
+        return <Button key={key} label={f.label} icon={f.icon} iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: fill(notInExample, { label: f.label }) })} />;
       case 'colour':
         return <TextField key={key} label={labelled} hideLabel={!show} size="xs" value={String(v ?? '')} onCommit={(x) => set(f.key, x)} swatch={{ value: String(v ?? ''), onChange: (x) => set(f.key, x) }} />;
       case 'slider':
@@ -210,6 +215,15 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
     });
   };
 
+  const toggleOf = (tg: NonNullable<InspectorSection['toggle']>) => {
+    const on = own(tg.key) !== tg.off;
+    return (
+      <>
+        {/* toggle-button: Figma's head toggle that adds or removes the section's feature (Auto layout), an icon in a dense panel head (Q128) */}
+        <Button label={tg.label} icon={tg.icon} iconOnly tooltip emphasis="quiet" size="xs" pressed={on} onClick={() => setOwn(tg.key, on ? tg.off : tg.on)} />
+      </>
+    );
+  };
   const section = (given: InspectorSection) => {
     const s = !page && given.headings?.[shape.kind] ? { ...given, heading: given.headings[shape.kind]! } : given;
     if (s.kinds ? !s.kinds.includes(page ? 'page' : shape.kind) : page) return null;
@@ -228,7 +242,7 @@ export function Inspector({ tabs, tab, shape, parent, label, notInExample, noCol
         key={s.id}
         heading={s.heading}
         density="compact"
-        actions={s.add ? <Button label={s.add.label} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: s.add!.says })} /> : l && <Button label={l.add} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => setItems([...items, { ...l.template }])} />}
+        actions={s.toggle && (!s.toggle.kinds || s.toggle.kinds.includes(shape.kind as never)) ? toggleOf(s.toggle) : s.add ? <Button label={s.add.label} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: s.add!.says })} /> : l && <Button label={l.add} icon="plus" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => setItems([...items, { ...l.template }])} />}
       >
         {!s.listFirst && rows(s.rows, own, setOwn)}
         {l &&

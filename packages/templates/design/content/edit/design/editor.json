@@ -940,14 +940,36 @@
             "rows": [
               [
                 {
+                  "key": "flowCaption",
+                  "kind": "caption",
+                  "label": "Flow",
+                  "when": {
+                    "key": "canLayout",
+                    "is": [
+                      true
+                    ]
+                  }
+                }
+              ],
+              [
+                {
                   "key": "layout",
                   "kind": "segmented",
-                  "label": "Auto layout",
+                  "label": "Flow",
+                  "iconOnly": true,
+                  "fill": true,
+                  "emphasis": "raised",
+                  "when": {
+                    "key": "canLayout",
+                    "is": [
+                      true
+                    ]
+                  },
                   "options": [
                     {
                       "value": "none",
-                      "label": "No auto layout",
-                      "icon": "frame"
+                      "label": "Freeform",
+                      "icon": "layout-free"
                     },
                     {
                       "value": "vertical",
@@ -960,12 +982,56 @@
                       "icon": "arrow-end"
                     },
                     {
-                      "value": "wrap",
-                      "label": "Wrap",
-                      "icon": "wrap"
+                      "value": "grid",
+                      "label": "Grid",
+                      "icon": "grid"
                     }
-                  ],
-                  "iconOnly": true
+                  ]
+                },
+                {
+                  "key": "wrap",
+                  "kind": "toggle",
+                  "label": "Wrap",
+                  "icon": "wrap",
+                  "at": "action",
+                  "when": [
+                    {
+                      "key": "canLayout",
+                      "is": [
+                        true
+                      ]
+                    },
+                    {
+                      "key": "layout",
+                      "is": [
+                        "horizontal"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              [
+                {
+                  "key": "sizeCaption",
+                  "kind": "caption",
+                  "label": "Resizing",
+                  "when": {
+                    "key": "canLayout",
+                    "is": [
+                      true
+                    ]
+                  }
+                },
+                {
+                  "key": "dimCaption",
+                  "kind": "caption",
+                  "label": "Dimensions",
+                  "when": {
+                    "key": "canLayout",
+                    "is": [
+                      false
+                    ]
+                  }
                 }
               ],
               [
@@ -974,88 +1040,85 @@
                   "kind": "number",
                   "label": "Width",
                   "glyph": "W",
-                  "min": 1
+                  "min": 1,
+                  "choice": {
+                    "key": "sizeW",
+                    "options": [
+                      {
+                        "value": "fixed",
+                        "label": "Fixed"
+                      },
+                      {
+                        "value": "hug",
+                        "label": "Hug"
+                      },
+                      {
+                        "value": "fill",
+                        "label": "Fill"
+                      }
+                    ],
+                    "label": "Width resizing"
+                  }
                 },
                 {
                   "key": "height",
                   "kind": "number",
                   "label": "Height",
                   "glyph": "H",
-                  "min": 1
+                  "min": 1,
+                  "choice": {
+                    "key": "sizeH",
+                    "options": [
+                      {
+                        "value": "fixed",
+                        "label": "Fixed"
+                      },
+                      {
+                        "value": "hug",
+                        "label": "Hug"
+                      },
+                      {
+                        "value": "fill",
+                        "label": "Fill"
+                      }
+                    ],
+                    "label": "Height resizing"
+                  }
+                },
+                {
+                  "key": "resizeFit",
+                  "kind": "button",
+                  "label": "Resize to fit",
+                  "icon": "resize-fit",
+                  "at": "action"
                 }
               ],
               [
                 {
-                  "key": "sizeW",
-                  "icon": "size-width",
-                  "kind": "select",
-                  "label": "Width sizing",
-                  "options": [
-                    {
-                      "value": "fixed",
-                      "label": "Fixed"
-                    },
-                    {
-                      "value": "hug",
-                      "label": "Hug"
-                    },
-                    {
-                      "value": "fill",
-                      "label": "Fill"
-                    }
-                  ]
+                  "key": "alignCaption",
+                  "kind": "caption",
+                  "label": "Alignment",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "grid"
+                    ]
+                  }
                 },
                 {
-                  "key": "sizeH",
-                  "icon": "size-height",
-                  "kind": "select",
-                  "label": "Height sizing",
-                  "options": [
-                    {
-                      "value": "fixed",
-                      "label": "Fixed"
-                    },
-                    {
-                      "value": "hug",
-                      "label": "Hug"
-                    },
-                    {
-                      "value": "fill",
-                      "label": "Fill"
-                    }
-                  ]
-                }
-              ],
-              [
-                {
-                  "key": "minW",
-                  "kind": "number",
-                  "label": "Minimum width",
-                  "glyph": "≥W",
-                  "min": 0
-                },
-                {
-                  "key": "maxW",
-                  "kind": "number",
-                  "label": "Maximum width",
-                  "glyph": "≤W",
-                  "min": 0
-                }
-              ],
-              [
-                {
-                  "key": "minH",
-                  "kind": "number",
-                  "label": "Minimum height",
-                  "glyph": "≥H",
-                  "min": 0
-                },
-                {
-                  "key": "maxH",
-                  "kind": "number",
-                  "label": "Maximum height",
-                  "glyph": "≤H",
-                  "min": 0
+                  "key": "gapCaption",
+                  "kind": "caption",
+                  "label": "Gap",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "grid"
+                    ]
+                  }
                 }
               ],
               [
@@ -1068,61 +1131,115 @@
                     "is": [
                       "vertical",
                       "horizontal",
-                      "wrap"
+                      "grid"
                     ]
                   }
                 },
                 {
-                  "key": "spacing",
-                  "kind": "column",
-                  "label": "Spacing",
+                  "key": "gap",
+                  "kind": "number",
+                  "label": "Gap between items",
+                  "icon": "distribute-h",
+                  "min": 0,
+                  "presets": [
+                    0,
+                    4,
+                    8,
+                    12,
+                    16,
+                    24,
+                    32
+                  ],
                   "when": {
                     "key": "layout",
                     "is": [
                       "vertical",
                       "horizontal",
-                      "wrap"
+                      "grid"
                     ]
-                  },
-                  "fields": [
+                  }
+                },
+                {
+                  "key": "gapSettings",
+                  "kind": "button",
+                  "label": "Spacing settings",
+                  "icon": "settings",
+                  "at": "action",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "grid"
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "padCaption",
+                  "kind": "caption",
+                  "label": "Padding",
+                  "when": {
+                    "key": "layout",
+                    "is": [
+                      "vertical",
+                      "horizontal",
+                      "grid"
+                    ]
+                  }
+                }
+              ],
+              [
+                {
+                  "key": "padLeft",
+                  "kind": "number",
+                  "min": 0,
+                  "label": "Horizontal padding",
+                  "icon": "padding-horizontal",
+                  "also": [
+                    "padRight"
+                  ],
+                  "when": [
                     {
-                      "key": "gap",
-                      "kind": "number",
-                      "label": "Gap between items",
-                      "icon": "distribute-h",
-                      "min": 0
+                      "key": "layout",
+                      "is": [
+                        "vertical",
+                        "horizontal",
+                        "grid"
+                      ]
                     },
                     {
-                      "key": "padLeft",
-                      "kind": "number",
-                      "min": 0,
-                      "label": "Horizontal padding",
-                      "glyph": "↔",
-                      "also": [
-                        "padRight"
-                      ],
-                      "when": {
-                        "key": "padSides",
-                        "is": [
-                          false
-                        ]
-                      }
+                      "key": "padSides",
+                      "is": [
+                        false
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "key": "padTop",
+                  "kind": "number",
+                  "min": 0,
+                  "label": "Vertical padding",
+                  "icon": "padding-vertical",
+                  "also": [
+                    "padBottom"
+                  ],
+                  "when": [
+                    {
+                      "key": "layout",
+                      "is": [
+                        "vertical",
+                        "horizontal",
+                        "grid"
+                      ]
                     },
                     {
-                      "key": "padTop",
-                      "kind": "number",
-                      "min": 0,
-                      "label": "Vertical padding",
-                      "glyph": "↕",
-                      "also": [
-                        "padBottom"
-                      ],
-                      "when": {
-                        "key": "padSides",
-                        "is": [
-                          false
-                        ]
-                      }
+                      "key": "padSides",
+                      "is": [
+                        false
+                      ]
                     }
                   ]
                 },
@@ -1130,16 +1247,16 @@
                   "key": "padSides",
                   "kind": "toggle",
                   "label": "Individual padding",
+                  "icon": "sides",
+                  "at": "action",
                   "when": {
                     "key": "layout",
                     "is": [
                       "vertical",
                       "horizontal",
-                      "wrap"
+                      "grid"
                     ]
-                  },
-                  "icon": "sides",
-                  "at": "action"
+                  }
                 }
               ],
               [
@@ -1155,7 +1272,7 @@
                       "is": [
                         "vertical",
                         "horizontal",
-                        "wrap"
+                        "grid"
                       ]
                     },
                     {
@@ -1178,7 +1295,7 @@
                       "is": [
                         "vertical",
                         "horizontal",
-                        "wrap"
+                        "grid"
                       ]
                     },
                     {
@@ -1203,7 +1320,7 @@
                       "is": [
                         "vertical",
                         "horizontal",
-                        "wrap"
+                        "grid"
                       ]
                     },
                     {
@@ -1226,7 +1343,7 @@
                       "is": [
                         "vertical",
                         "horizontal",
-                        "wrap"
+                        "grid"
                       ]
                     },
                     {
@@ -1265,6 +1382,16 @@
             ],
             "headings": {
               "frame": "Auto layout"
+            },
+            "toggle": {
+              "key": "layout",
+              "label": "Auto layout",
+              "icon": "layout-stack",
+              "on": "vertical",
+              "off": "none",
+              "kinds": [
+                "frame"
+              ]
             }
           },
           {
@@ -3204,7 +3331,9 @@
         "overflow": "none",
         "scrollPosition": "scroll",
         "instance": false,
-        "padSides": false
+        "padSides": false,
+        "canLayout": false,
+        "wrap": false
       },
       "frame": {
         "inLayout": false,
@@ -3222,7 +3351,8 @@
         "flowStart": false,
         "flowName": "",
         "device": "phone",
-        "protoBg": "#1e1e1e"
+        "protoBg": "#1e1e1e",
+        "canLayout": true
       },
       "rectangle": {
         "hasCorners": true,

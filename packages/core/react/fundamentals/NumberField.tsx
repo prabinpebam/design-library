@@ -51,6 +51,8 @@ export interface NumberFieldProps extends DataAttributes {
   onUnitChange?: (unit: string) => void;
   /** Common values in a list at the box's end (font sizes, export scales); any other number can still be typed. */
   presets?: number[];
+  /** A short word at the box's end naming how the value is set (a design tool's Hug, Fixed or Fill), which opens a menu of the alternatives. */
+  choice?: { value: string; options: { value: string; label: string }[]; onChange: (value: string) => void; label?: string };
 }
 
 const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' };
@@ -133,7 +135,7 @@ export function parseNumberInput(text: string, current: number, unit?: string): 
  * @key Escape: puts back the stored value; while scrubbing, cancels the drag
  * @key Drag the label, glyph or icon sideways: changes the value with the pointer hidden (Shift: ten, Alt: a tenth)
  */
-export function NumberField({ label, value, onCommit, mode = 'commit', min, max, step = 1, precision, unit, glyph, icon, steppers = false, size = 'normal', hideLabel = false, disabled = false, error, auto, units, onUnitChange, presets, variable, ...data }: NumberFieldProps) {
+export function NumberField({ label, value, onCommit, mode = 'commit', min, max, step = 1, precision, unit, glyph, icon, steppers = false, size = 'normal', hideLabel = false, disabled = false, error, auto, units, onUnitChange, presets, choice, variable, ...data }: NumberFieldProps) {
   // One decimal finer than the step by default, so Alt (×0.1) can reach between steps; trailing zeros aren't shown.
   const places = precision ?? decimals(step) + 1;
   const clamp = (n: number) => {
@@ -397,6 +399,18 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
             items={presets.map((p) => ({ value: String(p), label: show(p) }))}
             onSelect={(v) => set(Number(v), 'now')}
             disabled={disabled}
+          />
+        )}
+        {choice && (
+          <MenuButton
+            size={listSize[size]}
+            emphasis="quiet"
+            label={choice.options.find((o) => o.value === choice.value)?.label ?? choice.value}
+            menuLabel={choice.label ?? `How ${label.toLowerCase()} is set`}
+            items={choice.options}
+            onSelect={choice.onChange}
+            disabled={disabled}
+            data-dl-part="choice"
           />
         )}
         {steppers && !variable && (

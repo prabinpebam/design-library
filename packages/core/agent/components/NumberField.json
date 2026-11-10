@@ -162,6 +162,21 @@
           "name": "presets",
           "type": "number[]",
           "description": "Common values in a list at the box's end (font sizes, export scales); any other number can still be typed."
+        },
+        {
+          "name": "choice",
+          "type": "{ value: string",
+          "description": "A short word at the box's end naming how the value is set (a design tool's Hug, Fixed or Fill), which opens a menu of the alternatives."
+        },
+        {
+          "name": "options",
+          "type": "{ value: string",
+          "required": true
+        },
+        {
+          "name": "onChange",
+          "type": "(value: string) => void",
+          "required": true
         }
       ]
     }

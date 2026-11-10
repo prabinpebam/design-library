@@ -41,7 +41,7 @@ export interface InspectorWhen {
  */
 export interface InspectorField {
   key: string;
-  kind: 'number' | 'select' | 'segmented' | 'switch' | 'checkbox' | 'toggle' | 'visibility' | 'colour' | 'slider' | 'text' | 'alignment' | 'gradient' | 'align' | 'column' | 'menu';
+  kind: 'number' | 'select' | 'segmented' | 'switch' | 'checkbox' | 'toggle' | 'caption' | 'button' | 'visibility' | 'colour' | 'slider' | 'text' | 'alignment' | 'gradient' | 'align' | 'column' | 'menu';
   label: string;
   glyph?: string;
   icon?: IconName;
@@ -60,6 +60,14 @@ export interface InspectorField {
   at?: 'action';
   /** Takes two thirds of a two-field row (a stroke's position beside its weight). */
   wide?: boolean;
+  /** A number's word at its end that opens the alternatives (Hug, Fixed, Fill): the key it sets and its options. */
+  choice?: { key: string; options: InspectorOption[]; label?: string };
+  /** A number's common values, in a list at its end (a gap's). */
+  presets?: number[];
+  /** A segmented choice spans its row, its options equal (Flow). */
+  fill?: boolean;
+  /** A segmented choice's chosen option raised rather than filled. */
+  emphasis?: 'raised';
   /** A text field's hint while empty (an export's "Suffix"). */
   placeholder?: string;
 }
@@ -97,6 +105,8 @@ export interface InspectorSection {
   kinds?: ('frame' | 'rectangle' | 'ellipse' | 'text' | 'page')[];
   /** The heading for one kind, where it differs (a frame's Layout is Auto layout). */
   headings?: Partial<Record<'frame' | 'rectangle' | 'ellipse' | 'text', string>>;
+  /** An icon toggle in the head that turns the section's feature on or off (Auto layout): it writes `on` or `off` to `key`; only for `kinds`. */
+  toggle?: { key: string; label: string; icon: IconName; on: PropValue; off: PropValue; kinds?: ('frame' | 'rectangle' | 'ellipse' | 'text')[] };
   /** A head-only section whose add button says it isn't in the example (Styles +). */
   add?: { label: string; says: string };
   /** Dismissible help cards (Prototype, nothing selected): Alerts in the panel; with no heading, drawn without a section. */
