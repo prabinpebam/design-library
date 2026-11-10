@@ -1,6 +1,6 @@
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { announce } from '../behaviour/announce';
-import { layoutStipple, paintStipple, stippleTime, type StipplePoint } from '../behaviour/stipple';
+import { layoutStipple, paintStipple, stippleTime, type StipplePoint } from '../../effects';
 import { Button } from '../fundamentals/Button';
 import { Icon } from '../fundamentals/Icon';
 import { Image } from '../fundamentals/Image';
