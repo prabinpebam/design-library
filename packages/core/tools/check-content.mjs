@@ -162,8 +162,8 @@ for (const id of folders) {
   if (assetData) check(assetsFile, 'https://design-library.local/core/assets/1', assetData);
   for (const [name, a] of Object.entries(assetData?.assets ?? {})) {
     if (a?.src && !existsSync(join(dir, a.src))) fail(assetsFile, `/assets/${name}/src`, `file ${a.src} doesn't exist`, `add the file under ${id}/assets/ or fix the path`);
-    // Pictures per scheme (MP18, Q112): each file exists, is a safe SVG when it's one, and shares the picture's ratio (ID39).
-    const sources = [['/src', a?.src], ['/dark', a?.dark], ['/contrast/light', a?.contrast?.light], ['/contrast/dark', a?.contrast?.dark]].filter(([, s]) => typeof s === 'string');
+    // Pictures per scheme (MP18, Q112) and the paired picture (MP10): each file exists, is a safe SVG when it's one, and shares the picture's ratio (ID39).
+    const sources = [['/src', a?.src], ['/dark', a?.dark], ['/contrast/light', a?.contrast?.light], ['/contrast/dark', a?.contrast?.dark], ['/alternate', a?.alternate]].filter(([, s]) => typeof s === 'string');
     const base = a?.src && existsSync(join(dir, a.src)) ? pictureSize(join(dir, a.src)) : null;
     for (const [at, s] of sources) {
       const file = join(dir, s);
@@ -175,7 +175,7 @@ for (const id of folders) {
       if (at === '/src' || !base) continue;
       const size = pictureSize(file);
       if (size && Math.abs(size.w / size.h - base.w / base.h) / (base.w / base.h) > 0.01)
-        fail(assetsFile, `/assets/${name}${at}`, `${s} is ${size.w} × ${size.h}, a different shape from ${a.src} (${base.w} × ${base.h})`, 'make every scheme’s file the same shape: they share one frame and one alt');
+        fail(assetsFile, `/assets/${name}${at}`, `${s} is ${size.w} × ${size.h}, a different shape from ${a.src} (${base.w} × ${base.h})`, at === '/alternate' ? 'make the after the same shape as the before: they share one frame' : 'make every scheme’s file the same shape: they share one frame and one alt');
     }
   }
 
