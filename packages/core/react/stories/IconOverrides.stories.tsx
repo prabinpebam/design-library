@@ -20,8 +20,8 @@ import type { StoryFile } from './story';
 const none: Record<string, BrandGlyph> = {};
 const links = [
   { label: 'Shop', href: '#/brand-icons', current: true },
-  { label: 'Stories', href: '#/brand-icons' },
-  { label: 'Help', href: '#/brand-icons' },
+  { label: 'Icons', href: '#/icon' },
+  { label: 'Ratings', href: '#/rating' },
 ];
 const topics = [
   { value: 'orders', label: 'Orders' },
@@ -65,11 +65,11 @@ function Scene() {
   );
 }
 
-function Toggle({ children }: { children: (brand: boolean) => ReactNode }) {
+function Toggle({ label = 'Brand icons', children }: { label?: string; children: (brand: boolean) => ReactNode }) {
   const [brand, setBrand] = useState(true);
   return (
     <Stack gap="group">
-      <Switch label="Brand icons" checked={brand} onChange={setBrand} />
+      <Switch label={label} checked={brand} onChange={setBrand} />
       {children(brand)}
     </Stack>
   );
@@ -125,7 +125,7 @@ import brand from './brand/icons.json'; // npx design-library-icons src/brand/ic
 </Section>`,
       render: () => (
         <Section tone="sunken" data-scheme="dark" heading="After dark">
-          <Toggle>{(brand) => <IconOverrides icons={brand ? brandIcons : none}><Scene /></IconOverrides>}</Toggle>
+          <Toggle label="Brand icons in the dark band">{(brand) => <IconOverrides icons={brand ? brandIcons : none}><Scene /></IconOverrides>}</Toggle>
         </Section>
       ),
     },
