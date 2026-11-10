@@ -811,6 +811,20 @@ Each gives an openable result in 60 active minutes or less. Components, tokens, 
 
 **Guard added now (worker 64):** `tools/pack.mjs` refuses to pack when any `exports` or `bin` target that exists in the source is missing from the tarball (so `templates/{id}/registry.tsx` always ships), and `--dry-run` runs every check without writing to `.packages`.
 
+**The 30-minute check, done (worker 65, 2026-11-10 about 09:45):** one scratch Vite site per public entry, built outside the repository against today's source (Vite 7, production build, nothing shown but the import). Output by file type:
+
+| Entry imported | Output | Cause |
+| --- | --- | --- |
+| `react` (`<Button>` only) | 330 KB JS; 14 WebP (977 KB), 98 WOFF2 (6.2 MB), 2 WebM, 1 MP4, 1 MP3, 1 JPG (632 KB together) | The 114 story re-exports: their `?url` pictures and media, and `Fonts.stories` reaching every face |
+| `react` with the story lines removed (in memory, the proposed `components`) | 238 KB JS, nothing else | — |
+| `render` | The same as `react` | `render/blocks.tsx`, `rich-text.tsx`, `SiteView.tsx`, `TemplateView.tsx` import `'../react'` |
+| `fonts` | 98 WOFF2 (6.2 MB), 20 CSS, 14 KB JS | By design: one lazy `import()` per face; written, fetched only when a role uses that face |
+| `theme` | The same as `fonts`, 39 KB JS | `theme/index.ts` imports the font loader (`loadFace`) |
+| `icons` | 8 JS chunks (157 KB) | By design: one lazy chunk per curated set |
+| `site` | 22 KB JS | — |
+
+**Verdict:** only the story re-exports and the fonts' lazy entry, so **MP27 stays in 0.4.0-beta.2.** What the entry must also do: `render`'s four files import the new components entry (or the fundamentals directly), never `'../react'`, or every data-driven site keeps the story files. The fonts and icon chunks stay: they are the on-demand loaders working as designed; the guide says so (a site that wants no font files in its output doesn't import `theme` or `fonts` and sets the font tokens itself).
+
 ### What stays out, checked (ID6, Q105.2)
 
 The note's own split matches Part 2's out-of-scope list and Part 3's "what stays out": the shapes, hatch, collage, overprint, grain, stipple look, depth-motion weights, the year-list art and the 1 s reveal timing stay DesignUp's. Each new packet passes the ID6 bar with a second user named in its row: a real adopter plus a shipped template or reference product. None names DesignUp: every prop, field, story and example uses generic names and the library's own tokens and pictures. The note's withdrawals (MR6–MR10) are agreed; nothing is added for them.

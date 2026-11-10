@@ -125,5 +125,5 @@ A copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 f
 | MP15 | Top type steps as theme settings | BM.7 |
 | MP17–MP19 | Pictures per scheme *(pending)* | BM.9–BM.11 |
 | MP24–MP26 | Brand icons *(pending)* | BM.12–BM.14 |
-| MP27 | Lean builds *(pending; may move to 0.5.0-beta.1)* | BM.15 |
+| MP27 | Lean builds *(pending; stays in this release: the check found only the story re-exports and the fonts' lazy entry)* | BM.15 |
 | MP6 | This release and brief | BM.6 |
