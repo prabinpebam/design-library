@@ -109,6 +109,7 @@
     "--type-body-sm-size",
     "--type-display-leading",
     "--type-display-tracking",
+    "--type-display-weight",
     "--type-heading-1-leading",
     "--type-heading-1-weight",
     "--type-label-weight"

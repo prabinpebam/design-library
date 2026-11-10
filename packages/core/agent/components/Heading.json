@@ -79,6 +79,48 @@
     "--type-jumbo-weight",
     "--type-label-leading"
   ],
+  "settings": [
+    {
+      "var": "--type-display-size",
+      "default": "3.5rem",
+      "description": "The display step's size: Hero and page titles, Heading size=\"display\" and Statistic's large value (default text.xxxxl, 3.5rem). A token (var(--text-…)) or a length."
+    },
+    {
+      "var": "--type-display-weight",
+      "default": "700",
+      "description": "The display step's weight (default weight.bold). Set 400 for a display face that has one weight, so the browser doesn't fake bold."
+    },
+    {
+      "var": "--type-display-leading",
+      "default": "1.05",
+      "description": "The display step's line height (default leading.display). A unitless number or a token."
+    },
+    {
+      "var": "--type-display-tracking",
+      "default": "-0.025em",
+      "description": "The display step's letter spacing (default tracking.display). A length in em or a token."
+    },
+    {
+      "var": "--type-jumbo-size",
+      "default": "5rem",
+      "description": "The jumbo step's size: Heading size=\"jumbo\" (default text.jumbo, 5rem). Keep it larger than display; settingsCss and applySettings refuse a jumbo smaller than display when both are lengths."
+    },
+    {
+      "var": "--type-jumbo-weight",
+      "default": "700",
+      "description": "The jumbo step's weight (default weight.bold)."
+    },
+    {
+      "var": "--type-jumbo-leading",
+      "default": "1.05",
+      "description": "The jumbo step's line height (default leading.display)."
+    },
+    {
+      "var": "--type-jumbo-tracking",
+      "default": "-0.025em",
+      "description": "The jumbo step's letter spacing (default tracking.display)."
+    }
+  ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/heading",
   "usedBy": [
     "Popover",

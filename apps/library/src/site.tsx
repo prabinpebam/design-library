@@ -23,6 +23,7 @@ import { RouterDemo } from './views/RouterDemo';
 import { SiteDemo } from './views/SiteDemo';
 import { PartsDemo } from './views/PartsDemo';
 import { ReuseDemo } from './views/ReuseDemo';
+import { TypeStepsDemo } from './views/TypeStepsDemo';
 
 const routeOf = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, '')).replace(/^app\//, '');
 
@@ -67,6 +68,24 @@ if (query.get('face') === 'site')
   });
 /** The optional label and numeral roles (IP24): `site.html?face=roles#/app/…` sets eyebrows in a monospace and figures in a grotesque. */
 if (query.get('face') === 'roles') void applyFonts({ roles: { label: 'jetbrains-mono', numeral: 'space-grotesk' } });
+/**
+ * The top type steps as settings (MP15): `site.html?demo=type-steps&steps=one-weight` sets a display face with one
+ * weight (declared at 400 only) and the display and jumbo steps for it: larger, weight 400, tighter leading.
+ */
+if (query.get('steps') === 'one-weight') {
+  void applyFonts({
+    roles: { display: 'one-weight-display', numeral: 'one-weight-display' },
+    faces: [{ id: 'one-weight-display', family: 'One Weight Display', classification: 'sans', sources: [{ url: siteFaceUrl, format: 'woff2', weight: '400' }] }],
+  });
+  applySettings({
+    '--type-display-size': '4.6rem',
+    '--type-display-weight': '400',
+    '--type-display-leading': '1',
+    '--type-jumbo-size': '6.14rem',
+    '--type-jumbo-weight': '400',
+    '--type-jumbo-leading': '1',
+  });
+}
 const seed = query.get('seed');
 if (seed && /^#[0-9a-f]{6}$/i.test(seed))
   applyBrand({ colours: { 1: { seed, ...(query.get('pin') ? { pins: { '500': seed } } : {}) } }, contrast: query.get('guard') ? 'guard' : 'keep' });
@@ -149,6 +168,6 @@ function TemplateSite() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* The core router on a small site (IP27): `site.html?demo=router`, shown on the Routing page. A data-driven site (DP8, DP9): `site.html?demo=site`. A template's own blocks from page documents (DP18): `site.html?demo=parts&template={id}`. */}
-    {query.get('demo') === 'router' ? <RouterDemo /> : query.get('demo') === 'site' ? <SiteDemo /> : query.get('demo') === 'parts' ? <PartsDemo template={query.get('template') ?? ''} /> : query.get('demo') === 'reuse' ? <ReuseDemo /> : <TemplateSite />}
+    {query.get('demo') === 'router' ? <RouterDemo /> : query.get('demo') === 'site' ? <SiteDemo /> : query.get('demo') === 'parts' ? <PartsDemo template={query.get('template') ?? ''} /> : query.get('demo') === 'reuse' ? <ReuseDemo /> : query.get('demo') === 'type-steps' ? <TypeStepsDemo /> : <TemplateSite />}
   </StrictMode>,
 );

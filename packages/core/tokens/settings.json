@@ -14,5 +14,15 @@
   "Link": {
     "--link-decoration": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus.",
     "--link-decoration-hover": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour."
+  },
+  "Heading": {
+    "--type-display-size": "The display step's size: Hero and page titles, Heading size=\"display\" and Statistic's large value (default text.xxxxl, 3.5rem). A token (var(--text-…)) or a length.",
+    "--type-display-weight": "The display step's weight (default weight.bold). Set 400 for a display face that has one weight, so the browser doesn't fake bold.",
+    "--type-display-leading": "The display step's line height (default leading.display). A unitless number or a token.",
+    "--type-display-tracking": "The display step's letter spacing (default tracking.display). A length in em or a token.",
+    "--type-jumbo-size": "The jumbo step's size: Heading size=\"jumbo\" (default text.jumbo, 5rem). Keep it larger than display; settingsCss and applySettings refuse a jumbo smaller than display when both are lengths.",
+    "--type-jumbo-weight": "The jumbo step's weight (default weight.bold).",
+    "--type-jumbo-leading": "The jumbo step's line height (default leading.display).",
+    "--type-jumbo-tracking": "The jumbo step's letter spacing (default tracking.display)."
   }
 }

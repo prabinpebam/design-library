@@ -745,6 +745,28 @@ export const pages: Page[] = withDocs(withPrinciples([
         block: { type: 'type-styles' },
       },
       { heading: 'Sizes', minor: true, intro: 'Open-ended names: xs to xxxxl, then jumbo at the top.', block: { type: 'token-rows', group: 'text' } },
+      {
+        heading: 'A display face with one weight',
+        intro: 'The display and jumbo steps are theme settings (MP15): size, weight, leading and tracking for each, through applySettings or settingsCss, so Hero and page titles, Heading display and jumbo, and Statistic’s large value follow a brand’s display face. First the library’s defaults; then a face that has one weight, at 4.6rem and weight 400 for display and 6.14rem for jumbo, so nothing is faked bold. A jumbo set smaller than display is refused.',
+        block: {
+          type: 'code',
+          label: 'Set the top steps',
+          code: `import { applyFonts, applySettings } from '@design-library/core/theme';
+
+void applyFonts({ roles: { display: 'brand-display' }, faces: [/* the face, declared at weight 400 */] });
+applySettings({
+  '--type-display-size': '4.6rem',
+  '--type-display-weight': '400',
+  '--type-display-leading': '1',
+  '--type-jumbo-size': '6.14rem',
+  '--type-jumbo-weight': '400',
+  '--type-jumbo-leading': '1',
+});`,
+        },
+      },
+      { heading: 'The defaults', minor: true, block: { type: 'screen', src: 'site.html?demo=type-steps', title: 'A brand opening on the default top steps', width: 'fill' } },
+      { heading: 'A one-weight display face', minor: true, block: { type: 'screen', src: 'site.html?demo=type-steps&steps=one-weight', title: 'The same opening with the top steps set for a one-weight display face', width: 'fill' } },
+      { heading: 'A one-weight display face, in a narrow window', minor: true, block: { type: 'screen', src: 'site.html?demo=type-steps&steps=one-weight', title: 'The one-weight display steps in a phone-sized window', width: 'phone' } },
       { heading: 'Line height', minor: true, block: { type: 'token-rows', group: 'leading' } },
       { heading: 'Weight', minor: true, block: { type: 'token-rows', group: 'weight' } },
       { heading: 'Tracking', minor: true, intro: 'Display, tight and normal close or keep the gaps; wide and wider open them, only for a few words set small or in capitals (an eyebrow, a tag, a mark), never for running text. A custom part reads these roles instead of a raw em value.', block: { type: 'token-rows', group: 'tracking' } },

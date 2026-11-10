@@ -42,6 +42,7 @@
 
   [data-dl='statistic'][data-size='l'] [data-dl-part='figure'] {
     font-size: var(--c-statistic-value-size-l);
+    font-weight: var(--type-display-weight);
     line-height: var(--type-display-leading);
     letter-spacing: var(--type-display-tracking);
   }

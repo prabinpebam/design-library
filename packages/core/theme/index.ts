@@ -243,11 +243,22 @@ export function applyBrand(brand: Brand | null, target: HTMLElement = document.d
 export const themeSettings = Object.fromEntries(Object.entries(settingsList).filter(([k]) => !k.startsWith('$'))) as Record<string, Record<string, string>>;
 const allowed = new Set(Object.values(themeSettings).flatMap((s) => Object.keys(s)));
 
-/** The names in a set of settings that aren't on the allow-list, each with what to do instead. */
+/** A plain length in px (rem at 16 px), or `null` when it reads a token or another unit. */
+const plainPx = (value: string | undefined) => {
+  const m = /^\s*(-?[\d.]+)(rem|px)\s*$/.exec(value ?? '');
+  return m ? Number(m[1]) * (m[2] === 'rem' ? 16 : 1) : null;
+};
+
+/** The names in a set of settings that aren't on the allow-list, each with what to do instead; and a jumbo step set smaller than display (MP15). */
 export function settingsErrors(settings: Record<string, string>): string[] {
-  return Object.keys(settings)
+  const errors = Object.keys(settings)
     .filter((name) => !allowed.has(name))
     .map((name) => `"${name}" isn't a theme setting; use one of ${[...allowed].join(', ')}, or a prop, slot or your template's own tokens`);
+  const display = plainPx(settings['--type-display-size']);
+  const jumbo = plainPx(settings['--type-jumbo-size']);
+  if (display !== null && jumbo !== null && jumbo < display)
+    errors.push(`"--type-jumbo-size" (${settings['--type-jumbo-size']}) is smaller than "--type-display-size" (${settings['--type-display-size']}); jumbo is the larger step, so raise it or lower display`);
+  return errors;
 }
 
 /** Settings as CSS text, for a stylesheet loaded after `css/index.css`. Throws on a name off the allow-list. */
