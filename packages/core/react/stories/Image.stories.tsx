@@ -11,9 +11,9 @@ import { scenes } from './scenes';
 import type { StoryFile } from './story';
 import lighthouseDay from './media/scenes/lighthouse-day.webp?url';
 import lighthouseNight from './media/scenes/lighthouse-night.webp?url';
-import seedlingLight from './media/spot/seedling-light.svg?url';
-import seedlingDark from './media/spot/seedling-dark.svg?url';
-import seedlingDarkMore from './media/spot/seedling-dark-more.svg?url';
+import seedlingLight from './media/spot/seedling-light.webp?url';
+import seedlingDark from './media/spot/seedling-dark.webp?url';
+import seedlingDarkMore from './media/spot/seedling-dark-more.webp?url';
 
 const lighthouseAlt = 'A striped lighthouse on a green headland above the sea.';
 /** MP11: two reveals drawn with the one hook. A wipe from the start edge… */
@@ -170,7 +170,7 @@ export default {
     {
       title: 'Light and dark pictures',
       description:
-        'dark names the same picture for a dark scheme, and contrast its files for more contrast (MP17); src stays the light file. Each frame follows the scheme it is drawn in: the page’s, or a band’s own. A photo and an SVG alike, at one ratio under one alt. Only the file in use is fetched; a later switch keeps the old file until the new one has loaded, so nothing flashes or moves. Dark and more contrast falls back to contrast.dark, then dark, then src.',
+        'dark names the same picture for a dark scheme, and contrast its files for more contrast (MP17); src stays the light file. Each frame follows the scheme it is drawn in: the page’s, or a band’s own. A photo and an illustration alike, at one ratio under one alt; each dark file is the scene at night or the drawing redrawn on a dark canvas, never a tinted or inverted copy (Q117). Only the file in use is fetched; a later switch keeps the old file until the new one has loaded, so nothing flashes or moves. Dark and more contrast falls back to contrast.dark, then dark, then src.',
       code: `<Image src={day} dark={night} alt="A lighthouse on a green headland above the sea." />
 <Image src={seedling} dark={seedlingDark} contrast={{ dark: seedlingDarkMore }} ratio="classic" fit="contain" alt="A seedling in a pot." />`,
       render: () => (
@@ -191,7 +191,7 @@ export default {
             },
             {
               id: 'svg',
-              label: 'An SVG: light, dark and dark with more contrast',
+              label: 'An illustration: light canvas, dark canvas and dark with more contrast',
               cells: Object.fromEntries(
                 ['light', 'dark', 'light-more', 'dark-more'].map((c) => [c, <Image src={seedlingLight} dark={seedlingDark} contrast={{ dark: seedlingDarkMore }} ratio="classic" fit="contain" alt="A seedling with two leaves in a clay pot." />]),
               ),
@@ -223,7 +223,7 @@ export default {
       code: `"shopfront": {
   "src": "assets/shopfront.webp",
   "dark": "assets/shopfront-dark.webp",
-  "alt": "The shop’s lit window on a cobbled quay at dusk: …"
+  "alt": "The shop’s lit window on a cobbled quay in the evening: …"
 }`,
       render: () => <ScreenPreview src="site.html?demo=site#/" title="Harbour Books, whose opening picture has a dark file" caption="Harbour’s home: the opening picture follows the preview’s light or dark." />,
     },

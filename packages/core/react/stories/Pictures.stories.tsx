@@ -6,9 +6,9 @@ import { Section } from '../compounds/Section';
 import type { StoryFile } from './story';
 import lighthouseDay from './media/scenes/lighthouse-day.webp?url';
 import lighthouseNight from './media/scenes/lighthouse-night.webp?url';
-import seedlingLight from './media/spot/seedling-light.svg?url';
-import seedlingDark from './media/spot/seedling-dark.svg?url';
-import seedlingDarkMore from './media/spot/seedling-dark-more.svg?url';
+import seedlingLight from './media/spot/seedling-light.webp?url';
+import seedlingDark from './media/spot/seedling-dark.webp?url';
+import seedlingDarkMore from './media/spot/seedling-dark-more.webp?url';
 
 const alt = 'A striped lighthouse on a green headland above the sea.';
 const seedlingAlt = 'A seedling with two leaves in a clay pot.';
@@ -51,7 +51,7 @@ export default {
     {
       title: 'A file for each scheme',
       description:
-        'The same picture drawn for light, dark and more contrast, at one shape under one description. Each frame shows the file for the scheme it sits in. A scheme with no file of its own falls back: dark with more contrast to the dark file, then the light one; light with more contrast to the light one.',
+        'The same picture drawn for light, dark and more contrast, at one shape under one description. A dark file is never a tinted, filtered or inverted copy: it is the scene as it looks at night (the lighthouse) or the drawing redrawn on a dark canvas with the same light (the seedling), made with AI or supplied by you. Each frame shows the file for the scheme it sits in. A scheme with no file of its own falls back: dark with more contrast to the dark file, then the light one; light with more contrast to the light one.',
       code: `<Image src={day} dark={night} alt="…" />
 <Image src={seedling} dark={seedlingDark} contrast={{ dark: seedlingDarkMore }} alt="…" />`,
       render: () => (
@@ -63,7 +63,7 @@ export default {
             { id: 'photo', label: 'A photo: light and dark', cells: cells(() => <Image src={lighthouseDay} dark={lighthouseNight} alt={alt} />) },
             {
               id: 'svg',
-              label: 'An SVG: light, dark, dark with more contrast',
+              label: 'An illustration: light canvas, dark canvas, dark with more contrast',
               cells: cells(() => <Image src={seedlingLight} dark={seedlingDark} contrast={{ dark: seedlingDarkMore }} ratio="classic" fit="contain" alt={seedlingAlt} />),
             },
           ]}

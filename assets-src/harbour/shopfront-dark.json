@@ -1,0 +1,16 @@
+{
+  "id": "shopfront-dark",
+  "set": "SS1 Harbour",
+  "slot": "IA-H1 (dark scheme)",
+  "kind": "dark lighting (Q117): the same scene at night, regenerated with AI; never a colour-corrected copy",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit",
+  "reference": "packages/templates/harbour/assets/shopfront.webp (the light file, as Image 1 for composition)",
+  "size": "1536x1024",
+  "quality": "high",
+  "date": "2026-11-10",
+  "shipped": "packages/templates/harbour/assets/shopfront-dark.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 600 --density 2",
+  "alt": "The shop’s lit window on a cobbled quay in the evening: shelves of books, an armchair under a reading lamp, a rowing boat moored alongside.",
+  "prompt": "Image 1 is the same picture in the day version: keep its exact composition, camera position, framing, every object and its place, the painted style and the level of detail. Change only the time of day.\nUse: the dark-scheme version of the hero picture for a small bookshop's website, shown at about 560 by 373 pixels on a dark page.\nSubject: the same small bookshop on the harbour quay, seen from the same spot, late at night.\nDetails: a deep night sky with a crescent moon and scattered stars instead of the sunset glow; no orange in the sky; the shop window glowing warm with the lamps inside switched on, the reading lamp by the armchair lit; the wall lamp beside the door lit, casting a warm pool of light on the step and nearest cobbles; the rest of the quay in natural cool moonlit shadow; lit windows in the houses across the harbour with their reflections on the calm dark water; the rowing boat and mooring bollard dimly lit by moonlight; natural night colour, deep blues and near-blacks with warm lamp amber only where a lamp shines.\nComposition: identical to Image 1; the shop window is the centre of interest in the middle third; eye level.\nStyle: warm editorial illustration, flat shapes with soft painted edges, no outlines; palette of deep harbour blue, lamp amber, paper cream and brick red; night lighting from the lamps and the moon; calm and uncluttered.\nConstraints: no text, no letters or numbers, no sign lettering, no logos, no watermark, no frame or border, no people. Not a colour-tinted copy: real night lighting with lamps as the light sources."
+}

@@ -1,0 +1,15 @@
+{
+  "id": "seedling-light",
+  "set": "Library story art",
+  "kind": "light canvas",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate",
+  "reference": null,
+  "size": "1536x1152",
+  "quality": "high",
+  "date": "2026-11-10",
+  "shipped": "packages/core/react/stories/media/spot/seedling-light.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 360 --density 2",
+  "alt": "A seedling with two leaves in a clay pot.",
+  "prompt": "Use: spot illustration for a component library's Image and Pictures stories, shown at about 360 by 270 pixels (4:3) on a light page.\nSubject: a small seedling with two rounded leaves growing from a terracotta clay pot.\nDetails: a thin green stem, two leaves of slightly different greens, dark soil at the top of the pot, the pot with a rim; a soft shadow on the ground beside the pot from light coming from the upper left; highlights on the left side of the leaves and pot.\nComposition: the pot and seedling centred, filling about 45% of the width, sitting on a faint ground line, plenty of plain canvas around.\nStyle: flat vector-like illustration with soft gradients, no outlines, gentle shading, on a plain warm off-white paper canvas.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border."
+}

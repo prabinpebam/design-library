@@ -8,6 +8,8 @@ Every release of `@design-library/core` and `@design-library/templates` (they sh
 
 ## Unreleased
 
+- **Changed (Q117; templates):** dark pictures are never made by colour correction, tinting, a filter or an inversion of the light file. Harbour's `shopfront-dark.webp` (a blue-tinted copy of the dusk picture) is replaced by the same scene regenerated at night (moon and stars, lamps and windows lit), and its shared alt says "in the evening" so it fits both files. A dark file is either supplied or regenerated with an image model, as **dark lighting** (the scene at night) or **dark canvas** (the drawing redrawn on a dark canvas); the guide, Rules agents miss and the Pictures page say so. The library's seedling story art (a recoloured SVG trio) is now an AI-drawn light-canvas, dark-canvas and more-contrast WebP set.
+
 ## 0.5.0-beta.1 (2026-11-10): brand pictures and openings
 
 The pieces a brand-led site draws by hand around its pictures and openings, now in the library: an opening that keeps one height across a series, section titles at the opening's size, brand shapes over and under a picture, a second picture on hover or focus with the site's own reveal (the library keeps the triggers, the timing and reduced motion), the library's stipple as a public helper, glides timed by their distance, and `Illustration` for drawn art that follows the scheme, fits its space and moves only on the motion tokens. Every change is an addition: with nothing set, every opening, picture, title and glide is as before. A site on 0.2.0-beta.1 or later installs it with no edits. Upgrading: `UPGRADE.md`, section → 0.5.0-beta.1.

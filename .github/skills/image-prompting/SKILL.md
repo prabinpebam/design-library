@@ -1,6 +1,6 @@
 ---
 name: image-prompting
-description: Use whenever a picture is needed in the Design library or a template (a hero, card picture, spot illustration, empty-state art, avatar, sponsor or product shot), or when generating, regenerating, trimming, optimizing, storing or captioning one. Generates with the global GPT Image 2.5 skill (gpt-image-2-5), prompts by OpenAI's documented structure, keeps a set consistent with one style reference image, uses true alpha and trims transparent margins with tools/trim-alpha.mjs, generates at the resolution intended for display, ships optimized WebP through the template's assets.json, and writes alt text that matches the picture.
+description: Use whenever a picture is needed in the Design library or a template (a hero, card picture, spot illustration, empty-state art, avatar, sponsor or product shot), or when generating, regenerating, trimming, optimizing, storing or captioning one, including a dark or more-contrast version. Generates with the global GPT Image 2.5 skill (gpt-image-2-5), prompts by OpenAI's documented structure, keeps a set consistent with one style reference image, makes dark versions only by AI regeneration (the scene at night, or the drawing on a dark canvas) or the owner's file, never by colour correction or inversion, uses true alpha and trims transparent margins with tools/trim-alpha.mjs, generates at the resolution intended for display, ships optimized WebP through the template's assets.json, and writes alt text that matches the picture.
 ---
 
 # Image prompting: pictures that belong in the layout
@@ -74,6 +74,15 @@ Consistency still drifts ([Image generation: Limitations](https://developers.ope
 - **Trim every transparent picture.** The model pads the subject with empty space, which turns into unwanted padding in the layout and breaks alignment with the text beside it. `trim-alpha.mjs` crops to the bounding box of pixels with alpha > 8 (`--threshold`), then resizes. Space around the picture comes from the layout's gap tokens (`spacing`), never from transparent pixels; `--pad` exists only for a soft edge (a glow) that must not touch the box.
 - Opaque pictures (scenes, photographs) are never trimmed; frame them by composition, and `--fit cover` when the slot's ratio differs.
 
+## Dark and more-contrast versions (Q117)
+
+A picture that reads wrong on a dark page gets a dark file of the **same picture**. It is never made from the light file by colour correction, tinting, a filter, an inversion or any other pixel transform (`sharp().modulate()`, `.tint()`, `.negate()`, CSS `filter`, an image editor's curves): a darkened photo reads as a blue-tinted day, and an inverted drawing swaps its shadows and highlights. A dark file the owner supplies is used as is; otherwise it is regenerated with the generator, as an `edit` with the **light file** as Image 1 (here Image 1 is the composition, not just the style), in one of two kinds chosen per picture:
+
+- **Dark lighting** (scenes, photographs, painted scenes): the same scene as it would naturally look at night or in dim light. Prompt: *"Image 1 is the same picture in the day version: keep its exact composition, camera position, framing, every object and its place, the style and the level of detail. Change only the time of day."* then the night details: moon and stars instead of the sun, no sunset glow, lit windows and lamps as the light sources with warm pools and reflections, the rest in natural moonlit shadow, and *"Not a colour-tinted copy: real night lighting."*
+- **Dark canvas** (illustrations and spot art on a light canvas): the same drawing redrawn on a black or dark canvas. Prompt: *"keep its exact composition … Redraw it on a dark canvas; do not invert or tint it."* plus the same light direction, so highlights stay on the lit side and the cast shadow is darker than the canvas, colours slightly deeper so they don't glare, an optional faint rim light to separate shapes from the canvas.
+
+Same generation size and crop as the light file (`check:content` fails another shape), shipped with the same `trim-alpha.mjs` line, named `{name}-dark.webp` in the entry's `dark`, with its own provenance file whose `kind` says which of the two it is. One alt fits both files ("in the evening", not "at dusk"). A **more-contrast** file follows the same rule (regenerated with stronger separation, never a filter); without one, more contrast falls back to the scheme's file. Look at the dark file beside the light one before keeping it: the same objects in the same places, lit by the night or redrawn on the dark canvas.
+
 ## Resolution: generate for the display size
 
 Pictures in one view share a **visual resolution**: the same number of image pixels per CSS pixel, and the same apparent size of strokes and textures. A picture generated large and shrunk a lot looks finer than one generated small and shown big.
@@ -123,6 +132,7 @@ The visual-representation audit (G1) found placeholder landscapes with informati
 - [ ] Transparent: alpha real, margins trimmed. Opaque: framed by composition.
 - [ ] File = display × 2, WebP, within the proposed budget.
 - [ ] Alt written from the finished picture (or `""` when decorative), in `assets.json`.
+- [ ] A dark or more-contrast file is supplied or regenerated (dark lighting or dark canvas), never a pixel transform of the light file.
 - [ ] Provenance JSON in `assets-src/<set>/`.
 - [ ] `npm run check:content` and the build pass.
 

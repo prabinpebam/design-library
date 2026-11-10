@@ -1,0 +1,15 @@
+{
+  "id": "seedling-dark-more",
+  "set": "Library story art",
+  "kind": "dark canvas, more contrast (Q117): redrawn with AI with stronger separation; never a filter",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit",
+  "reference": "seedling-light (raw PNG) as Image 1",
+  "size": "1536x1152",
+  "quality": "high",
+  "date": "2026-11-10",
+  "shipped": "packages/core/react/stories/media/spot/seedling-dark-more.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 360 --density 2",
+  "alt": "A seedling with two leaves in a clay pot.",
+  "prompt": "Image 1 is the same illustration on a light canvas: keep its exact composition, the pot and seedling shape, size and place, the flat illustration style with soft gradients and no outlines. Redraw it on a dark canvas; do not invert or tint it.\nUse: the dark-scheme version of a spot illustration for a component library's Image and Pictures stories, shown at about 360 by 270 pixels (4:3) on a dark page.\nDetails: a plain near-black charcoal canvas instead of the off-white paper; the same light from the upper left, so highlights stay on the left of the leaves and pot and the shadow still falls to the right on the ground; the shadow is darker than the canvas, never lighter; the leaves stay natural greens and the pot natural terracotta, slightly deeper so they sit calmly on the dark canvas without glaring; a faint rim light on the left edges so the shapes separate from the canvas.\nMore contrast: this version is for people who asked for more contrast: stronger separation between the shapes and the canvas, a clearer rim light, leaf and pot colours a little brighter and more distinct, the ground line visible.\nConstraints: no text, no letters or numbers, no logos, no watermark, no frame or border."
+}

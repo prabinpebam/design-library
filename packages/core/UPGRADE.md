@@ -213,7 +213,7 @@ replaces; stop after any of them.
    does it). If you used a year in the query as a stopgap, drop it.
 5. Site from data: on the year page document, `"between": "keep"`; in `site.json`, `"again": "top"`.
 6. Pictures per scheme: a picture drawn for light that looks wrong in dark gets a `dark` file (same shape, same
-   alt; never the light file inverted), replacing any code that swaps pictures on the scheme (a `useScheme` check
+   alt; the scene at night or the drawing on a dark canvas, never the light file tinted, filtered or inverted), replacing any code that swaps pictures on the scheme (a `useScheme` check
    around two `<img>`, a `prefers-color-scheme` `<picture>`, or CSS that hides one of two pictures). In code:
    `<Image src="/a/hero.webp" dark="/a/hero-dark.webp" alt="…" />`; from data, the picture entry's `"dark"` file.
    Run `npx design-library-check-content` (the pair must share a shape within 1%).
