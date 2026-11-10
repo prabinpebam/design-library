@@ -182,6 +182,18 @@ A fundamental or compound of your own that content places is a **block type** in
 
 `npx design-library-new-template {id} --part compounds/{Name}` writes all four for a new part. The content check validates each `example` against its schema and the registry against the manifest; the worked example is the Conference template's `conference.countdown` and `conference.sponsor-wall`.
 
+## Customize a template or extend the library?
+
+A template may look like any product; the library stays generic so every other product can use it too. For each thing your template needs, ask in order and stop at the first yes:
+
+1. **Is it reachable already?** A prop or size, a slot, a context attribute (`data-density`, `data-scheme`), your theme or theme settings, your own `t.{id}.*` tokens, or a part inside your template ([the seam ladder](../AGENTS.md#the-seam-ladder)). Then it's **yours**: do it in the template.
+2. **Is it only a value?** A colour, radius, size or font on a seam that exists. It goes in your **theme or tokens**, never as a new library default.
+3. **Would a second, unrelated product need it?** Name one (a video editor, an IDE, a dashboard). If it's structure or behaviour (a dense row, a touching button group, a filled field, a menu's shortcut column, a panel width that can be set), ask for a **library change**: a generic prop, variant or token, named by what it does.
+4. **Does a library rule forbid it?** (Switches for binary settings, no one-sided borders, the text and target sizes.) Keep the rule; use only what it allows, and record the difference for the product owner to decide.
+5. **Otherwise** it is a **part inside your template**, built from library parts, styled under `[data-dl="{id}-{part}"]` with `t.{id}.*` tokens. A part that two templates need is a candidate for the library, by its own review.
+
+Never in the library: a product's name in a prop, variant, token or selector (`variant="figma"`), a product's brand colour as a default, a template's tokens. Never in a template: a copy, wrapper or restyle of a library component's markup, `!important`, or raw values outside its tokens. In the library repository `npm run check:generic` fails on the first list. Worked example: the Design tool template rebuilt as a Figma look-alike ([Figma replica](https://prabinpebam.github.io/design-library/docs/#figma-replica.md), section 3).
+
 ## Do and don't
 
 | Do | Don't |

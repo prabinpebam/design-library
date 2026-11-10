@@ -147,6 +147,7 @@ Steps are written in the order an agent usually needs them; each stands alone an
 | TypeScript or TSX | `npm run typecheck` |
 | A view or a template's bindings | `npm run check:views` |
 | A custom part's CSS | `npm run check:parts`, `npm run check:materials`, `npm run check:motion`, `npm run check:clipping` |
+| Core code, CSS or tokens while a template imitates a product | `npm run check:generic`: no product name in a prop, variant, selector or token, no product brand value as a default, no template token namespace in core ([Customize a template or extend the library?](guide/6-templates.md#customize-a-template-or-extend-the-library)) |
 | A component, block type, template or token | `npm run agent:index` (keeps this index true; `npm run agent:index:check` fails when stale) |
 | A principle or the elevation ladder (`principles/*.json`) | `npm run agent:index` (rewrites `guide/7-principles.md`; the library's Principles sections read the same file) |
 | Anything before you call it done | `npm run build -w apps/library`, then open the screen |
