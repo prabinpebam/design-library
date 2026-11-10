@@ -133,6 +133,6 @@ A copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 f
 | MP5 | Direct-jump proof from 0.2.0-beta.1 | BM.5 |
 | MP15 | Top type steps as theme settings | BM.7 |
 | MP17–MP19 | Pictures per scheme (MP17 code and MP19 docs built; MP18 from data pending) | BM.9–BM.11 |
-| MP24–MP26 | Brand icons *(pending)* | BM.12–BM.14 |
+| MP24–MP26 | Brand icons: the seam, the library page "Brand icons", the command and its guide | BM.12–BM.14 |
 | MP27 | Lean builds *(pending; stays in this release: the check found only the story re-exports and the fonts' lazy entry)* | BM.15 |
 | MP6 | This release and brief | BM.6 |
