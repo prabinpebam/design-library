@@ -258,6 +258,7 @@ export { default as textStories } from './stories/Text.stories';
 export { default as headingStories } from './stories/Heading.stories';
 export { default as linkStories } from './stories/Link.stories';
 export { default as iconStories } from './stories/Icon.stories';
+export { default as iconOverridesStories } from './stories/IconOverrides.stories';
 export { default as buttonStories } from './stories/Button.stories';
 export { default as buttonGroupStories } from './stories/ButtonGroup.stories';
 export { default as switchStories } from './stories/Switch.stories';

@@ -33,6 +33,7 @@
   ],
   "uses": [],
   "tokens": [],
+  "libraryPage": "https://prabinpebam.github.io/design-library/#/iconoverrides",
   "usedBy": [
     "Icon",
     "Rating"
