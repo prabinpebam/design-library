@@ -31,7 +31,7 @@ Everything a brand changes has a seam ([the seam ladder](../AGENTS.md#the-seam-l
 | What | Seam | Example |
 | --- | --- | --- |
 | Colour | `applyBrand` from `@design-library/core/theme` (`colours` by slot, each with its `seed`; `base` for a tinted page; `contrast: 'guard'` for a bright seed) | `applyBrand({ colours: { 1: { seed: '#ff4f00' } }, contrast: 'guard' })` |
-| Type | `applyFonts` (`faces` for the site's own files with a metric-matched fallback; `roles` for display, label and numeral) | A display face on headings and big numbers only |
+| Type | `applyFonts` (`faces` for the site's own files with a metric-matched fallback; `roles` for display, label and numeral); the top steps' size, weight, leading and tracking through `applySettings` (`--type-display-*`, `--type-jumbo-*`) | A display face on headings and big numbers only; a one-weight condensed face at `--type-display-weight: 400` and a larger `--type-display-size` |
 | Frame and space | Theme settings (`applySettings`, `settingsCss`): `--c-site-layout-width`, `-margin`, `-gap`, `-padding-start`; `SiteLayout opening="flush"` | A hero right under the header, a wider column |
 | Links | `--link-decoration: none` (the link colour must then stand 3:1 from the text) | Brand links without underlines |
 | Scheme | `SchemeControl` in the header | Light, dark and system |
