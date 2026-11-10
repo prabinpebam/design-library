@@ -132,6 +132,9 @@ for (const scheme of ['light', 'dark']) {
     await step('FR46-49 inspector by selection', async () => {
       const heads = () => page.evaluate(() => [...document.querySelectorAll('[data-dl="property-section"] [data-dl-part="head"]')].filter((h) => h.getClientRects().length).map((h) => h.textContent.trim().replace(/\s+/g, ' ').slice(0, 24)));
       const visSw = () => page.evaluate(() => [...document.querySelectorAll('[role="switch"]')].filter((s) => s.getClientRects().length).map((s) => (s.getAttribute('aria-label') || s.closest('label')?.textContent || s.parentElement?.textContent || '').trim()).filter((n) => /\b(show|hide|hidden|visib)/i.test(n)));
+      // Q129: R12–R19 show no Switch anywhere in the inspector (the 330 px end panel), so every Switch there, of any kind, is a gap.
+      const inspSw = () => page.evaluate(() => [...document.querySelectorAll('[role="switch"]')].filter((s) => s.getClientRects().length && s.getBoundingClientRect().left > innerWidth - 340).map((s) => `${s.closest('[data-dl="property-section"]')?.querySelector('[data-dl-part="head"]')?.textContent.trim().replace(/\s+/g, ' ').slice(0, 20) ?? 'panel'} › ${(s.getAttribute('aria-label') || (s.getAttribute('aria-labelledby') || '').split(' ').map((id) => document.getElementById(id)?.textContent ?? '').join(' ') || s.closest('label')?.textContent || s.closest('[data-dl="switch"]')?.textContent || s.title || '').trim().slice(0, 40)}`));
+      const anySw = {};
       const vis = {};
       const res = {};
       await page.getByRole('tab', { name: /^Design$/ }).first().click();
@@ -140,12 +143,15 @@ for (const scheme of ['light', 'dark']) {
         await page.waitForTimeout(200);
         res[k] = await heads();
         vis[k] = await visSw();
+        anySw[k] = await inspSw();
       }
       await page.keyboard.press('Escape');
       await page.waitForTimeout(200);
       res.none = await heads();
       vis.none = await visSw();
+      anySw.none = await inspSw();
       fb['FR57 no visibility Switch'] = { pass: Object.values(vis).every((v) => v.length === 0), got: vis };
+      fb['FR60 no Switch in the inspector'] = { pass: Object.values(anySw).every((v) => v.length === 0), got: anySw };
       await page.getByRole('tab', { name: /^Prototype$/ }).first().click();
       await page.waitForTimeout(200);
       res.prototypeNone = await heads();
