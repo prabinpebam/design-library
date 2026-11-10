@@ -103,6 +103,7 @@
   --space-gutter: var(--space-6);
   --space-margin-page: var(--space-4);
   --size-target: 2.75rem;
+  --size-target-floor: 44px;
   --size-target-min: 1.5rem;
   --size-indicator: 0.625rem;
   --size-indicator-s: 0.5rem;
@@ -334,6 +335,7 @@
   --c-description-list-gap: var(--space-stack-item);
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
+  --c-button-target-floor: var(--size-target-floor);
   --c-button-pressed-fill: var(--state-selected);
   --c-button-expanded-fill: var(--state-selected);
   --c-button-padding-inline: var(--space-inset-md);
