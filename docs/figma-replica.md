@@ -71,7 +71,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | FR6 | Page rows: rest, hover, selected | R2 | 24 px row highlight, inset 8 px, radius 5 px, hover and current page `#F5F5F5`, 11 px text (R11) | library (TreeView/ListItem dense row) + template (values) | open |
 | FR7 | Layers section title and divider | R2 | 1 px divider above, title 11 px semibold | template | open |
 | FR8 | Layer rows: icon per type (frame #, text T, image, rectangle, ellipse, group, component), name, expand chevron | R2, R6 | 24 px rows (R11; pitch to confirm), 16 px icons, 24 px indent per level, chevron outside the icon column | library (TreeView indent token) + template | open |
-| FR9 | Layer hover: lock and eye actions at the row end | R2 | Actions appear on hover and focus only, 16 px glyphs, stay while on; see OD2 | owner | decision |
+| FR9 | Layer hover: lock and eye actions at the row end | R2 | Actions appear on hover and focus only, 16 px glyphs, stay while on; see OD2 | template (OD2 decided) | open |
 | FR10 | Layer selected: accent-tinted row; children of selected lightly tinted | R7 | Selected row `#E5F4FF` light, `#2D3953` dark (R10); children of the selection a lighter tint (R7) | template | open |
 | FR11 | Assets tab: search, libraries, component tiles | R9 | Search 24 px field, tile grid; no proprietary thumbnails | template | open |
 
@@ -135,7 +135,7 @@ Baseline (evaluator, 2026-11-10 15:05, dark, 823 × 823 pane): panels 256 px, UI
 | --- | --- | --- | --- | --- | --- |
 | FR41 | Light scheme: every surface and text colour equals the table in section 1 | R1–R5 | Probe reports each sampled colour within ΔE 2 | template (theme) | open |
 | FR42 | Dark scheme | R10 | Panel `#2C2C2C` and dividers `#444444` (R10, UI2 sample); canvas `#1E1E1E`, fields `#383838`, text white (*ref pending*: no public UI3 dark capture yet) | template (theme) | open |
-| FR43 | UI type 11 px Inter, titles semibold | R2, R5 | Computed font sizes in panels and toolbar | owner | decision |
+| FR43 | UI type 11 px Inter, titles semibold | R2, R5 | Computed font sizes in panels and toolbar | template (OD1 decided) | open |
 | FR44 | Icons: look-alikes at 16 px (24 px buttons) with 1 px-ish strokes | R4, R5 | Every inspector and toolbar glyph has a look-alike from the library's sets; none copied | template (icon choice) + library (icon set gaps) | open |
 | FR45 | Motion: menus and popovers appear without delay; hover is immediate | — | Motion probe: no transitions on hover in panels; popover ≤ 100 ms | template | open |
 
@@ -231,8 +231,8 @@ Where an owner rule conflicts with Figma, the library keeps the rule (default, Q
 
 | ID | Conflict | Figma | Owner rule | Default now | Template options the rule allows |
 | --- | --- | --- | --- | --- | --- |
-| OD1 | UI type size | 11 px Inter | Text stays 14 px (DT15, body-sm) | 14 px everywhere (the builder applied 11 px in the template at 15:20 and reverted it in a1cd652 pending this decision). **Consequence measured at the same size (15:40):** 14 px is the most visible difference from Figma, and with the reserved Switch room (OD2) it truncates layer names ("Welco…", "Sign i…") and the Prototype tab ("Proto") in a 240 px panel | A template type-scale token for dense chrome at 11–12 px, only if the owner allows it for this template |
-| OD2 | Layer visibility and lock | Eye and lock icon buttons that toggle | Binary settings use a Switch, never a button (brief) | Switch `xs` at row end (DT19) | Icon toggle only if the owner treats canvas-object visibility as an object action, not a setting |
+| OD1 | UI type size | 11 px Inter | Text stays 14 px (DT15, body-sm) | **Owner-approved template exception ([DoD Q119](definition-of-done.md#owner-instructions), 2026-11-10 15:14):** "11 px like Figma, in this template only (the library stays at 14 px)". The Design tool template sets 11 px UI text through its template theme (`tokens/theme.json`); library defaults stay 14 px. FR43 is now judged at 11 px in the editor | Decided |
+| OD2 | Layer visibility and lock | Eye and lock icon buttons that toggle | Binary settings use a Switch, never a button (brief) | **Owner-approved template exception (DoD Q119, 15:14):** "Eye and lock icon toggles like Figma, in this template only". In the Design tool template they are icon toggle buttons with a pressed state (`aria-pressed`) and accessible names ("Hide Logo" / "Lock Logo" or equivalent), shown on hover and focus and kept while on; the library's Switch-for-binary rule stays the default everywhere else. FR9 is now judged on the icon toggles | Decided |
 | OD3 | Clip content | Checkbox | Switch for binary settings | Switch `xs` | Checkbox if the owner allows it in inspectors |
 | OD4 | Targets | 24–32 px controls | 44 px targets, 36/24 px dense sizes by written exception | Dense sizes (24 px fields, 32 px rows) under the dense-surface exception | Same |
 | OD5 | Menus | Always dark menus and tooltips in light mode | Menus follow the scheme | Scheme-following menus | A template "inverse" surface token for menus, if allowed |
