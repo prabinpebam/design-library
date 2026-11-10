@@ -84,11 +84,6 @@
         "icon": "pointer"
       },
       {
-        "value": "hand",
-        "label": "Hand",
-        "icon": "hand"
-      },
-      {
         "value": "frame",
         "label": "Frame",
         "icon": "frame"
@@ -99,11 +94,6 @@
         "icon": "rectangle"
       },
       {
-        "value": "ellipse",
-        "label": "Ellipse",
-        "icon": "ellipse"
-      },
-      {
         "value": "text",
         "label": "Text",
         "icon": "text"
@@ -112,6 +102,23 @@
         "value": "comment",
         "label": "Comment",
         "icon": "comment"
+      }
+    ],
+    "modes": [
+      {
+        "value": "draw",
+        "label": "Draw",
+        "icon": "edit"
+      },
+      {
+        "value": "design",
+        "label": "Design",
+        "icon": "pointer"
+      },
+      {
+        "value": "dev",
+        "label": "Dev Mode",
+        "icon": "code"
       }
     ],
     "zooms": [
@@ -730,7 +737,9 @@
       "fileTab": "File",
       "assetsTab": "Assets",
       "noAssets": "No assets in this file yet.",
-      "present": "Present"
+      "present": "Present",
+      "mode": "Mode",
+      "searchLayers": "Search layers"
     },
     "inspector": [
       {

@@ -31,6 +31,11 @@
     min-block-size: var(--c-property-section-head-compact);
   }
 
+  /* A theme may separate consecutive sections with a hairline (none by default: the panel's gap tells them apart). */
+  [data-dl='property-section'] + [data-dl='property-section'] {
+    border-block-start: var(--c-property-section-divider-width) solid var(--c-property-section-divider);
+  }
+
   [data-dl='property-section'] > [data-dl-part='head'] > [data-dl-part='actions'] {
     display: flex;
     align-items: center;

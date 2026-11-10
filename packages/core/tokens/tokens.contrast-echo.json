@@ -146,6 +146,16 @@
         "$description": "The bar's unfilled track; stronger under more contrast (echoed for contrast contexts)"
       }
     },
+    "property-section": {
+      "$extensions": {
+        "owner": "PropertySection"
+      },
+      "divider": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "The hairline's colour, when a theme draws one (echoed for contrast contexts)"
+      }
+    },
     "row-list": {
       "$extensions": {
         "owner": "RowList"

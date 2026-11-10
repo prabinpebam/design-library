@@ -56,6 +56,18 @@
           "type": "boolean",
           "default": "false",
           "description": "The choice can't change here. Prefer saying why nearby."
+        },
+        {
+          "name": "emphasis",
+          "type": "'accent' | 'raised'",
+          "default": "'accent'",
+          "description": "How the chosen segment shows: `accent` (default) an accent fill with on-accent text; `raised` a raised surface with accent text, for a mode switch that sits beside an accent-filled choice (a design tool's Design and Dev mode beside its tools)."
+        },
+        {
+          "name": "track",
+          "type": "boolean",
+          "default": "true",
+          "description": "The group's own track (fill and outline). Turn it off where a surrounding bar already encloses the segments (a floating tool bar): one enclosure per boundary."
         }
       ]
     },
@@ -93,6 +105,9 @@
     "--c-segmented-control-inset",
     "--c-segmented-control-padding-inline",
     "--c-segmented-control-radius",
+    "--c-segmented-control-raised-fill",
+    "--c-segmented-control-raised-shadow",
+    "--c-segmented-control-raised-text",
     "--c-segmented-control-size",
     "--c-segmented-control-size-l",
     "--c-segmented-control-size-m",

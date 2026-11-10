@@ -81,6 +81,13 @@
           },
           "type": "array"
         },
+        "modes": {
+          "description": "The mode switch at the end of the tool bar: Draw, Design, Dev Mode (only Design is built).",
+          "items": {
+            "$ref": "#/$defs/DesignTool"
+          },
+          "type": "array"
+        },
         "page": {
           "type": "string"
         },
@@ -171,6 +178,7 @@
         "page",
         "people",
         "tools",
+        "modes",
         "zooms",
         "width",
         "height",
@@ -466,6 +474,10 @@
           "description": "The main menu's icon button: \"Main menu\".",
           "type": "string"
         },
+        "mode": {
+          "description": "Names the mode switch: \"Mode\".",
+          "type": "string"
+        },
         "noAssets": {
           "description": "The Assets tab, empty in the example.",
           "type": "string"
@@ -488,6 +500,10 @@
         },
         "propertyLabels": {
           "description": "The Switch that shows every field's label above it: \"Property labels\".",
+          "type": "string"
+        },
+        "searchLayers": {
+          "description": "The search button at the end of the File and Assets tabs.",
           "type": "string"
         },
         "share": {
@@ -574,7 +590,9 @@
         "fileTab",
         "assetsTab",
         "noAssets",
-        "present"
+        "present",
+        "mode",
+        "searchLayers"
       ],
       "type": "object"
     },

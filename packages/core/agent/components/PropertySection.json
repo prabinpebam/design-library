@@ -54,6 +54,8 @@
   ],
   "tokens": [
     "--c-property-section-actions-gap",
+    "--c-property-section-divider",
+    "--c-property-section-divider-width",
     "--c-property-section-gap",
     "--c-property-section-head",
     "--c-property-section-head-compact",

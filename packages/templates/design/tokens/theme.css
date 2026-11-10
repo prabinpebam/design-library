@@ -14,7 +14,7 @@
     --color-accent: light-dark(#0d99ff, #0c8ce9);
     --color-accent-hover: light-dark(#007be5, #0a6dc2);
     --color-accent-pressed: light-dark(#0768cf, #085ba7);
-    --color-accent-subtle: light-dark(#e5f4ff, #4a5878);
+    --color-accent-subtle: light-dark(#e5f4ff, #2d3953);
     --color-focus: light-dark(#0d99ff, #0c8ce9);
     --state-hover: light-dark(rgb(0 0 0 / 0.04), rgb(255 255 255 / 0.06));
     --radius-sm: 0.3125rem;
@@ -32,6 +32,10 @@
     --c-canvas-name-selected: var(--color-accent);
     --c-floating-bar-radius: 0.8125rem;
     --c-floating-bar-padding: 0.5rem;
+    --c-tree-view-row-size-compact: 1.5rem;
+    --c-property-section-head-compact: 2.5rem;
+    --c-property-section-divider-width: 1px;
+    --c-segmented-control-raised-text: var(--color-accent);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--radius-md);
     --c-menu-button-border: var(--color-border-control);
@@ -97,6 +101,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-alignment-picker-mark-colour: var(--color-accent);
     --c-alignment-picker-hover-fill: var(--state-hover);
+    --c-property-section-divider: var(--color-border);
     --c-canvas-fill: var(--color-bg-sunken);
     --c-canvas-frame-fill: var(--color-bg);
     --c-canvas-shape-fill: var(--color-bg-raised);
@@ -120,6 +125,7 @@
     --c-chat-message-bubble-radius: var(--radius-lg);
     --c-checkbox-radius: var(--radius-sm);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-segmented-control-raised-fill: var(--color-bg-raised);
     --c-segmented-control-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
     --c-section-tone-sunken: var(--color-bg-sunken);
@@ -181,6 +187,7 @@
       --c-menu-button-border: var(--color-border-control);
       --c-popup-border: var(--color-border);
       --c-progress-bar-track: var(--color-border-group);
+      --c-property-section-divider: var(--color-border);
       --c-row-list-divider: var(--color-border);
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
@@ -207,6 +214,7 @@
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
+    --c-property-section-divider: var(--color-border);
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
@@ -232,6 +240,7 @@
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
+    --c-property-section-divider: var(--color-border);
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);

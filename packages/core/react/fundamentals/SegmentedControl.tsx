@@ -29,6 +29,10 @@ export interface SegmentedControlProps extends DataAttributes {
   size?: ButtonSize;
   /** The choice can't change here. Prefer saying why nearby. */
   disabled?: boolean;
+  /** How the chosen segment shows: `accent` (default) an accent fill with on-accent text; `raised` a raised surface with accent text, for a mode switch that sits beside an accent-filled choice (a design tool's Design and Dev mode beside its tools). */
+  emphasis?: 'accent' | 'raised';
+  /** The group's own track (fill and outline). Turn it off where a surrounding bar already encloses the segments (a floating tool bar): one enclosure per boundary. */
+  track?: boolean;
 }
 
 /**
@@ -52,11 +56,11 @@ export interface SegmentedControlProps extends DataAttributes {
  */
 const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: 'md', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' };
 
-export function SegmentedControl({ label, options, value, onChange, iconOnly = false, size = 's', disabled = false, ...data }: SegmentedControlProps) {
+export function SegmentedControl({ label, options, value, onChange, iconOnly = false, size = 's', disabled = false, emphasis = 'accent', track = true, ...data }: SegmentedControlProps) {
   const name = useId();
   const slide = useSlidingIndicator<HTMLDivElement>(value, (root) => root.querySelector('[data-dl-part="segment"][data-chosen]'), '::before');
   return (
-    <div {...data} ref={slide.root} {...slide.input} data-dl="segmented-control" data-icon-only={iconOnly ? '' : undefined} data-size={size} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
+    <div {...data} ref={slide.root} {...slide.input} data-dl="segmented-control" data-emphasis={emphasis === 'accent' ? undefined : emphasis} data-track={track ? undefined : 'none'} data-icon-only={iconOnly ? '' : undefined} data-size={size} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
       {options.map((option) => (
         <label key={option.value} data-dl-part="segment" data-chosen={option.value === value ? '' : undefined} title={iconOnly ? option.label : undefined}>
           <input type="radio" name={name} value={option.value} checked={option.value === value} disabled={disabled} onChange={() => {

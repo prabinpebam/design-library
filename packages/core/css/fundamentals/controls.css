@@ -1897,6 +1897,22 @@
     background-color: var(--color-accent);
   }
 
+  /* emphasis="raised": the chosen segment is a raised surface with accent text (a mode switch beside accent-filled tools). */
+  [data-dl='segmented-control'][data-emphasis='raised'] > [data-dl-part='segment']:has(input:checked) {
+    color: var(--c-segmented-control-raised-text);
+  }
+
+  [data-dl='segmented-control'][data-emphasis='raised'] > [data-dl-part='segment']:has(input:checked)::before {
+    background-color: var(--c-segmented-control-raised-fill);
+    box-shadow: var(--c-segmented-control-raised-shadow);
+  }
+
+  /* track={false}: a surrounding bar already encloses the segments, so the group draws no fill or outline of its own. */
+  [data-dl='segmented-control'][data-track='none'] {
+    background-color: transparent;
+    outline: none;
+  }
+
   [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:focus-visible) {
     outline: var(--size-focus-width) solid var(--color-focus);
     outline-offset: var(--size-focus-offset);

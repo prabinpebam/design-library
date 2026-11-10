@@ -13,7 +13,7 @@
   "color.accent": { "$value": { "light": "#0d99ff", "dark": "#0c8ce9" }, "$description": "Figma's blue: the selected tool, Share, selection on the canvas" },
   "color.accent-hover": { "$value": { "light": "#007be5", "dark": "#0a6dc2" }, "$description": "The blue, hovered" },
   "color.accent-pressed": { "$value": { "light": "#0768cf", "dark": "#085ba7" }, "$description": "The blue, pressed" },
-  "color.accent-subtle": { "$value": { "light": "#e5f4ff", "dark": "#4a5878" }, "$description": "A selected layer row's fill" },
+  "color.accent-subtle": { "$value": { "light": "#e5f4ff", "dark": "#2d3953" }, "$description": "A selected layer row's fill" },
   "color.focus": { "$value": { "light": "#0d99ff", "dark": "#0c8ce9" }, "$description": "Focus rings and the resize line in the blue" },
   "state.hover": { "$value": { "light": "rgb(0 0 0 / 0.04)", "dark": "rgb(255 255 255 / 0.06)" }, "$description": "A hovered row or icon button: #f5f5f5 on white, #383838 on the dark panel" },
   "radius.sm": { "$value": "0.3125rem", "$description": "5 px: fields, buttons, tool buttons, rows" },
@@ -30,5 +30,9 @@
   "c.canvas.size-radius": { "$value": "0.125rem", "$description": "The size label: 2 px corners" },
   "c.canvas.name-selected": { "$value": "{color.accent}", "$description": "A selected frame names itself in the blue" },
   "c.floating-bar.radius": { "$value": "0.8125rem", "$description": "13 px: the toolbar's corners, also in the compact chrome" },
-  "c.floating-bar.padding": { "$value": "0.5rem", "$description": "8 px around the tool buttons" }
+  "c.floating-bar.padding": { "$value": "0.5rem", "$description": "8 px around the tool buttons" },
+  "c.tree-view.row-size-compact": { "$value": "1.5rem", "$description": "Page and layer rows: a 24 px highlight" },
+  "c.property-section.head-compact": { "$value": "2.5rem", "$description": "Section title rows are 40 px" },
+  "c.property-section.divider-width": { "$value": "1px", "$description": "A hairline between inspector sections" },
+  "c.segmented-control.raised-text": { "$value": "{color.accent}", "$description": "The mode switch's chosen mode: the blue glyph on a white segment" }
 }

@@ -131,6 +131,8 @@ export interface DesignAppSpec {
   page: string;
   people: { name: string; presence?: 'available' | 'away' }[];
   tools: DesignTool[];
+  /** The mode switch at the end of the tool bar: Draw, Design, Dev Mode (only Design is built). */
+  modes: DesignTool[];
   zooms: number[];
   /** The page's size in document units, so the canvas scrolls to every frame. */
   width: number;
@@ -263,4 +265,8 @@ export interface DesignStrings {
   noAssets: string;
   /** The play button beside Share: "Present". */
   present: string;
+  /** Names the mode switch: "Mode". */
+  mode: string;
+  /** The search button at the end of the File and Assets tabs. */
+  searchLayers: string;
 }

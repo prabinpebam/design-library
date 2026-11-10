@@ -121,7 +121,10 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
       onEndToggle={() => setEndOpen((x) => !x)}
       toolsLabel={s.tool}
       tools={
-        <SegmentedControl label={s.tool} iconOnly size="s" value={tool} onChange={setTool} options={view.tools} />
+        <Cluster gap="group" wrap={false}>
+          <SegmentedControl label={s.tool} iconOnly size="s" track={false} value={tool} onChange={setTool} options={view.tools} />
+          <SegmentedControl label={s.mode} iconOnly size="xs" emphasis="raised" value="design" onChange={(m) => m !== 'design' && notify({ message: fill(s.notInExample, { label: view.modes.find((x) => x.value === m)?.label ?? '' }) })} options={view.modes} />
+        </Cluster>
       }
       startHead={
         <Stack gap="pair">
@@ -147,7 +150,7 @@ function DesignEditor({ view, tab, comments, height, picture }: { view: DesignAp
         </Toolbar>
       }
       start={
-        <Tabs label={s.layers} size="xs" items={[{ id: 'file', label: s.fileTab, panel: (
+        <Tabs label={s.layers} size="xs" extra={<Button label={s.searchLayers} icon="search" iconOnly tooltip emphasis="quiet" size="xs" onClick={() => notify({ message: fill(s.notInExample, { label: s.searchLayers }) })} />} items={[{ id: 'file', label: s.fileTab, panel: (
         <Stack gap="group">
           <Stack gap="item">
             <Cluster gap="item" justify="between" wrap={false}>
