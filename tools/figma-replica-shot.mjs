@@ -60,6 +60,54 @@ for (const scheme of ['light', 'dark']) {
     await page.screenshot({ path: join(out, `compare-${scheme}.png`) });
   }
   console.log(`${scheme}: ${m.viewport}, fails ${m.fails.join(' ') || 'none'}`);
+  if (scheme === 'light') {
+    // Basic behaviour (Q118.2): FB1 pages, FB2 canvas <-> layers, FB5 tabs, FB6 menus. Each step reports what it saw.
+    const bctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+    const page = await bctx.newPage();
+    page.setDefaultTimeout(5000);
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(800);
+    const fb = {};
+    const step = async (id, fn) => { try { fb[id] = await fn(); } catch (e) { fb[id] = { pass: false, error: String(e.message || e).split('\n')[0] }; } };
+    await step('FB2 canvas→layers', async () => {
+      const target = page.locator('[data-dl="canvas"] [aria-label^="Text:"]').first();
+      const name = (await target.getAttribute('aria-label')).replace(/^[^:]+:\s*/, '');
+      await target.click();
+      const row = page.getByRole('treeitem', { name, exact: false }).first();
+      return { pass: (await row.getAttribute('aria-selected')) === 'true', clicked: name };
+    });
+    await step('FB2 layers→canvas', async () => {
+      const row = page.getByRole('treeitem', { name: 'Logo', exact: true }).first();
+      const name = 'Logo';
+      await row.click();
+      const pressed = await page.locator(`[data-dl="canvas"] [aria-label$="${name}"]`).first().getAttribute('aria-pressed');
+      return { pass: pressed === 'true', clicked: name };
+    });
+    await step('FB1 pages', async () => {
+      const pages = page.getByRole('treeitem', { name: 'Components', exact: true }).first();
+      const before = await page.locator('[data-dl="canvas"]').innerText();
+      await pages.click();
+      await page.waitForTimeout(300);
+      const after = await page.locator('[data-dl="canvas"]').innerText();
+      return { pass: before !== after, note: 'canvas content changes after choosing the Components page' };
+    });
+    await step('FB5 tabs', async () => {
+      const tab = page.getByRole('tab', { name: /Prototype/ }).first();
+      await tab.click();
+      return { pass: (await tab.getAttribute('aria-selected')) === 'true' };
+    });
+    await step('FB6 main menu', async () => {
+      const btn = page.getByRole('button', { name: /Main menu/i }).first();
+      await btn.click();
+      const open = await page.getByRole('menu').first().isVisible();
+      await page.keyboard.press('Escape');
+      const back = await page.evaluate(() => document.activeElement?.getAttribute('aria-label') || document.activeElement?.textContent?.trim());
+      return { pass: open && /main menu/i.test(back || ''), menuOpened: open, focusReturnedTo: back };
+    });
+    writeFileSync(join(out, 'behaviour.json'), JSON.stringify(fb, null, 2));
+    console.log('behaviour: ' + Object.entries(fb).map(([k, v]) => `${k} ${v.pass ? 'pass' : 'FAIL'}`).join(' · '));
+    await bctx.close();
+  }
   await ctx.close();
 }
 await browser.close();

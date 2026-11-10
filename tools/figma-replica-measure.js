@@ -88,6 +88,29 @@
     const head = sections[0] && sections[0].querySelector(':scope > [data-dl-part="head"]');
     row('FR28', head && near(box(head).height, 40), head ? { height: Math.round(box(head).height) } : 'missing', { height: 40 });
 
+    // FR9 (OD2, Q119): eye and lock are icon toggles with aria-pressed and a name, taking no row width at rest.
+    const toggles = [...root.querySelectorAll('[role="treeitem"] button[aria-pressed]')];
+    const named = toggles.filter((b) => (b.getAttribute('aria-label') || b.textContent || '').trim());
+    const restWidth = toggles.filter((b) => b.getAttribute('aria-pressed') === 'false' && box(b).width > 0 && cs(b).visibility !== 'hidden' && cs(b).opacity !== '0').length;
+    row('FR9', toggles.length > 0 && named.length === toggles.length,
+      { toggles: toggles.length, named: named.length, visibleAtRestOff: restWidth },
+      { toggles: '> 0 (eye and lock per row)', named: 'all', visibleAtRestOff: '0 unless hovered or focused' });
+
+    // FR31: a 1 px divider between inspector sections.
+    const secs = [...root.querySelectorAll('[data-dl="property-section"]')].filter((s) => box(s).height > 0);
+    const divided = secs.slice(1).filter((s) => {
+      const st = cs(s);
+      return (parseFloat(st.borderTopWidth) >= 0.5 && hex(st.borderTopColor) === L.divider) || hex(getComputedStyle(s, '::before').backgroundColor) === L.divider;
+    }).length;
+    row('FR31', secs.length > 1 && divided === secs.length - 1, { sections: secs.length, divided }, { divided: 'every section after the first', colour: L.divider });
+
+    // FR24: the selection head sits below the Design / Prototype tabs.
+    const tablist = [...root.querySelectorAll('[role="tablist"]')].find((t) => /Design/.test(t.textContent || ''));
+    const selHead = [...root.querySelectorAll('[data-dl-part="panel"] h2, [data-dl-part="panel"] h3')].find((h) => /button|frame|rectangle|text|ellipse/i.test(h.textContent || '') && box(h).height > 0);
+    row('FR24', tablist && selHead && box(selHead).top > box(tablist).bottom,
+      tablist && selHead ? { tabsBottom: Math.round(box(tablist).bottom), selectionHeadTop: Math.round(box(selHead).top), text: selHead.textContent.trim().slice(0, 30) } : 'missing',
+      'selection head below the tabs');
+
     const fonts = {};
     root.querySelectorAll('[data-dl-part="panel"] *').forEach((e) => {
       if (![...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())) return;
