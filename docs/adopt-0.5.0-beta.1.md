@@ -2,13 +2,13 @@
 
 > **TL;DR:** 0.5.0-beta.1 is "Brand pictures and openings": the pieces a brand-led site draws by hand around its pictures and openings, now in the library. An opening can keep one height across a series, and section titles can take the opening's size. A picture can carry brand shapes over and under it, show a second picture on hover or focus, and run the site's own reveal, with the library keeping the triggers, the timing and reduced motion. The stipple drawing the library uses is public. Drawn art is a new `Illustration` that follows the scheme, fits its space and moves only on the motion tokens. Glides can take their time from their distance. It's additive: a site on 0.2.0-beta.1 or later installs it and keeps working unchanged. Paste the block below into your agent to upgrade, then adopt each piece one at a time; the site works between steps.
 
-**Status: draft** (worker 68, 2026-11-10; released with MP14). Every packet has landed: MP7–MP13, MP16, MP20–MP23.
+**Status: released** (worker 68, 2026-11-10).
 
 **Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."* Planned in [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110) (Q110, Q111, Q112).
 
 **Paste this into DesignUp's agent:** *"Upgrade the Design Library to 0.5.0-beta.1: follow node_modules/@design-library/core/UPGRADE.md, section → 0.5.0-beta.1, after running its install line; do steps 1–3 now and stop for review before step 4."*
 
-**Release:** v0.5.0-beta.1 (not cut yet). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110), [Definition of Done](definition-of-done.md) rows B5.1–B5.14.
+**Release:** [v0.5.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.5.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110), [Definition of Done](definition-of-done.md) rows B5.1–B5.14.
 
 ## The brief for your agent
 
@@ -126,7 +126,18 @@ replaces; stop after any of them.
 
 ## The proof
 
-At the release commit, outside both repositories (MP14, B5.14): to be run.
+At the release commit, outside both repositories (MP14, B5.14, Q114):
+
+| Check | 0.4.0-beta.2 → 0.5.0-beta.1 |
+| --- | --- |
+| Install the two tarballs into a copy of DesignUp's `web/` with no other edit | Pass |
+| `tsc --noEmit` and `vite build` | Pass, Pass |
+| Every route (226), each element's box, colour, background, size, face, underline and opacity, light | 226 identical |
+| The same in dark | 226 identical |
+| The same at 320 px | 226 identical |
+| Console errors | 0 before, 0 after |
+
+The 0.4.0-beta.2 brief proved 0.2.0-beta.1 → 0.4.0-beta.2 identical on the same 226 routes, so a site on 0.2.0-beta.1 or later reaches this version unchanged. Install matrix: npm 10.9.9 and 11.21.1 pass (the libraries, the dev tools, again from the lockfile). `npm run check` passes at the release commit. **Probe sweep** (once, on the release build): 181 pages (the 174 of 0.4.0-beta.1, the display-titles site demo, and the library's Hero, Image, Pictures, Section, Motion and Illustration pages) at 1000 and 320 px in light and dark, every probe, 52,128 rows. The template pages: 4 fails, all the known K9 (spacing FR14, S2, at 320 px on the blog's unsubscribed and not-found pages), unchanged. The library pages: the same library-chrome rows as unchanged pages such as Button and Card (title bar ME6, SC2, SC3 and SC5 on the page header and examples, VN3 for a picture in a card in an example frame), plus one new S2: SC4 on the Motion page at 320 px (a list item with a gap and no inset), handed to the components worker. Spacing now skips shapes inside an SVG, so an illustration's groups aren't counted as stacks.
 
 ## What's in it, by plan packet
 
