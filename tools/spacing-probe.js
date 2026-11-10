@@ -15,6 +15,8 @@
  *   SC14 page     the same invariant at the page's top level: page content apart from header and footer ≥ its own gaps
  *   SC16 columns  no short text wraps while the row it sits in has the room to hold it on one line (owner Q98: the
  *                 columns come from this group's content); judged on the whole layout, chrome included
+ *   SC18 leading  a field's leading swatch or icon is equally far from the box's top, start and bottom edges (owner
+ *                 Q127), within 1 px; judged on the whole page
  *
  * Frames (owner Q94): outside, a `data-frame` element is one unit measured from its outer edge; inside, its content is
  * the root of a tree of its own, judged only against itself. The frame's room between the two is judged by FR rows.
@@ -80,7 +82,7 @@
 
   window.spacingProbe = function (rootSelector) {
     const root = document.querySelector(rootSelector ?? 'main, [data-dl-part="main"]') ?? document.body;
-    const rows = Object.fromEntries(['SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SC6', 'SC7', 'SC8', 'SC14', 'FR1', 'FR2', 'FR3', 'FR4', 'FR5', 'FR6', 'FR7', 'FR8', 'FR9', 'FR11', 'FR12', 'FR14', 'FR15', 'FR16', 'FR17', 'SC16'].map((id) => [id, { pass: true, findings: [] }]));
+    const rows = Object.fromEntries(['SC1', 'SC2', 'SC3', 'SC4', 'SC5', 'SC6', 'SC7', 'SC8', 'SC14', 'FR1', 'FR2', 'FR3', 'FR4', 'FR5', 'FR6', 'FR7', 'FR8', 'FR9', 'FR11', 'FR12', 'FR14', 'FR15', 'FR16', 'FR17', 'SC16', 'SC18'].map((id) => [id, { pass: true, findings: [] }]));
     const fail = (id, finding, severity = 'S2') => {
       rows[id].findings.push({ severity, ...finding });
       if (severity !== 'S4') rows[id].pass = false;
@@ -238,6 +240,7 @@
 
     const frames = framing(fail);
     columns(fail);
+    leadingInset(fail);
 
     return {
       rows: Object.fromEntries(Object.entries(rows).map(([id, r]) => [id, { pass: r.pass, findings: r.findings.slice(0, 12), count: r.findings.length }])),
@@ -246,6 +249,28 @@
       frames,
     };
   };
+
+  // SC18 (owner Q127): a field's leading swatch or icon sits as far from the box's top, start and bottom edges (inside
+  // the border) as each other, within 1 px. The mark is what the eye sees: the icon's SVG or the swatch's colour, not
+  // its cell. Judged on the whole page, chrome included. A text glyph (a letter prefix) has no square box to measure.
+  function leadingInset(fail) {
+    for (const box of document.querySelectorAll('[data-dl-part="box"]')) {
+      const lead = box.firstElementChild;
+      if (!lead || !visible(box) || !visible(lead) || !['leading', 'swatch', 'scrub'].includes(lead.getAttribute('data-dl-part') ?? '')) continue;
+      const mark = lead.querySelector('svg') ?? lead.querySelector('[data-dl-part="trigger"]') ?? (lead.children.length ? lead.firstElementChild : null);
+      if (!mark || !visible(mark)) continue;
+      const b = box.getBoundingClientRect();
+      const m = mark.getBoundingClientRect();
+      const cs = getComputedStyle(box);
+      const rtl = cs.direction === 'rtl';
+      const top = m.top - b.top - px(cs.borderTopWidth);
+      const bottom = b.bottom - px(cs.borderBottomWidth) - m.bottom;
+      const start = rtl ? b.right - px(cs.borderRightWidth) - m.right : m.left - b.left - px(cs.borderLeftWidth);
+      const r = (n) => Math.round(n * 10) / 10;
+      if (Math.max(top, bottom, start) - Math.min(top, bottom, start) > 1)
+        fail('SC18', { where: `${name(box.closest('[data-dl="text-field"],[data-dl="number-field"],[data-dl="select"],[data-dl="colour-field"],[data-dl="combobox"]') ?? box.closest('[data-dl]') ?? box)} › ${lead.getAttribute('data-dl-part')}`, top: r(top), start: r(start), bottom: r(bottom), mark: `${r(m.width)}×${r(m.height)}`, box: `${r(b.width)}×${r(b.height)}` });
+    }
+  }
 
   // SC16 (owner Q98): no text wraps while the row it sits in has the room to hold it on one line. A row is a grid or
   // flex container laying cells side by side; its room is its content width less every cell's content and the gaps
