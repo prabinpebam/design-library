@@ -47,7 +47,7 @@ Parts and type
 - Theme settings for the top type steps: `--type-display-size`, `-weight`, `-leading`, `-tracking` and the same for
   `--type-jumbo-*`, through `applySettings` or `settingsCss` (a jumbo smaller than display is refused).
 
-Pictures per scheme *(`assets.json` half pending MP18)*
+Pictures per scheme
 - `Image`, `Hero` `picture` and `EmptyState` `illustration` take `dark` and `contrast: { light?, dark? }`, each a
   path or `{ src, srcSet? }`, raster or SVG; the file shown follows the scheme of the picture's own region (the page,
   the system, a `data-scheme` band, more contrast), with no flash or jump; one alt for all. More contrast falls back:
@@ -132,7 +132,7 @@ A copy of DesignUp's `web/` on 0.2.0-beta.1 against a copy on the 0.4.0-beta.2 f
 | MP4 | Template registries on their own | BM.4 |
 | MP5 | Direct-jump proof from 0.2.0-beta.1 | BM.5 |
 | MP15 | Top type steps as theme settings | BM.7 |
-| MP17–MP19 | Pictures per scheme (MP17 code and MP19 docs built; MP18 from data pending) | BM.9–BM.11 |
+| MP17–MP19 | Pictures per scheme, in code and from `assets.json`; guide and checks | BM.9–BM.11 |
 | MP24–MP26 | Brand icons: the seam, the library page "Brand icons", the command and its guide | BM.12–BM.14 |
 | MP27 | Lean builds *(pending; stays in this release: the check found only the story re-exports and the fonts' lazy entry)* | BM.15 |
 | MP6 | This release and brief | BM.6 |
