@@ -19,6 +19,7 @@
     inset-inline-start: var(--anchored-start, 0px);
     margin: 0;
     display: flex;
+    overflow: visible;
     align-items: baseline;
     gap: var(--space-inline-pair);
     inline-size: max-content;

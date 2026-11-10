@@ -15,3 +15,12 @@ test('popup shells delegate all scrolling to their inner ScrollArea', () => {
   assert.match(popup, /overflow:\s*visible/);
   assert.match(popup, /grid-template:\s*minmax\(0, 1fr\)/);
 });
+
+test('short wrapping hints do not inherit a browser popover scroll shell', () => {
+  const css = readFileSync(new URL('../packages/core/css/fundamentals/tooltip.css', import.meta.url), 'utf8');
+  const hint = css.match(/\[data-dl='hint'\]\s*\{([^}]+)\}/)?.[1];
+  assert.ok(hint);
+  assert.match(hint, /overflow:\s*visible/);
+  assert.match(hint, /white-space:\s*normal/);
+  assert.match(hint, /padding-block:\s*var\(--c-tooltip-padding-block\)/);
+});

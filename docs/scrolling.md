@@ -54,6 +54,11 @@ How every scroll region in the Design library scrolls, why the AI chat template 
 
 ## Part 1: the framework
 
+The short, wrapping Tooltip Hint is not a scroll region. Its popover explicitly
+uses visible overflow rather than the browser's default `overflow: auto`, while
+retaining its content padding and viewport-width constraint. Popup lists that
+can exceed the viewport instead delegate scrolling to an inner ScrollArea.
+
 ### The rules
 
 1. **Every scroll region is a ScrollArea.** No `overflow: auto` or `scroll` on any other element, in CSS or inline. The one exception is a region whose own controls replace the bar (a Carousel's slide track, marked `data-scrollbar="none"` and listed with its reason).
