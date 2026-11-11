@@ -120,6 +120,7 @@ export const icons = {
   emoji: { d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM8.5 14a4.5 4.5 0 0 0 7 0M9 9.5v.5M15 9.5v.5' },
   'more-vertical': { d: 'M12 6h0M12 12h0M12 18h0', fill: 'M10.5 6a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM10.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM10.5 18a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0z' },
   'caret-down': { d: 'M7.5 10h9L12 15z', fill: 'M7.5 10h9L12 15z' },
+  'text-format': { d: 'M2.5 19L8 5l5.5 14M4.5 14h7M21 12.5V19M21 16.5a2.75 2.75 0 1 1-5.5 0 2.75 2.75 0 0 1 5.5 0z' },
   headphones: { d: 'M4 17v-4a8 8 0 0 1 16 0v4M4 14.5h3v5.5H5a1 1 0 0 1-1-1zM20 14.5h-3v5.5h2a1 1 0 0 0 1-1z' },
 } satisfies Record<string, IconData>;
 

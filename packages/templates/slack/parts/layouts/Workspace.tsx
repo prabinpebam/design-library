@@ -70,6 +70,9 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
     restoreThreadFocus.current = true;
     setThread(undefined);
   };
+  useEffect(() => {
+    if (search) root.current?.querySelector<HTMLInputElement>("[data-dl-part='titlebar'] input")?.focus();
+  }, [search]);
   const messages = [...view.messages, ...(sent[channel] ?? [])];
   useEffect(() => {
     const viewport = timeline.current;
@@ -100,7 +103,7 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
         </div>}
         toolbar={<div data-dl="slack-tools">
           <div data-dl-part="group">
-            {action(c.add, 'plus')}{action(c.format, 'text', () => setFormatting(!formatting))}
+            {action(c.add, 'plus')}{action(c.format, 'text-format', () => setFormatting(!formatting))}
             {action(c.emoji, 'emoji')}{action(c.mention, 'at')}
             <span data-dl="slack-separator" />
             {action(c.video, 'image')}{action(c.audio, 'mic')}
@@ -192,7 +195,7 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
           </header>
           <div data-dl-part="tabs" data-density="compact" role="navigation" aria-label={channel}>
             {[['messages', c.messages, 'comment'], ['canvas', c.canvas, 'file'], ['files', c.files, 'file']].map(([key, label, icon]) =>
-              <span key={key} data-dl-part="tab" data-current={(!search && tab === key) || undefined}><Button label={label} icon={icon as 'comment' | 'file'} emphasis="quiet" size="s" onClick={() => { setTab(key); setSearch(false); }} /></span>)}
+              <span key={key} data-dl-part="tab" data-current={tab === key || undefined}><Button label={label} icon={icon as 'comment' | 'file'} emphasis="quiet" size="s" onClick={() => { setTab(key); setSearch(false); }} /></span>)}
             {action(c.addTab, 'plus')}
           </div>
           <ScrollArea label={search ? c.results : c.messages} viewportRef={timeline}>

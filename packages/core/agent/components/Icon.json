@@ -47,6 +47,7 @@
     "IconOverrides"
   ],
   "tokens": [
+    "--c-icon-fill",
     "--c-icon-stroke-width",
     "--size-icon-lg",
     "--size-icon-md",

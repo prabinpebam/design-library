@@ -209,7 +209,11 @@
   "$description": "Mention badge about 18 px r14/r19."
  },
  "space.inset-lg": {
-  "$value": "1.25rem",
-  "$description": "Message, header and composer gutter 20 px (P2 row 11 measured against r03/r04)."
+  "$value": "{space.5}",
+  "$description": "Message, header and composer gutter 20 px (r03/r04, P2 row 11): the scale step space.5."
+ },
+ "color.map.action-fill-on": {
+  "$value": "#ffffff",
+  "$description": "Glyph on the action-green fill: white in r02/r20; the fill does not change with the scheme, so neither does its glyph."
  }
 }

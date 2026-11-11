@@ -47,7 +47,8 @@
     --color-promo-new-text: #e01e5a;
     --c-button-size: 2.25rem;
     --c-badge-size-s: 1.125rem;
-    --space-inset-lg: 1.25rem;
+    --space-inset-lg: var(--space-5);
+    --color-map-action-fill-on: #ffffff;
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);

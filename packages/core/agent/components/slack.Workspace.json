@@ -50,6 +50,7 @@
   ],
   "tokens": [
     "--border-hairline",
+    "--c-badge-size-s",
     "--c-button-size-xs",
     "--color-bg",
     "--color-bg-sunken",
@@ -81,6 +82,8 @@
     "--size-target-dense",
     "--size-target-min",
     "--space-0-5",
+    "--space-1",
+    "--space-3",
     "--space-inline-item",
     "--space-inline-pair",
     "--space-inset-lg",

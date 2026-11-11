@@ -183,7 +183,7 @@
     flex: none;
     inline-size: var(--size-icon-md);
     block-size: var(--size-icon-md);
-    fill: none;
+    fill: var(--c-icon-fill);
     stroke: currentColor;
     stroke-width: var(--c-icon-stroke-width);
     stroke-linecap: round;

@@ -14,8 +14,8 @@
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
     "lib--space": {
-      "reason": "catalogue inventory: rail-width and app-bar-height lengthen the dimension inventory below the viewport; only the right scrollbar track changes.",
-      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+      "reason": "catalogue inventory: rail-width and app-bar-height lengthen the dimension inventory (scrollbar track); space.5 (Q143/Q145.3: the 4 px grid's skipped five-unit step, a theme gutter of 20 px) adds a row to the source-derived scale list, shifting the list below it. Only the scale list and the track change; the page's examples above it stay exact.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }, { "x": 380, "y": 126, "width": 890, "height": 774 }]
     },
     "lib--templates": {
       "reason": "catalogue inventory: the new workspace template lengthens the manifest-derived template inventory below the viewport; only the right scrollbar track changes.",
