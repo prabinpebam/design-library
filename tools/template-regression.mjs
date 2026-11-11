@@ -266,7 +266,8 @@ for (const scheme of schemes) {
         }
         const declared = noise[t.id] ?? noise[`${t.id}@${scheme}`];
         const inventoryPass = inventory && r.pixels > 0 && r.outsideInventoryExactPixels === 0;
-        const pass = r.sameSize && (r.pixels === 0 || inventoryPass || (declared && r.pct <= declared.maxPct));
+        const inside = (b) => !declared?.regions || (b && declared.regions.some((g) => b.x0 >= g.x && b.y0 >= g.y && b.x1 < g.x + g.width && b.y1 < g.y + g.height));
+        const pass = r.sameSize && (r.pixels === 0 || inventoryPass || (declared && r.pct <= declared.maxPct && inside(r.box)));
         if (pass && !r.pixels) for (const f of [a, b, join(out, `${t.id}-diff.png`), a.replace(/\.png$/, '-outside-inventory.png'), b.replace(/\.png$/, '-outside-inventory.png')]) rmSync(f, { force: true });
         results.push({ scheme, id: t.id, path: t.path, ...r, declared: inventoryPass ? inventory.reason : declared?.reason, catalogueInventory: Boolean(inventoryPass), pass });
         if (!pass) console.log(`  DIFF ${scheme.padEnd(5)} ${t.id.padEnd(44)} ${r.sizeBase} → ${r.sizeWt} ${r.pct}%${r.box ? ` at ${r.box.x0},${r.box.y0}–${r.box.x1},${r.box.y1}` : ''}${inventory ? `; ${r.outsideInventoryExactPixels} exact differing pixels outside inventory` : ''}`);

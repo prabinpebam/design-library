@@ -24,7 +24,7 @@
  * Returns { rows: { SC1: { pass, findings }, … }, levels, stacks } with distances in CSS px.
  */
 (function () {
-  const SCALE = [0, 2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128];
+  const SCALE = [0, 2, 4, 8, 12, 16, 20, 24, 32, 48, 64, 96, 128]; // the core space scale (tokens.json space.*), incl. space.5
   const ATOM = 'h1,h2,h3,h4,h5,h6,p,img,picture,video,button,input,select,textarea,label,legend,dl,table,ul,ol,blockquote,figure,svg,[aria-hidden="true"],[data-frame],[data-dl="card"],[data-dl="statistic"],[data-dl="button"],[data-dl="avatar"],[data-dl="persona"]';
   const HEAD_PART = new Set(['heading', 'head']);
   const px = (v) => parseFloat(v) || 0;

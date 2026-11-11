@@ -14,8 +14,8 @@
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
     "lib--space": {
-      "reason": "catalogue inventory: rail-width and app-bar-height lengthen the dimension inventory (scrollbar track); space.5 (Q143/Q145.3: the 4 px grid's skipped five-unit step, a theme gutter of 20 px) adds a row to the source-derived scale list, shifting the list below it. Only the scale list and the track change; the page's examples above it stay exact.",
-      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }, { "x": 380, "y": 126, "width": 890, "height": 774 }]
+      "reason": "catalogue inventory: rail-width and app-bar-height lengthen the dimension inventory (scrollbar track); space.5 (Q143/Q145.3: the 4 px grid's skipped five-unit step, a theme gutter of 20 px) adds a row to the source-derived scale list, shifting the list below it. Only the list from the space-5 row down (evaluator's measured change box x 380-788, y 676-874) and the track change; the title, lead and rows above stay exact.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }, { "x": 380, "y": 676, "width": 890, "height": 224 }]
     },
     "lib--templates": {
       "reason": "catalogue inventory: the new workspace template lengthens the manifest-derived template inventory below the viewport; only the right scrollbar track changes.",
@@ -39,7 +39,7 @@
     }
   },
   "pages": {
-    "blog--topic@dark": { "maxPct": 0.01, "reason": "Chromium rasterizes the dark lake photo nondeterministically: the frozen base against itself differed (6726 channels, max delta 28) with identical image URL, natural size and rect (.shots/w78-photo-proof/result.json, round 1)." },
+    "blog--topic@dark": { "maxPct": 0.01, "regions": [{ "x": 1119, "y": 339, "width": 80, "height": 82 }, { "x": 1119, "y": 507, "width": 80, "height": 82 }, { "x": 1119, "y": 675, "width": 80, "height": 82 }], "reason": "Chromium rasterizes the dark lake photo nondeterministically: the frozen base against itself differed (6726 channels, max delta 28) with identical image URL, natural size and rect (.shots/w78-photo-proof/result.json, round 1)." },
     "chat--chat": { "maxPct": 4, "reason": "ImageGeneration's stipple field places its dots at random on every load (held still under reduced motion, but a new layout each time)." },
     "lib--chat-chat": { "maxPct": 0.06, "reason": "The same random ImageGeneration stipple, its first row at the viewport's foot." },
     "lib--chatlayout": { "maxPct": 1.2, "reason": "An ImageGeneration example's random stipple at the viewport's foot." },

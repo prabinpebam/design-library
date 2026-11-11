@@ -85,6 +85,8 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
     setSent(old => ({ ...old, [target]: [...(old[target] ?? []), next] }));
     setDrafts(old => ({ ...old, [target]: '' }));
   };
+  const headAction = (label: string, icon: Parameters<typeof Button>[0]['icon'], onClick?: () => void) =>
+    <Button label={label} icon={icon} iconOnly emphasis="quiet" tone="inherit" onClick={onClick} />;
   const action = (label: string, icon: Parameters<typeof Button>[0]['icon'], onClick?: () => void) =>
     <Button label={label} icon={icon} iconOnly emphasis="quiet" tone="inherit" size="xs" onClick={onClick} />;
 
@@ -189,8 +191,8 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
             <div data-dl-part="channel-title"><Icon name="frame" /><Heading level={1} size={4}>{channel}</Heading><Icon name="chevron-down" size="sm" /></div>
             <div data-dl-part="channel-actions">
               <span data-dl-part="facepile"><AvatarGroup members={view.members.map(name => ({ name }))} label={c.members} size={20} shape="square" max={3} /><span data-dl-part="member-count">{view.memberCount}</span></span>
-              <span data-dl-part="huddle">{action(c.huddle, 'headphones')}{action(c.huddleOptions, 'chevron-down')}</span>
-              {action(c.channelMenu, 'more-vertical')}
+              <span data-dl-part="huddle">{headAction(c.huddle, 'headphones')}{action(c.huddleOptions, 'chevron-down')}</span>
+              {headAction(c.channelMenu, 'more-vertical')}
             </div>
           </header>
           <div data-dl-part="tabs" data-density="compact" role="navigation" aria-label={channel}>
@@ -200,10 +202,10 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
           </div>
           <ScrollArea label={search ? c.results : c.messages} viewportRef={timeline}>
             {search ? <div data-dl="slack-search-results">
-              <Heading level={2} size={4}>{c.results}</Heading>
+              <div data-dl-part="results-head"><Heading level={2} size={4}>{c.results}</Heading></div>
               {messages.filter(m => !query || m.text.toLowerCase().includes(query.toLowerCase())).map(m => message(m))}
               {query && !messages.some(m => m.text.toLowerCase().includes(query.toLowerCase())) && <Text>{c.emptySearch}</Text>}
-            </div> : tab === 'files' ? <div data-dl="slack-file-results"><Heading level={2} size={4}>{c.allFiles}</Heading>{messages.filter(m => m.file).map(m => message(m))}</div>
+            </div> : tab === 'files' ? <div data-dl="slack-file-results"><div data-dl-part="results-head"><Heading level={2} size={4}>{c.allFiles}</Heading></div>{messages.filter(m => m.file).map(m => message(m))}</div>
               : tab === 'canvas' ? <div data-dl="slack-file-results"><EmptyState title={c.canvas} reason="first-use">{view.topic}</EmptyState></div>
               : <div data-dl="slack-timeline"><div data-dl-part="date"><span>{view.date}<Icon name="chevron-down" size="sm" /></span></div>
                 {messages.map(m => <div key={m.id} data-dl="slack-message-group">{m.isNew && <div data-dl-part="new-line"><span>{c.newMessages}</span></div>}{message(m)}</div>)}
@@ -217,7 +219,7 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
             closeThread();
           }
         }}>
-          <header data-dl-part="thread-head"><strong>{c.thread}</strong><span data-dl-part="thread-channel">#{channel}</span>{action(c.popout, 'external')}{action(c.closeThread, 'close', closeThread)}</header>
+          <header data-dl-part="thread-head"><strong>{c.thread}</strong><span data-dl-part="thread-channel">#{channel}</span>{headAction(c.popout, 'external')}{headAction(c.closeThread, 'close', closeThread)}</header>
           <ScrollArea label={c.thread}><div data-dl="slack-thread-content">{message(thread, true)}<div data-dl-part="reply-count">{view.replies.length} {c.replies}</div>{[...view.replies, ...(sent[`thread-${thread.id}`] ?? [])].map(m => message(m, true))}</div></ScrollArea>
           <div data-dl="slack-composer-wrap">{composer(`thread-${thread.id}`, true)}</div>
         </aside>}
