@@ -61,6 +61,11 @@
           "name": "showPresence",
           "type": "boolean",
           "description": "Show each member's presence on their avatar (from 24 px)."
+        },
+        {
+          "name": "shape",
+          "type": "'circle' | 'square'",
+          "description": "Crop every member to this shape; by default each follows its kind (people round, teams square)."
         }
       ]
     },
@@ -139,6 +144,9 @@
     "--state-hover"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/avatargroup",
+  "usedBy": [
+    "slack.Workspace"
+  ],
   "principles": [
     "visual-representation"
   ]

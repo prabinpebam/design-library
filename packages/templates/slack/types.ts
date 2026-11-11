@@ -16,6 +16,8 @@ export interface WorkspaceRecord {
   currentUser: string;
   channel: string;
   topic: string;
+  members: string[];
+  memberCount: number;
   date: string;
   rail: { label: string; icon: WorkspaceIcon }[];
   sections: { title?: string; items: { name: string; icon?: WorkspaceIcon; presence?: 'available' | 'away'; unread?: boolean; mentions?: number }[] }[];

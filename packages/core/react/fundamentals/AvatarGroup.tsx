@@ -28,6 +28,8 @@ export interface AvatarGroupProps extends DataAttributes {
   size?: Extract<AvatarSize, 16 | 20 | 24 | 32 | 36 | 40 | 44 | 48 | 56 | 64>;
   /** Show each member's presence on their avatar (from 24 px). */
   showPresence?: boolean;
+  /** Crop every member to this shape; by default each follows its kind (people round, teams square). */
+  shape?: 'circle' | 'square';
 }
 
 /**
@@ -40,7 +42,7 @@ export interface AvatarGroupProps extends DataAttributes {
  * @key Enter or Space on "+n": opens the list
  * @key Escape in the list: closes it
  */
-export function AvatarGroup({ members, label, max = 4, layout = 'stack', size = 32, showPresence, ...data }: AvatarGroupProps) {
+export function AvatarGroup({ members, label, max = 4, layout = 'stack', size = 32, showPresence, shape, ...data }: AvatarGroupProps) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLSpanElement>(null);
   const more = useRef<HTMLButtonElement>(null);
@@ -59,8 +61,8 @@ export function AvatarGroup({ members, label, max = 4, layout = 'stack', size = 
   return (
     <span {...data} ref={root} data-dl="avatar-group" data-layout={layout} data-size={String(size)} role="group" aria-label={label}>
       {shown.map((m, i) => (
-        <span key={`${m.name}-${i}`} data-dl-part="item" data-shape={!m.kind || m.kind === 'person' ? 'circle' : 'square'}>
-          <Avatar name={m.name} src={m.src} kind={m.kind} size={size} presence={showPresence && size >= 24 ? m.presence : undefined} />
+        <span key={`${m.name}-${i}`} data-dl-part="item" data-shape={shape ?? (!m.kind || m.kind === 'person' ? 'circle' : 'square')}>
+          <Avatar name={m.name} src={m.src} kind={m.kind} shape={shape} size={size} presence={showPresence && size >= 24 ? m.presence : undefined} />
         </span>
       ))}
       {hidden.length > 0 && (

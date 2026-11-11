@@ -135,6 +135,15 @@
         "date": {
           "type": "string"
         },
+        "memberCount": {
+          "type": "number"
+        },
+        "members": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "messages": {
           "items": {
             "$ref": "#/$defs/WorkspaceMessage"
@@ -224,6 +233,8 @@
         "currentUser",
         "channel",
         "topic",
+        "members",
+        "memberCount",
         "date",
         "rail",
         "sections",

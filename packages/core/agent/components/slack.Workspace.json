@@ -36,8 +36,10 @@
   ],
   "uses": [
     "Avatar",
+    "AvatarGroup",
     "Badge",
     "Button",
+    "Checkbox",
     "EmptyState",
     "Heading",
     "Icon",
@@ -48,9 +50,11 @@
   ],
   "tokens": [
     "--border-hairline",
+    "--c-button-size-xs",
     "--color-bg",
     "--color-bg-sunken",
     "--color-border",
+    "--color-map-action-fill",
     "--color-map-nav",
     "--color-map-nav-hover",
     "--color-map-nav-on",
@@ -76,7 +80,7 @@
     "--size-rail-width",
     "--size-target-dense",
     "--size-target-min",
-    "--space-1",
+    "--space-0-5",
     "--space-inline-item",
     "--space-inline-pair",
     "--space-inset-lg",
@@ -89,6 +93,7 @@
     "--text-s",
     "--text-xs",
     "--type-body-sm-size",
+    "--weight-black",
     "--weight-bold"
   ]
 }

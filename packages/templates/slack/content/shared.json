@@ -8,6 +8,8 @@
     "currentUser": "Jamie Park",
     "channel": "project-studio",
     "topic": "A little space for the next big idea",
+    "members": ["Maya Chen", "Alex Rivera", "Sam Patel"],
+    "memberCount": 24,
     "date": "Wednesday, November 11",
     "rail": [
       {"label":"Home","icon":"organisation"},
@@ -41,7 +43,7 @@
       "format":"Show formatting","send":"Send message","sending":"Sending…","sent":"Sent","add":"Add attachment","emoji":"Add emoji","mention":"Mention someone","video":"Record video","audio":"Record audio",
       "bold":"Bold","italic":"Italic","strike":"Strikethrough","link":"Insert link","list":"Bulleted list","numbered":"Numbered list","quote":"Block quote","code":"Code","more":"More actions",
       "replies":"replies","replyAction":"Reply in thread","react":"Add reaction","save":"Save message","share":"Share message","lastReply":"Last reply 10:05 AM",
-      "emptySearch":"No messages match. Try another word.","results":"Search results","allFiles":"Shared files","searchHint":"Search messages in this workspace","back":"Back to channel"
+      "schedule":"Schedule for later","alsoSend":"Also send to","huddleOptions":"Huddle options","emptySearch":"No messages match. Try another word.","results":"Search results","allFiles":"Shared files","searchHint":"Search messages in this workspace","back":"Back to channel"
     }
   }
 }

@@ -21,6 +21,14 @@
       "reason": "catalogue inventory: the new workspace template lengthens the manifest-derived template inventory below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
+    "lib--avatargroup": {
+      "reason": "catalogue inventory: the generic opt-in AvatarGroup.shape prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--type": {
+      "reason": "catalogue inventory: the weight scale gains weight.black 900 (source-derived token row below the viewport); only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--scrollarea": {
       "reason": "catalogue inventory: the source-derived Used by list gains slack.Workspace (packages/core/agent/components/ScrollArea.json), lengthening metadata below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

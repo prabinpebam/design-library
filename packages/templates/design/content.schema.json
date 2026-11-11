@@ -804,7 +804,13 @@
         "size-width",
         "size-height",
         "stroke-position",
-        "blend"
+        "blend",
+        "send",
+        "at",
+        "emoji",
+        "more-vertical",
+        "caret-down",
+        "headphones"
       ],
       "type": "string"
     },
