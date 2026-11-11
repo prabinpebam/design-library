@@ -172,10 +172,6 @@
   "$value": "1.75rem",
   "$description": "Sidebar row pitch 28 px r02/r05; dense chrome exception, above 24 px."
  },
- "c.button.radius-sm": {
-  "$value": "0.375rem",
-  "$description": "Current selected row radius approximately 6 px r05."
- },
  "c.text-area.composer-radius": {
   "$value": "0.5rem",
   "$description": "Expanded composer r01: approximately 8 px."
@@ -215,5 +211,9 @@
  "color.map.action-fill-on": {
   "$value": "#ffffff",
   "$description": "Glyph on the action-green fill: white in r02/r20; the fill does not change with the scheme, so neither does its glyph."
+ },
+ "radius.sm": {
+  "$value": "0.375rem",
+  "$description": "One shape scale (CX3): the small radius is the selected row and control radius, about 6 px (r05); controls read it through c.button.radius-sm."
  }
 }

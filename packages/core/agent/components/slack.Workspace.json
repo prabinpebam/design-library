@@ -74,6 +74,7 @@
     "--radius-sm",
     "--size-app-bar-height",
     "--size-focus-width",
+    "--size-icon-lg",
     "--size-icon-sm",
     "--size-measure",
     "--size-nav-width",

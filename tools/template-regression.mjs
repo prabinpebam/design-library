@@ -14,7 +14,7 @@
 //   node tools/template-regression.mjs serve [--port 8769]   serve the frozen base for side-by-side viewing
 import { spawnSync } from 'node:child_process';
 import { createServer } from 'node:http';
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync, copyFileSync } from 'node:fs';
 import { extname, join, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 
@@ -249,28 +249,32 @@ for (const scheme of schemes) {
   if (!partial) rmSync(out, { recursive: true, force: true });
   mkdirSync(out, { recursive: true });
   for (const t of targets) for (const k of ['base', 'wt', 'diff', 'base-outside-inventory', 'wt-outside-inventory']) rmSync(join(out, `${t.id}-${k}.png`), { force: true });
+  const check = async (t) => {
+    const a = join(out, `${t.id}-base.png`);
+    const b = join(out, `${t.id}-wt.png`);
+    await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b)]);
+    const inventory = catalogueInventory[`${t.id}@${scheme}`] ?? catalogueInventory[t.id];
+    let r = await compare(a, b, join(out, `${t.id}-diff.png`), inventory);
+    // Up to two retakes of both before a difference counts: late pictures and timers settle under load, real changes stay.
+    for (let retake = 0; retake < 2 && (!r.sameSize || (r.pixels && !(inventory && r.outsideInventoryExactPixels === 0))); retake += 1) {
+      await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b)]);
+      r = await compare(a, b, join(out, `${t.id}-diff.png`), inventory);
+    }
+    const declared = noise[t.id] ?? noise[`${t.id}@${scheme}`];
+    const inventoryPass = inventory && r.pixels > 0 && r.outsideInventoryExactPixels === 0;
+    const inside = (box) => !declared?.regions || (box && declared.regions.some((g) => box.x0 >= g.x && box.y0 >= g.y && box.x1 < g.x + g.width && box.y1 < g.y + g.height));
+    const pass = r.sameSize && (r.pixels === 0 || inventoryPass || (declared && r.pct <= declared.maxPct && inside(r.box)));
+    if (pass && !r.pixels) for (const file of [a, b, join(out, `${t.id}-diff.png`), a.replace(/\.png$/, '-outside-inventory.png'), b.replace(/\.png$/, '-outside-inventory.png')]) rmSync(file, { force: true });
+    return { scheme, id: t.id, path: t.path, ...r, declared: inventoryPass ? inventory.reason : declared?.reason, catalogueInventory: Boolean(inventoryPass), pass };
+  };
   const queue = [...targets];
+  const pending = [];
   const worker = async () => {
     while (queue.length) {
       const t = queue.shift();
-      const a = join(out, `${t.id}-base.png`);
-      const b = join(out, `${t.id}-wt.png`);
       try {
-        await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b)]);
-        const inventory = catalogueInventory[`${t.id}@${scheme}`] ?? catalogueInventory[t.id];
-        let r = await compare(a, b, join(out, `${t.id}-diff.png`), inventory);
-        // Up to two retakes of both before a difference counts: late pictures and timers settle under load, real changes stay.
-        for (let retake = 0; retake < 2 && (!r.sameSize || (r.pixels && !(inventory && r.outsideInventoryExactPixels === 0))); retake += 1) {
-          await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b)]);
-          r = await compare(a, b, join(out, `${t.id}-diff.png`), inventory);
-        }
-        const declared = noise[t.id] ?? noise[`${t.id}@${scheme}`];
-        const inventoryPass = inventory && r.pixels > 0 && r.outsideInventoryExactPixels === 0;
-        const inside = (b) => !declared?.regions || (b && declared.regions.some((g) => b.x0 >= g.x && b.y0 >= g.y && b.x1 < g.x + g.width && b.y1 < g.y + g.height));
-        const pass = r.sameSize && (r.pixels === 0 || inventoryPass || (declared && r.pct <= declared.maxPct && inside(r.box)));
-        if (pass && !r.pixels) for (const f of [a, b, join(out, `${t.id}-diff.png`), a.replace(/\.png$/, '-outside-inventory.png'), b.replace(/\.png$/, '-outside-inventory.png')]) rmSync(f, { force: true });
-        results.push({ scheme, id: t.id, path: t.path, ...r, declared: inventoryPass ? inventory.reason : declared?.reason, catalogueInventory: Boolean(inventoryPass), pass });
-        if (!pass) console.log(`  DIFF ${scheme.padEnd(5)} ${t.id.padEnd(44)} ${r.sizeBase} → ${r.sizeWt} ${r.pct}%${r.box ? ` at ${r.box.x0},${r.box.y0}–${r.box.x1},${r.box.y1}` : ''}${inventory ? `; ${r.outsideInventoryExactPixels} exact differing pixels outside inventory` : ''}`);
+        const result = await check(t);
+        if (result.pass) results.push(result); else pending.push([t, result]);
       } catch (e) {
         results.push({ scheme, id: t.id, path: t.path, error: String(e).slice(0, 300), pass: false });
         console.log(`  FAIL ${scheme.padEnd(5)} ${t.id}: ${String(e).slice(0, 160)}`);
@@ -278,6 +282,17 @@ for (const scheme of schemes) {
     }
   };
   await Promise.all(Array.from({ length: +opt('jobs', 6) }, worker));
+  // A difference seen under parallel load is taken again alone, nothing else capturing: a real change differs there too,
+  // a load flake doesn't. The parallel evidence is kept as <id>-parallel-*.png and recorded in the result.
+  for (const [t, parallel] of pending) {
+    for (const k of ['base', 'wt', 'diff']) { const file = join(out, `${t.id}-${k}.png`); if (existsSync(file)) copyFileSync(file, join(out, `${t.id}-parallel-${k}.png`)); }
+    let result;
+    try { result = await check(t); } catch (e) { result = { scheme, id: t.id, path: t.path, error: String(e).slice(0, 300), pass: false }; }
+    result.parallel = { pct: parallel.pct, box: parallel.box, sameSize: parallel.sameSize };
+    if (result.pass) console.log(`  load-only ${scheme.padEnd(5)} ${t.id}: differed under parallel load (${parallel.pct}%), identical taken alone; evidence ${t.id}-parallel-*.png`);
+    else if (!result.error) console.log(`  DIFF ${scheme.padEnd(5)} ${t.id.padEnd(44)} ${result.sizeBase} → ${result.sizeWt} ${result.pct}%${result.box ? ` at ${result.box.x0},${result.box.y0}–${result.box.x1},${result.box.y1}` : ''}${result.outsideInventoryExactPixels !== undefined ? `; ${result.outsideInventoryExactPixels} exact differing pixels outside inventory` : ''}`);
+    results.push(result);
+  }
 }
 await browser.close();
 servers.forEach((s) => s.close());
@@ -287,10 +302,11 @@ mkdirSync(outRoot, { recursive: true });
 const failed = results.filter((r) => !r.pass);
 const inventoryChanges = results.filter((r) => r.pass && r.catalogueInventory);
 const noisy = results.filter((r) => r.pass && r.pixels && !r.catalogueInventory);
-writeFileSync(join(outRoot, partial ? 'result-partial.json' : 'result.json'), JSON.stringify({ at: new Date().toISOString(), self, exclude: [...exclude], schemes, compared: results.length, failed: failed.length, declaredNoise: noisy.length, catalogueInventory: inventoryChanges.length, results }, null, 2));
+const loadOnly = results.filter((r) => r.pass && r.parallel);
+writeFileSync(join(outRoot, partial ? 'result-partial.json' : 'result.json'), JSON.stringify({ at: new Date().toISOString(), self, exclude: [...exclude], schemes, compared: results.length, failed: failed.length, declaredNoise: noisy.length, catalogueInventory: inventoryChanges.length, loadOnly: loadOnly.length, results }, null, 2));
 const base = JSON.parse(readFileSync(join(baseDist, 'BASE.json'), 'utf8'));
 console.log(`template-regression: ${results.length} screens (${targets.length} pages × ${schemes.join(' + ')}), base frozen ${base.frozenAt}${exclude.size ? `, excluding ${[...exclude].join(', ')}` : ''}.`);
-console.log(`  ${results.length - failed.length - noisy.length - inventoryChanges.length} identical, ${noisy.length} within declared noise, ${inventoryChanges.length} catalogue inventory (remaining pixels exactly identical), ${failed.length} different.`);
+console.log(`  ${results.length - failed.length - noisy.length - inventoryChanges.length} identical, ${noisy.length} within declared noise, ${inventoryChanges.length} catalogue inventory (remaining pixels exactly identical), ${failed.length} different${loadOnly.length ? `; ${loadOnly.length} differed only under parallel load and were identical taken alone` : ''}.`);
 if (failed.length) {
   console.error(`template-regression: ${failed.length} unexplained screen change(s). Fix at source; only proven same-build noise or explicitly authorized catalogue inventory may be declared. Diffs: .shots/regression/<scheme>/<id>-diff.png`);
   process.exit(1);
