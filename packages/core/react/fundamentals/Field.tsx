@@ -16,6 +16,8 @@ export interface FieldControlProps {
 }
 
 export interface FieldProps extends DataAttributes {
+  /** Fill an application region; `measure` (default) caps the line length. */
+  width?: 'measure' | 'fill';
   /** A short noun phrase naming what goes in, sentence case, no colon: "Email address". */
   label: string;
   /** The control, given the wiring: `{(control) => <input {...control} />}`. For `group`, the controls inside name themselves. */
@@ -66,7 +68,7 @@ const tally = (text: string, unit: 'characters' | 'words') => (unit === 'words' 
  * `aria-describedby` in reading order; an error, or a count past its limit, sets `aria-invalid`. The count is announced
  * politely only near and past the limit. Icons are decorative: the words say it. As a heading, the label sits in an `h1`.
  */
-export function Field({ label, children, hint, error, warning, success, necessity, count, orientation = 'vertical', heading = false, group = false, action, disabled = false, readOnly, hideLabel = false, after, ...data }: FieldProps) {
+export function Field({ label, children, hint, error, warning, success, necessity, count, orientation = 'vertical', heading = false, group = false, action, disabled = false, readOnly, hideLabel = false, after, width = 'measure', ...data }: FieldProps) {
   const id = useId();
   const unit = count?.unit ?? 'characters';
   const hard = count?.limit === 'hard';
@@ -158,6 +160,7 @@ export function Field({ label, children, hint, error, warning, success, necessit
   const attrs = {
     ...data,
     'data-dl': 'field',
+    'data-width': width === 'fill' ? width : undefined,
     'data-orientation': orientation === 'horizontal' ? 'horizontal' : undefined,
     'data-invalid': invalid ? '' : undefined,
     'data-disabled': disabled ? '' : undefined,

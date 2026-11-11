@@ -32,7 +32,7 @@
         {
           "name": "tone",
           "type": "BadgeTone",
-          "description": "Meaning through the status roles only; `accent` (default) for a category with no status. The words or the icon always say it too."
+          "description": "Meaning through the status roles only; `accent` (default) for a category with no status. `offer` (a sale, a lower price) and `new` (something new) are promotions, never status (`color.promo.*`, Q139): strong is a filled tag for a picture's corner, subtle the words alone in the promotion's colour, over a product's name. The words or the icon always say it too."
         },
         {
           "name": "category",
@@ -104,7 +104,7 @@
     }
   ],
   "types": {
-    "BadgeTone": "'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'",
+    "BadgeTone": "'accent' | 'highlight' | 'offer' | 'new' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'",
     "Presence": "'available' | 'busy' | 'do-not-disturb' | 'away' | 'offline'"
   },
   "uses": [
@@ -125,8 +125,6 @@
     "--c-badge-radius",
     "--c-badge-size",
     "--c-badge-size-s",
-    "--color-accent",
-    "--color-accent-subtle",
     "--color-bg",
     "--color-category-1",
     "--color-category-2",
@@ -144,6 +142,17 @@
     "--color-category-on-6",
     "--color-category-on-7",
     "--color-category-on-8",
+    "--color-map-badge",
+    "--color-map-badge-on",
+    "--color-map-badge-tint",
+    "--color-map-highlight-badge",
+    "--color-map-highlight-badge-on",
+    "--color-promo-new",
+    "--color-promo-new-on",
+    "--color-promo-new-text",
+    "--color-promo-offer",
+    "--color-promo-offer-on",
+    "--color-promo-offer-text",
     "--color-status-danger-bg",
     "--color-status-danger-fg",
     "--color-status-danger-fill",
@@ -165,7 +174,6 @@
     "--color-status-warning-fill",
     "--color-status-warning-on-fill",
     "--color-text",
-    "--color-text-on-accent",
     "--duration-change",
     "--duration-quick",
     "--easing-enter",
@@ -176,7 +184,8 @@
     "--type-body-weight",
     "--type-caption-leading",
     "--type-caption-size",
-    "--type-label-weight"
+    "--type-label-weight",
+    "--weight-semibold"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/badge",
   "usedBy": [
@@ -189,7 +198,9 @@
     "MediaPlayer",
     "Notifications",
     "PageHeader",
-    "Tabs"
+    "Tabs",
+    "ikea.ProductTile",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-copy"

@@ -97,12 +97,12 @@
   }
 
   [data-dl='radio-group'] input:checked + [data-dl-part='mark'] > [data-dl-part='ring'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-on-fill);
   }
 
   /* The dot is drawn in the first frame and settles to full size over quick (none with reduced motion). */
   [data-dl='radio-group'] input:checked + [data-dl-part='mark'] > [data-dl-part='ring']::after {
-    background-color: var(--color-accent);
+    background-color: var(--color-map-on-fill);
     scale: 1;
   }
 
@@ -200,8 +200,8 @@
   }
 
   [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option'][data-chosen] {
-    border-color: var(--color-accent);
-    box-shadow: inset 0 0 0 var(--border-hairline) var(--color-accent);
+    border-color: var(--color-map-selection-indicator);
+    box-shadow: inset 0 0 0 var(--border-hairline) var(--color-map-selection-indicator);
   }
 
   [data-dl='radio-group'][data-appearance='tile'] > [data-dl-part='option']:has(input:focus-visible) {

@@ -12,6 +12,8 @@ export interface ChipEntry extends Pick<ChipProps, 'label' | 'icon' | 'avatar' |
 export interface ChipGroupProps extends DataAttributes {
   /** The group's visible label: what the chips are ("Recipients", "Status"). */
   label: string;
+  /** Hides the visible label where a heading beside the chips already says what they are (Q139 R6); the label stays the group's accessible name. */
+  hideLabel?: boolean;
   /** One line under the label, when the chips need explaining. */
   description?: string;
   chips: ChipEntry[];
@@ -45,7 +47,7 @@ export interface ChipGroupProps extends DataAttributes {
  * @key Home / End: the first or last chip
  * @key Delete / Backspace: remove the input chip in focus
  */
-export function ChipGroup({ label, description, chips, selection = 'none', value = [], onChange, onRemove, onPress, maxVisible, error, empty = 'None yet.', size, ...data }: ChipGroupProps) {
+export function ChipGroup({ label, hideLabel = false, description, chips, selection = 'none', value = [], onChange, onRemove, onPress, maxVisible, error, empty = 'None yet.', size, ...data }: ChipGroupProps) {
   const id = useId();
   const [current, setCurrent] = useState(0);
   const [all, setAll] = useState(false);
@@ -77,9 +79,11 @@ export function ChipGroup({ label, description, chips, selection = 'none', value
   const role = selection === 'none' ? 'list' : selection === 'single' ? 'radiogroup' : 'group';
   return (
     <div {...data} data-dl="chip-group" data-invalid={error ? '' : undefined}>
-      <span id={`${id}-label`} data-dl-part="label">
-        {label}
-      </span>
+      {hideLabel ? null : (
+        <span id={`${id}-label`} data-dl-part="label">
+          {label}
+        </span>
+      )}
       {description && (
         <span id={`${id}-description`} data-dl-part="description">
           {description}
@@ -91,7 +95,8 @@ export function ChipGroup({ label, description, chips, selection = 'none', value
         <div
           data-dl-part="chips"
           role={role}
-          aria-labelledby={`${id}-label`}
+          aria-labelledby={hideLabel ? undefined : `${id}-label`}
+          aria-label={hideLabel ? label : undefined}
           aria-describedby={[description && `${id}-description`, error && `${id}-error`].filter(Boolean).join(' ') || undefined}
         >
           {shown.map((chip, i) => {

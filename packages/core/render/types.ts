@@ -262,7 +262,7 @@ export interface TemplateAsset {
   /** Empty when the picture is decorative. */
   alt: string;
   /** The frame where the block doesn't fix one, as `Image` `ratio` (DP3). */
-  ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural';
+  ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'tall' | 'portrait' | 'natural';
   /** The point to keep in view when the frame crops, 0 to 1, as `Image` `focal` (DP3). */
   focal?: { x: number; y: number };
   /** How it is toned, always or at rest and when active (DP3). */

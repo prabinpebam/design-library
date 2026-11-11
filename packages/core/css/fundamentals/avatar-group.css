@@ -98,6 +98,9 @@
     inset-inline-start: var(--popup-start, 0px);
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    /* Q130: the people list fits its names, snapped up to a width step by usePopup. */
+    inline-size: var(--popup-fit, auto);
+    max-inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
     max-block-size: calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset));
     margin: 0;
     padding: 0;

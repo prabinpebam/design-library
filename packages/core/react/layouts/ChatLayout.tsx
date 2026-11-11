@@ -32,7 +32,7 @@ export interface ChatLayoutProps extends DataAttributes {
 }
 
 /** How close to the end still counts as "at the newest", so new words keep it there. */
-const stickSlack = 48;
+const stickThreshold = 48;
 
 /**
  * A conversation with an assistant: a collapsible sidebar of chats, a header, the messages in a reading column that
@@ -78,7 +78,7 @@ export function ChatLayout({ sidebar, sidebarFooter, sidebarLabel = 'Chat histor
   const measure = useCallback(() => {
     const el = scroller.current;
     if (!el) return;
-    atEnd.current = el.scrollHeight - el.scrollTop - el.clientHeight <= stickSlack;
+    atEnd.current = el.scrollHeight - el.scrollTop - el.clientHeight <= stickThreshold;
     setAway(!atEnd.current);
   }, []);
 

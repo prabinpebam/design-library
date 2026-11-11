@@ -28,6 +28,17 @@
       "extends": "DataAttributes",
       "props": [
         {
+          "name": "align",
+          "type": "'start' | 'center'",
+          "default": "'center'",
+          "description": "Align the label to the start in a navigation row; centre by default."
+        },
+        {
+          "name": "tone",
+          "type": "'inherit'",
+          "description": "Inherit the enclosing surface's text colour for a quiet action."
+        },
+        {
           "name": "label",
           "type": "string",
           "required": true,
@@ -52,9 +63,9 @@
         },
         {
           "name": "emphasis",
-          "type": "'primary' | 'default' | 'quiet' | 'danger'",
+          "type": "'primary' | 'default' | 'quiet' | 'danger' | 'strong'",
           "default": "'default'",
-          "description": "`primary` for the one main action in a view, `default` otherwise, `quiet` inside toolbars and other enclosed groups, `danger` for an action that destroys or can't be undone."
+          "description": "`primary` for the one main action in a view, `default` otherwise, `quiet` inside toolbars and other enclosed groups, `danger` for an action that destroys or can't be undone, `strong` for a main action on a brand-coloured panel where the brand fill would vanish (an ink fill: near-black on light, near-white on dark; Q140)."
         },
         {
           "name": "disabled",
@@ -207,7 +218,10 @@
     "Tooltip"
   ],
   "tokens": [
+    "--border-thick",
     "--c-button-border-width",
+    "--c-button-default-edge",
+    "--c-button-default-fill",
     "--c-button-expanded-fill",
     "--c-button-fill-min-inline",
     "--c-button-fill-move",
@@ -233,20 +247,22 @@
     "--c-button-size-xxl",
     "--c-field-border-width",
     "--c-field-size-xs",
-    "--color-accent",
-    "--color-accent-hover",
-    "--color-accent-pressed",
+    "--color-bg",
     "--color-bg-control",
     "--color-bg-sunken",
     "--color-border",
-    "--color-border-control",
     "--color-border-strong",
+    "--color-map-action-fill",
+    "--color-map-action-fill-hover",
+    "--color-map-action-fill-on",
+    "--color-map-action-fill-pressed",
+    "--color-map-button-ring",
+    "--color-map-progress",
     "--color-status-danger-fill",
     "--color-status-danger-on-fill",
     "--color-text",
     "--color-text-disabled",
     "--color-text-muted",
-    "--color-text-on-accent",
     "--duration-change",
     "--duration-confirm-read",
     "--duration-quick",
@@ -285,6 +301,7 @@
     "TextField",
     "Accordion",
     "Alert",
+    "Board",
     "Breadcrumbs",
     "Carousel",
     "CodeBlock",
@@ -307,7 +324,10 @@
     "AppLayout",
     "ChatLayout",
     "EditorLayout",
-    "ListDetail"
+    "ListDetail",
+    "ikea.ChatPanel",
+    "ikea.OfferTicket",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-states"

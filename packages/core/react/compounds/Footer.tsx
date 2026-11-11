@@ -31,6 +31,11 @@ export interface FooterProps extends DataAttributes {
   identity?: ReactNode;
   /** The legal line: copyright or licence, e.g. "© 2026 Northwind. Text under CC BY 4.0." */
   legal?: ReactNode;
+  /**
+   * A row of controls between the sections and the small print (Q140): the site's social links as icon buttons, the
+   * region and language, cookie settings. It wraps; place Buttons or a Cluster, never plain text.
+   */
+  tools?: ReactNode;
   /** The sections' heading level, from the page's outline. Defaults to 2. */
   headingLevel?: 2 | 3;
   /**
@@ -52,7 +57,7 @@ export interface FooterProps extends DataAttributes {
  * @a11y A `footer` placed outside `main` and `article`, so it is the page's contentinfo landmark. Each group of links
  * is a labelled navigation with a real list, so its links are counted; section headings keep the page's outline.
  */
-export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel = 'Support links', identity, legal, headingLevel = 2, arrangement, ...data }: FooterProps) {
+export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel = 'Support links', identity, legal, tools, headingLevel = 2, arrangement, ...data }: FooterProps) {
   const item = (l: FooterLink) => (
     <li key={l.href + l.label}>
       <Link href={l.href} external={l.external}>
@@ -78,6 +83,7 @@ export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel =
             ))}
           </nav>
         )}
+        {tools && <div data-dl-part="tools">{tools}</div>}
         {hasMeta && (
           <div data-dl-part="meta">
             {!!links?.length && (

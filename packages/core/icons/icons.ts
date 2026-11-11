@@ -69,6 +69,13 @@ export const icons = {
   'arrow-up': { d: 'M12 19.5v-15M5.5 11L12 4.5 18.5 11' },
   stop: { d: 'M7.5 6.5h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z', fill: 'M7.5 6.5h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1z' },
   globe: { d: 'M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17zM3.5 12h17M12 3.5c2.3 2.3 3.5 5.2 3.5 8.5s-1.2 6.2-3.5 8.5c-2.3-2.3-3.5-5.2-3.5-8.5s1.2-6.2 3.5-8.5z' },
+  // Shop icons (owner Q138): a store's favourites, bag, delivery and stores.
+  heart: { d: 'M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z' },
+  bag: { d: 'M3.5 9.5h17l-1.8 9.2a1 1 0 0 1-1 .8H6.3a1 1 0 0 1-1-.8zM8 9.5l3-5M16 9.5l-3-5' },
+  'bag-add': { d: 'M3.5 9.5h17l-1.8 9.2a1 1 0 0 1-1 .8H6.3a1 1 0 0 1-1-.8zM8 9.5l3-5M16 9.5l-3-5M12 12v5M9.5 14.5h5' },
+  delivery: { d: 'M2.5 6.5h11v10h-11zM13.5 10h4l3 3.5v3h-7M6.5 18.5a1.5 1.5 0 1 0 0-.01M17 18.5a1.5 1.5 0 1 0 0-.01' },
+  store: { d: 'M3.5 9.5l1.5-5h14l1.5 5M3.5 9.5h17M3.5 9.5v10h17v-10M9.5 19.5v-5h5v5' },
+  tag: { d: 'M3.5 12.5V4.5a1 1 0 0 1 1-1h8l8 8-9 9zM8.5 8.5v.01' },
   // Design-tool icons (F15.T2, Q66): alignment on a canvas is physical (left, right), so those never mirror.
   'align-left': { d: 'M4.5 4v16M8 7.5h9v3H8zM8 13.5h6v3H8z' },
   'align-h-center': { d: 'M12 4v16M7 7.5h10v3H7zM9 13.5h6v3H9z' },

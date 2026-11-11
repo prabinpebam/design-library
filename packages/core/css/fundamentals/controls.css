@@ -58,6 +58,9 @@
   }
 
   /* IP8: a Button with href is a link that looks like a button: the same box, no underline. */
+  [data-dl='button'][data-align='start'] { justify-items: start; }
+  [data-dl='button'][data-emphasis='quiet'][data-tone='inherit'] { color: inherit; }
+
   a[data-dl='button'] {
     box-sizing: border-box;
     text-decoration: none;
@@ -170,13 +173,15 @@
   }
 
   [data-dl='button'][data-emphasis='default'] {
-    border-color: var(--color-border-control);
-    background-color: var(--color-bg-control);
+    border-color: var(--c-button-default-edge);
+    background-color: var(--c-button-default-fill);
   }
 
   [data-dl='button'][data-emphasis='primary'] {
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    background-color: var(--color-map-action-fill);
+    color: var(--color-map-action-fill-on);
+    /* Brand map Button ring (Q132): a ring inside the edge; the fill's own colour, so not seen, until the map gives it one. */
+    box-shadow: inset 0 0 0 var(--border-thick) var(--color-map-button-ring);
   }
 
   /* Danger: the status colour, for an action that destroys or can't be undone. */
@@ -185,15 +190,27 @@
     color: var(--color-status-danger-on-fill);
   }
 
+  /* Strong (Q140): an ink fill, the page's text colour, for the main action on a brand-coloured panel. */
+  [data-dl='button'][data-emphasis='strong'] {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  [data-dl='button'][data-emphasis='strong'] > [data-dl-part='ring'] {
+    color: var(--color-bg);
+  }
+
   /* Unavailable with a reason: focusable, readable (muted text keeps 4.5:1), does nothing; the reason is its description. */
   [data-dl='button'][data-unavailable] {
     color: var(--color-text-muted);
     cursor: not-allowed;
   }
 
-  [data-dl='button'][data-unavailable]:is([data-emphasis='primary'], [data-emphasis='danger']) {
+  [data-dl='button'][data-unavailable]:is([data-emphasis='primary'], [data-emphasis='danger'], [data-emphasis='strong']) {
     border-color: var(--color-border-strong);
     background-color: transparent;
+    /* The brand map's ring belongs to the fill; without the fill it would read as a live button (Q142). */
+    box-shadow: none;
   }
 
   /*
@@ -212,11 +229,11 @@
     block-size: calc(100% + 2 * var(--c-button-border-width));
     overflow: visible;
     pointer-events: none;
-    color: var(--color-accent);
+    color: var(--color-map-progress);
   }
 
   [data-dl='button'][data-emphasis='primary'] > [data-dl-part='ring'] {
-    color: var(--color-text-on-accent);
+    color: var(--color-map-action-fill-on);
   }
 
   [data-dl='button'][data-emphasis='danger'] > [data-dl-part='ring'] {
@@ -315,8 +332,8 @@
   }
 
   [data-dl='button'][data-emphasis='primary'] > [data-dl-part='fill'] {
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    background-color: var(--color-map-action-fill);
+    color: var(--color-map-action-fill-on);
   }
 
   [data-dl='button'][data-emphasis='danger'] > [data-dl-part='fill'] {
@@ -349,7 +366,11 @@
     }
 
     [data-dl='button'][data-emphasis='primary']:enabled:not([aria-disabled='true']):hover {
-      background-color: var(--color-accent-hover);
+      background-color: var(--color-map-action-fill-hover);
+    }
+
+    [data-dl='button'][data-emphasis='strong']:enabled:not([aria-disabled='true']):hover {
+      background-color: color-mix(in srgb, var(--color-text) 85%, var(--color-bg));
     }
 
     [data-dl='button'][aria-expanded='true']:enabled:not([aria-disabled='true']):hover {
@@ -391,7 +412,11 @@
   }
 
   [data-dl='button'][data-emphasis='primary']:enabled:not([aria-disabled='true']):active {
-    background-color: var(--color-accent-pressed);
+    background-color: var(--color-map-action-fill-pressed);
+  }
+
+  [data-dl='button'][data-emphasis='strong']:enabled:not([aria-disabled='true']):active {
+    background-color: color-mix(in srgb, var(--color-text) 70%, var(--color-bg));
   }
 
   [data-dl='button'][aria-busy='true'] {
@@ -408,7 +433,8 @@
   }
 
   [data-dl='button'][data-emphasis='primary']:disabled,
-  [data-dl='button'][data-emphasis='danger']:disabled {
+  [data-dl='button'][data-emphasis='danger']:disabled,
+  [data-dl='button'][data-emphasis='strong']:disabled {
     background-color: var(--color-bg-sunken);
   }
 
@@ -610,13 +636,13 @@
   }
 
   [data-dl='switch'] [aria-checked='true'] [data-dl-part='track'] {
-    border-color: var(--color-accent);
-    background-color: var(--color-accent);
+    border-color: var(--color-map-on-fill);
+    background-color: var(--color-map-on-fill);
   }
 
   [data-dl='switch'] [aria-checked='true'] [data-dl-part='thumb'] {
     translate: calc(var(--switch-inline) - var(--switch-block));
-    background-color: var(--color-text-on-accent);
+    background-color: var(--color-map-switch-handle);
   }
 
   /*
@@ -662,7 +688,7 @@
     }
 
     [data-dl='switch'] > [data-dl-part='control'][aria-checked='true']:enabled:not([aria-disabled='true']):hover [data-dl-part='track'] {
-      background-color: var(--color-accent-hover);
+      background-color: var(--color-map-on-fill-hover);
     }
   }
 
@@ -983,7 +1009,7 @@
   }
 
   [data-dl='text-field'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-progress);
   }
 
   [data-dl='text-field'][data-busy='done'] [data-dl-part='control'] > [data-dl-part='code'] [data-dl-part='cell'] {
@@ -1008,7 +1034,7 @@
   }
 
   [data-dl='text-field'][data-busy='on'] [data-dl-part='box'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-progress);
   }
 
   [data-dl='text-field'][data-busy='on'] input {
@@ -1265,7 +1291,7 @@
   }
 
   [data-dl='number-field'][data-scrubbing] [data-dl-part='control'] > [data-dl-part='box'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-progress);
   }
 
   /* Steppers: two quiet square buttons inside the box's end, the field's own height less its border. */
@@ -1314,7 +1340,7 @@
   }
 
   [data-dl='number-field'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='box'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-progress);
   }
 
   [data-dl='number-field'][data-busy='done'] [data-dl-part='control'] > [data-dl-part='box'] {
@@ -1363,6 +1389,8 @@
     max-inline-size: var(--size-measure);
   }
 
+
+  [data-dl='text-area'][data-width='fill'] { max-inline-size: none; }
 
   [data-dl='text-area'] [data-dl-part='box'],
   [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] {
@@ -1495,7 +1523,7 @@
   }
 
   [data-dl='select'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='box'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-progress);
     cursor: progress;
   }
 
@@ -1725,9 +1753,9 @@
   }
 
   [data-dl='checkbox'] > input:is(:checked, :indeterminate) + [data-dl-part='mark'] > [data-dl-part='box'] {
-    border-color: var(--color-accent);
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    border-color: var(--color-map-on-fill);
+    background-color: var(--color-map-on-fill);
+    color: var(--color-map-mark-on-fill);
   }
 
   [data-dl='checkbox'] > input:focus-visible + [data-dl-part='mark'] > [data-dl-part='box'] {
@@ -1932,7 +1960,7 @@
   }
 
   [data-dl='segmented-control']:not([data-emphasis]) > [data-dl-part='segment']:has(input:checked) > [data-dl-part='trailing'] {
-    --color-text: var(--color-text-on-accent);
+    --color-text: var(--color-map-chosen-segment-on);
   }
 
   /* The fill: the same inset on every side, rounded to sit inside the group's corners. */
@@ -1969,11 +1997,11 @@
   }
 
   [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:checked) {
-    color: var(--color-text-on-accent);
+    color: var(--color-map-chosen-segment-on);
   }
 
   [data-dl='segmented-control'] > [data-dl-part='segment']:has(input:checked)::before {
-    background-color: var(--color-accent);
+    background-color: var(--color-map-chosen-segment);
   }
 
   /* emphasis="raised": the chosen segment is a raised surface with accent text (a mode switch beside accent-filled tools). */

@@ -46,6 +46,8 @@ export interface FontPreset {
   roles: Record<FontRoleId, string | null>;
   axes?: Partial<Record<FontRoleId, Record<string, number>>>;
   default?: boolean;
+  /** A heading in the preset list: absent for the library's own, 'Site looks' for a known site's look (Q137). */
+  group?: string;
 }
 
 export const fontRoles = registry.roles as FontRole[];
@@ -70,6 +72,32 @@ const sources: Record<string, () => Promise<unknown>[]> = {
   'roboto-flex': () => [import('@fontsource-variable/roboto-flex/full.css')],
   'jetbrains-mono': () => [import('@fontsource-variable/jetbrains-mono/wght.css'), import('@fontsource-variable/jetbrains-mono/wght-italic.css')],
   recursive: () => [import('@fontsource-variable/recursive/full.css')],
+  'noto-sans': () => [import('@fontsource-variable/noto-sans/standard.css'), import('@fontsource-variable/noto-sans/standard-italic.css')],
+  'open-sans': () => [import('@fontsource-variable/open-sans/standard.css'), import('@fontsource-variable/open-sans/standard-italic.css')],
+  'dm-sans': () => [import('@fontsource-variable/dm-sans/opsz.css'), import('@fontsource-variable/dm-sans/opsz-italic.css')],
+  'newsreader': () => [import('@fontsource-variable/newsreader/opsz.css'), import('@fontsource-variable/newsreader/opsz-italic.css')],
+  'gelasio': () => [import('@fontsource-variable/gelasio/wght.css'), import('@fontsource-variable/gelasio/wght-italic.css')],
+  'libre-franklin': () => [import('@fontsource-variable/libre-franklin/wght.css'), import('@fontsource-variable/libre-franklin/wght-italic.css')],
+  'libertinus-serif': () => [import('@fontsource/libertinus-serif/400.css'), import('@fontsource/libertinus-serif/400-italic.css'), import('@fontsource/libertinus-serif/600.css'), import('@fontsource/libertinus-serif/700.css')],
+  'arimo': () => [import('@fontsource-variable/arimo/wght.css'), import('@fontsource-variable/arimo/wght-italic.css')],
+  'mona-sans': () => [import('@fontsource-variable/mona-sans/standard.css'), import('@fontsource-variable/mona-sans/standard-italic.css')],
+  'roboto': () => [import('@fontsource-variable/roboto/standard.css'), import('@fontsource-variable/roboto/standard-italic.css')],
+  'reddit-sans': () => [import('@fontsource-variable/reddit-sans/wght.css'), import('@fontsource-variable/reddit-sans/wght-italic.css')],
+  'roboto-slab': () => [import('@fontsource-variable/roboto-slab/wght.css')],
+  'merriweather': () => [import('@fontsource-variable/merriweather/standard.css'), import('@fontsource-variable/merriweather/standard-italic.css')],
+  'bodoni-moda': () => [import('@fontsource-variable/bodoni-moda/opsz.css'), import('@fontsource-variable/bodoni-moda/opsz-italic.css')],
+  'lora': () => [import('@fontsource-variable/lora/wght.css'), import('@fontsource-variable/lora/wght-italic.css')],
+  'nunito': () => [import('@fontsource-variable/nunito/wght.css'), import('@fontsource-variable/nunito/wght-italic.css')],
+  'fira-code': () => [import('@fontsource-variable/fira-code/wght.css')],
+  // Lato has no variable build: its static weights (and italics) load together.
+  lato: () => [
+    import('@fontsource/lato/400.css'),
+    import('@fontsource/lato/400-italic.css'),
+    import('@fontsource/lato/700.css'),
+    import('@fontsource/lato/700-italic.css'),
+    import('@fontsource/lato/900.css'),
+    import('@fontsource/lato/900-italic.css'),
+  ],
 };
 
 const loading = new Map<string, Promise<void>>();

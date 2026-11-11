@@ -88,9 +88,7 @@
     "TextArea"
   ],
   "tokens": [
-    "--c-popup-width",
-    "--size-measure",
-    "--space-margin-page"
+    "--size-measure"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/mentions",
   "principles": [

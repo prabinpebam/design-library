@@ -1,0 +1,408 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "ikea",
+  "version": "1.0.0",
+  "title": "IKEA store",
+  "summary": "A furniture shop in IKEA's look: rooms, products, a bag and the whole checkout.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "home": "home",
+  "sections": [
+    {
+      "id": "shop",
+      "title": "Shop",
+      "summary": "Find something for a room.",
+      "flows": [
+        {
+          "id": "browse",
+          "title": "Browse the shop",
+          "summary": "Rooms and popular products, then every product by category.",
+          "screens": [
+            "home",
+            "products"
+          ]
+        },
+        {
+          "id": "room",
+          "title": "Shop a room",
+          "summary": "A room picture and the products in it.",
+          "screens": [
+            "room"
+          ]
+        },
+        {
+          "id": "choose",
+          "title": "Choose a product",
+          "summary": "Its picture, price, finish and measurements, then add it to the bag.",
+          "screens": [
+            "product"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "buy",
+      "title": "Buy",
+      "summary": "From the bag to a placed order.",
+      "flows": [
+        {
+          "id": "bag",
+          "title": "Review the bag",
+          "summary": "Change quantities, remove a product, see the total.",
+          "screens": [
+            "bag"
+          ]
+        },
+        {
+          "id": "checkout",
+          "title": "Check out",
+          "summary": "Contact, address, delivery and payment, then the order is placed.",
+          "screens": [
+            "checkout",
+            "confirmation"
+          ]
+        }
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "id": "home",
+      "title": "Home",
+      "component": "SiteLayout",
+      "content": "content/home.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The shop's opening: a room picture, rooms to shop by, popular products and the members' offer.",
+        "narrow": "The opening stacks its picture under the words; rooms and products drop to two columns, then one.",
+        "try": [
+          "Press the plus on a popular product: it goes in the bag, the bag's count rises and a note offers View bag.",
+          "Open a room card: the products page opens on that room's category.",
+          "Search the header for “lamp”."
+        ],
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The shop's name, Products and Rooms, search and the bag with its count",
+            "uses": "SiteHeader, TextField, Badge, Button"
+          },
+          {
+            "region": "Opening",
+            "holds": "The room picture, the headline and two actions",
+            "uses": "Hero, Button"
+          },
+          {
+            "region": "Rooms and products",
+            "holds": "Four rooms, then eight popular products with price, rating and Add to bag",
+            "uses": "Section, Grid, Card, Image, Rating"
+          },
+          {
+            "region": "Offer",
+            "holds": "The members' offer on the brand's tint",
+            "uses": "Section (tint), Button"
+          }
+        ]
+      }
+    },
+    {
+      "id": "products",
+      "title": "Products",
+      "component": "SiteLayout",
+      "content": "content/shop/products.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Every product, by category or search, sorted by popularity or price.",
+        "narrow": "The categories scroll in one row; the grid drops to two columns, then one.",
+        "try": [
+          "Choose Lighting, then sort by lowest price.",
+          "Search for something the shop doesn't sell to see the empty result."
+        ],
+        "regions": [
+          {
+            "region": "Head",
+            "holds": "The title or the search, and how many products",
+            "uses": "Heading, Text"
+          },
+          {
+            "region": "Filters",
+            "holds": "Category and sort",
+            "uses": "SegmentedControl, Select"
+          },
+          {
+            "region": "Products",
+            "holds": "A card per product",
+            "uses": "Grid, Card, Image, Rating, Button"
+          }
+        ]
+      }
+    },
+    {
+      "id": "room",
+      "title": "Room",
+      "component": "SiteLayout",
+      "content": "content/shop/room.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One room: its picture, the products in it with Add to bag, then the other rooms.",
+        "narrow": "The picture stacks under the title; the products drop to two columns, then one.",
+        "try": [
+          "Open Bedroom from the home page: the bedroom picture and its four products.",
+          "Add the lamp from the room, then open See all to browse its category."
+        ],
+        "regions": [
+          {
+            "region": "Opening",
+            "holds": "Breadcrumbs, the room title, its line and picture",
+            "uses": "Breadcrumbs, Hero"
+          },
+          {
+            "region": "In this room",
+            "holds": "The products in the picture, then See all for its category",
+            "uses": "Section, Grid, Card, Button"
+          },
+          {
+            "region": "More rooms",
+            "holds": "The other three rooms",
+            "uses": "Section, Grid, Card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "product",
+      "title": "Product",
+      "component": "SiteLayout",
+      "content": "content/shop/product.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One product: its picture, price, rating, finish, quantity and Add to bag, with details, measurements and delivery.",
+        "narrow": "The picture sits above the details.",
+        "try": [
+          "Pick another finish and a quantity of 2, then Add to bag.",
+          "Open Measurements."
+        ],
+        "regions": [
+          {
+            "region": "Picture",
+            "holds": "The product on the shop's grey",
+            "uses": "Image"
+          },
+          {
+            "region": "Buy",
+            "holds": "Name, price, rating, finish, quantity, Add to bag",
+            "uses": "Heading, Rating, RadioGroup (tile), NumberField, Button"
+          },
+          {
+            "region": "More",
+            "holds": "Details, measurements, delivery; related products",
+            "uses": "Accordion, DescriptionList, Grid, Card"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bag",
+      "title": "Shopping bag",
+      "component": "SiteLayout",
+      "content": "content/buy/bag.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "What's in the bag, each line's quantity and the order total, then Continue to checkout.",
+        "narrow": "The summary sits under the lines.",
+        "try": [
+          "Change a quantity: the line and the total follow.",
+          "Remove a product, then Undo.",
+          "Remove everything to see the empty bag."
+        ],
+        "regions": [
+          {
+            "region": "Lines",
+            "holds": "Each product, its finish, quantity and line price, with Remove",
+            "uses": "Card (beside), Image, NumberField, Button"
+          },
+          {
+            "region": "Summary",
+            "holds": "Subtotal, delivery, total and the next step",
+            "uses": "Section (sunken), DescriptionList, Button"
+          }
+        ]
+      }
+    },
+    {
+      "id": "checkout",
+      "title": "Checkout",
+      "component": "SiteLayout",
+      "content": "content/buy/checkout.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Contact, delivery address, delivery and payment in one page, then Place order.",
+        "narrow": "One column; the summary and Place order come last.",
+        "try": [
+          "Press Place order with nothing filled in: each missing field says so and keeps what you typed.",
+          "Choose Click and collect: delivery becomes free in the total.",
+          "Fill everything in and place the order."
+        ],
+        "regions": [
+          {
+            "region": "Form",
+            "holds": "Contact, address, delivery choice, payment with card fields",
+            "uses": "Section, TextField, RadioGroup (tile, reveals)"
+          },
+          {
+            "region": "Summary",
+            "holds": "The total with delivery, Place order",
+            "uses": "Section (sunken), DescriptionList, Button (onCommit)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "confirmation",
+      "title": "Order confirmed",
+      "component": "SiteLayout",
+      "content": "content/buy/confirmation.json",
+      "regions": [
+        {
+          "id": "header",
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "The order is placed: its number, where and how it comes, what was paid.",
+        "narrow": "One column.",
+        "regions": [
+          {
+            "region": "Confirmation",
+            "holds": "Thanks, the order number and its details",
+            "uses": "Alert (success), Heading, DescriptionList, Button"
+          }
+        ]
+      }
+    }
+  ],
+  "parts": {
+    "fundamentals": [
+      {
+        "name": "ikea.Notice",
+        "source": "parts/fundamentals/Notice.tsx"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "ikea.StoreHeader",
+        "source": "parts/compounds/StoreHeader.tsx"
+      },
+      {
+        "name": "ikea.ChipRail",
+        "source": "parts/compounds/ChipRail.tsx"
+      },
+      {
+        "name": "ikea.ProductTile",
+        "source": "parts/compounds/ProductTile.tsx"
+      },
+      {
+        "name": "ikea.PictureBanner",
+        "source": "parts/compounds/PictureBanner.tsx"
+      },
+      {
+        "name": "ikea.OfferMosaic",
+        "source": "parts/compounds/OfferMosaic.tsx"
+      },
+      {
+        "name": "ikea.ChatPanel",
+        "source": "parts/compounds/ChatPanel.tsx"
+      },
+      {
+        "name": "ikea.OfferTicket",
+        "source": "parts/compounds/OfferTicket.tsx"
+      }
+    ]
+  }
+}

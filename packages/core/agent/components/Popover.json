@@ -63,6 +63,11 @@
           "name": "onOpenChange",
           "type": "(open: boolean) => void",
           "description": "Asked to open or close: the trigger, Escape, a press outside, or focus leaving."
+        },
+        {
+          "name": "width",
+          "type": "'sm' | 'md' | 'lg'",
+          "description": "Its width step (Q130, docs/widths.md): `sm` a line of help or a confirmation, `md` (default) help with a link or a short form, `lg` a set of filters or a form with paired fields. Wider content belongs in a Dialog or Sheet."
         }
       ]
     },
@@ -117,6 +122,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/popover",
   "principles": [
-    "elevation"
+    "elevation",
+    "widths"
   ]
 }

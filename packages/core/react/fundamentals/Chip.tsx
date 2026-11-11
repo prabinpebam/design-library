@@ -69,7 +69,7 @@ export function Chip({
   onKeyDown,
   ...data
 }: ChipProps) {
-  const lead = invalid ? <Icon name="error" size="sm" /> : kind === 'filter' && selected ? <Icon name="check" size="sm" /> : icon && <Icon name={icon} size="sm" />;
+  const lead = invalid ? <Icon name="error" size="sm" /> : kind === 'filter' && selected ? <span data-dl-part="check"><Icon name="check" size="sm" /></span> : icon && <Icon name={icon} size="sm" />;
   const face = avatar && (
     <span data-dl-part="avatar" aria-hidden="true">
       {avatar.src ? <img src={avatar.src} alt="" /> : avatar.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase()}

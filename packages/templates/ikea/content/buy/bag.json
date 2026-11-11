@@ -1,0 +1,9 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "ikea",
+  "layout": "bag",
+  "contentVersion": 1,
+  "settings": {
+    "current": "bag"
+  }
+}

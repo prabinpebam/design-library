@@ -1,0 +1,60 @@
+/*
+ * Tier 1 fundamental: Price (Q139 R4, promoted from a template part, Q138). The sign small and raised, the number large
+ * and bold; a caption under a lower price naming the earlier one; the lowest price in a box of the highlight colour with
+ * an optional solid offset. Every look is a c.price token, so a theme restyles it without a fork.
+ */
+@layer fundamentals {
+  [data-dl='price'] {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--color-text);
+    font-family: var(--font-ui);
+    line-height: var(--leading-display);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-dl='price'] > [data-dl-part='drawn'] {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='price'] > [data-dl-part='drawn'] > [data-dl-part='now'] {
+    display: inline-flex;
+    align-items: var(--c-price-sign-align);
+    font-size: var(--c-price-value-size);
+    font-weight: var(--c-price-weight);
+  }
+
+  [data-dl='price'][data-size='l'] > [data-dl-part='drawn'] > [data-dl-part='now'] {
+    font-size: var(--c-price-value-size-l);
+  }
+
+  [data-dl='price'] > [data-dl-part='drawn'] > [data-dl-part='now'] > [data-dl-part='sign'] {
+    font-size: var(--c-price-sign-size);
+    line-height: var(--leading-normal);
+  }
+
+  [data-dl='price'][data-highlight] > [data-dl-part='drawn'] > [data-dl-part='now'] {
+    padding: var(--c-price-highlight-padding) var(--c-price-highlight-padding-inline);
+    background-color: var(--c-price-highlight-fill);
+    color: var(--c-price-highlight-on);
+    box-shadow: var(--c-price-highlight-offset) var(--c-price-highlight-offset) 0 var(--c-price-highlight-offset-colour);
+  }
+
+  [data-dl='price'] > [data-dl-part='drawn'] > [data-dl-part='caption'] {
+    color: var(--c-price-was);
+    font-size: var(--c-price-caption-size);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-normal);
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='price'][data-highlight] > [data-dl-part='drawn'] > [data-dl-part='now'] {
+      outline: var(--border-hairline) solid CanvasText;
+    }
+  }
+}

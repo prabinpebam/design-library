@@ -15,6 +15,11 @@ const roleLabel = (id: FontRoleId) => fontRoles.find((r) => r.id === id)?.label 
 const axesLine = (f: FontFace) =>
   `${f.axes.map((a, i) => `${i ? a.label.toLowerCase() : a.label} ${isBinaryAxis(a) ? 'on or off' : `${a.min} to ${a.max}`}`).join(', ')}${f.italic ? '; italic' : ''}`;
 
+// The role has no face of its own (it collapses, or code uses the system monospace); a search box shows no empty value.
+const SAME = 'same';
+const order = ['sans', 'serif', 'mono'];
+const classLabel: Record<string, string> = { sans: 'Sans', serif: 'Serif', mono: 'Monospace' };
+
 /** Presets, then the face for each role. */
 export function TypeChooser() {
   const t = useType();
@@ -25,7 +30,8 @@ export function TypeChooser() {
         <Select
           label="Preset"
           hint={t.preset ? t.preset.for : 'Your own mix: change any face below, or pick a preset to start again.'}
-          options={[...fontPresets.map((p) => ({ value: p.id, label: p.default ? `${p.name} (the theme’s own)` : p.name })), ...(t.preset ? [] : [{ value: custom, label: 'Custom' }])]}
+          search
+          options={[...fontPresets.map((p) => ({ value: p.id, label: p.default ? `${p.name} (the theme’s own)` : p.name, group: p.group ?? 'The library’s' })), ...(t.preset ? [] : [{ value: custom, label: 'Custom', group: 'Yours' }])]}
           value={t.preset?.id ?? custom}
           onChange={(v) => v !== custom && t.usePreset(v)}
         />
@@ -35,8 +41,11 @@ export function TypeChooser() {
           const own = t.choice.roles[role.id];
           const above = role.collapsesTo;
           const options = [
-            ...(role.id === 'code' ? [{ value: '', label: 'System monospace' }] : above ? [{ value: '', label: `Same as ${roleLabel(above).toLowerCase()}` }] : []),
-            ...fontFaces.filter((f) => (role.id === 'code' ? f.classification === 'mono' : true)).map((f) => ({ value: f.id, label: f.name })),
+            ...(role.id === 'code' ? [{ value: SAME, label: 'System monospace' }] : above ? [{ value: SAME, label: `Same as ${roleLabel(above).toLowerCase()}` }] : []),
+            ...[...fontFaces]
+              .filter((f) => (role.id === 'code' ? f.classification === 'mono' : true))
+              .sort((a, b) => order.indexOf(a.classification) - order.indexOf(b.classification) || a.name.localeCompare(b.name))
+              .map((f) => ({ value: f.id, label: f.name, group: classLabel[f.classification] })),
           ];
           return (
             <Select
@@ -44,8 +53,9 @@ export function TypeChooser() {
               label={`${role.label} face`}
               hint={role.function}
               options={options}
-              value={own ?? ''}
-              onChange={(v) => t.setFace(role.id, v || null)}
+              search
+              value={own ?? SAME}
+              onChange={(v) => t.setFace(role.id, v === SAME ? null : v)}
             />
           );
         })}

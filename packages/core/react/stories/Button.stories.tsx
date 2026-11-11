@@ -270,18 +270,20 @@ export default {
       ),
     },    {
       title: 'Emphasis',
-      description: 'Primary for the one main action in a view; default otherwise; quiet inside toolbars and other enclosed groups; danger for an action that destroys or can’t be undone.',
+      description: 'Primary for the one main action in a view; default otherwise; quiet inside toolbars and other enclosed groups; danger for an action that destroys or can’t be undone; strong (an ink fill) for the main action on a brand-coloured panel, where a brand fill would vanish.',
       arrangement: 'row',
       code: `<Button emphasis="primary" label="Publish page" />
 <Button label="Preview" />
 <Button emphasis="quiet" label="Cancel" />
-<Button emphasis="danger" label="Delete page" />`,
+<Button emphasis="danger" label="Delete page" />
+<Button emphasis="strong" label="Join the club" />`,
       render: () => (
         <>
           <Button emphasis="primary" label="Publish page" />
           <Button label="Preview" />
           <Button emphasis="quiet" label="Cancel" />
           <Button emphasis="danger" label="Delete page" />
+          <Button emphasis="strong" label="Join the club" />
         </>
       ),
     },

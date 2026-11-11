@@ -36,6 +36,11 @@
           "description": "`person` (default) is a circle; `organisation`, `team` and `bot` (any automated agent) are rounded squares, so people and the things they belong to never read the same."
         },
         {
+          "name": "shape",
+          "type": "'circle' | 'square'",
+          "description": "Visual crop independent of identity; defaults to the shape of `kind`."
+        },
+        {
           "name": "size",
           "type": "AvatarSize",
           "default": "32",
@@ -131,7 +136,6 @@
     "--c-avatar-size-80",
     "--c-avatar-size-96",
     "--c-avatar-square-scale",
-    "--color-accent",
     "--color-bg",
     "--color-category-1",
     "--color-category-2",
@@ -150,6 +154,7 @@
     "--color-category-on-7",
     "--color-category-on-8",
     "--color-focus",
+    "--color-map-selection-indicator",
     "--color-text",
     "--radius-full",
     "--size-focus-offset",
@@ -159,7 +164,8 @@
   "usedBy": [
     "AvatarGroup",
     "Persona",
-    "Board"
+    "Board",
+    "slack.Workspace"
   ],
   "principles": [
     "visual-representation"

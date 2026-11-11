@@ -23,7 +23,8 @@ export interface SheetProps extends DataAttributes {
   headerActions?: ReactNode;
   /** The edge it comes from. `end` (default) and `start` follow the reading direction; `bottom` is for small windows. */
   side?: 'start' | 'end' | 'bottom';
-  /** Width of a side sheet: `s` 20 rem, `m` 26 rem (default), `l` 40 rem. Every size fills a narrow window. Ignored for `bottom`. */
+  /** Width of a side sheet, a step of the width scale (Q130, docs/widths.md): `s` 20 rem (a narrow list), `m` 24 rem
+   * (details or a form, default), `l` 40 rem (an editor). Every size fills a narrow window. Ignored for `bottom`. */
   size?: 's' | 'm' | 'l';
   /**
    * Modal (default): over a scrim, the page waits, focus stays inside. `false`: a standard sheet that sits over the

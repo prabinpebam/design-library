@@ -1,0 +1,61 @@
+/*
+ * IKEA template part, tier 2 compound: OfferTicket (owner Q140). Pinned to the window's bottom end above the page (ikea.com, Q141), stacked over the chat launcher, on the
+ * band surface; the notches are a mask of two half circles at the middle of its sides. The close Button is re-scoped to
+ * the band's on-colour, not restyled. Reads only core semantic roles and its own t.ikea.offer-ticket tokens.
+ */
+@layer templates {
+  [data-dl='ikea-offer-ticket'] {
+    --color-text: var(--t-ikea-offer-ticket-on);
+    position: fixed;
+    inset-block-end: calc(var(--space-margin-page) + var(--size-control-lg) + var(--space-stack-item));
+    inset-inline-end: var(--space-margin-page);
+    z-index: var(--layer-popover);
+    display: flex;
+    gap: var(--space-inline-group);
+    box-sizing: border-box;
+    inline-size: min(var(--t-ikea-offer-ticket-width), calc(100vw - 2 * var(--space-margin-page)));
+    padding-block: var(--t-ikea-offer-ticket-padding);
+    padding-inline: calc(var(--t-ikea-offer-ticket-padding-inline) + var(--t-ikea-offer-ticket-notch) / 2) var(--space-inset-sm);
+    align-items: center;
+    border-radius: var(--radius-sm);
+    background-color: var(--t-ikea-offer-ticket-fill);
+    color: var(--t-ikea-offer-ticket-on);
+    font-family: var(--font-ui);
+    mask:
+      radial-gradient(circle at 0 50%, transparent calc(var(--t-ikea-offer-ticket-notch) / 2), #000 calc(var(--t-ikea-offer-ticket-notch) / 2)) left / 51% 100% no-repeat,
+      radial-gradient(circle at 100% 50%, transparent calc(var(--t-ikea-offer-ticket-notch) / 2), #000 calc(var(--t-ikea-offer-ticket-notch) / 2)) right / 51% 100% no-repeat;
+  }
+
+  [data-dl='ikea-offer-ticket'] > [data-dl-part='words'] {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  [data-dl='ikea-offer-ticket'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    color: inherit;
+    font-size: var(--text-s);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    text-decoration: none;
+  }
+
+  [data-dl='ikea-offer-ticket'] > [data-dl-part='words'] > a[data-dl-part='title']:hover {
+    text-decoration: underline;
+  }
+
+  [data-dl='ikea-offer-ticket'] > [data-dl-part='words'] > a[data-dl-part='title']:focus-visible {
+    outline: var(--border-thick) solid var(--color-focus);
+    outline-offset: var(--border-thick);
+  }
+
+  [data-dl='ikea-offer-ticket'] > [data-dl-part='words'] > [data-dl-part='text'] {
+    font-size: var(--text-s);
+    line-height: var(--leading-tight);
+  }
+
+  [data-dl='ikea-offer-ticket'][data-pinned='false'] {
+    position: static;
+  }
+}

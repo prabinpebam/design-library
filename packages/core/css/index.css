@@ -13,6 +13,7 @@
 @import url('./fundamentals/stack.css');
 @import url('./fundamentals/cluster.css');
 @import url('./fundamentals/grid.css');
+@import url('./fundamentals/rail.css');
 @import url('./fundamentals/scroll-area.css');
 @import url('./fundamentals/announcer.css');
 @import url('./fundamentals/slider.css');
@@ -26,6 +27,7 @@
 @import url('./fundamentals/time-field.css');
 @import url('./fundamentals/date-field.css');
 @import url('./fundamentals/rating.css');
+@import url('./fundamentals/price.css');
 @import url('./fundamentals/avatar.css');
 @import url('./fundamentals/avatar-group.css');
 @import url('./fundamentals/image.css');

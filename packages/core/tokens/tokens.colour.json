@@ -1119,6 +1119,237 @@
         "$description": "Text and marks on brand colour 1"
       }
     },
+    "map": {
+      "$description": "Brand map part roles (Q132): which brand colour each coloured part takes. Read by components; set by the brand map.",
+      "action-fill": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Action fill, the primary Button and fill progress"
+      },
+      "action-fill-hover": {
+        "$type": "color",
+        "$value": "{color.accent-hover}",
+        "$description": "Brand map part: Action fill while hovered"
+      },
+      "action-fill-pressed": {
+        "$type": "color",
+        "$value": "{color.accent-pressed}",
+        "$description": "Brand map part: Action fill while pressed"
+      },
+      "action-fill-on": {
+        "$type": "color",
+        "$value": "{color.text-on-accent}",
+        "$description": "Brand map part: Label and icon on the action fill"
+      },
+      "on-fill": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: On fills: Switch track on, Checkbox and Radio checked, Slider fill and thumb, chosen day"
+      },
+      "on-fill-hover": {
+        "$type": "color",
+        "$value": "{color.accent-hover}",
+        "$description": "Brand map part: On fills while hovered"
+      },
+      "on-fill-pressed": {
+        "$type": "color",
+        "$value": "{color.accent-pressed}",
+        "$description": "Brand map part: On fills while pressed"
+      },
+      "mark-on-fill": {
+        "$type": "color",
+        "$value": "{color.text-on-accent}",
+        "$description": "Brand map part: Marks on fills: Checkbox tick, Slider step dots, chosen day number"
+      },
+      "switch-handle": {
+        "$type": "color",
+        "$value": "{color.text-on-accent}",
+        "$description": "Brand map part: Switch handle while on"
+      },
+      "selection-indicator": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Selection indicators: Tabs indicator, Carousel current dot, tile outline, Avatar ring"
+      },
+      "progress": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Progress and activity: Progress fill, busy borders, spinners"
+      },
+      "drop-target": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Drop targets: Board, FileUpload, Canvas selection, AlignmentPicker mark"
+      },
+      "brand-tint": {
+        "$type": "color",
+        "$value": "{color.accent-subtle}",
+        "$description": "Brand map part: Brand tint: drag-over, focused date and time segments, fill-progress track"
+      },
+      "chosen-segment": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Chosen segment of a SegmentedControl"
+      },
+      "chosen-segment-on": {
+        "$type": "color",
+        "$value": "{color.text-on-accent}",
+        "$description": "Brand map part: Label on the chosen segment"
+      },
+      "chip": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Selected Chip outline"
+      },
+      "chip-tint": {
+        "$type": "color",
+        "$value": "{color.accent-subtle}",
+        "$description": "Brand map part: Selected Chip fill"
+      },
+      "badge": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Brand Badge, strong"
+      },
+      "badge-on": {
+        "$type": "color",
+        "$value": "{color.text-on-accent}",
+        "$description": "Brand map part: Label on a strong brand Badge"
+      },
+      "badge-tint": {
+        "$type": "color",
+        "$value": "{color.accent-subtle}",
+        "$description": "Brand map part: Brand Badge, subtle"
+      },
+      "rating": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Rating filled stars"
+      },
+      "rating-hover": {
+        "$type": "color",
+        "$value": "{color.accent-hover}",
+        "$description": "Brand map part: Rating stars while previewed"
+      },
+      "illustration": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Illustration accents: the accent role class in art, Image duotone and decoration"
+      },
+      "button-ring": {
+        "$type": "color",
+        "$value": "{color.map.action-fill}",
+        "$description": "Brand map part: Button ring inside the primary Button; the fill’s own colour (not drawn) until a map gives it one"
+      },
+      "highlight-badge": {
+        "$type": "color",
+        "$value": "{color.brand.1}",
+        "$description": "Brand map part: Highlight Badge: “New”, a promotion"
+      },
+      "highlight-badge-on": {
+        "$type": "color",
+        "$value": "{color.brand.on-1}",
+        "$description": "Brand map part: Label on a highlight Badge"
+      },
+      "band": {
+        "$type": "color",
+        "$value": "{color.accent}",
+        "$description": "Brand map part: Brand band: a full block of the lead colour (a promotion strip, a member panel)"
+      },
+      "band-on": {
+        "$type": "color",
+        "$value": "{color.text-on-accent}",
+        "$description": "Brand map part: Words and marks on the brand band"
+      },
+      "feature": {
+        "$type": "color",
+        "$value": "{color.brand.1}",
+        "$description": "Brand map part: Feature panel: a block of the second colour (a sale block, a chat header)"
+      },
+      "feature-on": {
+        "$type": "color",
+        "$value": "{color.brand.on-1}",
+        "$description": "Brand map part: Words and marks on the feature panel"
+      },
+      "feature-tint": {
+        "$type": "color",
+        "$value": "{color.accent-subtle}",
+        "$description": "Brand map part: Feature tint: a pale wash for a quiet feature area"
+      },
+      "nav": {
+        "$type": "color",
+        "$value": "{color.bg-sunken}",
+        "$description": "Brand map part: Navigation surface"
+      },
+      "nav-on": {
+        "$type": "color",
+        "$value": "{color.text}",
+        "$description": "Brand map part: Navigation labels and icons"
+      },
+      "nav-on-muted": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "Brand map part: Secondary navigation labels"
+      },
+      "nav-hover": {
+        "$type": "color",
+        "$value": "{state.hover}",
+        "$description": "Brand map part: Navigation row while hovered"
+      },
+      "nav-selected": {
+        "$type": "color",
+        "$value": "{color.accent-subtle}",
+        "$description": "Brand map part: Current navigation row"
+      },
+      "nav-selected-on": {
+        "$type": "color",
+        "$value": "{color.text}",
+        "$description": "Brand map part: Words on the current navigation row"
+      },
+      "nav-shell": {
+        "$type": "color",
+        "$value": "{color.bg-sunken}",
+        "$description": "Brand map part: Application rail and title bar surface"
+      },
+      "nav-shell-on": {
+        "$type": "color",
+        "$value": "{color.text}",
+        "$description": "Brand map part: Words and icons on the application rail"
+      }
+    },
+    "promo": {
+      "$description": "Promotion marks (Q139): a sale or lower price (offer) and something new (new). Never status; a template sets these, never color.status.*.",
+      "offer": {
+        "$type": "color",
+        "$value": "{color.status.danger.fill}",
+        "$description": "A sale or lower price: the tag or box fill"
+      },
+      "offer-on": {
+        "$type": "color",
+        "$value": "{color.status.danger.on-fill}",
+        "$description": "Words on the offer fill"
+      },
+      "offer-text": {
+        "$type": "color",
+        "$value": "{color.status.danger.fg}",
+        "$description": "A sale or lower price in words on the page: \"Lower price\""
+      },
+      "new": {
+        "$type": "color",
+        "$value": "{color.brand.1}",
+        "$description": "Something new: the tag fill (the brand highlight, as the highlight Badge)"
+      },
+      "new-on": {
+        "$type": "color",
+        "$value": "{color.brand.on-1}",
+        "$description": "Words on the new fill"
+      },
+      "new-text": {
+        "$type": "color",
+        "$value": "{color.text-accent}",
+        "$description": "Something new in words on the page: \"New\""
+      }
+    },
     "category": {
       "1": {
         "$type": "color",

@@ -16,6 +16,8 @@ export interface AvatarProps extends DataAttributes {
   src?: string;
   /** `person` (default) is a circle; `organisation`, `team` and `bot` (any automated agent) are rounded squares, so people and the things they belong to never read the same. */
   kind?: AvatarKind;
+  /** Visual crop independent of identity; defaults to the shape of `kind`. */
+  shape?: 'circle' | 'square';
   /** Pixels, from 16 (inline in text) to 128 (a profile editor). 24, 36, 44, 48, 56, 64 and 80 match the control sizes xs to xxl, so an avatar sits level with a control beside it. Default 32. */
   size?: AvatarSize;
   /** Override the initials, e.g. for a name whose initials aren't its first letters. */
@@ -89,6 +91,7 @@ export function Avatar({
   name,
   src,
   kind = 'person',
+  shape: crop,
   size = 32,
   initials,
   category,
@@ -106,7 +109,7 @@ export function Avatar({
   // Keyed by the source, so a new picture starts over without an effect racing a cached image's load event.
   const [loaded, setLoaded] = useState<string>();
   const [failed, setFailed] = useState<string>();
-  const shape = kind === 'person' ? 'circle' : 'square';
+  const shape = crop ?? (kind === 'person' ? 'circle' : 'square');
   const letters = initials ?? avatarInitials(name, size <= 20 ? 1 : 2);
   const cat = category && category >= 1 && category <= 8 ? Math.round(category) : avatarCategory(name);
   const badgeSize = size <= 40 ? 's' : size >= 96 ? 'l' : 'normal';

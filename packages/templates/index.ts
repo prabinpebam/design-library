@@ -13,7 +13,9 @@ import chat from './chat';
 import design from './design';
 import projects from './projects';
 import harbour from './harbour';
+import ikea from './ikea';
+import slack from './slack';
 
-export const templates: Template[] = [corporate, chat, portfolio, blog, conference, design, projects, harbour];
+export const templates: Template[] = [corporate, chat, portfolio, blog, conference, design, projects, harbour, ikea, slack];
 
 export const templateOf = (id: string) => templates.find((t) => t.manifest.id === id);

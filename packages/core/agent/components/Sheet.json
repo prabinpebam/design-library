@@ -75,7 +75,7 @@
           "name": "size",
           "type": "'s' | 'm' | 'l'",
           "default": "'m'",
-          "description": "Width of a side sheet: `s` 20 rem, `m` 26 rem (default), `l` 40 rem. Every size fills a narrow window. Ignored for `bottom`."
+          "description": "Width of a side sheet, a step of the width scale (Q130, docs/widths.md): `s` 20 rem (a narrow list), `m` 24 rem (details or a form, default), `l` 40 rem (an editor). Every size fills a narrow window. Ignored for `bottom`."
         },
         {
           "name": "modal",
@@ -127,6 +127,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/sheet",
   "principles": [
-    "elevation"
+    "elevation",
+    "widths"
   ]
 }

@@ -33,6 +33,6 @@ export default defineConfig({
   base: './',
   // libraryRevisions: the loopback revision API (dev server only); cors off, so no other origin may read it.
   plugins: [react(), libraryRevisions({ repoRoot: root }), librarySourceFiles()],
-  server: { host: '127.0.0.1', port: 8766, strictPort: true, cors: false, fs: { allow: [root] } },
+  server: { host: '127.0.0.1', port: 8766, strictPort: true, cors: false, fs: { allow: [root, ...(process.env.DL_FS_ALLOW ? [process.env.DL_FS_ALLOW] : [])] } },
   build: { outDir: 'dist', emptyOutDir: true, rollupOptions: { input: { main: join(root, 'apps/library/index.html'), site: join(root, 'apps/library/site.html') } } },
 });

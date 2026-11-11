@@ -1,0 +1,13 @@
+{
+  "id": "hero",
+  "set": "Q137 IKEA store",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "generate (set reference)",
+  "size": "1536x768",
+  "quality": "medium",
+  "date": "2026-11-11",
+  "shipped": "packages/templates/ikea/assets/hero.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 720 --density 2 --no-trim",
+  "alt": "An open-plan living and dining room in morning light: a light grey sofa, a round oak coffee table, a paper floor lamp and a white bookcase.",
+  "prompt": "medium 1536x768 ref=-\nUse: the wide opening picture of a furniture shop home page, shown 1280×640.\nSubject: an open living and dining room with a light grey sofa, a round oak coffee table, a paper lantern floor lamp, a white bookcase, plants, and a light oak dining table with pine chairs behind.\nStyle: bright natural-light interior photograph of an affordable Scandinavian home; daylight from a window on the left; white walls, light birch and oak wood, soft textiles in warm white, light grey and muted blue; lived-in but tidy; wide eye-level view; realistic photographic detail.\nConstraints: no text, no letters or numbers, no logos or trademarks, no labels or price tags, no watermark, no frame or border, no people."
+}

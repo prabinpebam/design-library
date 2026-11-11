@@ -28,6 +28,12 @@
       "extends": "DataAttributes",
       "props": [
         {
+          "name": "width",
+          "type": "'measure' | 'fill'",
+          "default": "'measure'",
+          "description": "Fill an application pane; `measure` (default) caps running-text width."
+        },
+        {
           "name": "label",
           "type": "string",
           "required": true,
@@ -183,7 +189,8 @@
   "libraryPage": "https://prabinpebam.github.io/design-library/#/textarea",
   "usedBy": [
     "Composer",
-    "Mentions"
+    "Mentions",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-states"

@@ -14,6 +14,12 @@
       "reason": "Reveal (Q65 P4): the starting style of a message that arrives open, clipped only while it grows"
     },
     {
+      "file": "packages/core/css/base.css",
+      "selector": "[data-dl-spoken]",
+      "kind": "visually hidden",
+      "reason": "The one visually hidden mechanism (Q139 R7): words read by assistive technology that the drawing already shows; core and template parts mark an element data-dl-spoken instead of writing their own clip"
+    },
+    {
       "file": "packages/core/css/fundamentals/announcer.css",
       "selector": "[data-dl='announcer']",
       "kind": "visually hidden",

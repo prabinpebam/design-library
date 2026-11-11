@@ -1,0 +1,215 @@
+{
+ "$description": "Q143 reference spec .design-library/slack-ref/README.md: r01/r05/r07 current chrome, r03 messages, r13 dark. Unmeasured dark chrome uses the same aubergine; not a claimed reference match.",
+ "font.text": {
+  "$value": "'Lato', system-ui, sans-serif",
+  "$description": "Typography: Lato OFL."
+ },
+ "font.ui": {
+  "$value": "'Lato', system-ui, sans-serif",
+  "$description": "Typography: Lato OFL."
+ },
+ "font.display": {
+  "$value": "'Lato', system-ui, sans-serif",
+  "$description": "Typography: Lato OFL."
+ },
+ "text.m": {
+  "$value": "0.9375rem",
+  "$description": "Message list: 15 px body."
+ },
+ "text.s": {
+  "$value": "0.8125rem",
+  "$description": "Tabs and chrome, r01."
+ },
+ "text.xs": {
+  "$value": "0.75rem",
+  "$description": "Message list timestamp 12 px."
+ },
+ "text.l": {
+  "$value": "1.125rem",
+  "$description": "Channel heading 18 px."
+ },
+ "type.body-sm.size": {
+  "$value": "{text.m}",
+  "$description": "Sidebar rows: 15 px r02/r05 even in compact chrome."
+ },
+ "type.label.weight": {
+  "$value": "400",
+  "$description": "Sidebar regular labels r02; unread has its own explicit semantic cue."
+ },
+ "color.bg-control": {
+  "$value": "{color.bg}",
+  "$description": "Expanded composer r01 surface."
+ },
+ "color.border-control": {
+  "$value": {
+   "light": "#e1e1e1",
+   "dark": "#565656"
+  },
+  "$description": "Composer boundary, evaluator measurement P2 row 21 (spec r01 reads #EAEAEA); dark provisional."
+ },
+ "leading.normal": {
+  "$value": "1.4666667",
+  "$description": "Message list 22 px pitch at 15 px."
+ },
+ "size.nav-width": {
+  "$value": "16.25rem",
+  "$description": "Sidebar: r02 measured 260 px, current range 220–260."
+ },
+ "size.rail-width": {
+  "$value": "4.75rem",
+  "$description": "Window and rail: r01 approximately 76 px."
+ },
+ "size.app-bar-height": {
+  "$value": "2.4375rem",
+  "$description": "Window and rail: r01 39 px title bar."
+ },
+ "size.pane-width": {
+  "$value": "24rem",
+  "$description": "r01/r11 right pane, provisional within measured full-window proportions."
+ },
+ "color.bg": {
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#1b1b1b"
+  },
+  "$description": "Message list r01 light, r13 dark."
+ },
+ "color.bg-raised": {
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#232323"
+  },
+  "$description": "Composer surface; dark value provisional (unmeasured)."
+ },
+ "color.bg-sunken": {
+  "$value": {
+   "light": "#f8f8f8",
+   "dark": "#292929"
+  },
+  "$description": "Reactions r05; dark provisional."
+ },
+ "color.text": {
+  "$value": {
+   "light": "#1d1c1d",
+   "dark": "#fdfdfd"
+  },
+  "$description": "Message list r01, r13."
+ },
+ "color.text-muted": {
+  "$value": {
+   "light": "#616061",
+   "dark": "#b9b9b9"
+  },
+  "$description": "Message timestamps r03; dark provisional."
+ },
+ "color.border": {
+  "$value": {
+   "light": "#eaeaea",
+   "dark": "#444444"
+  },
+  "$description": "Header and unfurl r01; dark provisional."
+ },
+ "color.text-link": {
+  "$value": {
+   "light": "#1264a3",
+   "dark": "#71b9e8"
+  },
+  "$description": "Thread replies line r04; dark provisional."
+ },
+ "color.focus": {
+  "$value": "#42d1ec",
+  "$description": "Sidebar keyboard focus r14."
+ },
+ "color.map.nav": {
+  "$value": "#501e54",
+  "$description": "Sidebar r05."
+ },
+ "color.map.nav-on": {
+  "$value": "#ffffff",
+  "$description": "Sidebar workspace and unread rows r07."
+ },
+ "color.map.nav-on-muted": {
+  "$value": "#cbb7cd",
+  "$description": "Sidebar secondary rows r01/r07."
+ },
+ "color.map.nav-hover": {
+  "$value": "#6a3c71",
+  "$description": "Rail current tile r05 #6A3C71; also row hover (unmeasured)."
+ },
+ "color.map.nav-selected": {
+  "$value": "#ffe5ff",
+  "$description": "Current selected row r05."
+ },
+ "color.map.nav-selected-on": {
+  "$value": "#39073d",
+  "$description": "Selected text r05."
+ },
+ "color.map.nav-shell": {
+  "$value": "#39073d",
+  "$description": "Rail and window fill r05."
+ },
+ "color.map.nav-shell-on": {
+  "$value": "#ffffff",
+  "$description": "Rail labels r05."
+ },
+ "color.map.selection-indicator": {
+  "$value": "#611f69",
+  "$description": "Channel tabs r01 default (r05 blue is uncertain)."
+ },
+ "color.map.badge": {
+  "$value": "#cd0459",
+  "$description": "Mention pill r14."
+ },
+ "color.map.badge-on": {
+  "$value": "#ffffff",
+  "$description": "Mention count r14."
+ },
+ "c.avatar.square-scale": {
+  "$value": "0.1666667",
+  "$description": "r04: 36 px square avatars with approximately 6 px corners."
+ },
+ "c.button.size-xs": {
+  "$value": "1.75rem",
+  "$description": "Sidebar row pitch 28 px r02/r05; dense chrome exception, above 24 px."
+ },
+ "c.button.radius-sm": {
+  "$value": "0.375rem",
+  "$description": "Current selected row radius approximately 6 px r05."
+ },
+ "c.text-area.composer-radius": {
+  "$value": "0.5rem",
+  "$description": "Expanded composer r01: approximately 8 px."
+ },
+ "space.inset-xs": {
+  "$value": "0.125rem",
+  "$description": "r01 optical chrome inset: 2 px."
+ },
+ "color.map.action-fill": {
+  "$value": "#007a5a",
+  "$description": "Send with text r20/r02 and primary actions r17: action green."
+ },
+ "color.map.action-fill-hover": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Hover fill unmeasured: keeps the measured fill rather than a guessed shade."
+ },
+ "color.map.action-fill-pressed": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Pressed fill unmeasured: keeps the measured fill."
+ },
+ "color.promo.new-text": {
+  "$value": "#e01e5a",
+  "$description": "New-messages line r02: #E01E5A."
+ },
+ "c.button.size": {
+  "$value": "2.25rem",
+  "$description": "Rail tiles 36x36 r05/r01 and standard buttons 36 r17."
+ },
+ "c.badge.size-s": {
+  "$value": "1.125rem",
+  "$description": "Mention badge about 18 px r14/r19."
+ },
+ "space.inset-lg": {
+  "$value": "1.25rem",
+  "$description": "Message, header and composer gutter 20 px (P2 row 11 measured against r03/r04)."
+ }
+}

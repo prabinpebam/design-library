@@ -23,7 +23,7 @@
     padding-block-end: var(--c-board-scroll-room);
   }
 
-  [data-dl='board'] [data-dl-part='column'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content']) > [data-dl-part='column'] {
     display: flex;
     flex-direction: column;
     flex: none;
@@ -35,12 +35,12 @@
     background-color: var(--c-board-column-fill);
   }
 
-  [data-dl='board'] [data-dl-part='column'][data-over] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content']) > [data-dl-part='column'][data-over] {
     outline: var(--border-thick) solid var(--c-board-drop);
     outline-offset: calc(-1 * var(--border-thick));
   }
 
-  [data-dl='board'] [data-dl-part='title'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='head']) > [data-dl-part='title'] {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -52,18 +52,18 @@
     font-weight: var(--weight-semibold);
   }
 
-  [data-dl='board'] [data-dl-part='count'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='head'] > [data-dl-part='title']) > [data-dl-part='count'] {
     font-weight: var(--weight-regular);
     color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
   }
 
-  [data-dl='board'] [data-dl-part='column'][data-full] [data-dl-part='count'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content']) > [data-dl-part='column'][data-full] > :where([data-dl-part='head'] > [data-dl-part='title']) > [data-dl-part='count'] {
     color: var(--color-text);
     font-weight: var(--weight-semibold);
   }
 
-  [data-dl='board'] [data-dl-part='cards'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column']) > [data-dl-part='cards'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-board-card-gap);
@@ -72,7 +72,7 @@
     list-style: none;
   }
 
-  [data-dl='board'] [data-dl-part='card'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards']) > [data-dl-part='card'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-board-card-inner-gap);
@@ -82,69 +82,69 @@
     cursor: grab;
   }
 
-  [data-dl='board'] [data-dl-part='card'][data-dragging] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards']) > [data-dl-part='card'][data-dragging] {
     opacity: var(--c-board-dragging-opacity);
     cursor: grabbing;
   }
 
   /* While dragging (Q65 C23): the room the card would land in, the dragged card's height; the cards after it slide. */
-  [data-dl='board'] [data-dl-part='slot'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards']) > [data-dl-part='slot'] {
     block-size: var(--board-slot);
   }
 
-  [data-dl='board'] [data-dl-part='top'],
-  [data-dl='board'] [data-dl-part='foot'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='top'],
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='foot'] {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-inline-pair);
   }
 
-  [data-dl='board'] [data-dl-part='top'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='top'] {
     justify-content: flex-end;
     min-block-size: var(--size-target-dense);
   }
 
-  [data-dl='board'] [data-dl-part='reference'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='top']) > [data-dl-part='reference'] {
     flex: 1;
   }
 
-  [data-dl='board'] [data-dl-part='reference'],
-  [data-dl='board'] [data-dl-part='meta'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='top']) > [data-dl-part='reference'],
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='top'], [data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='foot'] > [data-dl-part='end']) > [data-dl-part='meta'] {
     font-size: var(--type-caption-size);
     line-height: var(--type-caption-leading);
     color: var(--color-text-muted);
     font-variant-numeric: tabular-nums;
   }
 
-  [data-dl='board'] [data-dl-part='name'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='name'] {
     margin: 0;
     font-size: var(--type-body-sm-size);
     line-height: var(--type-body-sm-leading);
   }
 
-  [data-dl='board'] [data-dl-part='name'] a {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='name'] > a {
     color: inherit;
     text-decoration: none;
     border-radius: var(--radius-sm);
   }
 
-  [data-dl='board'] [data-dl-part='name'] a:focus-visible {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='name'] > a:focus-visible {
     outline: var(--size-focus-width) solid var(--color-focus);
     outline-offset: var(--size-focus-width);
   }
 
   @media (hover: hover) {
-    [data-dl='board'] [data-dl-part='name'] a:hover {
+    :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='name'] > a:hover {
       text-decoration: underline;
     }
   }
 
-  [data-dl='board'] [data-dl-part='name'] a:active {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='name'] > a:active {
     text-decoration: underline;
   }
 
-  [data-dl='board'] [data-dl-part='end'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='foot']) > [data-dl-part='end'] {
     display: inline-flex;
     align-items: center;
     gap: var(--space-inline-pair);
@@ -152,19 +152,131 @@
     justify-content: flex-end;
   }
 
-  [data-dl='board'] [data-dl-part='empty'] {
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column']) > [data-dl-part='empty'] {
     margin: 0;
     padding: var(--c-board-card-padding);
     font-size: var(--type-body-sm-size);
     color: var(--color-text-muted);
   }
 
+  /* A column's head: its title, then an optional note and actions, one group. */
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column']) > [data-dl-part='head'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+    padding-inline: var(--c-board-card-padding);
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column']) > [data-dl-part='head'] > [data-dl-part='title'] {
+    padding-inline: 0;
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='head'] > [data-dl-part='title']) > [data-dl-part='label'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='head']) > [data-dl-part='column-note'] {
+    margin: 0;
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    color: var(--color-text-muted);
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='head']) > [data-dl-part='column-actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-pair);
+    margin-inline-start: calc(-1 * var(--c-board-card-padding));
+  }
+
+  /* A colour mark: what a column or row stands for. Square-ish chip, hairline so a pale colour still reads. */
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='head'] > [data-dl-part='title'] > [data-dl-part='label'], [data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='item-text'] > [data-dl-part='item-name']) > [data-dl-part='swatch'] {
+    flex: none;
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+    border-radius: var(--radius-sm);
+    background-color: var(--board-swatch);
+    box-shadow: inset 0 0 0 var(--border-hairline) var(--color-border);
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='top']) > [data-dl-part='card-title'] {
+    flex: 1;
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    font-weight: var(--weight-semibold);
+  }
+
+  /* A card's rows (a group's parts): bare at rest inside the card (one enclosure), each its own drag source. */
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card']) > [data-dl-part='items'] {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items']) > [data-dl-part='item'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    min-block-size: var(--size-target-dense);
+    border-radius: var(--radius-sm);
+    cursor: grab;
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items']) > [data-dl-part='item'][data-dragging] {
+    opacity: var(--c-board-dragging-opacity);
+    cursor: grabbing;
+  }
+
+  @media (hover: hover) {
+    :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items']) > [data-dl-part='item']:hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items'] > [data-dl-part='item']) > [data-dl-part='item-text'] {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-inline-size: 0;
+  }
+
+  /* The swatch sits on the name's line; a note lines up under the name, not under the swatch. */
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='item-text']) > [data-dl-part='item-name'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='item-text']) > [data-dl-part='item-note'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    color: var(--color-text-muted);
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items']) > [data-dl-part='item']:has(> :where([data-dl-part='item-text']) > :where([data-dl-part='item-name']) > [data-dl-part='swatch']) > :where([data-dl-part='item-text']) > [data-dl-part='item-note'] {
+    padding-inline-start: calc(var(--size-icon-sm) + var(--space-inline-pair));
+  }
+
+  :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards'] > [data-dl-part='card'] > [data-dl-part='items'] > [data-dl-part='item'] > [data-dl-part='item-text']) > [data-dl-part='item-note'][data-tone='warning'] {
+    color: var(--color-status-warning-fg);
+  }
+
   @media (forced-colors: active) {
-    [data-dl='board'] [data-dl-part='card'] {
+    :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='column'] > [data-dl-part='cards']) > [data-dl-part='card'] {
       outline: var(--border-hairline) solid CanvasText;
     }
 
-    [data-dl='board'] [data-dl-part='column'][data-over] {
+    :where([data-dl='board'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content']) > [data-dl-part='column'][data-over] {
       outline-color: Highlight;
     }
   }

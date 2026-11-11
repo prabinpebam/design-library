@@ -336,12 +336,12 @@
     "--c-field-size-xxl",
     "--c-field-swatch",
     "--c-field-trailing",
-    "--color-accent",
     "--color-bg-control",
     "--color-bg-sunken",
     "--color-border",
     "--color-border-control",
     "--color-border-strong",
+    "--color-map-progress",
     "--color-status-danger-fg",
     "--color-status-success-fg",
     "--color-text",
@@ -369,7 +369,8 @@
   "usedBy": [
     "ColourPicker",
     "ConversationList",
-    "InlineEdit"
+    "InlineEdit",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-states"

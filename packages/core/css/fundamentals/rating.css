@@ -61,7 +61,7 @@
     position: absolute;
     inset: 0;
     clip-path: inset(0 calc((1 - var(--fill)) * 100%) 0 0);
-    color: var(--color-accent);
+    color: var(--color-map-rating);
   }
 
   [data-dl='rating'] [data-dl-part='star-full']:dir(rtl) {
@@ -77,7 +77,7 @@
 
   /* A hover preview is lighter than a chosen value, so the two never read the same. */
   [data-dl='rating'][data-preview] [data-dl-part='star-full'] {
-    color: var(--color-accent-hover);
+    color: var(--color-map-rating-hover);
   }
 
   /* Steps: invisible radios over the star, each half or the whole; the hit area reaches into the gap between stars. */
@@ -102,7 +102,7 @@
     outline-offset: var(--size-focus-offset);
   }
 
-  [data-dl='rating'] > [data-dl-part='row'] > [data-dl-part='value'] {
+  [data-dl='rating'] > [data-dl-part='row'] > :is([data-dl-part='value'], [data-dl-part='count']) {
     font-size: var(--type-body-sm-size);
     line-height: var(--type-body-sm-leading);
     color: var(--color-text-muted);

@@ -170,18 +170,18 @@
   [data-dl='carousel'] [data-dl-part='dot'] > [data-dl-part='mark']::after {
     position: absolute;
     inset: 0;
-    background-color: var(--color-accent);
+    background-color: var(--color-map-selection-indicator);
     transform-origin: left center;
   }
 
   [data-dl='carousel'] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark'] {
-    background-color: var(--color-accent);
+    background-color: var(--color-map-selection-indicator);
     clip-path: inset(0 round var(--radius-pill));
   }
 
   /* While rotating: the pill is a track that fills over the slide's time. */
   [data-dl='carousel'][data-playing] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark'] {
-    background-color: var(--color-accent-subtle);
+    background-color: var(--color-map-brand-tint);
   }
 
   [data-dl='carousel'][data-playing] [data-dl-part='dot'][aria-selected='true'] > [data-dl-part='mark']::after {
@@ -224,7 +224,7 @@
   }
 
   [data-dl='carousel'] [data-dl-part='thumb'][aria-selected='true'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-selection-indicator);
     opacity: 1;
   }
 

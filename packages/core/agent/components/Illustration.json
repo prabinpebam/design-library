@@ -35,7 +35,7 @@
         },
         {
           "name": "ratio",
-          "type": "'natural' | 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait'",
+          "type": "'natural' | 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'tall' | 'portrait'",
           "default": "'natural'",
           "description": "The frame's shape. `natural` (default) takes the art's own `viewBox`; give a ratio for a file, so its space is held before it arrives."
         },

@@ -179,6 +179,42 @@
     }
   }
 
+  /* `line` (Q141): a progress line under a row on a page. It takes its own strip under the content (never over it),
+     the track drawn the row's whole length and the thumb at the same thickness, square, in the text colour; shown
+     whenever the row overflows (mode is always). Hover and drag change nothing but the cursor. */
+  [data-dl='scroll-area'][data-bar='line'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    padding-block-end: calc(var(--c-scroll-area-line-gap) + var(--c-scroll-area-track));
+  }
+
+  [data-dl='scroll-area'][data-bar='line'] > [data-dl-part='track'][data-axis='x'] {
+    inset-inline: 0;
+    background: linear-gradient(var(--c-scroll-area-line-track) 0 0) center / 100% var(--c-scroll-area-line) no-repeat;
+  }
+
+  /* The line spans the content, not the inset kept for focus rings. */
+  [data-dl='scroll-area'][data-bar='line']:has(> [data-dl-part='viewport'] > [data-dl-part='content'][data-inset='sm']) > [data-dl-part='track'][data-axis='x'] {
+    inset-inline: var(--c-scroll-area-inset-sm);
+  }
+
+  [data-dl='scroll-area'][data-bar='line']:has(> [data-dl-part='viewport'] > [data-dl-part='content'][data-inset='md']) > [data-dl-part='track'][data-axis='x'] {
+    inset-inline: var(--c-scroll-area-inset-md);
+  }
+
+  [data-dl='scroll-area'][data-bar='line'] > [data-dl-part='track'][data-axis='x'] > [data-dl-part='thumb'],
+  [data-dl='scroll-area'][data-bar='line'][data-dragging] > [data-dl-part='track'][data-axis='x'] > [data-dl-part='thumb'] {
+    inset-block-end: calc((var(--c-scroll-area-track) - var(--c-scroll-area-line)) / 2);
+    block-size: var(--c-scroll-area-line);
+    border-radius: 0;
+    background-color: var(--c-scroll-area-line-thumb);
+    transform: none;
+  }
+
+  @media (hover: hover) {
+    [data-dl='scroll-area'][data-bar='line'] > [data-dl-part='track'][data-axis='x']:hover > [data-dl-part='thumb'] {
+      background-color: var(--c-scroll-area-line-thumb);
+    }
+  }
+
   /* A region whose own controls replace its scrollbar (Carousel's track: arrows, dots or thumbnails, swipe and keys)
      draws none and isn't wrapped in ScrollArea. The one opt-out; scrollbar styling still lives only in this file. */
   [data-scrollbar='none'] {

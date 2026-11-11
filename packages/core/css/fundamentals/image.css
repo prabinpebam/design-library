@@ -17,9 +17,13 @@
   [data-dl='image'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
   [data-dl='image'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
   [data-dl='image'][data-ratio='square'] { aspect-ratio: 1; }
+  [data-dl='image'][data-ratio='tall'] { aspect-ratio: 3 / 4; }
   [data-dl='image'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
   /* Natural: the shape from width and height when given, so the frame is right before the picture arrives. */
   [data-dl='image'][data-ratio='natural'] { aspect-ratio: var(--image-ratio, auto); }
+  /* fill (Q141): no ratio of its own; the picture fills the height its slot is given (a lead tile beside a column of
+     tiles), cropped by its focal point. Its slot must have a height, or it has none. */
+  [data-dl='image'][data-ratio='fill'] { aspect-ratio: auto; block-size: 100%; }
 
   /* `--image-radius` is the one seam a compound may set from its own wrapper: Card's media slot sets it to 0 (Q69), so a
      picture in a card follows only the card's outer corners and stays square where it meets the body. */

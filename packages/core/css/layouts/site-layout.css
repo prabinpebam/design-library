@@ -30,7 +30,8 @@
     border-block-end-color: var(--color-border);
   }
 
-  [data-dl='site-layout'] [data-dl-part='column'] {
+  /* Child paths only (Q141): a part named `column` inside the page (a Board's, a mosaic's) is not the page's column. */
+  [data-dl='site-layout'] > :is([data-dl-part='header'], [data-dl-part='main']) > [data-dl-part='column'] {
     box-sizing: border-box;
     inline-size: 100%;
     max-inline-size: calc(var(--c-site-layout-width) + 2 * var(--c-site-layout-margin));

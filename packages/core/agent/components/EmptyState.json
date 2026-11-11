@@ -106,6 +106,9 @@
     "--color-border"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/emptystate",
+  "usedBy": [
+    "slack.Workspace"
+  ],
   "principles": [
     "ui-states"
   ]

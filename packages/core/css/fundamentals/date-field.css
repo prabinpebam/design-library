@@ -82,7 +82,7 @@
   }
 
   [data-dl='date-field'] [data-dl-part='segment']:focus {
-    background-color: var(--color-accent-subtle);
+    background-color: var(--color-map-brand-tint);
   }
 
   [data-dl='date-field'] [data-dl-part='segment'][data-empty],

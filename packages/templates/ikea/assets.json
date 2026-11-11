@@ -1,0 +1,109 @@
+{
+  "$schema": "../../core/schemas/assets.schema.json",
+  "assets": {
+    "hero": {
+      "src": "assets/hero.webp",
+      "alt": "An open-plan living and dining room in morning light: a light grey sofa, a round oak coffee table, a paper floor lamp and a white bookcase."
+    },
+    "sofa": {
+      "src": "assets/product-sofa.webp",
+      "alt": "A light grey three-seat sofa with loose cushions on short birch legs."
+    },
+    "armchair": {
+      "src": "assets/product-armchair.webp",
+      "alt": "A bent birch armchair with a thick beige cushion."
+    },
+    "coffeeTable": {
+      "src": "assets/product-coffee-table.webp",
+      "alt": "A round oak coffee table on four solid legs."
+    },
+    "bookcase": {
+      "src": "assets/product-bookcase.webp",
+      "alt": "A tall white bookcase with five shelves holding a few books and plants."
+    },
+    "floorLamp": {
+      "src": "assets/product-floor-lamp.webp",
+      "alt": "A round rice paper lantern on a slim black floor stand."
+    },
+    "tableLamp": {
+      "src": "assets/product-table-lamp.webp",
+      "alt": "A small mushroom-shaped table lamp in white opal glass, lit."
+    },
+    "diningChair": {
+      "src": "assets/product-dining-chair.webp",
+      "alt": "A pine dining chair with a spindle back."
+    },
+    "diningTable": {
+      "src": "assets/product-dining-table.webp",
+      "alt": "A rectangular oak dining table on four straight legs."
+    },
+    "bed": {
+      "src": "assets/product-bed.webp",
+      "alt": "A white double bed frame with a low headboard, made up with white bedding."
+    },
+    "desk": {
+      "src": "assets/product-desk.webp",
+      "alt": "A white desk with a birch drawer unit on its right."
+    },
+    "baskets": {
+      "src": "assets/product-baskets.webp",
+      "alt": "Three woven seagrass baskets with handles, in three sizes."
+    },
+    "plantPot": {
+      "src": "assets/product-plant-pot.webp",
+      "alt": "A white ceramic plant pot on a small wooden stand, holding a trailing plant."
+    },
+    "roomLiving": {
+      "src": "assets/room-living.webp",
+      "alt": "A living room with a light grey sofa, a round oak coffee table, a paper floor lamp and a white bookcase."
+    },
+    "roomBedroom": {
+      "src": "assets/room-bedroom.webp",
+      "alt": "A bedroom with a white double bed, a grey throw, a bench at its foot and an oak chest of drawers."
+    },
+    "roomDining": {
+      "src": "assets/room-dining.webp",
+      "alt": "A dining room with an oak table, pine spindle-back chairs and a white pendant lamp."
+    },
+    "roomWorkspace": {
+      "src": "assets/room-workspace.webp",
+      "alt": "A home office corner with a white desk, a birch drawer unit, a wooden chair and a pinboard."
+    },
+    "bedsheets": {
+      "src": "assets/offer-bedsheets.webp",
+      "alt": "A made bed with white sheets and mustard cushions printed with leaves."
+    },
+    "dinnerware": {
+      "src": "assets/offer-dinnerware.webp",
+      "alt": "A table set with lilac plates on a rattan mat, an oak table and pink glasses."
+    },
+    "decorCandle": {
+      "src": "assets/offer-decor.webp",
+      "alt": "A brass lotus tealight holder beside a wine glass and a bowl of nuts, a sofa behind."
+    },
+    "storeBand": {
+      "src": "assets/store-band.webp",
+      "alt": "A woman in a green dress pushes a yellow basket on wheels past shelves of cushions, blankets and vases in a bright store."
+    },
+    "familyCafe": {
+      "src": "assets/family-cafe.webp",
+      "alt": "Four friends laughing over coffee in a bright café under black pendant lamps."
+    },
+    "rewardPhone": {
+      "src": "assets/reward-phone.webp",
+      "alt": "A hand holding a phone in a living room."
+    },
+    "rewardLaptop": {
+      "src": "assets/reward-laptop.webp",
+      "alt": "Hands typing on a laptop showing a grid of furniture."
+    },
+    "rewardEvents": {
+      "src": "assets/reward-events.webp",
+      "alt": "Hands potting a small succulent into a white pot at a wooden table."
+    },
+    "rewardPlanning": {
+      "src": "assets/reward-planning.webp",
+      "alt": "A woman planning a kitchen on a desktop computer, a floor plan on the desk."
+    }
+  }
+}

@@ -1251,6 +1251,21 @@
         "$description": "Between the anchor and the popup, below or above it (echoed for space contexts)"
       }
     },
+    "price": {
+      "$extensions": {
+        "owner": "Price"
+      },
+      "highlight-padding": {
+        "$type": "dimension",
+        "$value": "{space.inset-xs}",
+        "$description": "Inside the lowest-price box, above and below (echoed for space contexts)"
+      },
+      "highlight-padding-inline": {
+        "$type": "dimension",
+        "$value": "{space.inset-sm}",
+        "$description": "Inside the lowest-price box, at each side (echoed for space contexts)"
+      }
+    },
     "progress": {
       "$extensions": {
         "owner": "Progress"
@@ -1341,6 +1356,21 @@
         "$description": "Inside a tile, all around: the tile is the target and its outline the only enclosure (echoed for space contexts)"
       }
     },
+    "rail": {
+      "$extensions": {
+        "owner": "Rail"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.gutter}",
+        "$description": "Between cards in a rail (echoed for space contexts)"
+      },
+      "gap-item": {
+        "$type": "dimension",
+        "$value": "{space.inline-item}",
+        "$description": "Between chips or links in a rail (echoed for space contexts)"
+      }
+    },
     "row-list": {
       "$extensions": {
         "owner": "RowList"
@@ -1389,6 +1419,11 @@
         "$type": "dimension",
         "$value": "{space.inset-sm}",
         "$description": "inset=\"sm\": padding on the content inside the scroll box, never on the box (echoed for space contexts)"
+      },
+      "line-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between the row's content and its line bar (echoed for space contexts)"
       },
       "track-inset": {
         "$type": "dimension",

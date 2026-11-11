@@ -31,6 +31,15 @@
     /* Arrives and leaves through data-presence="popup" (motion.css, Q65 C7). */
   }
 
+  /* Q130: the other width steps a popover may take (`width`); md is c.popover.width above. */
+  [data-dl='popover'] > [data-dl-part='surface'][data-width='sm'] {
+    inline-size: min(var(--size-width-sm), calc(100vw - 2 * var(--space-margin-page)));
+  }
+
+  [data-dl='popover'] > [data-dl-part='surface'][data-width='lg'] {
+    inline-size: min(var(--size-width-lg), calc(100vw - 2 * var(--space-margin-page)));
+  }
+
   [data-dl='popover'] > [data-dl-part='surface']:focus-visible {
     outline: var(--size-focus-width) solid var(--color-focus);
     outline-offset: var(--size-focus-offset);

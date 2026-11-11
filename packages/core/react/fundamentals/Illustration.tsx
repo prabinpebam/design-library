@@ -25,7 +25,7 @@ interface IllustrationBase extends DataAttributes {
    * The frame's shape. `natural` (default) takes the art's own `viewBox`; give a ratio for a file, so its space is held
    * before it arrives.
    */
-  ratio?: 'natural' | 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait';
+  ratio?: 'natural' | 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'tall' | 'portrait';
   /** How the art meets the frame: `contain` (default) shows all of it; `cover` fills the frame and trims the overflow. */
   fit?: 'contain' | 'cover';
   /**

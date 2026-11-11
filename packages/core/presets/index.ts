@@ -50,6 +50,8 @@ interface UserPresets {
 }
 
 export const builtInGlobalPresets: GlobalPreset[] = (builtInFile as { global: GlobalPreset[] }).global.map((p) => ({ ...p, builtIn: true }));
+/** Read-only global presets an app adds over core's own (its brand demonstrations), after the built-ins. */
+const registeredGlobal: GlobalPreset[] = [];
 
 const categories = new Map<string, PresetCategory>();
 const listeners = new Set<() => void>();
@@ -106,6 +108,13 @@ export function registerPresetCategory<V>(category: PresetCategory<V>) {
 }
 
 export const presetCategories = () => [...categories.values()];
+
+/** Adds a read-only global preset whose category presets the app registered (e.g. a brand's colour, type and shape). */
+export function registerGlobalPreset(preset: Omit<GlobalPreset, 'builtIn'>) {
+  if (builtInGlobalPresets.some((p) => p.id === preset.id) || registeredGlobal.some((p) => p.id === preset.id)) return;
+  registeredGlobal.push({ ...preset, builtIn: true });
+  bump();
+}
 export const presetCategory = (id: string) => categories.get(id);
 
 /** A category's presets: built-in first, then the person's own. */
@@ -123,7 +132,7 @@ export function currentPreset(id: string): CategoryPreset | undefined {
   return categoryPresets(id).find((p) => same(p.value, value));
 }
 
-export const globalPresets = (): GlobalPreset[] => [...builtInGlobalPresets, ...user.global];
+export const globalPresets = (): GlobalPreset[] => [...builtInGlobalPresets, ...registeredGlobal, ...user.global];
 
 /** The global preset every category currently matches, if any. */
 export function currentGlobal(): GlobalPreset | undefined {

@@ -21,7 +21,7 @@
     padding-inline: var(--c-menu-button-padding-inline);
     border: var(--c-menu-button-border-width) solid var(--c-menu-button-border);
     border-radius: var(--c-menu-button-radius);
-    background-color: var(--color-bg-control);
+    background-color: var(--c-menu-button-fill);
     color: var(--color-text);
     font-size: var(--type-label-size);
     line-height: var(--type-label-leading);
@@ -89,8 +89,8 @@
 
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary'] {
     border-color: transparent;
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    background-color: var(--color-map-action-fill);
+    color: var(--color-map-action-fill-on);
   }
 
   [data-dl='menu-button'] > [data-dl-part='trigger'][aria-busy='true'] {
@@ -124,12 +124,12 @@
   }
 
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary']:enabled:not([aria-busy='true']):active {
-    background-color: var(--color-accent-pressed);
+    background-color: var(--color-map-action-fill-pressed);
   }
 
   @media (hover: hover) {
     [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary']:enabled:not([aria-busy='true']):hover {
-      background-color: var(--color-accent-hover);
+      background-color: var(--color-map-action-fill-hover);
       background-image: none;
     }
   }
@@ -155,6 +155,8 @@
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     min-inline-size: var(--popup-min-inline, auto);
+    /* Q130: fits its content, snapped up to a width step by usePopup; never wider than c.popup.width on its own. */
+    inline-size: var(--popup-fit, auto);
     max-inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
     max-block-size: min(var(--c-popup-height), calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset)));
     padding: 0;
@@ -183,9 +185,15 @@
     padding: var(--c-popup-inset);
   }
 
-  [data-dl='menu-button'] > [data-dl-part='popup'] {
-    inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
+  /* Q130: a list pinned to a width step (`listWidth`), so menus that sit together match; still never past the window. */
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width] {
+    max-inline-size: calc(100vw - 2 * var(--space-margin-page));
   }
+
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='xs'] { inline-size: var(--size-width-xs); }
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='sm'] { inline-size: var(--size-width-sm); }
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='md'] { inline-size: var(--size-width-md); }
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='lg'] { inline-size: var(--size-width-lg); }
 
   [data-dl='menu-button'] > [data-dl-part='popup'][data-placement='above'],
   [data-dl='mentions'] > [data-dl-part='popup'][data-placement='above'],
@@ -375,9 +383,9 @@
   }
 
   [data-dl='list-item'] > [data-dl-part='item-mark'][data-kind='box'][data-on] {
-    border-color: var(--color-accent);
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    border-color: var(--color-map-on-fill);
+    background-color: var(--color-map-on-fill);
+    color: var(--color-map-mark-on-fill);
   }
 
   [data-dl='list-item'] > [data-dl-part='item-mark'][data-kind='radio'][data-on]::before {

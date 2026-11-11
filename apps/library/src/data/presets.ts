@@ -6,8 +6,9 @@
  */
 import { fontPresets } from '@design-library/core/fonts';
 import { getIconChoice, iconSets, subscribeIconChoice, type IconChoice } from '@design-library/core/icons';
-import { registerPresetCategory, type CategoryPreset } from '@design-library/core/presets';
+import { registerGlobalPreset, registerPresetCategory, type CategoryPreset } from '@design-library/core/presets';
 import { getBrand, presets as colourPresets, setBrand, subscribeBrand, themeBrand, type Brand } from './brand';
+import { brandExamples } from './brand-examples';
 import { chooseIcons } from './icons';
 import { getSpaceShape, setShape, setSpace, subscribeSpaceShape } from './space-shape';
 import { shapeOptions, spaceOptions, themeSpaceShape, type ShapeOption, type SpaceOption } from './tokens';
@@ -23,6 +24,7 @@ registerPresetCategory<Brand>({
   builtIns: builtIn('colour', [
     { id: 'theme', name: 'Theme colours', for: 'The colours colour.config.json declares', theme: true, value: themeBrand },
     ...colourPresets.map((p) => ({ id: p.id, name: p.name, for: p.mood, value: p.brand })),
+    ...brandExamples.map((p) => ({ id: p.id, name: p.name, for: p.mood, value: p.brand })),
   ]),
   get: getBrand,
   set: (v) => setBrand(v),
@@ -89,4 +91,13 @@ registerPresetCategory<MaterialFinish>({
   get: getMaterial,
   set: setMaterial,
   subscribe: subscribeMaterial,
+});
+
+// Brand demonstrations (owner Q137): a whole look in one choice, from the library-only brand example, the site look's
+// type and the shape closest to the brand's square cards. The IKEA template carries the rest (pill buttons) itself.
+registerGlobalPreset({
+  id: 'ikea',
+  name: 'IKEA',
+  for: 'Blue and yellow, Noto Sans, square cards: the IKEA store template’s look',
+  presets: { colour: 'ikea', type: 'ikea', icons: 'theme', space: 'normal', shape: 'mild', material: 'solid' },
 });

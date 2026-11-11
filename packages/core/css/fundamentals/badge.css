@@ -54,13 +54,47 @@
 
   /* Tones. Subtle: the role's tint with its text colour; strong: the role's fill with its on-fill text. */
   [data-dl='badge'][data-tone='accent'][data-emphasis='subtle'] {
-    background-color: var(--color-accent-subtle);
+    background-color: var(--color-map-badge-tint);
     color: var(--color-text);
   }
 
   [data-dl='badge'][data-tone='accent'][data-emphasis='strong'] {
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    background-color: var(--color-map-badge);
+    color: var(--color-map-badge-on);
+  }
+
+  /* Highlight (Q132 brand map, Highlights group): "New", a promotion; always the fill, in the brand tone of its colour. */
+  [data-dl='badge'][data-tone='highlight'] {
+    background-color: var(--color-map-highlight-badge);
+    color: var(--color-map-highlight-badge-on);
+  }
+
+  /* Promotions (Q139 R1): a sale (offer) and something new (new), never status. Strong: the promotion's fill, for a tag
+     on a picture; subtle: the words alone in the promotion's colour, aligned with the text below them, as shops set a
+     tag over a product's name. */
+  [data-dl='badge'][data-tone='offer'][data-emphasis='strong'] {
+    background-color: var(--color-promo-offer);
+    color: var(--color-promo-offer-on);
+  }
+
+  [data-dl='badge'][data-tone='new'][data-emphasis='strong'] {
+    background-color: var(--color-promo-new);
+    color: var(--color-promo-new-on);
+  }
+
+  [data-dl='badge'][data-tone='offer'][data-emphasis='subtle'],
+  [data-dl='badge'][data-tone='new'][data-emphasis='subtle'] {
+    background-color: transparent;
+    padding-inline: 0;
+    font-weight: var(--weight-semibold);
+  }
+
+  [data-dl='badge'][data-tone='offer'][data-emphasis='subtle'] {
+    color: var(--color-promo-offer-text);
+  }
+
+  [data-dl='badge'][data-tone='new'][data-emphasis='subtle'] {
+    color: var(--color-promo-new-text);
   }
 
   [data-dl='badge'][data-tone='neutral'][data-emphasis='subtle'] {
@@ -244,7 +278,7 @@
   }
 
   [data-dl='badge'][data-kind='status'][data-tone='accent'] > [data-dl-part='dot'] {
-    background-color: var(--color-accent);
+    background-color: var(--color-map-badge);
   }
 
   [data-dl='badge'][data-kind='status'][data-tone='info'] > [data-dl-part='dot'] {

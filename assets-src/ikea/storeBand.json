@@ -1,0 +1,13 @@
+{
+  "id": "storeBand",
+  "set": "Q140 IKEA home",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = hero raw",
+  "size": "1536x864",
+  "quality": "medium",
+  "date": "2026-11-11",
+  "shipped": "packages/templates/ikea/assets/store-band.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 768 --density 2 --no-trim",
+  "alt": "A woman in a green dress pushes a yellow basket on wheels past shelves of cushions, blankets and vases in a bright store.",
+  "prompt": "Image 1 is a style reference only: copy its photographic style, lighting and colour treatment. Do not copy its subject or composition.\nShow: inside a bright, airy furniture showroom: a smiling young woman in a green dress pushes a plain yellow shopping basket on wheels past white shelves stacked with soft cushions, folded blankets and ceramic vases; light wooden floor, tall windows.\nUse: a wide store-opening banner on a shop home page, shown 16:9 at about 900x506.\nStyle: bright natural-light lifestyle photograph for an affordable Scandinavian home furnishing shop; soft daylight; light birch and oak wood, warm white, light grey and muted colours; realistic photographic detail; people are ordinary, friendly and natural, not posed models.\nConstraints: no text, no letters or numbers, no logos or trademarks, no labels or price tags, no watermark, no frame or border."
+}

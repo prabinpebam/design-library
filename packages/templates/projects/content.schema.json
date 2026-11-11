@@ -8,6 +8,9 @@
     "BadgeTone": {
       "enum": [
         "accent",
+        "highlight",
+        "offer",
+        "new",
         "neutral",
         "info",
         "success",

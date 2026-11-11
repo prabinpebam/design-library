@@ -29,6 +29,8 @@ For agents: the evaluator is a **separate session** (a fresh chat or a review ag
 6. **Repeat** steps 2–5 until the [exit rule](#when-the-loop-ends) holds. Each round, the evaluator re-scores **every** row, not just the ones that failed: a fix can break a passing row.
 7. **Record.** The final table (rows, evidence, rounds) goes where the change is documented; in this project, the framework's Results section in Slate.
 
+**Replicas** (Q143): when the screen recreates a well-known product, the loop also runs [Replica method and rules](replica-rules.md): the evaluator scores a side-by-side with the reference at the same width, region by region, and the builder's `npm run check:regression` must show no other template or library page changed, light and dark, before the screen goes to the evaluator.
+
 ## When the loop ends
 
 The screen passes when every framework's own pass rule holds, at every window, scheme and state named in step 3:

@@ -42,9 +42,9 @@
         },
         {
           "name": "ratio",
-          "type": "'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural'",
+          "type": "'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'tall' | 'portrait' | 'natural' | 'fill'",
           "default": "'photo'",
-          "description": "The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`)."
+          "description": "The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `tall` 3:4 (classic turned upright, a shop's portrait tile; Q141), `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`)."
         },
         {
           "name": "focal",
@@ -196,7 +196,9 @@
     "ImageGrid",
     "Lightbox",
     "MediaPlayer",
-    "Hero"
+    "Hero",
+    "ikea.PictureBanner",
+    "ikea.ProductTile"
   ],
   "principles": [
     "visual-representation"

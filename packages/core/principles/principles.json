@@ -563,6 +563,48 @@
         ],
         "tokens": []
       }
+    },
+    {
+      "id": "widths",
+      "title": "Widths of floating surfaces",
+      "doc": {
+        "label": "Widths",
+        "path": "widths.md"
+      },
+      "points": [
+        "Menus, lists, popovers, dialogs and sheets take one of a few preset widths, the same across the site.",
+        "Lists fit their content: the narrowest preset that holds the longest item.",
+        "Nothing is wider than its content needs; long words wrap rather than widen.",
+        "On a small window every surface fits inside it, and dialogs fill it."
+      ],
+      "appliesTo": {
+        "pages": [
+          "widths"
+        ],
+        "families": [
+          "floating",
+          "overlays"
+        ]
+      },
+      "agent": {
+        "rules": [
+          "Every overlay width is a size.width-* step (xs 12, sm 16, md 20, lg 24, xl 32, 2xl 40, 3xl 48 rem), through its component token or a prop; never a raw width.",
+          "Lists (MenuButton, Select, Mentions, AvatarGroup) fit their content, snapped up to xs, sm or md as they open; leave listWidth out unless the decision table says to pin.",
+          "Pin listWidth when the items load or change while the list is open, when items carry descriptions (lg), or when menus open side by side (the same step on all).",
+          "Popover width: sm for a line of help or a confirmation, md (default) for help with a link or a short form, lg for filters.",
+          "Dialog size by purpose: s a question and two buttons, m (default) a form, l a table or several steps. Sheet: s a narrow list, m (default) details or a form, l an editor.",
+          "No step fits: move the content one surface up (popover, dialog, sheet, page); never invent a width."
+        ],
+        "decide": [
+          "Follow The procedure and The decision table in docs/widths.md, then its Part 2 checklist (WC1-WC8)."
+        ],
+        "checks": [
+          "npm run check"
+        ],
+        "tokens": [
+          "size"
+        ]
+      }
     }
   ]
 }

@@ -11,6 +11,7 @@
   "pairs": {
     "overview": "how-it-works.md",
     "motion": "motion.md",
+    "widths": "widths.md",
     "materials": "materials.md",
     "elevation": "materials.md",
     "icon": "visual-representation.md#icons",

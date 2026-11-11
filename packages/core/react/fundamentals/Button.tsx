@@ -14,6 +14,10 @@ export type ButtonSize = 'xs' | 's' | 'normal' | 'm' | 'l' | 'xl' | 'xxl';
 export type ButtonProgress = 'inside' | 'ring' | 'fill';
 
 interface ButtonBase extends DataAttributes {
+  /** Align the label to the start in a navigation row; centre by default. */
+  align?: 'start' | 'center';
+  /** Inherit the enclosing surface's text colour for a quiet action. */
+  tone?: 'inherit';
   /** A verb first, 3 words or fewer. Shown, or the accessible name of an icon-only button. */
   label: string;
   /** Leading icon; required when `iconOnly`. */
@@ -26,8 +30,8 @@ interface ButtonBase extends DataAttributes {
    * shows the same words. An explicit Tooltip around the button replaces it (for a side or a shortcut).
    */
   tooltip?: boolean;
-  /** `primary` for the one main action in a view, `default` otherwise, `quiet` inside toolbars and other enclosed groups, `danger` for an action that destroys or can't be undone. */
-  emphasis?: 'primary' | 'default' | 'quiet' | 'danger';
+  /** `primary` for the one main action in a view, `default` otherwise, `quiet` inside toolbars and other enclosed groups, `danger` for an action that destroys or can't be undone, `strong` for a main action on a brand-coloured panel where the brand fill would vanish (an ink fill: near-black on light, near-white on dark; Q140). */
+  emphasis?: 'primary' | 'default' | 'quiet' | 'danger' | 'strong';
   /** The action can't happen and there's nothing to say about why. Prefer `unavailable` with a reason: a disabled button can't be focused, so its reason can't be heard. */
   disabled?: boolean;
   /** The action can't happen now, and why, e.g. "Add a title first". The button stays focusable, keeps its contrast, does nothing when pressed and says why as its description and tooltip. */
@@ -154,7 +158,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -209,6 +213,8 @@ export function Button(props: ButtonProps) {
         href={router ? router.href(href) : href}
         data-dl="button"
         data-emphasis={emphasis}
+        data-align={align === 'start' ? align : undefined}
+        data-tone={tone}
         data-icon-only={iconOnly ? '' : undefined}
         data-size={size}
         data-unavailable={unavailable ? '' : undefined}
@@ -246,6 +252,8 @@ export function Button(props: ButtonProps) {
       type={type}
       data-dl="button"
       data-emphasis={emphasis}
+      data-align={align === 'start' ? align : undefined}
+      data-tone={tone}
       data-icon-only={iconOnly ? '' : undefined}
       data-size={size}
       data-progress={shownProgress}

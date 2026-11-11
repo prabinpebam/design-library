@@ -168,6 +168,24 @@
       "updated": "2026-11-09"
     },
     {
+      "path": "widths.md",
+      "title": "Widths of floating and overlaid surfaces",
+      "order": 10.37,
+      "icon": "width",
+      "type": "page",
+      "status": "draft",
+      "updated": "2026-11-11"
+    },
+    {
+      "path": "brand-colour.md",
+      "title": "Brand colour: the brand map and amounts",
+      "order": 10.38,
+      "icon": "palette",
+      "type": "page",
+      "status": "draft",
+      "updated": "2026-11-11"
+    },
+    {
       "path": "ui-states.md",
       "title": "UI states",
       "order": 10.4,
@@ -193,6 +211,15 @@
       "type": "page",
       "status": "draft",
       "updated": "2026-11-09"
+    },
+    {
+      "path": "replica-rules.md",
+      "title": "Replica method and rules",
+      "order": 10.44,
+      "icon": "rule",
+      "type": "page",
+      "status": "draft",
+      "updated": "2026-11-11"
     },
     {
       "path": "adversarial-loop.md",

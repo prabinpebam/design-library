@@ -17,6 +17,8 @@ const records = {
   chat: { chat: 'ChatAppView' },
   design: { editor: 'DesignAppSpec' },
   projects: { shared: 'ProjectRecord', issue: 'IssueDetail' },
+  ikea: { shared: 'StoreRecord' },
+  slack: { shared: 'WorkspaceRecord' },
 };
 
 const tmp = mkdtempSync(join(tmpdir(), 'content-schemas-'));

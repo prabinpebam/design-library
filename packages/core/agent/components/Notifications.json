@@ -65,6 +65,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/notifications",
   "principles": [
-    "elevation"
+    "elevation",
+    "widths"
   ]
 }

@@ -6,6 +6,8 @@ import type { ButtonSize } from './Button';
 import type { DataAttributes } from '../types';
 
 export interface TextAreaProps extends DataAttributes {
+  /** Fill an application pane; `measure` (default) caps running-text width. */
+  width?: 'measure' | 'fill';
   /** A noun phrase naming what goes in, with no colon: "Comment". */
   label: string;
   /** The current text. */
@@ -59,7 +61,7 @@ export interface TextAreaProps extends DataAttributes {
  * @key Tab: leaves the field; Enter adds a new line
  * @key Enter: with `onEnter`, sends; Shift+Enter adds a new line
  */
-export function TextArea({ label, value, onChange, hint, placeholder, rows = 4, grow = false, size = 'normal', maxLength, optional = false, readOnly = false, disabled = false, error, combobox, processing, hideLabel = false, onEnter, tray, toolbar, ...data }: TextAreaProps) {
+export function TextArea({ label, value, onChange, hint, placeholder, rows = 4, grow = false, size = 'normal', width = 'measure', maxLength, optional = false, readOnly = false, disabled = false, error, combobox, processing, hideLabel = false, onEnter, tray, toolbar, ...data }: TextAreaProps) {
   const said = useRef<string | undefined>(undefined);
   const text = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -67,9 +69,10 @@ export function TextArea({ label, value, onChange, hint, placeholder, rows = 4, 
     said.current = processing;
   }, [processing]);
   return (
-    <span {...data} data-dl="text-area" data-size={size} data-grow={grow ? '' : undefined} data-invalid={error ? '' : undefined} data-readonly={readOnly ? '' : undefined} data-processing={processing ? '' : undefined} data-composer={toolbar ? '' : undefined}>
+    <span {...data} data-dl="text-area" data-size={size} data-width={width === 'fill' ? width : undefined} data-grow={grow ? '' : undefined} data-invalid={error ? '' : undefined} data-readonly={readOnly ? '' : undefined} data-processing={processing ? '' : undefined} data-composer={toolbar ? '' : undefined}>
       <Field
         label={label}
+        width={width}
         hideLabel={hideLabel}
         hint={processing ? undefined : hint}
         error={error}

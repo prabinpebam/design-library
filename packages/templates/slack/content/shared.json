@@ -1,0 +1,47 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "slack",
+  "shared": true,
+  "contentVersion": 1,
+  "record": {
+    "name": "Fieldwork",
+    "currentUser": "Jamie Park",
+    "channel": "project-studio",
+    "topic": "A little space for the next big idea",
+    "date": "Wednesday, November 11",
+    "rail": [
+      {"label":"Home","icon":"organisation"},
+      {"label":"DMs","icon":"comment"},
+      {"label":"Activity","icon":"speaker"},
+      {"label":"Files","icon":"file"},
+      {"label":"More","icon":"more"}
+    ],
+    "sections": [
+      {"items":[{"name":"Unreads","icon":"list","unread":true},{"name":"Threads","icon":"comment"},{"name":"Drafts & sent","icon":"edit"}]},
+      {"title":"Starred","items":[{"name":"launch-plan","icon":"frame","unread":true},{"name":"team-notes","icon":"frame"}]},
+      {"title":"Channels","items":[{"name":"general","icon":"frame"},{"name":"project-studio","icon":"frame"},{"name":"design-reviews","icon":"frame","unread":true,"mentions":2},{"name":"announcements","icon":"frame","unread":true},{"name":"watercooler","icon":"frame"},{"name":"Add channels","icon":"plus"}]},
+      {"title":"Direct messages","items":[{"name":"Maya Chen","presence":"available","unread":true},{"name":"Alex Rivera","presence":"available"},{"name":"Sam Patel","presence":"away","unread":true,"mentions":1},{"name":"Jamie Park (you)","presence":"available"},{"name":"Invite people","icon":"plus"}]}
+    ],
+    "messages": [
+      {"id":"m1","author":"Maya Chen","time":"9:12 AM","text":"Morning, team! The updated direction for our autumn collection is ready for a look. I brought the notes from yesterday into one place.","reactions":[{"emoji":"👍","label":"Like","count":4},{"emoji":"❤️","label":"Love","count":2}],"replies":4},
+      {"id":"m2","author":"Maya Chen","time":"9:13 AM","text":"The main change is a calmer opening and more room for the work. Let me know what feels right.","grouped":true},
+      {"id":"m3","author":"Alex Rivera","time":"9:24 AM","text":"This feels much clearer. I put together a short outline for the review so we can spend more time on the details.","file":{"name":"Studio review notes.pdf","detail":"PDF · 248 KB"}},
+      {"id":"m4","author":"Sam Patel","time":"9:31 AM","text":"A small update from the build: the new navigation is in place. The notes below cover what changed and what to try.","unfurl":{"title":"A new home for the studio","site":"Fieldwork journal","text":"The latest workspace update: a simpler way to find the conversations and projects that matter."},"reactions":[{"emoji":"👍","label":"Like","count":3}]},
+      {"id":"m5","author":"Jamie Park","time":"10:02 AM","text":"Thanks for bringing this together. I’ll review the opening this morning and leave a few thoughts in the thread.","isNew":true},
+      {"id":"m6","author":"Maya Chen","time":"10:05 AM","text":"Perfect. We have time to explore both directions before the team review tomorrow.","reactions":[{"emoji":"❤️","label":"Love","count":1}]}
+    ],
+    "replies": [
+      {"id":"r1","author":"Alex Rivera","time":"9:18 AM","text":"The extra space around the opening makes such a difference. I’d keep that direction."},
+      {"id":"r2","author":"Sam Patel","time":"9:22 AM","text":"Agreed. I’ll check how the longer project names sit in the navigation."},
+      {"id":"r3","author":"Jamie Park","time":"9:28 AM","text":"I added the mobile notes to the review document."}
+    ],
+    "copy": {
+      "search":"Search Fieldwork","members":"View 24 members","huddle":"Start huddle","channelMenu":"Open channel menu","compose":"Write message","preferences":"Open preferences","messagePrefix":"Message","mentions":"mentions",
+      "messages":"Messages","canvas":"Canvas","files":"Files","addTab":"Add tab","newMessages":"New","reply":"Reply","thread":"Thread","closeThread":"Close thread","popout":"Open thread separately",
+      "format":"Show formatting","send":"Send message","sending":"Sending…","sent":"Sent","add":"Add attachment","emoji":"Add emoji","mention":"Mention someone","video":"Record video","audio":"Record audio",
+      "bold":"Bold","italic":"Italic","strike":"Strikethrough","link":"Insert link","list":"Bulleted list","numbered":"Numbered list","quote":"Block quote","code":"Code","more":"More actions",
+      "replies":"replies","replyAction":"Reply in thread","react":"Add reaction","save":"Save message","share":"Share message","lastReply":"Last reply 10:05 AM",
+      "emptySearch":"No messages match. Try another word.","results":"Search results","allFiles":"Shared files","searchHint":"Search messages in this workspace","back":"Back to channel"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "bedsheets",
+  "set": "Q140 IKEA home",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = hero raw",
+  "size": "1536x1152",
+  "quality": "medium",
+  "date": "2026-11-11",
+  "shipped": "packages/templates/ikea/assets/offer-bedsheets.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2 --no-trim",
+  "alt": "A made bed with white sheets and mustard cushions printed with leaves.",
+  "prompt": "Image 1 is a style reference only: copy its photographic style, lighting and colour treatment. Do not copy its subject or composition.\nShow: a close view of a made bed with a mustard-yellow patterned cushion and yellow patterned pillowcase on white pillows, a white bedside table with books and a small vase, a framed print on a warm grey wall.\nUse: an offer tile on a shop home page, shown 4:3 at about 300x225.\nStyle: bright natural-light lifestyle photograph for an affordable Scandinavian home furnishing shop; soft daylight; light birch and oak wood, warm white, light grey and muted colours; realistic photographic detail; people are ordinary, friendly and natural, not posed models.\nConstraints: no text, no letters or numbers, no logos or trademarks, no labels or price tags, no watermark, no frame or border."
+}

@@ -27,6 +27,9 @@ export interface PopoverProps extends DataAttributes {
   open?: boolean;
   /** Asked to open or close: the trigger, Escape, a press outside, or focus leaving. */
   onOpenChange?: (open: boolean) => void;
+  /** Its width step (Q130, docs/widths.md): `sm` a line of help or a confirmation, `md` (default) help with a link or a
+   * short form, `lg` a set of filters or a form with paired fields. Wider content belongs in a Dialog or Sheet. */
+  width?: 'sm' | 'md' | 'lg';
 }
 
 /**
@@ -45,7 +48,7 @@ export interface PopoverProps extends DataAttributes {
  * @key Escape: closes it; focus returns to the trigger
  * @key Tab: moves through its controls; past the last one it closes and focus moves on
  */
-export function Popover({ trigger, title, children, side = 'bottom', open: controlled, onOpenChange, ...data }: PopoverProps) {
+export function Popover({ trigger, title, children, side = 'bottom', open: controlled, onOpenChange, width, ...data }: PopoverProps) {
   const id = useId();
   const root = useRef<HTMLSpanElement>(null);
   const anchor = useRef<HTMLElement | null>(null);
@@ -106,7 +109,7 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
       }}
     >
       <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />
-      <div ref={surface} id={`${id}-surface`} role="dialog" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : trigger.label} data-dl-part="surface" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" tabIndex={-1} hidden={!open}>
+      <div ref={surface} id={`${id}-surface`} role="dialog" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : trigger.label} data-dl-part="surface" data-width={width === 'md' ? undefined : width} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" tabIndex={-1} hidden={!open}>
         {title && (
           <Heading level={3} size={4} id={`${id}-title`}>
             {title}

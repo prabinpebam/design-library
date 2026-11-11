@@ -51,9 +51,9 @@
     backdrop-filter: var(--material-backdrop);
   }
 
-  /* AR11: a sheet covering more than about half the window goes solid (s 20, m 26, l 40 rem wide). */
-  /* tied to the sheet's own width: twice size m (26 rem), not a breakpoint */
-  @media (max-width: 52rem) {
+  /* AR11: a sheet covering more than about half the window goes solid (s 20, m 24, l 40 rem wide: size.width-md, -lg, -2xl). */
+  /* tied to the sheet's own width: twice size m (24 rem), not a breakpoint */
+  @media (max-width: 48rem) {
     [data-dl='sheet'][data-modal='false']:not([data-size='l']) {
       background-color: var(--color-bg-raised);
       -webkit-backdrop-filter: none;

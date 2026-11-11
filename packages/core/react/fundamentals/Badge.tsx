@@ -4,7 +4,7 @@ import { Icon } from './Icon';
 import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 
-export type BadgeTone = 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'danger';
+export type BadgeTone = 'accent' | 'highlight' | 'offer' | 'new' | 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 export type Presence = 'available' | 'busy' | 'do-not-disturb' | 'away' | 'offline';
 
 export interface BadgeProps extends DataAttributes {
@@ -12,7 +12,7 @@ export interface BadgeProps extends DataAttributes {
   kind?: 'label' | 'count' | 'dot' | 'status' | 'presence' | 'icon';
   /** The words, for `label` and `status`: a state or a category, in sentence case, never truncated. */
   children?: ReactNode;
-  /** Meaning through the status roles only; `accent` (default) for a category with no status. The words or the icon always say it too. */
+  /** Meaning through the status roles only; `accent` (default) for a category with no status. `offer` (a sale, a lower price) and `new` (something new) are promotions, never status (`color.promo.*`, Q139): strong is a filled tag for a picture's corner, subtle the words alone in the promotion's colour, over a product's name. The words or the icon always say it too. */
   tone?: BadgeTone;
   /** A category colour, 1-8 (`color.category.*`, Q44), for a badge that names a category (a project, a topic, a series), never a status. Replaces `tone`. Subtle: a quiet fill with a dot in the colour; strong: the colour as the fill. Keep one number per category everywhere it appears. */
   category?: number;

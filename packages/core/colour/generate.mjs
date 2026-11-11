@@ -204,6 +204,68 @@ export function generate(/** @type {any} */ config) {
     pairs.push({ fg: `color.brand.on-${s}`, bg: `color.brand.${s}`, min: 4.5 });
   }
 
+  // Q132 (trial, F15.BC2): the brand map's part roles (docs/brand-colour.md#the-parts). Components read a part's role,
+  // never a colour number. Each defaults to today's role, so a config without a map looks exactly as before; the
+  // library's map control overrides them live. Parts that already own a role keep it: Links (color.text-link), Focus ring
+  // (color.focus), Selected tint (state.selected), Brand text and icons (color.text-accent).
+  const part = (/** @type {string} */ to, /** @type {string} */ what) => alias(to, `Brand map part: ${what}`);
+  const map = /** @type {any} */ ({
+    $description: 'Brand map part roles (Q132): which brand colour each coloured part takes. Read by components; set by the brand map.',
+    'action-fill': part('color.accent', 'Action fill, the primary Button and fill progress'),
+    'action-fill-hover': part('color.accent-hover', 'Action fill while hovered'),
+    'action-fill-pressed': part('color.accent-pressed', 'Action fill while pressed'),
+    'action-fill-on': part('color.text-on-accent', 'Label and icon on the action fill'),
+    'on-fill': part('color.accent', 'On fills: Switch track on, Checkbox and Radio checked, Slider fill and thumb, chosen day'),
+    'on-fill-hover': part('color.accent-hover', 'On fills while hovered'),
+    'on-fill-pressed': part('color.accent-pressed', 'On fills while pressed'),
+    'mark-on-fill': part('color.text-on-accent', 'Marks on fills: Checkbox tick, Slider step dots, chosen day number'),
+    'switch-handle': part('color.text-on-accent', 'Switch handle while on'),
+    'selection-indicator': part('color.accent', 'Selection indicators: Tabs indicator, Carousel current dot, tile outline, Avatar ring'),
+    progress: part('color.accent', 'Progress and activity: Progress fill, busy borders, spinners'),
+    'drop-target': part('color.accent', 'Drop targets: Board, FileUpload, Canvas selection, AlignmentPicker mark'),
+    'brand-tint': part('color.accent-subtle', 'Brand tint: drag-over, focused date and time segments, fill-progress track'),
+    'chosen-segment': part('color.accent', 'Chosen segment of a SegmentedControl'),
+    'chosen-segment-on': part('color.text-on-accent', 'Label on the chosen segment'),
+    chip: part('color.accent', 'Selected Chip outline'),
+    'chip-tint': part('color.accent-subtle', 'Selected Chip fill'),
+    badge: part('color.accent', 'Brand Badge, strong'),
+    'badge-on': part('color.text-on-accent', 'Label on a strong brand Badge'),
+    'badge-tint': part('color.accent-subtle', 'Brand Badge, subtle'),
+    rating: part('color.accent', 'Rating filled stars'),
+    'rating-hover': part('color.accent-hover', 'Rating stars while previewed'),
+    illustration: part('color.accent', 'Illustration accents: the accent role class in art, Image duotone and decoration'),
+    'button-ring': part('color.map.action-fill', 'Button ring inside the primary Button; the fill’s own colour (not drawn) until a map gives it one'),
+    'highlight-badge': part(`color.brand.${accent}`, 'Highlight Badge: “New”, a promotion'),
+    'highlight-badge-on': part(`color.brand.on-${accent}`, 'Label on a highlight Badge'),
+    // Q140: the brand surfaces (docs/brand-colour.md "Surfaces"): a band of the lead colour, a feature panel of the second.
+    band: part('color.accent', 'Brand band: a full block of the lead colour (a promotion strip, a member panel)'),
+    'band-on': part('color.text-on-accent', 'Words and marks on the brand band'),
+    feature: part(`color.brand.${accent}`, 'Feature panel: a block of the second colour (a sale block, a chat header)'),
+    'feature-on': part(`color.brand.on-${accent}`, 'Words and marks on the feature panel'),
+    'feature-tint': part('color.accent-subtle', 'Feature tint: a pale wash for a quiet feature area'),
+    nav: part('color.bg-sunken', 'Navigation surface'),
+    'nav-on': part('color.text', 'Navigation labels and icons'),
+    'nav-on-muted': part('color.text-muted', 'Secondary navigation labels'),
+    'nav-hover': part('state.hover', 'Navigation row while hovered'),
+    'nav-selected': part('color.accent-subtle', 'Current navigation row'),
+    'nav-selected-on': part('color.text', 'Words on the current navigation row'),
+    'nav-shell': part('color.bg-sunken', 'Application rail and title bar surface'),
+    'nav-shell-on': part('color.text', 'Words and icons on the application rail'),
+  });
+
+  // Q139 R1: promotion marks (a sale, something new) are not status, so they get their own roles: a template re-colours
+  // them without turning its warnings orange or its errors sale-red. Defaults keep today's look: the sale reads the
+  // danger hue (the common convention), "new" the brand's highlight.
+  const promo = /** @type {any} */ ({
+    $description: 'Promotion marks (Q139): a sale or lower price (offer) and something new (new). Never status; a template sets these, never color.status.*.',
+    offer: alias('color.status.danger.fill', 'A sale or lower price: the tag or box fill'),
+    'offer-on': alias('color.status.danger.on-fill', 'Words on the offer fill'),
+    'offer-text': alias('color.status.danger.fg', 'A sale or lower price in words on the page: "Lower price"'),
+    new: alias(`color.brand.${accent}`, 'Something new: the tag fill (the brand highlight, as the highlight Badge)'),
+    'new-on': alias(`color.brand.on-${accent}`, 'Words on the new fill'),
+    'new-text': alias('color.text-accent', 'Something new in words on the page: "New"'),
+  });
+
   const SPECTRUM_PURPOSE = 'Data visualisation (series, categories), decoration and illustration, where many distinct hues are needed. Never status (use color.status.*), never a component’s own colours.';
   const meta = (/** @type {string} */ purpose) => ({ [EXT]: { purpose, functional: false } });
   const spectrum = /** @type {any} */ ({ $description: `The full hue range: a defined colour for every perceptible hue, the same in every context. Purpose: ${SPECTRUM_PURPOSE}`, $extensions: meta(SPECTRUM_PURPOSE) });
@@ -255,6 +317,6 @@ export function generate(/** @type {any} */ config) {
       });
     }
   }
-  const tree = { $comment: 'Generated by tools/colour.mjs from colour.config.json. Never edit by hand.', p, color: { brand, ...(category ? { category } : {}), ...(ai ? { ai } : {}) }, spectrum, set };
+  const tree = { $comment: 'Generated by tools/colour.mjs from colour.config.json. Never edit by hand.', p, color: { brand, map, promo, ...(category ? { category } : {}), ...(ai ? { ai } : {}) }, spectrum, set };
   return { tree, pairs, errors };
 }

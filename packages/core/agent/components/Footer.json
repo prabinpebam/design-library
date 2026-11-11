@@ -51,6 +51,11 @@
           "description": "The legal line: copyright or licence, e.g. \"© 2026 Northwind. Text under CC BY 4.0.\""
         },
         {
+          "name": "tools",
+          "type": "ReactNode",
+          "description": "A row of controls between the sections and the small print (Q140): the site's social links as icon buttons, the region and language, cookie settings. It wraps; place Buttons or a Cluster, never plain text."
+        },
+        {
           "name": "headingLevel",
           "type": "2 | 3",
           "default": "2",
@@ -116,6 +121,8 @@
     "--c-footer-gap",
     "--c-footer-heading-gap",
     "--c-footer-identity-width",
+    "--c-footer-link",
+    "--c-footer-link-decoration",
     "--c-footer-link-gap",
     "--c-footer-meta-gap",
     "--c-footer-meta-link-gap",

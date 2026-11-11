@@ -16,6 +16,10 @@
     border: none;
   }
 
+  [data-dl='field'][data-width='fill'] {
+    max-inline-size: none;
+  }
+
   /* A fieldset's legend sits outside its grid, so it carries the gap below it as its own padding. */
   fieldset[data-dl='field'] > legend[data-dl-part='label'],
   fieldset[data-dl='field'] > [data-dl-part='label-row'] {

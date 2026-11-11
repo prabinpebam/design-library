@@ -80,7 +80,7 @@
   [data-dl='avatar'] [data-dl-part='face'][data-activity] {
     box-shadow:
       0 0 0 var(--c-avatar-ring-gap) var(--color-bg),
-      0 0 0 calc(var(--c-avatar-ring-gap) + var(--c-avatar-ring-width)) var(--color-accent);
+      0 0 0 calc(var(--c-avatar-ring-gap) + var(--c-avatar-ring-width)) var(--color-map-selection-indicator);
   }
 
   [data-dl='avatar'] [data-dl-part='initials'] {

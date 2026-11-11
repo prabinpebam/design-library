@@ -38,6 +38,12 @@
           "description": "The group's visible label: what the chips are (\"Recipients\", \"Status\")."
         },
         {
+          "name": "hideLabel",
+          "type": "boolean",
+          "default": "false",
+          "description": "Hides the visible label where a heading beside the chips already says what they are (Q139 R6); the label stays the group's accessible name."
+        },
+        {
           "name": "description",
           "type": "string",
           "description": "One line under the label, when the chips need explaining."

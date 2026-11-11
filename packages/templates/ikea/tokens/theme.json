@@ -1,0 +1,385 @@
+{
+  "$description": "The IKEA store template's theme (owner Q137): IKEA blue and yellow, Noto Sans and pill buttons, for this template's screens only, through core tokens under [data-template='ikea']. Colours are the brand's public blue #0058A3 and yellow #FFDB00, not copied files. Run npm run tokens after a change.",
+  "color.accent": {
+    "$value": "#0058a3",
+    "$description": "IKEA blue: filled buttons, the selected choice, the bag count"
+  },
+  "color.accent-hover": {
+    "$value": "#004f93",
+    "$description": "The blue, hovered: one step darker (Q134: a derived step, not a misuse of the brand)"
+  },
+  "color.accent-pressed": {
+    "$value": "#004280",
+    "$description": "The blue, pressed"
+  },
+  "color.accent-subtle": {
+    "$value": {
+      "light": "#e5eef6",
+      "dark": "#14283d"
+    },
+    "$description": "A chosen tile or row: a pale blue"
+  },
+  "color.text-on-accent": {
+    "$value": "#ffffff",
+    "$description": "White on the blue: 7.4:1"
+  },
+  "color.text-link": {
+    "$value": "{color.text}",
+    "$description": "Q141: ikea.com text links are ink with an underline, not blue"
+  },
+  "color.focus": {
+    "$value": {
+      "light": "#0058a3",
+      "dark": "#ffdb00"
+    },
+    "$description": "Focus rings: the blue on light pages, the yellow on dark"
+  },
+  "c.section.tone-tint": {
+    "$value": {
+      "light": "#fff4b8",
+      "dark": "#3b3510"
+    },
+    "$description": "The members' offer band: a pale IKEA yellow"
+  },
+  "font.display": {
+    "$value": "'Noto Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+    "$description": "Headlines in Noto Sans, bold"
+  },
+  "font.text": {
+    "$value": "'Noto Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+    "$description": "Body text in Noto Sans"
+  },
+  "font.ui": {
+    "$value": "'Noto Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+    "$description": "Controls and labels in Noto Sans"
+  },
+  "c.button.radius": {
+    "$value": "999px",
+    "$description": "Buttons are pills"
+  },
+  "c.button.radius-sm": {
+    "$value": "999px",
+    "$description": "Small buttons are pills too"
+  },
+  "c.button.radius-lg": {
+    "$value": "999px",
+    "$description": "Large buttons are pills too"
+  },
+  "c.card.radius": {
+    "$value": "0px",
+    "$description": "Product and room pictures are square-cornered"
+  },
+  "c.section.tone-radius": {
+    "$value": "0px",
+    "$description": "Bands are square-cornered"
+  },
+  "color.promo.new-text": {
+    "$value": {
+      "light": "#ca5008",
+      "dark": "#ff9a52"
+    },
+    "$description": "A New tag in words over a name: a warm orange, lighter on dark so it reads (Q139: promotions, never status)"
+  },
+  "color.promo.new": {
+    "$value": {
+      "light": "#ca5008",
+      "dark": "#ff9a52"
+    },
+    "$description": "A New tag on a picture: the warm orange (Q139: promotions, never status)"
+  },
+  "color.promo.new-on": {
+    "$value": {
+      "light": "#ffffff",
+      "dark": "#111111"
+    },
+    "$description": "Words on the orange tag (Q139: promotions, never status)"
+  },
+  "color.promo.offer-text": {
+    "$value": {
+      "light": "#cc0008",
+      "dark": "#ff7a7a"
+    },
+    "$description": "A Lower price tag in words over a name: the sale red (Q139: promotions, never status)"
+  },
+  "color.promo.offer": {
+    "$value": {
+      "light": "#cc0008",
+      "dark": "#ff7a7a"
+    },
+    "$description": "A Lower price tag on a picture, and the lowest-price box offset: the sale red (Q139: promotions, never status)"
+  },
+  "color.promo.offer-on": {
+    "$value": {
+      "light": "#ffffff",
+      "dark": "#111111"
+    },
+    "$description": "Words on the red tag (Q139: promotions, never status)"
+  },
+  "color.map.highlight-badge": {
+    "$value": "#ffdb00",
+    "$description": "The lowest-price box: IKEA yellow, the brand’s second colour"
+  },
+  "color.map.highlight-badge-on": {
+    "$value": "#111111",
+    "$description": "The price on the yellow box"
+  },
+  "c.price.highlight-offset": {
+    "$value": "2px",
+    "$description": "The lowest-price box’s solid offset in the offer red, IKEA’s stacked-price look (Q139 R4: a theme value, not a part)"
+  },
+  "color.map.band": {
+    "$value": "#007cc1",
+    "$description": "The brand band (Q140, Q141): IKEA Family blue, a lighter blue than the logo's: the Family price tags, the Family panel, the offer ticket"
+  },
+  "color.map.band-on": {
+    "$value": "#ffffff",
+    "$description": "Words on the blue band"
+  },
+  "color.map.feature": {
+    "$value": "#ffdb00",
+    "$description": "The feature panel (Q140): IKEA yellow blocks, the sale block, the store band, the chat header"
+  },
+  "color.map.feature-on": {
+    "$value": "#111111",
+    "$description": "Words on the yellow panel"
+  },
+  "color.map.feature-tint": {
+    "$value": {
+      "light": "#fff6c2",
+      "dark": "#3b3510"
+    },
+    "$description": "A pale yellow wash for a quiet feature area"
+  },
+  "radius.sm": {
+    "$value": "0px",
+    "$description": "Q141: IKEA is square-cornered: pictures, panels, tags, cards. Pills are chosen, not the shape: buttons, chips and the search keep radius.pill"
+  },
+  "radius.md": {
+    "$value": "0px",
+    "$description": "Q141: square controls' corners where they aren't pills (menus, list items, fields other than the search)"
+  },
+  "radius.lg": {
+    "$value": "0px",
+    "$description": "Q141: square surfaces: pictures (c.image.radius), cards, dialogs"
+  },
+  "c.badge.radius": {
+    "$value": "0px",
+    "$description": "Q141: tags on pictures are square boxes (New, Lower price, IKEA Family price)"
+  },
+  "c.field.radius": {
+    "$value": "999px",
+    "$description": "Q141: fields are pills on IKEA (the search, the postcode field)"
+  },
+  "color.bg": {
+    "$value": {
+      "light": "#ffffff",
+      "dark": "#111111"
+    },
+    "$description": "Q141: the page is plain white"
+  },
+  "color.bg-raised": {
+    "$value": {
+      "light": "#ffffff",
+      "dark": "#1c1c1c"
+    },
+    "$description": "Q141: raised surfaces are white too"
+  },
+  "color.bg-sunken": {
+    "$value": {
+      "light": "#f5f5f5",
+      "dark": "#1f1f1f"
+    },
+    "$description": "Q141: IKEA's light grey: chips, the search, the grey bands, the footer"
+  },
+  "color.text": {
+    "$value": {
+      "light": "#111111",
+      "dark": "#f5f5f5"
+    },
+    "$description": "Q141: headings, names and labels in IKEA's near-black"
+  },
+  "color.text-muted": {
+    "$value": {
+      "light": "#484848",
+      "dark": "#c8c8c8"
+    },
+    "$description": "Q141: running text, nav and footer links in IKEA's dark grey"
+  },
+  "type.body.size": {
+    "$value": "0.875rem",
+    "$description": "Q141: IKEA's body text is 14 px"
+  },
+  "type.body.leading": {
+    "$value": "1.5714",
+    "$description": "Q141: 14/22"
+  },
+  "type.label.size": {
+    "$value": "0.875rem",
+    "$description": "Q141: labels and button words at 14 px"
+  },
+  "type.heading-2.size": {
+    "$value": "1.5rem",
+    "$description": "Q141: section titles are 24 px bold (Offers by category)"
+  },
+  "type.heading-2.leading": {
+    "$value": "1.45",
+    "$description": "Q141: 24/34.8"
+  },
+  "type.heading-3.size": {
+    "$value": "1.5rem",
+    "$description": "Q141: panel titles are 24 px bold"
+  },
+  "type.heading-3.weight": {
+    "$value": "700",
+    "$description": "Q141: bold"
+  },
+  "type.heading-4.size": {
+    "$value": "1rem",
+    "$description": "Q141: footer column titles are 16 px bold"
+  },
+  "type.heading-4.weight": {
+    "$value": "700",
+    "$description": "Q141: bold"
+  },
+  "type.jumbo.size": {
+    "$value": "clamp(3.5rem, 1rem + 10.5vw, 9.375rem)",
+    "$description": "Q141: the poster headline on a sale block (Up to 40% off): 150 px at a 1280 px window, never below 56 px"
+  },
+  "type.jumbo.leading": {
+    "$value": "1",
+    "$description": "Q141: poster lines set solid"
+  },
+  "type.jumbo.tracking": {
+    "$value": "-0.049em",
+    "$description": "Q141: IKEA's tight poster tracking"
+  },
+  "space.margin-page": {
+    "$value": "clamp(1rem, 3.75vw, 3rem)",
+    "$description": "Q141: 48 px page margin at 1280 px, 16 px on a phone"
+  },
+  "c.footer.link": {
+    "$value": "{color.text-muted}",
+    "$description": "Q141: footer links in the dark grey"
+  },
+  "c.footer.link-decoration": {
+    "$value": "none",
+    "$description": "Q141: footer links have no line at rest; hover keeps it"
+  },
+  "c.rail.gap": {
+    "$value": "1.25rem",
+    "$description": "Q141: 20 px between the cards of a rail, as ikea.com"
+  },
+  "c.rail.item": {
+    "$value": "14.5625rem",
+    "$description": "Q141: a rail card is 233 px wide, five across a 1184 px page"
+  },
+  "c.price.value-size": {
+    "$value": "1.75rem",
+    "$description": "Q141: product prices are large bold numbers (28 px)"
+  },
+  "color.map.rating": {
+    "$value": {
+      "light": "#111111",
+      "dark": "#f5f5f5"
+    },
+    "$description": "Q141: rating stars are black, not the brand colour"
+  },
+  "color.map.rating-hover": {
+    "$value": {
+      "light": "#484848",
+      "dark": "#c8c8c8"
+    },
+    "$description": "Q141: a star under the pointer, a step lighter"
+  },
+  "c.site-layout.width": {
+    "$value": "90rem",
+    "$description": "Q141: the page runs to the window margins (1184 px of content at 1280), as ikea.com"
+  },
+  "space.stack-section": {
+    "$value": "{space.16}",
+    "$description": "Q141: ikea.com spaces its home sections about 64-88 px apart."
+  },
+  "c.section.gap": {
+    "$value": "{space.8}",
+    "$description": "Q141: a section heading sits 32 px above its row on ikea.com."
+  },
+  "c.chip.fill": {
+    "$value": "{color.bg-sunken}",
+    "$description": "Q141: ikea.com filter pills: a grey fill"
+  },
+  "c.chip.edge": {
+    "$value": "transparent",
+    "$description": "Q141: ikea.com filter pills: no outline at rest; the fill is the boundary"
+  },
+  "c.chip.selected-ring": {
+    "$value": "{border.thick}",
+    "$description": "Q141: ikea.com filter pills: on is a 2 px ring"
+  },
+  "c.chip.weight": {
+    "$value": "{weight.bold}",
+    "$description": "Q141: ikea.com filter pills: bold words"
+  },
+  "c.chip.check": {
+    "$value": "none",
+    "$description": "Q141: ikea.com filter pills: no check; the thick ring marks on"
+  },
+  "c.chip.padding-inline": {
+    "$value": "{space.inset-lg}",
+    "$description": "Q141: ikea.com filter pills: 24 px either side"
+  },
+  "color.map.chip": {
+    "$value": {
+      "light": "#111111",
+      "dark": "#f5f5f5"
+    },
+    "$description": "Q141: ikea.com filter pills: the ring of the one that is on is ink, not blue"
+  },
+  "color.map.chip-tint": {
+    "$value": "{color.bg}",
+    "$description": "Q141: ikea.com filter pills: the one that is on goes white"
+  },
+  "c.grid.aside": {
+    "$value": "20rem",
+    "$description": "Q141: the offer panel beside the deals is 320 px on ikea.com"
+  },
+  "c.rail.item-l": {
+    "$value": "19.125rem",
+    "$description": "Q141: a deals tile is 306 px on ikea.com"
+  },
+  "c.button.default-fill": {
+    "$value": "transparent",
+    "$description": "Q141: IKEA secondary buttons are outlines"
+  },
+  "c.button.default-edge": {
+    "$value": "{color.text}",
+    "$description": "Q141: a 1 px ink outline"
+  },
+  "c.footer.link-gap": {
+    "$value": "{space.4}",
+    "$description": "Q141: 16 px between footer links on ikea.com"
+  },
+  "c.footer.heading-gap": {
+    "$value": "{space.4}",
+    "$description": "Q141: the column heading stands 16 px above its links"
+  },
+  "c.footer.identity-width": {
+    "$value": "20rem",
+    "$description": "Q141: the promo column is about 320 px"
+  },
+  "c.menu-button.fill": {
+    "$value": "{color.bg-sunken}",
+    "$description": "Q141: ikea.com menus open from grey filter pills (Sort, Filter)"
+  },
+  "c.menu-button.border": {
+    "$value": "transparent",
+    "$description": "Q141: the filter pill has no edge"
+  },
+  "c.menu-button.padding-inline": {
+    "$value": "{space.inset-md}",
+    "$description": "Q141: 16 px inside the filter pill"
+  },
+  "color.bg-control": {
+    "$value": "{color.bg}",
+    "$description": "Q141: ikea.com controls (choice cards, steppers, fields) are white with a grey edge, not grey-filled"
+  }
+}

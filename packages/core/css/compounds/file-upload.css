@@ -31,8 +31,8 @@
   }
 
   [data-dl='file-upload'] [data-dl-part='zone'][data-over] {
-    background-color: var(--color-accent-subtle);
-    outline-color: var(--color-accent);
+    background-color: var(--color-map-brand-tint);
+    outline-color: var(--color-map-drop-target);
     color: var(--color-text);
   }
 

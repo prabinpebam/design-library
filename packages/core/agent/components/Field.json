@@ -19,6 +19,12 @@
       "extends": "DataAttributes",
       "props": [
         {
+          "name": "width",
+          "type": "'measure' | 'fill'",
+          "default": "'measure'",
+          "description": "Fill an application region; `measure` (default) caps the line length."
+        },
+        {
           "name": "label",
           "type": "string",
           "required": true,

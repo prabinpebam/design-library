@@ -9,12 +9,14 @@ export interface GridProps extends DataAttributes {
   /**
    * Two uneven columns instead of equal ones (IP20): `2:1` and `3:2` give the start column the larger share, `1:2`
    * and `2:3` the end column; `aside` keeps the start column at `--c-grid-aside` (a heading beside its content) and
-   * gives the end column the rest. Children alternate start, end, start, end. Below two columns' width (two
+   * gives the end column the rest, and `aside-end` the reverse (the content, then a fixed column). Children alternate start, end, start, end. Below two columns' width (two
    * `size.column-min` and a gutter) they stack in source order. Default: equal columns.
    */
-  ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside';
+  ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside' | 'aside-end';
   /** The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap). */
   gap?: 'group' | 'section';
+  /** The narrowest a column gets before the grid drops one (Q139 R2): `s` (`size.column-min-s`, 176 px) for small things many to a row, like products in a shop; `m` (default, `size.column-min`, 256 px); `l` (`size.column-min-l`, 320 px) for cells read at length. */
+  min?: 's' | 'm' | 'l';
 }
 
 /**
@@ -29,9 +31,9 @@ export interface GridProps extends DataAttributes {
  * @a11y A plain `div` with no role: it arranges, it doesn't group for assistive technology. Reading order is the
  * source order, row by row.
  */
-export function Grid({ children, max, ratio, gap = 'group', ...data }: GridProps) {
+export function Grid({ children, max, ratio, gap = 'group', min = 'm', ...data }: GridProps) {
   return (
-    <div {...data} data-dl="grid" data-max={ratio ? undefined : max} data-ratio={ratio} data-gap={gap === 'section' ? 'section' : undefined}>
+    <div {...data} data-dl="grid" data-max={ratio ? undefined : max} data-ratio={ratio} data-gap={gap === 'section' ? 'section' : undefined} data-min={min === 'm' ? undefined : min}>
       {children}
     </div>
   );

@@ -26,3 +26,6 @@ apps/library/public/zz-sync-probe.html
 
 # Installable tarballs for separate projects (tools/pack.mjs)
 /.packages/
+
+# Visual regression sweep: frozen base build, working-copy build and screenshots (tools/template-regression.mjs)
+/.shots/

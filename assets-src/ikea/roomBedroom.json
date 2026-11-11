@@ -1,0 +1,13 @@
+{
+  "id": "roomBedroom",
+  "set": "Q137 IKEA store",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = hero raw",
+  "size": "1536x1024",
+  "quality": "medium",
+  "date": "2026-11-11",
+  "shipped": "packages/templates/ikea/assets/room-bedroom.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 480 --density 2 --no-trim",
+  "alt": "A bedroom with a white double bed, a grey throw, a bench at its foot and an oak chest of drawers.",
+  "prompt": "medium 1536x1024 ref=hero\nImage 1 is a style reference only: copy its photographic style, background, lighting, framing scale and colour treatment. Do not copy its subject. Show: a calm bedroom with a white double bed with white and light grey bedding, a small bedside table with a mushroom glass lamp, and woven baskets.\nUse: a room picture on a furniture shop's room-inspiration card, shown 3:2 up to 600×400.\nStyle: bright natural-light interior photograph of an affordable Scandinavian home; daylight from a window on the left; white walls, light birch and oak wood, soft textiles in warm white, light grey and muted blue; lived-in but tidy; wide eye-level view; realistic photographic detail.\nConstraints: no text, no letters or numbers, no logos or trademarks, no labels or price tags, no watermark, no frame or border, no people."
+}

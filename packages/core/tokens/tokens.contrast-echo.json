@@ -11,6 +11,21 @@
         "$description": "A point at rest (echoed for contrast contexts)"
       }
     },
+    "button": {
+      "$extensions": {
+        "owner": "Button"
+      },
+      "default-edge": {
+        "$type": "color",
+        "$value": "{color.border-control}",
+        "$description": "Q141: the default button's edge. A brand whose secondary button is an outline sets it to the text colour. (echoed for contrast contexts)"
+      },
+      "default-fill": {
+        "$type": "color",
+        "$value": "{color.bg-control}",
+        "$description": "Q141: the default button's fill. A brand whose secondary button is an outline sets it transparent. (echoed for contrast contexts)"
+      }
+    },
     "canvas": {
       "$extensions": {
         "owner": "Canvas"
@@ -19,6 +34,21 @@
         "$type": "color",
         "$value": "{color.text-muted}",
         "$description": "A frame's name while the frame is selected (the same as at rest by default; a theme may tint it) (echoed for contrast contexts)"
+      }
+    },
+    "chip": {
+      "$extensions": {
+        "owner": "Chip"
+      },
+      "edge": {
+        "$type": "color",
+        "$value": "{color.border-control}",
+        "$description": "A chip at rest: its outline, the boundary that says it can change (a theme with a filled chip may make it transparent; the fill is the boundary then) (echoed for contrast contexts)"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{color.bg-control}",
+        "$description": "A chip at rest: its fill (Q141: a shop theme fills its filter pills) (echoed for contrast contexts)"
       }
     },
     "code": {
@@ -122,8 +152,13 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{color.border-control}",
-        "$description": "The button's outline: the soft control outline its fill already marks, text strength in more contrast (Q71) (echoed for contrast contexts)"
+        "$value": "{c.button.default-edge}",
+        "$description": "Q141: the default Button's edge. (echoed for contrast contexts)"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{c.button.default-fill}",
+        "$description": "Q141: the trigger's fill, the default Button's. (echoed for contrast contexts)"
       }
     },
     "popup": {
@@ -134,6 +169,16 @@
         "$type": "color",
         "$value": "{color.border}",
         "$description": "The popup edge over the page (echoed for contrast contexts)"
+      }
+    },
+    "price": {
+      "$extensions": {
+        "owner": "Price"
+      },
+      "was": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "The line naming the earlier price (echoed for contrast contexts)"
       }
     },
     "progress": {
@@ -179,6 +224,11 @@
         "$type": "color",
         "$value": "{color.text-muted}",
         "$description": "The thumb while hovered or dragged (echoed for contrast contexts)"
+      },
+      "line-track": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "The line bar's track: the whole row's length (echoed for contrast contexts)"
       }
     },
     "site-header": {
@@ -203,6 +253,13 @@
     }
   },
   "color": {
+    "map": {
+      "nav-on-muted": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "Brand map part: Secondary navigation labels (echoed for contrast contexts)"
+      }
+    },
     "status": {
       "neutral": {
         "fg": {

@@ -1,0 +1,700 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "ikea",
+  "shared": true,
+  "contentVersion": 1,
+  "record": {
+    "store": "IKEA",
+    "currency": "EUR",
+    "categories": [
+      {
+        "id": "sofas",
+        "label": "Sofas and armchairs"
+      },
+      {
+        "id": "tables",
+        "label": "Tables and chairs"
+      },
+      {
+        "id": "beds",
+        "label": "Beds"
+      },
+      {
+        "id": "storage",
+        "label": "Storage"
+      },
+      {
+        "id": "lighting",
+        "label": "Lighting"
+      },
+      {
+        "id": "office",
+        "label": "Home office"
+      },
+      {
+        "id": "decor",
+        "label": "Decoration"
+      }
+    ],
+    "products": [
+      {
+        "id": "sofa",
+        "name": "LÖVNÄS",
+        "kind": "3-seat sofa, light grey",
+        "category": "sofas",
+        "price": 499,
+        "was": 549,
+        "rating": 4.5,
+        "reviews": 1284,
+        "picture": "sofa",
+        "tag": "Lower price",
+        "finishes": [
+          "Light grey",
+          "Dark blue",
+          "Beige"
+        ],
+        "description": "Deep seats, loose cushions and covers you can take off and wash. The birch legs lift it off the floor so it's easy to clean under.",
+        "measurements": [
+          {
+            "label": "Width",
+            "value": "214 cm"
+          },
+          {
+            "label": "Depth",
+            "value": "88 cm"
+          },
+          {
+            "label": "Height",
+            "value": "83 cm"
+          },
+          {
+            "label": "Seat height",
+            "value": "45 cm"
+          }
+        ]
+      },
+      {
+        "id": "armchair",
+        "name": "SVÄNGBY",
+        "kind": "Armchair, birch and natural",
+        "category": "sofas",
+        "price": 129,
+        "rating": 4.7,
+        "reviews": 3410,
+        "picture": "armchair",
+        "finishes": [
+          "Natural",
+          "Dark grey"
+        ],
+        "description": "A bent birch frame that gives a little as you sit, with a thick cushion. It sits well beside a sofa or alone by a window.",
+        "measurements": [
+          {
+            "label": "Width",
+            "value": "68 cm"
+          },
+          {
+            "label": "Depth",
+            "value": "82 cm"
+          },
+          {
+            "label": "Height",
+            "value": "100 cm"
+          }
+        ]
+      },
+      {
+        "id": "coffee-table",
+        "name": "RUNDHOLM",
+        "kind": "Coffee table, oak veneer",
+        "category": "tables",
+        "price": 79,
+        "rating": 4.3,
+        "reviews": 652,
+        "picture": "coffeeTable",
+        "tag": "New",
+        "finishes": [
+          "Oak",
+          "White"
+        ],
+        "description": "A round top with no corners to bump into, on four solid legs. Big enough for books, cups and a plant.",
+        "measurements": [
+          {
+            "label": "Diameter",
+            "value": "80 cm"
+          },
+          {
+            "label": "Height",
+            "value": "45 cm"
+          }
+        ]
+      },
+      {
+        "id": "bookcase",
+        "name": "HYLLBERG",
+        "kind": "Bookcase, white",
+        "category": "storage",
+        "price": 69,
+        "rating": 4.8,
+        "reviews": 9021,
+        "picture": "bookcase",
+        "finishes": [
+          "White",
+          "Birch",
+          "Black-brown"
+        ],
+        "description": "Five adjustable shelves for books, boxes and things you want to see. Fix it to the wall and add doors later if you like.",
+        "measurements": [
+          {
+            "label": "Width",
+            "value": "80 cm"
+          },
+          {
+            "label": "Depth",
+            "value": "28 cm"
+          },
+          {
+            "label": "Height",
+            "value": "202 cm"
+          }
+        ]
+      },
+      {
+        "id": "floor-lamp",
+        "name": "LYKTSKEN",
+        "kind": "Floor lamp, rice paper",
+        "category": "lighting",
+        "price": 39,
+        "rating": 4.6,
+        "reviews": 2275,
+        "picture": "floorLamp",
+        "finishes": [
+          "White"
+        ],
+        "description": "A large paper lantern on a slim stand that spreads a soft, even light through the room.",
+        "measurements": [
+          {
+            "label": "Height",
+            "value": "150 cm"
+          },
+          {
+            "label": "Shade diameter",
+            "value": "45 cm"
+          },
+          {
+            "label": "Bulb",
+            "value": "E27, sold separately"
+          }
+        ]
+      },
+      {
+        "id": "table-lamp",
+        "name": "SVAMPLJUS",
+        "kind": "Table lamp, opal glass",
+        "category": "lighting",
+        "price": 19,
+        "rating": 4.4,
+        "reviews": 1840,
+        "picture": "tableLamp",
+        "tag": "New",
+        "finishes": [
+          "White",
+          "Pink"
+        ],
+        "description": "A small mushroom of opal glass that gives a warm glow on a bedside table or a shelf.",
+        "measurements": [
+          {
+            "label": "Height",
+            "value": "24 cm"
+          },
+          {
+            "label": "Shade diameter",
+            "value": "21 cm"
+          }
+        ]
+      },
+      {
+        "id": "dining-chair",
+        "name": "PINNEBO",
+        "kind": "Chair, solid pine",
+        "category": "tables",
+        "price": 45,
+        "rating": 4.5,
+        "reviews": 977,
+        "picture": "diningChair",
+        "finishes": [
+          "Pine",
+          "White stain"
+        ],
+        "description": "A spindle-back chair in solid pine that gets more beautiful as it ages. Stacks two high.",
+        "measurements": [
+          {
+            "label": "Width",
+            "value": "43 cm"
+          },
+          {
+            "label": "Depth",
+            "value": "50 cm"
+          },
+          {
+            "label": "Seat height",
+            "value": "45 cm"
+          }
+        ]
+      },
+      {
+        "id": "dining-table",
+        "name": "MATSKOG",
+        "kind": "Extendable table, oak",
+        "category": "tables",
+        "price": 249,
+        "rating": 4.6,
+        "reviews": 534,
+        "picture": "diningTable",
+        "finishes": [
+          "Oak",
+          "White"
+        ],
+        "description": "Seats four every day and six when friends come, with the extra leaf stored under the top.",
+        "measurements": [
+          {
+            "label": "Length",
+            "value": "155–215 cm"
+          },
+          {
+            "label": "Width",
+            "value": "90 cm"
+          },
+          {
+            "label": "Height",
+            "value": "75 cm"
+          }
+        ]
+      },
+      {
+        "id": "bed",
+        "name": "SOVDAL",
+        "kind": "Bed frame, white",
+        "category": "beds",
+        "price": 199,
+        "was": 229,
+        "rating": 4.4,
+        "reviews": 2189,
+        "picture": "bed",
+        "tag": "Lower price",
+        "finishes": [
+          "White",
+          "Oak"
+        ],
+        "description": "A simple painted frame with a low headboard and room for boxes underneath. Mattress and bedding sold separately.",
+        "measurements": [
+          {
+            "label": "Mattress size",
+            "value": "160 × 200 cm"
+          },
+          {
+            "label": "Length",
+            "value": "209 cm"
+          },
+          {
+            "label": "Headboard height",
+            "value": "66 cm"
+          }
+        ]
+      },
+      {
+        "id": "desk",
+        "name": "SKRIVBY",
+        "kind": "Desk with drawers, white and birch",
+        "category": "office",
+        "price": 99,
+        "rating": 4.5,
+        "reviews": 1406,
+        "picture": "desk",
+        "finishes": [
+          "White and birch",
+          "Black-brown"
+        ],
+        "description": "A desk with a drawer unit you can put on either side, and a hole at the back for the cables.",
+        "measurements": [
+          {
+            "label": "Width",
+            "value": "120 cm"
+          },
+          {
+            "label": "Depth",
+            "value": "60 cm"
+          },
+          {
+            "label": "Height",
+            "value": "75 cm"
+          }
+        ]
+      },
+      {
+        "id": "baskets",
+        "name": "SJÖVÄV",
+        "kind": "Baskets, set of 3, seagrass",
+        "category": "storage",
+        "price": 24,
+        "rating": 4.7,
+        "reviews": 3128,
+        "picture": "baskets",
+        "finishes": [
+          "Natural"
+        ],
+        "description": "Three hand-woven baskets that nest inside each other when you don't need them.",
+        "measurements": [
+          {
+            "label": "Sizes",
+            "value": "Small, medium and large"
+          },
+          {
+            "label": "Large",
+            "value": "40 × 30 cm"
+          }
+        ],
+        "lowest": true
+      },
+      {
+        "id": "plant-pot",
+        "name": "KRUKVIK",
+        "kind": "Plant pot with stand, white",
+        "category": "decor",
+        "price": 15,
+        "rating": 4.2,
+        "reviews": 812,
+        "picture": "plantPot",
+        "finishes": [
+          "White",
+          "Grey-green"
+        ],
+        "description": "A matt ceramic pot on a small wooden stand that lifts a plant into the light. Shown with a plant, which is not included.",
+        "measurements": [
+          {
+            "label": "Pot diameter",
+            "value": "19 cm"
+          },
+          {
+            "label": "Height with stand",
+            "value": "32 cm"
+          }
+        ],
+        "lowest": true
+      }
+    ],
+    "rooms": [
+      {
+        "id": "living",
+        "title": "Living room",
+        "description": "Sofas, armchairs and coffee tables.",
+        "picture": "roomLiving",
+        "category": "sofas",
+        "products": [
+          "sofa",
+          "coffee-table",
+          "floor-lamp",
+          "bookcase",
+          "armchair",
+          "baskets"
+        ]
+      },
+      {
+        "id": "bedroom",
+        "title": "Bedroom",
+        "description": "Beds, bedside lamps and storage.",
+        "picture": "roomBedroom",
+        "category": "beds",
+        "products": [
+          "bed",
+          "table-lamp",
+          "baskets",
+          "plant-pot"
+        ]
+      },
+      {
+        "id": "dining",
+        "title": "Dining",
+        "description": "Tables and chairs for every day.",
+        "picture": "roomDining",
+        "category": "tables",
+        "products": [
+          "dining-table",
+          "dining-chair",
+          "bookcase",
+          "plant-pot"
+        ]
+      },
+      {
+        "id": "workspace",
+        "title": "Home office",
+        "description": "Desks, drawers and lamps.",
+        "picture": "roomWorkspace",
+        "category": "office",
+        "products": [
+          "desk",
+          "dining-chair",
+          "table-lamp",
+          "plant-pot"
+        ]
+      }
+    ],
+    "featured": "sofa",
+    "popular": [
+      "sofa",
+      "armchair",
+      "bookcase",
+      "floor-lamp",
+      "coffee-table",
+      "bed",
+      "table-lamp",
+      "baskets"
+    ],
+    "delivery": [
+      {
+        "id": "home",
+        "label": "Home delivery",
+        "description": "To your door in 3 to 5 working days.",
+        "price": 49
+      },
+      {
+        "id": "collect",
+        "label": "Click and collect",
+        "description": "Pick it up at the store in 2 days.",
+        "price": 0
+      },
+      {
+        "id": "parcel",
+        "label": "Parcel delivery",
+        "description": "Small products only, in 2 to 4 working days.",
+        "price": 9
+      }
+    ],
+    "payment": [
+      {
+        "id": "card",
+        "label": "Card",
+        "description": "Debit or credit card."
+      },
+      {
+        "id": "later",
+        "label": "Pay later",
+        "description": "In three payments, no interest."
+      },
+      {
+        "id": "gift",
+        "label": "Gift card",
+        "description": "Enter it on the next step."
+      }
+    ],
+    "footer": [
+      {
+        "heading": "Help",
+        "links": [
+          "Customer service",
+          "Track your order",
+          "Returns",
+          "Contact us"
+        ]
+      },
+      {
+        "heading": "Shop",
+        "links": [
+          "Products",
+          "Rooms",
+          "Offers",
+          "Gift cards"
+        ]
+      },
+      {
+        "heading": "About",
+        "links": [
+          "This is a demo",
+          "Sustainability",
+          "Careers"
+        ]
+      }
+    ],
+    "strings": {
+      "places": "Shop",
+      "heroEyebrow": "New season",
+      "heroTitle": "Make room for more of what you love",
+      "heroLead": "Light, clever furniture for every room, at prices that leave room for the rest.",
+      "shopProducts": "Shop products",
+      "shopRooms": "Explore rooms",
+      "roomsHeading": "Shop by room",
+      "roomsIntro": "Start with the room you want to change.",
+      "popularHeading": "Popular right now",
+      "popularIntro": "What people are putting in their bags this week.",
+      "familyHeading": "Members pay less",
+      "familyText": "Join the free family club for member prices, a free coffee on every visit and 365 days to change your mind.",
+      "familyAction": "Shop member prices",
+      "bag": "Bag",
+      "bagCount": "{count} in the bag",
+      "products": "Products",
+      "productsIntro": "What are you looking for?",
+      "rooms": "Rooms",
+      "roomProducts": "In this room",
+      "roomSeeAll": "See all {category}",
+      "moreRooms": "More rooms",
+      "all": "All",
+      "sort": "Sort",
+      "sortPopular": "Most popular",
+      "sortLow": "Price: low to high",
+      "sortHigh": "Price: high to low",
+      "count": "{count} products",
+      "wasPrice": "Was {price}",
+      "undo": "Undo",
+      "addToBag": "Add to bag",
+      "addToBagNamed": "Add {name} to bag",
+      "addedTo": "{name} added to your bag",
+      "viewBag": "View bag",
+      "reviews": "Rated {rating} out of 5 from {count} reviews",
+      "finish": "Colour",
+      "quantity": "Quantity",
+      "details": "Product details",
+      "measurements": "Measurements",
+      "deliveryInfo": "Delivery and returns",
+      "deliveryInfoText": "Home delivery in 3 to 5 working days, or collect it at the store in 2. Changed your mind? Return it within 365 days.",
+      "related": "You might also like",
+      "home": "Home",
+      "bagHeading": "Shopping bag",
+      "bagEmptyTitle": "Your bag is empty",
+      "bagEmptyText": "Products you add show up here. Start with a room or the most popular products.",
+      "removeNamed": "Remove {name}",
+      "removed": "{name} removed",
+      "summary": "Order summary",
+      "subtotal": "Products",
+      "deliveryLine": "Delivery",
+      "deliveryLater": "Chosen at checkout",
+      "total": "Total",
+      "toCheckout": "Continue to checkout",
+      "keepShopping": "Continue shopping",
+      "checkout": "Checkout",
+      "contact": "Contact",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Delivery address",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "street": "Street and number",
+      "postcode": "Postcode",
+      "city": "Town or city",
+      "deliveryHeading": "Delivery",
+      "paymentHeading": "Payment",
+      "deliveryChoice": "How should it reach you?",
+      "paymentChoice": "How would you like to pay?",
+      "cardNumber": "Card number",
+      "expiry": "Expiry (MM/YY)",
+      "cvc": "Security code",
+      "placeOrder": "Place order",
+      "placing": "Placing order…",
+      "placed": "Order placed",
+      "fixThese": "{count} fields need filling in",
+      "required": "Fill this in to place the order",
+      "free": "Free",
+      "confirmedTitle": "Thank you, {name}. Your order is placed.",
+      "confirmedLead": "We've sent the details to {email}.",
+      "orderNumber": "Order {number}",
+      "deliveryTo": "Delivery to",
+      "deliveryBy": "Delivery",
+      "paidWith": "Payment",
+      "items": "Products",
+      "nothingOrdered": "No order yet",
+      "notReal": "A demonstration of the design library: nothing is sold or charged.",
+      "storeServices": "Store services",
+      "language": "EN",
+      "enterPostcode": "Enter postcode",
+      "selectStore": "Select store",
+      "account": "Your account",
+      "favourites": "Favourites",
+      "saveFavourite": "Save {name} to favourites",
+      "menu": "Menu",
+      "shopByCategory": "Shop by category",
+      "allProducts": "All products",
+      "notice": "Book assembly with your order, in store or online",
+      "previousPrice": "Previous price {price}",
+      "dealsHeading": "Today’s best deals",
+      "dealsLabel": "Show deals",
+      "dealsLower": "Lower price",
+      "dealsNew": "New",
+      "lowerHeading": "Shop our lower prices",
+      "lowerBrowse": "Browse all lower prices",
+      "servicesHeading": "Services and support",
+      "overview": "Overview",
+      "aboutProduct": "About this product",
+      "howToGet": "Delivered in 3 to 5 working days, or collect it in store in 2",
+      "returnsTitle": "Changed your mind?",
+      "returnsText": "Return it within 365 days, with the receipt, in store or by post.",
+      "logIn": "Hej! Log in",
+      "navLabel": "Departments",
+      "navOffers": "Offers",
+      "navIdeas": "Inspiration",
+      "navSupport": "Customer service",
+      "saleTitle": "Up to 40% off",
+      "saleText": "On bed linen, dinnerware and decor",
+      "saleNote": "*While stocks last. Member prices need a free family club account.",
+      "memberPrice": "Member price",
+      "offerBedLinen": "Bed linen",
+      "offerDinnerware": "Dinnerware",
+      "offerDecor": "Candles and decor",
+      "offerLiving": "Living room",
+      "storeTitle": "A new store opens near you",
+      "storeText": "Come and walk through the rooms, then stay for lunch.",
+      "familyPanelTitle": "Family club members save more",
+      "familyPanelText": "Join for free and get member prices every week.",
+      "rewardsHeading": "Rewards for family club members",
+      "rewardsLead": "Join for free and start saving today",
+      "rewardApp": "Member prices in the app",
+      "rewardOnline": "Save your lists online",
+      "rewardWorkshops": "Workshops in store",
+      "rewardPlanning": "Free kitchen planning",
+      "joinTitle": "Join the family club",
+      "joinText": "Member prices, rewards and a free coffee on every visit.",
+      "joinAction": "Join or log in",
+      "seeMore": "See more",
+      "businessTitle": "Shop for your business",
+      "businessText": "Furniture, planning and delivery for offices, shops and cafés.",
+      "businessAction": "Join the business club",
+      "cookieSettings": "Cookie settings",
+      "chatTitle": "Chat with us",
+      "chatText": "Ask about an order, a delivery or a product. We answer every day from 8 to 20.",
+      "chatStart": "Start chat",
+      "chatMinimise": "Minimise",
+      "chatClose": "Close chat",
+      "ticketTitle": "15% off your first order",
+      "ticketText": "Join the family club and use your code at checkout.",
+      "ticketClose": "Close offer",
+      "servicePhone": "Customer service 020 000 0000",
+      "offersHeading": "Offers by category",
+      "trendingHeading": "What’s hot and trending?",
+      "newInTitle": "New in for spring",
+      "newInText": "Fresh colours, light fabrics and clever storage, just arrived.",
+      "newInLead": "Spring at home",
+      "inStorePrice": "In-store price",
+      "newTag": "New",
+      "seeOffers": "See all offers"
+    },
+    "services": [
+      {
+        "icon": "delivery",
+        "title": "Delivery",
+        "text": "Home delivery in 3 to 5 working days, or a slot you choose."
+      },
+      {
+        "icon": "store",
+        "title": "Click and collect",
+        "text": "Order online and pick it up at the store in 2 days."
+      },
+      {
+        "icon": "tag",
+        "title": "Assembly",
+        "text": "Book someone to build it for you when it arrives."
+      },
+      {
+        "icon": "people",
+        "title": "Planning help",
+        "text": "Plan a kitchen or a wardrobe with a specialist, free."
+      }
+    ]
+  }
+}

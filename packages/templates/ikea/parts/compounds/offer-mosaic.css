@@ -1,0 +1,57 @@
+/*
+ * IKEA template part, tier 2 compound: OfferMosaic (owner Q140). The root is the size container; its grid places the lead
+ * block across the mosaic's height, then columns of two offer pictures. Its tiles are PictureBanners, placed, not
+ * restyled. Reads only its own t.ikea.offer-mosaic tokens.
+ */
+@layer templates {
+  [data-dl='ikea-offer-mosaic'] {
+    container-type: inline-size;
+  }
+
+  [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--t-ikea-offer-mosaic-gap);
+  }
+
+  [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] > [data-dl-part='lead'] {
+    display: grid;
+  }
+
+  /* The lead block fills its cell rather than keeping its own ratio; a lead picture (Image ratio `fill`) fills it too, its
+     caption over it (Q141). */
+  [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] > [data-dl-part='lead'] > [data-dl='ikea-picture-banner'][data-tone] {
+    aspect-ratio: auto;
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] > [data-dl-part='lead'] > [data-dl='ikea-picture-banner'] > [data-dl-part='media'] {
+    display: grid;
+  }
+
+  [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] > [data-dl-part='column'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--t-ikea-offer-mosaic-gap);
+  }
+
+  @container (max-width: 52rem) {
+    [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] > [data-dl-part='lead'] {
+      grid-column: 1 / -1;
+    }
+
+    [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] > [data-dl-part='lead'] > [data-dl='ikea-picture-banner'][data-tone] {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @container (max-width: 30rem) {
+    [data-dl='ikea-offer-mosaic'] > [data-dl-part='grid'] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}

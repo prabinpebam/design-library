@@ -2,8 +2,9 @@
  * The Colour page's brand editor (owner, F7d): four numbered swatches, the accent choice, presets and the draft's
  * state. Above-core tooling made only of core components; the draft itself lives in data/brand.ts.
  */
-import { Button, Cluster, Code, CodeBlock, ColourField, Heading, Icon, MenuButton, SegmentedControl, Stack, Text, TokenSpecimen } from '@design-library/core/components';
-import { applyPreset, clearColour, configText, discardDraft, nameOf, pickColour, presets, setAccent, slots, undoBrand, useBrand, type Slot } from '../data/brand';
+import { Button, Cluster, Code, CodeBlock, ColourField, Heading, Icon, MenuButton, Stack, Text, TokenSpecimen } from '@design-library/core/components';
+import { applyPreset, brandExamples, clearColour, configText, discardDraft, nameOf, pickColour, presets, slots, undoBrand, useBrand, type Slot } from '../data/brand';
+import { BrandMapEditor } from './brand-map';
 import { INSPECTORS, rev } from '../revisions/target';
 
 const CONFIG = 'packages/core/tokens/colour.config.json';
@@ -25,7 +26,13 @@ export function BrandEditor() {
             items={presets.map((p) => ({ value: p.id, label: p.name, description: p.mood, preview: slots.flatMap((s) => (p.brand.colours[s] ? [p.brand.colours[s]!.seed] : [])) }))}
             onSelect={applyPreset}
           />
-          {undo && (
+          <MenuButton
+            label="Brand examples"
+            menuLabel="Famous brand examples"
+            items={brandExamples.map((p) => ({ value: p.id, label: p.name, description: p.mood, preview: slots.flatMap((s) => (p.brand.colours[s] ? [p.brand.colours[s]!.seed] : [])) }))}
+            onSelect={applyPreset}
+          />
+          {undo && undo.scope !== 'map' && (
             <Cluster gap="pair" align="center">
               <Text as="span" variant="body-sm">
                 {undo.message}
@@ -42,27 +49,17 @@ export function BrandEditor() {
               label={`Brand colour ${s}`}
               value={brand.colours[s]?.seed}
               name={brand.colours[s] ? nameOf(brand, s) : undefined}
-              tag={brand.accent === Number(s) ? 'Accent' : undefined}
+              tag={brand.accent === Number(s) ? 'Actions' : undefined}
               suggestion={suggestions[s]}
               onChange={(hex) => pickColour(s, hex)}
               onClear={only ? undefined : () => clearColour(s)}
             />
           ))}
         </Cluster>
-        {only ? (
+        {only && (
           <Text variant="body-sm" tone="muted">
-            Colour {defined[0]} is the accent and can’t be cleared: a theme needs at least one brand colour. Add another to choose which one is the accent.
+            Colour {defined[0]} can’t be cleared: a theme needs at least one brand colour.
           </Text>
-        ) : (
-          <Cluster gap="group" align="center">
-            <Text as="span" variant="body-sm">
-              Accent
-            </Text>
-            <SegmentedControl label="Accent colour" options={defined.map((s) => ({ value: s, label: s }))} value={String(brand.accent)} onChange={(v) => setAccent(v as Slot)} />
-            <Text as="span" variant="body-sm" tone="muted">
-              Actions, links, focus and selection read it.
-            </Text>
-          </Cluster>
         )}
         {errors.length > 0 ? (
           <Cluster gap="pair" wrap={false} align="start">
@@ -114,6 +111,7 @@ export function BrandEditor() {
           </Text>
         )}
       </Stack>
+      <BrandMapEditor />
       {defined.map((s) => (
         <Stack key={s} gap="group" {...rev({ kind: 'token', identity: { group: `--p-brand-${s}` }, sources: [CONFIG, INSPECTORS] })}>
           <Cluster gap="group" align="baseline">
@@ -121,7 +119,7 @@ export function BrandEditor() {
               {`${s}: ${nameOf(brand, s)}`}
             </Heading>
             <Text as="span" variant="body-sm" tone="muted">
-              {brand.accent === Number(s) ? 'The accent, and an identity colour. Private ramp; the same in every context.' : 'An identity colour. Private ramp; the same in every context.'}
+              {brand.accent === Number(s) ? 'The action colour, and an identity colour. Private ramp; the same in every context.' : 'An identity colour. Private ramp; the same in every context.'}
             </Text>
           </Cluster>
           <TokenSpecimen kind="ramp" steps={Object.entries(ramps[s] ?? {}).map(([step, hex]) => ({ name: step, token: `--p-brand-${s}-${step}`, value: hex }))} />

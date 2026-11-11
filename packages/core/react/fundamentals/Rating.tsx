@@ -20,6 +20,10 @@ export interface RatingProps extends DataAttributes {
   words?: string[];
   /** Writes the value beside the stars ("4.3 of 5", or the value's words). */
   showValue?: boolean;
+  /** How many ratings an average is made from, written after the stars as "(1,284)" (Q139 R5); read-only only. */
+  count?: number;
+  /** The count in words for assistive technology, in the page's language: "1,284 reviews". Default "{count} ratings"; empty when `label` already says the count. */
+  countLabel?: string;
   /** Pressing the chosen value again clears the rating. */
   clearable?: boolean;
   /** s 16 px stars for cards and tables, normal 24 px for forms, l 32 px for a page's main question. */
@@ -47,7 +51,7 @@ const say = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1).repla
  * @key Arrow keys: the next or previous step (chooses it, as radios do); Home / End: the lowest or highest
  * @key Space or Enter: chooses the focused step, or clears it when it is already chosen and `clearable`
  */
-export function Rating({ label, hideLabel = false, value, onChange, max = 5, precision = 1, words, showValue = false, clearable = true, size = 'normal', readOnly = false, disabled = false, ...data }: RatingProps) {
+export function Rating({ label, hideLabel = false, value, onChange, max = 5, precision = 1, words, showValue = false, count, countLabel, clearable = true, size = 'normal', readOnly = false, disabled = false, ...data }: RatingProps) {
   const id = useId();
   // Q113: a brand's `star` glyph (IconOverrides or setIconOverrides) draws the mark; the rating still paints it, outlined when empty and solid when filled.
   const brandStar = useIconOverride('star');
@@ -144,13 +148,18 @@ export function Rating({ label, hideLabel = false, value, onChange, max = 5, pre
             {stars}
           </span>
         ) : (
-          <span role="img" aria-label={`${label}: ${value === null ? 'not rated' : `${say(value)} of ${max}`}`}>
+          <span role="img" aria-label={`${label}: ${value === null ? 'not rated' : `${say(value)} of ${max}`}${count === undefined || countLabel === '' ? '' : `, ${countLabel ?? `${count.toLocaleString()} ratings`}`}`}>
             {stars}
           </span>
         )}
         {(showValue || (words && input)) && (
           <span data-dl-part="value" aria-hidden="true">
             {preview !== null ? wordFor(preview) ?? `${say(preview)} of ${max}` : written}
+          </span>
+        )}
+        {!input && count !== undefined && (
+          <span data-dl-part="count" aria-hidden="true">
+            ({count.toLocaleString()})
           </span>
         )}
       </span>

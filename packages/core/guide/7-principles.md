@@ -16,18 +16,19 @@ Goal: every decision you make with this library follows the frameworks behind it
 | A token in `shadow.*`, `layer.*` | [Elevation and layering](#elevation) |
 | A token in `material.*` | [Materials](#materials) |
 | A token in `duration.*`, `easing.*`, `motion.*`, `count.*` | [Motion](#motion) |
+| A token in `size.*` | [Widths of floating surfaces](#widths) |
 | A component in the `arrangement` family (Cluster, Grid, ScrollArea, Stack) | [Spacing](#spacing) |
 | A component in the `buttons` family (Button, ButtonGroup, MenuButton, VisibilityToggle) | [States](#ui-states) |
 | A component in the `chat` family (ChatMessage, ChatThinking, Composer, ConversationList, ImageGeneration, MessageActions) | [Words](#ui-copy) |
-| A component in the `content` family (Carousel, CodeBlock, DescriptionList, ImageGrid, IndexList, Lightbox, MediaPlayer, Quote, Section) | [Visual noise](#visual-noise) |
+| A component in the `content` family (Price, Carousel, CodeBlock, DescriptionList, ImageGrid, IndexList, Lightbox, MediaPlayer, Quote, Section) | [Visual noise](#visual-noise) |
 | A component in the `data` family (Accordion, Agenda, Board, Card, DataTable, RowList, StackedBar, Statistic) | [Showing information](#visual-representation) |
 | A component in the `feedback` family (Progress, Skeleton, Alert, EmptyState, ErrorSummary) | [States](#ui-states) |
-| A component in the `floating` family (Popover, Tooltip) | [Elevation and layering](#elevation) |
+| A component in the `floating` family (Popover, Tooltip) | [Elevation and layering](#elevation), [Widths of floating surfaces](#widths) |
 | A component in the `inputs` family (ColourPicker, Field, NumberField, Rating, Slider, TextArea, TextField, AllocationSlider, InlineEdit, Mentions, TagInput) | [States](#ui-states) |
-| A component in the `layout` family (Morph, Reveal) | [Spacing](#spacing) |
+| A component in the `layout` family (Morph, Rail, Reveal) | [Spacing](#spacing) |
 | A component in the `media` family (Flag, Illustration, Image, Canvas) | [Showing information](#visual-representation) |
 | A component in the `navigation` family (Breadcrumbs, Footer, Navigation, PageHeader, Pagination, SiteHeader, TableOfContents, Tabs, TitleBar, TreeView) | [Words](#ui-copy) |
-| A component in the `overlays` family (Dialog, Notifications, Sheet) | [Elevation and layering](#elevation) |
+| A component in the `overlays` family (Dialog, Notifications, Sheet) | [Elevation and layering](#elevation), [Widths of floating surfaces](#widths) |
 | A component in the `panels` family (FloatingBar, Pane, PropertyRow, PropertySection, Toolbar) | [Visual noise](#visual-noise) |
 | A component in the `people` family (Avatar, AvatarGroup, Persona) | [Showing information](#visual-representation) |
 | A component in the `pickers` family (Calendar, DateField, DatePicker, DateRangePicker, TimeField, ColourField, FileUpload, GradientEditor) | [States](#ui-states) |
@@ -351,3 +352,24 @@ Full framework: Visual representation (docs/visual-representation.md).
 1. Follow the agent procedure in docs/visual-representation.md (The chain as an agent procedure) and its Agent checklist.
 
 **Check:** `npm run check:content`
+
+<a id="widths"></a>
+
+## Widths of floating surfaces
+
+Full framework: Widths (docs/widths.md).
+
+**Rules**
+
+- Every overlay width is a size.width-* step (xs 12, sm 16, md 20, lg 24, xl 32, 2xl 40, 3xl 48 rem), through its component token or a prop; never a raw width.
+- Lists (MenuButton, Select, Mentions, AvatarGroup) fit their content, snapped up to xs, sm or md as they open; leave listWidth out unless the decision table says to pin.
+- Pin listWidth when the items load or change while the list is open, when items carry descriptions (lg), or when menus open side by side (the same step on all).
+- Popover width: sm for a line of help or a confirmation, md (default) for help with a link or a short form, lg for filters.
+- Dialog size by purpose: s a question and two buttons, m (default) a form, l a table or several steps. Sheet: s a narrow list, m (default) details or a form, l an editor.
+- No step fits: move the content one surface up (popover, dialog, sheet, page); never invent a width.
+
+**Decide**
+
+1. Follow The procedure and The decision table in docs/widths.md, then its Part 2 checklist (WC1-WC8).
+
+**Check:** `npm run check`

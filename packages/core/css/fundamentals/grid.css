@@ -7,22 +7,32 @@
     display: grid;
     /* Fills its container's width even where siblings keep their own (a start-aligned column), so columns can form. */
     align-self: stretch;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-column-min)), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--dl-grid-min)), 1fr));
     column-gap: var(--space-gutter);
     row-gap: var(--space-stack-group);
+    --dl-grid-min: var(--size-column-min);
+  }
+
+  /* Q139 R2: the column minimum by what the cells hold: s for small things many to a row (products), l for reading. */
+  [data-dl='grid'][data-min='s'] {
+    --dl-grid-min: var(--size-column-min-s);
+  }
+
+  [data-dl='grid'][data-min='l'] {
+    --dl-grid-min: var(--size-column-min-l);
   }
 
   /* At most N columns: each column is at least an Nth of the row, so four options read 2 × 2 rather than 3 + 1. */
   [data-dl='grid'][data-max='2'] {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - var(--space-gutter)) / 2)), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--dl-grid-min)), calc((100% - var(--space-gutter)) / 2)), 1fr));
   }
 
   [data-dl='grid'][data-max='3'] {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - 2 * var(--space-gutter)) / 3)), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--dl-grid-min)), calc((100% - 2 * var(--space-gutter)) / 3)), 1fr));
   }
 
   [data-dl='grid'][data-max='4'] {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--size-column-min)), calc((100% - 3 * var(--space-gutter)) / 4)), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(100%, var(--dl-grid-min)), calc((100% - 3 * var(--space-gutter)) / 4)), 1fr));
   }
 
   /* Cells that are sections, each with its heading: rows (and stacked columns) a step wider than the space inside a
@@ -55,7 +65,7 @@
 
   [data-dl='grid'][data-ratio] > * {
     flex: 1 1 calc((100% - var(--space-gutter)) * var(--dl-grid-share) - 1px);
-    min-inline-size: min(100%, var(--size-column-min));
+    min-inline-size: min(100%, var(--dl-grid-min));
   }
 
   [data-dl='grid'][data-ratio] > :nth-child(odd) { --dl-grid-share: var(--dl-grid-start); }
@@ -68,6 +78,16 @@
   }
 
   [data-dl='grid'][data-ratio='aside'] > :nth-child(even) {
+    flex-basis: calc(100% - var(--c-grid-aside) - var(--space-gutter) - 1px);
+  }
+
+  /* The same at the end (Q141): the content first, a fixed column after it (a shop's offer panel beside its deals). */
+  [data-dl='grid'][data-ratio='aside-end'] > :nth-child(even) {
+    flex-basis: min(100%, var(--c-grid-aside));
+    min-inline-size: min(100%, var(--c-grid-aside));
+  }
+
+  [data-dl='grid'][data-ratio='aside-end'] > :nth-child(odd) {
     flex-basis: calc(100% - var(--c-grid-aside) - var(--space-gutter) - 1px);
   }
 }

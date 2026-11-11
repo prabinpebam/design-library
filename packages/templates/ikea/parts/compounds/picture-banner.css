@@ -1,0 +1,270 @@
+/*
+ * IKEA template part, tier 2 compound: PictureBanner (owner Q138, Q140, Q141). One link: the picture, its tag and its
+ * caption share one grid cell when the caption sits over the picture (white words on a shade rising from the foot), or
+ * stack when it sits below; without a picture it's a block of a brand surface with large words and a circled arrow;
+ * with `side` or `panel` the words sit on a brand-surface panel beside or under the picture. Tags are square boxes of
+ * small bold words. Places core Image and Icon without restyling them. Reads only core semantic roles and its own
+ * t.ikea.picture-banner tokens, which alias the brand map's surfaces (color.map.band, color.map.feature) and the
+ * promotion colours (color.promo.*).
+ */
+@layer templates {
+  [data-dl='ikea-picture-banner'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    color: var(--color-text);
+    font-family: var(--font-ui);
+    text-decoration: none;
+  }
+
+  [data-dl='ikea-picture-banner']:focus-visible {
+    outline: var(--border-thick) solid var(--color-focus);
+    outline-offset: var(--border-thick);
+  }
+
+  [data-dl='ikea-picture-banner']:hover > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    text-decoration: underline;
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='media'],
+  [data-dl='ikea-picture-banner'] > [data-dl-part='tag'] {
+    grid-area: 1 / 1;
+  }
+
+  /* The tag: a square box of small bold words at the picture's top corner, in its tone's fill. */
+  [data-dl='ikea-picture-banner'] > [data-dl-part='tag'] {
+    align-self: start;
+    justify-self: start;
+    margin: var(--t-ikea-picture-banner-tag-inset);
+    padding: var(--t-ikea-picture-banner-tag-padding-block) var(--t-ikea-picture-banner-tag-padding-inline);
+    background-color: var(--tag-fill);
+    color: var(--tag-on);
+    font-size: var(--t-ikea-picture-banner-tag-size);
+    font-weight: var(--t-ikea-picture-banner-title-weight);
+    line-height: var(--leading-tight);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='tag'][data-tone='brand'] {
+    --tag-fill: var(--t-ikea-picture-banner-block-fill);
+    --tag-on: var(--t-ikea-picture-banner-block-on);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='tag'][data-tone='feature'] {
+    --tag-fill: var(--t-ikea-picture-banner-feature-fill);
+    --tag-on: var(--t-ikea-picture-banner-feature-on);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='tag'][data-tone='new'] {
+    --tag-fill: var(--t-ikea-picture-banner-promo-fill);
+    --tag-on: var(--t-ikea-picture-banner-promo-on);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='tag'][data-tone='offer'] {
+    --tag-fill: var(--t-ikea-picture-banner-offer-fill);
+    --tag-on: var(--t-ikea-picture-banner-offer-on);
+  }
+
+  /* The surfaces (Q140): a block or a caption panel takes the band (lead colour), the feature (second colour) or the
+     promotion orange (Q141). */
+  [data-dl='ikea-picture-banner'][data-surface='band'] {
+    --banner-fill: var(--t-ikea-picture-banner-block-fill);
+    --banner-on: var(--t-ikea-picture-banner-block-on);
+  }
+
+  [data-dl='ikea-picture-banner'][data-surface='feature'] {
+    --banner-fill: var(--t-ikea-picture-banner-feature-fill);
+    --banner-on: var(--t-ikea-picture-banner-feature-on);
+  }
+
+  [data-dl='ikea-picture-banner'][data-surface='promo'] {
+    --banner-fill: var(--t-ikea-picture-banner-promo-fill);
+    --banner-on: var(--t-ikea-picture-banner-promo-on);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='caption'] {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--t-ikea-picture-banner-gap);
+    font-size: var(--t-ikea-picture-banner-title-size);
+    line-height: var(--t-ikea-picture-banner-title-leading);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='caption'] > [data-dl-part='words'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-stack-pair);
+    min-inline-size: 0;
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    font-weight: var(--t-ikea-picture-banner-title-weight);
+    letter-spacing: var(--t-ikea-picture-banner-title-tracking);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='text'] {
+    font-size: var(--t-ikea-picture-banner-text-size);
+    line-height: var(--type-body-leading);
+    letter-spacing: normal;
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='caption'] > [data-dl-part='note'] {
+    font-size: var(--text-xs);
+  }
+
+  [data-dl='ikea-picture-banner'] > [data-dl-part='caption'] > [data-dl-part='arrow'] {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+  }
+
+  /* Over the picture: the caption shares the picture's cell, white bold words on a shade rising from the foot. */
+  [data-dl='ikea-picture-banner'][data-caption='over'] > [data-dl-part='caption'] {
+    grid-area: 1 / 1;
+    align-self: end;
+    padding: var(--t-ikea-picture-banner-padding);
+    padding-block-start: calc(var(--t-ikea-picture-banner-padding) * 3);
+    background-image: linear-gradient(to top, var(--t-ikea-picture-banner-scrim), transparent);
+    color: var(--t-ikea-picture-banner-caption-on);
+  }
+
+  /* Below the picture: small bold words a step under it, the arrow at the words' end. */
+  [data-dl='ikea-picture-banner'][data-caption='below'] {
+    align-content: start;
+    gap: var(--t-ikea-picture-banner-below-gap);
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='below'] > [data-dl-part='caption'] {
+    align-items: flex-start;
+    font-size: var(--t-ikea-picture-banner-below-size);
+    line-height: var(--leading-tight);
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='below'] > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    letter-spacing: normal;
+  }
+
+  /* A colour block, or a caption panel: the surface's fill and on-colour, large words, a circled arrow. */
+  [data-dl='ikea-picture-banner']:is([data-tone='block'], [data-caption='side'], [data-caption='panel']) > [data-dl-part='caption'] {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--t-ikea-picture-banner-block-padding);
+    background-color: var(--banner-fill);
+    color: var(--banner-on);
+    font-size: var(--t-ikea-picture-banner-title-size-block);
+  }
+
+  [data-dl='ikea-picture-banner']:is([data-tone='block'], [data-caption='side'], [data-caption='panel']) > [data-dl-part='caption'] > [data-dl-part='arrow'] {
+    inline-size: var(--t-ikea-picture-banner-arrow-size);
+    block-size: var(--t-ikea-picture-banner-arrow-size);
+    margin-block-start: auto;
+    border: var(--t-ikea-picture-banner-arrow-ring) solid currentColor;
+    border-radius: var(--radius-full);
+  }
+
+  /* Its width is the slot's, always: in a row that stretches it taller, the ratio must not widen it past the slot. */
+  [data-dl='ikea-picture-banner'][data-tone='block'] {
+    inline-size: 100%;
+    background-color: var(--banner-fill);
+  }
+
+  [data-dl='ikea-picture-banner'][data-tone='block'] > [data-dl-part='caption'] {
+    block-size: 100%;
+    box-sizing: border-box;
+  }
+
+  /* A small block (a tile in a mosaic): words at a tile's size, no arrow (the whole tile is the link). */
+  [data-dl='ikea-picture-banner'][data-tone='block']:not([data-title-size], [data-ratio='ultrawide']) > [data-dl-part='caption'] {
+    font-size: var(--t-ikea-picture-banner-title-size-tile);
+  }
+
+  [data-dl='ikea-picture-banner'][data-tone='block']:not([data-title-size], [data-ratio='ultrawide']) > [data-dl-part='caption'] > [data-dl-part='arrow'] {
+    display: none;
+  }
+
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='photo'] { aspect-ratio: 3 / 2; }
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='square'] { aspect-ratio: 1; }
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='tall'] { aspect-ratio: 3 / 4; }
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
+
+  /* A sale's headline: the poster type (type.jumbo, the template's 150 px poster at a wide window), the line under it
+     and the arrow at the block's foot. */
+  [data-dl='ikea-picture-banner'][data-title-size='display'] > [data-dl-part='caption'] > [data-dl-part='words'] {
+    flex: 1;
+  }
+
+  [data-dl='ikea-picture-banner'][data-title-size='display'] > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    font-family: var(--font-display);
+    font-size: var(--t-ikea-picture-banner-title-size-display);
+    line-height: var(--t-ikea-picture-banner-title-leading-display);
+    letter-spacing: var(--t-ikea-picture-banner-title-tracking-display);
+  }
+
+  [data-dl='ikea-picture-banner'][data-title-size='display'] > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='text'] {
+    margin-block-start: auto;
+    padding-block-start: var(--t-ikea-picture-banner-gap);
+    font-size: var(--t-ikea-picture-banner-title-size-tile);
+    font-weight: var(--t-ikea-picture-banner-title-weight);
+  }
+
+  [data-dl='ikea-picture-banner'][data-title-size='display'] > [data-dl-part='caption'] > [data-dl-part='arrow'] {
+    margin-block-start: var(--t-ikea-picture-banner-gap);
+  }
+
+  /* A band: as tall as its words, the words and the arrow in one row. */
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='ultrawide'] > [data-dl-part='caption'] {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  [data-dl='ikea-picture-banner'][data-tone='block'][data-ratio='ultrawide'] > [data-dl-part='caption'] > [data-dl-part='arrow'] {
+    margin-block-start: 0;
+  }
+
+  /* Side: the picture and a panel of the surface side by side (the picture 16 parts, the panel 9), the panel's words
+     centred on its height with the arrow under them; the panel wraps under the picture when the banner is too narrow. */
+  [data-dl='ikea-picture-banner'][data-caption='side'] {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='side'] > [data-dl-part='media'] {
+    flex: 16 1 28rem;
+    min-inline-size: 0;
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='side'] > [data-dl-part='caption'] {
+    flex: 9 1 16rem;
+    justify-content: center;
+    padding: var(--t-ikea-picture-banner-side-padding);
+    gap: var(--t-ikea-picture-banner-gap);
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='side'] > [data-dl-part='caption'] > [data-dl-part='words'] > [data-dl-part='title'] {
+    line-height: var(--leading-tight);
+    letter-spacing: var(--t-ikea-picture-banner-title-tracking);
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='side'] > [data-dl-part='caption'] > [data-dl-part='arrow'] {
+    margin-block-start: var(--t-ikea-picture-banner-gap);
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='side'] > [data-dl-part='tag'] {
+    position: absolute;
+  }
+
+  /* Panel: the panel is the next row under the picture, filling the rest of the banner's height. */
+  [data-dl='ikea-picture-banner'][data-caption='panel'] {
+    grid-template-rows: auto 1fr;
+  }
+
+  [data-dl='ikea-picture-banner'][data-caption='panel'] > [data-dl-part='caption'] {
+    gap: var(--t-ikea-picture-banner-gap);
+    padding: var(--t-ikea-picture-banner-padding);
+    font-size: var(--t-ikea-picture-banner-title-size);
+  }
+}

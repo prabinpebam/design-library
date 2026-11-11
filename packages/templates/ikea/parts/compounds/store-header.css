@@ -1,0 +1,116 @@
+/*
+ * IKEA template part, tier 2 compound: StoreHeader (owner Q138). A dark utility bar across the whole window (its fill is
+ * drawn out to the window's edges with a border image, so nothing scrolls sideways), then one row: the wordmark, a pill
+ * search on a quiet fill, the icon actions. Places core TextField and Button without forking them: the search's wrapper
+ * re-scopes only the field's radius, fill and border to the template's tokens. Reads only core semantic roles and its
+ * own t.ikea.store-header tokens.
+ */
+@layer templates {
+  [data-dl='ikea-store-header'] {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-ui);
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--t-ikea-store-header-gap);
+    min-block-size: var(--t-ikea-store-header-bar-height);
+    color: var(--t-ikea-store-header-bar-on);
+    font-size: var(--t-ikea-store-header-bar-text);
+    border-image: linear-gradient(var(--t-ikea-store-header-bar-fill) 0 0) fill 0 / / 0 100vw;
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] > [data-dl-part='bar-start'],
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] > [data-dl-part='bar-centre'],
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] > [data-dl-part='bar-end'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--t-ikea-store-header-gap);
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] > * > [data-dl-part='bar-link'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] > * > [data-dl-part='bar-link']:hover > span {
+    text-decoration: underline;
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='links'] > [data-dl-part='link']:focus-visible,
+  [data-dl='ikea-store-header'] > [data-dl-part='bar'] > * > [data-dl-part='bar-link']:focus-visible,
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='wordmark']:focus-visible {
+    outline: var(--border-thick) solid var(--color-focus);
+    outline-offset: var(--border-thick);
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] {
+    display: flex;
+    align-items: center;
+    gap: var(--t-ikea-store-header-gap);
+    padding-block: var(--t-ikea-store-header-row-padding);
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='wordmark'] {
+    flex: none;
+    padding: var(--t-ikea-store-header-wordmark-padding) calc(var(--t-ikea-store-header-wordmark-padding) * 2);
+    background-color: var(--t-ikea-store-header-wordmark-fill);
+    color: var(--t-ikea-store-header-wordmark-color);
+    letter-spacing: 0.02em;
+    font-family: var(--font-display);
+    font-size: var(--t-ikea-store-header-wordmark-size);
+    font-weight: var(--t-ikea-store-header-wordmark-weight);
+    text-decoration: none;
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='search'] {
+    --c-field-radius: var(--t-ikea-store-header-search-radius);
+    --color-bg-control: var(--t-ikea-store-header-search-fill);
+    --color-border-control: var(--t-ikea-store-header-search-fill);
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    max-inline-size: var(--t-ikea-store-header-search-max);
+    margin-inline-start: auto;
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='actions'] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+
+  /* The departments: quiet words in the row between the wordmark and the search (Q141); they hide in a narrow window,
+     where the menu carries them. */
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='links'] {
+    display: flex;
+    flex: none;
+    font-size: var(--t-ikea-store-header-links-text);
+    font-weight: var(--t-ikea-store-header-links-weight);
+  }
+
+  @container (inline-size < 60rem) {
+    [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='links'] {
+      display: none;
+    }
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='links'] > [data-dl-part='link'] {
+    padding: var(--t-ikea-store-header-link-padding-block) var(--t-ikea-store-header-link-padding-inline);
+    color: var(--t-ikea-store-header-links-color);
+    text-decoration: none;
+  }
+
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='links'] > [data-dl-part='link']:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+}

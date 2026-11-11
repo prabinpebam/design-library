@@ -100,12 +100,12 @@
   }
 
   [data-dl='calendar'] td[data-today] > [data-dl-part='day'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-selection-indicator);
   }
 
   [data-dl='calendar'] td[aria-selected='true'] > [data-dl-part='day'] {
-    background-color: var(--color-accent);
-    color: var(--color-text-on-accent);
+    background-color: var(--color-map-on-fill);
+    color: var(--color-map-mark-on-fill);
   }
 
   [data-dl='calendar'] td[aria-disabled='true'] {
@@ -146,7 +146,7 @@
   }
 
   [data-dl='calendar'] td[data-range='end'][data-preview] > [data-dl-part='day'] {
-    border-color: var(--color-accent);
+    border-color: var(--color-map-on-fill);
   }
 
   /* Months, years and decades: four wide cells a row, the same width as the week. */

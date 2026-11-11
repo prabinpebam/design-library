@@ -104,7 +104,8 @@
     "Notifications",
     "PageHeader",
     "TitleBar",
-    "Hero"
+    "Hero",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-copy"

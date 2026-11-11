@@ -1,0 +1,77 @@
+# Replica method and rules
+
+**Status:** rules for review ([DoD Q143](definition-of-done.md#owner-instructions)), hardened from building the IKEA-style template (Q137–Q142) and applied first to the Slack replica ([Slack replica](slack-replica.md)). The enforcement (`check:regression`, the extended `check:generic`) is built in the `feat/brand-map` worktree (`..\dl-brand-map`), not yet merged. Strict design: screens and the owner's regression sweep only, no tests.
+
+> **TL;DR for agents:**
+>
+> - **The method:** pick a well-known UI and recreate it with this library until, from a design-system point of view, it can't be told apart from the real one at the same window size. Every gap the replica finds is closed at the right layer: a brand value in the template, a missing pattern or knob in core as a generic seam whose default keeps every existing look.
+> - **Never from memory.** Capture the reference first, measure it into a region spec, build from the spec.
+> - **Never "done" without both proofs:** a side-by-side with the reference at the same width, region by region, and the regression sweep (`npm run check:regression`) showing no other template or library page changed, light and dark.
+> - **Core stays generic:** no product names or brand values in core (`check:generic`), no style restated on every template root, no trial styles applied when nothing is being tried, parts reach only their own children (`check:parts`).
+
+Owner's words, 2026-11-11 22:06 +05:30 ([DoD Q143](definition-of-done.md#owner-instructions)): *"Hardened this learning as mistakes to avoid in a proper orchestration rules document that we enforce while developing this library. Out method of development will be to attempt creating a sell known UI with this library to the point where it's indistinguishable from the real UI. Tho goal is to make this library capable of that while statying as a generic base paired with strong and robust customization capabilities."*
+
+## The method
+
+A replica is a stress test with a judge everyone can see: the real product. It works only if three things hold together.
+
+1. **The replica is exact.** Shape, size, spacing, type, colour, surfaces, states and motion match the reference at the same window width. Pictures, copy, logos and other trademarks are never copied: a neutral wordmark, generated or initials avatars, our own words.
+2. **The replica is built only from the library plus its customization layer.** Core components, layouts and tokens; the template's `tokens/theme.json`; content JSON; and parts in the template's own namespace that reach their children by child paths. Where that isn't enough, the library grows (see [what goes where](templates-and-library.md#the-rule-library-or-template)).
+3. **Nothing else moves.** Every core change keeps every rendered component example and every other template pixel-identical, proved against the frozen base. Source-derived catalogue inventory may grow under the narrowly bounded exception below.
+
+The replica is done when an evaluator who didn't build it can't tell the screens apart region by region, the sweep is clean and the boundary audit lists every core change with its reason ([the adversarial loop](adversarial-loop.md)).
+
+## The rules
+
+Each rule is a mistake we made, why it happened, what we do instead, what catches it and when that runs. A rule without an enforcing check is enforced by the evaluator's row named in its last column.
+
+| # | Mistake (where) | Cause | Rule | Enforced by | Runs |
+| --- | --- | --- | --- | --- | --- |
+| RR1 | Wrong corner radii and looks that "don't match at all in many places" (IKEA, Q141) | Built from the brief and memory of the site (Q137), then from a few screenshots without measuring | **Reference first.** Before a region is built, its reference screenshots exist at the target window, and its values are measured into a region spec (heights, radii, paddings, gaps, type size/weight/leading, colours per scheme, borders, states). Every value in the template's `theme.json` and parts traces to a spec row; a value without a source is a guess and is not allowed | The region spec (`.design-library/<template>-ref/README.md`); evaluator row "every themed value has a spec source" | Before each region is built |
+| RR2 | "Done" claimed while the owner found broken places, overflow and wrong shapes (IKEA, Q141) | No side-by-side at the same width; the builder judged its own screen | **Side by side before done.** Reference and replica at the same window and scheme, region by region, every remaining difference listed (pictures, copy and trademarks are the only accepted ones). The builder's side-by-side is evidence, never the verdict: the evaluator scores it | `.shots/side-by-side/` pairs; evaluator (Q143.6) | Every packet |
+| RR3 | 128 of 180 other pages changed because of the IKEA work (Q142) | Core changes were checked only on the template being built | **Nothing else moves.** Freeze before the first source change; compare every other template and library page, light and dark, 1280 px, before calling a packet done. Fix differences at source. The only declarations are proven same-build animation noise, and the separately recorded [catalogue inventory exception](#allowed-differences-catalogue-inventory), whose remaining pixels must be exactly identical | `npm run check:regression` (exit 1 on any unexplained difference; raw and masked evidence in `.shots/regression/<scheme>/`) | Every packet, before reporting |
+| RR4 | The design template's inherited text shrank to its 13 px step (Q142 fix 1) | Core `base.css` restated body text on every `[data-template]` root, for one template's font | **Core never restates a style on every template root.** A `[data-template]` rule in core CSS only re-resolves colour. Anything one template needs on its root is generated into that template's own `theme.css` from what its theme declares, and only when it declares it | `check:generic` (a core `[data-template]` rule setting anything but `color` or `background-color` fails); the sweep | `npm run check`, every packet |
+| RR5 | Every template's links turned `#4f5bd5`, even in dark (Q142 fix 2) | The brand-map trial stylesheet was applied when nothing was being tried | **A trial, demo or preview applies only while it's being tried.** An inspector or preview tool writes no style when its values equal the theme's; with nothing changed the document carries none of its rules | The sweep (every page identical with no trial active) | Every packet |
+| RR6 | A disabled primary button kept the brand-map ring (Q142 fix 3) | A new cue was added for one state and checked only in that state | **A new decoration is checked in every state.** When a part gains a ring, fill, shadow or underline, open it at rest, hover, focus, pressed, selected, disabled and loading, light and dark; the cue shows only while its state is active ([visual noise](visual-noise.md#part-1-the-framework)) | Evaluator's state matrix; the Button and Chip library pages in the sweep | Any change to a component's look |
+| RR7 | IKEA's name in core comments and token descriptions; IKEA values tempting core defaults (Q142 fix 4) | Values were added where they were first needed, named after the product | **No product names or brand values in core.** Brand values live only in `packages/templates/<template>/`; a core seam is named by what it does and its default keeps every existing look. Comments and descriptions stay neutral too. Each new replica adds its product's name and brand colours to `check:generic` when it starts (Slack: the name, aubergines `#4A154B` `#3F0E40` `#611F69` `#350D36`, `#1264A3`, action green `#007A5A`, current rail/sidebar/selection `#39073D` `#501E54` `#FFE5FF`, the four logo colours and `#1D1C1D`; camel-case identifiers are checked too) | `check:generic` (code, selectors, token names and values) | `npm run check`; extended at each replica's start |
+| RR8 | A grey oval under a chip on hover (IKEA ChipRail, Q140) | The part's descendant selector matched the ScrollArea's own thumb part | **A part reaches only its own children,** by child paths (`> [data-dl-part='…']`), never by a descendant selector into another component | `check:parts` | `npm run check` |
+| RR9 | A brown "New" tag (Q138) | Template part tokens resolved at `:root`, before the template theme | **Template tokens resolve where the template applies:** part tokens alias core roles and are emitted on `[data-template]` | `tokens:check` (`template-tokens --check`) | `npm run check` |
+| RR10 | Promotion tags re-themed `color.status.*` (Q139 L1) | No promotion role; the nearest colour was borrowed | **Meaning roles are never re-themed to mean something else.** Find or add the role (`color.promo.*`); a theme never sets `color.status.*` | `npm run tokens` (fails) | Every token build |
+| RR11 | Parts that rebuilt a price, a rail and hidden text (Q139 L4, L5) | The core lacked the pattern, so the template built its own | **A gap is closed at the right layer, once.** Pattern or mechanics → core (generic, tokens for its look, default unchanged); brand look → theme values; brand-only composition → template part; rule of two promotes a part. Every core change of a replica is listed with its reason in the DoD status | [The three-question rule](templates-and-library.md#the-rule-library-or-template); the boundary audit; the sweep | Every packet |
+| RR12 | Reports said "done" before the owner could see it was | Completion was judged by the builder's checks | **Evidence in every report:** the sweep's summary line, the side-by-side folder, the static checks and the evaluator's verdict. Without the evaluator's pass it is "in progress", never done | Evaluator sign-off (Q143.6) | Every report |
+
+## Allowed differences: catalogue inventory
+
+Main decision, 2026-11-11: a new generic core token or prop must appear in the source-derived catalogue. Its inventory count, metadata rows and resulting scrollbar length are expected changes, **not animation noise**.
+
+Declare each affected library page and its exact inventory/count or scrollbar-track rectangles in `tools/regression-noise.json` under `catalogueInventory`, with the source change and evidence. Keep the unmasked base, working-copy and difference pictures. The sweep masks only those rectangles, saves the two masked pictures and compares all remaining pixels; every remaining pixel must be identical. Screenshot dimensions must still match. No template or rendered component example can be masked; a difference outside the declared rectangles still fails and is fixed at source. Never widen a rectangle to absorb a component change.
+
+The first declarations are the Overview's token-count sentence (1,293 to 1,303 tokens), and only the right scrollbar track on Avatar (new shape prop), Colour (eight navigation roles), Space (two dimensions) and Templates (the new template inventory), in both schemes. Board and blog-topic have no exception: serial frozen-base captures are identical.
+
+## The replica packet loop
+
+Each packet is one or a few regions, small enough to show the owner within 20–30 active minutes.
+
+1. **Capture the reference.** Screenshots of the real product at the target window (1280 × 800 for Slack), light and dark, every state the region has (hover, selected, unread, open). Only public material or a throwaway account the agent may use; never sign into a real account and never capture the owner's own windows. Saved to `.design-library/<template>-ref/` (git-ignored) with a README index.
+2. **Write the region spec.** For each region: its box (width, height, padding), its type (family, size, weight, leading, colour), its shapes (radii, borders, shadows), its colours per scheme and its states, measured from the screenshots. The spec is the source the theme cites (RR1).
+3. **Build** in the seam order: a theme value → an existing core prop or slot → a new generic core token, prop or part (default keeps every look) → a template part (child paths, `t.<template>.*` tokens aliasing core roles) → content JSON.
+4. **Side by side.** Reference and replica at the same window and scheme, region by region; list every difference (RR2).
+5. **Regression sweep.** `npm run check:regression` passes (RR3), and `npm run check` passes (including `check:generic` and `check:parts`).
+6. **Boundary audit.** No brand values or names outside the template; every core change listed with why it's generic and what its default keeps (RR7, RR11).
+7. **Evaluator.** A separate session scores the side-by-side and the sweep with only the routes, windows and schemes ([the adversarial loop](adversarial-loop.md)); the builder fixes each fail at its owning source (token → layout → compound → part → content) and the loop repeats until every row passes.
+
+## Commands
+
+Run from the library repository root.
+
+| Command | What it does |
+| --- | --- |
+| `npm run regression:freeze` | Builds the library app as it is now into `.shots/base-dist` (git-ignored), the base every later packet is compared with. Refuses to overwrite an existing base unless `-- --force`; re-freeze only between replicas, after the owner accepts the current state |
+| `npm run check:regression` | Builds the working copy into `.shots/wt-dist`, screenshots every other template's layouts and every library page the base's navigation links to (459 screens per scheme today) at 1280 px in light and dark, and compares them pixel by pixel. Each difference is retaken up to twice before it counts. Fails on any undeclared difference, and on a filter that matches no screen; writes `.shots/regression/result.json` (`result-partial.json` for a filtered run, which keeps the other screens' files) and a `-diff.png` per changed screen. Options: `--scheme light`, `--match REGEX` (on screen ids), `--only blog,chat` (template ids), `--exclude <templates under work>`, `--self` |
+| `node tools/template-regression.mjs --self` | Compares the base with itself: the screens that still differ are noise to declare (today only the ImageGeneration stipple, whose dots are placed at random on each load) |
+| `node tools/template-regression.mjs serve --port 8769` | Serves the frozen base for viewing beside the working copy |
+| `npm run check:generic` | Core is free of product names, brand values, template namespaces and per-template-root restating |
+
+## Applied to Slack
+
+The first replica under these rules is the Slack desktop and web app ([Slack replica](slack-replica.md), DoD Q143.3–Q143.6): workspace rail, the aubergine sidebar, channel header with tabs, the message list, composer, threads, search, light and dark, in Lato. The base was frozen on 2026-11-11 22:10 +05:30, before any Slack source change; the evaluator captures the reference and writes the region spec.

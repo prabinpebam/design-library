@@ -20,6 +20,7 @@
 [data-dl='illustration'][data-ratio='photo'] { aspect-ratio: 3 / 2; }
 [data-dl='illustration'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
 [data-dl='illustration'][data-ratio='square'] { aspect-ratio: 1; }
+[data-dl='illustration'][data-ratio='tall'] { aspect-ratio: 3 / 4; }
 [data-dl='illustration'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
 
 [data-dl='illustration'] > :is([data-dl-part='art'], [data-dl-part='control']) {

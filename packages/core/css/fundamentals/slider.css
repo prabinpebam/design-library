@@ -128,7 +128,7 @@
   [data-dl='slider'] [data-dl-part='fill'] {
     inset-inline-start: calc(var(--slider-thumb) / 2 + (100% - var(--slider-thumb)) * var(--from));
     inline-size: calc((100% - var(--slider-thumb)) * (var(--to) - var(--from)));
-    background-color: var(--color-accent);
+    background-color: var(--color-map-on-fill);
   }
 
   /* A step dot on the track's centre line: quiet ink on the bare track, the accent's own text colour on the fill. */
@@ -143,7 +143,7 @@
   }
 
   [data-dl='slider'] [data-dl-part='mark'][data-in] {
-    background-color: var(--color-text-on-accent);
+    background-color: var(--color-map-mark-on-fill);
   }
 
   /* Mark labels and bounds: each stays inside the track's span (the first starts at its point, the last ends at it). */
@@ -171,7 +171,7 @@
     inline-size: var(--slider-thumb);
     block-size: var(--slider-thumb);
     border-radius: var(--radius-full);
-    background-color: var(--color-accent);
+    background-color: var(--color-map-on-fill);
     /* Q65 Z3: only the thumb's tint eases; its position never does. */
     transition: background-color var(--duration-change) var(--easing-standard);
   }
@@ -190,17 +190,17 @@
   }
 
   [data-dl='slider'] [data-dl-part='thumb'][data-dragging='on'] {
-    background-color: var(--color-accent-pressed);
+    background-color: var(--color-map-on-fill-pressed);
   }
 
   @media (hover: hover) {
     [data-dl='slider']:not([data-disabled], [data-readonly]) [data-dl-part='thumb']:hover {
-      background-color: var(--color-accent-hover);
+      background-color: var(--color-map-on-fill-hover);
     }
   }
 
   [data-dl='slider']:not([data-disabled], [data-readonly]) [data-dl-part='thumb']:active {
-    background-color: var(--color-accent-pressed);
+    background-color: var(--color-map-on-fill-pressed);
   }
 
   /*

@@ -282,8 +282,8 @@
       },
       "radius": {
         "$type": "dimension",
-        "$value": "{radius.md}",
-        "$description": "The button's corners (echoed for density contexts)"
+        "$value": "{c.button.radius}",
+        "$description": "Q141: the trigger is drawn like a default Button, so it takes the Button's corner (a pill when a theme makes buttons pills). (echoed for density contexts)"
       }
     },
     "navigation": {

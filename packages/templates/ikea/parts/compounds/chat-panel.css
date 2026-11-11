@@ -1,0 +1,60 @@
+/*
+ * IKEA template part, tier 2 compound: ChatPanel (owner Q140). Pinned to the window's bottom end above the page; a head
+ * of the feature surface (its buttons re-scoped to the head's on-colour, not restyled), a body of the page's surface.
+ * Places core Button. Reads only core semantic roles and its own t.ikea.chat-panel tokens.
+ */
+@layer templates {
+  [data-dl='ikea-chat-panel'] {
+    position: fixed;
+    inset-block-end: var(--space-margin-page);
+    inset-inline-end: var(--space-margin-page);
+    z-index: var(--layer-popover);
+    font-family: var(--font-ui);
+  }
+
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] {
+    inline-size: min(var(--t-ikea-chat-panel-width), calc(100vw - 2 * var(--space-margin-page)));
+    border-radius: var(--radius-md);
+    background-color: var(--t-ikea-chat-panel-fill);
+    box-shadow: var(--shadow-overlay);
+  }
+
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='head'] {
+    --color-text: var(--t-ikea-chat-panel-head-on);
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    padding-block: var(--space-inset-sm);
+    padding-inline: var(--t-ikea-chat-panel-padding) var(--space-inset-sm);
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    background-color: var(--t-ikea-chat-panel-head-fill);
+    color: var(--t-ikea-chat-panel-head-on);
+  }
+
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='head'] > [data-dl-part='title'] {
+    flex: 1 1 auto;
+    margin: 0;
+    font-size: var(--text-l);
+    font-weight: var(--weight-bold);
+  }
+
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='body'] {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--t-ikea-chat-panel-gap);
+    padding: var(--t-ikea-chat-panel-padding);
+    color: var(--color-text);
+  }
+
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='body'] > [data-dl-part='text'] {
+    margin: 0;
+    font-size: var(--text-m);
+    line-height: var(--leading-normal);
+  }
+
+  [data-dl='ikea-chat-panel'][data-pinned='false'] {
+    position: static;
+  }
+}

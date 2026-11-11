@@ -13,9 +13,29 @@ const coreDirs = ['packages/core/react', 'packages/core/css', 'packages/core/tok
 const skipDir = /[\\/](stories|node_modules|dist)([\\/]|$)/;
 
 // Product identities a template may imitate but core must never name in code.
-const productNames = /\b(figma|sketch(?:app)?|framer|penpot|photoshop|canva)\b/i;
+const productNames = /\b(figma|sketch(?:app)?|framer|penpot|photoshop|canva|ikea|slack)\b/i;
+const productIn = (text) => text.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replaceAll('_', ' ').match(productNames);
 // Brand values of imitated products; extend when a new replica template starts.
-const brandValues = [{ re: /#0d99ff\b/i, what: "Figma's accent #0D99FF" }];
+const brandValues = [
+  { re: /#0d99ff\b/i, what: "Figma's accent #0D99FF" },
+  { re: /#0058a3\b/i, what: "IKEA's blue #0058A3" },
+  { re: /#ffdb00\b/i, what: "IKEA's yellow #FFDB00" },
+  // Slack (Q143): aubergine brand and sidebar, the active-item blue, the four logo colours and its text colour.
+  { re: /#4a154b\b/i, what: "Slack's aubergine #4A154B" },
+  { re: /#3f0e40\b/i, what: "Slack's sidebar aubergine #3F0E40" },
+  { re: /#611f69\b/i, what: "Slack's aubergine #611F69" },
+  { re: /#350d36\b/i, what: "Slack's sidebar hover #350D36" },
+  { re: /#1264a3\b/i, what: "Slack's active-item blue #1264A3" },
+  { re: /#007a5a\b/i, what: "Slack's action green #007A5A" },
+  { re: /#39073d\b/i, what: "Slack's current rail #39073D" },
+  { re: /#501e54\b/i, what: "Slack's current sidebar #501E54" },
+  { re: /#ffe5ff\b/i, what: "Slack's current selection #FFE5FF" },
+  { re: /#36c5f0\b/i, what: "Slack's blue #36C5F0" },
+  { re: /#2eb67d\b/i, what: "Slack's green #2EB67D" },
+  { re: /#ecb22e\b/i, what: "Slack's yellow #ECB22E" },
+  { re: /#e01e5a\b/i, what: "Slack's red #E01E5A" },
+  { re: /#1d1c1d\b/i, what: "Slack's text #1D1C1D" },
+];
 
 let templateIds = [];
 try {
@@ -41,7 +61,8 @@ function stripComments(src, ext) {
 
 function checkLines(file, text) {
   text.split('\n').forEach((line, i) => {
-    if (productNames.test(line)) report(file, i + 1, line, `names a product (${line.match(productNames)[0]}) in code`, 'move the look to the template (theme, t.{template}.* tokens or a template part) and name the core seam by what it does');
+    const product = productIn(line);
+    if (product) report(file, i + 1, line, `names a product (${product[0]}) in code`, 'move the look to the template (theme, t.{template}.* tokens or a template part) and name the core seam by what it does');
     for (const b of brandValues) if (b.re.test(line)) report(file, i + 1, line, `carries ${b.what}`, "set the value in the template's theme or tokens, not as a core default");
     if (templateNs && templateNs.test(line)) report(file, i + 1, line, 'reaches a template namespace from core', 'core never reads or styles a template; expose a public seam instead');
   });
@@ -52,13 +73,13 @@ function walkJson(file, node, path) {
   if (node && typeof node === 'object') {
     for (const [k, v] of Object.entries(node)) {
       if (k.startsWith('$') && k !== '$value') continue; // descriptions and extensions may cite a product
-      if (productNames.test(k)) report(file, 0, `${path}/${k}`, 'names a product in a token name', 'name the token by its role');
+      if (productIn(k)) report(file, 0, `${path}/${k}`, 'names a product in a token name', 'name the token by its role');
       walkJson(file, v, `${path}/${k}`);
     }
     return;
   }
   if (typeof node === 'string') {
-    if (productNames.test(node)) report(file, 0, `${path}: ${node}`, 'names a product in a token value', 'use a role, not a product');
+    if (productIn(node)) report(file, 0, `${path}: ${node}`, 'names a product in a token value', 'use a role, not a product');
     for (const b of brandValues) if (b.re.test(node)) report(file, 0, `${path}: ${node}`, `carries ${b.what}`, "set it in the template's theme");
   }
 }
@@ -83,6 +104,30 @@ function walk(dir) {
 }
 
 for (const d of coreDirs) walk(join(root, d));
+
+// Q143 RR4 (docs/replica-rules.md): core never restates a style on every template root. A `[data-template]` rule in
+// core CSS may only re-resolve colour; anything a template needs on its root is generated into that template's own
+// theme.css from what its theme declares (tools/template-tokens.mjs), and only when it declares it.
+function checkTemplateRoot(dir) {
+  let entries;
+  try { entries = readdirSync(dir); } catch { return; }
+  for (const name of entries) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) { checkTemplateRoot(p); continue; }
+    if (extname(name) !== '.css') continue;
+    const src = stripComments(readFileSync(p, 'utf8'), '.css');
+    for (const m of src.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      if (!/\[data-template\]/.test(m[1])) continue;
+      const props = m[2].split(';').map((d) => d.split(':')[0].trim()).filter(Boolean);
+      const extra = props.filter((x) => !['color', 'background-color'].includes(x));
+      if (extra.length) {
+        const line = src.slice(0, m.index + m[0].indexOf('{')).split('\n').length;
+        report(p, line, `${m[1].trim()} { ${extra.join(', ')} }`, 'core restates a style on every template root', "generate it into the template's theme.css only when its theme declares it (tools/template-tokens.mjs)");
+      }
+    }
+  }
+}
+checkTemplateRoot(join(root, 'packages/core/css'));
 
 if (problems.length) {
   console.error(`check:generic: ${problems.length} problem(s). Core stays generic (Q118.4, docs/figma-replica.md section 3):`);

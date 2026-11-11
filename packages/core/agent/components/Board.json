@@ -4,10 +4,10 @@
   "tier": "compound",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/compounds/Board.tsx",
-  "summary": "Work as cards in columns by stage (To do, In progress, Done): drag a card to another column or position, or move it with its Move menu. The columns scroll sideways inside the board when they don't fit. For a kanban board, a pipeline of deals or applications. Not for a table of records (DataTable) or a single ordered list (List with reordering).",
+  "summary": "Work as cards in columns by stage (To do, In progress, Done): drag a card to another column or position, or move it with its Move menu. The columns scroll sideways inside the board when they don't fit. For a kanban board, a pipeline of deals or applications, or assigning things to buckets (a brand map: groups of parts to colours), where a card may hold rows that move on their own. Not for a table of records (DataTable) or a single ordered list (List with reordering).",
   "family": "data",
   "a11y": [
-    "Each column is a labelled section with a heading and its count (\"3 of 4\" against a limit); cards are list items. Dragging is never the only way: every card has a Move menu that names the columns, and each move is announced (\"Moved Sign-in error to Done\"). The drop target shows an accent outline only while a card is over it. Tags carry their meaning in words."
+    "Each column is a labelled section with a heading and its count (\"3 of 4\" against a limit); cards are list items. Dragging is never the only way: every card and every row has a Move menu that names the columns, and each move is announced (\"Moved Sign-in error to Done\"). The drop target shows an accent outline only while a card is over it. Tags carry their meaning in words; a column's colour mark only adds to its title."
   ],
   "keys": [],
   "sealed": true,
@@ -45,6 +45,27 @@
           "type": "string",
           "default": "'Nothing here yet.'",
           "description": "What an empty column says."
+        },
+        {
+          "name": "ordered",
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether a card's position in its column matters (default true). False: the whole column is the drop target, no slot opens and a moved card goes where the data puts it (a set sorted by its own rule, like a brand map's groups)."
+        },
+        {
+          "name": "onMoveItem",
+          "type": "(itemId: string, toColumn: string) => void",
+          "description": "A row inside a card was moved, by dragging or with its Move menu, to another column."
+        },
+        {
+          "name": "onCardAction",
+          "type": "(cardId: string, value: string) => void",
+          "description": "One of a card's own Move menu choices (BoardCard.actions) was picked."
+        },
+        {
+          "name": "onColumnAction",
+          "type": "(columnId: string, value: string) => void",
+          "description": "One of a column's actions (BoardColumn.actions) was pressed."
         }
       ]
     },
@@ -89,6 +110,51 @@
           "name": "meta",
           "type": "string",
           "description": "A short note at the end: an estimate, a due date."
+        },
+        {
+          "name": "items",
+          "type": "BoardItem[]",
+          "description": "Rows inside the card that move on their own (a group's parts): each has its own drag and Move menu."
+        },
+        {
+          "name": "actions",
+          "type": "{ value: string",
+          "description": "More choices in the card's Move menu, after the columns (\"Gather all 4 here\")."
+        },
+        {
+          "name": "label",
+          "type": "string }[]",
+          "required": true
+        }
+      ]
+    },
+    {
+      "interface": "BoardItem",
+      "props": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "swatch",
+          "type": "string",
+          "description": "A small colour mark before the name, any CSS colour: what the row stands for, never its state."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "description": "One line under the name, only when something needs saying: \"Shifted in dark: lighter step\"."
+        },
+        {
+          "name": "noteTone",
+          "type": "'info' | 'warning'",
+          "description": "`warning` puts a warning icon before the note; default `info`, the note alone."
         }
       ]
     },
@@ -114,6 +180,37 @@
           "name": "limit",
           "type": "number",
           "description": "The most cards the column should hold (work in progress); the count says \"3 of 4\"."
+        },
+        {
+          "name": "swatch",
+          "type": "string",
+          "description": "A colour mark before the title, any CSS colour."
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "description": "A short tag after the title: \"Actions\"."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "description": "One line under the title: \"Shows the plain look\"."
+        },
+        {
+          "name": "actions",
+          "type": "{ value: string",
+          "description": "Quiet buttons under the title that act on the column (\"Use for actions\")."
+        },
+        {
+          "name": "label",
+          "type": "string }[]",
+          "required": true
+        },
+        {
+          "name": "emptyText",
+          "type": "string",
+          "default": "'Nothing here yet.'",
+          "description": "What this column says when empty, when it differs from the board's `emptyText`."
         }
       ]
     }
@@ -121,6 +218,8 @@
   "uses": [
     "Avatar",
     "Badge",
+    "Button",
+    "Icon",
     "MenuButton",
     "ScrollArea"
   ],
@@ -140,13 +239,18 @@
     "--c-board-dragging-opacity",
     "--c-board-drop",
     "--c-board-scroll-room",
+    "--color-border",
     "--color-focus",
+    "--color-status-warning-fg",
     "--color-text",
     "--color-text-muted",
     "--radius-sm",
     "--size-focus-width",
+    "--size-icon-sm",
     "--size-target-dense",
     "--space-inline-pair",
+    "--space-stack-pair",
+    "--state-hover",
     "--type-body-sm-leading",
     "--type-body-sm-size",
     "--type-caption-leading",

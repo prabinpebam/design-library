@@ -137,7 +137,8 @@
     "Section",
     "Sheet",
     "Hero",
-    "conference.SponsorWall"
+    "conference.SponsorWall",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-copy"

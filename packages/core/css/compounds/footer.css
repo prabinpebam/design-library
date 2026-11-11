@@ -38,6 +38,13 @@
     list-style: none;
   }
 
+  /* Q141: a brand may quieten the footer's link lists (grey, no line at rest); hover and focus keep the line. A
+     link in the identity (a promo's "See more") stays an ordinary link. */
+  [data-dl='footer'] > [data-dl-part='content'] > :is([data-dl-part='sections'] > [data-dl-part='section'] > [data-dl-part='links'], [data-dl-part='meta'] > [data-dl-part='meta-links']) > li > [data-dl='link'] {
+    --link-decoration: var(--c-footer-link-decoration);
+    color: var(--c-footer-link);
+  }
+
   [data-dl='footer'] [data-dl-part='links'] {
     display: flex;
     flex-direction: column;
@@ -48,6 +55,19 @@
     display: flex;
     flex-direction: column;
     gap: var(--c-footer-meta-gap);
+  }
+
+  /* Tools (Q140): social links, region, cookie settings; one wrapping row, ends pushed apart when it fits. */
+  [data-dl='footer'] > [data-dl-part='content'] > [data-dl-part='tools'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--c-footer-link-gap) var(--c-footer-column-gap);
+  }
+
+  [data-dl='footer'][data-arrangement='identity'] > [data-dl-part='content'] > [data-dl-part='tools'] {
+    grid-column: 1 / -1;
   }
 
   [data-dl='footer'] [data-dl-part='meta-links'] {

@@ -1,0 +1,45 @@
+/*
+ * Tier 1 fundamental: Rail (Q139 R3, promoted from a template's product and chip rows, Q138). One row of items inside an
+ * inline ScrollArea (Q96); each item the same c.rail width, or its own width for chips and links.
+ */
+@layer fundamentals {
+  /* Q141: the items line up with the words around the rail; the ScrollArea's inset (room for focus rings) sits outside
+     that line, never more than the page margin, so the page never scrolls sideways. */
+  [data-dl='rail'] > [data-dl='scroll-area'] {
+    margin-inline: calc(-1 * min(var(--c-scroll-area-inset-sm), var(--space-margin-page)));
+  }
+
+  [data-dl='rail'] [data-dl-part='items'] {
+    display: flex;
+    gap: var(--c-rail-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [data-dl='rail'][data-gap='item'] [data-dl-part='items'] {
+    gap: var(--c-rail-gap-item);
+  }
+
+  [data-dl='rail'] [data-dl-part='item'] {
+    display: flex;
+    flex: none;
+    inline-size: var(--c-rail-item);
+  }
+
+  [data-dl='rail'][data-item='s'] [data-dl-part='item'] {
+    inline-size: var(--c-rail-item-s);
+  }
+
+  [data-dl='rail'][data-item='l'] [data-dl-part='item'] {
+    inline-size: var(--c-rail-item-l);
+  }
+
+  [data-dl='rail'][data-item='auto'] [data-dl-part='item'] {
+    inline-size: auto;
+  }
+
+  [data-dl='rail'] [data-dl-part='item'] > * {
+    flex: 1;
+  }
+}

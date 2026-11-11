@@ -6,6 +6,12 @@ export interface ScrollAreaProps extends DataAttributes {
   children: ReactNode;
   /** `auto` shows the scrollbar while scrolling, on hover and while it's dragged, then fades it; `always` shows it whenever the content overflows. */
   mode?: 'auto' | 'always';
+  /**
+   * How the bar is drawn: `overlay` (default) a thin thumb over the end edge, shown by `mode`; `line` (inline only, Q141)
+   * a progress line under the content, its track the row's whole length and its thumb the part in view, shown whenever
+   * the content overflows. `line` is for a row of cards on a page (a Rail), where the line says there's more.
+   */
+  bar?: 'overlay' | 'line';
   /** Which directions scroll: `block` (down), `inline` (across) or `both`. */
   axis?: 'block' | 'inline' | 'both';
   /** The most the region grows before it scrolls; `fill` takes the height its parent gives it. */
@@ -37,11 +43,11 @@ export interface ScrollAreaProps extends DataAttributes {
  * @a11y Forced colours and touch screens get the system's own scrollbar back.
  * @key Arrow keys, Page Up, Page Down, Home, End, Space: scroll the region (native)
  */
-export function ScrollArea({ children, mode = 'auto', axis = 'block', maxSize = 'fill', inset = 'none', surface = 'none', label, id, tabIndex, viewportRef, contain = false, ...data }: ScrollAreaProps) {
+export function ScrollArea({ children, mode = 'auto', bar = 'overlay', axis = 'block', maxSize = 'fill', inset = 'none', surface = 'none', label, id, tabIndex, viewportRef, contain = false, ...data }: ScrollAreaProps) {
   const { root, setViewport, tracks } = useOverlayScroll(viewportRef);
 
   return (
-    <div {...data} ref={root} data-dl="scroll-area" data-mode={mode} data-axis={axis} data-max={maxSize} data-surface={surface} data-contain={contain ? '' : undefined}>
+    <div {...data} ref={root} data-dl="scroll-area" data-mode={bar === 'line' ? 'always' : mode} data-bar={bar === 'line' ? 'line' : undefined} data-axis={axis} data-max={maxSize} data-surface={surface} data-contain={contain ? '' : undefined}>
       <div
         ref={setViewport}
         data-dl-part="viewport"

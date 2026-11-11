@@ -1,0 +1,13 @@
+{
+  "id": "armchair",
+  "set": "Q137 IKEA store",
+  "model": "gpt-image-2.5-sunburst (global gpt-image-2-5 skill)",
+  "mode": "edit, Image 1 = product-sofa raw",
+  "size": "1024x1024",
+  "quality": "medium",
+  "date": "2026-11-11",
+  "shipped": "packages/templates/ikea/assets/product-armchair.webp",
+  "ship": "node ./tools/trim-alpha.mjs RAW.png -o SHIPPED --width 400 --density 2 --no-trim",
+  "alt": "A bent birch armchair with a thick beige cushion.",
+  "prompt": "medium 1024x1024 ref=product-sofa\nImage 1 is a style reference only: copy its photographic style, background, lighting, framing scale and colour treatment. Do not copy its subject. Show: a lounge armchair with a bent light birch wood frame that forms a cantilever curve, and a thick natural beige cushion.\nStyle: clean e-commerce product photograph; soft even studio light from the upper left; seamless plain very light warm grey background (#F2F2F0) filling the whole frame; a faint soft contact shadow under the product; true-to-life materials; Scandinavian flat-pack furniture design, simple and affordable looking; three-quarter view from slightly above; the product centred and filling about 70% of the frame width.\nConstraints: no text, no letters or numbers, no logos or trademarks, no labels or price tags, no watermark, no frame or border, no people."
+}

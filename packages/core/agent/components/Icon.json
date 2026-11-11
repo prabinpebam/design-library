@@ -74,6 +74,7 @@
     "Accordion",
     "Alert",
     "AllocationSlider",
+    "Board",
     "Breadcrumbs",
     "ChatMessage",
     "ChatThinking",
@@ -87,7 +88,12 @@
     "Pagination",
     "Statistic",
     "Tabs",
-    "TreeView"
+    "TreeView",
+    "ikea.Notice",
+    "ikea.ChipRail",
+    "ikea.PictureBanner",
+    "ikea.StoreHeader",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-copy"

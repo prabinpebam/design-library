@@ -176,6 +176,11 @@
           "name": "onSearch",
           "type": "(query: string) => void",
           "description": "Called with what's typed, for options that come from a server: fetch, set `loading` while waiting, then pass the results as `options` (they're still narrowed by what's typed)."
+        },
+        {
+          "name": "listWidth",
+          "type": "ListWidth",
+          "description": "Pins the list to one width step (Q130, docs/widths.md). Leave out to fit the options, snapped up to `xs`, `sm` or `md`, and never narrower than the box. Pin when the options load or change while it's open (`onSearch`)."
         }
       ]
     },
@@ -297,11 +302,11 @@
     "--c-popup-radius",
     "--c-popup-shadow",
     "--c-popup-width",
-    "--color-accent",
     "--color-bg-control",
     "--color-bg-sunken",
     "--color-border",
     "--color-border-control",
+    "--color-map-progress",
     "--color-status-danger-border",
     "--color-status-danger-fg",
     "--color-status-success-fg",

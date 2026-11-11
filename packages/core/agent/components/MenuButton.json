@@ -114,6 +114,11 @@
           "name": "pendingLabel",
           "type": "string",
           "description": "Present tense while `busy`, e.g. \"Applying…\"; the label stays when left out."
+        },
+        {
+          "name": "listWidth",
+          "type": "ListWidth",
+          "description": "Pins the menu to one width step (Q130, docs/widths.md). Leave out to fit the items, snapped up to `xs`, `sm` or `md`. Pin only so menus that sit together (one toolbar) match, or when the items change while it's open."
         }
       ]
     },
@@ -164,6 +169,7 @@
     "--c-field-size-xs",
     "--c-menu-button-border",
     "--c-menu-button-border-width",
+    "--c-menu-button-fill",
     "--c-menu-button-gap",
     "--c-menu-button-padding-inline",
     "--c-menu-button-radius",
@@ -183,14 +189,13 @@
     "--c-popup-radius",
     "--c-popup-shadow",
     "--c-popup-width",
-    "--color-accent",
-    "--color-accent-hover",
-    "--color-accent-pressed",
-    "--color-bg-control",
     "--color-border",
+    "--color-map-action-fill",
+    "--color-map-action-fill-hover",
+    "--color-map-action-fill-on",
+    "--color-map-action-fill-pressed",
     "--color-text",
     "--color-text-disabled",
-    "--color-text-on-accent",
     "--duration-change",
     "--easing-standard",
     "--size-icon-sm",

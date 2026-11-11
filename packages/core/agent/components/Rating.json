@@ -74,6 +74,16 @@
           "description": "Writes the value beside the stars (\"4.3 of 5\", or the value's words)."
         },
         {
+          "name": "count",
+          "type": "number",
+          "description": "How many ratings an average is made from, written after the stars as \"(1,284)\" (Q139 R5); read-only only."
+        },
+        {
+          "name": "countLabel",
+          "type": "string",
+          "description": "The count in words for assistive technology, in the page's language: \"1,284 reviews\". Default \"{count} ratings\"; empty when `label` already says the count."
+        },
+        {
           "name": "clearable",
           "type": "boolean",
           "default": "true",
@@ -108,10 +118,10 @@
     "--c-rating-star-l",
     "--c-rating-star-s",
     "--c-rating-stroke",
-    "--color-accent",
-    "--color-accent-hover",
     "--color-border-strong",
     "--color-focus",
+    "--color-map-rating",
+    "--color-map-rating-hover",
     "--color-text-disabled",
     "--color-text-muted",
     "--radius-sm",
