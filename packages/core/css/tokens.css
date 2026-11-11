@@ -235,6 +235,14 @@
   --c-pane-gap: var(--space-stack-group);
   --c-pane-head-gap: var(--space-inline-item);
   --c-pane-status-gap: var(--space-stack-pair);
+  --c-ribbon-gap: var(--space-stack-pair);
+  --c-ribbon-bg: var(--color-bg-raised);
+  --c-ribbon-radius: var(--radius-md);
+  --c-ribbon-shadow: var(--shadow-raised);
+  --c-ribbon-padding: var(--space-inset-sm);
+  --c-ribbon-group-gap: var(--space-inline-item);
+  --c-ribbon-command-gap: var(--space-stack-pair);
+  --c-ribbon-separator: var(--color-border);
   --c-toolbar-gap: var(--space-inline-item);
   --c-token-specimen-tile: var(--size-specimen);
   --c-token-specimen-mark: var(--color-accent);
@@ -342,6 +350,8 @@
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
   --c-button-pressed-fill: var(--state-selected);
+  --c-button-stack-gap: var(--space-stack-pair);
+  --c-button-stack-padding: var(--space-inset-xs);
   --c-button-expanded-fill: var(--state-selected);
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-gap: var(--space-inline-pair);
@@ -824,6 +834,9 @@
   --c-tabs-indicator: var(--border-thick);
   --c-tabs-indicator-fill: var(--color-map-selection-indicator);
   --c-tabs-selected-fill: transparent;
+  --c-tabs-selected-weight: var(--type-label-weight);
+  --c-tabs-text: var(--color-text-muted);
+  --c-tabs-selected-text: var(--color-text);
   --c-tabs-panel-gap: var(--space-stack-group);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-pagination-gap: var(--space-inline-pair);
@@ -1439,12 +1452,14 @@
     --c-price-was: var(--color-text-muted);
     --c-progress-bar-track: var(--color-border-group);
     --c-property-section-divider: var(--color-border);
+    --c-ribbon-separator: var(--color-border);
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-line-track: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
+    --c-tabs-text: var(--color-text-muted);
   }
 }
 
@@ -1480,12 +1495,14 @@
   --c-price-was: var(--color-text-muted);
   --c-progress-bar-track: var(--color-border-group);
   --c-property-section-divider: var(--color-border);
+  --c-ribbon-separator: var(--color-border);
   --c-row-list-divider: var(--color-border);
   --c-scroll-area-colour: var(--color-border-strong);
   --c-scroll-area-colour-active: var(--color-text-muted);
   --c-scroll-area-line-track: var(--color-border);
   --c-site-header-current-rule: var(--color-border-strong);
   --c-skeleton-fill: var(--color-border);
+  --c-tabs-text: var(--color-text-muted);
 }
 
 @media (prefers-contrast: more) {
@@ -1521,12 +1538,14 @@
     --c-price-was: var(--color-text-muted);
     --c-progress-bar-track: var(--color-border-group);
     --c-property-section-divider: var(--color-border);
+    --c-ribbon-separator: var(--color-border);
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-line-track: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
+    --c-tabs-text: var(--color-text-muted);
   }
 }
 
@@ -1562,12 +1581,14 @@
   --c-price-was: var(--color-text-muted);
   --c-progress-bar-track: var(--color-border-group);
   --c-property-section-divider: var(--color-border);
+  --c-ribbon-separator: var(--color-border);
   --c-row-list-divider: var(--color-border);
   --c-scroll-area-colour: var(--color-border-strong);
   --c-scroll-area-colour-active: var(--color-text-muted);
   --c-scroll-area-line-track: var(--color-border);
   --c-site-header-current-rule: var(--color-border-strong);
   --c-skeleton-fill: var(--color-border);
+  --c-tabs-text: var(--color-text-muted);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1675,6 +1696,8 @@
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-padding-inline-lg: var(--space-inset-lg);
   --c-button-padding-inline-sm: var(--space-inset-sm);
+  --c-button-stack-gap: var(--space-stack-pair);
+  --c-button-stack-padding: var(--space-inset-xs);
   --c-calendar-gap: var(--space-stack-item);
   --c-calendar-month-gap: var(--space-inline-group);
   --c-canvas-margin: var(--space-stack-section);
@@ -1841,6 +1864,10 @@
   --c-radio-group-tile-padding: var(--space-inset-md);
   --c-rail-gap: var(--space-gutter);
   --c-rail-gap-item: var(--space-inline-item);
+  --c-ribbon-command-gap: var(--space-stack-pair);
+  --c-ribbon-gap: var(--space-stack-pair);
+  --c-ribbon-group-gap: var(--space-inline-item);
+  --c-ribbon-padding: var(--space-inset-sm);
   --c-row-list-facts-gap: var(--space-stack-pair);
   --c-row-list-gap: var(--space-inline-group);
   --c-row-list-gap-large: var(--space-gutter);
@@ -1961,6 +1988,8 @@
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-padding-inline-lg: var(--space-inset-lg);
   --c-button-padding-inline-sm: var(--space-inset-sm);
+  --c-button-stack-gap: var(--space-stack-pair);
+  --c-button-stack-padding: var(--space-inset-xs);
   --c-calendar-gap: var(--space-stack-item);
   --c-calendar-month-gap: var(--space-inline-group);
   --c-canvas-margin: var(--space-stack-section);
@@ -2127,6 +2156,10 @@
   --c-radio-group-tile-padding: var(--space-inset-md);
   --c-rail-gap: var(--space-gutter);
   --c-rail-gap-item: var(--space-inline-item);
+  --c-ribbon-command-gap: var(--space-stack-pair);
+  --c-ribbon-gap: var(--space-stack-pair);
+  --c-ribbon-group-gap: var(--space-inline-item);
+  --c-ribbon-padding: var(--space-inset-sm);
   --c-row-list-facts-gap: var(--space-stack-pair);
   --c-row-list-gap: var(--space-inline-group);
   --c-row-list-gap-large: var(--space-gutter);
@@ -2247,6 +2280,8 @@
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-padding-inline-lg: var(--space-inset-lg);
   --c-button-padding-inline-sm: var(--space-inset-sm);
+  --c-button-stack-gap: var(--space-stack-pair);
+  --c-button-stack-padding: var(--space-inset-xs);
   --c-calendar-gap: var(--space-stack-item);
   --c-calendar-month-gap: var(--space-inline-group);
   --c-canvas-margin: var(--space-stack-section);
@@ -2413,6 +2448,10 @@
   --c-radio-group-tile-padding: var(--space-inset-md);
   --c-rail-gap: var(--space-gutter);
   --c-rail-gap-item: var(--space-inline-item);
+  --c-ribbon-command-gap: var(--space-stack-pair);
+  --c-ribbon-gap: var(--space-stack-pair);
+  --c-ribbon-group-gap: var(--space-inline-item);
+  --c-ribbon-padding: var(--space-inset-sm);
   --c-row-list-facts-gap: var(--space-stack-pair);
   --c-row-list-gap: var(--space-inline-group);
   --c-row-list-gap-large: var(--space-gutter);
@@ -2533,6 +2572,8 @@
   --c-button-padding-inline: var(--space-inset-md);
   --c-button-padding-inline-lg: var(--space-inset-lg);
   --c-button-padding-inline-sm: var(--space-inset-sm);
+  --c-button-stack-gap: var(--space-stack-pair);
+  --c-button-stack-padding: var(--space-inset-xs);
   --c-calendar-gap: var(--space-stack-item);
   --c-calendar-month-gap: var(--space-inline-group);
   --c-canvas-margin: var(--space-stack-section);
@@ -2699,6 +2740,10 @@
   --c-radio-group-tile-padding: var(--space-inset-md);
   --c-rail-gap: var(--space-gutter);
   --c-rail-gap-item: var(--space-inline-item);
+  --c-ribbon-command-gap: var(--space-stack-pair);
+  --c-ribbon-gap: var(--space-stack-pair);
+  --c-ribbon-group-gap: var(--space-inline-item);
+  --c-ribbon-padding: var(--space-inset-sm);
   --c-row-list-facts-gap: var(--space-stack-pair);
   --c-row-list-gap: var(--space-inline-group);
   --c-row-list-gap-large: var(--space-gutter);
@@ -2809,6 +2854,7 @@
   --c-pagination-radius: var(--radius-md);
   --c-popup-radius: var(--radius-md);
   --c-radio-group-tile-radius: var(--radius-md);
+  --c-ribbon-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
@@ -2875,6 +2921,7 @@
   --c-pagination-radius: var(--radius-md);
   --c-popup-radius: var(--radius-md);
   --c-radio-group-tile-radius: var(--radius-md);
+  --c-ribbon-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
@@ -2941,6 +2988,7 @@
   --c-pagination-radius: var(--radius-md);
   --c-popup-radius: var(--radius-md);
   --c-radio-group-tile-radius: var(--radius-md);
+  --c-ribbon-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
@@ -3007,6 +3055,7 @@
   --c-pagination-radius: var(--radius-md);
   --c-popup-radius: var(--radius-md);
   --c-radio-group-tile-radius: var(--radius-md);
+  --c-ribbon-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
@@ -3073,6 +3122,7 @@
   --c-pagination-radius: var(--radius-md);
   --c-popup-radius: var(--radius-md);
   --c-radio-group-tile-radius: var(--radius-md);
+  --c-ribbon-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-radius: var(--radius-pill);
   --c-scroll-area-surface-radius: var(--radius-md);
@@ -3132,6 +3182,7 @@
   --c-popup-radius: var(--radius-md);
   --c-quote-text-size-s: var(--type-body-size);
   --c-radio-group-tile-radius: var(--radius-md);
+  --c-ribbon-radius: var(--radius-md);
   --c-screen-preview-radius: var(--radius-md);
   --c-scroll-area-surface-radius: var(--radius-md);
   --c-section-tone-radius: var(--radius-lg);

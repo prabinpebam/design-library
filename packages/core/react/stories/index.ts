@@ -74,6 +74,7 @@ export { default as priceStories } from './Price.stories';
 export { default as railStories } from './Rail.stories';
 export { default as paneStories } from './Pane.stories';
 export { default as toolbarStories } from './Toolbar.stories';
+export { default as ribbonStories } from './Ribbon.stories';
 export { default as propertySectionStories } from './PropertySection.stories';
 export { default as propertyRowStories } from './PropertyRow.stories';
 export { default as colourFieldStories } from './ColourField.stories';

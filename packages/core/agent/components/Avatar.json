@@ -165,7 +165,8 @@
     "AvatarGroup",
     "Persona",
     "Board",
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "visual-representation"

@@ -247,6 +247,9 @@
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/slider",
+  "usedBy": [
+    "word.Window"
+  ],
   "principles": [
     "ui-states"
   ]

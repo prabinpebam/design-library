@@ -130,6 +130,16 @@
     padding-inline: 0;
   }
 
+  /* A stacked command: the icon above its label, the box growing to hold both. */
+  [data-dl='button'][data-stacked] {
+    padding-block: var(--c-button-stack-padding);
+  }
+
+  [data-dl='button'][data-stacked] > [data-dl-part='layer'] {
+    flex-direction: column;
+    gap: var(--c-button-stack-gap);
+  }
+
   /* A disclosure that's open: the selected tint, the one cue for "open". */
   [data-dl='button'][aria-expanded='true'] {
     background-color: var(--c-button-expanded-fill);

@@ -370,7 +370,8 @@
     "ColourPicker",
     "ConversationList",
     "InlineEdit",
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "ui-states"

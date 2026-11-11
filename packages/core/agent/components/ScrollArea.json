@@ -138,6 +138,7 @@
     "DataTable",
     "Dialog",
     "Example",
+    "Ribbon",
     "Sheet",
     "Tabs",
     "AppLayout",
@@ -145,7 +146,8 @@
     "EditorLayout",
     "LibraryLayout",
     "ListDetail",
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "spacing"

@@ -170,7 +170,18 @@
     // SC2 headings: the head's space above vs below, measured between the nearest atoms that overlap it sideways. What the
     // eye sees counts (spacing rule 7): words, media, controls, a legend, a drawn shape and a visible enclosure's edge.
     const atoms = [...new Set([...root.querySelectorAll(ATOM), ...all.filter((el) => el !== root && bounded(el))])].filter((el) => visible(el) && !el.parentElement.closest('[data-dl="card"],[data-dl="statistic"],[data-dl="button"],button,a,label,dl,table,ul,ol,blockquote,figure,svg,picture'));
-    const boxes = atoms.map((el) => ({ el, r: el.getBoundingClientRect() }));
+    // What the eye sees: an atom scrolled wholly out of its scroll region's viewport (a timeline opened at its newest
+    // message) is clipped, not space above or below a heading.
+    const scrolledOut = (el) => {
+      const r = el.getBoundingClientRect();
+      for (let a = el.parentElement; a && a !== root; a = a.parentElement) {
+        if (!/auto|scroll|hidden/.test(getComputedStyle(a).overflowY)) continue;
+        const v = a.getBoundingClientRect();
+        if (r.bottom <= v.top + 0.5 || r.top >= v.bottom - 0.5) return true;
+      }
+      return false;
+    };
+    const boxes = atoms.filter((el) => !scrolledOut(el)).map((el) => ({ el, r: el.getBoundingClientRect() }));
     const overlap = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1;
     const seen = new Set();
     for (const h of root.querySelectorAll('h1,h2,h3,h4,h5,h6')) {

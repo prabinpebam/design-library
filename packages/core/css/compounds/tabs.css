@@ -73,7 +73,7 @@
     border: 0;
     border-radius: var(--c-tabs-radius);
     background: none;
-    color: var(--color-text-muted);
+    color: var(--c-tabs-text);
     font: inherit;
     font-weight: var(--type-label-weight);
     white-space: nowrap;
@@ -107,7 +107,8 @@
   }
 
   [data-dl='tabs'] [data-dl-part='tab']:is([aria-selected='true'], [aria-current='page']) {
-    color: var(--color-text);
+    color: var(--c-tabs-selected-text);
+    font-weight: var(--c-tabs-selected-weight);
     /* A theme may mark the selected tab with a quiet fill as well as (or instead of) the indicator (F15.FR5). */
     border-radius: var(--c-tabs-radius);
     background-color: var(--c-tabs-selected-fill);

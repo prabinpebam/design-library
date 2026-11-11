@@ -1,0 +1,76 @@
+/*
+ * Tier 2 compound: Ribbon (Q145.W). A tab row over a card of labelled command groups. The card is the one enclosure
+ * (its surface and shadow); hairlines separate the groups, each group's label sits centred under its commands with
+ * its launcher at the end. The groups scroll sideways to the card's edges when they don't fit.
+ */
+@layer compounds {
+  [data-dl='ribbon'] {
+    --c-tabs-panel-gap: var(--c-ribbon-gap);
+    display: grid;
+    min-inline-size: 0;
+  }
+
+  [data-dl='ribbon-card'] {
+    display: flex;
+    align-items: stretch;
+    min-inline-size: 0;
+    background: var(--c-ribbon-bg);
+    border-radius: var(--c-ribbon-radius);
+    box-shadow: var(--c-ribbon-shadow);
+  }
+
+  [data-dl='ribbon-card'] > [data-dl-part='groups'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  [data-dl='ribbon-groups'] {
+    display: flex;
+    align-items: stretch;
+    inline-size: max-content;
+    padding: var(--c-ribbon-padding);
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group'] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: var(--c-ribbon-command-gap);
+    padding-inline: var(--c-ribbon-group-gap);
+    border-inline-end: var(--border-hairline) solid var(--c-ribbon-separator);
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group']:first-child {
+    padding-inline-start: 0;
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group'] > [data-dl-part='commands'] {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--c-ribbon-command-gap);
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group'] > [data-dl-part='foot'] {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+    color: var(--color-text);
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group'] > [data-dl-part='foot'] > [data-dl-part='group-label'] {
+    grid-column: 2;
+    white-space: nowrap;
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group'] > [data-dl-part='foot'] > [data-dl='button'] {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  [data-dl='ribbon-card'] > [data-dl-part='end'] {
+    display: flex;
+    align-items: flex-end;
+    padding: var(--c-ribbon-padding);
+  }
+}

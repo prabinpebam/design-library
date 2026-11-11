@@ -16,6 +16,8 @@ export type ButtonProgress = 'inside' | 'ring' | 'fill';
 interface ButtonBase extends DataAttributes {
   /** Align the label to the start in a navigation row; centre by default. */
   align?: 'start' | 'center';
+  /** The icon above the label and larger, for a command that leads its group (an app ribbon's Paste); beside it by default. */
+  stacked?: boolean;
   /** Inherit the enclosing surface's text colour for a quiet action. */
   tone?: 'inherit';
   /** A verb first, 3 words or fewer. Shown, or the accessible name of an icon-only button. */
@@ -158,7 +160,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, stacked = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -166,7 +168,7 @@ export function Button(props: ButtonProps) {
   const self = useRef<HTMLElement>(null);
   const pending = phase === 'on' || busy;
   const shown = pending ? 'on' : phase === 'done' ? 'done' : 'rest';
-  const mark = (name: IconName) => <Icon name={name} size={iconSize[size]} />;
+  const mark = (name: IconName) => <Icon name={name} size={stacked ? 'lg' : iconSize[size]} />;
   const narrow = useNarrow(self, progress === 'fill');
   const blocker = progress === 'fill' ? fillBlocker(emphasis, iconOnly, value, narrow) : null;
   // `fill` that can't fill shows the inside spinner: one fallback, never a broken fill.
@@ -214,6 +216,7 @@ export function Button(props: ButtonProps) {
         data-dl="button"
         data-emphasis={emphasis}
         data-align={align === 'start' ? align : undefined}
+        data-stacked={stacked && !iconOnly ? '' : undefined}
         data-tone={tone}
         data-icon-only={iconOnly ? '' : undefined}
         data-size={size}
@@ -253,6 +256,7 @@ export function Button(props: ButtonProps) {
       data-dl="button"
       data-emphasis={emphasis}
       data-align={align === 'start' ? align : undefined}
+        data-stacked={stacked && !iconOnly ? '' : undefined}
       data-tone={tone}
       data-icon-only={iconOnly ? '' : undefined}
       data-size={size}

@@ -259,6 +259,16 @@
         "$type": "dimension",
         "$value": "{space.inset-sm}",
         "$description": "Inline padding at the xs and s sizes (echoed for space contexts)"
+      },
+      "stack-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "A stacked command: between its icon and the label under it (echoed for space contexts)"
+      },
+      "stack-padding": {
+        "$type": "dimension",
+        "$value": "{space.inset-xs}",
+        "$description": "A stacked command: above its icon and under its label (echoed for space contexts)"
       }
     },
     "calendar": {
@@ -1369,6 +1379,31 @@
         "$type": "dimension",
         "$value": "{space.inline-item}",
         "$description": "Between chips or links in a rail (echoed for space contexts)"
+      }
+    },
+    "ribbon": {
+      "$extensions": {
+        "owner": "Ribbon"
+      },
+      "command-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "Between the commands inside a group, across and down (echoed for space contexts)"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "Between the tab row and the command card (echoed for space contexts)"
+      },
+      "group-gap": {
+        "$type": "dimension",
+        "$value": "{space.inline-item}",
+        "$description": "Between groups, either side of the hairline that separates them (echoed for space contexts)"
+      },
+      "padding": {
+        "$type": "dimension",
+        "$value": "{space.inset-sm}",
+        "$description": "Inside the command card, around its groups (echoed for space contexts)"
       }
     },
     "row-list": {

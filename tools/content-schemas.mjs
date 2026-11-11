@@ -19,6 +19,7 @@ const records = {
   projects: { shared: 'ProjectRecord', issue: 'IssueDetail' },
   ikea: { shared: 'StoreRecord' },
   slack: { shared: 'WorkspaceRecord' },
+  word: { shared: 'WordRecord' },
 };
 
 const tmp = mkdtempSync(join(tmpdir(), 'content-schemas-'));

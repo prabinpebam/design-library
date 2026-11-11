@@ -34,6 +34,12 @@
           "description": "Align the label to the start in a navigation row; centre by default."
         },
         {
+          "name": "stacked",
+          "type": "boolean",
+          "default": "false",
+          "description": "The icon above the label and larger, for a command that leads its group (an app ribbon's Paste); beside it by default."
+        },
+        {
           "name": "tone",
           "type": "'inherit'",
           "description": "Inherit the enclosing surface's text colour for a quiet action."
@@ -245,6 +251,8 @@
     "--c-button-size-xl",
     "--c-button-size-xs",
     "--c-button-size-xxl",
+    "--c-button-stack-gap",
+    "--c-button-stack-padding",
     "--c-field-border-width",
     "--c-field-size-xs",
     "--color-bg",
@@ -316,6 +324,7 @@
     "MessageActions",
     "Notifications",
     "Pane",
+    "Ribbon",
     "SchemeControl",
     "Sheet",
     "SiteHeader",
@@ -327,7 +336,8 @@
     "ListDetail",
     "ikea.ChatPanel",
     "ikea.OfferTicket",
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "ui-states"

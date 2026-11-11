@@ -97,18 +97,15 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
         placeholder={reply ? `${c.reply}…` : `${c.messagePrefix} #${channel}`} rows={2}
         onEnter={() => { void send(target); }}
         tray={formatting && <div data-dl="slack-formatting" role="toolbar" aria-label={c.format}>
-          {action(c.bold, 'text')}{action(c.italic, 'pen')}{action(c.strike, 'minus')}
-          <span data-dl="slack-separator" />
-          {action(c.link, 'link')}{action(c.list, 'list')}{action(c.numbered, 'list')}
-          <span data-dl="slack-separator" />
-          {action(c.quote, 'comment')}{action(c.code, 'code')}
+          <div data-dl-part="set">{action(c.bold, 'text')}{action(c.italic, 'pen')}{action(c.strike, 'minus')}</div>
+          <div data-dl-part="set">{action(c.link, 'link')}{action(c.list, 'list')}{action(c.numbered, 'list')}</div>
+          <div data-dl-part="set">{action(c.quote, 'comment')}{action(c.code, 'code')}</div>
         </div>}
         toolbar={<div data-dl="slack-tools">
           <div data-dl-part="group">
-            {action(c.add, 'plus')}{action(c.format, 'text-format', () => setFormatting(!formatting))}
-            {action(c.emoji, 'emoji')}{action(c.mention, 'at')}
-            <span data-dl="slack-separator" />
-            {action(c.video, 'image')}{action(c.audio, 'mic')}
+            <div data-dl-part="set">{action(c.add, 'plus')}{action(c.format, 'text-format', () => setFormatting(!formatting))}
+            {action(c.emoji, 'emoji')}{action(c.mention, 'at')}</div>
+            <div data-dl-part="set">{action(c.video, 'image')}{action(c.audio, 'mic')}</div>
           </div>
           <div data-dl-part="send" data-ready={drafts[target]?.trim() ? true : undefined}>
             <Button label={c.send} icon="send" iconOnly size="xs" emphasis={drafts[target]?.trim() ? 'primary' : 'quiet'}
@@ -207,7 +204,7 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
               {query && !messages.some(m => m.text.toLowerCase().includes(query.toLowerCase())) && <Text>{c.emptySearch}</Text>}
             </div> : tab === 'files' ? <div data-dl="slack-file-results"><div data-dl-part="results-head"><Heading level={2} size={4}>{c.allFiles}</Heading></div>{messages.filter(m => m.file).map(m => message(m))}</div>
               : tab === 'canvas' ? <div data-dl="slack-file-results"><EmptyState title={c.canvas} reason="first-use">{view.topic}</EmptyState></div>
-              : <div data-dl="slack-timeline"><div data-dl-part="date"><span>{view.date}<Icon name="chevron-down" size="sm" /></span></div>
+              : <div data-dl="slack-timeline"><div data-dl-part="date"><span data-dl-part="date-pill">{view.date}<Icon name="chevron-down" size="sm" /></span></div>
                 {messages.map(m => <div key={m.id} data-dl="slack-message-group">{m.isNew && <div data-dl-part="new-line"><span>{c.newMessages}</span></div>}{message(m)}</div>)}
               </div>}
           </ScrollArea>

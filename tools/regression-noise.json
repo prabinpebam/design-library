@@ -1,9 +1,17 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--button": {
+      "reason": "catalogue inventory: (Q145.W) the generic opt-in Button.stacked prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--icon": {
+      "reason": "catalogue inventory: (Q145.W) 29 generic editing icons (bold, paste, undo and the rest, packages/core/icons/icons.ts) lengthen the source-derived icon inventory below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--overview": {
-      "reason": "catalogue inventory: source-derived token count grows from 1293 to 1303 (eight navigation roles, two dimensions). Only the count sentence at the viewport foot changes.",
-      "regions": [{ "x": 400, "y": 890, "width": 640, "height": 10 }]
+      "reason": "catalogue inventory: source-derived token count grows from 1293 to 1303 (eight navigation roles, two dimensions), then with the Ribbon, Button.stacked and Tabs tokens (Q145.W). Only the count sentence at the viewport foot and, as the inventory lengthens, the right scrollbar track change.",
+      "regions": [{ "x": 400, "y": 890, "width": 640, "height": 10 }, { "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
     "lib--avatar": {
       "reason": "catalogue inventory: Avatar.shape adds a source-derived prop row below the viewport; only the right scrollbar track changes.",

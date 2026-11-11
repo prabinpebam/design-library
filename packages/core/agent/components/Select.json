@@ -329,7 +329,8 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/select",
   "usedBy": [
-    "Pagination"
+    "Pagination",
+    "word.Window"
   ],
   "principles": [
     "ui-states"

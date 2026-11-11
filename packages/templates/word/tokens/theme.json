@@ -1,0 +1,259 @@
+{
+ "$description": "Q145.W reference spec .design-library/word-ref/README.md: w-theme-07 (Colorful, 2x), w-theme-03 (Dark Gray, 2x), w-copilot-01 (near-full window, 1.28x). Type: Noto Sans (OFL) stands in for Segoe UI, which isn't openly licensed; Noto is about 5% wider at the same size (recorded difference). Dark values are the Dark Gray theme; unmeasured values are marked.",
+ "font.text": {
+  "$value": "'Noto Sans Variable', system-ui, sans-serif",
+  "$description": "UI and document type: Noto Sans OFL in place of Segoe UI and Aptos."
+ },
+ "font.ui": {
+  "$value": "'Noto Sans Variable', system-ui, sans-serif",
+  "$description": "UI type: Noto Sans OFL in place of Segoe UI."
+ },
+ "font.display": {
+  "$value": "'Noto Sans Variable', system-ui, sans-serif",
+  "$description": "Document title and headings: Noto Sans OFL in place of Aptos Display."
+ },
+ "text.xs": {
+  "$value": "0.6875rem",
+  "$description": "Small chrome text, 11 px."
+ },
+ "text.s": {
+  "$value": "0.75rem",
+  "$description": "Ribbon commands, group labels and the status bar: 9 pt (12 px), w-copilot-01."
+ },
+ "text.m": {
+  "$value": "0.8333333rem",
+  "$description": "Tabs and title bar: 10 pt (13.33 px), w-theme-07 ('Insert' 32 px wide)."
+ },
+ "text.l": {
+  "$value": "1rem",
+  "$description": "Document body: 12 pt (16 px) at 100% zoom."
+ },
+ "type.label.size": {
+  "$value": "{text.m}",
+  "$description": "Tabs and buttons in the chrome: 10 pt."
+ },
+ "type.body-sm.size": {
+  "$value": "{text.s}",
+  "$description": "Small buttons and fields in the ribbon: 9 pt."
+ },
+ "type.caption.size": {
+  "$value": "{text.s}",
+  "$description": "Group labels under the ribbon's commands: 9 pt."
+ },
+ "type.label.weight": {
+  "$value": "400",
+  "$description": "Chrome labels are regular; the selected tab alone is bold."
+ },
+ "c.tabs.selected-weight": {
+  "$value": "700",
+  "$description": "Selected tab bold, w-theme-07 'Home'."
+ },
+ "c.tabs.item-size": {
+  "$value": "1.9375rem",
+  "$description": "Tab row 31 px (62 image px at 2x, w-theme-07 x300 122-184)."
+ },
+ "c.tabs.item-padding-inline": {
+  "$value": "{space.inset-sm}",
+  "$description": "Tab label inset, by eye: 8 px either side."
+ },
+ "c.tabs.gap": {
+  "$value": "{space.0-5}",
+  "$description": "Tabs sit close: the labels are about 20 px apart, their own padding making most of it."
+ },
+ "c.tabs.indicator": {
+  "$value": "0.1875rem",
+  "$description": "Selected tab underline 3 px, rounded."
+ },
+ "c.tabs.text": {
+  "$value": {
+   "light": "#242424",
+   "dark": "#ffffff"
+  },
+  "$description": "Tab labels: w-theme-07 #242424 on the frame; white on Dark Gray (w-theme-03)."
+ },
+ "c.tabs.selected-text": {
+  "$value": "{c.tabs.text}",
+  "$description": "The selected tab keeps the label colour; weight and the underline mark it."
+ },
+ "color.map.selection-indicator": {
+  "$value": {
+   "light": "#185abd",
+   "dark": "#a9c4f5"
+  },
+  "$description": "Selected-tab underline: w-theme-07 #185ABD; Dark Gray light blue (w-theme-03, by eye)."
+ },
+ "color.map.nav-shell": {
+  "$value": {
+   "light": "#185abd",
+   "dark": "#54585b"
+  },
+  "$description": "Title bar: w-theme-07 x400 #185ABD; Dark Gray w-theme-03 #54585B."
+ },
+ "color.map.nav-shell-on": {
+  "$value": "#ffffff",
+  "$description": "Title bar text and icons: white in both themes."
+ },
+ "color.map.nav-on": {
+  "$value": {
+   "light": "#424242",
+   "dark": "#262626"
+  },
+  "$description": "Status bar text (by eye in w-copilot-01); dark on the Dark Gray status bar (unmeasured)."
+ },
+ "color.map.nav": {
+  "$value": {
+   "light": "#e9eef2",
+   "dark": "#54585b"
+  },
+  "$description": "The window frame behind the tab row and the document canvas: w-theme-07 #E9EEF2; Dark Gray #54585B (w-theme-03)."
+ },
+ "color.bg": {
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#bdbdbd"
+  },
+  "$description": "Surfaces with text (panes): white; the Dark Gray card grey #BDBDBD (w-theme-03)."
+ },
+ "color.bg-raised": {
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#bdbdbd"
+  },
+  "$description": "Ribbon card: white (w-theme-07); Dark Gray card #BDBDBD (w-theme-03)."
+ },
+ "color.bg-sunken": {
+  "$value": {
+   "light": "#f5f5f5",
+   "dark": "#bdbdbd"
+  },
+  "$description": "Status bar: w-copilot-01 #F5F5F5; Dark Gray unmeasured, taken as the card grey."
+ },
+ "color.text": {
+  "$value": {
+   "light": "#242424",
+   "dark": "#262626"
+  },
+  "$description": "Ribbon and document text: w-theme-07 #242424; the Dark Gray card keeps dark text (w-theme-03)."
+ },
+ "color.text-muted": {
+  "$value": {
+   "light": "#616161",
+   "dark": "#424242"
+  },
+  "$description": "Secondary text (comment times), by eye."
+ },
+ "color.border": {
+  "$value": {
+   "light": "#e1e1e1",
+   "dark": "#a0a0a0"
+  },
+  "$description": "Hairlines between ribbon groups: w-copilot-01 #E7E7E7 at 1.28x (a 1 px line blended); Dark Gray by eye."
+ },
+ "color.border-strong": {
+  "$value": {
+   "light": "#d6d6d8",
+   "dark": "#3f4245"
+  },
+  "$description": "The page edge on the canvas: w-copilot-01 y500 #D6D6D8; Dark Gray unmeasured."
+ },
+ "color.border-control": {
+  "$value": "#8a8a8a",
+  "$description": "Font and size fields, Comments and Editing outlines: w-theme-07 #8A8A8A."
+ },
+ "color.bg-control": {
+  "$value": "#ffffff",
+  "$description": "Fields and outlined buttons are white in both themes (w-theme-03 card fields)."
+ },
+ "color.map.action-fill": {
+  "$value": "#185abd",
+  "$description": "Share: w-copilot-01 #185ABD."
+ },
+ "color.map.action-fill-hover": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Hover unmeasured: keeps the measured fill."
+ },
+ "color.map.action-fill-pressed": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Pressed unmeasured: keeps the measured fill."
+ },
+ "color.map.action-fill-on": {
+  "$value": "#ffffff",
+  "$description": "Share label white."
+ },
+ "size.app-bar-height": {
+  "$value": "2.9375rem",
+  "$description": "Title bar 47 px (94 image px at 2x, w-theme-07)."
+ },
+ "size.nav-width": {
+  "$value": "18.75rem",
+  "$description": "Navigation pane about 300 px (w-nav-pane, by eye)."
+ },
+ "size.pane-width": {
+  "$value": "21.25rem",
+  "$description": "Comments pane about 340 px (w-comments, by eye)."
+ },
+ "c.button.size-xs": {
+  "$value": "1.5rem",
+  "$description": "Small ribbon commands 24 px on a 26 px pitch (w-theme-07 B and I 52 image px apart)."
+ },
+ "c.button.size-s": {
+  "$value": "1.5rem",
+  "$description": "Comments, Editing and Share 24 px (w-copilot-01 y2-32 at 1.28x)."
+ },
+ "c.button.radius-sm": {
+  "$value": "0.25rem",
+  "$description": "Ribbon buttons and fields 4 px (w-theme-07 font field)."
+ },
+ "c.button.radius": {
+  "$value": "0.25rem",
+  "$description": "Outlined chrome buttons 4 px."
+ },
+ "c.ribbon.radius": {
+  "$value": "0.5rem",
+  "$description": "Ribbon card 8 px: the corner's first row starts 13 image px in at 2x (w-theme-07 rows 184-197)."
+ },
+ "c.ribbon.shadow": {
+  "$value": "0 1px 4px rgba(0, 0, 0, 0.14)",
+  "$description": "Card foot: #D8D9DD fading to the frame over about 4 px (w-copilot-01 x30 y165-174)."
+ },
+ "c.ribbon.padding": {
+  "$value": "{space.1}",
+  "$description": "Card padding: the first row starts 4 px under the card's top (w-theme-07 field at y192)."
+ },
+ "c.ribbon.gap": {
+  "$value": "0",
+  "$description": "The card sits right under the tab row (w-theme-07 y184)."
+ },
+ "c.ribbon.command-gap": {
+  "$value": "0.125rem",
+  "$description": "Commands on a 26 px pitch with 24 px buttons: 2 px apart."
+ },
+ "c.ribbon.group-gap": {
+  "$value": "{space.1}",
+  "$description": "About 4 px either side of a group's hairline."
+ },
+ "c.button.stack-gap": {
+  "$value": "0",
+  "$description": "Paste: the label sits under the 32 px icon with no gap (w-theme-07)."
+ },
+ "text.xl": {
+  "$value": "1.3333333rem",
+  "$description": "Document Heading 2: 16 pt."
+ },
+ "text.xxl": {
+  "$value": "1.6666667rem",
+  "$description": "Document Heading 1: 20 pt."
+ },
+ "text.xxxl": {
+  "$value": "2.3333333rem",
+  "$description": "Document Title: 28 pt."
+ },
+ "leading.normal": {
+  "$value": "1.38",
+  "$description": "Document body: 1.15 multiple line spacing on a 1.2 font line, about 22 px at 12 pt."
+ },
+ "color.text-accent-display": {
+  "$value": "#0f4761",
+  "$description": "Document heading colour (the default heading style's dark teal), unchanged on Dark Gray because the page stays white."
+ }
+}

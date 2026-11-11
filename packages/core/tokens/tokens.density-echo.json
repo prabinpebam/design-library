@@ -336,6 +336,16 @@
         "$description": "Tile corners, from the theme's shape option (echoed for density contexts)"
       }
     },
+    "ribbon": {
+      "$extensions": {
+        "owner": "Ribbon"
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{radius.md}",
+        "$description": "The command card's corners (echoed for density contexts)"
+      }
+    },
     "screen-preview": {
       "$extensions": {
         "owner": "ScreenPreview"

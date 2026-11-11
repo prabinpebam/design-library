@@ -13,7 +13,7 @@ const coreDirs = ['packages/core/react', 'packages/core/css', 'packages/core/tok
 const skipDir = /[\\/](stories|node_modules|dist)([\\/]|$)/;
 
 // Product identities a template may imitate but core must never name in code.
-const productNames = /\b(figma|sketch(?:app)?|framer|penpot|photoshop|canva|ikea|slack)\b/i;
+const productNames = /\b(figma|sketch(?:app)?|framer|penpot|photoshop|canva|ikea|slack|microsoft ?word|ms ?word|winword|microsoft 365)\b/i;
 const productIn = (text) => text.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replaceAll('_', ' ').match(productNames);
 // Brand values of imitated products; extend when a new replica template starts.
 const brandValues = [
@@ -35,6 +35,10 @@ const brandValues = [
   { re: /#ecb22e\b/i, what: "Slack's yellow #ECB22E" },
   { re: /#e01e5a\b/i, what: "Slack's red #E01E5A" },
   { re: /#1d1c1d\b/i, what: "Slack's text #1D1C1D" },
+  // Microsoft Word (Q145.W): the title bar and Share blue, the Word brand blue, the Dark Gray title bar.
+  { re: /#185abd\b/i, what: "Word's title bar blue #185ABD" },
+  { re: /#2b579a\b/i, what: "Word's brand blue #2B579A" },
+  { re: /#54585a\b/i, what: "Word's Dark Gray title bar #54585A" },
 ];
 
 let templateIds = [];

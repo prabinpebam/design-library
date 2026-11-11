@@ -138,7 +138,8 @@
     "Sheet",
     "Hero",
     "conference.SponsorWall",
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "ui-copy"

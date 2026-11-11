@@ -156,11 +156,12 @@
     "--c-tabs-panel-gap",
     "--c-tabs-radius",
     "--c-tabs-selected-fill",
+    "--c-tabs-selected-text",
+    "--c-tabs-selected-weight",
     "--c-tabs-side-gap",
+    "--c-tabs-text",
     "--color-focus",
-    "--color-text",
     "--color-text-disabled",
-    "--color-text-muted",
     "--duration-change",
     "--duration-quick",
     "--easing-standard",
@@ -174,6 +175,10 @@
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/tabs",
+  "usedBy": [
+    "Ribbon",
+    "word.Window"
+  ],
   "principles": [
     "ui-copy"
   ]

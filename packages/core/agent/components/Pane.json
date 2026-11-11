@@ -64,6 +64,9 @@
     "--c-pane-status-gap"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/pane",
+  "usedBy": [
+    "word.Window"
+  ],
   "principles": [
     "visual-noise"
   ]

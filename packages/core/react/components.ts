@@ -163,11 +163,13 @@ export type { TokenSpecimenProps, TokenSpecimenKind, TokenSpecimenStep } from '.
 export { Pane } from './compounds/Pane';
 export type { PaneProps } from './compounds/Pane';
 export { Toolbar } from './compounds/Toolbar';
+export { Ribbon } from './compounds/Ribbon';
 export { PropertySection } from './compounds/PropertySection';
 export type { PropertySectionProps } from './compounds/PropertySection';
 export { PropertyRow } from './compounds/PropertyRow';
 export type { PropertyRowProps } from './compounds/PropertyRow';
 export type { ToolbarProps } from './compounds/Toolbar';
+export type { RibbonProps, RibbonTab, RibbonGroup } from './compounds/Ribbon';
 export { Cluster } from './fundamentals/Cluster';
 export { Grid } from './fundamentals/Grid';
 export type { ClusterProps } from './fundamentals/Cluster';

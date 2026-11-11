@@ -213,7 +213,11 @@
   "$description": "Glyph on the action-green fill: white in r02/r20; the fill does not change with the scheme, so neither does its glyph."
  },
  "radius.sm": {
-  "$value": "0.375rem",
-  "$description": "One shape scale (CX3): the small radius is the selected row and control radius, about 6 px (r05); controls read it through c.button.radius-sm."
+  "$value": "0.28125rem",
+  "$description": "One shape scale (CX3): the small radius is the selected row and control radius, measured 4.5 px on r05 at 4x (the 110 px row's corner: 14 px in on its first line, flush by line 14, an 18 px circle)."
+ },
+ "radius.lg": {
+  "$value": "0.5625rem",
+  "$description": "Rail current tile 9 px: r05 at 4x, the 144 px tile's corner is 30 px in on its first line and 2 px in on line 23, a 36 px circle."
  }
 }

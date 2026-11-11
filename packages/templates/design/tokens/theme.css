@@ -63,6 +63,9 @@
     --c-popup-border: var(--color-border);
     --c-popup-bg: var(--color-bg-raised);
     --c-list-item-radius: var(--radius-md);
+    --c-ribbon-bg: var(--color-bg-raised);
+    --c-ribbon-radius: var(--radius-md);
+    --c-ribbon-separator: var(--color-border);
     --c-token-specimen-mark: var(--color-accent);
     --c-token-specimen-tile-surface: var(--color-bg-raised);
     --c-token-specimen-checker-dark: var(--color-bg-sunken);
@@ -159,6 +162,8 @@
     --c-carousel-radius: var(--radius-lg);
     --c-breadcrumbs-size: var(--type-body-sm-size);
     --c-tabs-radius: var(--radius-md);
+    --c-tabs-text: var(--color-text-muted);
+    --c-tabs-selected-text: var(--color-text);
     --c-pagination-radius: var(--radius-md);
     --c-dialog-radius: var(--radius-lg);
     --c-alert-radius: var(--radius-md);
@@ -266,12 +271,14 @@
       --c-price-was: var(--color-text-muted);
       --c-progress-bar-track: var(--color-border-group);
       --c-property-section-divider: var(--color-border);
+      --c-ribbon-separator: var(--color-border);
       --c-row-list-divider: var(--color-border);
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
       --c-scroll-area-line-track: var(--color-border);
       --c-site-header-current-rule: var(--color-border-strong);
       --c-skeleton-fill: var(--color-border);
+      --c-tabs-text: var(--color-text-muted);
     }
   }
   [data-contrast='standard'] [data-template='design'], [data-template='design'][data-contrast='standard'] {
@@ -301,12 +308,14 @@
     --c-price-was: var(--color-text-muted);
     --c-progress-bar-track: var(--color-border-group);
     --c-property-section-divider: var(--color-border);
+    --c-ribbon-separator: var(--color-border);
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-line-track: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
+    --c-tabs-text: var(--color-text-muted);
   }
   [data-contrast='more'] [data-template='design'], [data-template='design'][data-contrast='more'] {
     --color-border-strong: var(--color-text);
@@ -335,12 +344,14 @@
     --c-price-was: var(--color-text-muted);
     --c-progress-bar-track: var(--color-border-group);
     --c-property-section-divider: var(--color-border);
+    --c-ribbon-separator: var(--color-border);
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-line-track: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
+    --c-tabs-text: var(--color-text-muted);
   }
   [data-shape='sharp'] [data-template='design'], [data-template='design'][data-shape='sharp'] {
     --c-accordion-radius: var(--radius-md);
@@ -381,6 +392,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-section-tone-radius: var(--radius-lg);
@@ -436,6 +448,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-section-tone-radius: var(--radius-lg);
@@ -491,6 +504,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-section-tone-radius: var(--radius-lg);
@@ -546,6 +560,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-section-tone-radius: var(--radius-lg);
@@ -601,6 +616,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-section-tone-radius: var(--radius-lg);
@@ -654,6 +670,7 @@
     --c-popup-radius: var(--radius-md);
     --c-quote-text-size-s: var(--type-body-size);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-section-tone-radius: var(--radius-lg);

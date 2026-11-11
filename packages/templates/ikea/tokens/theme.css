@@ -88,6 +88,8 @@
     --c-popup-radius: var(--radius-md);
     --c-popup-bg: var(--color-bg-raised);
     --c-list-item-radius: var(--radius-md);
+    --c-ribbon-bg: var(--color-bg-raised);
+    --c-ribbon-radius: var(--radius-md);
     --c-token-specimen-mark: var(--color-accent);
     --c-token-specimen-tile-surface: var(--color-bg-raised);
     --c-token-specimen-checker-dark: var(--color-bg-sunken);
@@ -170,6 +172,8 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-carousel-radius: var(--radius-lg);
     --c-tabs-radius: var(--radius-md);
+    --c-tabs-text: var(--color-text-muted);
+    --c-tabs-selected-text: var(--color-text);
     --c-pagination-radius: var(--radius-md);
     --c-dialog-radius: var(--radius-lg);
     --c-hero-gap: var(--space-stack-section);
@@ -268,6 +272,7 @@
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
       --c-site-header-current-rule: var(--color-border-strong);
+      --c-tabs-text: var(--color-text-muted);
     }
   }
   [data-contrast='standard'] [data-template='ikea'], [data-template='ikea'][data-contrast='standard'] {
@@ -288,6 +293,7 @@
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-tabs-text: var(--color-text-muted);
   }
   [data-contrast='more'] [data-template='ikea'], [data-template='ikea'][data-contrast='more'] {
     --color-border-strong: var(--color-text);
@@ -307,6 +313,7 @@
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-tabs-text: var(--color-text-muted);
   }
   [data-space='compact'] [data-template='ikea'], [data-template='ikea'][data-space='compact'] {
     --c-agenda-slot-gap: var(--space-stack-section);
@@ -404,6 +411,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
@@ -455,6 +463,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
@@ -506,6 +515,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
@@ -557,6 +567,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
@@ -608,6 +619,7 @@
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
@@ -655,6 +667,7 @@
     --c-popup-radius: var(--radius-md);
     --c-quote-text-size-s: var(--type-body-size);
     --c-radio-group-tile-radius: var(--radius-md);
+    --c-ribbon-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
