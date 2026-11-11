@@ -93,17 +93,20 @@
   [data-dl='slack-message']:active > [data-dl-part='hover-actions'] { opacity: 1; pointer-events: auto; }
   @container (max-width: 56rem) {
     [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] { display: none; }
+    [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] > [data-dl-part='channel-head'] > [data-dl-part='channel-actions'] > [data-dl-part='facepile'] { display: none; }
   }
+  /* The channel stays the widest pane: the thread gives way first. */
+  [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] { min-inline-size: min(100%, var(--size-pane-width)); }
   @container (max-width: 72rem) {
     [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='sidebar'] { display: none; }
   }
   @container (max-width: 40rem) {
-    [data-dl='slack-workspace'] { grid-template-columns: minmax(0, 1fr); }
     [data-dl='slack-workspace'] > [data-dl-part='rail'] { display: none; }
     [data-dl='slack-workspace'] > [data-dl-part='titlebar'] { grid-template-columns: minmax(0, 1fr) auto; }
     [data-dl='slack-workspace'] > [data-dl-part='titlebar'] > [data-dl-part='history'] { display: none; }
     [data-dl='slack-workspace'] > [data-dl-part='titlebar'] > [data-dl-part='search-pill'] { margin-inline-start: var(--space-inset-sm); }
-    [data-dl='slack-workspace'] > [data-dl-part='window'] { padding-inline-start: var(--space-inset-xs); }
+    /* The workspace is its own query container, so its columns stay; the window spans the rail's column instead. */
+    [data-dl='slack-workspace'] > [data-dl-part='window'] { grid-column: 1 / -1; padding-inline-start: var(--space-inset-xs); }
     [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='thread'] { flex-basis: 100%; }
     [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] { display: none; }
     [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] > [data-dl-part='channel-head'] > [data-dl-part='channel-actions'] { display: none; }
