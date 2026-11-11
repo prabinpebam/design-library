@@ -9,15 +9,15 @@
   }
 
   /* Title bar: quick actions and the document's name at the start, search in the middle, the account and window controls at the end. */
-  [data-dl='word-window'] > [data-dl-part='titlebar'] { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 30rem) minmax(0, 1fr) auto; align-items: center; gap: var(--space-inline-item); block-size: var(--size-app-bar-height); padding-inline: var(--space-inset-sm); background: var(--color-map-nav-shell); color: var(--color-map-nav-shell-on); font-size: var(--type-label-size); }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-inline-item); block-size: var(--size-app-bar-height); padding-inline: var(--space-inset-sm); background: var(--color-map-nav-shell); color: var(--color-map-nav-shell-on); font-size: var(--type-label-size); }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] { display: flex; align-items: center; gap: var(--space-0-5); }
   /* A neutral app mark: a plain tile, never a product logo. */
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='app-mark'] { inline-size: var(--size-icon-md); block-size: var(--size-icon-md); margin-inline-end: var(--space-inline-pair); border-radius: var(--radius-sm); background: var(--color-map-nav-shell-on); }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='autosave'] { display: flex; padding-inline: var(--space-inset-sm); }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] { display: flex; align-items: baseline; gap: var(--space-inline-pair); min-inline-size: 0; white-space: nowrap; overflow-wrap: normal; }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] > [data-dl-part='save-state'] { font-size: var(--text-s); }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] { display: grid; }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] { grid-column: 5; display: flex; align-items: center; gap: var(--space-0-5); }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] { display: grid; justify-self: center; inline-size: min(100%, 30rem); }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] { display: flex; align-items: center; gap: var(--space-0-5); }
 
   /* The ribbon: the tab row on the frame, the card inset from the window's edges. */
   [data-dl='word-window'] > [data-dl-part='ribbon'] { display: grid; padding-inline: var(--space-inset-sm); }
@@ -30,7 +30,7 @@
   [data-dl='word-command'] { display: flex; --size-icon-lg: var(--size-icon-xl); }
   /* Font name and size fields: 172 and 42 px wide (w-theme-07 x234-578 and 586-671 at 2x). */
   [data-dl='word-field'] { display: grid; inline-size: 10.75rem; }
-  [data-dl='word-field'][data-width='narrow'] { inline-size: 2.625rem; }
+  [data-dl='word-field'][data-width='narrow'] { inline-size: 3rem; }
 
   [data-dl='word-window'] > [data-dl-part='body'] { display: flex; min-block-size: 0; }
   [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='canvas'] { flex: 1; display: grid; min-inline-size: 0; min-block-size: 0; }

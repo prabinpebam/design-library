@@ -190,7 +190,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
           <Button label={c.webLayout} icon="globe" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <div data-dl-part="zoom">
             <Button label={c.zoomOut} icon="minus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.max(10, z - 10))} />
-            <Slider label={c.zoom} hideLabel size="s" min={10} max={500} value={zoom} onChange={(v) => setZoom(v as number)} />
+            <Slider label={c.zoom} hideLabel size="s" valueLabel="none" min={10} max={500} value={zoom} onChange={(v) => setZoom(v as number)} />
             <Button label={c.zoomIn} icon="plus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.min(500, z + 10))} />
           </div>
           <Button label={`${zoom}%`} size="xs" emphasis="quiet" tone="inherit" />

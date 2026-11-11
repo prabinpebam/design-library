@@ -48,6 +48,8 @@
     --c-ribbon-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
     --c-ribbon-padding: var(--space-1);
     --c-ribbon-gap: 0;
+    --c-menu-button-size-s: 1.5rem;
+    --c-slider-hit-s: 1.5rem;
     --c-ribbon-command-gap: 0.125rem;
     --c-ribbon-group-gap: var(--space-1);
     --c-button-stack-gap: 0;

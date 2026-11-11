@@ -224,6 +224,14 @@
   "$value": "0",
   "$description": "The card sits right under the tab row (w-theme-07 y184)."
  },
+ "c.menu-button.size-s": {
+  "$value": "1.5rem",
+  "$description": "Editing and Share 24 px, the same as Comments (w-copilot-01 y2-32 at 1.28x)."
+ },
+ "c.slider.hit-s": {
+  "$value": "1.5rem",
+  "$description": "Status bar zoom slider in the 24 px bar (w-copilot-01)."
+ },
  "c.ribbon.command-gap": {
   "$value": "0.125rem",
   "$description": "Commands on a 26 px pitch with 24 px buttons: 2 px apart."
