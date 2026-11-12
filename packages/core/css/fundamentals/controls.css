@@ -189,6 +189,12 @@
     background-color: var(--c-button-default-fill);
   }
 
+  /* Q145.Y: tone link clears the default fill and keeps the edge (the rule above has the same weight, so it's restated here). */
+  [data-dl='button'][data-emphasis='default'][data-tone='link'] {
+    border-color: var(--c-button-link-edge);
+    background-color: transparent;
+  }
+
   [data-dl='button'][data-emphasis='primary'] {
     background-color: var(--color-map-action-fill);
     color: var(--color-map-action-fill-on);
@@ -400,11 +406,19 @@
       background-color: var(--color-bg-control);
       background-image: linear-gradient(var(--state-hover), var(--state-hover));
     }
+
+    [data-dl='button'][data-emphasis='default'][data-tone='link']:enabled:not([aria-disabled='true'], [aria-expanded='true']):hover {
+      background-color: transparent;
+    }
   }
 
   [data-dl='button'][data-emphasis='default']:enabled:not([aria-disabled='true'], [aria-expanded='true']):active {
     background-color: var(--color-bg-control);
     background-image: linear-gradient(var(--state-pressed), var(--state-pressed));
+  }
+
+  [data-dl='button'][data-emphasis='default'][data-tone='link']:enabled:not([aria-disabled='true'], [aria-expanded='true']):active {
+    background-color: transparent;
   }
 
   [data-dl='button'][data-emphasis='danger']:enabled:not([aria-disabled='true']):active {
@@ -971,6 +985,16 @@
     border-start-start-radius: 0;
     border-end-start-radius: 0;
     border-inline-start-width: 0;
+  }
+
+  /* Q145.Y: the joined action's own fill, edge and width, so a theme can style a search button apart from other buttons. */
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'][data-emphasis='default'] {
+    border-color: var(--c-field-action-edge);
+    background-color: var(--c-field-action-fill);
+  }
+
+  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'][data-icon-only] {
+    padding-inline: var(--c-field-action-padding-inline);
   }
 
   [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > :focus-visible,

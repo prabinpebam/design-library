@@ -320,6 +320,9 @@
   "tokens": [
     "--border-hairline",
     "--c-button-group-focus-layer",
+    "--c-field-action-edge",
+    "--c-field-action-fill",
+    "--c-field-action-padding-inline",
     "--c-field-border-width",
     "--c-field-gap",
     "--c-field-padding-inline",

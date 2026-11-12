@@ -1,8 +1,12 @@
-/* Reference values and their sources are in the template theme (tokens/theme.json) and .design-library/youtube-ref/README.md. Only own child paths cross wrappers. */
+/* Reference values and their sources are in the template theme (tokens/theme.json), the template tokens (tokens/tokens.json)
+   and .design-library/youtube-ref/README.md. Only own child paths cross wrappers. */
 @layer templates {
+  /* Below the wide breakpoint (H-1280-L): the 72 mini guide; the guide button opens the 240 guide as a drawer over the
+     content. From it (H-1440-L): the 240 guide; the guide button folds it to the mini guide. */
   [data-dl='youtube-site'] {
+    --youtube-feed-inset: var(--t-youtube-site-feed-inset);
     display: grid;
-    grid-template-columns: var(--size-nav-width) minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr);
     grid-template-rows: var(--size-app-bar-height) minmax(0, 1fr);
     block-size: 100dvh;
     background: var(--color-bg);
@@ -12,46 +16,65 @@
 
   /* Masthead: 56 high, 16 from each edge (H-1280-L); start, a centred search, end. */
   [data-dl='youtube-site'] > [data-dl-part='masthead'] { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-inline-group); padding-inline: var(--space-4); }
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='start'] { display: flex; align-items: center; }
+  [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) { display: flex; align-items: center; }
   /* A neutral wordmark in the logo's box (x56, 123 wide, H-1280-L): a plain mark and an original name, never the product logo. */
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='start'] > [data-dl-part='wordmark'] { display: flex; align-items: center; gap: var(--space-1); padding-inline: var(--space-4) var(--space-3); color: var(--color-text); text-decoration: none; font-size: var(--text-l); font-weight: var(--weight-bold); letter-spacing: -0.02em; }
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='start'] > [data-dl-part='wordmark'] > [data-dl-part='mark'] { display: grid; place-items: center; inline-size: 1.75rem; block-size: 1.25rem; border-radius: var(--radius-sm); background: var(--color-text); color: var(--color-bg); }
+  [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) > [data-dl-part='wordmark'] { display: flex; align-items: center; gap: var(--space-1); padding-inline: var(--space-4) var(--space-3); color: var(--color-text); text-decoration: none; font-size: var(--text-l); font-weight: var(--weight-bold); letter-spacing: var(--tracking-display); }
+  [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) > [data-dl-part='wordmark'] > [data-dl-part='mark'] { display: grid; place-items: center; flex: none; inline-size: var(--space-6); block-size: var(--space-5); border-radius: var(--radius-sm); background: var(--color-text); color: var(--color-bg); }
   /* Search: 536 + 64 wide, 40 high (H-1280-L); voice 16 after it. */
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] { display: flex; align-items: center; justify-content: center; gap: var(--space-4); min-inline-size: 0; }
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { display: grid; grid-template-columns: minmax(0, 1fr) auto; inline-size: min(100%, 37.5rem); }
+  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { display: grid; inline-size: min(100%, 37.5rem); /* 536 + 64 (H-1280-L): no width step holds it */ }
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='voice'] { display: grid; }
   /* Signed-out end: settings, then Sign in 8 after it (H-1280-L). */
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='end'] { display: flex; align-items: center; gap: var(--space-2); }
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='end'] > [data-dl-part='sign-in'] { display: grid; color: var(--color-text-link); }
 
-  /* Guide: 240 wide, each section padded 12 with entries 204 wide (24 free at the end), a rule between sections (G-1280-L). */
-  [data-dl='youtube-site'] > [data-dl-part='guide'] { display: grid; min-block-size: 0; }
+  /* Mini guide: 72 wide, padding-inline 4; entries 64×76, radius 10, icon 24 at y+16 over a 10/16 label (H-1280-L). */
+  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; padding-inline: var(--space-1); }
+  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry'] { display: flex; flex-direction: column; align-items: center; gap: var(--t-youtube-guide-mini-gap); inline-size: var(--t-youtube-guide-mini-entry-width); padding-block: var(--t-youtube-guide-mini-padding-block-start) var(--t-youtube-guide-mini-padding-block-end); border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: 0.625rem; line-height: 1.6; /* 10/16 (H-1280-L): below the core type scale's smallest step */ }
+  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
+
+  /* Guide: 240 wide, each section padded 12 with entries 204 wide (24 free at the end), a rule between sections (G-1280-L).
+     Below the wide breakpoint it's a drawer over the content with the masthead's start at its head (G-1280-L). */
+  [data-dl='youtube-site'] > [data-dl-part='guide'] { display: none; grid-template-rows: auto minmax(0, 1fr); min-block-size: 0; }
+  [data-dl='youtube-site'] > [data-dl-part='guide'] > [data-dl-part='head'] { block-size: var(--size-app-bar-height); padding-inline: var(--space-4); }
+  [data-dl='youtube-site'] > [data-dl-part='scrim'] { display: none; }
+  [data-dl='youtube-site'][data-guide='toggled'] > [data-dl-part='guide'] { position: fixed; inset-block: 0; inset-inline-start: 0; z-index: var(--layer-overlay); display: grid; inline-size: var(--size-nav-width); background: var(--color-bg); }
+  [data-dl='youtube-site'][data-guide='toggled'] > [data-dl-part='scrim'] { position: fixed; inset: 0; z-index: var(--layer-overlay); display: block; background: var(--color-bg-overlay); }
+  @media (min-width: 82.0625rem) {
+    [data-dl='youtube-site']:not([data-guide='toggled']) { --youtube-feed-inset: var(--t-youtube-site-feed-inset-guide); grid-template-columns: var(--size-nav-width) minmax(0, 1fr); }
+    [data-dl='youtube-site']:not([data-guide='toggled']) > [data-dl-part='mini'] { display: none; }
+    [data-dl='youtube-site']:not([data-guide='toggled']) > [data-dl-part='guide'] { display: grid; grid-template-rows: minmax(0, 1fr); }
+    [data-dl='youtube-site']:not([data-guide='toggled']) > [data-dl-part='guide'] > [data-dl-part='head'] { display: none; }
+    [data-dl='youtube-site'][data-guide='toggled'] > :is([data-dl-part='guide'], [data-dl-part='scrim']) { display: none; }
+  }
+  [data-dl='youtube-site'] > [data-dl-part='mini'],
+  [data-dl='youtube-site'] > [data-dl-part='guide'] { grid-column: 1; grid-row: 2; }
   [data-dl='youtube-guide'] { display: grid; }
   [data-dl='youtube-guide'] > [data-dl-part='section'] { display: grid; padding: var(--space-3) var(--space-6) var(--space-3) var(--space-3); border-block-end: var(--border-hairline) solid var(--color-border); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='section-title'] { margin: 0; padding: 0.375rem var(--space-3) var(--space-1); font-size: var(--text-m); font-weight: var(--weight-medium); line-height: 1.375; }
+  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='section-title'] { display: grid; align-content: end; block-size: var(--t-youtube-guide-title-height); padding: 0 var(--space-3) var(--space-1); }
   /* Entry: 40 high, radius 10, icon 24 at 12 in, label 24 after it, 14/20 (G-1280-L). */
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'] { display: flex; align-items: center; gap: var(--space-6); block-size: var(--size-control-md); padding-inline: var(--space-3); border-radius: 0.625rem; color: var(--color-text); text-decoration: none; font-size: var(--text-s); line-height: 1.4286; }
+  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'] { display: flex; align-items: center; gap: var(--space-6); block-size: var(--size-control-md); padding-inline: var(--space-3); border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'][aria-current='page'] { background: var(--c-chip-fill); font-weight: var(--weight-medium); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] { display: grid; justify-items: start; gap: var(--space-3); padding: var(--space-1) var(--space-4) var(--space-2); font-size: var(--text-s); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] > p { margin: 0; }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] > [data-dl-part='sign-in'] { display: grid; color: var(--color-text-link); }
 
-  [data-dl='youtube-site'] > [data-dl-part='main'] { display: grid; min-block-size: 0; }
-  /* Feed: grid contents 16 from each side and 24 below the filters (H-1280-L gridContents). */
-  [data-dl='youtube-feed'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--space-4); padding-block-end: var(--space-6); }
+  [data-dl='youtube-site'] > [data-dl-part='main'] { grid-column: 2; grid-row: 2; display: grid; min-block-size: 0; }
+  /* Feed: 24 beside the mini guide (x96, T-1280-L), 16 beside the 240 guide (x256, H-1440-L); 24 below the filters. */
+  [data-dl='youtube-feed'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--youtube-feed-inset); padding-block-end: var(--space-6); }
   /* Filters: a 56 row (S-1280-L), held under the masthead while the feed scrolls. */
   [data-dl='youtube-feed'] > [data-dl-part='chips'] { position: sticky; inset-block-start: 0; z-index: var(--layer-raised); display: flex; align-items: center; min-block-size: var(--size-app-bar-height); background: var(--color-bg); }
-  /* Three columns 16 apart, rows 36 apart (H-1280-L items-per-row 3, item margin 16, row margin 36). */
-  [data-dl='youtube-feed'] > [data-dl-part='grid'] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--t-youtube-site-gap); row-gap: 2.25rem; margin: 0; padding: var(--space-6) 0 0; list-style: none; }
+  /* Three columns 16 apart, rows 32 apart (H-1280-L items-per-row 3, item margin 16, row margin 32). */
+  [data-dl='youtube-feed'] > [data-dl-part='grid'] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--t-youtube-site-gap); row-gap: var(--t-youtube-site-row-gap); margin: 0; padding: var(--space-6) 0 0; list-style: none; }
 
-  /* Video: 16:9 frame radius 12; details 12 below; avatar 36; title 12 after it (C-1280-L, T-1280-L). */
+  /* Video: 16:9 frame radius 12; details 12 below; avatar 36; title 12 after it; the ⋮ menu 40×40 at the end (C-1280-L, T-1280-L). */
   [data-dl='youtube-video'] { display: grid; gap: var(--space-3); }
   [data-dl='youtube-video'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--radius-lg); background: var(--color-bg-sunken); }
-  /* Length: 8 from the frame's bottom and end, 20 high (C-1280-L). The reference fills it black at 60% in both schemes; the core
-     neutral strong badge stands in until core has a see-through label-on-picture material (Y.2a finding). */
+  /* Length: 8 from the frame's bottom and end, 20 high, white on black at 60% (C-1280-L). */
   [data-dl='youtube-video'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
-  [data-dl='youtube-video'] > [data-dl-part='details'] { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-inline-end: var(--space-6); }
-  [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] { display: grid; }
-  [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] > [data-dl-part='meta'] { margin: 0; color: var(--color-text-muted); font-size: var(--text-s); line-height: 1.4286; }
+  [data-dl='youtube-video'] > [data-dl-part='details'] { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-inline-end: var(--space-6); }
+  /* Title 16/22, two lines; meta 4 below it, 14/20 (C-1280-L, T-1280-L). */
+  [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] { display: grid; gap: var(--space-1); }
+  [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] > [data-dl-part='meta'] { display: grid; }
+  /* The menu: a 40 round button in the title's end padding, its glyph level with the title's first line and 12 past the item's end (T-1280-L). */
+  [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: calc(-1 * var(--space-3)); display: grid; }
 }

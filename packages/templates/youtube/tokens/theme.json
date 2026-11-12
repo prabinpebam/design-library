@@ -27,5 +27,22 @@
   "type.caption.size": { "$value": "{text.xs}", "$description": "The length badge's words 12/18 w500 (C-1280-L)." },
   "type.label.size": { "$value": "{text.s}", "$description": "Chip words 14/20 w500 (S-1280-L) and Sign in 14 w500 (H-1280-L)." },
   "type.heading-4.size": { "$value": "{text.m}", "$description": "A video's title in the feed 16/22 w500 (C-1280-L)." },
-  "type.heading-4.weight": { "$value": "{weight.medium}", "$description": "A video's title in the feed 16/22 w500 (C-1280-L)." }
+  "type.heading-4.weight": { "$value": "{weight.medium}", "$description": "A video's title in the feed 16/22 w500 (C-1280-L)." },
+  "type.heading-4.leading": { "$value": "1.375", "$description": "A video's title in the feed 16/22: two lines are 44 high (C-1280-L)." },
+  "type.body-sm.leading": { "$value": "1.4286", "$description": "Meta lines and guide labels 14/20 (T-1280-L, G-1280-L)." },
+  "size.icon-md": { "$value": "1.5rem", "$description": "Every masthead, guide and card icon is 24 (H-1280-L guide, search, mic, settings, sign-in; G-1280-L entries; T-1280-L card menu)." },
+  "c.button.radius": { "$value": "{radius.pill}", "$description": "Icon buttons are round (40×40, radius 50%) and Sign in is radius 20 at 40 high (H-1280-L)." },
+  "c.button.padding-inline": { "$value": "0.9375rem", "$description": "Sign in padding 0 15 (H-1280-L)." },
+  "c.button.default-fill": { "$value": { "light": "rgba(0, 0, 0, 0.05)", "dark": "rgba(255, 255, 255, 0.1)" }, "$description": "A default button is tonal: voice search fill (H-1280-L/D)." },
+  "c.button.default-edge": { "$value": "transparent", "$description": "Tonal buttons have no outline (voice search, H-1280-L)." },
+  "c.button.link-edge": { "$value": { "light": "rgba(0, 0, 0, 0.2)", "dark": "rgba(255, 255, 255, 0.2)" }, "$description": "Sign in: 1 px outline (H-1280-L, S-1280-D)." },
+  "color.bg-control": { "$value": { "light": "#ffffff", "dark": "#121212" }, "$description": "The search box's fill (H-1280-L #FFFFFF, S-1280-D #121212)." },
+  "color.border-control": { "$value": { "light": "hsla(0, 0%, 53.3%, 0.2)", "dark": "#303030" }, "$description": "The search box's outline (H-1280-L; S-1280-D)." },
+  "c.field.padding-inline": { "$value": "{space.4}", "$description": "Search text starts 16 inside the box (H-1280-L padding 0 4 0 16)." },
+  "c.field.action-fill": { "$value": { "light": "#f8f8f8", "dark": "rgba(255, 255, 255, 0.08)" }, "$description": "The search button's fill (H-1280-L, S-1280-D)." },
+  "c.field.action-edge": { "$value": { "light": "#d3d3d3", "dark": "#303030" }, "$description": "The search button's outline (H-1280-L, S-1280-D)." },
+  "c.field.action-padding-inline": { "$value": "1.25rem", "$description": "The search button is 64 wide around a 24 icon (H-1280-L)." },
+  "radius.md": { "$value": "0.625rem", "$description": "Guide entries, expanded and mini: radius 10 (G-1280-L, H-1280-L)." },
+  "c.badge.size-s": { "$value": "1.25rem", "$description": "The length badge is 20 high (C-1280-L); icons grow to 24 here, the badge doesn't." },
+  "c.menu-button.size": { "$value": "2.5rem", "$description": "The card's ⋮ menu is 40×40 (T-1280-L, C-1280-L)." }
 }

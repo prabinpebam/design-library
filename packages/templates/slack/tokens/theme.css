@@ -167,10 +167,13 @@
     --c-button-fill-track: var(--color-map-brand-tint);
     --c-button-default-fill: var(--color-bg-control);
     --c-button-link-text: var(--color-text-link);
+    --c-button-link-edge: var(--c-button-default-edge);
     --c-skeleton-fill: var(--color-border);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);
     --c-field-readonly-border: var(--color-border);
+    --c-field-action-fill: var(--c-button-default-fill);
+    --c-field-action-edge: var(--c-button-default-edge);
     --c-field-ring-color: var(--color-focus);
     --c-composer-tile-fill: var(--color-bg-sunken);
     --c-composer-drop-radius: var(--radius-lg);
@@ -304,6 +307,7 @@
       --color-status-neutral-fg: var(--color-text-muted);
       --c-alignment-picker-dot-colour: var(--color-text-muted);
       --c-button-default-fill: var(--color-bg-control);
+      --c-button-link-edge: var(--c-button-default-edge);
       --c-canvas-name-selected: var(--color-text-muted);
       --c-chip-edge: var(--color-border-control);
       --c-chip-fill: var(--color-bg-control);
@@ -316,6 +320,8 @@
       --c-data-table-outline: var(--color-border);
       --c-editor-layout-divider: var(--color-border);
       --c-example-outline: var(--color-border);
+      --c-field-action-edge: var(--c-button-default-edge);
+      --c-field-action-fill: var(--c-button-default-fill);
       --c-field-readonly-border: var(--color-border);
       --c-illustration-muted: var(--color-text-muted);
       --c-menu-button-border: var(--c-button-default-edge);
@@ -341,6 +347,7 @@
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-link-edge: var(--c-button-default-edge);
     --c-canvas-name-selected: var(--color-text-muted);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
@@ -353,6 +360,8 @@
     --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-action-edge: var(--c-button-default-edge);
+    --c-field-action-fill: var(--c-button-default-fill);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
@@ -377,6 +386,7 @@
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-link-edge: var(--c-button-default-edge);
     --c-canvas-name-selected: var(--color-text-muted);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
@@ -389,6 +399,8 @@
     --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-action-edge: var(--c-button-default-edge);
+    --c-field-action-fill: var(--c-button-default-fill);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);

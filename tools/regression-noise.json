@@ -50,7 +50,7 @@
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
     "lib--overview": {
-      "reason": "catalogue inventory: source-derived token count grows from 1293 to 1303 (eight navigation roles, two dimensions), then with the Ribbon, Button.stacked and Tabs tokens (Q145.W). Only the count sentence at the viewport foot and, as the inventory lengthens, the right scrollbar track change.",
+      "reason": "catalogue inventory: source-derived token count grows from 1293 to 1303 (eight navigation roles, two dimensions), then with the Ribbon, Button.stacked and Tabs tokens (Q145.W), then with four Q145.Y seams in the commit after c4c7aa7 (c.button.link-edge, c.field.action-fill, c.field.action-edge, c.field.action-padding-inline; defaults unchanged). Only the count sentence at the viewport foot and, as the inventory lengthens, the right scrollbar track change.",
       "regions": [{ "x": 400, "y": 890, "width": 640, "height": 10 }, { "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
     "lib--avatar": {

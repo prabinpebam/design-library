@@ -99,11 +99,14 @@
     --c-button-radius: var(--radius-md);
     --c-button-default-fill: var(--color-bg-control);
     --c-button-default-edge: var(--color-border-control);
+    --c-button-link-edge: var(--c-button-default-edge);
     --c-skeleton-fill: var(--color-border);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);
     --c-field-radius: var(--radius-md);
     --c-field-readonly-border: var(--color-border);
+    --c-field-action-fill: var(--c-button-default-fill);
+    --c-field-action-edge: var(--c-button-default-edge);
     --c-field-ring-color: var(--color-focus);
     --c-text-area-composer-radius: var(--radius-lg);
     --c-composer-tile-fill: var(--color-bg-sunken);
@@ -262,6 +265,7 @@
       --c-alignment-picker-dot-colour: var(--color-text-muted);
       --c-button-default-edge: var(--color-border-control);
       --c-button-default-fill: var(--color-bg-control);
+      --c-button-link-edge: var(--c-button-default-edge);
       --c-button-unavailable-edge: var(--color-border-strong);
       --c-chip-edge: var(--color-border-control);
       --c-chip-fill: var(--color-bg-control);
@@ -274,6 +278,8 @@
       --c-data-table-outline: var(--color-border);
       --c-editor-layout-divider: var(--color-border);
       --c-example-outline: var(--color-border);
+      --c-field-action-edge: var(--c-button-default-edge);
+      --c-field-action-fill: var(--c-button-default-fill);
       --c-field-readonly-border: var(--color-border);
       --c-illustration-muted: var(--color-text-muted);
       --c-list-item-submenu-ink: var(--color-text-muted);
@@ -302,6 +308,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-link-edge: var(--c-button-default-edge);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
@@ -314,6 +321,8 @@
     --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-action-edge: var(--c-button-default-edge);
+    --c-field-action-fill: var(--c-button-default-fill);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-item-submenu-ink: var(--color-text-muted);
@@ -341,6 +350,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-link-edge: var(--c-button-default-edge);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
@@ -353,6 +363,8 @@
     --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-action-edge: var(--c-button-default-edge);
+    --c-field-action-fill: var(--c-button-default-fill);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-item-submenu-ink: var(--color-text-muted);

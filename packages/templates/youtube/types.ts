@@ -5,6 +5,8 @@ export interface YoutubeGuideEntry {
   icon: string;
   /** The page being shown. */
   current?: boolean;
+  /** Also shown in the mini guide (the 72 wide column of icons over short labels). */
+  mini?: boolean;
 }
 /** A guide section: an optional heading over its destinations, or a short signed-out prompt with a sign-in action. */
 export interface YoutubeGuideSection {

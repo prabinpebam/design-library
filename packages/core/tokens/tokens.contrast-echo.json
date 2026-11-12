@@ -25,6 +25,11 @@
         "$value": "{color.bg-control}",
         "$description": "Q141: the default button's fill. A brand whose secondary button is an outline sets it transparent. (echoed for contrast contexts)"
       },
+      "link-edge": {
+        "$type": "color",
+        "$value": "{c.button.default-edge}",
+        "$description": "Q145.Y: the outline of a default button with tone link. The default keeps the default edge; a theme whose default buttons are tonal with no edge keeps the link button outlined (echoed for contrast contexts)"
+      },
       "unavailable-edge": {
         "$type": "color",
         "$value": "{color.border-strong}",
@@ -134,6 +139,16 @@
     "field": {
       "$extensions": {
         "owner": "shared"
+      },
+      "action-edge": {
+        "$type": "color",
+        "$value": "{c.button.default-edge}",
+        "$description": "Q145.Y: the outline of a TextField's joined action button. The default is a default button's edge (echoed for contrast contexts)"
+      },
+      "action-fill": {
+        "$type": "color",
+        "$value": "{c.button.default-fill}",
+        "$description": "Q145.Y: the fill of a TextField's joined action button (a search box's search button). The default is a default button's fill (echoed for contrast contexts)"
       },
       "readonly-border": {
         "$type": "color",

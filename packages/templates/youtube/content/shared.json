@@ -7,12 +7,12 @@
     "wordmark": "Reelhouse",
     "guide": [
       { "id": "main", "entries": [
-        { "label": "Home", "icon": "home", "current": true },
-        { "label": "Clips", "icon": "video" },
-        { "label": "Subscriptions", "icon": "people" }
+        { "label": "Home", "icon": "home", "mini": true, "current": true },
+        { "label": "Clips", "icon": "video", "mini": true },
+        { "label": "Subscriptions", "icon": "people", "mini": true }
       ] },
       { "id": "you", "entries": [
-        { "label": "You", "icon": "person" },
+        { "label": "You", "icon": "person", "mini": true },
         { "label": "History", "icon": "clock" }
       ] },
       { "id": "sign-in", "prompt": "Sign in to like videos, leave comments and follow channels." },
@@ -54,7 +54,13 @@
       "signIn": "Sign in",
       "filters": "Filter the feed",
       "feed": "Recommended videos",
-      "duration": "Length"
+      "duration": "Length",
+      "videoMenu": "Action menu",
+      "queue": "Add to queue",
+      "later": "Save to Watch later",
+      "playlist": "Save to playlist",
+      "share": "Share",
+      "notInterested": "Not interested"
     }
   }
 }

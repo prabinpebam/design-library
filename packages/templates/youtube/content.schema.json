@@ -22,6 +22,10 @@
         },
         "label": {
           "type": "string"
+        },
+        "mini": {
+          "description": "Also shown in the mini guide (the 72 wide column of icons over short labels).",
+          "type": "boolean"
         }
       },
       "required": [

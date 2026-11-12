@@ -106,7 +106,8 @@
     "TitleBar",
     "Hero",
     "slack.Workspace",
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "ui-copy"
