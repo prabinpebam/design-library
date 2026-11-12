@@ -152,9 +152,11 @@ export type MediaPresentation = (props: MediaPresentationProps) => ReactNode;
 /**
  * A template's framing art for one picture (G3): drawn behind it (`under`) and over it (`over`) through `Image`'s
  * `under` and `decoration` layers, the picture's own size, hidden from screen readers and never taking the pointer.
- * Art may spill past the picture's edge. `index` and `count` place the picture in its set, so a frame can vary.
+ * `room` (CSS padding, percentages of the box's width) is kept around the picture for the art's spill, so the art stays
+ * in the picture's own box (its column or cell); the picture and its art are one isolated group, so an overprint never
+ * blends with the page. `index` and `count` place the picture in its set, so a frame can vary.
  */
-export type MediaFrame = (picture: { index: number; count: number }) => { under?: ReactNode; over?: ReactNode };
+export type MediaFrame = (picture: { index: number; count: number }) => { under?: ReactNode; over?: ReactNode; room?: string };
 
 /**
  * One picture of a media block as its depth motion moves it (G3). Framed: `box` is the picture's layers (positioned),

@@ -67,22 +67,23 @@ export default {
     {
       title: 'Framed pictures',
       description:
-        'In standard and masonry grids an item takes under and decoration as Image does: framing art behind and over each picture (a template’s frames, which a media block draws with its frame switch). The art may spill past the picture: framed widens the gap to keep room for it (--c-image-grid-framed-gap). Quilted and justified tiles leave it out. Screen readers skip it and the pointer passes through it.',
-      code: `<ImageGrid framed label="…" items={photos.map((p) => ({ ...p, under: <svg viewBox="0 0 100 100">…</svg>, decoration: <svg viewBox="0 0 100 100">…</svg> }))} />`,
+        'In standard and masonry grids an item takes under and decoration as Image does: framing art behind and over each picture (a template’s frames, which a media block draws with its frame switch). room keeps space around each picture for its art, so the art stays in the item’s box and never touches a neighbour; the picture and its art blend as one group. Quilted and justified tiles leave it out. Screen readers skip it and the pointer passes through it.',
+      code: `<ImageGrid framed label="…" items={photos.map((p) => ({ ...p, room: '6%', under: <svg viewBox="0 0 100 100">…</svg>, decoration: <svg viewBox="0 0 100 100">…</svg> }))} />`,
       render: () => (
         <ImageGrid
           framed
           label="Framed photos from the trip"
           items={photos.slice(0, 3).map((p) => ({
             ...p,
+            room: '6%',
             under: (
               <svg viewBox="0 0 100 100">
-                <circle cx="2" cy="2" r="16" fill="currentColor" />
+                <circle cx="-2" cy="-2" r="16" fill="currentColor" />
               </svg>
             ),
             decoration: (
               <svg viewBox="0 0 100 100">
-                <rect x="84" y="88" width="14" height="10" fill="currentColor" />
+                <rect x="90" y="92" width="14" height="10" fill="currentColor" />
               </svg>
             ),
           }))}

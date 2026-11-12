@@ -27,10 +27,12 @@ export interface ImageGridItem extends SchemeSources {
   credit?: string;
   /** As `Image`: the point kept in view where a frame crops. */
   focal?: { x: number; y: number };
-  /** As `Image`: shapes drawn over the picture (a template's framing art); they may spill into the gap. */
+  /** As `Image`: shapes drawn over the picture (a template's framing art). */
   decoration?: ReactNode;
   /** As `Image`: shapes drawn behind the picture. */
   under?: ReactNode;
+  /** As `Image`: room kept around the picture for its art, so the art stays in the item's own box. */
+  room?: string;
 }
 
 export interface ImageGridProps extends DataAttributes {
@@ -48,8 +50,8 @@ export interface ImageGridProps extends DataAttributes {
   /** What the set is: names the list for screen readers ("Photos from the trip"). */
   label: string;
   /**
-   * The pictures carry framing art (items' `under` and `decoration`) that spills past their edges: the gap widens to
-   * `--c-image-grid-framed-gap` to keep room for it.
+   * The pictures carry framing art (items' `under`, `decoration` and `room`): the gap is `--c-image-grid-framed-gap`
+   * (default the usual gap; each picture keeps its art in its own box).
    */
   framed?: boolean;
 }
@@ -90,6 +92,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             focal={item.focal}
             decoration={item.decoration}
             under={item.under}
+            room={item.room}
             {...(onSelect ? {} : words)}
           />
         );

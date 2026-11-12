@@ -59,7 +59,7 @@
         {
           "name": "framed",
           "type": "boolean",
-          "description": "The pictures carry framing art (items' `under` and `decoration`) that spills past their edges: the gap widens to `--c-image-grid-framed-gap` to keep room for it."
+          "description": "The pictures carry framing art (items' `under`, `decoration` and `room`): the gap is `--c-image-grid-framed-gap` (default the usual gap; each picture keeps its art in its own box)."
         }
       ]
     },
@@ -137,12 +137,17 @@
         {
           "name": "decoration",
           "type": "ReactNode",
-          "description": "As `Image`: shapes drawn over the picture (a template's framing art); they may spill into the gap."
+          "description": "As `Image`: shapes drawn over the picture (a template's framing art)."
         },
         {
           "name": "under",
           "type": "ReactNode",
           "description": "As `Image`: shapes drawn behind the picture."
+        },
+        {
+          "name": "room",
+          "type": "string",
+          "description": "As `Image`: room kept around the picture for its art, so the art stays in the item's own box."
         }
       ]
     }
@@ -165,8 +170,8 @@
   "settings": [
     {
       "var": "--c-image-grid-framed-gap",
-      "default": "2rem",
-      "description": "Between pictures in a framed grid (framed; a media block with its frame switch on): room for the framing art each picture spills past its edge (default space.8). A template whose art spills further sets a larger length."
+      "default": "0.5rem",
+      "description": "Between pictures in a framed grid (framed; a media block with its frame switch on). Default space.2, the usual gap: each picture keeps its art in its own box (Image room). A template whose framed pictures read crowded sets more."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/imagegrid",

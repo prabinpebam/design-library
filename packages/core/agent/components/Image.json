@@ -131,6 +131,11 @@
           "description": "The same as `decoration`, drawn behind the picture: seen only where it spills past the picture's edge."
         },
         {
+          "name": "room",
+          "type": "string",
+          "description": "Room kept around the picture inside its box for its `under` and `decoration` art (a frame), as CSS padding (`'4% 4% 5% 5%'`; percentages of the box's width): the picture shrinks so the art's spill stays in the box and never reaches a neighbour. The picture and its art are then one isolated group: art drawn with a blend mode blends with the picture, never with the page. Only with `under` or `decoration`."
+        },
+        {
           "name": "alternate",
           "type": "string | PictureSource",
           "description": "A paired picture (MP10): an after to `src`'s before, a product's other side. It shows while the picture, or the link, button or card around it, is hovered or focused (the same as `treatment`'s `active`), crossfading on the change duration (kept under reduced motion, as a fade). Fetched only on the first hover or focus. Same shape as the picture; screen readers keep `alt`, so say both there (\"Before and after: …\")."

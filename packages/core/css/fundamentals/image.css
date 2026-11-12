@@ -79,6 +79,16 @@
   }
 
   /*
+   * A framed picture (room, G3): its art's spill is reserved as padding, so the picture shrinks and the art stays in the
+   * box; the group is isolated, so art with a blend mode (an overprint) blends with the picture, never the page.
+   */
+  [data-dl='image-layers'][data-room] {
+    box-sizing: border-box;
+    padding: var(--image-room);
+    isolation: isolate;
+  }
+
+  /*
    * A media block's depth group (G3): a template's depth motion moves each picture and its framing in the picture's own
    * box, so that box is positioned (the motion measures offsets from it). It adds no space, fill or clip.
    */

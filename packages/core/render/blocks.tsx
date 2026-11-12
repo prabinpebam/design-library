@@ -312,11 +312,11 @@ function frameOf(ctx: RenderContext, frame: boolean | string | undefined): Media
   return drawn;
 }
 
-/** Framing art as `Image` takes it: behind the picture (`under`) and over it (`decoration`). */
+/** Framing art as `Image` takes it: behind the picture (`under`), over it (`decoration`) and the room kept for it. */
 const framing = (frame: MediaFrame | undefined, index: number, count: number) => {
   if (!frame) return {};
   const art = frame({ index, count });
-  return { under: art.under, decoration: art.over };
+  return { under: art.under, decoration: art.over, room: art.room };
 };
 
 

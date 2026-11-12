@@ -60,6 +60,13 @@ export interface ImageProps extends DataAttributes {
   /** The same as `decoration`, drawn behind the picture: seen only where it spills past the picture's edge. */
   under?: ReactNode;
   /**
+   * Room kept around the picture inside its box for its `under` and `decoration` art (a frame), as CSS padding
+   * (`'4% 4% 5% 5%'`; percentages of the box's width): the picture shrinks so the art's spill stays in the box and
+   * never reaches a neighbour. The picture and its art are then one isolated group: art drawn with a blend mode blends
+   * with the picture, never with the page. Only with `under` or `decoration`.
+   */
+  room?: string;
+  /**
    * A paired picture (MP10): an after to `src`'s before, a product's other side. It shows while the picture, or the
    * link, button or card around it, is hovered or focused (the same as `treatment`'s `active`), crossfading on the
    * change duration (kept under reduced motion, as a fade). Fetched only on the first hover or focus. Same shape as
@@ -154,6 +161,7 @@ export function Image({
   contrast,
   decoration,
   under,
+  room,
   alternate,
   reveal,
   ...data
@@ -262,7 +270,7 @@ export function Image({
   const layered = (decoration != null && decoration !== false) || (under != null && under !== false);
   const decorated = (attrs: DataAttributes) =>
     layered ? (
-      <span {...attrs} data-dl="image-layers">
+      <span {...attrs} data-dl="image-layers" data-room={room ? '' : undefined} style={room ? ({ '--image-room': room } as CSSProperties) : undefined}>
         {under != null && under !== false && (
           <span data-dl-part="under" aria-hidden="true">
             {under}
