@@ -14,5 +14,6 @@
     --t-youtube-guide-title-height: var(--size-control-sm);
     --t-youtube-guide-mini-inset-block-start: var(--space-1);
     --t-youtube-guide-prompt-inset: var(--space-5);
+    --t-youtube-guide-mini-label-size: 0.625rem;
   }
 }

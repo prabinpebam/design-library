@@ -73,6 +73,7 @@
     "--t-youtube-guide-mini-entry-width",
     "--t-youtube-guide-mini-gap",
     "--t-youtube-guide-mini-inset-block-start",
+    "--t-youtube-guide-mini-label-size",
     "--t-youtube-guide-mini-padding-block-end",
     "--t-youtube-guide-mini-padding-block-start",
     "--t-youtube-guide-prompt-inset",

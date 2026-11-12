@@ -644,5 +644,301 @@
  "c.data-table.radius": {
   "$value": "{radius.md}",
   "$description": "8 CSS px rounded corners on the Backstage Recent DataTable card (12-backstage-home.png)."
- }
+ },
+ "$parts": [
+  {
+   "selector": "[data-dl='word-search-box']",
+   "$description": "word-search-box: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.75rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade']",
+   "$description": "upgrade: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.8125rem",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.gap": "var(--space-2)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='flourish']",
+   "$description": "flourish: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='ribbon']",
+   "$description": "ribbon: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.ribbon.radius": "var(--t-word-window-card-radius)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-collapse-btn']",
+   "$description": "word-collapse-btn: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "0.75rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-doc-actions']",
+   "$description": "word-doc-actions: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.5rem",
+    "c.menu-button.size-xs": "1.5rem",
+    "c.button.padding-inline-sm": "var(--space-1)",
+    "c.button.gap": "var(--space-1)",
+    "c.menu-button.padding-inline": "var(--space-1)",
+    "c.menu-button.gap": "var(--space-0-5)",
+    "size.icon-sm": "0.6875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command'][data-stacked], [data-dl='word-split'][data-stacked], [data-dl='word-copilot-card']",
+   "$description": "word-copilot-card: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.75rem",
+    "size.icon-lg": "1.75rem",
+    "c.button.padding-inline-sm": "var(--space-0-5)",
+    "type.body-sm.size": "var(--text-xs)",
+    "type.body-sm.leading": "1.15"
+   }
+  },
+  {
+   "selector": "[data-dl='word-split'][data-icon='design-colors'], [data-dl='word-split'][data-icon='design-fonts']",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-lg": "2rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command'][data-tool], [data-dl='word-split'][data-tool]",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "2.125rem",
+    "c.button.size-xs": "2.5rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command'][data-pen], [data-dl='word-split'][data-pen]",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "3.375rem",
+    "c.button.size-xs": "3.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command']:not([data-stacked]):not([data-pen]):not([data-tool]), [data-dl='word-split']:not([data-stacked]):not([data-pen]):not([data-tool])",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1rem",
+    "c.button.gap": "var(--space-1)",
+    "c.button.padding-inline-sm": "var(--space-0-5)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-split'] > [data-dl-part='split-menu']",
+   "$description": "split-menu: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "0.625rem",
+    "size.icon-sm": "0.625rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-split'][data-stacked] > [data-dl-part='split-menu']",
+   "$description": "split-menu: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "0.625rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='ribbon'] > [data-dl-part='gallery-host']",
+   "$description": "gallery-host: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-style-tile'] > [data-dl-part='preview']",
+   "$description": "preview: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-style-gallery'] > [data-dl-part='menu-foot']",
+   "$description": "menu-foot: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-field']",
+   "$description": "word-field: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "space.inline-pair": "var(--space-1)",
+    "size.icon-sm": "0.75rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-label']",
+   "$description": "spin-label: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "0.9375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-box']",
+   "$description": "spin-box: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.field.size-xs": "1.375rem",
+    "space.inline-pair": "var(--space-0-5)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-labelled-field']",
+   "$description": "word-labelled-field: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.field.size-xs": "1.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-labelled-field'] > [data-dl-part='field-label']",
+   "$description": "field-label: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-record-stepper']",
+   "$description": "word-record-stepper: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.25rem",
+    "size.icon-sm": "0.875rem",
+    "c.field.size-xs": "1.25rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-ruler-h'] > [data-dl-part='tab-stop']",
+   "$description": "tab-stop: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "1.4375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip']",
+   "$description": "prompt-chip: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "2.125rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage'] > [data-dl-part='rail']",
+   "$description": "rail: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "2.25rem",
+    "c.button.radius": "var(--radius-md)",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.gap": "var(--space-2)",
+    "size.icon-sm": "1.125rem",
+    "c.button.pressed-fill": "var(--t-word-window-surface)",
+    "c.button.pressed-edge": "var(--t-word-window-border)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='back']",
+   "$description": "back: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='nav-group'] > [data-dl-part='nav-item'][data-active]",
+   "$description": "nav-item: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "type.label.weight": "600",
+    "c.button.weight": "var(--type-label-weight)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-bs-prompt'] > [data-dl-part='actions'] > [data-dl-part='create-pill']",
+   "$description": "create-pill: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-full)",
+    "c.button.padding-inline-sm": "var(--space-3)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='hero'] > [data-dl-part='hero-controls'] > [data-dl-part='suggestions']",
+   "$description": "suggestions: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "2.125rem",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.radius": "var(--radius-md)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > :is([data-dl-part='new-section'], [data-dl-part='rec-section']) > [data-dl-part='head'] > [data-dl-part='sec-head'] > [data-dl-part='sec-title']",
+   "$description": "sec-title: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "0.875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-bs-template'] > [data-dl-part='thumb-box'] > [data-dl-part='thumb-svg']",
+   "$description": "thumb-svg: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-rec-card'] > [data-dl-part='card-top'] > [data-dl-part='card-activity']",
+   "$description": "card-activity: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "0.8125rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-rec-card'] > [data-dl-part='card-well'] > [data-dl-part='mini-doc']",
+   "$description": "mini-doc: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='pills']",
+   "$description": "pills: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "1.875rem",
+    "c.button.radius": "var(--radius-full)",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.pressed-fill": "var(--color-map-action-fill)",
+    "c.button.pressed-edge": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='filter-end']",
+   "$description": "filter-end: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "1.875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='filter-end'] > [data-dl-part='file-search']",
+   "$description": "file-search: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.field.size-s": "1.875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='statusbar']",
+   "$description": "statusbar: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.25rem"
+   }
+  }
+ ]
 }

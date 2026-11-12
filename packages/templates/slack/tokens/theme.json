@@ -513,5 +513,420 @@
    "dark": "#473b14"
   },
   "$description": "Owner benchmark 07 S07.2: @channel broadcast mention badge highlight #FCF4C7."
- }
+ },
+ "$parts": [
+  {
+   "selector": "[data-dl='slack-workspace'][data-dual-rail]",
+   "$description": "slack-workspace: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.nav-width": "18.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='titlebar'] > [data-dl-part='left-chrome']",
+   "$description": "left-chrome: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.125rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='titlebar'] > [data-dl-part='center-chrome'] > [data-dl-part='search-pill']",
+   "$description": "search-pill: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.weight": "var(--weight-regular)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='titlebar'] > [data-dl-part='center-chrome'] > [data-dl-part='bot-trigger']",
+   "$description": "bot-trigger: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg-sunken": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='titlebar'] > [data-dl-part='window-controls']",
+   "$description": "window-controls: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.25rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items']",
+   "$description": "rail-items: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-md": "1.625rem",
+    "c.icon.stroke-width": "1.5px"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-dl-part='rail-item'] > [data-activity-anchor]",
+   "$description": "rail-item: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.popover.width": "24.125rem",
+    "c.popover.padding": "0px",
+    "c.popover.gap": "0px",
+    "c.popover.offset": "1rem",
+    "c.popover.cross-offset": "19.4375rem",
+    "c.popup.radius": "var(--radius-lg)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-current] > [data-dl-part='rail-icon']",
+   "$description": "rail-icon: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.icon.fill": "currentColor"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-slackbot-slot] > [data-dl-part='rail-icon']",
+   "$description": "rail-icon: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg-sunken": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-bottom']",
+   "$description": "rail-bottom: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.25rem",
+    "c.menu-button.list-min-width": "22.125rem",
+    "c.popup.width": "22.125rem",
+    "c.popup.submenu-offset": "1rem",
+    "c.popup.radius": "var(--radius-lg)",
+    "c.list-item.hover-fill": "color-mix(in srgb, var(--color-text) 5%, var(--color-bg))",
+    "c.list-item.hover-text": "var(--color-text)",
+    "c.list-item.size": "3.25rem",
+    "c.list-item.name-weight": "var(--weight-bold)",
+    "c.list-item.padding-inline": "var(--space-4)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-bottom'] > [data-dl-part='rail-avatar']",
+   "$description": "rail-avatar: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg": "var(--color-map-nav-shell)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-bottom'] > [data-dl-part='rail-circle']",
+   "$description": "rail-circle: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-pill)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='org-banner'] > [data-dl-part='banner-copy']",
+   "$description": "banner-copy: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.text-link": "var(--color-map-nav-on)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head']",
+   "$description": "workspace-head: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.25rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head'] > [data-dl-part='head-actions']",
+   "$description": "head-actions: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.menu-button.list-min-width": "19.3125rem",
+    "c.popup.width": "19.3125rem",
+    "c.menu-button.submenu-min-width": "19.75rem",
+    "c.popup.submenu-width": "19.75rem",
+    "c.popup.inline-offset": "-1.875rem",
+    "c.popup.offset": "0.625rem",
+    "c.popup.inset": "var(--space-2)",
+    "c.list-item.padding-inline": "var(--space-3)",
+    "c.list-item.size": "1.9375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-welcome-card'] > [data-dl-part='welcome-cta']",
+   "$description": "welcome-cta: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.weight": "var(--weight-bold)",
+    "c.button.padding-inline-sm": "0px"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-vip-card'] > [data-dl-part='vip-actions'] > [data-dl-part='vip-later']",
+   "$description": "vip-later: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)",
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-vip-card'] > [data-dl-part='vip-actions'] > [data-dl-part='vip-start']",
+   "$description": "vip-start: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)",
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-find-pill']",
+   "$description": "slack-find-pill: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.weight": "var(--weight-regular)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-nav-section']",
+   "$description": "slack-nav-section: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-regular)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-nav-section'] > [data-dl-part='rows'] > [data-unread]",
+   "$description": "rows: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-nav-section'] > [data-dl-part='rows'] > [data-current][data-was-unread]",
+   "$description": "rows: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='more-unreads']",
+   "$description": "more-unreads: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-pill)",
+    "c.button.padding-inline-sm": "var(--space-5)",
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.weight": "var(--weight-bold)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] > [data-dl-part='channel-head'] > [data-dl-part='channel-actions']",
+   "$description": "channel-actions: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.25rem",
+    "c.popup.inline-offset": "-0.34375rem",
+    "c.popup.offset": "0.5625rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] > [data-dl-part='tabs']",
+   "$description": "tabs: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.weight": "var(--weight-regular)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] > [data-dl-part='tabs'] > [data-current]",
+   "$description": "tabs: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)",
+    "c.icon.fill": "currentColor"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-new-pill']",
+   "$description": "slack-new-pill: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-pill)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='reactions'] > [data-dl-part='reaction']",
+   "$description": "reaction: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-pill)",
+    "c.button.weight": "var(--weight-semibold)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='reply-line']",
+   "$description": "reply-line: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)",
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-tools'] > [data-dl-part='group'] > [data-dl-part='add-circle']",
+   "$description": "add-circle: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-pill)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-tools'] > [data-dl-part='send']",
+   "$description": "send: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.icon.fill": "currentColor"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-vip-aside']",
+   "$description": "slack-vip-aside: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg-sunken": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-vip-modal']",
+   "$description": "slack-vip-modal: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.border-control": "color-mix(in srgb, var(--color-text) 30%, var(--color-bg))"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-directories'] > [data-dl-part='dir-head']",
+   "$description": "dir-head: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.heading-4.size": "1.25rem",
+    "type.heading-4.weight": "var(--weight-black)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-directories'] > [data-dl-part='dir-head'] > [data-dl-part='dir-tabs']",
+   "$description": "dir-tabs: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.weight": "var(--weight-regular)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-directories'] > [data-dl-part='dir-head'] > [data-dl-part='dir-tabs'] > [data-current]",
+   "$description": "dir-tabs: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-bold)",
+    "c.icon.fill": "currentColor"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-directories-body'] > [data-dl-part='dir-controls'] > [data-dl-part='dir-toolbar']",
+   "$description": "dir-toolbar: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-directories-body'] > [data-dl-part='dir-controls'] > [data-dl-part='dir-toolbar'] > [data-dl-part='dir-search']",
+   "$description": "dir-search: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.field.ring-color": "var(--color-text-link)",
+    "size.measure": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-huddles'] > [data-dl-part='huddles-head']",
+   "$description": "huddles-head: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.heading-4.size": "1.25rem",
+    "type.heading-4.weight": "var(--weight-black)",
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-huddles-hero']",
+   "$description": "slack-huddles-hero: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.heading-3.weight": "var(--weight-black)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-huddles-hero'] > [data-dl-part='hero-art']",
+   "$description": "hero-art: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg-sunken": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-unreads'] > [data-dl-part='unreads-head']",
+   "$description": "unreads-head: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.heading-4.size": "1.25rem",
+    "type.heading-4.weight": "var(--weight-black)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-unreads'] > [data-dl-part='channel-band'] > [data-dl-part='band-title']",
+   "$description": "band-title: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-m)",
+    "c.button.weight": "var(--weight-black)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-unreads'] > [data-dl-part='channel-band'] > [data-dl-part='band-actions']",
+   "$description": "band-actions: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-welcome-body'] > [data-dl-part='top-label']",
+   "$description": "top-label: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.heading-4.weight": "var(--weight-black)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-welcome-body'] > [data-dl-part='hero'] > [data-dl-part='hero-bubble']",
+   "$description": "hero-bubble: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg-sunken": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-welcome-msg-row'] > [data-dl-part='msg-action']",
+   "$description": "msg-action: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-teammate-card'] > [data-dl-part='tm-body'] > [data-dl-part='tm-cta']",
+   "$description": "tm-cta: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "type.body-sm.size": "var(--text-s)"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-slackbot'] > [data-dl-part='sb-top']",
+   "$description": "sb-top: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.25rem"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-slackbot-center'] > [data-dl-part='sb-hero'] > [data-dl-part='sb-mark']",
+   "$description": "sb-mark: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "color.bg-sunken": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-slackbot-prompt']",
+   "$description": "slack-slackbot-prompt: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.text-area.composer-radius": "var(--radius-lg)",
+    "color.border-control": "color-mix(in srgb, var(--color-text-link) 12%, color-mix(in srgb, var(--color-map-badge) 18%, var(--color-border)))"
+   }
+  },
+  {
+   "selector": "[data-dl='slack-prompt-card']",
+   "$description": "slack-prompt-card: core component tokens for this part, moved from parts/layouts/workspace.css (LG3).",
+   "tokens": {
+    "c.button.weight": "var(--weight-semibold)",
+    "type.body-sm.size": "var(--text-s)",
+    "c.button.padding-inline-sm": "0px"
+   }
+  }
+ ]
 }

@@ -83,7 +83,6 @@
     inline-size: 21.75rem;
   }
   [data-dl='word-search-box'] {
-    --c-button-size-xs: 1.75rem;
     display: flex;
     align-items: center;
     min-block-size: 1.8125rem;
@@ -111,9 +110,6 @@
     gap: var(--space-2);
   }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade'] {
-    --c-button-size-xs: 1.8125rem;
-    --c-button-padding-inline-sm: var(--space-3);
-    --c-button-gap: var(--space-2);
     position: relative;
     display: inline-flex;
   }
@@ -134,7 +130,6 @@
     display: grid;
     inline-size: min(26.25rem, 100%);
     block-size: 100%;
-    --size-icon-md: 100%;
     pointer-events: none;
   }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='bs-head-icon'] {
@@ -162,20 +157,11 @@
     padding-inline: var(--space-2);
     padding-block-end: var(--space-1);
     background-color: var(--t-word-window-tab-wash);
-    --c-ribbon-radius: var(--t-word-window-card-radius);
   }
   [data-dl='word-collapse-btn'] {
-    --c-button-size-xs: 0.75rem;
     display: grid;
   }
   [data-dl='word-doc-actions'] {
-    --c-button-size-xs: 1.5rem;
-    --c-menu-button-size-xs: 1.5rem;
-    --c-button-padding-inline-sm: var(--space-1);
-    --c-button-gap: var(--space-1);
-    --c-menu-button-padding-inline: var(--space-1);
-    --c-menu-button-gap: var(--space-0-5);
-    --size-icon-sm: 0.6875rem;
     display: flex;
     align-items: center;
     gap: var(--space-1);
@@ -233,23 +219,8 @@
   [data-dl='word-command'] {
     display: flex;
   }
-  [data-dl='word-command'][data-stacked],
-  [data-dl='word-split'][data-stacked],
-  [data-dl='word-copilot-card'] {
-    --size-icon-sm: 1.75rem;
-    --size-icon-lg: 1.75rem;
-    --c-button-padding-inline-sm: var(--space-0-5);
-    --type-body-sm-size: var(--text-xs);
-    --type-body-sm-leading: 1.15;
-  }
-  [data-dl='word-split'][data-icon='design-colors'],
-  [data-dl='word-split'][data-icon='design-fonts'] {
-    --size-icon-lg: 2rem;
-  }
   [data-dl='word-command'][data-tool],
   [data-dl='word-split'][data-tool] {
-    --size-icon-sm: 2.125rem;
-    --c-button-size-xs: 2.5rem;
     align-self: center;
   }
   [data-dl='word-command'][data-pressed][data-stacked],
@@ -259,8 +230,6 @@
   }
   [data-dl='word-command'][data-pen],
   [data-dl='word-split'][data-pen] {
-    --size-icon-sm: 3.375rem;
-    --c-button-size-xs: 3.375rem;
     align-self: start;
   }
   [data-dl='word-checkbox'] {
@@ -273,19 +242,8 @@
     inline-size: var(--border-hairline);
     background-color: var(--t-word-window-border);
   }
-  [data-dl='word-command']:not([data-stacked]):not([data-pen]):not([data-tool]),
-  [data-dl='word-split']:not([data-stacked]):not([data-pen]):not([data-tool]) {
-    --size-icon-sm: 1rem;
-    --c-button-gap: var(--space-1);
-    --c-button-padding-inline-sm: var(--space-0-5);
-  }
   [data-dl='word-split'] > [data-dl-part='split-menu'] {
-    --c-button-size-xs: 0.625rem;
     display: grid;
-    --size-icon-sm: 0.625rem;
-  }
-  [data-dl='word-split'][data-stacked] > [data-dl-part='split-menu'] {
-    --c-button-size-xs: 0.625rem;
   }
   [data-dl='word-split'][data-labelled] {
     justify-content: space-between;
@@ -314,7 +272,6 @@
     border-inline-start: var(--border-hairline) solid var(--t-word-window-border);
   }
   [data-dl='word-window'] > [data-dl-part='ribbon'] > [data-dl-part='gallery-host'] {
-    --c-button-size-xs: 1rem;
     position: absolute;
     inset-block-start: 2.25rem;
     inset-inline-start: 53.4375rem;
@@ -345,7 +302,6 @@
     display: grid;
     inline-size: 100%;
     block-size: 100%;
-    --size-icon-md: 100%;
     pointer-events: none;
   }
 
@@ -374,7 +330,6 @@
     gap: var(--space-2);
   }
   [data-dl='word-style-gallery'] > [data-dl-part='menu-foot'] {
-    --c-button-size-xs: 1.375rem;
     display: grid;
     padding-block-start: var(--space-1);
     border-block-start: var(--border-hairline) solid var(--t-word-window-border);
@@ -548,8 +503,6 @@
   [data-dl='word-field'] {
     display: grid;
     inline-size: 9.625rem;
-    --space-inline-pair: var(--space-1);
-    --size-icon-sm: 0.75rem;
   }
   [data-dl='word-field'][data-width='narrow'] {
     inline-size: 2.75rem;
@@ -589,12 +542,9 @@
     min-inline-size: 2.5rem;
     font-size: var(--text-s);
     white-space: nowrap;
-    --size-icon-sm: 0.9375rem;
   }
   [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-box'] {
     inline-size: 3.375rem;
-    --c-field-size-xs: 1.375rem;
-    --space-inline-pair: var(--space-0-5);
   }
 
   /* References Style: APA row & Mailings record stepper. */
@@ -602,7 +552,6 @@
     display: flex;
     align-items: center;
     gap: var(--space-1);
-    --c-field-size-xs: 1.375rem;
   }
   [data-dl='word-labelled-field'] > [data-dl-part='field-label'] {
     display: inline-flex;
@@ -610,12 +559,8 @@
     gap: var(--space-1);
     font-size: var(--text-s);
     white-space: nowrap;
-    --size-icon-sm: 1rem;
   }
   [data-dl='word-record-stepper'] {
-    --c-button-size-xs: 1.25rem;
-    --size-icon-sm: 0.875rem;
-    --c-field-size-xs: 1.25rem;
     display: flex;
     align-items: center;
     gap: var(--space-0-5);
@@ -652,7 +597,6 @@
     place-items: center;
     block-size: 100%;
     background-color: var(--t-word-window-ruler-bg);
-    --size-icon-md: 1.4375rem;
   }
   [data-dl='word-ruler-h'] > [data-dl-part='track-center'] {
     display: grid;
@@ -728,7 +672,6 @@
     padding-block-start: var(--space-4);
   }
   [data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip'] {
-    --c-button-size-xs: 2.125rem;
     position: relative;
     display: inline-grid;
     padding-inline: var(--space-3);
@@ -865,13 +808,6 @@
     min-block-size: 0;
   }
   [data-dl='word-backstage'] > [data-dl-part='rail'] {
-    --c-button-size-s: 2.25rem;
-    --c-button-radius: var(--radius-md);
-    --c-button-padding-inline-sm: var(--space-3);
-    --c-button-gap: var(--space-2);
-    --size-icon-sm: 1.125rem;
-    --c-button-pressed-fill: var(--t-word-window-surface);
-    --c-button-pressed-edge: var(--t-word-window-border);
     display: grid;
     grid-template-rows: auto auto auto minmax(0, 1fr) auto;
     align-items: start;
@@ -885,7 +821,6 @@
   [data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='back'] {
     display: flex;
     padding-inline-start: var(--space-1);
-    --size-icon-sm: 1.375rem;
   }
   [data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='rail-sep'],
   [data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='rail-foot'] > [data-dl-part='rail-sep'] {
@@ -905,9 +840,7 @@
   }
   [data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='nav-group'] > [data-dl-part='nav-item'][data-active] {
     color: var(--color-accent);
-    --type-label-weight: 600;
     /* c.button.weight resolves at the template root; re-alias it here so the Button follows this item's label weight. */
-    --c-button-weight: var(--type-label-weight);
     --icon-accent-fill: var(--color-accent);
   }
   [data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='nav-group'] > [data-dl-part='nav-item'][data-indented] {
@@ -973,14 +906,9 @@
     gap: var(--space-2);
   }
   [data-dl='word-bs-prompt'] > [data-dl-part='actions'] > [data-dl-part='create-pill'] {
-    --c-button-radius-sm: var(--radius-full);
-    --c-button-padding-inline-sm: var(--space-3);
     display: inline-flex;
   }
   [data-dl='word-backstage-stage'] > [data-dl-part='hero'] > [data-dl-part='hero-controls'] > [data-dl-part='suggestions'] {
-    --c-button-size-s: 2.125rem;
-    --c-button-padding-inline-sm: var(--space-3);
-    --c-button-radius: var(--radius-md);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -1012,7 +940,6 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    --size-icon-sm: 0.875rem;
   }
   [data-dl='word-backstage-stage'] > [data-dl-part='new-section'] > [data-dl-part='head'] > [data-dl-part='sec-head'] > [data-dl-part='more-link'] {
     display: inline-flex;
@@ -1055,7 +982,6 @@
     display: grid;
     inline-size: 100%;
     block-size: 100%;
-    --size-icon-md: 100%;
     --icon-accent: var(--color-accent);
     --icon-accent-fill: var(--color-accent);
     --icon-muted: var(--t-word-window-border);
@@ -1107,7 +1033,6 @@
     min-inline-size: 0;
     font-size: var(--text-xs);
     color: var(--t-word-window-muted);
-    --size-icon-sm: 0.8125rem;
   }
   [data-dl='word-rec-card'] > [data-dl-part='card-top'] > [data-dl-part='card-activity'] > [data-dl-part='activity-words'] {
     min-inline-size: 0;
@@ -1150,7 +1075,6 @@
     display: grid;
     inline-size: min(100%, 12.625rem);
     block-size: 8.125rem;
-    --size-icon-md: 100%;
     --icon-accent: var(--color-accent);
     --icon-accent-fill: var(--color-accent);
     --icon-muted: var(--t-word-window-border);
@@ -1169,11 +1093,6 @@
     gap: var(--space-2);
   }
   [data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='pills'] {
-    --c-button-size-s: 1.875rem;
-    --c-button-radius: var(--radius-full);
-    --c-button-padding-inline-sm: var(--space-3);
-    --c-button-pressed-fill: var(--color-map-action-fill);
-    --c-button-pressed-edge: transparent;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -1183,7 +1102,6 @@
     display: inline-flex;
   }
   [data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='filter-end'] {
-    --c-button-size-s: 1.875rem;
     flex: 1 1 auto;
     display: flex;
     justify-content: flex-end;
@@ -1191,7 +1109,6 @@
     gap: var(--space-2);
   }
   [data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='filter-end'] > [data-dl-part='file-search'] {
-    --c-field-size-s: 1.875rem;
     flex: 0 1 17.625rem;
     min-inline-size: 0;
   }
@@ -1227,7 +1144,6 @@
 
   /* Status bar (y=750..766 PNG = 21 CSS px): color.bg-sunken, page & proofing at start, view modes & zoom at end. */
   [data-dl='word-window'] > [data-dl-part='statusbar'] {
-    --c-button-size-xs: 1.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

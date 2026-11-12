@@ -5,7 +5,6 @@
  */
 @layer templates {
   [data-dl='ikea-offer-ticket'] {
-    --color-text: var(--t-ikea-offer-ticket-on);
     position: fixed;
     inset-block-end: calc(var(--space-margin-page) + var(--size-control-lg) + var(--space-stack-item));
     inset-inline-end: var(--space-margin-page);

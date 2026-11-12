@@ -727,4 +727,15 @@
     line-height: var(--type-body-leading);
     font-weight: var(--type-body-weight);
   }
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='head'] {
+    --color-text: var(--t-ikea-chat-panel-head-on);
+  }
+  [data-dl='ikea-offer-ticket'] {
+    --color-text: var(--t-ikea-offer-ticket-on);
+  }
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='search'] {
+    --c-field-radius: var(--t-ikea-store-header-search-radius);
+    --color-bg-control: var(--t-ikea-store-header-search-fill);
+    --color-border-control: var(--t-ikea-store-header-search-fill);
+  }
 }

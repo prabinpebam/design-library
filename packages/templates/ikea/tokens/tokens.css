@@ -21,6 +21,7 @@
     --t-ikea-store-header-links-color: var(--color-text-muted);
     --t-ikea-store-header-link-padding-block: var(--space-stack-item);
     --t-ikea-store-header-link-padding-inline: var(--space-3);
+    --t-ikea-store-header-wordmark-tracking: 0.02em;
     --t-ikea-chip-rail-gap: var(--space-inline-group);
     --t-ikea-chip-rail-height: var(--size-control-lg);
     --t-ikea-chip-rail-padding: var(--space-inset-sm);
