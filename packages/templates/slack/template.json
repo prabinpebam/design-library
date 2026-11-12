@@ -12,11 +12,14 @@
   "sections": [
     { "id": "workspace", "title": "Workspace", "summary": "Read, reply and find a conversation.", "flows": [
       { "id": "converse", "title": "Conversations", "summary": "A channel, its replies and shared files.", "screens": ["channel", "thread", "files"] },
+      { "id": "actions", "title": "Channel actions and VIPs", "summary": "Prioritize VIPs and manage channel settings.", "screens": ["vip-modal", "channel-menu"] },
       { "id": "find", "title": "Find a message", "summary": "Search the workspace.", "screens": ["search"] }
     ] }
   ],
   "layouts": [
     { "id": "channel", "title": "Channel", "component": "SiteLayout", "content": "content/channel.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "vip-modal", "title": "VIP modal", "component": "SiteLayout", "content": "content/workspace/vip-modal.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "channel-menu", "title": "Channel menu", "component": "SiteLayout", "content": "content/workspace/channel-menu.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "thread", "title": "Thread", "component": "SiteLayout", "content": "content/workspace/thread.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "files", "title": "Files", "component": "SiteLayout", "content": "content/workspace/files.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "search", "title": "Search", "component": "SiteLayout", "content": "content/workspace/search.json", "regions": [{"id":"main","accepts":["*"]}] }

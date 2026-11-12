@@ -894,6 +894,9 @@
   --c-dialog-heading-gap: var(--space-stack-pair);
   --c-dialog-actions-gap: var(--space-inline-item);
   --c-dialog-rise: var(--space-2);
+  --c-dialog-aside-width: 16rem;
+  --c-dialog-aside-bg: var(--color-bg-sunken);
+  --c-dialog-aside-padding: var(--space-5);
   --c-grid-aside: var(--size-column-min);
   --c-grid-section-gap: var(--space-12);
   --c-hero-gap: var(--space-stack-section);

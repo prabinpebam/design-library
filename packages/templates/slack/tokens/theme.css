@@ -72,6 +72,9 @@
     --c-list-item-plate-fill-1: light-dark(#fde2e4, color-mix(in oklab, #e01e5a 24%, transparent));
     --c-list-item-plate-ink-1: light-dark(#b4233b, #ff9eb0);
     --c-popup-gap: 0;
+    --c-dialog-width-l: 50.25rem;
+    --c-dialog-aside-width: 17.625rem;
+    --c-dialog-aside-bg: light-dark(#a0b3f3, #39487a);
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);

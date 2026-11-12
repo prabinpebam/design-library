@@ -56,6 +56,11 @@
           "description": "The body: a short form, a list, longer reading. Scrolls inside the dialog when it doesn't fit."
         },
         {
+          "name": "aside",
+          "type": "ReactNode",
+          "description": "An optional start-side visual panel (an illustration or preview) flush with the dialog's top, start and bottom edges; hidden on narrow windows."
+        },
+        {
           "name": "actions",
           "type": "ReactNode",
           "description": "The answers, as Buttons: the safest first, the main action last (it sits at the end)."
@@ -89,6 +94,9 @@
   "tokens": [
     "--border-hairline",
     "--c-dialog-actions-gap",
+    "--c-dialog-aside-bg",
+    "--c-dialog-aside-padding",
+    "--c-dialog-aside-width",
     "--c-dialog-gap",
     "--c-dialog-heading-gap",
     "--c-dialog-margin",

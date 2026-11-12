@@ -63,6 +63,10 @@ export interface MenuButtonProps extends DataAttributes {
   /** Pins the menu to one width step (Q130, docs/widths.md). Leave out to fit the items, snapped up to `xs`, `sm` or
    * `md`. Pin only so menus that sit together (one toolbar) match, or when the items change while it's open. */
   listWidth?: ListWidth;
+  /** Controlled open state, matching Popover; omit for uncontrolled behaviour. */
+  open?: boolean;
+  /** Called when the menu asks to open or close in controlled mode. */
+  onOpenChange?: (open: boolean) => void;
 }
 
 /**
@@ -89,9 +93,14 @@ export interface MenuButtonProps extends DataAttributes {
  * @key Arrow left (right in right-to-left) or Escape in a submenu: closes it and returns to its item
  * @key Escape: closes the menu and returns to the button
  */
-export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, ...data }: MenuButtonProps) {
+export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, open: controlledOpen, onOpenChange, ...data }: MenuButtonProps) {
   const id = useId();
-  const [open, setOpen] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = (next: boolean) => {
+    if (controlledOpen === undefined) setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  };
   const root = useRef<HTMLDivElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -103,12 +112,12 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const subRefs = useRef<(HTMLDivElement | null)[]>([]);
   const subItems = sub === null ? [] : (items[sub]?.items ?? []);
 
-  const focusItem = (i: number) => itemRefs.current[(i + items.length) % items.length]?.focus();
-  const focusSub = (i: number) => subRefs.current[(i + subItems.length) % subItems.length]?.focus();
+  const focusItem = (i: number) => itemRefs.current[(i + items.length) % items.length]?.focus({ preventScroll: true });
+  const focusSub = (i: number) => subRefs.current[(i + subItems.length) % subItems.length]?.focus({ preventScroll: true });
   const close = (returnFocus: boolean) => {
     setSub(null);
     setOpen(false);
-    if (returnFocus) trigger.current?.focus();
+    if (returnFocus) trigger.current?.focus({ preventScroll: true });
   };
   const openSub = (i: number, focus: boolean) => {
     subAnchor.current = itemRefs.current[i];

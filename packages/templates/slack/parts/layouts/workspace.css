@@ -875,6 +875,26 @@
     color: var(--color-text-muted);
     font-size: var(--text-s);
   }
+  [data-dl='slack-vip-aside'] {
+    inline-size: 13.75rem;
+    box-shadow: var(--shadow-raised);
+    border-radius: var(--radius-lg);
+  }
+  [data-dl='slack-vip-modal'] {
+    display: grid;
+    gap: var(--space-4);
+    padding-block-start: var(--space-1);
+  }
+  [data-dl='slack-vip-modal'] > [data-dl-part='vip-list-head'] {
+    font-size: var(--text-s);
+    font-weight: var(--weight-bold);
+    color: var(--color-text);
+  }
+  [data-dl='slack-vip-modal'] > [data-dl-part='vip-empty'] {
+    display: grid;
+    place-items: center;
+    padding-block: var(--space-8);
+  }
 
   /* Responsive containers: sidebar stays visible down to 42rem (672 px), so 906 px benchmark windows show the full shell. */
   [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] {

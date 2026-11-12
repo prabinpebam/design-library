@@ -30,6 +30,85 @@
       "title": "Welcome back",
       "cta": "Top things to check out"
     },
+    "vipModal": {
+      "title": "Never miss a message from your VIPs",
+      "description": "Choose who or what you want to prioritize, so you’ll always see their messages and notifications first.",
+      "searchPlaceholder": "Search to add people, apps and workflows",
+      "listHeading": "Added to your VIP list",
+      "emptyText": "No VIPs added yet",
+      "remindLater": "Remind Me Later",
+      "save": "Save"
+    },
+    "amaChannel": {
+      "channel": "ask-me-anything-events",
+      "topicText": "Where we host Ask Me Anythings (AMAs) with studio leads and practitioners…",
+      "memberCountText": "20,617",
+      "activityMentions": 26,
+      "tabs": [
+        { "id": "messages", "label": "Messages", "icon": "comment" },
+        { "id": "files", "label": "Files & links", "icon": "layers" },
+        { "id": "pins", "label": "Pins", "icon": "pin" }
+      ],
+      "channelBadges": {
+        "hangout": "4",
+        "partner_abstract": "3",
+        "partner_adobe-xd": "1",
+        "partner_wireframe": "1",
+        "partner_botstudio": "2",
+        "partner_fieldnotes": "2",
+        "partner_usertesting": "9+"
+      },
+      "messages": [
+        {
+          "id": "ama-1",
+          "author": "Clara Lindqvist",
+          "avatar": "avatar06",
+          "time": "11:00 AM",
+          "dateAbove": "Wednesday, July 22nd",
+          "text": "Hi all! For founders or hiring leads in this group, you might find this live session valuable. We’re hosting a virtual workshop on how to attract and mentor strong product builders across distributed teams, with practical playbooks on evaluating craft without slowing shipping.",
+          "linkText": "luma.com/rethink-xd53",
+          "unfurl": {
+            "title": "How to Attract and Scale Teams Quickly and Efficiently — Live Workshop",
+            "site": "luma.com",
+            "text": "One of the biggest challenges for growing teams is hiring well without heavy process. Join our live interactive session.",
+            "thumb": "unfurlWorkshop"
+          }
+        },
+        {
+          "id": "ama-2",
+          "author": "usabilitynotes",
+          "avatar": "avatar14",
+          "time": "3:19 AM",
+          "dateAbove": "Wednesday, September 9th",
+          "text": "I’ll be teaching a class on inline interactive forms in conversational interfaces — free on Oct 7.",
+          "linkText": "maven.com/p/f68a7d/how-to-create-inline-and-tappable-forms",
+          "unfurl": {
+            "title": "How to create inline and tappable forms in conversational workflows",
+            "site": "maven.com",
+            "text": "Structured buttons, menus, and multi-selects let an interface collect clear input right inside the conversation stream.",
+            "thumb": "unfurlSpeaker"
+          },
+          "reactions": [
+            { "emoji": "👀", "label": "Looking", "count": 1 }
+          ]
+        },
+        {
+          "id": "ama-3",
+          "author": "Jonas Freeborn",
+          "avatar": "avatar18",
+          "time": "9:28 AM",
+          "dateAbove": "Thursday, September 10th",
+          "text": "If you are in San Diego (or nearby), I’m planning a casual dinner for product designers in Carlsbad on Wednesday, September 23rd at 6:30pm. Drop your name in the sheet if you’d like to join:",
+          "linkText": "forms.gle/creative-dinner-rsvp",
+          "unfurl": {
+            "title": "Autumn Dinner for Product & Systems Designers",
+            "site": "Shared Docs",
+            "text": "Event timing: Wednesday, September 23rd, 6:30 PM · Carlsbad coastal district · Open RSVP list",
+            "thumb": "unfurlDinner"
+          }
+        }
+      ]
+    },
     "workspaces": [
       { "id": "sh", "initials": "SH", "name": "Studio Hangout", "tone": "coral", "current": true }
     ],

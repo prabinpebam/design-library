@@ -25,6 +25,10 @@
       "reason": "catalogue inventory: (Q145.W) the generic opt-in Button.stacked prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
+    "lib--dialog": {
+      "reason": "catalogue inventory: (Q146 Packet B) the generic opt-in Dialog.aside prop and tokens (defaults unchanged) add source-derived prop and token rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--icon": {
       "reason": "catalogue inventory: (Q145.W) 29 generic editing icons (bold, paste, undo and the rest, packages/core/icons/icons.ts) lengthen the source-derived icon inventory below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

@@ -178,6 +178,7 @@
     --c-tabs-selected-text: var(--color-text);
     --c-pagination-radius: var(--radius-md);
     --c-dialog-radius: var(--radius-lg);
+    --c-dialog-aside-bg: var(--color-bg-sunken);
     --c-hero-gap: var(--space-stack-section);
     --c-hero-words-gap: var(--space-stack-section);
     --c-footer-padding-block: var(--space-stack-section);

@@ -170,6 +170,7 @@
     --c-tabs-selected-text: var(--color-text);
     --c-pagination-radius: var(--radius-md);
     --c-dialog-radius: var(--radius-lg);
+    --c-dialog-aside-bg: var(--color-bg-sunken);
     --c-alert-radius: var(--radius-md);
     --c-empty-state-silhouette-radius: var(--radius-sm);
     --c-file-upload-zone-radius: var(--radius-md);

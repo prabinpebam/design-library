@@ -343,5 +343,20 @@
  "c.popup.gap": {
   "$value": "0",
   "$description": "Region 25: menu rows sit edge to edge at a 32 px pitch with no space between fills (g-edit-01-f82)."
+ },
+ "c.dialog.width-l": {
+  "$value": "50.25rem",
+  "$description": "Owner benchmark 02: VIP modal 536 px at 2/3 scale = 804 CSS px."
+ },
+ "c.dialog.aside-width": {
+  "$value": "17.625rem",
+  "$description": "Owner benchmark 02: left lavender panel 188 px at 2/3 scale = 282 CSS px."
+ },
+ "c.dialog.aside-bg": {
+  "$value": {
+   "light": "#a0b3f3",
+   "dark": "#39487a"
+  },
+  "$description": "Owner benchmark 02: left lavender panel #A0B3F3."
  }
 }

@@ -44,14 +44,19 @@ export interface WorkspaceProps extends DataAttributes {
 export function Workspace({ view, screen = 'channel', settings, picture, ...data }: WorkspaceProps) {
   const c = view.copy;
   const pic = (id?: string) => (id && picture ? picture(id) : { src: '', alt: '' });
-  const [channel, setChannel] = useState(typeof settings?.channel === 'string' ? settings.channel : view.channel);
+  const [channel, setChannel] = useState(
+    screen === 'channel-menu' ? view.amaChannel.channel : typeof settings?.channel === 'string' ? settings.channel : view.channel,
+  );
   const [thread, setThread] = useState<WorkspaceMessage | undefined>(screen === 'thread' ? view.messages[0] : undefined);
   const [tab, setTab] = useState(screen === 'files' ? 'files' : 'messages');
   const [search, setSearch] = useState(screen === 'search');
+  const [vipOpen, setVipOpen] = useState(screen === 'vip-modal');
+  const [vipSearch, setVipSearch] = useState('');
+  const [channelMenuOpen, setChannelMenuOpen] = useState(screen === 'channel-menu');
   const [query, setQuery] = useState('');
   const [sidebarFilter, setSidebarFilter] = useState('');
   const [finding, setFinding] = useState(false);
-  const [vipDismissed, setVipDismissed] = useState(false);
+  const [vipDismissed, setVipDismissed] = useState(screen === 'channel-menu');
   const [newBannerDismissed, setNewBannerDismissed] = useState(false);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [sent, setSent] = useState<Record<string, WorkspaceMessage[]>>({});
@@ -89,8 +94,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     setThread(screen === 'thread' ? view.messages[0] : undefined);
     setTab(screen === 'files' ? 'files' : 'messages');
     setSearch(screen === 'search');
-    if (typeof settings?.channel === 'string') setChannel(settings.channel);
-  }, [screen, settings?.channel, view.messages]);
+    setVipOpen(screen === 'vip-modal');
+    setChannelMenuOpen(screen === 'channel-menu');
+    setVipDismissed(screen === 'channel-menu');
+    if (screen === 'channel-menu') setChannel(view.amaChannel.channel);
+    else if (typeof settings?.channel === 'string') setChannel(settings.channel);
+  }, [screen, settings?.channel, view.amaChannel.channel, view.messages]);
 
   useEffect(() => {
     if (thread && threadOpener.current && !threadOpener.current.getClientRects().length) {
@@ -123,8 +132,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     }
   }, [search]);
 
+  const isAma = channel === view.amaChannel.channel;
+  const activeMessages = isAma ? view.amaChannel.messages : view.messages;
+  const activeTabs = isAma ? view.amaChannel.tabs : view.tabs;
+  const activeMemberCount = isAma ? view.amaChannel.memberCountText : view.memberCountText;
   const localSent = sent[channel] ?? [];
-  const messages = [...view.messages, ...localSent];
+  const messages = [...activeMessages, ...localSent];
 
   useEffect(() => {
     const viewport = timeline.current;
@@ -554,32 +567,35 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           ))}
         </div>
         <div data-dl-part="rail-items">
-          {view.rail.map((r, i) => (
-            <div data-dl-part="rail-item" data-current={i === 0 || undefined} key={r.id}>
-              <span data-dl-part="rail-icon">
-                <Button
-                  label={r.label}
-                  icon={r.icon}
-                  iconOnly
-                  emphasis="quiet"
-                  tone="inherit"
-                  onClick={() => {
-                    if (r.id === 'files') setTab('files');
-                    else {
-                      setTab('messages');
-                      setSearch(false);
-                    }
-                  }}
-                />
-                {r.mentions && (
-                  <span data-dl-part="rail-badge">
-                    <Badge kind="count" emphasis="strong" tone="accent" count={r.mentions} label={`${r.mentions} ${c.mentions}`} size="s" />
-                  </span>
-                )}
-              </span>
-              <span data-dl-part="rail-label">{r.label}</span>
-            </div>
-          ))}
+          {view.rail.map((r, i) => {
+            const railCount = r.id === 'activity' && isAma ? view.amaChannel.activityMentions : r.mentions;
+            return (
+              <div data-dl-part="rail-item" data-current={i === 0 || undefined} key={r.id}>
+                <span data-dl-part="rail-icon">
+                  <Button
+                    label={r.label}
+                    icon={r.icon}
+                    iconOnly
+                    emphasis="quiet"
+                    tone="inherit"
+                    onClick={() => {
+                      if (r.id === 'files') setTab('files');
+                      else {
+                        setTab('messages');
+                        setSearch(false);
+                      }
+                    }}
+                  />
+                  {railCount && (
+                    <span data-dl-part="rail-badge">
+                      <Badge kind="count" emphasis="strong" tone="accent" count={railCount} label={`${railCount} ${c.mentions}`} size="s" />
+                    </span>
+                  )}
+                </span>
+                <span data-dl-part="rail-label">{r.label}</span>
+              </div>
+            );
+          })}
         </div>
         <div data-dl-part="rail-bottom">
           <span data-dl-part="rail-circle">
@@ -630,7 +646,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                       <Button label={view.vipPrompt.later} size="xs" emphasis="quiet" tone="inherit" onClick={() => setVipDismissed(true)} />
                     </span>
                     <span data-dl-part="vip-start">
-                      <Button label={view.vipPrompt.start} size="xs" emphasis="primary" onClick={() => setVipDismissed(true)} />
+                      <Button label={view.vipPrompt.start} size="xs" emphasis="primary" onClick={() => setVipOpen(true)} />
                     </span>
                   </div>
                 </div>
@@ -679,12 +695,15 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   <div data-dl-part="rows">
                     {section.items.map((item) => {
                       const itemPic = pic(item.avatar);
+                      const overrideBadge = isAma ? view.amaChannel.channelBadges[item.name] : undefined;
+                      const badgeLabel = overrideBadge ?? (item.mentions ? (item.mentionsLabel ?? String(item.mentions)) : undefined);
+                      const isUnread = item.name !== channel && (item.unread || Boolean(overrideBadge));
                       return (
                         <div
                           key={item.name}
                           data-dl-part="row"
                           data-person={item.presence ? true : undefined}
-                          data-unread={item.unread || undefined}
+                          data-unread={isUnread || undefined}
                           data-current={item.name === channel || undefined}
                         >
                           {item.presence && (
@@ -712,9 +731,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                               setTab('messages');
                             }}
                           />
-                          {item.mentions && (
-                            <span data-dl-part="count-pill">{item.mentionsLabel ?? String(item.mentions)}</span>
-                          )}
+                          {badgeLabel && <span data-dl-part="count-pill">{badgeLabel}</span>}
                         </div>
                       );
                     })}
@@ -740,10 +757,16 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 </Heading>
               </div>
               <div data-dl-part="channel-topic">
-                <span>{view.topicPrefix}</span>
-                <span data-dl-part="mini-ws">{view.workspaceBadge}</span>
-                <span>{view.topicMiddle}</span>
-                <Link href="#/app/slack/channel">{view.topicLink}</Link>
+                {isAma ? (
+                  <span>{view.amaChannel.topicText}</span>
+                ) : (
+                  <>
+                    <span>{view.topicPrefix}</span>
+                    <span data-dl-part="mini-ws">{view.workspaceBadge}</span>
+                    <span>{view.topicMiddle}</span>
+                    <Link href="#/app/slack/channel">{view.topicLink}</Link>
+                  </>
+                )}
               </div>
             </div>
             <div data-dl-part="channel-actions">
@@ -755,7 +778,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   shape="square"
                   max={3}
                 />
-                <span data-dl-part="member-count">{view.memberCountText}</span>
+                <span data-dl-part="member-count">{activeMemberCount}</span>
               </span>
               <span data-dl-part="huddle">
                 {headAction(c.huddle, 'headphones')}
@@ -774,13 +797,15 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 tone="inherit"
                 size="xs"
                 items={view.channelMenu}
-                onSelect={() => undefined}
+                open={channelMenuOpen}
+                onOpenChange={setChannelMenuOpen}
+                onSelect={() => setChannelMenuOpen(false)}
               />
             </div>
           </header>
 
           <div data-dl-part="tabs" data-density="compact" role="navigation" aria-label={channel}>
-            {view.tabs.map((t) => (
+            {activeTabs.map((t) => (
               <span key={t.id} data-dl-part="tab" data-current={tab === t.id || undefined}>
                 <Button
                   label={t.label}
@@ -802,7 +827,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           </div>
 
           <div data-dl-part="timeline-stage">
-            {!newBannerDismissed && view.newMessagesBanner && !search && tab === 'messages' && (
+            {!newBannerDismissed && !isAma && view.newMessagesBanner && !search && tab === 'messages' && (
               <div data-dl="slack-new-pill" data-material="floating">
                 <span>{view.newMessagesBanner}</span>
                 {action(c.dismissBanner, 'close', () => setNewBannerDismissed(true))}
@@ -930,6 +955,48 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
         >
           <TextField label={c.channelName} prefix="#" placeholder={c.channelNameHint} value={channelName} onChange={setChannelName} />
         </form>
+      </Dialog>
+
+      <Dialog
+        open={vipOpen}
+        onClose={() => setVipOpen(false)}
+        size="l"
+        title={view.vipModal.title}
+        description={view.vipModal.description}
+        aside={
+          pic('vipPreview').src && (
+            <div data-dl="slack-vip-aside">
+              <Image src={pic('vipPreview').src} alt={pic('vipPreview').alt} ratio="natural" width={220} height={260} />
+            </div>
+          )
+        }
+        actions={
+          <>
+            <Button label={view.vipModal.remindLater} onClick={() => setVipOpen(false)} />
+            <Button
+              label={view.vipModal.save}
+              emphasis="primary"
+              unavailable={!vipSearch.trim() ? view.vipModal.emptyText : undefined}
+              onClick={() => setVipOpen(false)}
+            />
+          </>
+        }
+      >
+        <div data-dl="slack-vip-modal">
+          <TextField
+            label={view.vipModal.searchPlaceholder}
+            hideLabel
+            type="search"
+            icon="search"
+            placeholder={view.vipModal.searchPlaceholder}
+            value={vipSearch}
+            onChange={setVipSearch}
+          />
+          <div data-dl-part="vip-list-head">{view.vipModal.listHeading}</div>
+          <div data-dl-part="vip-empty">
+            <Text tone="muted">{view.vipModal.emptyText}</Text>
+          </div>
+        </div>
       </Dialog>
     </div>
   );

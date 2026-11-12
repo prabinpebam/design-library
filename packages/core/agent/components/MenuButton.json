@@ -132,6 +132,16 @@
           "name": "listWidth",
           "type": "ListWidth",
           "description": "Pins the menu to one width step (Q130, docs/widths.md). Leave out to fit the items, snapped up to `xs`, `sm` or `md`. Pin only so menus that sit together (one toolbar) match, or when the items change while it's open."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "description": "Controlled open state, matching Popover; omit for uncontrolled behaviour."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "description": "Called when the menu asks to open or close in controlled mode."
         }
       ]
     },

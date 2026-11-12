@@ -16,6 +16,8 @@ export interface DialogProps extends DataAttributes {
   description?: string;
   /** The body: a short form, a list, longer reading. Scrolls inside the dialog when it doesn't fit. */
   children?: ReactNode;
+  /** An optional start-side visual panel (an illustration or preview) flush with the dialog's top, start and bottom edges; hidden on narrow windows. */
+  aside?: ReactNode;
   /** The answers, as Buttons: the safest first, the main action last (it sits at the end). */
   actions?: ReactNode;
   /** Width, a step of the width scale (Q130, docs/widths.md): `s` 24 rem (a question), `m` 32 rem (default; a short form), `l` 48 rem (a table or longer reading). Every size fills a narrow window. */
@@ -50,7 +52,7 @@ export interface DialogProps extends DataAttributes {
  * @key Escape: closes (not an alert dialog)
  * @key Tab, Shift+Tab: move through the dialog's controls only
  */
-export function Dialog({ open, onClose, title, description, children, actions, size = 'm', alert = false, state, ...data }: DialogProps) {
+export function Dialog({ open, onClose, title, description, children, aside, actions, size = 'm', alert = false, state, ...data }: DialogProps) {
   const id = useId();
   const ref = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -67,10 +69,10 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       const actionsArea = d.querySelector<HTMLElement>('[data-dl-part="actions"]');
       const focusable = 'input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])';
       const first = alert ? actionsArea?.querySelector<HTMLElement>(focusable) : body?.querySelector<HTMLElement>(focusable);
-      (first ?? d.querySelector<HTMLElement>('[data-dl-part="heading"]'))?.focus();
+      (first ?? d.querySelector<HTMLElement>('[data-dl-part="heading"]'))?.focus({ preventScroll: true });
     } else if (!open && d.open) {
       d.close();
-      opener.current?.focus();
+      opener.current?.focus({ preventScroll: true });
     }
   }, [open, alert]);
 
@@ -98,12 +100,15 @@ export function Dialog({ open, onClose, title, description, children, actions, s
     </div>
   );
 
+  const content = state === undefined ? surface : <Morph state={state}>{surface}</Morph>;
+
   return (
     <dialog
       {...data}
       ref={ref}
       data-dl="dialog" data-material="modal" data-elevation="4"
       data-size={size}
+      data-has-aside={aside ? '' : undefined}
       role={alert ? 'alertdialog' : undefined}
       aria-labelledby={`${id}-title`}
       aria-describedby={description ? `${id}-description` : undefined}
@@ -116,7 +121,14 @@ export function Dialog({ open, onClose, title, description, children, actions, s
         if (!alert && e.target === e.currentTarget) close.current();
       }}
     >
-      {state === undefined ? surface : <Morph state={state}>{surface}</Morph>}
+      {aside ? (
+        <div data-dl-part="split">
+          <div data-dl-part="aside">{aside}</div>
+          {content}
+        </div>
+      ) : (
+        content
+      )}
     </dialog>
   );
 }

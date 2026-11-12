@@ -106,6 +106,24 @@ export interface WorkspaceRecord {
     title: string;
     cta: string;
   };
+  vipModal: {
+    title: string;
+    description: string;
+    searchPlaceholder: string;
+    listHeading: string;
+    emptyText: string;
+    remindLater: string;
+    save: string;
+  };
+  amaChannel: {
+    channel: string;
+    topicText: string;
+    memberCountText: string;
+    activityMentions: number;
+    tabs: WorkspaceTabItem[];
+    channelBadges: Record<string, string>;
+    messages: WorkspaceMessage[];
+  };
   workspaces: WorkspaceTile[];
   rail: { id: string; label: string; icon: WorkspaceIcon; mentions?: number }[];
   tabs: WorkspaceTabItem[];

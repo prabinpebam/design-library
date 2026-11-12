@@ -66,15 +66,30 @@
       display var(--duration-quick) allow-discrete;
   }
 
+  [data-dl='dialog'][data-has-aside] > [data-dl-part='split'] {
+    display: grid;
+    grid-template-columns: var(--c-dialog-aside-width) minmax(0, 1fr);
+    max-block-size: inherit;
+    min-block-size: calc(var(--c-dialog-width-s) * 1.375);
+  }
+
+  [data-dl='dialog'][data-has-aside] > [data-dl-part='split'] > [data-dl-part='aside'] {
+    display: grid;
+    place-items: center;
+    padding: var(--c-dialog-aside-padding);
+    background-color: var(--c-dialog-aside-bg);
+  }
+
   /* A column: the body takes the room there is and scrolls; with no body, header and answers sit apart when full screen. */
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     max-block-size: inherit;
+    min-inline-size: 0;
   }
 
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] {
     display: flex;
     align-items: start;
     justify-content: space-between;
@@ -82,33 +97,33 @@
     padding: var(--c-dialog-padding) var(--c-dialog-padding) var(--c-dialog-gap);
   }
 
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] {
     display: grid;
     gap: var(--c-dialog-heading-gap);
     min-inline-size: 0;
     overflow-wrap: anywhere;
   }
 
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading']:focus {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading']:focus {
     outline: none;
   }
 
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] > [data-dl-part='description'] {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] > [data-dl-part='description'] {
     margin: 0;
     color: var(--color-text-muted);
   }
 
   /* The body is a ScrollArea (Q96): the library's bar at the dialog's edge; padding on its content, so it scrolls edge to edge. */
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] {
     flex: 1 1 auto;
     min-block-size: 0;
   }
 
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='body'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
     padding: 0 var(--c-dialog-padding) var(--c-dialog-gap);
   }
 
-  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='actions'] {
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='actions'] {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -127,7 +142,16 @@
       border-radius: 0;
     }
 
-    :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) {
+    [data-dl='dialog'][data-has-aside] > [data-dl-part='split'] {
+      grid-template-columns: minmax(0, 1fr);
+      block-size: 100%;
+    }
+
+    [data-dl='dialog'][data-has-aside] > [data-dl-part='split'] > [data-dl-part='aside'] {
+      display: none;
+    }
+
+    :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) {
       block-size: 100%;
     }
   }

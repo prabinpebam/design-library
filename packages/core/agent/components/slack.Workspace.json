@@ -95,6 +95,7 @@
     "--color-text-link",
     "--color-text-muted",
     "--layer-raised",
+    "--radius-lg",
     "--radius-md",
     "--radius-pill",
     "--radius-sm",

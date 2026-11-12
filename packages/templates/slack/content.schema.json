@@ -278,6 +278,51 @@
     "WorkspaceRecord": {
       "additionalProperties": false,
       "properties": {
+        "amaChannel": {
+          "additionalProperties": false,
+          "properties": {
+            "activityMentions": {
+              "type": "number"
+            },
+            "channel": {
+              "type": "string"
+            },
+            "channelBadges": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "memberCountText": {
+              "type": "string"
+            },
+            "messages": {
+              "items": {
+                "$ref": "#/$defs/WorkspaceMessage"
+              },
+              "type": "array"
+            },
+            "tabs": {
+              "items": {
+                "$ref": "#/$defs/WorkspaceTabItem"
+              },
+              "type": "array"
+            },
+            "topicText": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "channel",
+            "topicText",
+            "memberCountText",
+            "activityMentions",
+            "tabs",
+            "channelBadges",
+            "messages"
+          ],
+          "type": "object"
+        },
         "channel": {
           "type": "string"
         },
@@ -499,6 +544,42 @@
         "topicPrefix": {
           "type": "string"
         },
+        "vipModal": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "emptyText": {
+              "type": "string"
+            },
+            "listHeading": {
+              "type": "string"
+            },
+            "remindLater": {
+              "type": "string"
+            },
+            "save": {
+              "type": "string"
+            },
+            "searchPlaceholder": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "description",
+            "searchPlaceholder",
+            "listHeading",
+            "emptyText",
+            "remindLater",
+            "save"
+          ],
+          "type": "object"
+        },
         "vipPrompt": {
           "additionalProperties": false,
           "properties": {
@@ -560,6 +641,8 @@
         "moreUnreadsLabel",
         "vipPrompt",
         "welcomePrompt",
+        "vipModal",
+        "amaChannel",
         "workspaces",
         "rail",
         "tabs",
