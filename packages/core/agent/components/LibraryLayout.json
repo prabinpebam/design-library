@@ -103,6 +103,7 @@
   "tokens": [
     "--border-divider",
     "--border-thick",
+    "--c-site-layout-skip-radius",
     "--color-bg-raised",
     "--color-bg-sunken",
     "--color-border",

@@ -12,7 +12,8 @@
     "--c-site-layout-margin": "The page margin on each column: header, main and footer content share it (default space.margin-page).",
     "--c-site-layout-gap": "The space between the column's bands: hero, sections, call to action (default space.stack-page).",
     "--c-site-layout-padding-block": "The space above the first band and under the last (default space.stack-page).",
-    "--c-site-layout-padding-start": "The space above the first band only; follows padding-block when not set. 0 puts the first band right under the header, as opening=\"flush\" does."
+    "--c-site-layout-padding-start": "The space above the first band only; follows padding-block when not set. 0 puts the first band right under the header, as opening=\"flush\" does.",
+    "--c-site-layout-skip-radius": "The skip link's corners while it shows on focus, in SiteLayout and LibraryLayout (default radius.none, square). Set var(--radius-md) to follow the controls' corners."
   },
   "Grid": {
     "--c-grid-aside": "The start column's width when ratio is aside, a heading beside its content (default size.column-min, 16rem)."

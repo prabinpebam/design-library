@@ -21,6 +21,7 @@
     padding-block: var(--space-inset-sm);
     padding-inline: var(--space-inset-md);
     background-color: var(--color-bg-raised);
+    border-radius: var(--c-site-layout-skip-radius);
     color: var(--color-text-link);
     clip-path: inset(50%);
   }

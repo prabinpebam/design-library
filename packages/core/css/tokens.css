@@ -585,6 +585,7 @@
   --c-site-layout-margin: var(--space-margin-page);
   --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-padding-block: var(--space-stack-page);
+  --c-site-layout-skip-radius: var(--radius-none);
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
   --c-screen-preview-height: 40rem;

@@ -38,5 +38,12 @@ applySettings({
 });`,
       render: () => <ScreenPreview src="site.html?frame=tight#/app/harbour/home" title="Harbour home, tighter frame" caption="Harbour’s home with a narrower column and section-sized gaps." />,
     },
+    {
+      title: 'Skip link corners from the theme',
+      description:
+        'The skip link is square by default. A theme whose corners are rounded sets --c-site-layout-skip-radius (a theme setting) so the link follows the controls’ corners while it shows. Press Tab inside the window to show it.',
+      code: `applySettings({ '--c-site-layout-skip-radius': 'var(--radius-md)' });`,
+      render: () => <ScreenPreview src="site.html?frame=skip#/app/harbour/home" title="Harbour home, rounded skip link" caption="Harbour’s home with the skip link on the controls’ corners; Tab shows it." />,
+    },
   ],
 } satisfies StoryFile;

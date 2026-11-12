@@ -97,6 +97,11 @@
     {
       "var": "--c-site-layout-padding-start",
       "description": "The space above the first band only; follows padding-block when not set. 0 puts the first band right under the header, as opening=\"flush\" does."
+    },
+    {
+      "var": "--c-site-layout-skip-radius",
+      "default": "0px",
+      "description": "The skip link's corners while it shows on focus, in SiteLayout and LibraryLayout (default radius.none, square). Set var(--radius-md) to follow the controls' corners."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/sitelayout"
