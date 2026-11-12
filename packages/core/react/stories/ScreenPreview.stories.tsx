@@ -23,5 +23,12 @@ export default {
         </EditorLayout>
       ),
     },
+    {
+      title: 'A desktop window scaled to fit',
+      description:
+        'With width="desktop" the screen is laid out at least 1280 px wide (the theme’s c.screen-preview.desktop) and drawn scaled down to fit a narrower column, so a page builder’s wide canvas shows the desktop layout, not the narrow one. In a column wider than that it is the column’s width. A template whose canvas makes text too small sets a narrower --c-screen-preview-desktop for a larger scale.',
+      code: `<ScreenPreview src="#/app/chat" title="Chat app at desktop width, scaled to fit" width="desktop" />`,
+      render: () => <ScreenPreview src="#/app/chat" title="Chat app at desktop width, scaled to fit" width="desktop" caption="Laid out at 1280 px with its sidebar beside the conversation, drawn at the column's width." />,
+    },
   ],
 } satisfies StoryFile;

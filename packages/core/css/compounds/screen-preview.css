@@ -44,6 +44,48 @@
     min-block-size: 0;
   }
 
+  /* width="desktop": the window takes its column's width (a start-aligned parent would shrink it to its caption); the
+     viewport is the window's box (its outline and corners); the screen inside is laid out at least a desktop window
+     wide and as tall as the viewport, then scaled down to fit it from the top-start corner. */
+  [data-dl='screen-preview'][data-width='desktop'] {
+    align-self: stretch;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='viewport'] {
+    position: relative;
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: var(--c-screen-preview-height);
+    overflow: hidden;
+    border: var(--border-hairline) solid var(--color-border);
+    border-radius: var(--c-screen-preview-radius);
+    background-color: var(--color-bg);
+  }
+
+  [data-dl='screen-preview'][data-height='fill'] > [data-dl-part='viewport'] {
+    flex: 1;
+    block-size: auto;
+    min-block-size: 0;
+  }
+
+  /* Out of flow, so the laid-out width never widens the window; the column alone sets it. */
+  [data-dl='screen-preview'] > [data-dl-part='viewport'] > [data-dl-part='frame'] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: block;
+    inline-size: var(--dl-screen-width, 100%);
+    block-size: var(--dl-screen-height, 100%);
+    border: 0;
+    border-radius: 0;
+    transform: scale(var(--dl-screen-scale, 1));
+    transform-origin: 0 0;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='viewport']:dir(rtl) > [data-dl-part='frame'] {
+    transform-origin: 100% 0;
+  }
+
   [data-dl='screen-preview'] > [data-dl-part='caption'] {
     color: var(--color-text-muted);
     font-size: var(--type-body-sm-size);

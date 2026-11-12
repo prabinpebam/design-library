@@ -612,6 +612,7 @@
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
+  --c-screen-preview-desktop: 80rem;
   --c-screen-preview-height: 40rem;
   --c-screen-preview-radius: var(--radius-md);
   --c-screen-preview-gap: var(--space-stack-pair);

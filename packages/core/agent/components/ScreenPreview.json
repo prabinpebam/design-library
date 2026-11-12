@@ -32,9 +32,9 @@
         },
         {
           "name": "width",
-          "type": "'phone' | 'tablet' | 'fill'",
+          "type": "'phone' | 'tablet' | 'desktop' | 'fill'",
           "default": "'fill'",
-          "description": "The window's width: `phone` (375 px), `tablet` (768 px) or `fill` (the column's width)."
+          "description": "The window's width: `phone` (375 px), `tablet` (768 px), `fill` (the column's width) or `desktop`: the screen laid out at least as wide as a desktop window (the theme's `c.screen-preview.desktop`, 1280 px) and drawn scaled down to fit the column, so a narrower frame still shows the desktop layout (a page builder's wide canvas). Wider than that, `desktop` is `fill`."
         },
         {
           "name": "caption",
@@ -53,6 +53,7 @@
   "uses": [],
   "tokens": [
     "--border-hairline",
+    "--c-screen-preview-desktop",
     "--c-screen-preview-gap",
     "--c-screen-preview-height",
     "--c-screen-preview-phone",
@@ -62,6 +63,13 @@
     "--color-border",
     "--color-text-muted",
     "--type-body-sm-size"
+  ],
+  "settings": [
+    {
+      "var": "--c-screen-preview-desktop",
+      "default": "80rem",
+      "description": "The least width a screen is laid out at with width desktop, scaled down to fit a narrower window (default 80rem, 1280 px). A canvas that shows small text sets a narrower desktop (64rem) for a larger scale."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/screenpreview"
 }

@@ -33,6 +33,9 @@
     "--c-list-tile-fill": "A tile's surface inside its hairline outline (default color.bg-control). A theme that draws tiles outlined on the page sets var(--color-bg); the outline stays the tile's boundary.",
     "--c-list-tile-name-weight": "A tile's name (default type.label.weight). A catalogue whose names lead its tiles sets var(--weight-bold) or var(--weight-semibold)."
   },
+  "ScreenPreview": {
+    "--c-screen-preview-desktop": "The least width a screen is laid out at with width desktop, scaled down to fit a narrower window (default 80rem, 1280 px). A canvas that shows small text sets a narrower desktop (64rem) for a larger scale."
+  },
   "Section": {
     "--c-section-gap": "Between a section's head (heading and intro) and its content (default space.stack-section). A theme whose page gap is close to it sets the group gap here, so a heading stays visibly with its content.",
     "--c-section-content-gap": "Between the parts of a section's content (default space.stack-group)."

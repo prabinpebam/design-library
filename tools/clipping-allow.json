@@ -44,6 +44,12 @@
       "reason": "Says where a moved row landed (TreeView reorderable, DesignUp template 2 gap h); the tree shows it"
     },
     {
+      "file": "packages/core/css/compounds/screen-preview.css",
+      "selector": "[data-dl='screen-preview'] > [data-dl-part='viewport']",
+      "kind": "shape crop",
+      "reason": "width=desktop scales a desktop-wide screen into the window (LR17); the window's corners and edges crop the scaled frame, which has no focus ring of its own outside the window"
+    },
+    {
       "file": "packages/core/css/compounds/gradient-editor.css",
       "selector": "[data-dl='gradient-editor'] > [data-dl-part='announce']",
       "kind": "visually hidden",
