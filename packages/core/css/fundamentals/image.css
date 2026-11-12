@@ -157,6 +157,8 @@
    */
   /* MP11: a reveal draws on a canvas over the cell, seen only while it runs; the crossfade above is off while it draws. */
   [data-dl='image'] > canvas[data-dl-part='reveal'] {
+    /* Positioned, so it paints over a picture whose tone (a filter) makes it a stacking context. */
+    position: relative;
     grid-area: 1 / 1;
     display: block;
     inline-size: 100%;
