@@ -39,12 +39,13 @@
           "type": "string"
         },
         "kind": {
-          "description": "labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks).",
+          "description": "labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks); separator: the thin line between sets on a row (its label stays empty).",
           "enum": [
             "stacked",
             "icon",
             "labelled",
-            "field"
+            "field",
+            "separator"
           ],
           "type": "string"
         },

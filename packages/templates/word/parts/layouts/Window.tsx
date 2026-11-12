@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Avatar, Button, Heading, MenuButton, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
+import { Avatar, Button, Heading, IconOverrides, MenuButton, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { WordCommand, WordGroup, WordRecord } from '../../types';
+import { wordGlyphs } from './glyphs';
 
 export interface WindowProps extends DataAttributes {
   /** Validated shared content: the document, its comments and every label. */
@@ -32,6 +33,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
   useEffect(() => { setPane(paneFor(screen)); }, [screen]);
 
   const command = (cmd: WordCommand, key: string) => {
+    if (cmd.kind === 'separator') return <span key={key} data-dl-part="separator" aria-hidden="true" />;
     if (cmd.kind === 'field') {
       return (
         <div key={key} data-dl="word-field" data-width={cmd.width}>
@@ -98,6 +100,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
         </div>
       </header>
       <div data-dl-part="ribbon">
+        <IconOverrides icons={wordGlyphs}>
         <Ribbon
           label={c.ribbon}
           selected={tab}
@@ -113,6 +116,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
           end={<Button label={c.collapse} icon="chevron-down" iconOnly size="xs" emphasis="quiet" />}
           tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
         />
+        </IconOverrides>
       </div>
       <div data-dl-part="body">
         {pane === 'navigation' && (

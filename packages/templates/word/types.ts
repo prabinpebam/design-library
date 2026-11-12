@@ -3,8 +3,8 @@ export interface WordCommand {
   label: string;
   /** A core icon name. */
   icon?: string;
-  /** labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks). */
-  kind?: 'stacked' | 'icon' | 'labelled' | 'field';
+  /** labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks); separator: the thin line between sets on a row (its label stays empty). */
+  kind?: 'stacked' | 'icon' | 'labelled' | 'field' | 'separator';
   /** A field's current value ("Aptos (Body)", "12"). */
   value?: string;
   /** A field's width class: `wide` for a font name, `narrow` for a size. */

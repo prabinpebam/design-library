@@ -28,17 +28,21 @@
 
   [data-dl='word-rows'] { display: grid; align-content: start; gap: var(--c-ribbon-command-gap); }
   [data-dl='word-rows'] > [data-dl-part='row'] { display: flex; align-items: center; gap: var(--c-ribbon-command-gap); }
+  /* The thin line between command sets on a row (w-copilot-01: after Change case, after Shrink, after Increase indent). */
+  [data-dl='word-rows'] > [data-dl-part='row'] > [data-dl-part='separator'] { align-self: stretch; inline-size: var(--border-hairline); margin-inline: var(--space-1); background: var(--c-ribbon-separator); }
   [data-dl='word-split'] { display: flex; align-items: center; }
   [data-dl='word-split'][data-stacked] { flex-direction: column; align-items: stretch; --size-icon-lg: var(--size-icon-xl); }
   [data-dl='word-command'] { display: flex; --size-icon-lg: var(--size-icon-xl); }
-/* W7: ribbon command glyphs are ≈20 px (w-copilot-01); a split command's menu chevron stays small. */
-[data-dl='word-window'] > [data-dl-part='ribbon'] { --size-icon-sm: var(--size-icon-md); }
+/* W7: ribbon command glyphs sit in a 20 px box (w-copilot-01); a split command's menu chevron stays small. W8: only the commands, so the group launchers keep their 16 px row and the card stays ≈102. */
+[data-dl='word-command'], [data-dl='word-split'] { --size-icon-sm: var(--size-icon-md); }
 [data-dl='word-split'] > [data-dl-part='split-menu'] { display: grid; --size-icon-sm: 0.75rem; }
 /* W7: Word's command icons carry colour in one part (w-theme-07), through the core icon accent seam; outlines are the library's own. */
-[data-dl='word-window'] [data-icon='highlight'] { --icon-accent: var(--c-icon-accent-1); }
-[data-dl='word-window'] [data-icon='text-colour'] { --icon-accent: var(--c-icon-accent-2); }
-[data-dl='word-window'] [data-icon='fill-colour'] { --icon-accent: var(--c-icon-accent-4); }
-[data-dl='word-window'] :is([data-icon='list-bulleted'], [data-icon='list-numbered'], [data-icon='subscript'], [data-icon='superscript']) { --icon-accent: var(--c-icon-accent-3); }
+/* W8: highlight and shading draw a solid bar (glyphs.ts); the font colour is Automatic in w-copilot-01, so its A has no bar. */
+[data-dl='word-window'] [data-icon='highlight'] { --icon-accent-fill: var(--c-icon-accent-1); }
+[data-dl='word-window'] [data-icon='text-effects'] { color: var(--c-icon-accent-7); }
+[data-dl='word-window'] [data-icon='character-shading'] { --icon-accent: var(--c-icon-accent-2); --icon-accent-fill: var(--c-icon-accent-2); }
+[data-dl='word-window'] [data-icon='fill-colour'] { --icon-accent-fill: var(--c-icon-accent-8); }
+[data-dl='word-window'] :is([data-icon='list-bulleted'], [data-icon='list-numbered'], [data-icon='list-multilevel'], [data-icon='subscript'], [data-icon='superscript'], [data-icon='phonetic-guide'], [data-icon='character-spacing']) { --icon-accent: var(--c-icon-accent-3); }
 [data-dl='word-window'] [data-icon='clear-format'] { --icon-accent: var(--c-icon-accent-5); }
 [data-dl='word-window'] [data-icon='format-painter'] { --icon-accent: var(--c-icon-accent-6); }
 [data-dl='word-window'] [data-icon='paste'] { --icon-accent: var(--c-icon-accent-6); --icon-accent-fill: var(--c-icon-accent-fill); }

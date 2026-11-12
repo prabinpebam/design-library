@@ -2,12 +2,14 @@
 @layer templates {
   [data-template='word'] {
     --c-icon-accent-1: #ffff00;
-    --c-icon-accent-2: #ff0000;
+    --c-icon-accent-2: #c8c8c8;
     --c-icon-accent-3: #1e8bcd;
     --c-icon-accent-4: #0063b1;
     --c-icon-accent-5: #922e9b;
     --c-icon-accent-6: #de6c00;
-    --c-icon-accent-fill: #f8db8f;
+    --c-icon-accent-7: #0c6cb9;
+    --c-icon-accent-8: #d5e6f6;
+    --c-icon-accent-fill: #fae49b;
     --c-button-inherit-disabled: 35;
     --c-switch-track-inline-xs: 2.625rem;
     --c-switch-track-block-xs: 1.25rem;

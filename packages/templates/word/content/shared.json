@@ -1141,21 +1141,12 @@
               "width": "narrow"
             },
             {
-              "label": "Increase font size",
-              "icon": "text-larger"
+              "label": "Phonetic Guide",
+              "icon": "phonetic-guide"
             },
             {
-              "label": "Decrease font size",
-              "icon": "text-smaller"
-            },
-            {
-              "label": "Change case",
-              "icon": "text-format",
-              "menu": true
-            },
-            {
-              "label": "Clear all formatting",
-              "icon": "clear-format"
+              "label": "Character border",
+              "icon": "character-border"
             }
           ],
           [
@@ -1185,6 +1176,17 @@
               "icon": "superscript"
             },
             {
+              "label": "Clear all formatting",
+              "icon": "clear-format"
+            }
+          ],
+          [
+            {
+              "label": "Text effects and typography",
+              "icon": "text-effects",
+              "menu": true
+            },
+            {
               "label": "Text highlight colour",
               "icon": "highlight",
               "menu": true
@@ -1193,6 +1195,35 @@
               "label": "Font colour",
               "icon": "text-colour",
               "menu": true
+            },
+            {
+              "label": "Change case",
+              "icon": "text-format",
+              "menu": true
+            },
+            {
+              "kind": "separator",
+              "label": ""
+            },
+            {
+              "label": "Increase font size",
+              "icon": "text-larger"
+            },
+            {
+              "label": "Decrease font size",
+              "icon": "text-smaller"
+            },
+            {
+              "kind": "separator",
+              "label": ""
+            },
+            {
+              "label": "Character shading",
+              "icon": "character-shading"
+            },
+            {
+              "label": "Enclosed character",
+              "icon": "enclosed-character"
             }
           ]
         ]
@@ -1214,20 +1245,21 @@
               "menu": true
             },
             {
+              "label": "Multilevel list",
+              "icon": "list-multilevel",
+              "menu": true
+            },
+            {
+              "kind": "separator",
+              "label": ""
+            },
+            {
               "label": "Decrease indent",
               "icon": "indent-decrease"
             },
             {
               "label": "Increase indent",
               "icon": "indent-increase"
-            },
-            {
-              "label": "Sort",
-              "icon": "sort"
-            },
-            {
-              "label": "Show paragraph marks",
-              "icon": "pilcrow"
             }
           ],
           [
@@ -1249,10 +1281,20 @@
               "icon": "text-justify"
             },
             {
+              "label": "Distributed",
+              "icon": "text-distributed"
+            },
+            {
+              "kind": "separator",
+              "label": ""
+            },
+            {
               "label": "Line and paragraph spacing",
               "icon": "line-spacing",
               "menu": true
-            },
+            }
+          ],
+          [
             {
               "label": "Shading",
               "icon": "fill-colour",
@@ -1262,6 +1304,27 @@
               "label": "Borders",
               "icon": "borders",
               "menu": true
+            },
+            {
+              "kind": "separator",
+              "label": ""
+            },
+            {
+              "label": "Asian layout",
+              "icon": "character-spacing",
+              "menu": true
+            },
+            {
+              "kind": "separator",
+              "label": ""
+            },
+            {
+              "label": "Sort",
+              "icon": "sort"
+            },
+            {
+              "label": "Show paragraph marks",
+              "icon": "pilcrow"
             }
           ]
         ]

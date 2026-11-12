@@ -1,11 +1,11 @@
 {
  "c.icon.accent-1": {
   "$value": "#ffff00",
-  "$description": "Highlight's ink bar: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$description": "Highlight's ink bar: w-theme-07 (≈2×), the most common saturated pixel of that part; w-copilot-01 matches (W7)."
  },
  "c.icon.accent-2": {
-  "$value": "#ff0000",
-  "$description": "Font colour's bar: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": "#c8c8c8",
+  "$description": "Character shading's grey box: by eye from the evaluator's ref-row3-x3 crop of w-copilot-01 (unmeasured, so n/m)."
  },
  "c.icon.accent-3": {
   "$value": "#1e8bcd",
@@ -13,7 +13,7 @@
  },
  "c.icon.accent-4": {
   "$value": "#0063b1",
-  "$description": "Shading's bar and the Dictate microphone: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$description": "The Dictate microphone: w-theme-07 (≈2×), the most common saturated pixel of that part."
  },
  "c.icon.accent-5": {
   "$value": "#922e9b",
@@ -23,9 +23,17 @@
   "$value": "#de6c00",
   "$description": "Paste's clipboard edge and the format painter's brush: w-theme-07 (≈2×), the most common saturated pixel of that part."
  },
+ "c.icon.accent-7": {
+  "$value": "#0c6cb9",
+  "$description": "Text effects' outlined A: w-copilot-01 (≈1.25×, the scoring window), measured by the evaluator at W7."
+ },
+ "c.icon.accent-8": {
+  "$value": "#d5e6f6",
+  "$description": "Shading's bar, a light block under the bucket: w-copilot-01 (≈1.25×), measured by the evaluator at W7."
+ },
  "c.icon.accent-fill": {
-  "$value": "#f8db8f",
-  "$description": "Paste's clipboard board: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": "#fae49b",
+  "$description": "Paste's clipboard board: w-copilot-01 (≈1.25×, the scoring window; w-theme-07 at ≈2× reads #F8DB8F), measured by the evaluator at W7."
  },
  "c.button.inherit-disabled": {
   "$value": 35,

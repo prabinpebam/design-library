@@ -36,7 +36,8 @@
   "libraryPage": "https://prabinpebam.github.io/design-library/#/iconoverrides",
   "usedBy": [
     "Icon",
-    "Rating"
+    "Rating",
+    "word.Window"
   ],
   "principles": [
     "ui-copy"
