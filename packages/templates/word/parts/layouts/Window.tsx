@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Avatar, Button, Heading, Icon, IconOverrides, MenuButton, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
-import type { WordCommand, WordGroup, WordRecord } from '../../types';
+import type { WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
 
 export interface WindowProps extends DataAttributes {
   /** Validated shared content: the document, its comments and every label. */
   view: WordRecord;
-  /** A directly openable review state: `home`, `document`, `navigation`, `comments` or `dark`. */
+  /** A directly openable review state: `home`, `document`, `insert`, `draw`, `design`, `design-gallery`, `navigation`, `comments` or `dark`. */
   screen?: string;
   /** Resolves an entry in the template's `assets.json`. */
   picture?: (id: string) => { src: string; alt: string };
@@ -33,6 +33,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [tab, setTab] = useState(tabFor(screen));
   const [pane, setPane] = useState<'navigation' | 'comments' | undefined>(paneFor(screen));
   const [copilotOpen, setCopilotOpen] = useState(screen === 'dark');
+  const [galleryOpen, setGalleryOpen] = useState(screen === 'design-gallery');
+  const [activeStyle, setActiveStyle] = useState('current');
   const [autoSave, setAutoSave] = useState(false);
   const [zoom, setZoom] = useState(90);
   const [query, setQuery] = useState('');
@@ -42,6 +44,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     setPane(paneFor(screen));
     setTab(tabFor(screen));
     setCopilotOpen(screen === 'dark');
+    setGalleryOpen(screen === 'design-gallery');
   }, [screen]);
   useEffect(() => {
     const tpl = rootRef.current?.closest('[data-template="word"]');
@@ -55,8 +58,48 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
   const showSampleDoc = screen === 'navigation' || screen === 'comments';
 
+  const styleTile = (s: WordStyleSet, active: boolean, onChoose: () => void) => (
+    <div key={s.id} data-dl="word-style-tile" data-active={active ? '' : undefined}>
+      {/* binary-setting: chooses one document style set in a visual thumbnail strip, as in the reference. */}
+      <Button label={s.name} size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
+      <svg data-dl-part="preview" viewBox="0 0 68 50" width="68" height="50" aria-hidden="true">
+        <rect x="0.5" y="0.5" width="67" height="49" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-text)' : 'none'} strokeWidth={active ? '1.2' : '0'} />
+        {s.variant === 'bar-num' && <rect x="4" y="6" width="60" height="7" fill="var(--color-text)" />}
+        {s.variant === 'caps-rule' && <line x1="4" y1="13" x2="64" y2="13" stroke="var(--color-accent)" strokeWidth="1" />}
+        {s.variant === 'boxed' && <line x1="4" y1="13" x2="64" y2="13" stroke="var(--color-border-control)" strokeWidth="0.8" />}
+        <text
+          x={s.variant === 'caps-centered' ? '34' : '5'}
+          y="11"
+          textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
+          fontSize="7.5"
+          fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
+          fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
+        >
+          {s.titleText}
+        </text>
+        <text x="5" y="21" fontSize="6" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
+          {s.headingText}
+        </text>
+        <path d="M5 27h56M5 31h52M5 35h55M5 39h48M5 43h38" stroke="currentColor" strokeWidth="1.2" opacity="0.45" />
+      </svg>
+    </div>
+  );
+
   const command = (cmd: WordCommand, key: string) => {
     if (cmd.kind === 'separator') return <span key={key} data-dl-part="separator" aria-hidden="true" />;
+    if (cmd.kind === 'style-gallery') {
+      const sets = view.styleSets ?? [];
+      return (
+        <div key={key} data-dl="word-style-strip">
+          <div data-dl-part="tiles">
+            {sets.slice(0, 11).map((s) => styleTile(s, activeStyle === s.id, () => setActiveStyle(s.id)))}
+          </div>
+          <span data-dl-part="expand">
+            <Button label={c.moreStyleSets} icon={'qat-customize' as IconName} iconOnly size="xs" emphasis="quiet" onClick={() => setGalleryOpen((o) => !o)} />
+          </span>
+        </div>
+      );
+    }
     if (cmd.kind === 'field') {
       return (
         <div key={key} data-dl="word-field" data-width={cmd.width}>
@@ -64,30 +107,32 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         </div>
       );
     }
-    const wide = cmd.lines ? (cmd.lines[0].length > 10 || cmd.lines[1]?.length > 12 ? 'lg' : 'md') : undefined;
-    /* binary-setting: ribbon formatting commands (alignment, bold) are toolbar toggles in a dense command set, as in the reference, not settings. */
+    const isPen = cmd.kind === 'pen';
+    const isStacked = cmd.kind === 'stacked';
+    const wide = cmd.lines ? (cmd.lines[0].length > 10 || (cmd.lines[1]?.length ?? 0) > 12 ? 'lg' : 'md') : undefined;
+    /* binary-setting: ribbon formatting and drawing commands are toolbar toggles in a dense command set, as in the reference, not settings. */
     const main = (
       <Button
         label={cmd.label}
         icon={cmd.icon as IconName}
-        iconOnly={cmd.kind !== 'stacked' && cmd.kind !== 'labelled'}
-        stacked={cmd.kind === 'stacked'}
+        iconOnly={!isStacked && cmd.kind !== 'labelled'}
+        stacked={isStacked}
         align={cmd.kind === 'labelled' ? 'start' : undefined}
         size="xs"
         emphasis="quiet"
         pressed={cmd.pressed}
-        disabled={cmd.disabled}
+        unavailable={cmd.disabled ? cmd.label : undefined}
       />
     );
     if (!cmd.menu) {
       return (
-        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={cmd.kind === 'stacked' ? '' : undefined} data-wide={wide}>
+        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-wide={wide}>
           {main}
         </div>
       );
     }
     return (
-      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={cmd.kind === 'stacked' ? '' : undefined} data-wide={wide}>
+      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined} data-wide={wide}>
         {main}
         <span data-dl-part="split-menu">
           <Button label={`${cmd.label} options`} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
@@ -104,6 +149,12 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     commands: (
       <>
         {g.lead?.map((cmd, i) => command(cmd, `lead-${i}`))}
+        {g.trailLead?.map((cmd, i) => command(cmd, `trail-${i}`))}
+        {g.columns?.map((col, ci) => (
+          <div key={`col-${ci}`} data-dl="word-rows" data-count={col.length}>
+            {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${ci}-${r}-${i}`))}</div>)}
+          </div>
+        ))}
         {g.rows && (
           <div data-dl="word-rows" data-count={g.rows.length} data-compact={g.lead ? '' : undefined}>
             {g.rows.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${r}-${i}`))}</div>)}
@@ -118,7 +169,14 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     <IconOverrides icons={wordPack.glyphs}>
       <div {...data} ref={rootRef} data-dl="word-window" data-scheme={screen === 'dark' ? 'dark' : undefined}>
         <svg data-dl-part="backdrop" viewBox="0 0 100 922" preserveAspectRatio="none" aria-hidden="true">
-          <rect x="0" y="0" width="100" height="174" fill="var(--color-map-nav-shell)" />
+          <defs>
+            <linearGradient id="word-mica-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--color-map-nav-shell)" />
+              <stop offset="100%" stopColor="var(--t-word-window-mica-end)" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="100" height="46" fill="url(#word-mica-grad)" />
+          <rect x="0" y="46" width="100" height="128" fill="var(--t-word-window-tab-wash)" />
           <rect x="0" y="174" width="100" height="748" fill="var(--color-map-nav)" />
         </svg>
         <svg data-dl-part="frame-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -191,23 +249,42 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             extra={
               <div data-dl="word-doc-actions">
                 {/* binary-setting: Comments shows or hides its pane, a toolbar toggle beside Editing and Share, as in the reference. */}
-                <Button label={c.comments} icon="comment" size="s" pressed={pane === 'comments'} onClick={() => setPane(pane === 'comments' ? undefined : 'comments')} />
-                <MenuButton label={c.editing} icon="edit" size="s" items={[{ value: 'editing', label: c.editing }]} onSelect={() => undefined} />
-                <MenuButton label={c.share} icon="share" size="s" emphasis="primary" items={[{ value: 'share', label: c.share }]} onSelect={() => undefined} />
+                <Button label={c.comments} icon="comment" size="xs" pressed={pane === 'comments'} onClick={() => setPane(pane === 'comments' ? undefined : 'comments')} />
+                <MenuButton label={c.editing} icon="edit" size="xs" items={[{ value: 'editing', label: c.editing }]} onSelect={() => undefined} />
+                <MenuButton label={c.share} icon="share" size="xs" emphasis="primary" items={[{ value: 'share', label: c.share }]} onSelect={() => undefined} />
                 <span data-dl-part="people">
-                  <Button label={c.catchUp} icon="people" iconOnly size="s" emphasis="quiet" />
+                  <Button label={c.catchUp} icon="people" iconOnly size="xs" emphasis="quiet" />
                 </span>
               </div>
             }
             end={<Button label={c.collapse} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" />}
             aside={
               <div data-dl="word-copilot-card" data-open={copilotOpen ? '' : undefined}>
-                {/* binary-setting: shows or hides the assistant side pane from the ribbon band, as in the reference. */}
-                <Button label={c.copilot} icon={'assistant-ribbon' as IconName} stacked size="xs" emphasis="quiet" pressed={copilotOpen} onClick={() => setCopilotOpen((o) => !o)} />
+                <Button label={c.copilot} icon={'assistant-ribbon' as IconName} stacked size="xs" emphasis="quiet" onClick={() => setCopilotOpen((o) => !o)} />
               </div>
             }
             tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
           />
+          {tab === 'design' && galleryOpen && view.styleSets && (
+            <div data-dl="word-style-gallery" data-material="floating" role="dialog" aria-label={c.styleGallery}>
+              <div data-dl-part="section">
+                <span data-dl-part="section-head">{c.thisDocument}</span>
+                <div data-dl-part="grid">
+                  {styleTile(view.styleSets[0], activeStyle === view.styleSets[0].id, () => { setActiveStyle(view.styleSets[0].id); setGalleryOpen(false); })}
+                </div>
+              </div>
+              <div data-dl-part="section">
+                <span data-dl-part="section-head">{c.builtIn}</span>
+                <div data-dl-part="grid">
+                  {view.styleSets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }))}
+                </div>
+              </div>
+              <div data-dl-part="menu-foot">
+                <Button label={c.resetStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => { setActiveStyle('current'); setGalleryOpen(false); }} />
+                <Button label={c.saveStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => setGalleryOpen(false)} />
+              </div>
+            </div>
+          )}
         </div>
 
         <div data-dl-part="workspace">
@@ -293,7 +370,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               )}
 
               <main data-dl-part="canvas" aria-label={c.document}>
-                <ScrollArea label={c.document} mode="always">
+                <ScrollArea label={c.document} mode="always" bar="gutter">
                   <div data-dl="word-page-stage">
                     {!showSampleDoc && !copilotOpen && (
                       <div data-dl="word-draft-bar">
@@ -362,13 +439,18 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                   {view.copilotPane.prompts.map((p, i) => (
                     <div key={i} data-dl-part="prompt-chip">
                       <Button label={`${p.prefix}${p.emphasis}`} size="xs" emphasis="quiet" tone="inherit" align="start" />
+                      <span data-dl-part="chip-words" aria-hidden="true">
+                        <span data-dl-part="prefix">{p.prefix}</span>
+                        <strong data-dl-part="tail">{p.emphasis}</strong>
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
               <div data-dl-part="foot">
                 <div data-dl-part="mode">
-                  <MenuButton label={view.copilotPane.allowEditing} size="xs" tone="inherit" items={[{ value: 'edit', label: view.copilotPane.allowEditing }]} onSelect={() => undefined} />
+                  <Button label={view.copilotPane.allowEditing} size="xs" emphasis="quiet" tone="inherit" />
+                  <Icon name={'qat-chevron' as IconName} size="sm" />
                 </div>
                 <div data-dl="word-copilot-input">
                   <span data-dl-part="lead">
@@ -428,7 +510,7 @@ function paneFor(screen: string) {
 }
 
 function tabFor(screen: string) {
-  const tabs = new Set(['home', 'insert', 'draw', 'design', 'layout', 'references', 'mailings', 'review', 'view', 'help', 'acrobat']);
+  const tabs = new Set(['home', 'insert', 'draw', 'design', 'layout', 'references', 'mailings', 'review', 'view', 'help', 'pdf-tools']);
   if (screen === 'design-gallery') return 'design';
   return tabs.has(screen) ? screen : 'home';
 }

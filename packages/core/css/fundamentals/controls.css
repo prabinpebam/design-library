@@ -568,7 +568,6 @@
   }
 
   [data-dl='switch'][data-label='start'] > [data-dl-part='control'] {
-    flex-direction: row-reverse;
     justify-content: space-between;
   }
 

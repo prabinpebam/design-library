@@ -1,6 +1,7 @@
 /* Reference geometry and values are documented in .design-library/word-ref/owner/README.md (Q147, 1349x922 CSS -> 1124x768 PNG at 5/6). Only own child paths cross wrappers. */
 @layer templates {
   [data-dl='word-window'] {
+    container-type: inline-size;
     position: relative;
     box-sizing: border-box;
     display: grid;
@@ -26,7 +27,9 @@
   [data-dl='word-window'] > :is([data-dl-part='titlebar'], [data-dl-part='ribbon'], [data-dl-part='workspace'], [data-dl-part='statusbar']) {
     position: relative;
   }
+  /* Title bar (y=1..38 PNG = 46 CSS px): transparent over color.bg (#ECEFF2) so enclosure depth stays 0 (VN1, VN3). */
   [data-dl='word-window'] > [data-dl-part='titlebar'] {
+    position: relative;
     display: grid;
     grid-template-columns: auto auto minmax(0, 1fr) auto;
     align-items: center;
@@ -46,9 +49,9 @@
     display: inline-flex;
     align-items: center;
     padding-inline-end: var(--space-2);
-    --icon-accent-fill: #07279b;
-    --icon-accent-2-fill: #159bf0;
-    --icon-surface: #ffffff;
+    --icon-accent-fill: var(--t-word-window-mark-primary);
+    --icon-accent-2-fill: var(--t-word-window-mark-secondary);
+    --icon-surface: var(--t-word-window-ruler-inner);
   }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='autosave'] {
     display: flex;
@@ -80,14 +83,16 @@
     font-size: var(--text-s);
   }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] {
+    position: absolute;
+    inset-inline-start: 31.75rem;
     display: grid;
-    justify-self: center;
-    inline-size: min(100%, 22.125rem);
+    inline-size: 21.75rem;
   }
   [data-dl='word-search-box'] {
+    --c-button-size-xs: 1.75rem;
     display: flex;
     align-items: center;
-    min-block-size: var(--space-8);
+    min-block-size: 1.8125rem;
     padding-inline: var(--space-1);
     border: var(--border-hairline) solid var(--t-word-window-border-strong);
     border-radius: var(--radius-sm);
@@ -104,13 +109,16 @@
   }
 
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] {
+    grid-column: 4;
+    justify-self: end;
     display: flex;
     align-items: center;
     align-self: stretch;
     gap: var(--space-2);
   }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade'] {
-    --c-button-size-xs: 2rem;
+    --c-button-size-xs: 1.8125rem;
+    --c-button-padding-inline-sm: 0.625rem;
     position: relative;
     display: inline-flex;
   }
@@ -140,13 +148,19 @@
 
   /* Tab row + Ribbon + Copilot companion card (y=39..143 PNG): transparent over color.bg so controls stay depth 1 (VN1, VN3). */
   [data-dl='word-window'] > [data-dl-part='ribbon'] {
+    position: relative;
     display: grid;
     padding-inline: var(--space-2);
+    --c-tabs-item-padding-inline: 0.625rem;
   }
   [data-dl='word-doc-actions'] {
+    --c-button-size-xs: 1.5rem;
+    --c-menu-button-size-xs: 1.5rem;
+    --c-button-padding-inline-sm: var(--space-1);
+    --size-icon-sm: 0.875rem;
     display: flex;
     align-items: center;
-    gap: var(--space-inline-pair);
+    gap: var(--space-1);
   }
   [data-dl='word-doc-actions'] > [data-dl-part='people'] {
     display: inline-flex;
@@ -155,12 +169,12 @@
     display: grid;
     align-items: start;
     justify-items: center;
-    min-inline-size: 3.125rem;
+    min-inline-size: 2.75rem;
     --icon-accent-fill: var(--c-icon-accent-4);
     --icon-accent-2-fill: var(--c-icon-accent-6);
     --icon-surface: var(--t-word-window-ruler-inner);
   }
-  [data-dl='word-window'][data-scheme='dark'] [data-dl='word-copilot-card'][data-open] {
+  [data-dl='word-window'][data-scheme='dark'] [data-dl='word-copilot-card'] {
     --icon-accent-fill: none;
     --icon-accent-2-fill: none;
   }
@@ -198,25 +212,101 @@
   [data-dl='word-copilot-card'] {
     --size-icon-sm: 1.75rem;
   }
-  [data-dl='word-command']:not([data-stacked]),
-  [data-dl='word-split']:not([data-stacked]) {
+  [data-dl='word-command'][data-pen],
+  [data-dl='word-split'][data-pen] {
+    --size-icon-sm: 2.375rem;
+    --c-button-size-xs: 2.625rem;
+  }
+  [data-dl='word-command']:not([data-stacked]):not([data-pen]),
+  [data-dl='word-split']:not([data-stacked]):not([data-pen]) {
     --size-icon-sm: 1.125rem;
   }
   [data-dl='word-command'][data-wide='md'],
   [data-dl='word-split'][data-wide='md'] {
-    inline-size: 4.5rem;
+    inline-size: 3.875rem;
   }
   [data-dl='word-command'][data-wide='lg'],
   [data-dl='word-split'][data-wide='lg'] {
-    inline-size: 6.25rem;
+    inline-size: 5rem;
   }
   [data-dl='word-split'] > [data-dl-part='split-menu'] {
-    --c-button-size-xs: 0.75rem;
+    --c-button-size-xs: 0.6875rem;
     display: grid;
     --size-icon-sm: 0.6875rem;
   }
   [data-dl='word-split'][data-stacked] > [data-dl-part='split-menu'] {
-    --c-button-size-xs: 0.875rem;
+    --c-button-size-xs: 0.75rem;
+  }
+  [data-dl='word-split'][data-labelled] {
+    justify-content: space-between;
+  }
+
+  /* Design tab inline style-set thumbnail strip + floating 05-design-gallery popup. */
+  [data-dl='word-style-strip'] {
+    display: flex;
+    align-items: stretch;
+    border: var(--border-hairline) solid var(--t-word-window-border);
+    border-radius: var(--radius-sm);
+    background: var(--t-word-window-ruler-inner);
+  }
+  [data-dl='word-style-strip'] > [data-dl-part='tiles'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-0-5);
+    padding: var(--space-0-5);
+  }
+  [data-dl='word-style-strip'] > [data-dl-part='expand'] {
+    display: grid;
+    align-items: center;
+    border-inline-start: var(--border-hairline) solid var(--t-word-window-border);
+    --c-button-size-xs: 1.125rem;
+  }
+  [data-dl='word-style-tile'] {
+    position: relative;
+    display: grid;
+    inline-size: 4.25rem;
+    block-size: 3.125rem;
+  }
+  [data-dl='word-style-tile'] > [data-dl-part='preview'] {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    pointer-events: none;
+  }
+
+  [data-dl='word-style-gallery'] {
+    position: absolute;
+    inset-block-start: 2.25rem;
+    inset-inline-start: 4.125rem;
+    z-index: var(--layer-overlay);
+    display: grid;
+    gap: var(--space-3);
+    inline-size: 49.125rem;
+    padding: var(--space-3);
+    border: var(--border-hairline) solid var(--t-word-window-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--t-word-window-ruler-inner);
+    box-shadow: var(--shadow-overlay);
+    color: var(--color-text);
+  }
+  [data-dl='word-style-gallery'] > [data-dl-part='section'] {
+    display: grid;
+    gap: var(--space-2);
+  }
+  [data-dl='word-style-gallery'] > [data-dl-part='section'] > [data-dl-part='section-head'] {
+    font-size: var(--text-s);
+    font-weight: 600;
+  }
+  [data-dl='word-style-gallery'] > [data-dl-part='section'] > [data-dl-part='grid'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  [data-dl='word-style-gallery'] > [data-dl-part='menu-foot'] {
+    display: grid;
+    padding-block-start: var(--space-2);
+    border-block-start: var(--border-hairline) solid var(--t-word-window-border);
   }
 
   /* Semantic icon role mappings for Word's multi-tone command icons. */
@@ -271,6 +361,42 @@
     --icon-accent: var(--c-icon-accent-7);
     --icon-accent-fill: var(--c-icon-accent-7);
   }
+  /* Insert, Draw & Design semantic icon role bindings. */
+  [data-dl='word-command']:is([data-icon='cover-page'], [data-icon='page-break'], [data-icon='table-grid'], [data-icon='pictures-insert'], [data-icon='shapes-insert'], [data-icon='icons-bird'], [data-icon='models-3d'], [data-icon='screenshot-cam'], [data-icon='online-video'], [data-icon='link-globe'], [data-icon='bookmark-ribbon'], [data-icon='cross-ref'], [data-icon='page-number'], [data-icon='text-box'], [data-icon='quick-parts'], [data-icon='wordart'], [data-icon='signature-line'], [data-icon='date-time'], [data-icon='insert-object'], [data-icon='ink-to-shape'], [data-icon='ink-to-math'], [data-icon='ink-replay'], [data-icon='ink-help'], [data-icon='format-bg'], [data-icon='design-effects']),
+  [data-dl='word-split']:is([data-icon='cover-page'], [data-icon='page-break'], [data-icon='table-grid'], [data-icon='pictures-insert'], [data-icon='shapes-insert'], [data-icon='icons-bird'], [data-icon='models-3d'], [data-icon='screenshot-cam'], [data-icon='online-video'], [data-icon='link-globe'], [data-icon='bookmark-ribbon'], [data-icon='cross-ref'], [data-icon='page-number'], [data-icon='text-box'], [data-icon='quick-parts'], [data-icon='wordart'], [data-icon='signature-line'], [data-icon='date-time'], [data-icon='insert-object'], [data-icon='ink-to-shape'], [data-icon='ink-to-math'], [data-icon='ink-replay'], [data-icon='ink-help'], [data-icon='format-bg'], [data-icon='design-effects'], [data-icon='pen-blue']) {
+    --icon-accent: var(--c-icon-accent-3);
+    --icon-accent-fill: var(--c-icon-accent-4);
+  }
+  [data-dl='word-command']:is([data-icon='smartart'], [data-icon='chart-bars'], [data-icon='comment-new'], [data-icon='drawing-canvas'], [data-icon='set-default'], [data-icon='themes-aa']),
+  [data-dl='word-split']:is([data-icon='add-pen'], [data-icon='pen-green'], [data-icon='themes-aa'], [data-icon='design-colors']) {
+    --icon-accent: var(--t-word-window-icon-green);
+    --icon-accent-fill: var(--t-word-window-icon-green);
+    --icon-accent-2: var(--t-word-window-icon-green);
+    --icon-accent-2-fill: var(--c-icon-accent-6);
+  }
+  [data-dl='word-split']:is([data-icon='header-page'], [data-icon='footer-page'], [data-icon='page-color']),
+  [data-dl='word-command'][data-icon='page-borders'] {
+    --icon-accent: var(--c-icon-accent-6);
+    --icon-accent-fill: var(--c-icon-accent-fill);
+    --icon-accent-2: var(--c-icon-accent-6);
+    --icon-accent-2-fill: var(--c-icon-accent-fill);
+  }
+  [data-dl='word-split'][data-icon='pen-red'],
+  [data-dl='word-command'][data-icon='draw-touch'] {
+    --icon-accent-fill: var(--c-icon-accent-2);
+    --icon-accent-2: var(--c-icon-accent-2);
+  }
+  [data-dl='word-split'][data-icon='pen-highlighter'] {
+    --icon-accent-fill: var(--c-icon-accent-1);
+  }
+  [data-dl='word-split'][data-icon='pen-pencil'] {
+    --icon-accent-fill: var(--t-word-window-muted);
+  }
+  [data-dl='word-split'][data-icon='draw-eraser'],
+  [data-dl='word-split'][data-icon='watermark'] {
+    --icon-accent-fill: var(--c-icon-accent-5);
+    --icon-accent-2: var(--c-icon-accent-6);
+  }
 
   /* Font name (168 CSS px) and Font size (42 CSS px) combo fields. */
   [data-dl='word-field'] {
@@ -313,6 +439,7 @@
   [data-dl='word-ruler-h'] > [data-dl-part='track-center'] {
     display: grid;
     justify-items: center;
+    padding-inline-end: var(--space-4);
   }
 
   /* Body: left vertical ruler + canvas ScrollArea + optional panes. */
@@ -355,7 +482,7 @@
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
     gap: var(--space-4);
-    padding: var(--space-3) var(--space-5) var(--space-4);
+    padding: var(--space-3) var(--space-6) var(--space-6);
     border-inline-start: var(--border-hairline) solid var(--t-word-window-border);
     background: var(--t-word-window-copilot-bg);
     color: var(--t-word-window-copilot-fg);
@@ -374,7 +501,7 @@
     display: grid;
     align-content: start;
     gap: var(--space-3);
-    padding-block-start: var(--space-4);
+    padding-block-start: var(--space-8);
   }
   [data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] {
     display: grid;
@@ -384,10 +511,30 @@
   }
   [data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip'] {
     --c-button-size-xs: 2.125rem;
+    position: relative;
     display: inline-grid;
-    padding-inline: var(--space-2);
-    border-radius: var(--radius-md);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-full);
     background: var(--t-word-window-copilot-chip);
+    color: transparent;
+  }
+  [data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip'] > [data-dl-part='chip-words'] {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    padding-inline: var(--space-4);
+    font-size: var(--text-s);
+    color: var(--t-word-window-copilot-fg);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  [data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip'] > [data-dl-part='chip-words'] > [data-dl-part='prefix'] {
+    color: var(--t-word-window-muted);
+    padding-inline-end: var(--space-1);
+  }
+  [data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip'] > [data-dl-part='chip-words'] > [data-dl-part='tail'] {
+    font-weight: 600;
   }
   [data-dl='word-copilot-pane'] > [data-dl-part='foot'] {
     display: grid;
@@ -395,11 +542,13 @@
   }
   [data-dl='word-copilot-pane'] > [data-dl-part='foot'] > [data-dl-part='mode'] {
     display: inline-flex;
+    align-items: center;
+    color: var(--t-word-window-muted);
   }
   [data-dl='word-copilot-input'] {
     display: flex;
     align-items: center;
-    min-block-size: var(--space-10);
+    min-block-size: 2.25rem;
     padding-inline: var(--space-2);
     border: var(--border-hairline) solid var(--t-word-window-border);
     border-radius: var(--radius-full);
@@ -418,8 +567,8 @@
   [data-dl='word-page-stage'] {
     display: grid;
     justify-items: center;
-    gap: var(--space-3);
-    padding-block: var(--space-3) var(--space-4);
+    gap: var(--space-4);
+    padding-block: var(--space-4);
     padding-inline: var(--space-inset-md);
   }
   [data-dl='word-draft-bar'] {
@@ -450,7 +599,7 @@
     gap: var(--space-3);
     inline-size: min(100%, 42.375rem);
     min-block-size: 60rem;
-    padding: var(--space-20);
+    padding: calc(var(--space-16) + var(--space-4));
     border: var(--border-hairline) solid var(--t-word-window-border-strong);
     background: var(--color-bg-control);
     color: var(--color-text);
@@ -460,16 +609,17 @@
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'][data-narrow] {
     inline-size: min(100%, 40.75rem);
+    padding-inline: calc(var(--space-12) + var(--space-6));
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='caret-row'] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    --icon-accent-2: #49b86e;
+    --icon-accent-2: var(--t-word-window-icon-green);
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='caret-row'] > [data-dl-part='caret-block'] {
-    inline-size: var(--space-1);
-    block-size: var(--space-6);
+    inline-size: 1.5px;
+    block-size: 1.125rem;
     background: var(--t-word-window-muted);
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='block'] { margin: 0; font-weight: 400; }
@@ -498,7 +648,7 @@
     gap: var(--space-inline-item);
     block-size: 1.3125rem;
     padding-inline: var(--space-2);
-    border-block-start: var(--border-hairline) solid var(--t-word-window-border);
+    border-block-start: var(--border-hairline) solid var(--t-word-window-status-seam);
     background: var(--color-bg-sunken);
     color: var(--color-map-nav-on);
     font-size: var(--text-xs);
@@ -524,5 +674,30 @@
     display: flex;
     align-items: center;
     inline-size: 8.5rem;
+  }
+
+  @container (max-width: 48rem) {
+    [data-dl='word-window'] > [data-dl-part='titlebar'] {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+    [data-dl='word-window'] > [data-dl-part='titlebar'] > :is([data-dl-part='doc-title'], [data-dl-part='search']),
+    [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > :not([data-dl-part='app-mark']),
+    [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > :is([data-dl-part='upgrade'], [data-dl-part='caption-buttons']),
+    [data-dl='word-doc-actions'],
+    [data-dl='word-ruler-h'],
+    [data-dl='word-ruler-v'],
+    [data-dl='word-copilot-pane'],
+    [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] {
+      display: none;
+    }
+    [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] {
+      grid-column: 2;
+    }
+    [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-start'] > :not(:first-child) {
+      display: none;
+    }
+    [data-dl='word-page-stage'] > [data-dl-part='page'] {
+      padding: var(--space-4);
+    }
   }
 }

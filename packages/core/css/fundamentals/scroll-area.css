@@ -215,6 +215,43 @@
     }
   }
 
+  /* `gutter`: a permanent scrollbar strip at the block end edge for desktop editors and document canvases. Reserves
+     the track width so centered sheets sit centered in the remaining space, and paints the sunken track with steppers. */
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    padding-inline-end: var(--c-scroll-area-track);
+  }
+
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='track'][data-axis='y'] {
+    display: block;
+    inset-block: 0;
+    background-color: var(--c-scroll-area-surface);
+  }
+
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='track'][data-axis='y']::before,
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='track'][data-axis='y']::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 50%;
+    inline-size: 0;
+    block-size: 0;
+    transform: translateX(-50%);
+    border-inline: 3.5px solid transparent;
+  }
+
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='track'][data-axis='y']::before {
+    inset-block-start: var(--space-1);
+    border-block-end: 4.5px solid var(--c-scroll-area-colour);
+  }
+
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='track'][data-axis='y']::after {
+    inset-block-end: var(--space-1);
+    border-block-start: 4.5px solid var(--c-scroll-area-colour);
+  }
+
+  [data-dl='scroll-area'][data-bar='gutter'] > [data-dl-part='track'][data-axis='y'] > [data-dl-part='thumb'] {
+    margin-block-start: var(--space-3);
+  }
+
   /* A region whose own controls replace its scrollbar (Carousel's track: arrows, dots or thumbnails, swipe and keys)
      draws none and isn't wrapped in ScrollArea. The one opt-out; scrollbar styling still lives only in this file. */
   [data-scrollbar='none'] {

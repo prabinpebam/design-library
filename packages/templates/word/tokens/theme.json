@@ -23,9 +23,9 @@
  "c.icon.accent-4": {
   "$value": {
    "light": "#83beec",
-   "dark": "#0063b1"
+   "dark": "#2899f5"
   },
-  "$description": "Dictate microphone capsule fill: #83BEEC light (01-home.png), #0063B1 dark (13-dark-home.png)."
+  "$description": "Dictate microphone capsule fill: #83BEEC light (01-home.png), #2899F5 dark (13-dark-home.png)."
  },
  "c.icon.accent-5": {
   "$value": {
@@ -37,16 +37,16 @@
  "c.icon.accent-6": {
   "$value": {
    "light": "#dc4e1a",
-   "dark": "#cf3a03"
+   "dark": "#e05328"
   },
-  "$description": "Add-ins tiles: #DC4E1A light (01-home.png), #CF3A03 dark (13-dark-home.png)."
+  "$description": "Add-ins tiles: #DC4E1A light (01-home.png), #E05328 dark (13-dark-home.png)."
  },
  "c.icon.accent-7": {
   "$value": {
    "light": "#185abd",
-   "dark": "#2b7cd3"
+   "dark": "#588de9"
   },
-  "$description": "Editor nib, Text effects A and Acrobat badges: #185ABD light, #2B7CD3 dark (13-dark-home.png)."
+  "$description": "Editor nib, Text effects A and Acrobat badges: #185ABD light, #588DE9 dark (13-dark-home.png)."
  },
  "c.icon.accent-8": {
   "$value": {
@@ -164,16 +164,30 @@
  "color.map.selection-indicator": {
   "$value": {
    "light": "#185abd",
-   "dark": "#6899f3"
+   "dark": "#7da4e6"
   },
-  "$description": "Selected-tab underline: #185ABD light, #6899F3 dark (13-dark-home.png)."
+  "$description": "Selected-tab underline: #185ABD light, #7DA4E6 dark (13-dark-home.png)."
  },
  "color.map.nav-shell": {
   "$value": {
    "light": "#eceff2",
    "dark": "#212629"
   },
-  "$description": "Title bar and tab row Mica: #ECEFF2 light (01-home.png), #212629 dark (13-dark-home.png)."
+  "$description": "Title bar and tab row Mica start: #ECEFF2 light (01-home.png), #212629 dark (13-dark-home.png)."
+ },
+ "color.map.nav-hover": {
+  "$value": {
+   "light": "#efecec",
+   "dark": "#1e2224"
+  },
+  "$description": "Title bar Mica right end: #EFECEC light, #1E2224 dark (13-dark-home.png)."
+ },
+ "color.map.nav-selected": {
+  "$value": {
+   "light": "#efedea",
+   "dark": "#1e2425"
+  },
+  "$description": "Tab strip wash: #EFEDEA light, #1E2425 dark (13-dark-home.png)."
  },
  "color.map.nav-shell-on": {
   "$value": {
@@ -213,9 +227,35 @@
  "color.map.feature-tint": {
   "$value": {
    "light": "#ffffff",
-   "dark": "#25201c"
+   "dark": "#292929"
   },
-  "$description": "Ruler printable strip: #FFFFFF light (01-home.png), #25201C dark (13-dark-home.png x=450 y=151)."
+  "$description": "Ruler printable strip: #FFFFFF light (01-home.png), #292929 dark (13-dark-home.png)."
+ },
+ "color.map.feature": {
+  "$value": {
+   "light": "#e5e5e5",
+   "dark": "#31302e"
+  },
+  "$description": "Status bar top seam: #E5E5E5 light, #31302E dark (13-dark-home.png)."
+ },
+ "color.promo.offer": {
+  "$value": "#d13438",
+  "$description": "Upgrade plan notification dot (#D13438 in 01-home.png and 13-dark-home.png)."
+ },
+ "color.category.1": {
+  "$value": "#07279b",
+  "$description": "App tile primary spine (#07279B)."
+ },
+ "color.category.2": {
+  "$value": "#159bf0",
+  "$description": "App tile secondary page stripe (#159BF0)."
+ },
+ "color.category.3": {
+  "$value": {
+   "light": "#107c41",
+   "dark": "#49b86e"
+  },
+  "$description": "Positive/sheet accent on Add pen, SmartArt, Comment-new and Set-as-default icons."
  },
  "color.map.chip-tint": {
   "$value": {
@@ -324,6 +364,28 @@
   "$value": "{color.bg-raised}",
   "$description": "Outlined chrome buttons (Upgrade, Comments, Editing) match ribbon card surface (#FFFFFF light, #292929 dark)."
  },
+ "c.button.default-edge": {
+  "$value": {
+   "light": "#ababab",
+   "dark": "#565656"
+  },
+  "$description": "Outlined chrome button border (#ABABAB light, #565656 dark in 13-dark-home.png)."
+ },
+ "c.button.pressed-fill": {
+  "$value": {
+   "light": "#e0e0e0",
+   "dark": "#3f3f3f"
+  },
+  "$description": "Pressed toolbar toggle plate (Align left, Print Layout): #E0E0E0 light, #3F3F3F dark (13-dark-home.png)."
+ },
+ "c.button.padding-inline-sm": {
+  "$value": "0.25rem",
+  "$description": "Compact inline padding on ribbon and tab-bar controls so Share is 66 CSS px (55 PNG px)."
+ },
+ "c.scroll-area.track": {
+  "$value": "1rem",
+  "$description": "Permanent 16 CSS px (13.3 PNG px) vertical scrollbar gutter on the document canvas."
+ },
  "c.scroll-area.colour": {
   "$value": {
    "light": "#707070",
@@ -332,8 +394,8 @@
   "$description": "Canvas scrollbar thumb: #707070 light (01-home.png), #999999 dark (13-dark-home.png x=773)."
  },
  "c.scroll-area.rest-scale": {
-  "$value": 0.75,
-  "$description": "Desktop editor scrollbar thumb stays clearly visible at rest (6 px)."
+  "$value": 0.85,
+  "$description": "Desktop editor scrollbar thumb stays clearly visible at rest (7 px)."
  },
  "size.app-bar-height": {
   "$value": "2.875rem",
@@ -363,9 +425,13 @@
   "$value": "0.25rem",
   "$description": "Outlined chrome buttons 4 px."
  },
+ "radius.md": {
+  "$value": "0.5rem",
+  "$description": "Ribbon and companion card radius 8 CSS px (6.5 PNG px in 01-home.png and 13-dark-home.png)."
+ },
  "c.ribbon.radius": {
   "$value": "0.5rem",
-  "$description": "Ribbon card 8 px: the corner's first row starts 13 image px in at 2x (w-theme-07 rows 184-197)."
+  "$description": "Ribbon card 8 CSS px."
  },
  "c.ribbon.shadow": {
   "$value": "none",

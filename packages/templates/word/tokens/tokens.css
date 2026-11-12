@@ -13,6 +13,12 @@
     --t-word-window-border: var(--color-border);
     --t-word-window-border-strong: var(--color-border-strong);
     --t-word-window-muted: var(--color-text-muted);
-    --t-word-window-badge-dot: var(--color-status-danger-fill);
+    --t-word-window-badge-dot: var(--color-promo-offer);
+    --t-word-window-mica-end: var(--color-map-nav-hover);
+    --t-word-window-tab-wash: var(--color-map-nav-selected);
+    --t-word-window-status-seam: var(--color-map-feature);
+    --t-word-window-mark-primary: var(--color-category-1);
+    --t-word-window-mark-secondary: var(--color-category-2);
+    --t-word-window-icon-green: var(--color-category-3);
   }
 }

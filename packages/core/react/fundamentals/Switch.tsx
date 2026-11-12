@@ -84,20 +84,32 @@ export function Switch({ label, checked, onChange, description, size = 'normal',
         disabled={disabled}
         onClick={toggle}
       >
+        {labelPosition === 'start' && (
+          <span data-dl-part="words">
+            <span data-dl-part="name" data-hidden={hideLabel ? '' : undefined}>{label}</span>
+            {description && (
+              <span data-dl-part="description" id={descriptionId}>
+                {description}
+              </span>
+            )}
+          </span>
+        )}
         <span data-dl-part="mark" aria-hidden="true">
           <span data-dl-part="track">
             <span data-dl-part="thumb">{pending && <Progress />}</span>
             {stateText && <span data-dl-part="state">{value ? stateText.on : stateText.off}</span>}
           </span>
         </span>
-        <span data-dl-part="words">
-          <span data-dl-part="name" data-hidden={hideLabel ? '' : undefined}>{label}</span>
-          {description && (
-            <span data-dl-part="description" id={descriptionId}>
-              {description}
-            </span>
-          )}
-        </span>
+        {labelPosition !== 'start' && (
+          <span data-dl-part="words">
+            <span data-dl-part="name" data-hidden={hideLabel ? '' : undefined}>{label}</span>
+            {description && (
+              <span data-dl-part="description" id={descriptionId}>
+                {description}
+              </span>
+            )}
+          </span>
+        )}
       </button>
       <span data-dl-part="failure" id={failureId} role="status">
         {failed && (

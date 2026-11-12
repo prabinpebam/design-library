@@ -10,14 +10,19 @@
   "assets": "assets.json",
   "home": "document",
   "sections": [
-    { "id": "editor", "title": "Editor", "summary": "Write, review and find your way around a document.", "flows": [
+    { "id": "editor", "title": "Editor", "summary": "Write, format and review a document.", "flows": [
       { "id": "write", "title": "Write", "summary": "The page with the Home ribbon, in the light and dark themes.", "screens": ["home", "document", "dark"] },
+      { "id": "authoring", "title": "Insert, Draw and Design", "summary": "Insert elements, draw with ink and choose a document style set.", "screens": ["insert", "draw", "design", "design-gallery"] },
       { "id": "review", "title": "Review", "summary": "Move through headings and read comments.", "screens": ["navigation", "comments"] }
     ] }
   ],
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout", "content": "content/editor/home.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "document", "title": "Document", "component": "SiteLayout", "content": "content/document.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "insert", "title": "Insert", "component": "SiteLayout", "content": "content/editor/authoring/insert.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "draw", "title": "Draw", "component": "SiteLayout", "content": "content/editor/authoring/draw.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "design", "title": "Design", "component": "SiteLayout", "content": "content/editor/authoring/design.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "design-gallery", "title": "Design gallery", "component": "SiteLayout", "content": "content/editor/authoring/design-gallery.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "navigation", "title": "Navigation pane", "component": "SiteLayout", "content": "content/editor/navigation.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "comments", "title": "Comments", "component": "SiteLayout", "content": "content/editor/comments.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "dark", "title": "Dark theme", "component": "SiteLayout", "content": "content/editor/dark.json", "regions": [{"id":"main","accepts":["*"]}] }
