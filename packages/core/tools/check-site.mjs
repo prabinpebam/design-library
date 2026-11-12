@@ -15,12 +15,13 @@
  *   its `#anchor` is a section anchor on that page. Aliases lead to a page (an `https://` target leaves the site) and
  *   never shadow a page's own route.
  * - Information: a section whose list binding finds nothing and declares no `empty` is left out of the page.
- * - The page's `grid` (LR18): unique ids, splits that divide their span with one cell per share, known gaps, each
- *   section placed once and in range, three levels at most (render/page-grid.ts, the renderer's own check).
+ * - The page's `grid` (LR18, LR23): unique ids, cell spans of whole columns (at least 3) adding up to their row's
+ *   span (or a deprecated split that divides it), known gaps, each
+ *   section placed once and in range, three levels at most (render/page-grid-model.mjs, the renderer's own check).
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as nodeModule from 'node:module';
 import Ajv2020 from 'ajv/dist/2020.js';
 
@@ -188,7 +189,7 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
   // Blocks: resolved with the renderer's resolver, then by type, slots by their own type.
   const slots = slotsFromRenderer();
   const lib = await loadResolver();
-  const grids = await loadStripped('render/page-grid.ts');
+  const grids = await import(pathToFileURL(join(core, 'render/page-grid-model.mjs')).href);
   if (!lib) info(dir, '/', "references and bindings weren't resolved (this Node has no type stripping; Node 22.13 or later does)");
   const siteData = { pages: pages.map((p) => p.doc), collections: Object.fromEntries(Object.entries(byCollection).map(([k, c]) => [k, c.doc])) };
   // Derived values (DP14), worked out as `loadSite` does; a derivation that finds nothing is reported on site.json.
@@ -277,7 +278,7 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
     });
     walkHrefs(p.file, p.doc.sections, '/sections');
     // The page's grid (LR18): the renderer's own check, so the page's development notice and this report agree.
-    if (p.doc.grid !== undefined && grids) for (const issue of grids.pageGridRecordProblems(p.doc.grid, sections.length)) fail(p.file, issue.at, issue.what, 'fix the grid: unique ids, a split its span allows with one cell per share, each section placed once');
+    if (p.doc.grid !== undefined) for (const issue of grids.pageGridRecordProblems(p.doc.grid, sections.length)) fail(p.file, issue.at, issue.what, 'fix the grid: unique ids, cell spans of whole columns (at least 3) adding up to their row\'s span, each section placed once');
     sections.forEach((s, i) => {
       const bound = listIsEmptyBinding(s);
       if (!bound || s.empty) return;

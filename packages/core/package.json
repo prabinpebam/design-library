@@ -26,6 +26,7 @@
     "./fonts": "./fonts/loader.ts",
     "./icons": "./icons/sets.ts",
     "./colour": "./colour/index.mjs",
+    "./page-grid": "./render/page-grid-model.mjs",
     "./render": "./render/index.ts",
     "./presets": "./presets/index.ts",
     "./theme": "./theme/index.ts",

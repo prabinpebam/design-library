@@ -1,5 +1,6 @@
-/* PageGrid (DesignUp, owner 2026-11-12 23:54): a page's composition grid. Rows of cells on one set of twelve columns;
-   a cell holds more rows or one block. Rows a chosen stack step apart, columns a fixed gutter apart. A row stacks its
+/* PageGrid (DesignUp, owner 2026-11-12 23:54, 2026-11-13 02:27): a page's composition grid. Rows of cells on one set
+   of twelve columns, each cell spanning a whole number of them; a cell holds more rows or one block. Rows a chosen
+   stack step apart, columns a fixed gutter apart. A row stacks its
    cells in source order when its narrowest cell would be under size.column-min (n columns and n - 1 gutters). */
 @layer layouts {
   [data-dl='page-grid'] {
@@ -34,9 +35,13 @@
   [data-dl-part='page-columns'][data-columns='2'] { --dl-page-grid-columns: 2; }
   [data-dl-part='page-columns'][data-columns='3'] { --dl-page-grid-columns: 3; }
   [data-dl-part='page-columns'][data-columns='4'] { --dl-page-grid-columns: 4; }
+  [data-dl-part='page-columns'][data-columns='5'] { --dl-page-grid-columns: 5; }
   [data-dl-part='page-columns'][data-columns='6'] { --dl-page-grid-columns: 6; }
+  [data-dl-part='page-columns'][data-columns='7'] { --dl-page-grid-columns: 7; }
   [data-dl-part='page-columns'][data-columns='8'] { --dl-page-grid-columns: 8; }
   [data-dl-part='page-columns'][data-columns='9'] { --dl-page-grid-columns: 9; }
+  [data-dl-part='page-columns'][data-columns='10'] { --dl-page-grid-columns: 10; }
+  [data-dl-part='page-columns'][data-columns='11'] { --dl-page-grid-columns: 11; }
   [data-dl-part='page-columns'][data-columns='12'] { --dl-page-grid-columns: 12; }
 
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'] {
@@ -47,10 +52,19 @@
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='2'] { --dl-page-grid-span: 2; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='3'] { --dl-page-grid-span: 3; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='4'] { --dl-page-grid-span: 4; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='5'] { --dl-page-grid-span: 5; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='6'] { --dl-page-grid-span: 6; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='7'] { --dl-page-grid-span: 7; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='8'] { --dl-page-grid-span: 8; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='9'] { --dl-page-grid-span: 9; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='10'] { --dl-page-grid-span: 10; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='11'] { --dl-page-grid-span: 11; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='12'] { --dl-page-grid-span: 12; }
+
+  /* An empty slot keeps its size (none by default), so a preview lays out as the editor's canvas does (LR23). */
+  [data-dl-part='page-cell'][data-empty] {
+    min-block-size: var(--c-page-grid-empty-size);
+  }
 
   /* An editor's selection: an outline, so the geometry never moves. */
   :is([data-dl-part='page-row'], [data-dl-part='page-cell'])[data-selected] {
