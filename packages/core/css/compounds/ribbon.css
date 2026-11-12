@@ -10,7 +10,29 @@
     min-inline-size: 0;
   }
 
+  [data-dl='ribbon-band'] {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+  }
+
+  [data-dl='ribbon-band'] > [data-dl='ribbon-card'] {
+    flex: 1 1 auto;
+  }
+
+  [data-dl='ribbon-band'] > [data-dl-part='aside'] {
+    display: flex;
+    align-items: stretch;
+    flex: none;
+    padding: var(--c-ribbon-padding);
+    background: var(--c-ribbon-bg);
+    border-radius: var(--c-ribbon-radius);
+    box-shadow: var(--c-ribbon-shadow);
+  }
+
   [data-dl='ribbon-card'] {
+    position: relative;
     display: flex;
     align-items: stretch;
     min-inline-size: 0;
@@ -22,6 +44,7 @@
   [data-dl='ribbon-card'] > [data-dl-part='groups'] {
     flex: 1 1 auto;
     min-inline-size: 0;
+    border-radius: inherit;
   }
 
   [data-dl='ribbon-groups'] {
@@ -31,12 +54,27 @@
     padding: var(--c-ribbon-padding);
   }
 
+  [data-dl='ribbon-groups'] :is(button, input, select, [tabindex]):focus-visible {
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
   [data-dl='ribbon-groups'] > [data-dl-part='group'] {
+    position: relative;
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto;
     gap: var(--c-ribbon-command-gap);
-    padding-inline: var(--c-ribbon-group-gap);
-    border-inline-end: var(--border-hairline) solid var(--c-ribbon-separator);
+    padding-inline-start: var(--c-ribbon-group-gap);
+    padding-inline-end: calc(var(--c-ribbon-group-gap) + var(--border-hairline));
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group']::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    inline-size: var(--border-hairline);
+    background: var(--c-ribbon-separator);
+    pointer-events: none;
   }
 
   [data-dl='ribbon-groups'] > [data-dl-part='group']:first-child {
@@ -76,5 +114,11 @@
     display: flex;
     align-items: flex-end;
     padding: var(--c-ribbon-padding);
+  }
+
+  [data-dl='ribbon-card'][data-end-placement='corner'] > [data-dl-part='end'] {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
   }
 }

@@ -108,6 +108,9 @@
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/datatable",
+  "usedBy": [
+    "word.Window"
+  ],
   "principles": [
     "visual-representation"
   ]

@@ -153,6 +153,7 @@
     "--c-tabs-item-size",
     "--c-tabs-item-size-s",
     "--c-tabs-item-size-xs",
+    "--c-tabs-list-padding-inline-start",
     "--c-tabs-panel-gap",
     "--c-tabs-radius",
     "--c-tabs-selected-fill",

@@ -422,6 +422,7 @@
   --c-button-weight: var(--type-label-weight);
   --c-button-unavailable-fill: transparent;
   --c-button-unavailable-edge: var(--color-border-strong);
+  --c-button-pressed-edge: transparent;
   --c-switch-track-inline: var(--size-control-md);
   --c-switch-track-block: var(--size-icon-lg);
   --c-switch-thumb: var(--size-icon-sm);
@@ -439,6 +440,8 @@
   --c-switch-thumb-inset: var(--space-1);
   --c-switch-gap: var(--space-inline-pair);
   --c-switch-border-width: var(--border-hairline);
+  --c-switch-off-border: var(--color-border-strong);
+  --c-switch-off-thumb: var(--color-border-strong);
   --c-switch-spinner: var(--color-map-progress);
   --c-switch-disabled-opacity: 0.5;
   --c-progress-label-gap: var(--space-stack-pair);
@@ -889,6 +892,7 @@
   --c-breadcrumbs-step: var(--size-target-min);
   --c-breadcrumbs-size: var(--type-body-sm-size);
   --c-tabs-gap: var(--space-inline-pair);
+  --c-tabs-list-padding-inline-start: 0px;
   --c-tabs-item-size: var(--size-target);
   --c-tabs-item-size-xs: var(--size-target-min);
   --c-tabs-item-size-s: var(--size-target-dense);
@@ -1541,6 +1545,8 @@
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
     --c-slider-track-fill: var(--color-border);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
 }
@@ -1590,6 +1596,8 @@
   --c-site-header-current-rule: var(--color-border-strong);
   --c-skeleton-fill: var(--color-border);
   --c-slider-track-fill: var(--color-border);
+  --c-switch-off-border: var(--color-border-strong);
+  --c-switch-off-thumb: var(--color-border-strong);
   --c-tabs-text: var(--color-text-muted);
 }
 
@@ -1639,6 +1647,8 @@
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
     --c-slider-track-fill: var(--color-border);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
 }
@@ -1688,6 +1698,8 @@
   --c-site-header-current-rule: var(--color-border-strong);
   --c-skeleton-fill: var(--color-border);
   --c-slider-track-fill: var(--color-border);
+  --c-switch-off-border: var(--color-border-strong);
+  --c-switch-off-thumb: var(--color-border-strong);
   --c-tabs-text: var(--color-text-muted);
 }
 

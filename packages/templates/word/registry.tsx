@@ -12,6 +12,12 @@ import './parts/layouts/window.css';
 export const registry: Template['registry'] = {
   blocks: {},
   layouts: {
-    SiteLayout: ({ shared, ctx }) => <Window view={shared?.record as unknown as WordRecord} screen={ctx.layout} />,
+    SiteLayout: ({ shared, ctx }) => (
+      <Window
+        view={shared?.record as unknown as WordRecord}
+        screen={ctx.layout}
+        picture={ctx.picture}
+      />
+    ),
   },
 };

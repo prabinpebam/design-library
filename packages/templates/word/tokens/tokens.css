@@ -3,5 +3,29 @@
   :root,
   [data-template='word'] {
     --t-word-window-gap: var(--space-inset-sm);
+    --t-word-window-frame-border: var(--color-border-strong);
+    --t-word-window-surface: var(--color-bg-control);
+    --t-word-window-search-bg: var(--color-bg);
+    --t-word-window-ruler-inner: var(--color-map-feature-tint);
+    --t-word-window-copilot-bg: var(--color-map-band);
+    --t-word-window-copilot-fg: var(--color-map-band-on);
+    --t-word-window-copilot-chip: var(--color-map-chip-tint);
+    --t-word-window-border: var(--color-border);
+    --t-word-window-border-strong: var(--color-border-strong);
+    --t-word-window-muted: var(--color-text-muted);
+    --t-word-window-badge-dot: var(--color-promo-offer);
+    --t-word-window-mica-end: var(--color-map-nav-hover);
+    --t-word-window-tab-wash: var(--color-map-nav-selected);
+    --t-word-window-status-seam: var(--color-map-feature);
+    --t-word-window-mark-primary: var(--color-category-1);
+    --t-word-window-mark-secondary: var(--color-category-2);
+    --t-word-window-icon-green: var(--color-category-3);
+    --t-word-window-card-radius: var(--radius-md);
+    --t-word-window-ruler-bg: var(--color-category-4);
+    --t-word-window-icon-pink: var(--color-category-5);
+    --t-word-window-icon-slate: var(--color-category-6);
+    --t-word-window-icon-purple: var(--color-category-7);
+    --t-word-window-icon-teal: var(--color-category-8);
+    --t-word-window-grip-tracking: var(--space-0-5);
   }
 }

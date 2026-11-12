@@ -4,8 +4,8 @@
   "shared": true,
   "contentVersion": 1,
   "record": {
-    "documentName": "Harbour survey notes",
-    "saveState": "Saved to this PC",
+    "documentName": "Document1",
+    "saveState": "-  Word",
     "user": "Jamie Park",
     "tabs": [
       {
@@ -23,71 +23,35 @@
           {
             "id": "pages",
             "label": "Pages",
-            "lead": [
-              {
-                "label": "Pages",
-                "icon": "file",
-                "kind": "stacked",
-                "menu": true
-              }
+            "rows": [
+              [{ "label": "Cover Page", "icon": "cover-page", "kind": "labelled", "menu": true }],
+              [{ "label": "Blank Page", "icon": "blank-page", "kind": "labelled" }],
+              [{ "label": "Page Break", "icon": "page-break", "kind": "labelled" }]
             ]
           },
           {
             "id": "tables",
             "label": "Tables",
             "lead": [
-              {
-                "label": "Table",
-                "icon": "grid",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Table", "icon": "table-grid", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "illustrations",
             "label": "Illustrations",
             "lead": [
-              {
-                "label": "Pictures",
-                "icon": "image",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Shapes",
-                "icon": "ellipse",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Icons",
-                "icon": "emoji",
-                "kind": "stacked"
-              }
+              { "label": "Pictures", "icon": "pictures-insert", "kind": "stacked", "menu": true }
             ],
-            "rows": [
+            "columns": [
               [
-                {
-                  "label": "3D Models",
-                  "icon": "layers",
-                  "kind": "labelled",
-                  "menu": true
-                }
+                [{ "label": "Shapes", "icon": "shapes-insert", "kind": "labelled", "menu": true }],
+                [{ "label": "Icons", "icon": "icons-bird", "kind": "labelled" }],
+                [{ "label": "3D Models", "icon": "models-3d", "kind": "labelled", "menu": true }]
               ],
               [
-                {
-                  "label": "SmartArt",
-                  "icon": "board",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Chart",
-                  "icon": "trend-up",
-                  "kind": "labelled"
-                }
+                [{ "label": "SmartArt", "icon": "smartart", "kind": "labelled" }],
+                [{ "label": "Chart", "icon": "chart-bars", "kind": "labelled" }],
+                [{ "label": "Screenshot", "icon": "screenshot-cam", "kind": "labelled", "menu": true }]
               ]
             ]
           },
@@ -95,117 +59,66 @@
             "id": "media",
             "label": "Media",
             "lead": [
-              {
-                "label": "Online Videos",
-                "icon": "play",
-                "kind": "stacked"
-              }
+              { "label": "Online Videos", "lines": ["Online", "Videos"], "icon": "online-video", "kind": "stacked" }
             ]
           },
           {
             "id": "links",
             "label": "Links",
-            "lead": [
-              {
-                "label": "Links",
-                "icon": "link",
-                "kind": "stacked",
-                "menu": true
-              }
+            "rows": [
+              [{ "label": "Link", "icon": "link-globe", "kind": "labelled", "menu": true }],
+              [{ "label": "Bookmark", "icon": "bookmark-ribbon", "kind": "labelled" }],
+              [{ "label": "Cross-reference", "icon": "cross-ref", "kind": "labelled" }]
             ]
           },
           {
             "id": "comments",
             "label": "Comments",
             "lead": [
-              {
-                "label": "Comment",
-                "icon": "comment",
-                "kind": "stacked"
-              }
+              { "label": "Comment", "icon": "comment-new", "kind": "stacked" }
             ]
           },
           {
             "id": "header-footer",
             "label": "Header & Footer",
             "rows": [
-              [
-                {
-                  "label": "Header",
-                  "icon": "layout-stack",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Footer",
-                  "icon": "layout-stack",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Page Number",
-                  "icon": "list-numbered",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
+              [{ "label": "Header", "icon": "header-page", "kind": "labelled", "menu": true }],
+              [{ "label": "Footer", "icon": "footer-page", "kind": "labelled", "menu": true }],
+              [{ "label": "Page Number", "icon": "page-number", "kind": "labelled", "menu": true }]
             ]
           },
           {
             "id": "text",
             "label": "Text",
             "lead": [
-              {
-                "label": "Text Box",
-                "icon": "text",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Text Box", "lines": ["Text", "Box"], "icon": "text-box", "kind": "stacked", "menu": true }
             ],
-            "rows": [
+            "columns": [
               [
-                {
-                  "label": "Quick Parts",
-                  "icon": "component",
-                  "menu": true
-                }
+                [{ "label": "Quick Parts", "icon": "quick-parts", "menu": true }],
+                [{ "label": "WordArt", "icon": "wordart", "menu": true }],
+                [{ "label": "Drop Cap", "icon": "drop-cap", "menu": true, "disabled": true }]
               ],
               [
-                {
-                  "label": "WordArt",
-                  "icon": "text-format",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Drop Cap",
-                  "icon": "text-larger",
-                  "menu": true
-                }
+                [{ "label": "Signature Line", "icon": "signature-line", "menu": true }],
+                [{ "label": "Date & Time", "icon": "date-time" }],
+                [{ "label": "Object", "icon": "insert-object", "menu": true }]
               ]
             ]
           },
           {
             "id": "symbols",
             "label": "Symbols",
+            "rows": [
+              [{ "label": "Equation", "icon": "pi-symbol", "kind": "labelled", "menu": true }],
+              [{ "label": "Symbol", "icon": "omega-symbol", "kind": "labelled", "menu": true }]
+            ]
+          },
+          {
+            "id": "esignature",
+            "label": "eSignature",
             "lead": [
-              {
-                "label": "Equation",
-                "icon": "code",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Symbol",
-                "icon": "at",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "eSignature fields", "lines": ["eSignature", "fields"], "icon": "esignature", "kind": "stacked" }
             ]
           }
         ]
@@ -215,59 +128,78 @@
         "label": "Draw",
         "groups": [
           {
+            "id": "undo-group",
+            "label": "Undo",
+            "rows": [
+              [{ "label": "Undo", "icon": "undo", "disabled": true }],
+              [{ "label": "Repeat", "icon": "redo", "disabled": true }]
+            ]
+          },
+          {
             "id": "tools",
             "label": "Drawing Tools",
             "lead": [
-              {
-                "label": "Draw",
-                "icon": "pointer",
-                "kind": "stacked"
-              },
-              {
-                "label": "Pen",
-                "icon": "pen",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Highlighter",
-                "icon": "highlight",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Eraser",
-                "icon": "clear-format",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Select", "icon": "draw-cursor", "kind": "tool", "pressed": true },
+              { "label": "Lasso Select", "icon": "draw-lasso", "kind": "tool" },
+              { "label": "Stroke Eraser", "icon": "draw-eraser", "kind": "pen", "menu": true },
+              { "label": "Action Pen", "icon": "pen-action", "kind": "pen" },
+              { "label": "Black Pen", "icon": "pen-black", "kind": "pen", "menu": true },
+              { "label": "Red Pen", "icon": "pen-red", "kind": "pen", "menu": true },
+              { "label": "Pencil", "icon": "pen-pencil", "kind": "pen", "menu": true },
+              { "label": "Highlighter", "icon": "pen-highlighter", "kind": "pen", "menu": true },
+              { "label": "Blue Fountain Pen", "icon": "pen-blue", "kind": "pen", "menu": true },
+              { "label": "Green Pen", "icon": "pen-green", "kind": "pen", "menu": true },
+              { "label": "Add", "icon": "add-pen", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "touch",
+            "label": "Touch",
+            "lead": [
+              { "label": "Draw with Touch", "lines": ["Draw with", "Touch"], "icon": "draw-touch", "kind": "stacked" }
+            ]
+          },
+          {
+            "id": "stencils",
+            "label": "Stencils",
+            "lead": [
+              { "label": "Ruler", "icon": "draw-ruler", "kind": "stacked" }
+            ]
+          },
+          {
+            "id": "edit-bg",
+            "label": "Edit",
+            "lead": [
+              { "label": "Format Background", "lines": ["Format", "Background"], "icon": "format-bg", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "convert",
             "label": "Convert",
             "lead": [
-              {
-                "label": "Ink to Shape",
-                "icon": "ellipse",
-                "kind": "stacked"
-              },
-              {
-                "label": "Ink to Math",
-                "icon": "code",
-                "kind": "stacked"
-              }
+              { "label": "Ink to Shape", "lines": ["Ink to", "Shape"], "icon": "ink-to-shape", "kind": "stacked" },
+              { "label": "Ink to Math", "lines": ["Ink to", "Math"], "icon": "ink-to-math", "kind": "stacked" }
+            ]
+          },
+          {
+            "id": "insert-canvas",
+            "label": "Insert",
+            "lead": [
+              { "label": "Drawing Canvas", "lines": ["Drawing", "Canvas"], "icon": "drawing-canvas", "kind": "stacked" }
             ]
           },
           {
             "id": "replay",
             "label": "Replay",
             "lead": [
-              {
-                "label": "Ink Replay",
-                "icon": "play",
-                "kind": "stacked"
-              }
+              { "label": "Ink Replay", "lines": ["Ink", "Replay"], "icon": "ink-replay", "kind": "stacked" }
+            ]
+          },
+          {
+            "id": "draw-help",
+            "label": "Help",
+            "lead": [
+              { "label": "Ink Help", "lines": ["Ink", "Help"], "icon": "ink-help", "kind": "stacked" }
             ]
           }
         ]
@@ -280,61 +212,26 @@
             "id": "formatting",
             "label": "Document Formatting",
             "lead": [
-              {
-                "label": "Themes",
-                "icon": "layers",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Themes", "icon": "themes-aa", "kind": "stacked", "menu": true },
+              { "label": "Style sets", "kind": "style-gallery" }
+            ],
+            "trailLead": [
+              { "label": "Colors", "icon": "design-colors", "kind": "stacked", "menu": true },
+              { "label": "Fonts", "icon": "design-fonts", "kind": "stacked", "menu": true }
             ],
             "rows": [
-              [
-                {
-                  "label": "Colours",
-                  "icon": "fill-colour",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Fonts",
-                  "icon": "text",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Paragraph Spacing",
-                  "icon": "line-spacing",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
+              [{ "label": "Paragraph Spacing", "icon": "line-spacing", "kind": "labelled", "menu": true }],
+              [{ "label": "Effects", "icon": "design-effects", "kind": "labelled", "menu": true }],
+              [{ "label": "Set as Default", "icon": "set-default", "kind": "labelled" }]
             ]
           },
           {
             "id": "background",
             "label": "Page Background",
             "lead": [
-              {
-                "label": "Watermark",
-                "icon": "image",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Page Colour",
-                "icon": "fill-colour",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Page Borders",
-                "icon": "borders",
-                "kind": "stacked"
-              }
+              { "label": "Watermark", "icon": "watermark", "kind": "stacked", "menu": true },
+              { "label": "Page Color", "lines": ["Page", "Color"], "icon": "page-color", "kind": "stacked", "menu": true },
+              { "label": "Page Borders", "lines": ["Page", "Borders"], "icon": "page-borders", "kind": "stacked" }
             ]
           }
         ]
@@ -348,120 +245,52 @@
             "label": "Page Setup",
             "launcher": "Page setup",
             "lead": [
-              {
-                "label": "Margins",
-                "icon": "padding-horizontal",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Orientation",
-                "icon": "rotate",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Size",
-                "icon": "size-width",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Columns",
-                "icon": "layout-free",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Margins", "icon": "layout-margins", "kind": "stacked", "menu": true },
+              { "label": "Orientation", "icon": "layout-orientation", "kind": "stacked", "menu": true },
+              { "label": "Size", "icon": "layout-size", "kind": "stacked", "menu": true },
+              { "label": "Columns", "icon": "layout-columns", "kind": "stacked", "menu": true }
             ],
             "rows": [
-              [
-                {
-                  "label": "Breaks",
-                  "icon": "wrap",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Line Numbers",
-                  "icon": "list-numbered",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Hyphenation",
-                  "icon": "minus",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
+              [{ "label": "Breaks", "icon": "layout-breaks", "kind": "labelled", "menu": true }],
+              [{ "label": "Line Numbers", "icon": "line-numbers", "kind": "labelled", "menu": true }],
+              [{ "label": "Hyphenation", "icon": "hyphenation", "kind": "labelled", "menu": true }]
             ]
           },
           {
             "id": "paragraph",
             "label": "Paragraph",
             "launcher": "Paragraph settings",
-            "rows": [
-              [
-                {
-                  "label": "Indent left",
-                  "icon": "indent-increase",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Indent right",
-                  "icon": "indent-decrease",
-                  "kind": "labelled"
-                }
-              ]
+            "spinColumns": [
+              {
+                "heading": "Indent",
+                "fields": [
+                  { "label": "Left:", "icon": "indent-left-field", "value": 0, "unit": " cm", "step": 0.1 },
+                  { "label": "Right:", "icon": "indent-right-field", "value": 0, "unit": " cm", "step": 0.1 }
+                ]
+              },
+              {
+                "heading": "Spacing",
+                "fields": [
+                  { "label": "Before:", "icon": "spacing-before", "value": 0, "unit": " pt", "step": 6 },
+                  { "label": "After:", "icon": "spacing-after", "value": 8, "unit": " pt", "step": 6 }
+                ]
+              }
             ]
           },
           {
             "id": "arrange",
             "label": "Arrange",
             "lead": [
-              {
-                "label": "Position",
-                "icon": "align-top",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Wrap Text",
-                "icon": "wrap",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Position", "icon": "arrange-position", "kind": "stacked", "menu": true, "disabled": true },
+              { "label": "Wrap Text", "lines": ["Wrap", "Text"], "icon": "wrap-text", "kind": "stacked", "menu": true, "disabled": true },
+              { "label": "Bring Forward", "lines": ["Bring", "Forward"], "icon": "bring-forward", "kind": "stacked", "menu": true, "disabled": true },
+              { "label": "Send Backward", "lines": ["Send", "Backward"], "icon": "send-backward", "kind": "stacked", "menu": true, "disabled": true },
+              { "label": "Selection Pane", "lines": ["Selection", "Pane"], "icon": "selection-pane", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "Bring Forward",
-                  "icon": "layers",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Send Backward",
-                  "icon": "layers",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Selection Pane",
-                  "icon": "list",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Align", "icon": "align-objects", "kind": "labelled", "menu": true }],
+              [{ "label": "Group", "icon": "group-objects", "kind": "labelled", "menu": true, "disabled": true }],
+              [{ "label": "Rotate", "icon": "rotate-object", "kind": "labelled", "menu": true, "disabled": true }]
             ]
           }
         ]
@@ -474,29 +303,11 @@
             "id": "toc",
             "label": "Table of Contents",
             "lead": [
-              {
-                "label": "Table of Contents",
-                "icon": "list",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Table of Contents", "lines": ["Table of", "Contents"], "icon": "toc-doc", "kind": "stacked", "menu": true }
             ],
             "rows": [
-              [
-                {
-                  "label": "Add Text",
-                  "icon": "plus",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Update Table",
-                  "icon": "retry",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Add Text", "icon": "toc-add-text", "kind": "labelled", "menu": true }],
+              [{ "label": "Update Table", "icon": "toc-update", "kind": "labelled" }]
             ]
           },
           {
@@ -504,110 +315,61 @@
             "label": "Footnotes",
             "launcher": "Footnote and endnote",
             "lead": [
-              {
-                "label": "Insert Footnote",
-                "icon": "superscript",
-                "kind": "stacked"
-              }
+              { "label": "Insert Footnote", "lines": ["Insert", "Footnote"], "icon": "insert-footnote", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "Insert Endnote",
-                  "icon": "subscript",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Next Footnote",
-                  "icon": "chevron-down",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Show Notes",
-                  "icon": "eye",
-                  "kind": "labelled"
-                }
-              ]
-            ]
-          },
-          {
-            "id": "research",
-            "label": "Research",
-            "lead": [
-              {
-                "label": "Search",
-                "icon": "search",
-                "kind": "stacked"
-              },
-              {
-                "label": "Researcher",
-                "icon": "book",
-                "kind": "stacked"
-              }
+              [{ "label": "Insert Endnote", "icon": "insert-endnote", "kind": "labelled" }],
+              [{ "label": "Next Footnote", "icon": "next-footnote", "kind": "labelled", "menu": true }],
+              [{ "label": "Show Notes", "icon": "show-notes", "kind": "labelled", "disabled": true }]
             ]
           },
           {
             "id": "citations",
             "label": "Citations & Bibliography",
             "lead": [
-              {
-                "label": "Insert Citation",
-                "icon": "comment",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Insert Citation", "lines": ["Insert", "Citation"], "icon": "insert-citation", "kind": "stacked", "menu": true }
             ],
             "rows": [
-              [
-                {
-                  "label": "Manage Sources",
-                  "icon": "list",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Style: APA",
-                  "icon": "text",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Bibliography",
-                  "icon": "book",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
+              [{ "label": "Manage Sources", "icon": "manage-sources", "kind": "labelled" }],
+              [{ "label": "Style:", "icon": "styles-brush", "kind": "labelled-field", "value": "APA", "width": "medium" }],
+              [{ "label": "Bibliography", "icon": "bibliography-book", "kind": "labelled", "menu": true }]
+            ],
+            "endLead": [
+              { "label": "Change Provider", "lines": ["Change", "Provider"], "icon": "change-provider", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "captions",
             "label": "Captions",
             "lead": [
-              {
-                "label": "Insert Caption",
-                "icon": "image",
-                "kind": "stacked"
-              }
+              { "label": "Insert Caption", "lines": ["Insert", "Caption"], "icon": "insert-caption", "kind": "stacked" }
+            ],
+            "rows": [
+              [{ "label": "Insert Table of Figures", "icon": "table-figures", "kind": "labelled" }],
+              [{ "label": "Update Table", "icon": "toc-update", "kind": "labelled", "disabled": true }],
+              [{ "label": "Cross-reference", "icon": "cross-ref", "kind": "labelled" }]
             ]
           },
           {
             "id": "index",
             "label": "Index",
             "lead": [
-              {
-                "label": "Mark Entry",
-                "icon": "tag",
-                "kind": "stacked"
-              }
+              { "label": "Mark Entry", "lines": ["Mark", "Entry"], "icon": "mark-entry", "kind": "stacked" }
+            ],
+            "rows": [
+              [{ "label": "Insert Index", "icon": "table-figures", "kind": "labelled" }],
+              [{ "label": "Update Index", "icon": "toc-update", "kind": "labelled", "disabled": true }]
+            ]
+          },
+          {
+            "id": "authorities",
+            "label": "Table of Authorities",
+            "lead": [
+              { "label": "Mark Citation", "lines": ["Mark", "Citation"], "icon": "mark-citation", "kind": "stacked" }
+            ],
+            "rows": [
+              [{ "label": "Insert Table of Authorities", "icon": "table-authorities", "kind": "labelled" }],
+              [{ "label": "Update Table", "icon": "toc-update", "kind": "labelled", "disabled": true }]
             ]
           }
         ]
@@ -620,79 +382,58 @@
             "id": "create",
             "label": "Create",
             "lead": [
-              {
-                "label": "Envelopes",
-                "icon": "file",
-                "kind": "stacked"
-              },
-              {
-                "label": "Labels",
-                "icon": "tag",
-                "kind": "stacked"
-              }
+              { "label": "Envelopes", "icon": "mail-envelopes", "kind": "stacked" },
+              { "label": "Labels", "icon": "mail-labels", "kind": "stacked" }
             ]
           },
           {
             "id": "merge",
             "label": "Start Mail Merge",
             "lead": [
-              {
-                "label": "Start Mail Merge",
-                "icon": "people",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Select Recipients",
-                "icon": "person",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Start Mail Merge", "lines": ["Start Mail", "Merge"], "icon": "mail-start-merge", "kind": "stacked", "menu": true },
+              { "label": "Select Recipients", "lines": ["Select", "Recipients"], "icon": "mail-recipients", "kind": "stacked", "menu": true },
+              { "label": "Edit Recipient List", "lines": ["Edit", "Recipient List"], "icon": "mail-edit-list", "kind": "stacked", "disabled": true }
             ]
           },
           {
             "id": "fields",
             "label": "Write & Insert Fields",
             "lead": [
-              {
-                "label": "Address Block",
-                "icon": "list",
-                "kind": "stacked"
-              },
-              {
-                "label": "Greeting Line",
-                "icon": "comment",
-                "kind": "stacked"
-              },
-              {
-                "label": "Insert Merge Field",
-                "icon": "plus",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Highlight Merge Fields", "lines": ["Highlight", "Merge Fields"], "icon": "mail-highlight", "kind": "stacked", "disabled": true },
+              { "label": "Address Block", "lines": ["Address", "Block"], "icon": "mail-address", "kind": "stacked", "disabled": true },
+              { "label": "Greeting Line", "lines": ["Greeting", "Line"], "icon": "mail-greeting", "kind": "stacked", "disabled": true },
+              { "label": "Insert Merge Field", "lines": ["Insert Merge", "Field"], "icon": "mail-insert-field", "kind": "stacked", "menu": true, "disabled": true }
+            ],
+            "rows": [
+              [{ "label": "Rules", "icon": "mail-rules", "kind": "labelled", "menu": true, "disabled": true }],
+              [{ "label": "Match Fields", "icon": "mail-match", "kind": "labelled", "disabled": true }],
+              [{ "label": "Update Labels", "icon": "mail-update-labels", "kind": "labelled", "disabled": true }]
             ]
           },
           {
             "id": "preview",
             "label": "Preview Results",
             "lead": [
-              {
-                "label": "Preview Results",
-                "icon": "eye",
-                "kind": "stacked"
-              }
+              { "label": "Preview Results", "lines": ["Preview", "Results"], "icon": "mail-preview", "kind": "stacked", "disabled": true }
+            ],
+            "rows": [
+              [{ "label": "Record navigation", "kind": "record-stepper", "disabled": true }],
+              [{ "label": "Find Recipient", "icon": "mail-find", "kind": "labelled", "disabled": true }],
+              [{ "label": "Check for Errors", "icon": "mail-check-errors", "kind": "labelled", "disabled": true }]
             ]
           },
           {
             "id": "finish",
             "label": "Finish",
             "lead": [
-              {
-                "label": "Finish & Merge",
-                "icon": "send",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Finish & Merge", "lines": ["Finish &", "Merge"], "icon": "mail-finish", "kind": "stacked", "menu": true, "disabled": true }
+            ]
+          },
+          {
+            "id": "mail-pdf",
+            "label": "Document PDF",
+            "lead": [
+              { "label": "Merge to Document PDF", "lines": ["Merge to", "Document PDF"], "icon": "mail-merge-pdf", "kind": "stacked" }
             ]
           }
         ]
@@ -705,178 +446,99 @@
             "id": "proofing",
             "label": "Proofing",
             "lead": [
-              {
-                "label": "Editor",
-                "icon": "pen",
-                "kind": "stacked"
-              }
+              { "label": "Editor", "icon": "editor-pen", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "Thesaurus",
-                  "icon": "book",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Word Count",
-                  "icon": "list-numbered",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Spelling and Grammar", "icon": "spelling-grammar", "kind": "labelled", "menu": true }],
+              [{ "label": "Thesaurus", "icon": "thesaurus-book", "kind": "labelled" }],
+              [{ "label": "Word Count", "icon": "word-count", "kind": "labelled" }]
             ]
           },
           {
             "id": "speech",
             "label": "Speech",
             "lead": [
-              {
-                "label": "Read Aloud",
-                "icon": "speaker",
-                "kind": "stacked"
-              }
+              { "label": "Read Aloud", "lines": ["Read", "Aloud"], "icon": "read-aloud", "kind": "stacked" }
             ]
           },
           {
             "id": "accessibility",
             "label": "Accessibility",
             "lead": [
-              {
-                "label": "Check Accessibility",
-                "icon": "person",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Check Accessibility", "lines": ["Check", "Accessibility"], "icon": "check-accessibility-doc", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "language",
             "label": "Language",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "Language",
-                "icon": "globe",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Language", "icon": "language-doc", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "comments",
             "label": "Comments",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "New Comment",
-                "icon": "comment",
-                "kind": "stacked"
-              }
+              { "label": "Comments", "icon": "review-comments", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "markup",
+            "label": "Markup",
+            "launcher": "Track Changes options",
+            "lead": [
+              { "label": "Filter All Markup", "lines": ["Filter All", "Markup"], "icon": "filter-markup", "kind": "stacked", "menu": true }
             ],
             "rows": [
-              [
-                {
-                  "label": "Delete",
-                  "icon": "close",
-                  "menu": true
-                },
-                {
-                  "label": "Previous",
-                  "icon": "chevron-start"
-                },
-                {
-                  "label": "Next",
-                  "icon": "chevron-end"
-                }
-              ],
-              [
-                {
-                  "label": "Show Comments",
-                  "icon": "comment",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
+              [{ "label": "Display for Review", "icon": "markup-view", "kind": "labelled-field", "hideFieldLabel": true, "value": "All Markup", "width": "markup" }],
+              [{ "label": "Show Markup", "icon": "show-markup", "kind": "labelled", "menu": true }],
+              [{ "label": "Reviewing Pane", "icon": "reviewing-pane", "kind": "labelled", "menu": true }]
             ]
           },
           {
             "id": "tracking",
             "label": "Tracking",
-            "launcher": "Tracking options",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "Track Changes",
-                "icon": "edit",
-                "kind": "stacked",
-                "menu": true
-              }
-            ],
-            "rows": [
-              [
-                {
-                  "label": "All Markup",
-                  "icon": "eye",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Show Markup",
-                  "icon": "list",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Reviewing Pane",
-                  "icon": "layout-stack",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
-            ]
-          },
-          {
-            "id": "changes",
-            "label": "Changes",
-            "lead": [
-              {
-                "label": "Accept",
-                "icon": "check",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Reject",
-                "icon": "close",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Tracking", "icon": "tracking-doc", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "compare",
             "label": "Compare",
             "lead": [
-              {
-                "label": "Compare",
-                "icon": "copy",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Compare", "icon": "compare-docs", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "protect",
             "label": "Protect",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "Restrict Editing",
-                "icon": "lock",
-                "kind": "stacked"
-              }
+              { "label": "Protect", "icon": "protect-doc", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "ink",
+            "label": "Ink",
+            "lead": [
+              { "label": "Hide Ink", "lines": ["Hide", "Ink"], "icon": "hide-ink", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "definitions",
+            "label": "Definitions",
+            "lead": [
+              { "label": "Show Defined Terms", "lines": ["Show Defined", "Terms"], "icon": "defined-terms", "kind": "stacked" }
+            ]
+          },
+          {
+            "id": "notes",
+            "label": "Notes",
+            "lead": [
+              { "label": "Linked Notes", "lines": ["Linked", "Notes"], "icon": "linked-notes", "kind": "stacked" }
             ]
           }
         ]
@@ -889,168 +551,84 @@
             "id": "views",
             "label": "Views",
             "lead": [
-              {
-                "label": "Read Mode",
-                "icon": "book",
-                "kind": "stacked"
-              },
-              {
-                "label": "Print Layout",
-                "icon": "file",
-                "kind": "stacked"
-              },
-              {
-                "label": "Web Layout",
-                "icon": "globe",
-                "kind": "stacked"
-              }
+              { "label": "Read Mode", "lines": ["Read", "Mode"], "icon": "view-read-mode", "kind": "stacked" },
+              { "label": "Print Layout", "lines": ["Print", "Layout"], "icon": "view-print-layout", "kind": "stacked", "pressed": true },
+              { "label": "Web Layout", "lines": ["Web", "Layout"], "icon": "view-web-layout", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "Outline",
-                  "icon": "list",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Draft",
-                  "icon": "text",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Outline", "icon": "view-outline", "kind": "labelled" }],
+              [{ "label": "Draft", "icon": "view-draft", "kind": "labelled" }]
             ]
           },
           {
             "id": "immersive",
             "label": "Immersive",
             "lead": [
-              {
-                "label": "Focus",
-                "icon": "frame",
-                "kind": "stacked"
-              },
-              {
-                "label": "Immersive Reader",
-                "icon": "book",
-                "kind": "stacked"
-              }
+              { "label": "Focus", "icon": "view-focus", "kind": "stacked" },
+              { "label": "Immersive Reader", "lines": ["Immersive", "Reader"], "icon": "immersive-reader", "kind": "stacked" }
             ]
           },
           {
             "id": "movement",
             "label": "Page Movement",
             "lead": [
-              {
-                "label": "Vertical",
-                "icon": "arrow-down",
-                "kind": "stacked"
-              },
-              {
-                "label": "Side to Side",
-                "icon": "arrow-end",
-                "kind": "stacked"
-              }
+              { "label": "Vertical", "icon": "page-vertical", "kind": "stacked", "pressed": true },
+              { "label": "Side to Side", "lines": ["Side", "to Side"], "icon": "page-side-to-side", "kind": "stacked" }
             ]
           },
           {
             "id": "show",
             "label": "Show",
             "rows": [
-              [
-                {
-                  "label": "Ruler",
-                  "icon": "size-width",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Gridlines",
-                  "icon": "grid",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Navigation Pane",
-                  "icon": "list",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Ruler", "kind": "checkbox", "checked": true }],
+              [{ "label": "Gridlines", "kind": "checkbox" }],
+              [{ "label": "Navigation Pane", "kind": "checkbox" }]
             ]
           },
           {
             "id": "zoom",
             "label": "Zoom",
             "lead": [
-              {
-                "label": "Zoom",
-                "icon": "search",
-                "kind": "stacked"
-              },
-              {
-                "label": "100%",
-                "icon": "size-width",
-                "kind": "stacked"
-              }
+              { "label": "Zoom", "icon": "zoom-loupe", "kind": "stacked" },
+              { "label": "100%", "icon": "zoom-100", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "One Page",
-                  "icon": "file",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Multiple Pages",
-                  "icon": "copy",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Page Width",
-                  "icon": "size-width",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "One Page", "icon": "one-page", "kind": "labelled" }],
+              [{ "label": "Multiple Pages", "icon": "multiple-pages", "kind": "labelled" }],
+              [{ "label": "Page Width", "icon": "page-width", "kind": "labelled" }]
             ]
           },
           {
             "id": "window",
             "label": "Window",
-            "lead": [
-              {
-                "label": "New Window",
-                "icon": "external",
-                "kind": "stacked"
-              },
-              {
-                "label": "Arrange All",
-                "icon": "layout-stack",
-                "kind": "stacked"
-              },
-              {
-                "label": "Split",
-                "icon": "layout-free",
-                "kind": "stacked"
-              }
+            "columns": [
+              [
+                [{ "label": "New Window", "icon": "window-new", "kind": "labelled" }],
+                [{ "label": "Arrange All", "icon": "window-arrange", "kind": "labelled" }],
+                [{ "label": "Split", "icon": "window-split", "kind": "labelled" }]
+              ],
+              [
+                [{ "label": "View Side by Side", "icon": "window-side-by-side", "kind": "labelled", "disabled": true }],
+                [{ "label": "Synchronous Scrolling", "icon": "window-sync-scroll", "kind": "labelled", "disabled": true }],
+                [{ "label": "Reset Window Position", "icon": "window-reset-pos", "kind": "labelled", "disabled": true }]
+              ]
+            ],
+            "endLead": [
+              { "label": "Switch Windows", "lines": ["Switch", "Windows"], "icon": "switch-windows", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "macros",
             "label": "Macros",
             "lead": [
-              {
-                "label": "Macros",
-                "icon": "code",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Macros", "icon": "macros-doc", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "document-props",
+            "label": "Document",
+            "lead": [
+              { "label": "Properties", "icon": "doc-properties", "kind": "stacked" }
             ]
           }
         ]
@@ -1063,24 +641,45 @@
             "id": "help",
             "label": "Help",
             "lead": [
+              { "label": "Help", "icon": "help-circle", "kind": "stacked" },
+              { "label": "Contact Support", "lines": ["Contact", "Support"], "icon": "contact-support", "kind": "stacked" },
+              { "label": "Feedback", "icon": "feedback-person", "kind": "stacked" },
+              { "label": "Show Training", "lines": ["Show", "Training"], "icon": "show-training", "kind": "stacked" }
+            ],
+            "rows": [
+              [{ "label": "What's New", "icon": "whats-new", "kind": "labelled" }]
+            ]
+          },
+          {
+            "id": "mobile",
+            "label": "Mobile",
+            "lead": [
+              { "label": "Get Mobile App", "lines": ["Get Mobile", "App"], "icon": "mobile-phone", "kind": "stacked" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pdf-tools",
+        "label": "PDF Tools",
+        "groups": [
+          {
+            "id": "create-pdf",
+            "label": "Document PDF",
+            "lead": [
               {
-                "label": "Help",
-                "icon": "info",
+                "label": "Create PDF",
+                "icon": "pdf-share-link",
                 "kind": "stacked"
               },
               {
-                "label": "Contact Support",
-                "icon": "people",
+                "label": "Create PDF and Share link",
+                "icon": "pdf-share-link",
                 "kind": "stacked"
               },
               {
-                "label": "Feedback",
-                "icon": "comment",
-                "kind": "stacked"
-              },
-              {
-                "label": "Show Training",
-                "icon": "play",
+                "label": "Create PDF and Share by Mail",
+                "icon": "pdf-share-mail",
                 "kind": "stacked"
               }
             ]
@@ -1105,13 +704,15 @@
           [
             {
               "label": "Cut",
-              "icon": "cut"
+              "icon": "cut",
+              "disabled": true
             }
           ],
           [
             {
               "label": "Copy",
-              "icon": "copy"
+              "icon": "copy",
+              "disabled": true
             }
           ],
           [
@@ -1137,16 +738,8 @@
             {
               "label": "Font size",
               "kind": "field",
-              "value": "12",
+              "value": "11",
               "width": "narrow"
-            },
-            {
-              "label": "Phonetic Guide",
-              "icon": "phonetic-guide"
-            },
-            {
-              "label": "Character border",
-              "icon": "character-border"
             }
           ],
           [
@@ -1198,12 +791,8 @@
             },
             {
               "label": "Change case",
-              "icon": "text-format",
+              "icon": "change-case",
               "menu": true
-            },
-            {
-              "kind": "separator",
-              "label": ""
             },
             {
               "label": "Increase font size",
@@ -1212,18 +801,6 @@
             {
               "label": "Decrease font size",
               "icon": "text-smaller"
-            },
-            {
-              "kind": "separator",
-              "label": ""
-            },
-            {
-              "label": "Character shading",
-              "icon": "character-shading"
-            },
-            {
-              "label": "Enclosed character",
-              "icon": "enclosed-character"
             }
           ]
         ]
@@ -1281,10 +858,6 @@
               "icon": "text-justify"
             },
             {
-              "label": "Distributed",
-              "icon": "text-distributed"
-            },
-            {
               "kind": "separator",
               "label": ""
             },
@@ -1310,15 +883,6 @@
               "label": ""
             },
             {
-              "label": "Asian layout",
-              "icon": "character-spacing",
-              "menu": true
-            },
-            {
-              "kind": "separator",
-              "label": ""
-            },
-            {
               "label": "Sort",
               "icon": "sort"
             },
@@ -1336,7 +900,7 @@
         "lead": [
           {
             "label": "Styles",
-            "icon": "text-format",
+            "icon": "styles-brush",
             "kind": "stacked",
             "menu": true
           }
@@ -1345,12 +909,37 @@
       {
         "id": "editing",
         "label": "Editing",
+        "hideLabel": true,
         "lead": [
           {
             "label": "Editing",
-            "icon": "search",
+            "icon": "editing-lens",
             "kind": "stacked",
             "menu": true
+          }
+        ]
+      },
+      {
+        "id": "document-pdf",
+        "label": "Document PDF",
+        "lead": [
+          {
+            "label": "Create PDF and Share link",
+            "lines": ["Create PDF", "and Share link"],
+            "icon": "pdf-share-link",
+            "kind": "stacked"
+          },
+          {
+            "label": "Create PDF and Share by Mail",
+            "lines": ["Create PDF and", "Share by Mail"],
+            "icon": "pdf-share-mail",
+            "kind": "stacked"
+          },
+          {
+            "label": "Request Signatures",
+            "lines": ["Request", "Signatures"],
+            "icon": "request-signatures",
+            "kind": "stacked"
           }
         ]
       },
@@ -1360,23 +949,66 @@
         "lead": [
           {
             "label": "Dictate",
-            "icon": "mic",
+            "icon": "dictate",
             "kind": "stacked",
             "menu": true
           }
         ]
       },
       {
+        "id": "sensitivity",
+        "label": "Sensitivity",
+        "lead": [
+          {
+            "label": "Sensitivity",
+            "icon": "sensitivity",
+            "kind": "stacked",
+            "disabled": true
+          }
+        ]
+      },
+      {
+        "id": "add-ins",
+        "label": "Add-ins",
+        "lead": [
+          {
+            "label": "Add-ins",
+            "icon": "add-ins",
+            "kind": "stacked"
+          }
+        ]
+      },
+      {
         "id": "editor",
         "label": "Editor",
+        "hideLabel": true,
         "lead": [
           {
             "label": "Editor",
-            "icon": "pen",
+            "icon": "editor-pen",
             "kind": "stacked"
           }
         ]
       }
+    ],
+    "styleSets": [
+      { "id": "current", "name": "Default", "titleText": "Title", "headingText": "Heading 1", "variant": "default" },
+      { "id": "basic-elegant", "name": "Basic (Elegant)", "titleText": "TITLE", "headingText": "HEADING 1", "variant": "caps-blue" },
+      { "id": "basic-simple", "name": "Basic (Simple)", "titleText": "TITLE", "headingText": "Heading 1", "variant": "caps-rule" },
+      { "id": "basic-stylish", "name": "Basic (Stylish)", "titleText": "Title", "headingText": "HEADING 1", "variant": "serif" },
+      { "id": "black-white-classic", "name": "Black & White (Classic)", "titleText": "TITLE", "headingText": "HEADING 1", "variant": "caps-dark" },
+      { "id": "black-white-numbered", "name": "Black & White (Numbered)", "titleText": "HEADING 1", "headingText": "Heading 2", "variant": "bar-num" },
+      { "id": "black-white-simple", "name": "Black & White (Simple)", "titleText": "1  HEADING 1", "headingText": "Heading 2", "variant": "numbered" },
+      { "id": "casual", "name": "Casual", "titleText": "Title", "headingText": "Heading 1", "variant": "warm" },
+      { "id": "centered", "name": "Centered", "titleText": "TITLE", "headingText": "Heading 1", "variant": "caps-centered" },
+      { "id": "lines-distinctive", "name": "Lines (Distinctive)", "titleText": "TITLE", "headingText": "Heading 1", "variant": "boxed" },
+      { "id": "lines-simple", "name": "Lines (Simple)", "titleText": "Heading 1", "headingText": "Heading 2", "variant": "minimal" },
+      { "id": "Lines-stylish", "name": "Lines (Stylish)", "titleText": "Title", "headingText": "TITLE", "variant": "bold-sans" },
+      { "id": "minimalist", "name": "Minimalist", "titleText": "TITLE", "headingText": "Heading 1", "variant": "editorial" },
+      { "id": "shaded", "name": "Shaded", "titleText": "TITLE", "headingText": "HEADING 1", "variant": "classic" },
+      { "id": "word-2003", "name": "Classic", "titleText": "Title", "headingText": "Heading 1", "variant": "slate" },
+      { "id": "word-2010", "name": "Modern", "titleText": "Title", "headingText": "Heading 1", "variant": "compact" },
+      { "id": "traditional", "name": "Traditional", "titleText": "Title", "headingText": "Heading 1", "variant": "serif" }
     ],
     "document": [
       {
@@ -1432,17 +1064,139 @@
     ],
     "status": {
       "page": "Page 1 of 1",
-      "words": "214 words",
-      "language": "English (United Kingdom)",
-      "predictions": "Text Predictions: On",
+      "words": "0 words",
+      "language": "English (United States)",
+      "predictions": "Text Predictions: Off",
       "accessibility": "Accessibility: Good to go",
-      "zoom": "100%"
+      "zoom": "90%"
+    },
+    "copilotPane": {
+      "heading": "What would you like to create?",
+      "body": "Let me know what you’d like to do, and I can go ahead and start editing your document.",
+      "prompts": [
+        { "prefix": "List the pros and cons of ", "emphasis": "the different project ideas" },
+        { "prefix": "Suggest me engaging title for ", "emphasis": "description" }
+      ],
+      "allowEditing": "Allow editing",
+      "placeholder": "Edit with Copilot",
+      "menuLabel": "Copilot menu",
+      "moreLabel": "More Copilot actions"
+    },
+    "backstage": {
+      "backLabel": "Back to document",
+      "primaryNav": [
+        { "id": "home", "label": "Home", "icon": "bs-home", "active": true },
+        { "id": "new", "label": "New", "icon": "bs-new" },
+        { "id": "open", "label": "Open", "icon": "bs-open" }
+      ],
+      "docNav": [
+        { "id": "info", "label": "Info", "icon": "bs-info" },
+        { "id": "save", "label": "Save", "icon": "bs-save" },
+        { "id": "save-as", "label": "Save As", "icon": "bs-save-as" },
+        { "id": "save-pdf", "label": "Save as\nPDF" },
+        { "id": "print", "label": "Print", "icon": "bs-print" },
+        { "id": "share", "label": "Share", "icon": "bs-share" },
+        { "id": "share-pdf", "label": "Share as\nPDF link" },
+        { "id": "export", "label": "Export", "icon": "bs-export" },
+        { "id": "close", "label": "Close", "icon": "bs-close-doc" }
+      ],
+      "footerNav": [
+        { "id": "account", "label": "Account", "icon": "bs-account" },
+        { "id": "feedback", "label": "Feedback", "icon": "feedback-person" },
+        { "id": "options", "label": "Options", "icon": "bs-options" }
+      ],
+      "heroHeading": "What would you like to create today?",
+      "promptPlaceholder": "Describe the document you’d like to write",
+      "createLabel": "Create",
+      "suggestions": [
+        "Draft a resume",
+        "Draft a small business plan",
+        "Draft a travel itinerary",
+        "Draft a cover letter",
+        "Draft an interview prep plan"
+      ],
+      "newHeading": "New",
+      "moreTemplates": "More templates",
+      "cloudNotice": "New files are automatically created in your default cloud location. You can always rename the file or move it to a different location.",
+      "cloudLink": "Open default cloud location",
+      "templates": [
+        { "id": "blank", "title": "Blank document", "variant": "blank" },
+        { "id": "tour", "title": "Welcome to Document", "variant": "tour" },
+        { "id": "toc", "title": "Insert your first table of cont...", "variant": "toc" },
+        { "id": "grant", "title": "Grant proposal", "variant": "grant" },
+        { "id": "minutes", "title": "Team meeting minutes", "variant": "minutes" },
+        { "id": "proposal", "title": "One-page business proposal", "variant": "proposal" }
+      ],
+      "recommendedHeading": "Recommended for You",
+      "recommended": [
+        {
+          "id": "rec-1",
+          "author": "Maya Chen",
+          "activity": "commented on",
+          "title": "Harbour_Survey_Q4_Proposal.docx",
+          "date": "12 November",
+          "icon": "comment",
+          "preview": "survey"
+        },
+        {
+          "id": "rec-2",
+          "activity": "You opened this file",
+          "title": "Breakwater Tide Analysis.docx",
+          "date": "10 November",
+          "icon": "edit",
+          "preview": "tide"
+        },
+        {
+          "id": "rec-3",
+          "author": "Alex Rivera",
+          "activity": "shared this file",
+          "title": "Coastal Mooring Entry Guidelines.docx",
+          "date": "8 November",
+          "icon": "people",
+          "preview": "mooring"
+        },
+        {
+          "id": "rec-4",
+          "author": "Sam Patel",
+          "activity": "shared this file",
+          "title": "Spring Tide Inspection Report.docx",
+          "date": "5 November",
+          "icon": "people",
+          "preview": "inspection"
+        }
+      ],
+      "tabs": [
+        { "id": "recent", "label": "Recent" },
+        { "id": "favorites", "label": "Favorites" },
+        { "id": "shared", "label": "Shared with Me" }
+      ],
+      "searchPlaceholder": "Search for a file",
+      "filterLabel": "Filter list",
+      "columns": { "name": "Name", "modified": "Date modified", "owner": "Owner" },
+      "files": [
+        { "id": "f1", "name": "Harbour survey notes.docx", "location": "Documents › Surveys", "modified": "Just now", "owner": "Jamie Park", "favorite": true },
+        { "id": "f2", "name": "East breakwater tide log.docx", "location": "Shared › Coastal Ops", "modified": "Yesterday at 4:18 PM", "owner": "Maya Chen", "shared": true },
+        { "id": "f3", "name": "Mooring renewal checklist.docx", "location": "Documents › Operations", "modified": "Tue at 11:05 AM", "owner": "Alex Rivera", "favorite": true, "shared": true },
+        { "id": "f4", "name": "Dredging schedule 2026.docx", "location": "Shared › Engineering", "modified": "Nov 8", "owner": "Sam Patel", "shared": true },
+        { "id": "f5", "name": "Lighthouse steps repair spec.docx", "location": "Documents › Maintenance", "modified": "Nov 4", "owner": "Jamie Park" },
+        { "id": "f6", "name": "Quarterly safety briefing.docx", "location": "Documents › Operations", "modified": "Oct 29", "owner": "Maya Chen" }
+      ]
     },
     "copy": {
+      "backstageHome": "File home",
+      "backstageNav": "File menu",
+      "feedbackTitle": "Share thoughts",
+      "helpTitle": "Help",
+      "thisDocument": "This Document",
+      "builtIn": "Built-In",
+      "resetStyleSet": "Reset to the Default Style Set",
+      "saveStyleSet": "Save as a New Style Set...",
+      "moreStyleSets": "More style sets",
+      "styleGallery": "Document formatting style sets",
       "appMark": "Documents",
       "undo": "Undo",
       "undoOptions": "Undo options",
-      "redo": "Redo",
+      "redo": "Repeat",
       "save": "Save",
       "autoSave": "AutoSave",
       "on": "On",
@@ -1451,6 +1205,8 @@
       "touchModeOptions": "Touch/Mouse Mode options",
       "customize": "Customise Quick Access Toolbar",
       "search": "Search",
+      "voiceSearch": "Search by voice",
+      "upgradePlan": "Upgrade your plan",
       "minimise": "Minimise",
       "maximise": "Maximise",
       "close": "Close",
@@ -1458,7 +1214,16 @@
       "comments": "Comments",
       "editing": "Editing",
       "share": "Share",
+      "catchUp": "Catch up",
+      "copilot": "Copilot",
       "collapse": "Collapse the ribbon",
+      "horizontalRuler": "Horizontal ruler",
+      "verticalRuler": "Vertical ruler",
+      "draftPrompt": "Describe what you’d like to draft with Copilot",
+      "draftMore": "More draft options",
+      "draftVoice": "Dictate prompt",
+      "proofing": "No proofing errors",
+      "macros": "Record macro",
       "navigation": "Navigation",
       "navigationSearch": "Search document",
       "headings": "Headings",
@@ -1477,7 +1242,12 @@
       "webLayout": "Web Layout",
       "zoom": "Zoom",
       "zoomOut": "Zoom out",
-      "zoomIn": "Zoom in"
+      "zoomIn": "Zoom in",
+      "firstRecord": "First record",
+      "previousRecord": "Previous record",
+      "currentRecord": "Current record",
+      "nextRecord": "Next record",
+      "lastRecord": "Last record"
     }
   }
 }
