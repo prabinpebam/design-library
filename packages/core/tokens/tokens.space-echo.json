@@ -1586,6 +1586,16 @@
         "$description": "Between the label, the figure, the trend line and the change: one statistic reads as one group (echoed for space contexts)"
       }
     },
+    "sticky-bar": {
+      "$extensions": {
+        "owner": "StickyBar"
+      },
+      "padding-block": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Above and below the bar's controls, at rest and stuck alike, so its geometry never changes (echoed for space contexts)"
+      }
+    },
     "switch": {
       "$extensions": {
         "owner": "Switch"

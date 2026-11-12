@@ -37,6 +37,7 @@ const frostedPlaces = new Map([
   ['packages/core/css/fundamentals/avatar-group.css', 'FR4 avatar group popup'],
   ['packages/core/css/fundamentals/tooltip.css', 'FR5 tooltips'],
   ['packages/core/css/compounds/floating-bar.css', 'FR3 floating toolbar'],
+['packages/core/css/layouts/sticky-bar.css', 'FR3 a section’s bar while it is stuck under the header (StickyBar, DesignUp LR4)'],
   ['packages/core/css/compounds/notifications.css', 'FR6 notification pills'],
   ['packages/core/css/compounds/image-generation.css', 'FR6 status pill over a picture'],
   ['packages/core/css/compounds/sheet.css', 'FR7 standard sheets'],

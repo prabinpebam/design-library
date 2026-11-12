@@ -18,6 +18,9 @@
   "Footer": {
     "--c-footer-links-column-min": "A two-column section (FooterSection.columns = 2): the narrowest a column of links gets before the section falls back to one column (default 8em). Short labels such as years can take less."
   },
+  "StickyBar": {
+    "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
+  },
   "Section": {
     "--c-section-gap": "Between a section's head (heading and intro) and its content (default space.stack-section). A theme whose page gap is close to it sets the group gap here, so a heading stays visibly with its content.",
     "--c-section-content-gap": "Between the parts of a section's content (default space.stack-group)."

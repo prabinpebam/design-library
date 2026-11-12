@@ -45,6 +45,8 @@ export type { MenuButtonProps, MenuButtonItem } from './fundamentals/MenuButton'
 export { PageLayout } from './layouts/PageLayout';
 export type { PageLayoutProps } from './layouts/PageLayout';
 export { ListDetail } from './layouts/ListDetail';
+export { StickyBar } from './layouts/StickyBar';
+export type { StickyBarProps } from './layouts/StickyBar';
 export type { ListDetailProps } from './layouts/ListDetail';
 export { Footer } from './compounds/Footer';
 export { Hero } from './layouts/Hero';

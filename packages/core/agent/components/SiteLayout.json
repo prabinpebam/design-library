@@ -6,7 +6,7 @@
   "file": "@design-library/core/react/layouts/SiteLayout.tsx",
   "summary": "A website's page: the site header at the top (it stays while the page scrolls, on the chrome material: frosted when the setting is on, with its hairline only while content is under it), the page's parts in one centred column spaced as sections, and the footer across the full width. The window scrolls; the margins hold at every width. Not for an app with its own panes (ChatLayout, ListDetail) or for documentation with a side navigation (LibraryLayout). Frame settings (ID4): the column's width, margin, gap and the space above the first band are theme settings, set with `applySettings` from `@design-library/core/theme` (the allow-list is `tokens/settings.json`).",
   "a11y": [
-    "A skip link first, to the `main` landmark; the header slot sits in a `banner` (`header`) landmark and the Footer brings its own `contentinfo`. The column's parts keep their own headings; give the page one level-1 heading (usually the Hero's)."
+    "A skip link first, to the `main` landmark; the header slot sits in a `banner` (`header`) landmark and the Footer brings its own `contentinfo`. The column's parts keep their own headings; give the page one level-1 heading (usually the Hero's). The header's measured height is public as `--dl-chrome-block` on the layout's root, so anything that sticks under the header (StickyBar) starts below it and focused content clears it."
   ],
   "keys": [],
   "sealed": true,

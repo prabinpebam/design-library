@@ -26,7 +26,8 @@ export interface SiteLayoutProps extends DataAttributes {
  * @tier 3
  * @a11y A skip link first, to the `main` landmark; the header slot sits in a `banner` (`header`) landmark and the
  * Footer brings its own `contentinfo`. The column's parts keep their own headings; give the page one level-1 heading
- * (usually the Hero's).
+ * (usually the Hero's). The header's measured height is public as `--dl-chrome-block` on the layout's root, so
+ * anything that sticks under the header (StickyBar) starts below it and focused content clears it.
  */
 export function SiteLayout({ header, children, footer, width = 'wide', skipLabel = 'Skip to content', opening = 'spaced', ...data }: SiteLayoutProps) {
   const mainId = useId();

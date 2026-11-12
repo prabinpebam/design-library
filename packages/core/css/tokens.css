@@ -586,6 +586,8 @@
   --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-padding-block: var(--space-stack-page);
   --c-site-layout-skip-radius: var(--radius-none);
+  --c-sticky-bar-padding-block: var(--space-stack-item);
+  --c-sticky-bar-layer: var(--layer-raised);
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
   --c-screen-preview-height: 40rem;
@@ -1765,6 +1767,7 @@
   --c-slider-icon-gap: var(--space-inline-pair);
   --c-statistic-change-gap: var(--space-inline-pair);
   --c-statistic-gap: var(--space-stack-pair);
+  --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-switch-gap: var(--space-inline-pair);
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
@@ -2046,6 +2049,7 @@
   --c-slider-icon-gap: var(--space-inline-pair);
   --c-statistic-change-gap: var(--space-inline-pair);
   --c-statistic-gap: var(--space-stack-pair);
+  --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-switch-gap: var(--space-inline-pair);
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
@@ -2327,6 +2331,7 @@
   --c-slider-icon-gap: var(--space-inline-pair);
   --c-statistic-change-gap: var(--space-inline-pair);
   --c-statistic-gap: var(--space-stack-pair);
+  --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-switch-gap: var(--space-inline-pair);
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
@@ -2608,6 +2613,7 @@
   --c-slider-icon-gap: var(--space-inline-pair);
   --c-statistic-change-gap: var(--space-inline-pair);
   --c-statistic-gap: var(--space-stack-pair);
+  --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-switch-gap: var(--space-inline-pair);
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);

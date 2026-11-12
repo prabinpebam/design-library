@@ -27,6 +27,7 @@ export { default as pageHeaderStories } from './PageHeader.stories';
 export { default as listDetailStories } from './ListDetail.stories';
 export { default as footerStories } from './Footer.stories';
 export { default as heroStories } from './Hero.stories';
+export { default as stickyBarStories } from './StickyBar.stories';
 export { default as notificationsStories } from './Notifications.stories';
 export { default as alertStories } from './Alert.stories';
 export { default as errorSummaryStories } from './ErrorSummary.stories';

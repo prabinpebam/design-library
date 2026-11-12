@@ -1,0 +1,25 @@
+/* StickyBar (LR4): a bar of controls that sticks within its section, under the site header. Geometry never changes
+   between rest and stuck: only the fill, the backdrop and the shadow appear while it is stuck. */
+@layer layouts {
+  [data-dl='sticky-bar'] {
+    position: sticky;
+    inset-block-start: var(--dl-chrome-block, 0px);
+    /* Above the section's content, under SiteLayout's header, so the bar slides beneath it. */
+    z-index: var(--c-sticky-bar-layer);
+    isolation: isolate;
+    padding-block: var(--c-sticky-bar-padding-block);
+  }
+
+  /* Reaches into the page margin and pads back by it: aligned with the column at rest, one strip under the header stuck. */
+  [data-dl='sticky-bar'][data-bleed] {
+    margin-inline: calc(-1 * var(--c-site-layout-margin));
+    padding-inline: var(--c-site-layout-margin);
+  }
+
+  [data-dl='sticky-bar'][data-stuck] {
+    background-color: var(--material-floating-bg);
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--shadow-raised);
+  }
+}

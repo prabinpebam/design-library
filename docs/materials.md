@@ -114,7 +114,7 @@ Frosted applies to every MT6 chrome and MT7 floating surface, **when the global 
 | --- | --- | --- | --- |
 | FR1 | Sticky site and app headers (SiteLayout, AppLayout, ChatLayout top bar) | chrome | content scrolls under (AJ1) |
 | FR2 | The library title bar and the Design tool's top bar | chrome | as FR1 |
-| FR3 | FloatingBar (template preview toolbar, Design tool tools) | floating | sits over the canvas and pages |
+| FR3 | FloatingBar (template preview toolbar, Design tool tools); StickyBar while stuck under the header | floating | sits over the canvas and pages, or over a section's scrolling content |
 | FR4 | Popovers, menus, select and combobox lists, date and colour pickers | floating | transient, light-dismiss ([Fluent acrylic](#sources): "used only for transient, light-dismiss surfaces") |
 | FR5 | Tooltips | floating | small and transient; solid when its text is long |
 | FR6 | Notification pills | floating | over any page |
