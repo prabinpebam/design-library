@@ -78,6 +78,9 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
     if (e.button !== 0) return;
     drag.current = { y: e.clientY, moved: false, id: ids[i] };
     e.currentTarget.setPointerCapture(e.pointerId);
+    // A move re-orders the rows under the pointer, which can drop the capture: the drag ends wherever the pointer is let go.
+    window.addEventListener('pointerup', onUp, { once: true });
+    window.addEventListener('pointercancel', onUp, { once: true });
   };
   const onMove = (e: React.PointerEvent<HTMLSpanElement>) => {
     const d = drag.current;
@@ -91,6 +94,8 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
     if (to !== from) move(from, to);
   };
   const onUp = () => {
+    window.removeEventListener('pointerup', onUp);
+    window.removeEventListener('pointercancel', onUp);
     setDragId(null);
     setTimeout(() => (drag.current = null));
   };

@@ -56,6 +56,11 @@
     isolation: isolate;
   }
 
+  /* The handle makes each row as tall as a control: the cells' words centre on it, so a row reads as one line. */
+  [data-dl='data-table'][data-reorder] tbody > tr > :is(th, td) {
+    vertical-align: middle;
+  }
+
   [data-dl='data-table'][data-reorder] tbody > tr > th > [data-dl-part='row'] {
     display: inline-flex;
     align-items: center;
