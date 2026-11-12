@@ -1487,6 +1487,18 @@
       "accessibility": "Accessibility: Good to go",
       "zoom": "90%"
     },
+    "copilotPane": {
+      "heading": "What would you like to create?",
+      "body": "Let me know what you’d like to do, and I can go ahead and start editing your document.",
+      "prompts": [
+        { "prefix": "List the pros and cons of ", "emphasis": "the different project ideas" },
+        { "prefix": "Suggest me engaging title for: ", "emphasis": "description" }
+      ],
+      "allowEditing": "Allow editing",
+      "placeholder": "Edit with Copilot",
+      "menuLabel": "Copilot menu",
+      "moreLabel": "More Copilot actions"
+    },
     "copy": {
       "appMark": "Documents",
       "undo": "Undo",

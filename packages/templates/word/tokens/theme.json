@@ -1,39 +1,66 @@
 {
  "c.icon.accent-1": {
-  "$value": "#ffff00",
-  "$description": "Highlight's ink bar: 01-home.png Font row 3 #FFFF00."
+  "$value": {
+   "light": "#ffff00",
+   "dark": "#ffff00"
+  },
+  "$description": "Highlight's ink bar: 01-home.png and 13-dark-home.png #FFFF00."
  },
  "c.icon.accent-2": {
-  "$value": "#ee0000",
-  "$description": "Font colour's red bar: 01-home.png Font row 3 #EE0000."
+  "$value": {
+   "light": "#ee0000",
+   "dark": "#ee0000"
+  },
+  "$description": "Font colour's red bar and PDF loop: 01-home.png and 13-dark-home.png #EE0000."
  },
  "c.icon.accent-3": {
-  "$value": "#1e8bcd",
-  "$description": "Bullets, numbers, sub/superscript, font grow/shrink and styles brush: 01-home.png #1E8BCD."
+  "$value": {
+   "light": "#1e8bcd",
+   "dark": "#4ba3ee"
+  },
+  "$description": "Bullets, numbers, sub/superscript, font grow/shrink and styles brush: #1E8BCD light, #4BA3EE dark (13-dark-home.png)."
  },
  "c.icon.accent-4": {
-  "$value": "#0f6cbd",
-  "$description": "Dictate microphone rim: 01-home.png Voice group."
+  "$value": {
+   "light": "#83beec",
+   "dark": "#0063b1"
+  },
+  "$description": "Dictate microphone capsule fill: #83BEEC light (01-home.png), #0063B1 dark (13-dark-home.png)."
  },
  "c.icon.accent-5": {
-  "$value": "#9b40a3",
-  "$description": "Title bar Save icon (#9B40A3) and Clear formatting eraser: 01-home.png."
+  "$value": {
+   "light": "#9b40a3",
+   "dark": "#d6d6d6"
+  },
+  "$description": "Title bar Save icon (#9B40A3 light, monochrome #D6D6D6 dark in 13-dark-home.png) and Clear formatting eraser."
  },
  "c.icon.accent-6": {
-  "$value": "#dc4e1a",
-  "$description": "Add-ins tiles (#DC4E1A) and Paste/Format Painter warm amber (#D48B28): 01-home.png."
+  "$value": {
+   "light": "#dc4e1a",
+   "dark": "#cf3a03"
+  },
+  "$description": "Add-ins tiles: #DC4E1A light (01-home.png), #CF3A03 dark (13-dark-home.png)."
  },
  "c.icon.accent-7": {
-  "$value": "#185abd",
-  "$description": "Editor nib, Text effects A and Share/PDF actions: 01-home.png #185ABD."
+  "$value": {
+   "light": "#185abd",
+   "dark": "#2b7cd3"
+  },
+  "$description": "Editor nib, Text effects A and Acrobat badges: #185ABD light, #2B7CD3 dark (13-dark-home.png)."
  },
  "c.icon.accent-8": {
-  "$value": "#d5e6f6",
-  "$description": "Shading's bar under the paint bucket: 01-home.png #D5E6F6."
+  "$value": {
+   "light": "#d5e6f6",
+   "dark": "#3678a6"
+  },
+  "$description": "Shading bar under the paint bucket: #D5E6F6 light, #3678A6 dark (13-dark-home.png)."
  },
  "c.icon.accent-fill": {
-  "$value": "#f8db8f",
-  "$description": "Paste's clipboard board: 01-home.png #F8DB8F."
+  "$value": {
+   "light": "#f8db8f",
+   "dark": "#e39123"
+  },
+  "$description": "Paste clipboard board and Format Painter bristles: #F8DB8F light, #E39123 dark (13-dark-home.png)."
  },
  "c.button.inherit-disabled": {
   "$value": 38,
@@ -123,128 +150,190 @@
  "c.tabs.text": {
   "$value": {
    "light": "#242424",
-   "dark": "#ffffff"
+   "dark": "#e0e0e0"
   },
-  "$description": "Tab labels: 01-home.png #242424 on the frame; white on Dark Gray."
+  "$description": "Tab labels: #242424 light (01-home.png), #E0E0E0 dark (13-dark-home.png)."
  },
  "c.tabs.selected-text": {
-  "$value": "{c.tabs.text}",
-  "$description": "The selected tab keeps the label colour; weight and the underline mark it."
+  "$value": {
+   "light": "#242424",
+   "dark": "#fafafa"
+  },
+  "$description": "Selected tab label: #242424 light, #FAFAFA dark (13-dark-home.png)."
  },
  "color.map.selection-indicator": {
   "$value": {
    "light": "#185abd",
-   "dark": "#a9c4f5"
+   "dark": "#6899f3"
   },
-  "$description": "Selected-tab underline: 01-home.png #185ABD; Dark Gray light blue."
+  "$description": "Selected-tab underline: #185ABD light, #6899F3 dark (13-dark-home.png)."
  },
  "color.map.nav-shell": {
   "$value": {
    "light": "#eceff2",
-   "dark": "#54585b"
+   "dark": "#212629"
   },
-  "$description": "Title bar: 01-home.png Windows 11 Mica #ECEFF2; Dark Gray #54585B."
+  "$description": "Title bar and tab row Mica: #ECEFF2 light (01-home.png), #212629 dark (13-dark-home.png)."
  },
  "color.map.nav-shell-on": {
   "$value": {
    "light": "#242424",
-   "dark": "#ffffff"
+   "dark": "#eaeaea"
   },
-  "$description": "Title bar text and icons: #242424 on Windows 11 Mica (01-home.png); white on Dark Gray."
+  "$description": "Title bar text and icons: #242424 light, #EAEAEA dark (13-dark-home.png)."
  },
  "color.map.nav-on": {
   "$value": {
    "light": "#424242",
-   "dark": "#262626"
+   "dark": "#e0e0e0"
   },
-  "$description": "Status bar text: 01-home.png #424242."
+  "$description": "Status bar text: #424242 light, #E0E0E0 dark (13-dark-home.png)."
  },
  "color.map.nav": {
   "$value": {
    "light": "#f2ece7",
-   "dark": "#54585b"
+   "dark": "#221b15"
   },
-  "$description": "Document canvas warm neutral: 01-home.png #F2ECE7; Dark Gray #54585B."
+  "$description": "Document canvas: warm stone #F2ECE7 light, warm near-black #221B15 dark (13-dark-home.png)."
+ },
+ "color.map.band": {
+  "$value": {
+   "light": "#faf9f8",
+   "dark": "#181818"
+  },
+  "$description": "Copilot right pane surface: #FAF9F8 light, #181818 dark (13-dark-home.png x=980 y=400)."
+ },
+ "color.map.band-on": {
+  "$value": {
+   "light": "#242424",
+   "dark": "#eaeaea"
+  },
+  "$description": "Copilot right pane text."
+ },
+ "color.map.feature-tint": {
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#25201c"
+  },
+  "$description": "Ruler printable strip: #FFFFFF light (01-home.png), #25201C dark (13-dark-home.png x=450 y=151)."
+ },
+ "color.map.chip-tint": {
+  "$value": {
+   "light": "#efefef",
+   "dark": "#2e2e2e"
+  },
+  "$description": "Copilot prompt suggestion chips: #EFEFEF light, #2E2E2E dark (13-dark-home.png y=295)."
  },
  "color.accent": {
   "$value": {
    "light": "#185abd",
-   "dark": "#a9c4f5"
+   "dark": "#598fec"
   },
-  "$description": "Primary action and active selection accent (#185ABD)."
+  "$description": "Primary accent (#185ABD light, #598FEC dark)."
  },
  "color.bg": {
   "$value": {
    "light": "#fafafa",
-   "dark": "#bdbdbd"
+   "dark": "#1f1f1f"
   },
-  "$description": "Base window surface (#FAFAFA matching root so chrome sits at depth 0); #BDBDBD in Dark Gray."
+  "$description": "Base chrome/search-box surface: #FAFAFA light, #1F1F1F dark (13-dark-home.png x=500 y=18)."
  },
  "color.bg-raised": {
   "$value": {
    "light": "#ffffff",
-   "dark": "#bdbdbd"
+   "dark": "#292929"
   },
-  "$description": "Ribbon card and panes: white (01-home.png); Dark Gray card #BDBDBD."
+  "$description": "Ribbon card, Copilot companion card, chrome buttons and ruler printable strip: #FFFFFF light, #292929 dark (13-dark-home.png)."
  },
  "color.bg-sunken": {
   "$value": {
    "light": "#f5f5f5",
-   "dark": "#bdbdbd"
+   "dark": "#141414"
   },
-  "$description": "Status bar: 01-home.png #F5F5F5."
+  "$description": "Status bar and scrollbar track: #F5F5F5 light, #141414 dark (13-dark-home.png y=758)."
  },
  "color.text": {
   "$value": {
    "light": "#242424",
-   "dark": "#262626"
+   "dark": "#eaeaea"
   },
-  "$description": "Ribbon and document text: 01-home.png #242424."
+  "$description": "Ribbon, pane and dark-page text: #242424 light, #EAEAEA dark (13-dark-home.png)."
  },
  "color.text-muted": {
   "$value": {
    "light": "#616161",
-   "dark": "#424242"
+   "dark": "#a8a8a8"
   },
-  "$description": "Secondary text (search placeholder, draft prompt, ruler digits)."
+  "$description": "Secondary text (search placeholder, ruler digits, prompt hints): #616161 light, #A8A8A8 dark."
  },
  "color.border": {
   "$value": {
    "light": "#dcdcdc",
-   "dark": "#a0a0a0"
+   "dark": "#484848"
   },
-  "$description": "Hairlines on ribbon groups, search, draft pill, page and status bar (01-home.png #D9D9D9-#DEDEDE)."
+  "$description": "Hairlines on ribbon groups, Copilot pane divider, composer and status bar: #DCDCDC light, #484848 dark (13-dark-home.png)."
  },
  "color.border-strong": {
   "$value": {
    "light": "#dcdcdc",
-   "dark": "#3f4245"
+   "dark": "#6d6d6e"
   },
-  "$description": "Unified subtle hairline role matching color.border so distinct strokes stay within VN4."
+  "$description": "Page sheet edge and window frame border: #DCDCDC light, #6D6D6E dark (13-dark-home.png)."
  },
  "color.border-control": {
-  "$value": "#8a8a8a",
-  "$description": "Font and size fields, Comments and Editing outlines: w-theme-07 #8A8A8A."
+  "$value": {
+   "light": "#8a8a8a",
+   "dark": "#737373"
+  },
+  "$description": "Font/size combo fields and outlined chrome buttons (Upgrade, Comments, Editing): #8A8A8A light, #737373 dark (13-dark-home.png)."
  },
  "color.bg-control": {
-  "$value": "#ffffff",
-  "$description": "Fields and outlined buttons are white in both themes (w-theme-03 card fields)."
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#262626"
+  },
+  "$description": "Document page and input controls: #FFFFFF light, #262626 dark (13-dark-home.png x=450 y=400)."
  },
  "color.map.action-fill": {
-  "$value": "#185abd",
-  "$description": "Share: w-copilot-01 #185ABD."
+  "$value": {
+   "light": "#185abd",
+   "dark": "#598fec"
+  },
+  "$description": "Share primary button fill: #185ABD light, #598FEC dark (13-dark-home.png x=1068 y=50)."
  },
  "color.map.action-fill-hover": {
   "$value": "{color.map.action-fill}",
-  "$description": "Hover unmeasured: keeps the measured fill."
+  "$description": "Hover keeps the measured fill."
  },
  "color.map.action-fill-pressed": {
   "$value": "{color.map.action-fill}",
-  "$description": "Pressed unmeasured: keeps the measured fill."
+  "$description": "Pressed keeps the measured fill."
  },
  "color.map.action-fill-on": {
-  "$value": "#ffffff",
-  "$description": "Share label white."
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#0f1726"
+  },
+  "$description": "Share label and icon: white on #185ABD light, dark #0F1726 on #598FEC dark (13-dark-home.png)."
+ },
+ "color.map.button-ring": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Primary button ring matches action-fill in both schemes."
+ },
+ "c.button.default-fill": {
+  "$value": "{color.bg-raised}",
+  "$description": "Outlined chrome buttons (Upgrade, Comments, Editing) match ribbon card surface (#FFFFFF light, #292929 dark)."
+ },
+ "c.scroll-area.colour": {
+  "$value": {
+   "light": "#707070",
+   "dark": "#999999"
+  },
+  "$description": "Canvas scrollbar thumb: #707070 light (01-home.png), #999999 dark (13-dark-home.png x=773)."
+ },
+ "c.scroll-area.rest-scale": {
+  "$value": 0.75,
+  "$description": "Desktop editor scrollbar thumb stays clearly visible at rest (6 px)."
  },
  "size.app-bar-height": {
   "$value": "2.875rem",

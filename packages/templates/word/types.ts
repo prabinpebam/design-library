@@ -5,8 +5,8 @@ export interface WordCommand {
   lines?: string[];
   /** Icon name from core or the template's custom icon pack. */
   icon?: string;
-  /** labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks); separator: the thin line between sets on a row (its label stays empty). */
-  kind?: 'stacked' | 'icon' | 'labelled' | 'field' | 'separator';
+  /** labelled: a small icon with its name beside it; pen: a tall drawing tool; style-gallery: inline style-set thumbnail strip; separator: thin line between sets. */
+  kind?: 'stacked' | 'icon' | 'labelled' | 'field' | 'separator' | 'pen' | 'style-gallery';
   /** A field's current value ("Aptos (Body)", "11"). */
   value?: string;
   /** A field's width class: `wide` for a font name, `narrow` for a size. */
@@ -28,6 +28,18 @@ export interface WordGroup {
   lead?: WordCommand[];
   /** Rows of commands beside the lead ones. */
   rows?: WordCommand[][];
+  /** Multiple side-by-side stacks of command rows (Illustrations, Text). */
+  columns?: WordCommand[][][];
+  /** Lead commands placed after an inline gallery (Colors, Fonts in Design). */
+  trailLead?: WordCommand[];
+}
+
+export interface WordStyleSet {
+  id: string;
+  name: string;
+  titleText: string;
+  headingText: string;
+  variant: 'default' | 'caps-blue' | 'caps-rule' | 'serif' | 'caps-dark' | 'bar-num' | 'numbered' | 'caps-centered' | 'warm' | 'boxed' | 'minimal' | 'bold-sans' | 'editorial' | 'classic' | 'slate' | 'compact';
 }
 export interface WordBlock {
   style: 'title' | 'heading-1' | 'heading-2' | 'body';
@@ -40,6 +52,21 @@ export interface WordComment {
   /** The words in the document the comment is anchored to. */
   anchor: string;
 }
+export interface WordCopilotPrompt {
+  prefix: string;
+  emphasis: string;
+}
+
+export interface WordCopilotPane {
+  heading: string;
+  body: string;
+  prompts: WordCopilotPrompt[];
+  allowEditing: string;
+  placeholder: string;
+  menuLabel: string;
+  moreLabel: string;
+}
+
 export interface WordRecord {
   documentName: string;
   saveState: string;
@@ -47,6 +74,8 @@ export interface WordRecord {
   /** Ribbon tabs; each tab but Home carries its own groups (Home's are home). */
   tabs: { id: string; label: string; groups?: WordGroup[] }[];
   home: WordGroup[];
+  styleSets?: WordStyleSet[];
+  copilotPane?: WordCopilotPane;
   document: WordBlock[];
   comments: WordComment[];
   status: { page: string; words: string; language: string; predictions: string; accessibility: string; zoom: string };

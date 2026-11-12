@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Avatar, Button, Heading, Icon, IconOverrides, MenuButton, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
@@ -29,8 +29,10 @@ const V_CMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 export function Window({ view, screen = 'home', picture, ...data }: WindowProps) {
   const c = view.copy;
   const userAvatar = picture?.('userAvatar');
+  const rootRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState(tabFor(screen));
   const [pane, setPane] = useState<'navigation' | 'comments' | undefined>(paneFor(screen));
+  const [copilotOpen, setCopilotOpen] = useState(screen === 'dark');
   const [autoSave, setAutoSave] = useState(false);
   const [zoom, setZoom] = useState(90);
   const [query, setQuery] = useState('');
@@ -39,9 +41,19 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   useEffect(() => {
     setPane(paneFor(screen));
     setTab(tabFor(screen));
+    setCopilotOpen(screen === 'dark');
+  }, [screen]);
+  useEffect(() => {
+    const tpl = rootRef.current?.closest('[data-template="word"]');
+    if (!tpl) return;
+    if (screen === 'dark') {
+      tpl.setAttribute('data-scheme', 'dark');
+      return () => { tpl.removeAttribute('data-scheme'); };
+    }
+    tpl.removeAttribute('data-scheme');
   }, [screen]);
 
-  const showSampleDoc = screen === 'navigation' || screen === 'comments' || screen === 'dark';
+  const showSampleDoc = screen === 'navigation' || screen === 'comments';
 
   const command = (cmd: WordCommand, key: string) => {
     if (cmd.kind === 'separator') return <span key={key} data-dl-part="separator" aria-hidden="true" />;
@@ -104,7 +116,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const headings = view.document.filter((b) => b.style === 'heading-1' || b.style === 'heading-2');
   return (
     <IconOverrides icons={wordPack.glyphs}>
-      <div {...data} data-dl="word-window" data-scheme={screen === 'dark' ? 'dark' : undefined}>
+      <div {...data} ref={rootRef} data-dl="word-window" data-scheme={screen === 'dark' ? 'dark' : undefined}>
         <svg data-dl-part="backdrop" viewBox="0 0 100 922" preserveAspectRatio="none" aria-hidden="true">
           <rect x="0" y="0" width="100" height="174" fill="var(--color-map-nav-shell)" />
           <rect x="0" y="174" width="100" height="748" fill="var(--color-map-nav)" />
@@ -189,138 +201,185 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             }
             end={<Button label={c.collapse} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" />}
             aside={
-              <div data-dl="word-copilot-card">
-                <Button label={c.copilot} icon={'assistant-ribbon' as IconName} stacked size="xs" emphasis="quiet" />
+              <div data-dl="word-copilot-card" data-open={copilotOpen ? '' : undefined}>
+                {/* binary-setting: shows or hides the assistant side pane from the ribbon band, as in the reference. */}
+                <Button label={c.copilot} icon={'assistant-ribbon' as IconName} stacked size="xs" emphasis="quiet" pressed={copilotOpen} onClick={() => setCopilotOpen((o) => !o)} />
               </div>
             }
             tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
           />
         </div>
 
-        <div data-dl="word-ruler-h">
-          <span data-dl-part="tab-stop">
-            <svg viewBox="0 0 23 23" width="23" height="23" aria-hidden="true">
-              <path d="M9 7v6.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-            </svg>
-          </span>
-          <div data-dl-part="track-center">
-            <svg viewBox="0 0 678 23" width="678" height="23" role="img" aria-label={c.horizontalRuler}>
-              <rect x="82" y="5" width="514" height="12" fill="#ffffff" />
-              {Array.from({ length: 84 }, (_, i) => {
-                const x = Math.round(i * 8.1 * 10) / 10;
-                if (x <= 2 || x >= 676) return null;
-                const cmIdx = Math.round((x - 82) / 32.4);
-                const isCm = Math.abs(x - (82 + cmIdx * 32.4)) < 1.2;
-                const isHalf = !isCm && Math.abs(((x - 82) % 32.4 + 32.4) % 32.4 - 16.2) < 1.5;
-                if (isCm && cmIdx >= 1 && cmIdx <= 15) {
-                  return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{cmIdx}</text>;
-                }
-                if (isCm && (cmIdx === -1 || cmIdx === -2)) {
-                  return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{Math.abs(cmIdx)}</text>;
-                }
-                const h = isHalf ? 4 : 2;
-                return <line key={i} x1={x} y1={11 - h / 2} x2={x} y2={11 + h / 2} stroke="currentColor" strokeWidth="0.9" opacity="0.7" />;
-              })}
-              <g transform="translate(82, 0)">
-                <polygon points="-4,3 4,3 4,6 0,10 -4,6" fill="#ffffff" stroke="currentColor" strokeWidth="0.9" />
-                <polygon points="-4,18 0,14 4,18 4,20 -4,20" fill="#ffffff" stroke="currentColor" strokeWidth="0.9" />
-                <rect x="-4" y="20" width="8" height="2.5" fill="#ffffff" stroke="currentColor" strokeWidth="0.9" />
-              </g>
-              <g transform="translate(596, 0)">
-                <polygon points="-4,18 0,14 4,18 4,21 -4,21" fill="#ffffff" stroke="currentColor" strokeWidth="0.9" />
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        <div data-dl-part="body">
-          <div data-dl="word-ruler-v">
-            <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
-              <rect x="5" y="142" width="12" height="558" fill="#ffffff" />
-              {V_CMS.map((n) => {
-                const y = 142 + n * 32.4;
-                return (
-                  <g key={n}>
-                    <line x1="9" y1={y - 16.2} x2="13" y2={y - 16.2} stroke="currentColor" strokeWidth="0.9" opacity="0.65" />
-                    <text x="11" y={y + 3} textAnchor="middle" fontSize="8.5" fill="currentColor" transform={`rotate(-90 11 ${y})`}>{n}</text>
-                  </g>
-                );
-              })}
-              <line x1="5" y1="142" x2="17" y2="142" stroke="currentColor" strokeWidth="0.9" />
-            </svg>
-          </div>
-
-          {pane === 'navigation' && (
-            <div data-dl-part="nav-pane" data-density="compact">
-              <Pane title={c.navigation} closeLabel={c.closePane} onClose={() => setPane(undefined)}>
-                <div data-dl="word-nav-content">
-                  <TextField label={c.navigationSearch} hideLabel type="search" icon="search" size="xs" placeholder={c.navigationSearch} value={query} onChange={setQuery} />
-                  <Tabs
-                    label={c.navigation}
-                    size="xs"
-                    items={[
-                      { id: 'headings', label: c.headings, panel: (
-                        <div data-dl="word-outline">
-                          {headings.map((h, i) => (
-                            <div key={i} data-dl-part="outline-item" data-level={h.style === 'heading-2' ? 2 : 1} data-current={i === 0 ? '' : undefined}>
-                              <Button label={h.text} size="xs" emphasis="quiet" align="start" />
-                            </div>
-                          ))}
-                        </div>
-                      ) },
-                      { id: 'pages', label: c.pages, panel: null },
-                      { id: 'results', label: c.results, panel: null },
-                    ]}
-                  />
-                </div>
-              </Pane>
-            </div>
-          )}
-
-          <main data-dl-part="canvas" aria-label={c.document}>
-            <ScrollArea label={c.document} mode="always">
-              <div data-dl="word-page-stage">
-                {!showSampleDoc && (
-                  <div data-dl="word-draft-bar">
-                    <span data-dl-part="lead">
-                      <Button label={c.draftPrompt} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" />
-                    </span>
-                    <span data-dl-part="actions">
-                      <Button label={c.draftMore} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-                      <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-                    </span>
-                  </div>
-                )}
-                <article data-dl-part="page" data-empty={!showSampleDoc ? '' : undefined}>
-                  {showSampleDoc && view.document.map((b, i) => {
-                    const Tag = tags[b.style];
-                    return <Tag key={i} data-dl-part="block" data-style={b.style}>{b.text}</Tag>;
+        <div data-dl-part="workspace">
+          <div data-dl-part="editor-col">
+            <div data-dl="word-ruler-h">
+              <span data-dl-part="tab-stop">
+                <svg viewBox="0 0 23 23" width="23" height="23" aria-hidden="true">
+                  <path d="M9 7v6.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+                </svg>
+              </span>
+              <div data-dl-part="track-center">
+                <svg viewBox="0 0 678 23" width="678" height="23" role="img" aria-label={c.horizontalRuler}>
+                  <rect x="82" y="5" width="514" height="12" fill="var(--t-word-window-ruler-inner)" />
+                  {Array.from({ length: 84 }, (_, i) => {
+                    const x = Math.round(i * 8.1 * 10) / 10;
+                    if (x <= 2 || x >= 676) return null;
+                    const cmIdx = Math.round((x - 82) / 32.4);
+                    const isCm = Math.abs(x - (82 + cmIdx * 32.4)) < 1.2;
+                    const isHalf = !isCm && Math.abs(((x - 82) % 32.4 + 32.4) % 32.4 - 16.2) < 1.5;
+                    if (isCm && cmIdx >= 1 && cmIdx <= 15) {
+                      return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{cmIdx}</text>;
+                    }
+                    if (isCm && (cmIdx === -1 || cmIdx === -2)) {
+                      return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{Math.abs(cmIdx)}</text>;
+                    }
+                    const h = isHalf ? 4 : 2;
+                    return <line key={i} x1={x} y1={11 - h / 2} x2={x} y2={11 + h / 2} stroke="currentColor" strokeWidth="0.9" opacity="0.7" />;
                   })}
-                </article>
+                  <g transform="translate(82, 0)">
+                    <polygon points="-4,3 4,3 4,6 0,10 -4,6" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                    <polygon points="-4,18 0,14 4,18 4,20 -4,20" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                    <rect x="-4" y="20" width="8" height="2.5" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                  </g>
+                  <g transform="translate(596, 0)">
+                    <polygon points="-4,18 0,14 4,18 4,21 -4,21" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                  </g>
+                </svg>
               </div>
-            </ScrollArea>
-          </main>
+            </div>
 
-          {pane === 'comments' && (
-            <div data-dl-part="comments-pane" data-density="compact">
-              <Pane title={c.comments} closeLabel={c.closePane} onClose={() => setPane(undefined)}>
-                <div data-dl="word-comment-list">
-                  {view.comments.map((m, i) => (
-                    <article key={i} data-dl-part="comment" data-current={i === 0 ? '' : undefined}>
-                      <div data-dl-part="comment-head">
-                        <Avatar name={m.author} size={32} />
-                        <div data-dl-part="comment-who">
-                          <Heading level={3} size="label">{m.author}</Heading>
-                          <Text variant="caption" tone="muted">{m.time}</Text>
-                        </div>
+            <div data-dl-part="body">
+              <div data-dl="word-ruler-v">
+                <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
+                  <rect x="5" y={copilotOpen ? 88 : 142} width="12" height={copilotOpen ? 612 : 558} fill="var(--t-word-window-ruler-inner)" />
+                  {V_CMS.map((n) => {
+                    const y = (copilotOpen ? 88 : 142) + n * 32.4;
+                    return (
+                      <g key={n}>
+                        <line x1="9" y1={y - 16.2} x2="13" y2={y - 16.2} stroke="currentColor" strokeWidth="0.9" opacity="0.65" />
+                        <text x="11" y={y + 3} textAnchor="middle" fontSize="8.5" fill="currentColor" transform={`rotate(-90 11 ${y})`}>{n}</text>
+                      </g>
+                    );
+                  })}
+                  <line x1="5" y1={copilotOpen ? 88 : 142} x2="17" y2={copilotOpen ? 88 : 142} stroke="currentColor" strokeWidth="0.9" />
+                </svg>
+              </div>
+
+              {pane === 'navigation' && (
+                <div data-dl-part="nav-pane" data-density="compact">
+                  <Pane title={c.navigation} closeLabel={c.closePane} onClose={() => setPane(undefined)}>
+                    <div data-dl="word-nav-content">
+                      <TextField label={c.navigationSearch} hideLabel type="search" icon="search" size="xs" placeholder={c.navigationSearch} value={query} onChange={setQuery} />
+                      <Tabs
+                        label={c.navigation}
+                        size="xs"
+                        items={[
+                          { id: 'headings', label: c.headings, panel: (
+                            <div data-dl="word-outline">
+                              {headings.map((h, i) => (
+                                <div key={i} data-dl-part="outline-item" data-level={h.style === 'heading-2' ? 2 : 1} data-current={i === 0 ? '' : undefined}>
+                                  <Button label={h.text} size="xs" emphasis="quiet" align="start" />
+                                </div>
+                              ))}
+                            </div>
+                          ) },
+                          { id: 'pages', label: c.pages, panel: null },
+                          { id: 'results', label: c.results, panel: null },
+                        ]}
+                      />
+                    </div>
+                  </Pane>
+                </div>
+              )}
+
+              <main data-dl-part="canvas" aria-label={c.document}>
+                <ScrollArea label={c.document} mode="always">
+                  <div data-dl="word-page-stage">
+                    {!showSampleDoc && !copilotOpen && (
+                      <div data-dl="word-draft-bar">
+                        <span data-dl-part="lead">
+                          <Button label={c.draftPrompt} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" />
+                        </span>
+                        <span data-dl-part="actions">
+                          <Button label={c.draftMore} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                          <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                        </span>
                       </div>
-                      <Text variant="body-sm">{m.text}</Text>
-                      <TextField label={c.reply} hideLabel size="xs" placeholder={c.reply} value="" onChange={() => undefined} />
+                    )}
+                    <article data-dl-part="page" data-empty={!showSampleDoc ? '' : undefined} data-narrow={copilotOpen ? '' : undefined}>
+                      {!showSampleDoc && copilotOpen && (
+                        <div data-dl-part="caret-row" aria-hidden="true">
+                          <span data-dl-part="caret-block" />
+                          <Icon name={'comment-new' as IconName} size="sm" />
+                        </div>
+                      )}
+                      {showSampleDoc && view.document.map((b, i) => {
+                        const Tag = tags[b.style];
+                        return <Tag key={i} data-dl-part="block" data-style={b.style}>{b.text}</Tag>;
+                      })}
                     </article>
+                  </div>
+                </ScrollArea>
+              </main>
+
+              {pane === 'comments' && (
+                <div data-dl-part="comments-pane" data-density="compact">
+                  <Pane title={c.comments} closeLabel={c.closePane} onClose={() => setPane(undefined)}>
+                    <div data-dl="word-comment-list">
+                      {view.comments.map((m, i) => (
+                        <article key={i} data-dl-part="comment" data-current={i === 0 ? '' : undefined}>
+                          <div data-dl-part="comment-head">
+                            <Avatar name={m.author} size={32} />
+                            <div data-dl-part="comment-who">
+                              <Heading level={3} size="label">{m.author}</Heading>
+                              <Text variant="caption" tone="muted">{m.time}</Text>
+                            </div>
+                          </div>
+                          <Text variant="body-sm">{m.text}</Text>
+                          <TextField label={c.reply} hideLabel size="xs" placeholder={c.reply} value="" onChange={() => undefined} />
+                        </article>
+                      ))}
+                    </div>
+                  </Pane>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {copilotOpen && view.copilotPane && (
+            <aside data-dl="word-copilot-pane" data-density="compact" aria-label={c.copilot}>
+              <div data-dl-part="head">
+                <Button label={view.copilotPane.menuLabel} icon="menu" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                <div data-dl-part="head-end">
+                  <Button label={view.copilotPane.moreLabel} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  <Button label={c.closePane} icon={'win-close' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setCopilotOpen(false)} />
+                </div>
+              </div>
+              <div data-dl-part="content">
+                <Heading level={2} size="4">{view.copilotPane.heading}</Heading>
+                <Text variant="body-sm">{view.copilotPane.body}</Text>
+                <div data-dl-part="prompts">
+                  {view.copilotPane.prompts.map((p, i) => (
+                    <div key={i} data-dl-part="prompt-chip">
+                      <Button label={`${p.prefix}${p.emphasis}`} size="xs" emphasis="quiet" tone="inherit" align="start" />
+                    </div>
                   ))}
                 </div>
-              </Pane>
-            </div>
+              </div>
+              <div data-dl-part="foot">
+                <div data-dl-part="mode">
+                  <MenuButton label={view.copilotPane.allowEditing} size="xs" tone="inherit" items={[{ value: 'edit', label: view.copilotPane.allowEditing }]} onSelect={() => undefined} />
+                </div>
+                <div data-dl="word-copilot-input">
+                  <span data-dl-part="lead">
+                    <Button label={view.copilotPane.placeholder} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" />
+                  </span>
+                  <span data-dl-part="mic">
+                    <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  </span>
+                </div>
+              </div>
+            </aside>
           )}
         </div>
 

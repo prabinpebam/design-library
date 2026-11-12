@@ -43,13 +43,15 @@
           "type": "string"
         },
         "kind": {
-          "description": "labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks); separator: the thin line between sets on a row (its label stays empty).",
+          "description": "labelled: a small icon with its name beside it; pen: a tall drawing tool; style-gallery: inline style-set thumbnail strip; separator: thin line between sets.",
           "enum": [
             "stacked",
             "icon",
             "labelled",
             "field",
-            "separator"
+            "separator",
+            "pen",
+            "style-gallery"
           ],
           "type": "string"
         },
@@ -114,9 +116,77 @@
       ],
       "type": "object"
     },
+    "WordCopilotPane": {
+      "additionalProperties": false,
+      "properties": {
+        "allowEditing": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "heading": {
+          "type": "string"
+        },
+        "menuLabel": {
+          "type": "string"
+        },
+        "moreLabel": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string"
+        },
+        "prompts": {
+          "items": {
+            "$ref": "#/$defs/WordCopilotPrompt"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "heading",
+        "body",
+        "prompts",
+        "allowEditing",
+        "placeholder",
+        "menuLabel",
+        "moreLabel"
+      ],
+      "type": "object"
+    },
+    "WordCopilotPrompt": {
+      "additionalProperties": false,
+      "properties": {
+        "emphasis": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prefix",
+        "emphasis"
+      ],
+      "type": "object"
+    },
     "WordGroup": {
       "additionalProperties": false,
       "properties": {
+        "columns": {
+          "description": "Multiple side-by-side stacks of command rows (Illustrations, Text).",
+          "items": {
+            "items": {
+              "items": {
+                "$ref": "#/$defs/WordCommand"
+              },
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        },
         "hideLabel": {
           "description": "Hides redundant group caption under a single-command collapsed group.",
           "type": "boolean"
@@ -146,6 +216,13 @@
             "type": "array"
           },
           "type": "array"
+        },
+        "trailLead": {
+          "description": "Lead commands placed after an inline gallery (Colors, Fonts in Design).",
+          "items": {
+            "$ref": "#/$defs/WordCommand"
+          },
+          "type": "array"
         }
       },
       "required": [
@@ -162,6 +239,9 @@
             "$ref": "#/$defs/WordComment"
           },
           "type": "array"
+        },
+        "copilotPane": {
+          "$ref": "#/$defs/WordCopilotPane"
         },
         "copy": {
           "additionalProperties": {
@@ -219,6 +299,12 @@
           ],
           "type": "object"
         },
+        "styleSets": {
+          "items": {
+            "$ref": "#/$defs/WordStyleSet"
+          },
+          "type": "array"
+        },
         "tabs": {
           "description": "Ribbon tabs; each tab but Home carries its own groups (Home's are home).",
           "items": {
@@ -259,6 +345,52 @@
         "comments",
         "status",
         "copy"
+      ],
+      "type": "object"
+    },
+    "WordStyleSet": {
+      "additionalProperties": false,
+      "properties": {
+        "headingText": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "titleText": {
+          "type": "string"
+        },
+        "variant": {
+          "enum": [
+            "default",
+            "caps-blue",
+            "caps-rule",
+            "serif",
+            "caps-dark",
+            "bar-num",
+            "numbered",
+            "caps-centered",
+            "warm",
+            "boxed",
+            "minimal",
+            "bold-sans",
+            "editorial",
+            "classic",
+            "slate",
+            "compact"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "titleText",
+        "headingText",
+        "variant"
       ],
       "type": "object"
     }

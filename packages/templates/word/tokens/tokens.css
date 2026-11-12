@@ -3,8 +3,13 @@
   :root,
   [data-template='word'] {
     --t-word-window-gap: var(--space-inset-sm);
-    --t-word-window-frame-border: var(--color-map-action-fill);
+    --t-word-window-frame-border: var(--color-border-strong);
     --t-word-window-surface: var(--color-bg-control);
+    --t-word-window-search-bg: var(--color-bg);
+    --t-word-window-ruler-inner: var(--color-map-feature-tint);
+    --t-word-window-copilot-bg: var(--color-map-band);
+    --t-word-window-copilot-fg: var(--color-map-band-on);
+    --t-word-window-copilot-chip: var(--color-map-chip-tint);
     --t-word-window-border: var(--color-border);
     --t-word-window-border-strong: var(--color-border-strong);
     --t-word-window-muted: var(--color-text-muted);
