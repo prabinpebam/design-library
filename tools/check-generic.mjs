@@ -13,7 +13,7 @@ const coreDirs = ['packages/core/react', 'packages/core/css', 'packages/core/tok
 const skipDir = /[\\/](stories|node_modules|dist)([\\/]|$)/;
 
 // Product identities a template may imitate but core must never name in code.
-const productNames = /\b(figma|sketch(?:app)?|framer|penpot|photoshop|canva|ikea|slack|microsoft ?word|ms ?word|winword|microsoft 365)\b/i;
+const productNames = /\b(figma|sketch(?:app)?|framer|penpot|photoshop|canva|ikea|slack|youtube|microsoft ?word|ms ?word|winword|microsoft 365)\b/i;
 const productIn = (text) => text.replace(/([a-z0-9])([A-Z])/g, '$1 $2').replaceAll('_', ' ').match(productNames);
 // Brand values of imitated products; extend when a new replica template starts.
 const brandValues = [
@@ -39,6 +39,13 @@ const brandValues = [
   { re: /#185abd\b/i, what: "Word's title bar blue #185ABD" },
   { re: /#2b579a\b/i, what: "Word's brand blue #2B579A" },
   { re: /#54585a\b/i, what: "Word's Dark Gray title bar #54585A" },
+  // YouTube (Q145.Y): the brand red of the logo mark; spec in .design-library/youtube-ref/README.md.
+  { re: /#ff0000\b/i, what: "YouTube's brand red #FF0000" },
+];
+// Embedding a provider's real player is a public integration, not an imitated look: MediaPlayer's
+// `from: 'youtube'` source names the service it embeds. Only the product name is allowed, only there.
+const embedProviders = [
+  { file: 'packages/core/react/compounds/MediaPlayer.tsx', name: /^youtube$/i },
 ];
 
 let templateIds = [];
@@ -64,9 +71,11 @@ function stripComments(src, ext) {
 }
 
 function checkLines(file, text) {
+  const rel = relative(root, file).replace(/\\/g, '/');
   text.split('\n').forEach((line, i) => {
     const product = productIn(line);
-    if (product) report(file, i + 1, line, `names a product (${product[0]}) in code`, 'move the look to the template (theme, t.{template}.* tokens or a template part) and name the core seam by what it does');
+    const embed = product && embedProviders.some((a) => a.file === rel && a.name.test(product[0]));
+    if (product && !embed) report(file, i + 1, line, `names a product (${product[0]}) in code`, 'move the look to the template (theme, t.{template}.* tokens or a template part) and name the core seam by what it does');
     for (const b of brandValues) if (b.re.test(line)) report(file, i + 1, line, `carries ${b.what}`, "set the value in the template's theme or tokens, not as a core default");
     if (templateNs && templateNs.test(line)) report(file, i + 1, line, 'reaches a template namespace from core', 'core never reads or styles a template; expose a public seam instead');
   });
