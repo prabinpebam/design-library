@@ -5,6 +5,7 @@
  */
 import type { ReactNode } from 'react';
 import type { AgendaSlot, FooterLink, FooterSection, IconName, IllustrationPlay, StoryFile } from '../react/components';
+import type { PageGridRecord } from './page-grid';
 
 export type SiteAction = {
   label: string;
@@ -137,9 +138,15 @@ export type CoreBlock =
   | { type: 'agenda'; heading: string; size?: SectionTitleSize; label: string; slots: AgendaSlot[]; empty?: SiteEmpty }
   | { type: 'tickets'; heading: string; size?: SectionTitleSize; intro?: string; currency: string; options: { value: string; label: string; price: number; description: string; meta?: string }[]; submit: string; sent: string; labels: { ticket: string; count: string; tickets: string; total: string; line: string } }
   | { type: 'questions'; heading: string; size?: SectionTitleSize; items: { title: string; text: string }[] }
-  /** Two columns of blocks side by side (DP11 slots `split.start` and `split.end`), stacking when narrow. */
+  /**
+   * Two columns of blocks side by side (DP11 slots `split.start` and `split.end`), stacking when narrow.
+   * @deprecated A page inside a block (composition rule, LR18): put the blocks side by side with the page's `grid`.
+   */
   | { type: 'split'; heading?: string; size?: SectionTitleSize; intro?: string; ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside'; start: Block[]; end: Block[] }
-  /** Blocks in equal columns (DP11 slot `grid.items`). */
+  /**
+   * Blocks in equal columns (DP11 slot `grid.items`).
+   * @deprecated A page inside a block (composition rule, LR18): put the blocks side by side with the page's `grid`.
+   */
   | { type: 'grid'; heading?: string; size?: SectionTitleSize; intro?: string; max?: 2 | 3 | 4; items: Block[] };
 
 /** Any block: a core one, or a template's own (`{template}.{name}`). */
@@ -419,6 +426,8 @@ export interface PageDocument {
   /** With `collection`: moving between two of its items lands at the top (default) or keeps the place (`keep`, MP2). */
   between?: 'top' | 'keep';
   sections: PageSection[];
+  /** The page's layout grid (LR18): rows and cells placing `sections` by index; unplaced sections follow as whole rows. */
+  grid?: PageGridRecord;
 }
 
 /** A data-driven site as `SiteView` reads it: the site document, its pages, its pictures and its own registry. */

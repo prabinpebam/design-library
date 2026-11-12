@@ -15,6 +15,8 @@
  *   its `#anchor` is a section anchor on that page. Aliases lead to a page (an `https://` target leaves the site) and
  *   never shadow a page's own route.
  * - Information: a section whose list binding finds nothing and declares no `empty` is left out of the page.
+ * - The page's `grid` (LR18): unique ids, splits that divide their span with one cell per share, known gaps, each
+ *   section placed once and in range, three levels at most (render/page-grid.ts, the renderer's own check).
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -28,10 +30,15 @@ const core = fileURLToPath(new URL('..', import.meta.url));
 let resolver;
 async function loadResolver() {
   if (resolver !== undefined) return resolver;
-  resolver = null;
+  resolver = await loadStripped('render/collections.ts');
+  return resolver;
+}
+
+/** A plain TypeScript module of the renderer (no JSX, type-only imports), loaded with Node's type stripping; null without it. */
+async function loadStripped(path) {
   const strip = nodeModule.stripTypeScriptTypes;
-  if (typeof strip !== 'function') return resolver;
-  const src = readFileSync(join(core, 'render/collections.ts'), 'utf8');
+  if (typeof strip !== 'function') return null;
+  const src = readFileSync(join(core, path), 'utf8');
   // Node marks the API experimental; the warning says nothing a person running the check can act on.
   const emit = process.emitWarning;
   process.emitWarning = () => {};
@@ -41,8 +48,7 @@ async function loadResolver() {
   } finally {
     process.emitWarning = emit;
   }
-  resolver = await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
-  return resolver;
+  return import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
 }
 
 /** The slots and what each accepts, read from the renderer's `SLOTS` so the check and the page agree. */
@@ -182,6 +188,7 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
   // Blocks: resolved with the renderer's resolver, then by type, slots by their own type.
   const slots = slotsFromRenderer();
   const lib = await loadResolver();
+  const grids = await loadStripped('render/page-grid.ts');
   if (!lib) info(dir, '/', "references and bindings weren't resolved (this Node has no type stripping; Node 22.13 or later does)");
   const siteData = { pages: pages.map((p) => p.doc), collections: Object.fromEntries(Object.entries(byCollection).map(([k, c]) => [k, c.doc])) };
   // Derived values (DP14), worked out as `loadSite` does; a derivation that finds nothing is reported on site.json.
@@ -269,6 +276,8 @@ export async function checkSite(dir, { schemas: given, fail, info, rel, extraChe
       });
     });
     walkHrefs(p.file, p.doc.sections, '/sections');
+    // The page's grid (LR18): the renderer's own check, so the page's development notice and this report agree.
+    if (p.doc.grid !== undefined && grids) for (const issue of grids.pageGridRecordProblems(p.doc.grid, sections.length)) fail(p.file, issue.at, issue.what, 'fix the grid: unique ids, a split its span allows with one cell per share, each section placed once');
     sections.forEach((s, i) => {
       const bound = listIsEmptyBinding(s);
       if (!bound || s.empty) return;

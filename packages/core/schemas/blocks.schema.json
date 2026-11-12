@@ -1662,7 +1662,8 @@
       }
     },
     "split": {
-      "description": "Two columns of blocks side by side, stacking when narrow: slots split.start and split.end. Each takes content blocks (prose, points, details, quote, stats, cards, gallery, people, questions, agenda, schedule, posts, person, byline, alert, empty, form, search, settings, tickets) or a template's own.",
+      "deprecated": true,
+      "description": "Deprecated (LR18, composition rule: no page inside a block): put blocks side by side with the page's `grid` instead. Kept so existing pages render unchanged. Two columns of blocks side by side, stacking when narrow: slots split.start and split.end. Each takes content blocks (prose, points, details, quote, stats, cards, gallery, people, questions, agenda, schedule, posts, person, byline, alert, empty, form, search, settings, tickets) or a template's own.",
       "type": "object",
       "required": ["type", "start", "end"],
       "properties": {
@@ -1677,7 +1678,8 @@
       "additionalProperties": false
     },
     "grid": {
-      "description": "Blocks in equal columns: slot grid.items, taking the same content blocks as split.",
+      "deprecated": true,
+      "description": "Deprecated (LR18, composition rule: no page inside a block): put blocks side by side with the page's `grid` instead. Kept so existing pages render unchanged. Blocks in equal columns: slot grid.items, taking the same content blocks as split.",
       "examples": [{ "type": "grid", "heading": "Ways to visit", "max": 3, "items": [{ "type": "points", "items": ["Open every day from nine"] }, { "type": "points", "items": ["Step-free entrance on the side street"] }, { "type": "points", "items": ["Bicycle racks by the door"] }] }],
       "type": "object",
       "required": ["type", "items"],

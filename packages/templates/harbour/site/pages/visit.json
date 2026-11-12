@@ -13,27 +13,20 @@
       "lead": "On the quay between the ferry steps and the harbour master’s office, with the blue door."
     },
     {
-      "type": "split",
+      "type": "details",
       "anchor": "hours",
-      "start": [
-        {
-          "type": "details",
-          "heading": "Opening hours",
-          "items": [
-            { "term": "Monday to Friday", "details": "10:00 to 19:00" },
-            { "term": "Saturday", "details": "9:00 to 18:00" },
-            { "term": "Sunday", "details": "11:00 to 17:00" },
-            { "term": "Reading nights", "details": "Open until 21:00" }
-          ]
-        }
-      ],
-      "end": [
-        {
-          "type": "points",
-          "heading": "Getting here",
-          "items": ["Five minutes on foot from the ferry steps.", "Bus 4 stops at Quay Street.", "Step-free through the blue door."]
-        }
+      "heading": "Opening hours",
+      "items": [
+        { "term": "Monday to Friday", "details": "10:00 to 19:00" },
+        { "term": "Saturday", "details": "9:00 to 18:00" },
+        { "term": "Sunday", "details": "11:00 to 17:00" },
+        { "term": "Reading nights", "details": "Open until 21:00" }
       ]
+    },
+    {
+      "type": "points",
+      "heading": "Getting here",
+      "items": ["Five minutes on foot from the ferry steps.", "Bus 4 stops at Quay Street.", "Step-free through the blue door."]
     },
     {
       "type": "cta",
@@ -44,5 +37,12 @@
       "actions": [{ "label": "Email the shop", "primary": true, "href": "mailto:books@example.com" }],
       "note": "We reply the same day."
     }
-  ]
+  ],
+  "grid": {
+    "rows": [
+      { "id": "opening", "cells": [{ "id": "hero", "section": 0 }] },
+      { "id": "practical", "split": "halves", "cells": [{ "id": "hours", "section": 1 }, { "id": "travel", "section": 2 }] },
+      { "id": "reserve", "cells": [{ "id": "cta", "section": 3 }] }
+    ]
+  }
 }

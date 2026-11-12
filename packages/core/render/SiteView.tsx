@@ -8,12 +8,13 @@
  * window title, description, preview picture, canonical address and `noindex` come from the page. No styles.
  */
 import { Component, Fragment, useEffect, type ReactNode } from 'react';
-import { Alert, Text } from '../react/components';
+import { Alert, PageGrid, Text } from '../react/components';
 import { useRouter } from '../react/behaviour/router';
 import { SectionAnchor } from '../react/behaviour/section-anchor';
 import { matchPath, Router } from '../site';
 import { BLOCKS } from './blocks';
 import { findItem, isBinding, resolveData } from './collections';
+import { pageGridPlacements, pageGridRecordProblems, type PageGridRecordCell } from './page-grid';
 import { LAYOUTS, resolveLinks } from './TemplateView';
 import type { Block, BlockRenderer, PageDocument, RenderContext, Site, SiteDocument, TemplateContent } from './types';
 import { resolveUnconfirmed } from './unconfirmed';
@@ -273,13 +274,15 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       ) : null;
     return render(block, at, i);
   }
-  function list(blocks: Block[] | undefined, base: RenderContext, region: string | undefined, where = 'sections', within?: string): ReactNode {
+  function list(blocks: Block[] | undefined, base: RenderContext, region: string | undefined, where = 'sections', within?: string, narrow?: ReadonlySet<number>): ReactNode[] {
     const items = blocks ?? [];
     const local: RenderContext = { ...base, siblings: items.length, neighbours: items, region };
     return items.map((b, i) => {
       const path = within ? `${within} › [${i}]` : `${where === 'sections' ? file : 'site'} ${where}[${region === 'main' ? kept[i] : i}]`;
       const anchor = typeof b.anchor === 'string' ? b.anchor : undefined;
-      const own: RenderContext = { ...local, problem: (what) => problems.push({ where: path, what }), blocks: (inner) => list(inner, at, undefined, where, path) };
+      // A section in a cell narrower than the page sits beside others: it flows, never framed (framing is whole-width).
+      const placed: RenderContext = narrow?.has(kept[i]) ? { ...local, region: 'cell' } : local;
+      const own: RenderContext = { ...placed, problem: (what) => problems.push({ where: path, what }), blocks: (inner) => list(inner, at, undefined, where, path) };
       const at = region === 'main' && i === firstAt ? { ...own, picture: (id: string) => (id === first && assets[id] ? { ...assets[id], priority: true } : own.picture(id)) } : own;
       return (
         <SectionBoundary key={`${routeKey}-${where}-${i}`} path={path} development={development}>
@@ -289,7 +292,22 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
       );
     });
   }
-  const main = list(sections, ctx, 'main');
+  // The page's grid (LR18) places sections in rows and cells; a grid with problems is reported and the page flows.
+  const gridIssues = raw.grid ? pageGridRecordProblems(raw.grid, raw.sections.length) : [];
+  for (const issue of gridIssues) problems.push({ where: `${file} ${issue.at}`, what: issue.what });
+  const grid = raw.grid && !gridIssues.length ? raw.grid : undefined;
+  const spans = grid ? pageGridPlacements(grid) : undefined;
+  const narrow = spans ? new Set([...spans].filter(([, span]) => span < 12).map(([n]) => n)) : undefined;
+  const drawn = list(sections, ctx, 'main', 'sections', undefined, narrow);
+  const byIndex = new Map(kept.map((n, i) => [n, drawn[i]]));
+  const main = grid ? (
+    <Fragment>
+      <PageGrid rows={grid.rows} renderSlot={(cell) => ((cell as PageGridRecordCell).section === undefined ? null : (byIndex.get((cell as PageGridRecordCell).section!) ?? null))} />
+      {kept.filter((n) => !spans!.has(n)).map((n) => byIndex.get(n))}
+    </Fragment>
+  ) : (
+    drawn
+  );
   const notice =
     development && problems.length ? (
       <Alert tone="warning" title={problems.length === 1 ? 'One problem in this page’s content' : `${problems.length} problems in this page’s content`}>

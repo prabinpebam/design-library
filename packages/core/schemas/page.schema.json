@@ -29,11 +29,42 @@
       "type": "array",
       "description": "The page's sections in order, top to bottom. Reordering them is reordering the page.",
       "items": { "$ref": "#/$defs/section" }
+    },
+    "grid": {
+      "type": "object",
+      "description": "The page's layout grid (PageGrid; LR18): rows, each split into cells on twelve columns; a cell places one of `sections` by its index, or holds more rows (three levels at most). The only way to put blocks side by side. Sections stay in reading order in `sections`; one the grid doesn't place draws after it as a whole row. Without `grid`, each section is a whole row.",
+      "required": ["rows"],
+      "properties": { "rows": { "type": "array", "items": { "$ref": "#/$defs/gridRow" } } },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false,
   "$defs": {
     "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "gridRow": {
+      "type": "object",
+      "required": ["id", "cells"],
+      "description": "One row of the page grid: how it splits its span, the space above it, and one cell per share.",
+      "properties": {
+        "id": { "$ref": "#/$defs/id", "description": "Unique in the grid." },
+        "split": { "enum": ["whole", "halves", "thirds", "quarters", "two-thirds-start", "two-thirds-end"], "default": "whole", "description": "How the row divides its span; the split must divide it into whole columns (a half allows all but quarters)." },
+        "gap": { "enum": ["item", "group", "section", "page"], "default": "section", "description": "The space above the row, a stack step." },
+        "cells": { "type": "array", "minItems": 1, "maxItems": 4, "items": { "$ref": "#/$defs/gridCell" } }
+      },
+      "additionalProperties": false
+    },
+    "gridCell": {
+      "type": "object",
+      "required": ["id"],
+      "description": "One cell: places a section (`section`), holds rows (`rows`), or neither (an empty slot).",
+      "properties": {
+        "id": { "$ref": "#/$defs/id", "description": "Unique in the grid." },
+        "section": { "type": "integer", "minimum": 0, "description": "The index in `sections` this cell places; each section at most once." },
+        "rows": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/gridRow" } }
+      },
+      "not": { "required": ["section", "rows"] },
+      "additionalProperties": false
+    },
     "section": {
       "type": "object",
       "required": ["type"],
