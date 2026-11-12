@@ -223,7 +223,7 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
       </nav>
       <div data-dl-part="window">
         <aside data-dl-part="sidebar" data-density="compact" aria-label={view.name}>
-          <div data-dl-part="workspace-head"><strong data-dl-part="workspace-name">{view.name}<Icon name="chevron-down" size="sm" /></strong>{action(c.compose, 'edit')}</div>
+          <div data-dl-part="workspace-head"><strong data-dl-part="workspace-name">{view.name}<Icon name="chevron-down" size="sm" /></strong><span data-dl-part="head-actions">{action(c.sidebarSettings, 'settings')}{action(c.compose, 'edit')}</span></div>
           <ScrollArea label={view.name}><div data-dl="slack-sidebar-content">
             {sections.map(section => <section data-dl="slack-nav-section" key={section.title ?? section.items[0].name}>
               {section.title && <div data-dl-part="section-title"><Icon name="caret-down" size="sm" /><span>{section.title}</span></div>}

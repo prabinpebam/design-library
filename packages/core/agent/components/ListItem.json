@@ -144,7 +144,7 @@
         {
           "name": "expanded",
           "type": "boolean",
-          "description": "For an item that shows or hides child items: the chevron turns and `aria-expanded` is set. The list renders the children."
+          "description": "For an item that shows or hides child items: the chevron turns and `aria-expanded` is set. The list renders the children. With `submenu`, whether the submenu is open (`aria-expanded` only; the submenu chevron stays)."
         },
         {
           "name": "trailing",

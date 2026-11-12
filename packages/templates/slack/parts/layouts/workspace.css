@@ -30,7 +30,9 @@
   [data-dl='slack-workspace'] > [data-dl-part='window'] { display: flex; min-inline-size: 0; min-block-size: 0; padding-block-end: var(--space-inset-xs); padding-inline-end: var(--space-inset-xs); border-start-start-radius: var(--radius-md); }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] { flex: 0 0 var(--size-nav-width); display: grid; grid-template-rows: auto minmax(0, 1fr); min-block-size: 0; background: var(--color-map-nav); color: var(--color-map-nav-on-muted); border-start-start-radius: var(--radius-md); border-end-start-radius: var(--radius-md); }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head'] { display: flex; align-items: center; justify-content: space-between; padding: var(--space-inset-md); color: var(--color-map-nav-on); }
-  [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head'] > [data-dl-part='workspace-name'] { display: flex; align-items: center; gap: var(--space-inline-pair); font-size: var(--text-l); }
+  /* Region 3: two round head controls, centres 30 and 66 px from the sidebar's right edge (r01 4x): 28 px boxes 8 px apart. */
+[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head'] > [data-dl-part='head-actions'] { display: flex; gap: var(--space-2); }
+[data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head'] > [data-dl-part='workspace-name'] { display: flex; align-items: center; gap: var(--space-inline-pair); font-size: var(--text-l); }
   [data-dl='slack-sidebar-content'] { display: grid; gap: var(--space-stack-group); padding-block: var(--space-inset-sm); padding-inline: var(--space-inset-sm); }
   [data-dl='slack-nav-section'] { display: grid; gap: var(--space-stack-pair); }
   [data-dl='slack-nav-section'] > [data-dl-part='section-title'] { display: flex; align-items: center; gap: var(--space-inline-pair); padding-inline: var(--space-inset-sm); min-block-size: var(--size-target-min); font-size: var(--type-body-sm-size); font-weight: var(--weight-bold); }
@@ -55,18 +57,20 @@
   [data-dl='slack-timeline'] { display: grid; padding-block: var(--space-inset-md); }
   [data-dl='slack-timeline'] > [data-dl-part='date'] { display: flex; align-items: center; gap: var(--space-inline-item); padding-block-end: var(--space-inset-sm); }
   [data-dl='slack-timeline'] > [data-dl-part='date']::before, [data-dl='slack-timeline'] > [data-dl-part='date']::after { content: ''; block-size: var(--border-hairline); background: var(--color-border); flex: 1; }
-  [data-dl='slack-timeline'] > [data-dl-part='date'] > [data-dl-part='date-pill'] { display: inline-flex; align-items: center; gap: var(--space-inline-pair); border: var(--border-hairline) solid var(--color-border); border-radius: var(--radius-pill); padding-block: var(--space-inset-xs); padding-inline: var(--space-inset-md); font-size: var(--text-s); font-weight: var(--weight-bold); }
+  [data-dl='slack-timeline'] > [data-dl-part='date'] > [data-dl-part='date-pill'] { display: inline-flex; align-items: center; gap: var(--space-inline-pair); padding-block: var(--space-inset-xs); padding-inline: var(--space-inset-md); background: var(--color-bg); font-size: var(--text-s); font-weight: var(--weight-bold); }
+/* VN3: the date pill's outline is unmeasured (no public reference at usable scale, searches recorded in the spec), so it is flattened to words on the rule, masked by the canvas, keeping the timeline at depth 2. */
   [data-dl='slack-message-group'] > [data-dl-part='new-line'] { display: flex; justify-content: end; align-items: center; color: var(--color-promo-new-text); font-size: var(--text-xs); gap: var(--space-inline-pair); }
   [data-dl='slack-message-group'] > [data-dl-part='new-line']::before { content: ''; flex: 1; block-size: var(--border-hairline); background: currentColor; }
   [data-dl='slack-message'] { position: relative; display: grid; grid-template-columns: auto minmax(0,1fr); gap: var(--space-inline-pair); padding-block: var(--space-inset-sm); padding-inline: var(--space-inset-lg); }
   [data-dl='slack-message'] > [data-dl-part='avatar'] { inline-size: var(--size-target-dense); }
-  /* Region 12: a grouped message's words start 23 px below the reaction row above (r02, 1x), 8 px padding above. */
-[data-dl='slack-message'][data-grouped] { padding-block: var(--space-inset-sm) var(--space-inset-xs); }
+  /* Region 12: a grouped message's words start 22 px below the reaction row above (r02, 1x; W84 measured 23 with 2 px padding). */
+[data-dl='slack-message'][data-grouped] { padding-block: var(--space-inset-xs); }
   [data-dl='slack-message'] > [data-dl-part='body'] { display: grid; gap: var(--space-stack-pair); min-inline-size: 0; }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='byline'] { display: flex; align-items: baseline; gap: var(--space-inline-pair); }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='byline'] > [data-dl-part='author'] { font-weight: var(--weight-black); }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='byline'] > [data-dl-part='time'] { font-size: var(--text-xs); color: var(--color-text-muted); }
-  [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='reactions'] { display: flex; gap: var(--space-inline-pair); }
+  /* Region 14: the pill row starts ≈13 px below the body's baseline (r05 4x, r02), 4 px more than the body's own leading gives. */
+[data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='reactions'] { display: flex; gap: var(--space-inline-pair); padding-block-start: var(--space-1); }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='reactions'] > [data-dl-part='reaction'] { display: grid; background: var(--color-bg-sunken); border-radius: var(--radius-pill); --c-button-radius-sm: var(--radius-pill); }
   /* Own reaction: Slack's link blue as ring, words and a light tint (exact tint unmeasured, r05). */
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='reactions'] > [data-chosen] { background: color-mix(in srgb, var(--color-text-link) 10%, var(--color-bg)); color: var(--color-text-link); box-shadow: inset 0 0 0 var(--border-hairline) var(--color-text-link); }

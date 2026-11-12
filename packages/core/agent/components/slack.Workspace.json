@@ -86,6 +86,7 @@
     "--size-target-dense",
     "--size-target-min",
     "--space-0-5",
+    "--space-1",
     "--space-2",
     "--space-inline-group",
     "--space-inline-item",

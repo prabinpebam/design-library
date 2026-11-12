@@ -240,6 +240,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
                     plate={item.plate}
                     tone={item.tone}
                     submenu={!!item.items?.length}
+                    expanded={item.items?.length ? sub === i : undefined}
                     thumbnail={item.flag && flagSrc(item.flag)}
                     itemRef={(el) => {
                       itemRefs.current[i] = el;

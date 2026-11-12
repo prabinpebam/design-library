@@ -59,7 +59,7 @@ export interface ListItemProps extends DataAttributes {
   busy?: boolean;
   /** Not read yet: a heavier name and a dot, with "Unread" for assistive technology. */
   unread?: boolean;
-  /** For an item that shows or hides child items: the chevron turns and `aria-expanded` is set. The list renders the children. */
+  /** For an item that shows or hides child items: the chevron turns and `aria-expanded` is set. The list renders the children. With `submenu`, whether the submenu is open (`aria-expanded` only; the submenu chevron stays). */
   expanded?: boolean;
   /** A trailing element: a Badge; for a `listitem` also an icon-only Button (remove, more). Never a control inside an option or menu item. */
   trailing?: ReactNode;
@@ -226,7 +226,7 @@ export function ListItem({
           {trailing}
         </span>
       )}
-      {expanded !== undefined && (
+      {expanded !== undefined && !submenu && (
         <span data-dl-part="item-disclosure" aria-hidden="true">
           <Icon name="chevron-down" />
         </span>
