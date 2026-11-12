@@ -14,6 +14,12 @@ const exports = [
   { value: 'css', label: 'Copy as CSS' },
 ];
 
+const destinations = [
+  { value: 'theme', label: 'Theme controls' },
+  { value: 'docs', label: 'Documentation', href: '#documentation' },
+  { value: 'changes', label: 'What’s new', href: '#changelog' },
+];
+
 function Chooser() {
   const [chosen, setChosen] = useState('none yet');
   return (
@@ -49,6 +55,15 @@ export default {
       description: 'The menu can’t open here; say why nearby.',
       code: `<MenuButton label="Presets" disabled items={presets} onSelect={applyPreset} />`,
       render: () => <MenuButton label="Presets" disabled items={presets} onSelect={() => undefined} />,
+    },
+    {
+      title: 'Items that go somewhere',
+      description: 'An item with href is a real link with the menu item role: middle-click or the link menu opens it in a new tab, and Enter follows it.',
+      code: `<MenuButton label="Settings" icon="settings" iconOnly emphasis="quiet" items={[
+  { value: 'theme', label: 'Theme controls' },
+  { value: 'docs', label: 'Documentation', href: '/docs' },
+]} onSelect={openTheme} />`,
+      render: () => <MenuButton label="Settings" icon="settings" iconOnly emphasis="quiet" items={destinations} onSelect={() => undefined} />,
     },
   ],
 } satisfies StoryFile;

@@ -260,6 +260,24 @@ export default {
         </Items>
       ),
     },
+    {
+      title: 'Destinations',
+      description: 'With href the item is a real link that keeps its role and look: a search result or a menu item that opens a page can be middle-clicked, opened in a new tab or copied. Unavailable, the href is left off.',
+      code: `<ListItem role="option" icon="file" label="Talks" description="Every recorded talk" href="/talks" />
+<ListItem role="menuitem" icon="external" label="Documentation" href="/docs" />`,
+      render: () => (
+        <Stack gap="group">
+          <Items role="listbox" aria-label="Results">
+            <ListItem role="option" icon="file" label="Talks" description="Every recorded talk" href="#talks" />
+            <ListItem role="option" icon="file" label="Speakers" description="Everyone who has spoken" href="#speakers" />
+          </Items>
+          <Items role="menu" aria-label="Help">
+            <ListItem role="menuitem" icon="external" label="Documentation" href="#documentation" />
+            <ListItem role="menuitem" icon="external" label="Release notes" href="#release-notes" disabled />
+          </Items>
+        </Stack>
+      ),
+    },
   ],
 } satisfies StoryFile;
 

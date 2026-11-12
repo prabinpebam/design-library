@@ -217,6 +217,12 @@
     cursor: pointer;
   }
 
+  /* With href the item is a real link: the item's own colour and no underline, the same look as every other item. */
+  a[data-dl='list-item'] {
+    color: inherit;
+    text-decoration: none;
+  }
+
   [data-dl='list-item'][aria-selected='true'] {
     background-color: var(--state-selected);
   }

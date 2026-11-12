@@ -21,6 +21,12 @@ export interface MenuButtonItem {
   /** A country's flag before the name. Decorative. */
   flag?: FlagCode;
   preview?: string[];
+  /**
+   * Goes somewhere: the item is a real link (`a[href][role="menuitem"]`, router-aware), so middle-click, Ctrl or
+   * Cmd-click and "Open link in new tab" work. Choosing it closes the menu and calls `onSelect` as the link is followed;
+   * a click that opens it elsewhere (a modifier key) leaves the menu open and doesn't call `onSelect`.
+   */
+  href?: string;
 }
 
 export interface MenuButtonProps extends DataAttributes {
@@ -32,7 +38,7 @@ export interface MenuButtonProps extends DataAttributes {
   flag?: FlagCode;
   /** The actions or choices, in a meaningful order. */
   items: MenuButtonItem[];
-  /** The chosen item. The menu closes and focus returns to the button. */
+  /** The chosen item. The menu closes and focus returns to the button. Called for link items too, as they're followed. */
   onSelect: (value: string) => void;
   /** The menu's accessible name when it differs from `label`, e.g. "Brand colour presets". */
   menuLabel?: string;
@@ -64,13 +70,14 @@ export interface MenuButtonProps extends DataAttributes {
  * ListItem every popup list uses. A 44 px target from `normal` (36 px at `s`, 24 px at `xs`, dense exceptions). Busy keeps the same focused
  * trigger, locked with `aria-disabled` and `aria-busy`, its present-tense label as the name, and the width of its widest label. Icon-only
  * is named by `label`, also its tooltip;
- * each item is at least 44 px tall. Previews are decorative and hidden from assistive technology.
+ * each item is at least 44 px tall. Previews are decorative and hidden from assistive technology. An item with `href` is a
+ * destination kept in the menu (documentation, settings): a real `a[href]` with the `menuitem` role.
  * @key Enter, Space or Arrow down on the button: opens the menu at its first item
  * @key Arrow up on the button: opens the menu at its last item
  * @key Arrow down, Arrow up: move through the items, wrapping at the ends
  * @key Home, End: move to the first or last item
  * @key A letter: moves to the next item whose name starts with it
- * @key Enter or Space on an item: chooses it
+ * @key Enter or Space on an item: chooses it; on a link item, follows the link
  * @key Escape: closes the menu and returns to the button
  */
 export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, busy = false, pendingLabel, ...data }: MenuButtonProps) {
@@ -174,10 +181,12 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
                   description={item.description}
                   preview={item.preview}
                   thumbnail={item.flag && flagSrc(item.flag)}
+                  href={item.href}
                   itemRef={(el) => {
                     itemRefs.current[i] = el;
                   }}
-                  onClick={() => {
+                  onClick={(event) => {
+                    if (item.href !== undefined && (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)) return;
                     close(true);
                     onSelect(item.value);
                   }}

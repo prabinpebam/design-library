@@ -1,5 +1,6 @@
 import { useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import { Icon } from './Icon';
+import { useRouter } from '../behaviour/router';
 import { Progress } from './Progress';
 import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
@@ -67,6 +68,13 @@ export interface ListItemProps extends DataAttributes {
   trailing?: ReactNode;
   /** Needed for `aria-activedescendant`. */
   id?: string;
+  /**
+   * Goes somewhere: the item renders as a real link (`a[href]`) that keeps its role, so middle-click, Ctrl or Cmd-click,
+   * "Open link in new tab" and "Copy link address" work on a menu item, an option or an action. Inside the core
+   * `Router` it goes through `router.href()`, as Button with `href` does. Unavailable or busy, the href is left off.
+   * With it, `onClick` and `itemRef` receive the anchor; call `event.preventDefault()` to take a plain click over.
+   */
+  href?: string;
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
   /** For a `row`: the one row the Tab key reaches (the grid list moves it with the arrows). */
   tabbable?: boolean;
@@ -113,6 +121,8 @@ function Thumbnail({ src, icon }: { src: string; icon?: IconName }) {
  * A `button` (an on-page action list) is its own Tab stop and runs on Enter or Space; `drillIn` adds the chevron.
  * A `listitem` is static: no Tab stop, no hover; a control in its `trailing` slot is its own Tab stop. `inactive` stays
  * reachable so its reason is read; `busy` sets `aria-busy`; unread adds ", unread" to the name for assistive technology.
+ * With `href` it is an `a[href]` with the same role, look, focus and keyboard: the browser's link menu and middle-click
+ * work, and Enter follows it.
  */
 export function ListItem({
   role,
@@ -142,6 +152,7 @@ export function ListItem({
   expanded,
   trailing,
   id,
+  href,
   onClick,
   tabbable,
   itemRef,
@@ -151,6 +162,8 @@ export function ListItem({
   const leadingMark = checkable || ((role === 'option' || role === 'row') && multiple);
   const cell = role === 'row' ? 'gridcell' : undefined;
   const unavailable = disabled || inactive;
+  const router = useRouter();
+  const Tag = href === undefined ? 'div' : 'a';
   const activate = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
@@ -170,10 +183,11 @@ export function ListItem({
     inset && <span data-dl-part="item-inset" aria-hidden="true" />
   );
   return (
-    <div
+    <Tag
       {...data}
-      ref={itemRef}
+      ref={itemRef as (el: HTMLElement | null) => void}
       id={id}
+      href={href === undefined || unavailable || busy ? undefined : router ? router.href(href) : href}
       role={role}
       tabIndex={role === 'listitem' ? undefined : role === 'row' ? (tabbable ? 0 : -1) : role === 'button' && !(disabled && !inactive) ? 0 : -1}
       data-dl="list-item"
@@ -191,8 +205,8 @@ export function ListItem({
       aria-expanded={expanded === undefined ? undefined : expanded}
       aria-keyshortcuts={shortcut}
       aria-haspopup={submenu && role === 'menuitem' ? 'menu' : undefined}
-      onClick={unavailable || busy ? undefined : onClick}
-      onKeyDown={role === 'button' ? activate : undefined}
+      onClick={(unavailable || busy ? undefined : onClick) as ((event: MouseEvent<HTMLElement>) => void) | undefined}
+      onKeyDown={(role === 'button' ? activate : undefined) as ((event: KeyboardEvent<HTMLElement>) => void) | undefined}
     >
       {leadingMark && (
         <span
@@ -251,6 +265,6 @@ export function ListItem({
         </span>
       )}
       {role === 'option' && !multiple && <span data-dl-part="item-check">{selected && <Icon name="check" />}</span>}
-    </div>
+    </Tag>
   );
 }
