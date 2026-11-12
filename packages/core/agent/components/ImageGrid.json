@@ -105,6 +105,11 @@
           "description": "As `Image`: the paired picture shown while it's hovered or focused."
         },
         {
+          "name": "reveal",
+          "type": "PictureReveal",
+          "description": "As `Image`: draws the change to `alternate` yourself (a template's reveal preset)."
+        },
+        {
           "name": "focal",
           "type": "{ x: number",
           "description": "As `Image`: the point kept in view where a frame crops."

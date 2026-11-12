@@ -987,7 +987,7 @@
         "caption": { "$ref": "#/$defs/text" },
         "credit": { "$ref": "#/$defs/text" },
         "alt": { "$ref": "#/$defs/words", "description": "Replaces the asset's own alternative text here." },
-        "reveal": { "type": "boolean", "description": "Grey at rest, its colour while hovered or focused (the picture's treatment `{ rest: greyscale, active: none }`)." }
+        "reveal": { "$ref": "#/$defs/reveal" }
       },
       "additionalProperties": false
     },
@@ -1014,7 +1014,7 @@
         "picture": { "$ref": "#/$defs/asset" },
         "caption": { "$ref": "#/$defs/text", "description": "With `picture`: its caption." },
         "credit": { "$ref": "#/$defs/text", "description": "With `picture`: its credit." },
-        "reveal": { "type": "boolean", "description": "With `picture`: grey at rest, its colour while hovered or focused." },
+        "reveal": { "$ref": "#/$defs/reveal", "description": "With `picture`: grey at rest, its colour while hovered or focused (see `reveal`)." },
         "album": { "$ref": "#/$defs/album" },
         "presentation": { "enum": ["single", "grid", "carousel"], "description": "Default: single with `picture`, grid with `album`." },
         "variant": { "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few"], "description": "The presentation's own variant: grid standard, quilted, masonry, justified; carousel one, peek, few. Ignored where it isn't the presentation's." },
@@ -1701,6 +1701,13 @@
       "oneOf": [
         { "type": "string", "pattern": "^[a-z][a-zA-Z0-9-]*$" },
         { "$ref": "#/$defs/slot", "deprecated": true }
+      ]
+    },
+    "reveal": {
+      "description": "Grey at rest, its colour while hovered or focused (G4). `true` draws the change with the template's `default` reveal preset (registry.reveals) when it has one, else as a fade from greyscale (the picture's treatment `{ rest: greyscale, active: none }`); a name picks another of the template's presets. Reduced motion keeps the fade.",
+      "oneOf": [
+        { "type": "boolean" },
+        { "type": "string", "pattern": "^[a-z][a-zA-Z0-9-]*$" }
       ]
     },
     "slot": {

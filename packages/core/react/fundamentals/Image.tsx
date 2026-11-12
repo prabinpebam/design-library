@@ -70,7 +70,9 @@ export interface ImageProps extends DataAttributes {
    * Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs
    * with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame
    * fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced
-   * motion, where it isn't called and the crossfade shows instead. Needs `alternate`.
+   * motion, where it isn't called and the crossfade shows instead. Needs `alternate`. With a `treatment` whose `active`
+   * differs, the tone holds at rest while a reveal draws (the reveal owns the change); reduced motion keeps the tone's
+   * change. A template's reveal presets (`registry.reveals`) reach a picture through its block's `reveal`.
    */
   reveal?: PictureReveal;
 }
@@ -188,6 +190,7 @@ export function Image({
   const pair = asSource(alternate);
   const [armed, setArmed] = useState(false);
   const [pairReady, setPairReady] = useState(false);
+  const [pairFailed, setPairFailed] = useState(false);
   useEffect(() => {
     const frameEl = frameRef.current;
     if (!pair || armed || !frameEl) return;
@@ -202,7 +205,7 @@ export function Image({
   }, [pair?.src, armed]);
   const altRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const drawing = useReveal(frameRef, canvasRef, { reveal: pair ? reveal : undefined, picture: () => imgs.current[shown] ?? null, alternate: () => altRef.current, ready: pairReady && state === 'loaded', fit, focal });
+  const { drawing, owns } = useReveal(frameRef, canvasRef, { reveal: pair && !pairFailed ? reveal : undefined, picture: () => imgs.current[shown] ?? null, alternate: () => altRef.current, ready: pairReady && state === 'loaded', fit, focal });
 
   const frame = (attrs: DataAttributes) => (
     <span
@@ -213,7 +216,7 @@ export function Image({
         width && height || focal
           ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focal ? { '--image-focus': `${focal.x * 100}% ${focal.y * 100}%` } : {}) } as CSSProperties)
           : undefined
-      } data-ratio={ratio} data-fit={fit} data-fallback-layout={fallbackLayout === 'label' ? 'label' : undefined} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined}>
+      } data-ratio={ratio} data-fit={fit} data-fallback-layout={fallbackLayout === 'label' ? 'label' : undefined} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={owns ? undefined : active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined}>
       {state === 'failed' && (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
           {(fallbackLayout !== 'label' || !alt) && <Icon name="image" size="lg" />}
@@ -248,9 +251,9 @@ export function Image({
         );
       })}
       {pair && state !== 'failed' && (
-        <img ref={altRef} data-dl-part="alternate" src={armed ? pair.src : undefined} srcSet={armed ? pair.srcSet : undefined} sizes={sizes} alt="" aria-hidden="true" width={width} height={height} decoding="async" data-ready={pairReady ? '' : undefined} onLoad={() => setPairReady(true)} />
+        <img ref={altRef} data-dl-part="alternate" src={armed ? pair.src : undefined} srcSet={armed ? pair.srcSet : undefined} sizes={sizes} alt="" aria-hidden="true" width={width} height={height} decoding="async" data-ready={pairReady ? '' : undefined} onLoad={() => setPairReady(true)} onError={() => setPairFailed(true)} />
       )}
-              {pair && reveal && state !== 'failed' && <canvas ref={canvasRef} data-dl-part="reveal" aria-hidden="true" />}
+              {drawing && state !== 'failed' && <canvas ref={canvasRef} data-dl-part="reveal" aria-hidden="true" />}
             </span>
   );
 

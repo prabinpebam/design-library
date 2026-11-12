@@ -28,6 +28,9 @@
   "StickyBar": {
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
   },
+  "Image": {
+    "--c-image-reveal-duration": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it."
+  },
   "List": {
     "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length.",
     "--c-list-tile-fill": "A tile's surface inside its hairline outline (default color.bg-control). A theme that draws tiles outlined on the page sets var(--color-bg); the outline stays the tile's boundary.",

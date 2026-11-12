@@ -284,7 +284,7 @@ export default {
     {
       title: 'Your own reveal: a wipe and a stipple',
       description:
-        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows. Left, a wipe from the start edge; right, a stipple built on the library’s own field from @design-library/core/effects (the dots ImageGeneration draws), growing darker noise first. Same hook, different drawing.',
+        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows. Left, a wipe from the start edge; right, a stipple built on the library’s own field from @design-library/core/effects (the dots ImageGeneration draws), growing darker noise first. Same hook, different drawing. From data, a template registers its reveals by name (registry.reveals, G4) and a picture in a media block with reveal: true rests grey and draws its colour with the template’s default reveal (a name picks another); without one it fades from grey.',
       code: `const wipe: PictureReveal = ({ context, width, height, progress, paint }) => {
   paint('picture');
   context.save(); context.beginPath(); context.rect(0, 0, width * progress, height); context.clip();
@@ -304,7 +304,10 @@ const stipple: PictureReveal = ({ context, width, height, progress, time, paint 
     if (r > 0) { context.moveTo(p.x + r, p.y); context.arc(p.x, p.y, r, 0, Math.PI * 2); }
   }
   context.clip(); paint('alternate'); context.restore();
-};`,
+};
+
+// a template: registry: { reveals: { default: stipple } }; content: { "type": "media", "picture": "harbour", "reveal": true }
+// draws <Image src={harbour} treatment={{ rest: 'greyscale', active: 'none' }} alternate={harbour} reveal={stipple} … />`,
       render: () => (
         <Grid max={2}>
           <Image src={lighthouseDay} alternate={lighthouseNight} reveal={wipe} alt="Before and after: the lighthouse by day, then lit at night." caption="A wipe" />

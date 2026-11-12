@@ -138,7 +138,7 @@
         {
           "name": "reveal",
           "type": "PictureReveal",
-          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the crossfade shows instead. Needs `alternate`."
+          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the crossfade shows instead. Needs `alternate`. With a `treatment` whose `active` differs, the tone holds at rest while a reveal draws (the reveal owns the change); reduced motion keeps the tone's change. A template's reveal presets (`registry.reveals`) reach a picture through its block's `reveal`."
         }
       ]
     },
@@ -193,6 +193,13 @@
     "--state-hover",
     "--type-body-sm-leading",
     "--type-body-sm-size"
+  ],
+  "settings": [
+    {
+      "var": "--c-image-reveal-duration",
+      "default": "400ms",
+      "description": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/image",
   "usedBy": [

@@ -7,7 +7,8 @@ import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Carousel, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
+import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, MediaReveal, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
+import type { PictureReveal } from '../react/behaviour/reveal';
 
 /** A picture from assets drawn inline as an Illustration, when its asset says so (MP22); null for any other picture. */
 const illustrationOf = (ctx: RenderContext, id: string, ratio?: TemplateAsset['ratio']) => {
@@ -263,14 +264,29 @@ const inSection = (key: number, heading: string | undefined, body: ReactNode, si
     <Fragment key={key}>{body}</Fragment>
   );
 
+/**
+ * The template's reveal preset for a picture's `reveal` (G4): `true` takes `default`, a name its preset. None (or an
+ * unknown name, reported) leaves the tone's fade.
+ */
+function revealOf(ctx: RenderContext, reveal: MediaReveal | undefined): PictureReveal | undefined {
+  if (!reveal) return undefined;
+  const name = reveal === true ? 'default' : reveal;
+  const drawn = ctx.reveal?.(name);
+  if (!drawn && reveal !== true) ctx.problem?.(`there's no reveal called “${name}” (a template registers its reveals in registry.reveals)`);
+  return drawn;
+}
+
 /** An asset as `Image` props, with what an album says about it: its alt text here, and reveal (grey until pointed at). */
-const pictureProps = (ctx: RenderContext, id: string, alt?: string, reveal?: boolean) => {
+const pictureProps = (ctx: RenderContext, id: string, alt?: string, reveal?: MediaReveal) => {
   const a = ctx.picture(id);
+  // G4: a template's reveal draws the change from the grey picture to its colour (the same file, unless it has a pair).
+  const drawn = revealOf(ctx, reveal);
   return {
     src: a.src,
     dark: a.dark,
     contrast: a.contrast,
-    alternate: a.alternate,
+    alternate: drawn ? (a.alternate ?? a.src) : a.alternate,
+    reveal: drawn,
     alt: a.decorative ? '' : (alt ?? a.alt),
     focal: a.focal,
     treatment: reveal ? { rest: 'greyscale' as const, active: 'none' as const } : a.treatment,

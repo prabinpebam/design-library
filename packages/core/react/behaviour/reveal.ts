@@ -58,14 +58,14 @@ function fitted(img: HTMLImageElement, w: number, h: number, fit: 'cover' | 'con
 }
 
 /**
- * Runs a reveal on the canvas over a frame. Returns whether it draws (false: none given, reduced motion, or the pair
- * not yet loaded), so the frame keeps the crossfade otherwise.
+ * Runs a reveal on the canvas over a frame. Returns whether it draws (`drawing`; false: none given, reduced motion, or
+ * the pair not yet loaded), so the frame keeps the crossfade otherwise, and whether it will once the pair is in (`owns`).
  */
 export function useReveal(
   frame: RefObject<HTMLElement | null>,
   canvas: RefObject<HTMLCanvasElement | null>,
   options: { reveal?: PictureReveal; picture: () => HTMLImageElement | null; alternate: () => HTMLImageElement | null; ready: boolean; fit: 'cover' | 'contain'; focal?: { x: number; y: number } },
-): boolean {
+): { drawing: boolean; owns: boolean } {
   const { reveal, ready } = options;
   const latest = useRef(options);
   latest.current = options;
@@ -169,5 +169,6 @@ export function useReveal(
     };
   }, [drawing, frame, canvas]);
 
-  return drawing;
+  // `owns`: a reveal will draw the change (given, motion allowed), so a picture's tone holds at rest meanwhile (G4).
+  return { drawing, owns: !!reveal && !reduce };
 }

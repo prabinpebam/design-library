@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
+import type { PictureReveal } from '../behaviour/reveal';
 import type { DataAttributes } from '../types';
 
 export interface ImageGridItem extends SchemeSources {
@@ -18,6 +19,8 @@ export interface ImageGridItem extends SchemeSources {
   treatment?: PictureTreatment;
   /** As `Image`: the paired picture shown while it's hovered or focused. */
   alternate?: string | PictureSource;
+  /** As `Image`: draws the change to `alternate` yourself (a template's reveal preset). */
+  reveal?: PictureReveal;
   /** As `Image`: the point kept in view where a frame crops. */
   focal?: { x: number; y: number };
 }
@@ -66,6 +69,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             ratio={layout === 'standard' ? ratio : layout === 'quilted' ? 'square' : 'natural'}
             treatment={item.treatment}
             alternate={item.alternate}
+            reveal={item.reveal}
             focal={item.focal}
           />
         );

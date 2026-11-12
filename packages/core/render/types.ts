@@ -6,6 +6,7 @@
 import type { ReactNode } from 'react';
 import type { AgendaSlot, FooterLink, FooterSection, IconName, IllustrationPlay, StoryFile } from '../react/components';
 import type { PageGridRecord } from './page-grid';
+import type { PictureReveal } from '../react/behaviour/reveal';
 
 export type SiteAction = {
   label: string;
@@ -94,9 +95,16 @@ export interface AlbumItem {
   credit?: string;
   /** Replaces the asset's alternative text here. */
   alt?: string;
-  /** Grey at rest, its colour while hovered or focused. */
-  reveal?: boolean;
+  /** Grey at rest, its colour while hovered or focused (see `MediaReveal`). */
+  reveal?: MediaReveal;
 }
+
+/**
+ * Grey at rest, its colour while hovered or focused (G4). `true` draws the change with the template's `default` reveal
+ * preset (`registry.reveals`) when it has one, else as the picture's tone (a fade from greyscale); a name picks another
+ * preset. Reduced motion, and a name the template doesn't have, keep the fade.
+ */
+export type MediaReveal = boolean | string;
 
 /** Pictures in order, reusable across blocks: an `albums` collection item (by `{ ref }`) or written in the block. */
 export interface Album {
@@ -114,7 +122,7 @@ export type MediaBlock = {
   presentation?: 'single' | 'grid' | 'carousel';
   variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few';
   ratio?: TemplateAsset['ratio'];
-} & ({ picture: string; caption?: string; credit?: string; reveal?: boolean; album?: never } | { album: Album; picture?: never });
+} & ({ picture: string; caption?: string; credit?: string; reveal?: MediaReveal; album?: never } | { album: Album; picture?: never });
 
 /** A block's section title at the top steps of the type ramp (MP16); without it the usual section size. */
 export type SectionTitleSize = 'display' | 'jumbo';
@@ -343,6 +351,8 @@ export interface RenderContext {
   region?: string;
   /** A template decoration preset by name (LR20), or undefined when the template has none by that name. */
   decoration?: (name: string) => ReactNode | undefined;
+  /** A template reveal preset by name (G4), or undefined when the template has none by that name. */
+  reveal?: (name: string) => PictureReveal | undefined;
   /** Told of a content problem the renderer finds (a block a slot doesn't accept); `SiteView` lists them in development. */
   problem?: (what: string) => void;
 }
@@ -372,7 +382,12 @@ export interface Template {
   registry?: { // eslint-disable-next-line @typescript-eslint/no-explicit-any -- each entry narrows its own block
   blocks?: Record<string, BlockRenderer<any>>; layouts?: Record<string, LayoutBinding>;
   /** Decoration presets (LR20): art drawn over a picture (shapes, marks), by name; a hero or picture names one in `decoration`. */
-  decorations?: Record<string, () => ReactNode> };
+  decorations?: Record<string, () => ReactNode>;
+  /**
+   * Reveal presets (G4): how a picture with `reveal` draws its change from grey to colour, as `Image` `reveal` draws
+   * (MP11). `default` serves `reveal: true`; without it the change is the tone's fade.
+   */
+  reveals?: Record<string, PictureReveal> };
 }
 
 /** A site's navigation place (site.schema.json `navigation`). */
