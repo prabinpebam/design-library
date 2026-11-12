@@ -1018,7 +1018,15 @@
         "album": { "$ref": "#/$defs/album" },
         "presentation": { "anyOf": [{ "enum": ["single", "grid", "carousel"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)?$" }], "description": "Default: single with `picture`, grid with `album`. Another name is a template's own presentation (`registry.presentations`, G2), such as a collage; a name the template doesn't have is reported and shown as a grid." },
         "variant": { "anyOf": [{ "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }], "description": "The presentation's own variant: grid standard, quilted, masonry, justified; carousel one, peek, few; a template presentation's own. Ignored where it isn't the presentation's." },
-        "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frames' shape where the presentation has one (single; grid standard: wide, photo, square or portrait); default the asset's, else photo." }
+        "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frames' shape where the presentation has one (single; grid standard: wide, photo, square or portrait); default the asset's, else photo." },
+        "frame": {
+          "description": "Framing switch (G3): the template's framing art (shapes) around each picture, behind it and over it. `true` takes the template's `default` frame (registry.frames), a name another; off (default) draws none. Drawn in single and grid standard and masonry; quilted, justified and carousel leave it out (their pictures fill clipped cells). A template presentation gets it as `frame` and draws its own. A name the template doesn't have is reported and draws none.",
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string", "pattern": "^[a-z][a-zA-Z0-9-]*$" }
+          ]
+        },
+        "depth": { "type": "boolean", "description": "Depth motion switch (G3): the template's depth motion (registry.motions.depth, such as scroll parallax and pointer repel) on the pictures and their framing. Off by default; reduced motion turns it off. Single and grid only (a carousel's slides already move); a template presentation gets it as `depth`." }
       },
       "oneOf": [{ "required": ["picture"], "not": { "required": ["album"] } }, { "required": ["album"], "not": { "required": ["picture"] } }],
       "additionalProperties": false

@@ -140,10 +140,34 @@ export interface MediaPresentationProps {
   /** The block's variant, when the presentation has its own. */
   variant?: string;
   ratio?: TemplateAsset['ratio'];
+  /** The block's framing switch (G3): `true` on, `false` off, absent the presentation's own default. */
+  frame?: boolean;
+  /** The block's depth motion switch (G3): `true` on, `false` off, absent the presentation's own default. Reduced motion is the presentation's to honour. */
+  depth?: boolean;
 }
 
 /** A template's own presentation of an album (G2): a collage, a stack. Registered by name in `registry.presentations`. */
 export type MediaPresentation = (props: MediaPresentationProps) => ReactNode;
+
+/**
+ * A template's framing art for one picture (G3): drawn behind it (`under`) and over it (`over`) through `Image`'s
+ * `under` and `decoration` layers, the picture's own size, hidden from screen readers and never taking the pointer.
+ * Art may spill past the picture's edge. `index` and `count` place the picture in its set, so a frame can vary.
+ */
+export type MediaFrame = (picture: { index: number; count: number }) => { under?: ReactNode; over?: ReactNode };
+
+/** The elements a depth motion moves (G3), read again on every call: the pictures, and the framing art's layers. */
+export interface MediaMotionParts {
+  pictures: () => HTMLElement[];
+  shapes: () => HTMLElement[];
+}
+
+/**
+ * A template's depth motion (G3): attached to the block's group (a positioned box holding its pictures and their
+ * framing) while the block's `depth` is on and reduced motion isn't; returns its cleanup. The library detaches it when
+ * reduced motion turns on and attaches it again when it turns off.
+ */
+export type MediaMotion = (group: HTMLElement, parts: MediaMotionParts) => (() => void) | void;
 
 /** One picture, or an album shown by a presentation and its variant (blocks.schema `media`; owner, DesignUp 02:36). */
 export type MediaBlock = {
@@ -155,6 +179,10 @@ export type MediaBlock = {
   presentation?: 'single' | 'grid' | 'carousel' | (string & {});
   variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few' | (string & {});
   ratio?: TemplateAsset['ratio'];
+  /** Framing switch (G3): the template's `default` frame (`true`) or one by name (`registry.frames`); off by default. */
+  frame?: boolean | string;
+  /** Depth motion switch (G3): the template's `registry.motions.depth`; off by default, and off under reduced motion. */
+  depth?: boolean;
 } & ({ picture: string; caption?: string; credit?: string; reveal?: MediaReveal; album?: never } | { album: Album; picture?: never });
 
 /** A block's section title at the top steps of the type ramp (MP16); without it the usual section size. */
@@ -388,6 +416,10 @@ export interface RenderContext {
   reveal?: (name: string) => PictureReveal | undefined;
   /** A template media presentation by name (G2), or undefined when the template has none by that name. */
   presentation?: (name: string) => MediaPresentation | undefined;
+  /** A template frame by name (G3), or undefined when the template has none by that name. */
+  frame?: (name: string) => MediaFrame | undefined;
+  /** A template motion by name (G3, `depth`), or undefined when the template has none. */
+  motion?: (name: 'depth') => MediaMotion | undefined;
   /** Told of a content problem the renderer finds (a block a slot doesn't accept); `SiteView` lists them in development. */
   problem?: (what: string) => void;
 }
@@ -424,7 +456,11 @@ export interface Template {
    */
   reveals?: Record<string, PictureReveal>;
   /** Media presentations (G2): a template's own way to show an album (a collage), by name; a media block names one in `presentation`. */
-  presentations?: Record<string, MediaPresentation> };
+  presentations?: Record<string, MediaPresentation>;
+  /** Framing art (G3): a template's shapes around a picture, by name; a media block's `frame` switch draws `default` or a named one. */
+  frames?: Record<string, MediaFrame>;
+  /** Motions (G3): `depth` serves a media block's `depth` switch (scroll parallax, pointer repel); off under reduced motion. */
+  motions?: { depth?: MediaMotion } };
 }
 
 /** A site's navigation place (site.schema.json `navigation`). */

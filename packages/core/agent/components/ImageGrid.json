@@ -128,6 +128,16 @@
           "name": "y",
           "type": "number }",
           "required": true
+        },
+        {
+          "name": "decoration",
+          "type": "ReactNode",
+          "description": "As `Image`: shapes drawn over the picture (a template's framing art); they may spill into the gap."
+        },
+        {
+          "name": "under",
+          "type": "ReactNode",
+          "description": "As `Image`: shapes drawn behind the picture."
         }
       ]
     }

@@ -7,8 +7,9 @@ import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Carousel, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, MediaReveal, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
+import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, MediaFrame, MediaReveal, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
 import type { PictureReveal } from '../react/behaviour/reveal';
+import { DepthGroup } from '../react/behaviour/depth';
 
 /** A picture from assets drawn inline as an Illustration, when its asset says so (MP22); null for any other picture. */
 const illustrationOf = (ctx: RenderContext, id: string, ratio?: TemplateAsset['ratio']) => {
@@ -299,6 +300,25 @@ const GRID_VARIANTS = ['standard', 'quilted', 'masonry', 'justified'] as const;
 const GRID_RATIOS = ['wide', 'photo', 'square', 'portrait'] as const;
 const CAROUSEL_VARIANTS = { one: { perView: 1, peek: false }, peek: { perView: 1, peek: true }, few: { perView: 3, peek: false } } as const;
 const CORE_PRESENTATIONS = ['single', 'grid', 'carousel'] as const;
+/** Grid layouts whose pictures keep their own box, so framing art can spill into the gap (quilted and justified fill clipped cells). */
+const FRAMED_GRIDS = new Set(['standard', 'masonry']);
+
+/** The template's frame for a media block's `frame` switch (G3): `true` takes `default`, a name its frame; an unknown name is reported. */
+function frameOf(ctx: RenderContext, frame: boolean | string | undefined): MediaFrame | undefined {
+  if (!frame) return undefined;
+  const name = frame === true ? 'default' : frame;
+  const drawn = ctx.frame?.(name);
+  if (!drawn && frame !== true) ctx.problem?.(`there's no frame called “${name}” (a template registers its frames in registry.frames)`);
+  return drawn;
+}
+
+/** Framing art as `Image` takes it: behind the picture (`under`) and over it (`decoration`). */
+const framing = (frame: MediaFrame | undefined, index: number, count: number) => {
+  if (!frame) return {};
+  const art = frame({ index, count });
+  return { under: art.under, decoration: art.over };
+};
+
 
 /** The media block (owner, DesignUp 2026-11-13 02:36): one picture, or an album by its presentation and variant. */
 function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
@@ -310,12 +330,16 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
   const own = core ? undefined : ctx.presentation?.(requested);
   if (!core && !own) ctx.problem?.(`there's no presentation called “${requested}” (a template registers its presentations in registry.presentations); shown as a grid`);
   const presentation = core ?? (own ? requested : 'grid');
+  const count = items.length;
   if (own) {
     // G2: a template's own presentation (a collage) gets the pictures as Image takes them, with the album's words.
+    // G3: and the block's framing and depth switches, as given; it draws its own shapes and motion.
     body = own({
       label,
       variant: b.variant,
       ratio: b.ratio,
+      frame: b.frame === undefined ? undefined : !!b.frame,
+      depth: b.depth,
       pictures: items.map((item, n) => {
         const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
         return { id: String(n), ...p, caption: item.caption, credit: item.credit };
@@ -324,6 +348,7 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
   } else if (presentation === 'grid') {
     const layout = GRID_VARIANTS.find((v) => v === b.variant) ?? 'standard';
     const ratio = GRID_RATIOS.find((r) => r === b.ratio);
+    const frame = FRAMED_GRIDS.has(layout) ? frameOf(ctx, b.frame) : undefined;
     body = (
       <ImageGrid
         label={label}
@@ -331,7 +356,7 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
         ratio={ratio}
         items={items.map((item, n) => {
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-          return { id: String(n), ...p, caption: item.caption, credit: item.credit, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };
+          return { id: String(n), ...p, ...framing(frame, n, count), caption: item.caption, credit: item.credit, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };
         })}
       />
     );
@@ -352,8 +377,11 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
   } else {
     const item = items[0];
     const { ratio, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-    body = <Image {...p} ratio={b.ratio ?? ratio ?? 'photo'} caption={item.caption} credit={item.credit} />;
+    body = <Image {...p} {...framing(frameOf(ctx, b.frame), 0, 1)} ratio={b.ratio ?? ratio ?? 'photo'} caption={item.caption} credit={item.credit} />;
   }
+  // G3: the template's depth motion around single and grid (a carousel's slides already move; a presentation moves its own).
+  const motion = b.depth && !own && presentation !== 'carousel' ? ctx.motion?.('depth') : undefined;
+  if (motion) body = <DepthGroup motion={motion}>{body}</DepthGroup>;
   return inSection(i, b.heading, body, b.size);
 }
 

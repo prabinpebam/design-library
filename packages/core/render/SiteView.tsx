@@ -225,6 +225,8 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
     decoration: (name) => registry?.decorations?.[name]?.(),
     reveal: (name) => registry?.reveals?.[name],
     presentation: (name) => registry?.presentations?.[name],
+    frame: (name) => registry?.frames?.[name],
+    motion: (name) => registry?.motions?.[name],
     blocks: (blocks) => list(blocks, ctx, undefined),
   };
   function one(block: Block, i: number, at: RenderContext, path: string): ReactNode {

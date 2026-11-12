@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
 import type { PictureReveal } from '../behaviour/reveal';
 import type { DataAttributes } from '../types';
@@ -27,6 +27,10 @@ export interface ImageGridItem extends SchemeSources {
   credit?: string;
   /** As `Image`: the point kept in view where a frame crops. */
   focal?: { x: number; y: number };
+  /** As `Image`: shapes drawn over the picture (a template's framing art); they may spill into the gap. */
+  decoration?: ReactNode;
+  /** As `Image`: shapes drawn behind the picture. */
+  under?: ReactNode;
 }
 
 export interface ImageGridProps extends DataAttributes {
@@ -79,6 +83,8 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             alternate={item.alternate}
             reveal={item.reveal}
             focal={item.focal}
+            decoration={item.decoration}
+            under={item.under}
             {...(onSelect ? {} : words)}
           />
         );

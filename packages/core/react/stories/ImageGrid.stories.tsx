@@ -64,5 +64,29 @@ export default {
       code: `<ImageGrid label="…" items={photos.map((p) => ({ ...p, caption: '…', credit: 'Photo: …' }))} />`,
       render: () => <ImageGrid label="Captioned photos from the trip" items={scenes.slice(0, 3).map((s, i) => ({ ...photos[i], caption: s.caption, credit: 'Photo: A. Rivera' }))} />,
     },
+    {
+      title: 'Framed pictures',
+      description:
+        'In standard and masonry grids an item takes under and decoration as Image does: framing art behind and over each picture (a template’s frames, which a media block draws with its frame switch). The art may spill past the picture into the gap; quilted and justified tiles leave it out. Screen readers skip it and the pointer passes through it.',
+      code: `<ImageGrid label="…" items={photos.map((p) => ({ ...p, under: <svg viewBox="0 0 100 100">…</svg>, decoration: <svg viewBox="0 0 100 100">…</svg> }))} />`,
+      render: () => (
+        <ImageGrid
+          label="Framed photos from the trip"
+          items={photos.slice(0, 3).map((p) => ({
+            ...p,
+            under: (
+              <svg viewBox="0 0 100 100">
+                <circle cx="2" cy="2" r="16" fill="currentColor" />
+              </svg>
+            ),
+            decoration: (
+              <svg viewBox="0 0 100 100">
+                <rect x="84" y="88" width="14" height="10" fill="currentColor" />
+              </svg>
+            ),
+          }))}
+        />
+      ),
+    },
   ],
 } satisfies StoryFile;
