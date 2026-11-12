@@ -4,7 +4,7 @@
   "tier": "compound",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/compounds/DataTable.tsx",
-  "summary": "Structured facts to compare in rows and columns, such as a component's props or its keys. The first column heads each row. Wider than the page, it scrolls sideways in its own region; the page never does. One enclosure, one hairline between rows, a header row set apart by tone. With `reorderable`, rows are put in order by a Move handle, the same handle and menu as a reorderable List. Not for a list of named values read one by one (a token reference), for term and details pairs (use DescriptionList) or for layout.",
+  "summary": "Structured facts to compare in rows and columns, such as a component's props or its keys. The first column heads each row. Wider than the page, it scrolls sideways in its own region; the page never does. One enclosure, one hairline between rows, a header row set apart by tone. Not for a list of named values read one by one (a token reference), for term and details pairs (use DescriptionList) or for layout.",
   "family": "data",
   "a11y": [
     "A native `table` with column headers (`th scope=\"col\"`) and row headers (`th scope=\"row\"`), inside a region named by `label`. The region is focusable only so keyboard users can scroll it. Code in a cell may break at any character, so a long type never forces the page sideways. A row's Move handle is a menu button named \"Move\" and the row's label; a move is announced (\"Moved … to position 2 of 5.\") and focus stays on the moved row's handle."

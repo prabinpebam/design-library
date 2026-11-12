@@ -44,8 +44,7 @@ export interface DataTableProps extends DataAttributes {
 /**
  * Structured facts to compare in rows and columns, such as a component's props or its keys. The first column heads
  * each row. Wider than the page, it scrolls sideways in its own region; the page never does. One enclosure, one hairline
- * between rows, a header row set apart by tone. With `reorderable`, rows are put in order by a Move handle, the same
- * handle and menu as a reorderable List.
+ * between rows, a header row set apart by tone.
  * Not for a list of named values read one by one (a token reference), for term and details pairs (use
  * DescriptionList) or for layout.
  * @tier compound
