@@ -34,8 +34,12 @@
       "additionalProperties": false,
       "description": "One ribbon command: a stacked lead command, an icon command (optionally with a menu chevron), or a value field.",
       "properties": {
+        "disabled": {
+          "description": "Unavailable in the current selection state (Cut, Copy, Sensitivity on an empty selection).",
+          "type": "boolean"
+        },
         "icon": {
-          "description": "A core icon name.",
+          "description": "Icon name from core or the template's custom icon pack.",
           "type": "string"
         },
         "kind": {
@@ -52,6 +56,13 @@
         "label": {
           "type": "string"
         },
+        "lines": {
+          "description": "Explicit multi-line stacked caption lines when a ribbon wraps at a specific break.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "menu": {
           "description": "A split command with a menu of options.",
           "type": "boolean"
@@ -61,7 +72,7 @@
           "type": "boolean"
         },
         "value": {
-          "description": "A field's current value (\"Aptos (Body)\", \"12\").",
+          "description": "A field's current value (\"Aptos (Body)\", \"11\").",
           "type": "string"
         },
         "width": {
@@ -106,6 +117,10 @@
     "WordGroup": {
       "additionalProperties": false,
       "properties": {
+        "hideLabel": {
+          "description": "Hides redundant group caption under a single-command collapsed group.",
+          "type": "boolean"
+        },
         "id": {
           "type": "string"
         },

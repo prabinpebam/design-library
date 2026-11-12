@@ -10,6 +10,27 @@
     min-inline-size: 0;
   }
 
+  [data-dl='ribbon-band'] {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-inline-pair);
+    min-inline-size: 0;
+  }
+
+  [data-dl='ribbon-band'] > [data-dl='ribbon-card'] {
+    flex: 1 1 auto;
+  }
+
+  [data-dl='ribbon-band'] > [data-dl-part='aside'] {
+    display: flex;
+    align-items: stretch;
+    flex: none;
+    padding: var(--c-ribbon-padding);
+    background: var(--c-ribbon-bg);
+    border-radius: var(--c-ribbon-radius);
+    box-shadow: var(--c-ribbon-shadow);
+  }
+
   [data-dl='ribbon-card'] {
     display: flex;
     align-items: stretch;

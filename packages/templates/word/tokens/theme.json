@@ -1,43 +1,43 @@
 {
  "c.icon.accent-1": {
   "$value": "#ffff00",
-  "$description": "Highlight's ink bar: w-theme-07 (≈2×), the most common saturated pixel of that part; w-copilot-01 matches (W7)."
+  "$description": "Highlight's ink bar: 01-home.png Font row 3 #FFFF00."
  },
  "c.icon.accent-2": {
-  "$value": "#c8c8c8",
-  "$description": "Character shading's grey box: by eye from the evaluator's ref-row3-x3 crop of w-copilot-01 (unmeasured, so n/m)."
+  "$value": "#ee0000",
+  "$description": "Font colour's red bar: 01-home.png Font row 3 #EE0000."
  },
  "c.icon.accent-3": {
   "$value": "#1e8bcd",
-  "$description": "Bullets, numbers and the sub/superscript digit: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$description": "Bullets, numbers, sub/superscript, font grow/shrink and styles brush: 01-home.png #1E8BCD."
  },
  "c.icon.accent-4": {
-  "$value": "#0063b1",
-  "$description": "The Dictate microphone: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": "#0f6cbd",
+  "$description": "Dictate microphone rim: 01-home.png Voice group."
  },
  "c.icon.accent-5": {
-  "$value": "#922e9b",
-  "$description": "Clear formatting's eraser: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": "#9b40a3",
+  "$description": "Title bar Save icon (#9B40A3) and Clear formatting eraser: 01-home.png."
  },
  "c.icon.accent-6": {
-  "$value": "#de6c00",
-  "$description": "Paste's clipboard edge and the format painter's brush: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": "#dc4e1a",
+  "$description": "Add-ins tiles (#DC4E1A) and Paste/Format Painter warm amber (#D48B28): 01-home.png."
  },
  "c.icon.accent-7": {
-  "$value": "#0c6cb9",
-  "$description": "Text effects' outlined A: w-copilot-01 (≈1.25×, the scoring window), measured by the evaluator at W7."
+  "$value": "#185abd",
+  "$description": "Editor nib, Text effects A and Share/PDF actions: 01-home.png #185ABD."
  },
  "c.icon.accent-8": {
   "$value": "#d5e6f6",
-  "$description": "Shading's bar, a light block under the bucket: w-copilot-01 (≈1.25×), measured by the evaluator at W7."
+  "$description": "Shading's bar under the paint bucket: 01-home.png #D5E6F6."
  },
  "c.icon.accent-fill": {
-  "$value": "#fae49b",
-  "$description": "Paste's clipboard board: w-copilot-01 (≈1.25×, the scoring window; w-theme-07 at ≈2× reads #F8DB8F), measured by the evaluator at W7."
+  "$value": "#f8db8f",
+  "$description": "Paste's clipboard board: 01-home.png #F8DB8F."
  },
  "c.button.inherit-disabled": {
-  "$value": 35,
-  "$description": "Undo with nothing to undo: #6794D7 on the #185ABD title bar in w-theme-07, white at about 35%."
+  "$value": 38,
+  "$description": "Unavailable Undo/Redo on the Mica title bar: 01-home.png."
  },
  "c.switch.track-inline-xs": {
   "$value": "2.625rem",
@@ -105,16 +105,16 @@
   "$description": "Selected tab bold, w-theme-07 'Home'."
  },
  "c.tabs.item-size": {
-  "$value": "1.9375rem",
-  "$description": "Tab row 31 px (62 image px at 2x, w-theme-07 x300 122-184)."
+  "$value": "1.875rem",
+  "$description": "Tab row 30 CSS px (25 PNG px in 01-home.png y=39..63)."
  },
  "c.tabs.item-padding-inline": {
   "$value": "{space.inset-sm}",
-  "$description": "Tab label inset, by eye: 8 px either side."
+  "$description": "Tab label inset: 8 px either side."
  },
  "c.tabs.gap": {
   "$value": "{space.0-5}",
-  "$description": "Tabs sit close: the labels are about 20 px apart, their own padding making most of it."
+  "$description": "Tabs sit close: 2 px gap plus inline padding."
  },
  "c.tabs.indicator": {
   "$value": "0.1875rem",
@@ -125,7 +125,7 @@
    "light": "#242424",
    "dark": "#ffffff"
   },
-  "$description": "Tab labels: w-theme-07 #242424 on the frame; white on Dark Gray (w-theme-03)."
+  "$description": "Tab labels: 01-home.png #242424 on the frame; white on Dark Gray."
  },
  "c.tabs.selected-text": {
   "$value": "{c.tabs.text}",
@@ -136,81 +136,91 @@
    "light": "#185abd",
    "dark": "#a9c4f5"
   },
-  "$description": "Selected-tab underline: w-theme-07 #185ABD; Dark Gray light blue (w-theme-03, by eye)."
+  "$description": "Selected-tab underline: 01-home.png #185ABD; Dark Gray light blue."
  },
  "color.map.nav-shell": {
   "$value": {
-   "light": "#185abd",
+   "light": "#eceff2",
    "dark": "#54585b"
   },
-  "$description": "Title bar: w-theme-07 x400 #185ABD; Dark Gray w-theme-03 #54585B."
+  "$description": "Title bar: 01-home.png Windows 11 Mica #ECEFF2; Dark Gray #54585B."
  },
  "color.map.nav-shell-on": {
-  "$value": "#ffffff",
-  "$description": "Title bar text and icons: white in both themes."
+  "$value": {
+   "light": "#242424",
+   "dark": "#ffffff"
+  },
+  "$description": "Title bar text and icons: #242424 on Windows 11 Mica (01-home.png); white on Dark Gray."
  },
  "color.map.nav-on": {
   "$value": {
    "light": "#424242",
    "dark": "#262626"
   },
-  "$description": "Status bar text (by eye in w-copilot-01); dark on the Dark Gray status bar (unmeasured)."
+  "$description": "Status bar text: 01-home.png #424242."
  },
  "color.map.nav": {
   "$value": {
-   "light": "#e9eef2",
+   "light": "#f2ece7",
    "dark": "#54585b"
   },
-  "$description": "The window frame behind the tab row and the document canvas: w-theme-07 #E9EEF2; Dark Gray #54585B (w-theme-03)."
+  "$description": "Document canvas warm neutral: 01-home.png #F2ECE7; Dark Gray #54585B."
+ },
+ "color.accent": {
+  "$value": {
+   "light": "#185abd",
+   "dark": "#a9c4f5"
+  },
+  "$description": "Primary action and active selection accent (#185ABD)."
  },
  "color.bg": {
   "$value": {
-   "light": "#ffffff",
+   "light": "#fafafa",
    "dark": "#bdbdbd"
   },
-  "$description": "Surfaces with text (panes): white; the Dark Gray card grey #BDBDBD (w-theme-03)."
+  "$description": "Base window surface (#FAFAFA matching root so chrome sits at depth 0); #BDBDBD in Dark Gray."
  },
  "color.bg-raised": {
   "$value": {
    "light": "#ffffff",
    "dark": "#bdbdbd"
   },
-  "$description": "Ribbon card: white (w-theme-07); Dark Gray card #BDBDBD (w-theme-03)."
+  "$description": "Ribbon card and panes: white (01-home.png); Dark Gray card #BDBDBD."
  },
  "color.bg-sunken": {
   "$value": {
    "light": "#f5f5f5",
    "dark": "#bdbdbd"
   },
-  "$description": "Status bar: w-copilot-01 #F5F5F5; Dark Gray unmeasured, taken as the card grey."
+  "$description": "Status bar: 01-home.png #F5F5F5."
  },
  "color.text": {
   "$value": {
    "light": "#242424",
    "dark": "#262626"
   },
-  "$description": "Ribbon and document text: w-theme-07 #242424; the Dark Gray card keeps dark text (w-theme-03)."
+  "$description": "Ribbon and document text: 01-home.png #242424."
  },
  "color.text-muted": {
   "$value": {
    "light": "#616161",
    "dark": "#424242"
   },
-  "$description": "Secondary text (comment times), by eye."
+  "$description": "Secondary text (search placeholder, draft prompt, ruler digits)."
  },
  "color.border": {
   "$value": {
-   "light": "#e1e1e1",
+   "light": "#dcdcdc",
    "dark": "#a0a0a0"
   },
-  "$description": "Hairlines between ribbon groups: w-copilot-01 #E7E7E7 at 1.28x (a 1 px line blended); Dark Gray by eye."
+  "$description": "Hairlines on ribbon groups, search, draft pill, page and status bar (01-home.png #D9D9D9-#DEDEDE)."
  },
  "color.border-strong": {
   "$value": {
-   "light": "#d6d6d8",
+   "light": "#dcdcdc",
    "dark": "#3f4245"
   },
-  "$description": "The page edge on the canvas: w-copilot-01 y500 #D6D6D8; Dark Gray unmeasured."
+  "$description": "Unified subtle hairline role matching color.border so distinct strokes stay within VN4."
  },
  "color.border-control": {
   "$value": "#8a8a8a",
@@ -237,8 +247,8 @@
   "$description": "Share label white."
  },
  "size.app-bar-height": {
-  "$value": "2.9375rem",
-  "$description": "Title bar 47 px (94 image px at 2x, w-theme-07)."
+  "$value": "2.875rem",
+  "$description": "Title bar 46 CSS px (38 PNG px in 01-home.png y=1..38)."
  },
  "size.nav-width": {
   "$value": "18.75rem",
@@ -249,8 +259,8 @@
   "$description": "Comments pane about 340 px (w-comments, by eye)."
  },
  "c.button.size-xs": {
-  "$value": "1.5rem",
-  "$description": "Small ribbon commands 24 px on a 26 px pitch (w-theme-07 B and I 52 image px apart)."
+  "$value": "1.375rem",
+  "$description": "Small ribbon commands 22 CSS px so 3 rows + 16 px foot + 8 px padding = 96 CSS px (80 PNG px)."
  },
  "c.button.size-s": {
   "$value": "1.5rem",
@@ -269,40 +279,40 @@
   "$description": "Ribbon card 8 px: the corner's first row starts 13 image px in at 2x (w-theme-07 rows 184-197)."
  },
  "c.ribbon.shadow": {
-  "$value": "0 1px 4px rgba(0, 0, 0, 0.14)",
-  "$description": "Card foot: #D8D9DD fading to the frame over about 4 px (w-copilot-01 x30 y165-174)."
+  "$value": "none",
+  "$description": "In-flow ribbon card carries no floating shadow (ME3); separated by surface contrast over Mica."
  },
  "c.ribbon.padding": {
   "$value": "{space.1}",
-  "$description": "Card padding: the first row starts 4 px under the card's top (w-theme-07 field at y192)."
+  "$description": "Card padding: 4 px inside the 96 CSS px ribbon card."
  },
  "c.ribbon.gap": {
   "$value": "0",
-  "$description": "The card sits right under the tab row (w-theme-07 y184)."
+  "$description": "The card sits right under the tab row."
  },
  "c.menu-button.size-s": {
   "$value": "1.5rem",
-  "$description": "Editing and Share 24 px, the same as Comments (w-copilot-01 y2-32 at 1.28x)."
+  "$description": "Editing and Share 24 px, the same as Comments."
  },
  "c.slider.hit-s": {
-  "$value": "1.5rem",
-  "$description": "Status bar zoom slider in the 24 px bar (w-copilot-01)."
+  "$value": "1.25rem",
+  "$description": "Status bar zoom slider in the 21 px bar."
  },
  "c.button.stack-padding": {
   "$value": "0",
-  "$description": "Paste and the other lead commands fill the group's height with no extra padding (w-theme-07)."
+  "$description": "Paste and the other lead commands fill the group's height with no extra padding."
  },
  "c.ribbon.launcher-size": {
   "$value": "1rem",
-  "$description": "Group launcher: a 16 px box beside the 9 pt label (w-theme-07 'Clipboard' launcher, 2x)."
+  "$description": "Group launcher: 16 px box so 3 rows + foot + padding = 96 CSS px (80 PNG px)."
  },
  "c.ribbon.command-gap": {
-  "$value": "0.125rem",
-  "$description": "Commands on a 26 px pitch with 24 px buttons: 2 px apart."
+  "$value": "0",
+  "$description": "Dense ribbon command rows sit flush on 22 px targets."
  },
  "c.ribbon.group-gap": {
   "$value": "{space.1}",
-  "$description": "About 4 px either side of a group's hairline."
+  "$description": "4 px either side of a group's hairline."
  },
  "c.button.stack-gap": {
   "$value": "0",
@@ -345,8 +355,8 @@
   "$description": "Zoom slider thumb: square-ended bar with a softened edge (antialiased corner pixels only), 1 px."
  },
  "c.slider.thumb-fill": {
-  "$value": "#616161",
-  "$description": "Zoom slider thumb #616161 in w-copilot-01 (y866-875 at x1368). The Dark Gray status bar is unmeasured and renders light here, so the same ink keeps its contrast."
+  "$value": "#686868",
+  "$description": "Zoom slider thumb unified with track grey #686868."
  },
  "c.slider.track-s": {
   "$value": "0.0625rem",

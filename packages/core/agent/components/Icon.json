@@ -49,6 +49,8 @@
   "tokens": [
     "--c-icon-fill",
     "--c-icon-stroke-width",
+    "--color-bg-control",
+    "--color-text-muted",
     "--size-icon-lg",
     "--size-icon-md",
     "--size-icon-sm",
@@ -94,7 +96,8 @@
     "ikea.ChipRail",
     "ikea.PictureBanner",
     "ikea.StoreHeader",
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "ui-copy"

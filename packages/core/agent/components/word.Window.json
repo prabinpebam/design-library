@@ -5,7 +5,7 @@
   "template": "word",
   "import": "@design-library/templates/word/parts/layouts/Window",
   "file": "@design-library/templates/word/parts/layouts/Window.tsx",
-  "summary": "A desktop word processor's window: a title bar with quick actions, a command ribbon, the page on its canvas with optional Navigation and Comments panes, and a status bar. Not for a web page editor (EditorLayout) or a conversation (ChatLayout). The ribbon, panes, fields, scrolling and focus stay in core; this part only arranges them.",
+  "summary": "A desktop word processor's window: a title bar with quick actions, a command ribbon, rulers, the page on its canvas with optional Navigation and Comments panes, and a status bar. Not for a web page editor (EditorLayout) or a conversation (ChatLayout). The ribbon, panes, fields, scrolling and focus stay in core; this part only arranges them.",
   "family": "word",
   "a11y": [
     "One main landmark (the document), a named ribbon and status bar, and native core controls."
@@ -28,8 +28,18 @@
         {
           "name": "screen",
           "type": "string",
-          "default": "'document'",
-          "description": "A directly openable review state: `document`, `navigation`, `comments` or `dark`."
+          "default": "'home'",
+          "description": "A directly openable review state: `home`, `document`, `navigation`, `comments` or `dark`."
+        },
+        {
+          "name": "picture",
+          "type": "(id: string) => { src: string",
+          "description": "Resolves an entry in the template's `assets.json`."
+        },
+        {
+          "name": "alt",
+          "type": "string }",
+          "required": true
         }
       ]
     }
@@ -38,6 +48,7 @@
     "Avatar",
     "Button",
     "Heading",
+    "Icon",
     "IconOverrides",
     "MenuButton",
     "Pane",
@@ -52,7 +63,6 @@
   ],
   "tokens": [
     "--border-hairline",
-    "--c-button-size-xs",
     "--c-icon-accent-1",
     "--c-icon-accent-2",
     "--c-icon-accent-3",
@@ -62,15 +72,11 @@
     "--c-icon-accent-7",
     "--c-icon-accent-8",
     "--c-icon-accent-fill",
-    "--c-ribbon-command-gap",
-    "--c-ribbon-separator",
     "--color-bg-control",
     "--color-bg-raised",
     "--color-bg-sunken",
     "--color-border",
-    "--color-map-nav",
     "--color-map-nav-on",
-    "--color-map-nav-shell",
     "--color-map-nav-shell-on",
     "--color-map-selection-indicator",
     "--color-text",
@@ -79,17 +85,18 @@
     "--font-text",
     "--leading-normal",
     "--leading-tight",
+    "--radius-full",
     "--radius-md",
     "--radius-sm",
     "--size-app-bar-height",
-    "--size-icon-md",
-    "--size-icon-xl",
     "--size-nav-width",
     "--size-pane-width",
     "--space-0-5",
     "--space-1",
+    "--space-2",
     "--space-3",
     "--space-4",
+    "--space-8",
     "--space-inline-item",
     "--space-inline-pair",
     "--space-inset-md",
@@ -97,11 +104,17 @@
     "--space-stack-item",
     "--space-stack-pair",
     "--state-selected",
+    "--t-word-window-badge-dot",
+    "--t-word-window-border",
+    "--t-word-window-border-strong",
+    "--t-word-window-frame-border",
+    "--t-word-window-muted",
+    "--t-word-window-surface",
     "--text-l",
     "--text-s",
     "--text-xl",
+    "--text-xs",
     "--text-xxl",
-    "--text-xxxl",
-    "--type-label-size"
+    "--text-xxxl"
   ]
 }

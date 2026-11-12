@@ -11,11 +11,12 @@
   "home": "document",
   "sections": [
     { "id": "editor", "title": "Editor", "summary": "Write, review and find your way around a document.", "flows": [
-      { "id": "write", "title": "Write", "summary": "The page with the Home ribbon, in the light and dark grey themes.", "screens": ["document", "dark"] },
+      { "id": "write", "title": "Write", "summary": "The page with the Home ribbon, in the light and dark grey themes.", "screens": ["home", "document", "dark"] },
       { "id": "review", "title": "Review", "summary": "Move through headings and read comments.", "screens": ["navigation", "comments"] }
     ] }
   ],
   "layouts": [
+    { "id": "home", "title": "Home", "component": "SiteLayout", "content": "content/editor/home.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "document", "title": "Document", "component": "SiteLayout", "content": "content/document.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "navigation", "title": "Navigation pane", "component": "SiteLayout", "content": "content/editor/navigation.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "comments", "title": "Comments", "component": "SiteLayout", "content": "content/editor/comments.json", "regions": [{"id":"main","accepts":["*"]}] },

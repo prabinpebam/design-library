@@ -1,65 +1,382 @@
-/* Reference geometry and values are documented in the template theme (tokens/theme.json). Only own child paths cross wrappers. */
+/* Reference geometry and values are documented in .design-library/word-ref/owner/README.md (Q147, 1349x922 CSS -> 1124x768 PNG at 5/6). Only own child paths cross wrappers. */
 @layer templates {
   [data-dl='word-window'] {
+    position: relative;
+    box-sizing: border-box;
     display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
     block-size: 100dvh;
-    background: var(--color-map-nav);
     color: var(--color-text);
   }
 
-  /* Title bar: quick actions and the document's name at the start, search in the middle, the account and window controls at the end. */
-  [data-dl='word-window'] > [data-dl-part='titlebar'] { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-inline-item); block-size: var(--size-app-bar-height); padding-inline: var(--space-inset-sm); background: var(--color-map-nav-shell); color: var(--color-map-nav-shell-on); font-size: var(--type-label-size); }
-  /* Quick-access glyphs: undo's ink is ≈16 px tall in w-theme-07 (31 px at ≈2×), a 20 px icon box. */
-[data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] { display: flex; align-items: center; gap: var(--space-0-5); --size-icon-sm: var(--size-icon-md); }
-  /* A neutral app mark: a plain tile, never a product logo. */
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='app-mark'] { inline-size: var(--size-icon-md); block-size: var(--size-icon-md); margin-inline-end: var(--space-inline-pair); border-radius: var(--radius-sm); background: var(--color-map-nav-shell-on); }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='autosave'] { display: flex; padding-inline: var(--space-inset-sm); }
-  /* w-theme-07: the quick-access chevrons are about 6 px of ink, half a button's glyph. */
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='qat-chevron'] { display: grid; --size-icon-sm: 0.75rem; }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] { display: flex; align-items: baseline; gap: var(--space-inline-pair); min-inline-size: 0; white-space: nowrap; overflow-wrap: normal; }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] > [data-dl-part='save-state'] { font-size: var(--text-s); }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] { display: grid; justify-self: center; inline-size: min(100%, 30rem); }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] { display: flex; align-items: center; gap: var(--space-0-5); }
+  [data-dl='word-window'] > [data-dl-part='backdrop'] {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    pointer-events: none;
+  }
+  [data-dl='word-window'] > [data-dl-part='frame-ring'] {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    color: var(--t-word-window-frame-border);
+    pointer-events: none;
+  }
+  [data-dl='word-window'] > :is([data-dl-part='titlebar'], [data-dl-part='ribbon'], [data-dl='word-ruler-h'], [data-dl-part='body'], [data-dl-part='statusbar']) {
+    position: relative;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-inline-item);
+    block-size: var(--size-app-bar-height);
+    padding-inline-start: var(--space-3);
+    padding-inline-end: 0;
+    color: var(--color-map-nav-shell-on);
+    font-size: var(--text-s);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-0-5);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='app-mark'] {
+    display: inline-flex;
+    align-items: center;
+    padding-inline-end: var(--space-2);
+    --icon-accent-fill: #07279b;
+    --icon-accent-2-fill: #159bf0;
+    --icon-surface: #ffffff;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='autosave'] {
+    display: flex;
+    padding-inline-end: var(--space-1);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='qat-save'] {
+    display: grid;
+    --icon-accent: var(--c-icon-accent-5);
+    --icon-accent-fill: #c87fcd;
+    --icon-surface: #ffffff;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='qat-item'] {
+    display: grid;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='qat-chevron'] {
+    display: grid;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    padding-inline-start: var(--space-2);
+    min-inline-size: 0;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    font-size: var(--text-s);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] > [data-dl-part='save-state'] {
+    font-size: var(--text-s);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] {
+    display: grid;
+    justify-self: center;
+    inline-size: min(100%, 22.125rem);
+  }
+  [data-dl='word-search-box'] {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--space-8);
+    padding-inline: var(--space-1);
+    border: var(--border-hairline) solid var(--t-word-window-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--t-word-window-surface);
+    color: var(--t-word-window-muted);
+  }
+  [data-dl='word-search-box'] > [data-dl-part='trigger'] {
+    flex: 1 1 auto;
+    display: grid;
+  }
+  [data-dl='word-search-box'] > [data-dl-part='mic'] {
+    flex: none;
+    display: grid;
+  }
 
-  /* The ribbon: the tab row on the frame, the card inset from the window's edges. */
-  [data-dl='word-window'] > [data-dl-part='ribbon'] { display: grid; padding-inline: var(--space-inset-sm); }
-  [data-dl='word-doc-actions'] { display: flex; align-items: center; gap: var(--space-inline-pair); }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    gap: var(--space-2);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade'] {
+    --c-button-size-xs: 2rem;
+    position: relative;
+    display: inline-flex;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade'] > [data-dl-part='upgrade-dot'] {
+    position: absolute;
+    inset-block-start: -2px;
+    inset-inline-end: -2px;
+    inline-size: 0.4375rem;
+    block-size: 0.4375rem;
+    border-radius: var(--radius-full);
+    background: var(--t-word-window-badge-dot);
+    pointer-events: none;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='avatar'] {
+    display: inline-flex;
+    padding-inline: var(--space-1);
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='caption-buttons'] {
+    display: flex;
+    align-self: stretch;
+  }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='caption-buttons'] > [data-dl-part='win-btn'] {
+    display: grid;
+    place-items: center;
+    inline-size: 2.875rem;
+  }
 
-  [data-dl='word-rows'] { display: grid; align-content: start; gap: var(--c-ribbon-command-gap); }
-  [data-dl='word-rows'] > [data-dl-part='row'] { display: flex; align-items: center; gap: var(--c-ribbon-command-gap); }
-  /* The thin line between command sets on a row (w-copilot-01: after Change case, after Shrink, after Increase indent). */
-  [data-dl='word-rows'] > [data-dl-part='row'] > [data-dl-part='separator'] { align-self: stretch; inline-size: var(--border-hairline); margin-inline: var(--space-1); background: var(--c-ribbon-separator); }
-  [data-dl='word-split'] { display: flex; align-items: center; }
-  [data-dl='word-split'][data-stacked] { flex-direction: column; align-items: stretch; --size-icon-lg: var(--size-icon-xl); }
-  [data-dl='word-command'] { display: flex; --size-icon-lg: var(--size-icon-xl); }
-/* W7: ribbon command glyphs sit in a 20 px box (w-copilot-01); a split command's menu chevron stays small. W8: only the commands, so the group launchers keep their 16 px row and the card stays ≈102. */
-[data-dl='word-command'], [data-dl='word-split'] { --size-icon-sm: var(--size-icon-md); }
-[data-dl='word-split'] > [data-dl-part='split-menu'] { display: grid; --size-icon-sm: 0.75rem; }
-/* W7: Word's command icons carry colour in one part (w-theme-07), through the core icon accent seam; outlines are the library's own. */
-/* W8: highlight and shading draw a solid bar (glyphs.ts); the font colour is Automatic in w-copilot-01, so its A has no bar. */
-[data-dl='word-window'] [data-icon='highlight'] { --icon-accent-fill: var(--c-icon-accent-1); }
-[data-dl='word-window'] [data-icon='text-effects'] { color: var(--c-icon-accent-7); }
-[data-dl='word-window'] [data-icon='character-shading'] { --icon-accent: var(--c-icon-accent-2); --icon-accent-fill: var(--c-icon-accent-2); }
-[data-dl='word-window'] [data-icon='fill-colour'] { --icon-accent-fill: var(--c-icon-accent-8); }
-[data-dl='word-window'] :is([data-icon='list-bulleted'], [data-icon='list-numbered'], [data-icon='list-multilevel'], [data-icon='subscript'], [data-icon='superscript'], [data-icon='phonetic-guide'], [data-icon='character-spacing']) { --icon-accent: var(--c-icon-accent-3); }
-[data-dl='word-window'] [data-icon='clear-format'] { --icon-accent: var(--c-icon-accent-5); }
-[data-dl='word-window'] [data-icon='format-painter'] { --icon-accent: var(--c-icon-accent-6); }
-[data-dl='word-window'] [data-icon='paste'] { --icon-accent: var(--c-icon-accent-6); --icon-accent-fill: var(--c-icon-accent-fill); }
-[data-dl='word-window'] [data-icon='mic'] { color: var(--c-icon-accent-4); }
-  /* Font name and size fields: 172 and 42 px wide (w-theme-07 x234-578 and 586-671 at 2x). */
-  /* w-copilot-01: the size box's chevron is a 12 px glyph 4 px after the value, so \"12\" fits a 43 px box. */
-  [data-dl='word-field'] { display: grid; inline-size: 10.75rem; --space-inline-pair: var(--space-1); --size-icon-sm: 0.75rem; }
-  [data-dl='word-field'][data-width='narrow'] { inline-size: 2.75rem; }
+  /* Tab row + Ribbon + Copilot companion card (y=39..143 PNG): transparent over color.bg so controls stay depth 1 (VN1, VN3). */
+  [data-dl='word-window'] > [data-dl-part='ribbon'] {
+    display: grid;
+    padding-inline: var(--space-2);
+  }
+  [data-dl='word-doc-actions'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+  }
+  [data-dl='word-doc-actions'] > [data-dl-part='people'] {
+    display: inline-flex;
+  }
+  [data-dl='word-copilot-card'] {
+    display: grid;
+    align-items: start;
+    justify-items: center;
+    min-inline-size: 3.125rem;
+    --icon-accent-fill: #7ce0ff;
+    --icon-accent-2-fill: #fa8e68;
+    --icon-surface: #ffffff;
+  }
 
-  [data-dl='word-window'] > [data-dl-part='body'] { display: flex; min-block-size: 0; }
-  [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='canvas'] { flex: 1; display: grid; min-inline-size: 0; min-block-size: 0; }
-  [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='nav-pane'] { flex: 0 0 var(--size-nav-width); display: grid; min-block-size: 0; background: var(--color-bg-raised); }
-  [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='comments-pane'] { flex: 0 0 var(--size-pane-width); display: grid; min-block-size: 0; background: var(--color-bg-raised); }
+  [data-dl='word-rows'] {
+    display: grid;
+    align-content: start;
+    gap: 0;
+  }
+  [data-dl='word-rows'] > [data-dl-part='row'] {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  [data-dl='word-rows'] > [data-dl-part='row'] > [data-dl-part='separator'] {
+    align-self: stretch;
+    inline-size: var(--border-hairline);
+    margin-inline: var(--space-0-5);
+    background: var(--t-word-window-border);
+  }
 
-  /* The page: US Letter at 100% zoom with one-inch margins, white in both themes, no edge (w-copilot-01); 18 px below the ribbon card (≈22 px at ≈1.25×). */
-  [data-dl='word-page-stage'] { display: grid; justify-items: center; padding-block: calc(var(--space-4) + var(--space-0-5)) var(--space-3); padding-inline: var(--space-inset-md); }
-  [data-dl='word-page-stage'] > [data-dl-part='page'] { display: grid; align-content: start; gap: var(--space-3); inline-size: 8.5in; min-block-size: 11in; padding: 1in; background: var(--color-bg-control); color: var(--color-text); font-family: var(--font-text); font-size: var(--text-l); line-height: var(--leading-normal); }
+  [data-dl='word-split'] {
+    display: flex;
+    align-items: center;
+  }
+  [data-dl='word-split'][data-stacked] {
+    flex-direction: column;
+    align-items: center;
+  }
+  [data-dl='word-command'] {
+    display: flex;
+  }
+  [data-dl='word-command'][data-stacked],
+  [data-dl='word-split'][data-stacked],
+  [data-dl='word-copilot-card'] {
+    --size-icon-sm: 1.75rem;
+  }
+  [data-dl='word-command']:not([data-stacked]),
+  [data-dl='word-split']:not([data-stacked]) {
+    --size-icon-sm: 1.125rem;
+  }
+  [data-dl='word-command'][data-wide='md'],
+  [data-dl='word-split'][data-wide='md'] {
+    inline-size: 4.5rem;
+  }
+  [data-dl='word-command'][data-wide='lg'],
+  [data-dl='word-split'][data-wide='lg'] {
+    inline-size: 6.25rem;
+  }
+  [data-dl='word-split'] > [data-dl-part='split-menu'] {
+    --c-button-size-xs: 0.75rem;
+    display: grid;
+    --size-icon-sm: 0.6875rem;
+  }
+  [data-dl='word-split'][data-stacked] > [data-dl-part='split-menu'] {
+    --c-button-size-xs: 0.875rem;
+  }
+
+  /* Semantic icon role mappings for Word's multi-tone command icons. */
+  [data-dl='word-command'][data-icon='highlight'],
+  [data-dl='word-split'][data-icon='highlight'] {
+    --icon-accent-fill: var(--c-icon-accent-1);
+  }
+  [data-dl='word-command'][data-icon='text-colour'],
+  [data-dl='word-split'][data-icon='text-colour'] {
+    --icon-accent-fill: var(--c-icon-accent-2);
+  }
+  [data-dl='word-command'][data-icon='text-effects'],
+  [data-dl='word-split'][data-icon='text-effects'] {
+    --icon-accent: var(--c-icon-accent-7);
+    --icon-accent-fill: #cbe4fa;
+  }
+  [data-dl='word-command'][data-icon='fill-colour'],
+  [data-dl='word-split'][data-icon='fill-colour'] {
+    --icon-accent-fill: var(--c-icon-accent-8);
+  }
+  [data-dl='word-command']:is([data-icon='list-bulleted'], [data-icon='list-numbered'], [data-icon='list-multilevel'], [data-icon='subscript'], [data-icon='superscript'], [data-icon='text-larger'], [data-icon='text-smaller'], [data-icon='indent-increase'], [data-icon='indent-decrease'], [data-icon='line-spacing'], [data-icon='sort'], [data-icon='styles-brush']),
+  [data-dl='word-split']:is([data-icon='list-bulleted'], [data-icon='list-numbered'], [data-icon='list-multilevel'], [data-icon='subscript'], [data-icon='superscript'], [data-icon='text-larger'], [data-icon='text-smaller'], [data-icon='indent-increase'], [data-icon='indent-decrease'], [data-icon='line-spacing'], [data-icon='sort'], [data-icon='styles-brush']) {
+    --icon-accent: var(--c-icon-accent-3);
+    --icon-accent-fill: var(--c-icon-accent-3);
+  }
+  [data-dl='word-split'][data-icon='editing-lens'] {
+    --icon-accent-fill: #e5f3fc;
+  }
+  [data-dl='word-command'][data-icon='clear-format'] {
+    --icon-accent: var(--c-icon-accent-5);
+    --icon-accent-fill: #f5b5d8;
+  }
+  [data-dl='word-command'][data-icon='format-painter'],
+  [data-dl='word-split'][data-icon='paste'] {
+    --icon-accent: #d48b28;
+    --icon-accent-fill: var(--c-icon-accent-fill);
+  }
+  [data-dl='word-command']:is([data-icon='pdf-share-link'], [data-icon='pdf-share-mail'], [data-icon='request-signatures']) {
+    --icon-accent: #1473e6;
+    --icon-accent-fill: #c6d7f5;
+    --icon-accent-2: var(--c-icon-accent-2);
+  }
+  [data-dl='word-split'][data-icon='dictate'] {
+    --icon-accent: var(--c-icon-accent-4);
+    --icon-accent-fill: #83beec;
+  }
+  [data-dl='word-command'][data-icon='add-ins'] {
+    --icon-accent: var(--c-icon-accent-6);
+    --icon-accent-fill: #f7d8cc;
+  }
+  [data-dl='word-command'][data-icon='editor-pen'] {
+    --icon-accent: var(--c-icon-accent-7);
+    --icon-accent-fill: var(--c-icon-accent-7);
+  }
+
+  /* Font name (168 CSS px) and Font size (42 CSS px) combo fields. */
+  [data-dl='word-field'] {
+    display: grid;
+    inline-size: 10.5rem;
+    --space-inline-pair: var(--space-1);
+    --size-icon-sm: 0.75rem;
+  }
+  [data-dl='word-field'][data-width='narrow'] {
+    inline-size: 2.625rem;
+  }
+
+  /* Horizontal metric ruler (y=144..162 PNG = 23 CSS px). */
+  [data-dl='word-ruler-h'] {
+    display: grid;
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    align-items: center;
+    block-size: 1.5rem;
+    border-block-end: var(--border-hairline) solid var(--t-word-window-border);
+    color: var(--t-word-window-muted);
+    user-select: none;
+  }
+  [data-dl='word-ruler-h'] > [data-dl-part='tab-stop'] {
+    display: grid;
+    place-items: center;
+  }
+  [data-dl='word-ruler-h'] > [data-dl-part='track-center'] {
+    display: grid;
+    justify-items: center;
+  }
+
+  /* Body: left vertical ruler + canvas ScrollArea + optional panes. */
+  [data-dl='word-window'] > [data-dl-part='body'] {
+    display: flex;
+    min-block-size: 0;
+  }
+  [data-dl='word-ruler-v'] {
+    flex: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-inline-end: var(--border-hairline) solid var(--t-word-window-border);
+    color: var(--t-word-window-muted);
+    user-select: none;
+  }
+
+  [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='canvas'] {
+    flex: 1;
+    display: grid;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+  [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='nav-pane'] {
+    flex: 0 0 var(--size-nav-width);
+    display: grid;
+    min-block-size: 0;
+    background: var(--color-bg-raised);
+  }
+  [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='comments-pane'] {
+    flex: 0 0 var(--size-pane-width);
+    display: grid;
+    min-block-size: 0;
+    background: var(--color-bg-raised);
+  }
+
+  /* Canvas stage: Copilot draft pill (550x38 CSS px) + A4 page at 90% zoom (678x962 CSS px). */
+  [data-dl='word-page-stage'] {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3) var(--space-4);
+    padding-inline: var(--space-inset-md);
+  }
+  [data-dl='word-draft-bar'] {
+    display: flex;
+    align-items: center;
+    inline-size: min(100%, 34.375rem);
+    min-block-size: 2.375rem;
+    padding-inline: var(--space-2);
+    border: var(--border-hairline) solid var(--t-word-window-border);
+    border-radius: var(--radius-full);
+    background: var(--t-word-window-surface);
+    color: var(--t-word-window-muted);
+  }
+  [data-dl='word-draft-bar'] > [data-dl-part='lead'] {
+    flex: 1 1 auto;
+    display: grid;
+  }
+  [data-dl='word-draft-bar'] > [data-dl-part='actions'] {
+    flex: none;
+    display: flex;
+    align-items: center;
+  }
+
+  [data-dl='word-page-stage'] > [data-dl-part='page'] {
+    box-sizing: border-box;
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    inline-size: min(100%, 42.375rem);
+    min-block-size: 60rem;
+    padding: var(--space-20);
+    border: var(--border-hairline) solid var(--t-word-window-border-strong);
+    background: var(--color-bg-control);
+    color: var(--color-text);
+    font-family: var(--font-text);
+    font-size: var(--text-l);
+    line-height: var(--leading-normal);
+  }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='block'] { margin: 0; font-weight: 400; }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='title'] { font-family: var(--font-display); font-size: var(--text-xxxl); line-height: var(--leading-tight); }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='heading-1'] { padding-block-start: var(--space-1); font-family: var(--font-display); font-size: var(--text-xxl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
@@ -77,9 +394,40 @@
   [data-dl='word-comment-list'] > [data-dl-part='comment'] > [data-dl-part='comment-head'] { display: flex; align-items: center; gap: var(--space-inline-pair); }
   [data-dl='word-comment-list'] > [data-dl-part='comment'] > [data-dl-part='comment-head'] > [data-dl-part='comment-who'] { display: grid; }
 
-  /* Status bar: 24 px, #F5F5F5 (w-copilot-01), page and word counts at the start, views and zoom at the end. */
-  [data-dl='word-window'] > [data-dl-part='statusbar'] { display: flex; justify-content: space-between; align-items: center; gap: var(--space-inline-item); min-block-size: var(--c-button-size-xs); padding-inline: var(--space-inset-sm); background: var(--color-bg-sunken); color: var(--color-map-nav-on); font-size: var(--text-s); white-space: nowrap; overflow-wrap: normal; }
+  /* Status bar (y=750..766 PNG = 21 CSS px): #F5F5F5, page & proofing at start, view modes & zoom at end. */
+  [data-dl='word-window'] > [data-dl-part='statusbar'] {
+    --c-button-size-xs: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-inline-item);
+    block-size: 1.3125rem;
+    padding-inline: var(--space-2);
+    border-block-start: var(--border-hairline) solid var(--t-word-window-border);
+    background: var(--color-bg-sunken);
+    color: var(--color-map-nav-on);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
   [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-start'],
-  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] { display: flex; align-items: center; gap: var(--space-inline-item); min-inline-size: 0; }
-  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] > [data-dl-part='zoom'] { display: flex; align-items: center; inline-size: 10rem; }
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-inline-size: 0;
+  }
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-start'] > [data-dl-part='icon-btn'],
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-start'] > [data-dl-part='text-btn'],
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] > [data-dl-part='text-btn'],
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] > [data-dl-part='view-btn'],
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] > [data-dl-part='zoom-pct'] {
+    display: inline-flex;
+    align-items: center;
+  }
+  [data-dl='word-window'] > [data-dl-part='statusbar'] > [data-dl-part='status-end'] > [data-dl-part='zoom'] {
+    display: flex;
+    align-items: center;
+    inline-size: 8.5rem;
+  }
 }

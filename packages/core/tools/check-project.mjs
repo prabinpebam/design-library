@@ -334,9 +334,11 @@ for (const file of walk(SRC, /\.json$/)) {
     continue;
   }
   if (!data || typeof data.glyphs !== 'object' || Array.isArray(data.glyphs)) continue;
+  const allowCustom = Boolean(data.custom);
   for (const [name, glyph] of Object.entries(data.glyphs)) {
     const line = lineAt(text, text.indexOf(`"${name}"`));
-    if (!iconNames.has(name)) add('warning', 'icon-name', file, line, `"${name}" isn't an icon name, so no component draws it: rename it to the semantic name it replaces (npx design-library-icons --names)`);
+    const validName = iconNames.has(name) || ((allowCustom || glyph?.custom) && /^[a-z][a-z0-9-]*$/.test(name));
+    if (!validName) add('warning', 'icon-name', file, line, `"${name}" isn't an icon name, so no component draws it: rename it to the semantic name it replaces (npx design-library-icons --names)`);
     else if (!glyph || typeof glyph.v !== 'string' || !Array.isArray(glyph.c)) add('warning', 'icon-name', file, line, `"${name}" has no viewBox or shapes: make the file again with npx design-library-icons`);
   }
 }

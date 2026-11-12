@@ -3,5 +3,11 @@
   :root,
   [data-template='word'] {
     --t-word-window-gap: var(--space-inset-sm);
+    --t-word-window-frame-border: var(--color-map-action-fill);
+    --t-word-window-surface: var(--color-bg-control);
+    --t-word-window-border: var(--color-border);
+    --t-word-window-border-strong: var(--color-border-strong);
+    --t-word-window-muted: var(--color-text-muted);
+    --t-word-window-badge-dot: var(--color-status-danger-fill);
   }
 }
