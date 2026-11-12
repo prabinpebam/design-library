@@ -40,6 +40,12 @@
           "name": "caption",
           "type": "string",
           "description": "One short line under the frame: what to notice at this width."
+        },
+        {
+          "name": "height",
+          "type": "'default' | 'fill'",
+          "default": "'default'",
+          "description": "The window's height: `default` (the theme's `c.screen-preview.height`, 40 rem) or `fill`, the height its parent gives it (an editor's working area), less the caption."
         }
       ]
     }

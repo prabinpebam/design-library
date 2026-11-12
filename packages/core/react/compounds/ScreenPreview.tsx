@@ -22,6 +22,8 @@ export interface ScreenPreviewProps extends DataAttributes {
   width?: 'phone' | 'tablet' | 'fill';
   /** One short line under the frame: what to notice at this width. */
   caption?: string;
+  /** The window's height: `default` (the theme's `c.screen-preview.height`, 40 rem) or `fill`, the height its parent gives it (an editor's working area), less the caption. */
+  height?: 'default' | 'fill';
 }
 
 /**
@@ -33,9 +35,9 @@ export interface ScreenPreviewProps extends DataAttributes {
  * @a11y A `figure` holding a titled `iframe` (the screen's own landmarks and headings are inside it) and the caption
  * as its `figcaption`. The frame is focusable through its content; it loads only when scrolled near.
  */
-export function ScreenPreview({ src, title, width = 'fill', caption, ...data }: ScreenPreviewProps) {
+export function ScreenPreview({ src, title, width = 'fill', caption, height = 'default', ...data }: ScreenPreviewProps) {
   return (
-    <figure {...data} data-dl="screen-preview" data-width={width}>
+    <figure {...data} data-dl="screen-preview" data-width={width} data-height={height === 'fill' ? 'fill' : undefined}>
       <iframe src={src} title={title} loading="lazy" data-dl-part="frame" onLoad={markFramed} />
       {caption && <figcaption data-dl-part="caption">{caption}</figcaption>}
     </figure>
