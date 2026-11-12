@@ -153,7 +153,7 @@ export default {
       code: `applySettings({ '--c-list-tile-fill': 'var(--color-bg)', '--c-list-tile-name-weight': 'var(--weight-bold)' });
 <List mode="action" layout="tiles" label="Add a block" groups={…} />`,
       render: () => (
-        <WithSettings settings={onPaper}>
+        <WithSettings settings={onPaper} contents>
           <Tiles />
         </WithSettings>
       ),
