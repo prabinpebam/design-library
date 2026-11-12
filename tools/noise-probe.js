@@ -15,8 +15,9 @@
  *   VN4 strokes   at most three distinct border values in the view, status and accent excepted
  *   VN5 fills     at most four distinct fills in the view, status, accent and selection excepted
  *   VN6 shadows   at most two distinct shadows in the view (raised and overlay)
- *   VN7 painted   no decorative picture (aria-hidden, alt="", stretched with preserveAspectRatio="none") covers a
- *                 transparent region to paint its fills; each fill it paints counts toward VN5 (F4, LG6)
+ *   VN7 painted   no picture, whatever its role (aria-hidden, alt="", role="img"), stretched with preserveAspectRatio="none"
+ *                 or drawing two or more fills, covers a transparent region to paint its fills, and no background-image
+ *                 gradient paints bands over a transparent region; each fill counts toward VN5 (F4, LG6, F22)
  *
  * Content is skipped: pictures, icons, a canvas's document, avatars and colour swatches (their colour is data).
  * Returns { rows: { VN1: { pass, findings, count }, … }, values: { strokes, fills, shadows } }.
@@ -114,14 +115,13 @@
     };
     walk(root, 0, surface(root.parentElement ?? root), null);
 
-    // VN7 painted regions (F4, LG6, L2, L4): a decorative picture stretched over a region that keeps itself
-    // transparent paints that region's fills where the rows above can't see them. Each such picture is a finding, and
-    // each fill it paints over a tenth of its area counts as a fill of the view (VN5).
+    // VN7 painted regions (F4, LG6, L2, L4; F22): a picture stretched over a region that keeps itself transparent
+    // paints that region's fills where the rows above can't see them, whatever its role (decorative or role="img").
+    // Each such picture is a finding, and each fill it paints over a tenth of its area counts as a fill of the view (VN5).
     for (const pic of root.querySelectorAll('svg, img')) {
       const cs = getComputedStyle(pic);
       if (cs.display === 'none' || cs.visibility === 'hidden') continue;
-      const decorative = pic.matches('[aria-hidden="true"], [alt=""], [role="presentation"], [role="none"]') || !!pic.closest('[aria-hidden="true"]');
-      if (!decorative) continue;
+      if (pic.tagName.toLowerCase() === 'svg' && pic.parentElement?.closest('svg')) continue;
       const host = pic.parentElement?.closest('*');
       const region = host && (cs.position === 'absolute' || cs.position === 'fixed' || getComputedStyle(host).position !== 'static') ? host : null;
       if (!region || !clear(getComputedStyle(region).backgroundColor)) continue;
@@ -141,6 +141,17 @@
       if (!stretched && painted.length < 2) continue;
       for (const f of painted) note(fills, f, pic);
       fail('VN7', { where: name(region), picture: name(pic), stretched, fills: [...new Set(painted)].length });
+    }
+    // F22: bands painted by a background-image gradient over a region whose own background colour stays clear.
+    for (const region of root.querySelectorAll('*')) {
+      const cs = getComputedStyle(region);
+      if (!/gradient\(/.test(cs.backgroundImage) || !clear(cs.backgroundColor)) continue;
+      const r = region.getBoundingClientRect();
+      if (r.width * r.height < 40000) continue;
+      const stops = [...new Set((cs.backgroundImage.match(/(?:rgba?|hsla?|color|oklch|oklab|lab|lch)\([^()]*\)/g) ?? []).filter((c) => !clear(c)))];
+      if (stops.length < 2) continue;
+      for (const f of stops) note(fills, f, region);
+      fail('VN7', { where: name(region), picture: 'background-image gradient', stretched: false, fills: stops.length });
     }
 
     if (fills.size > 4) fail('VN5', { count: fills.size, values: [...fills].map(([v, w]) => `${v} (${w})`) });

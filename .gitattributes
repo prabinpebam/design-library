@@ -1,0 +1,17 @@
+# F23: text is stored and checked out with LF on every platform, so generated files (tokens.css, theme.css,
+# the agent index) match their generators on a fresh Windows clone whatever core.autocrlf says.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.zip binary
+*.tgz binary

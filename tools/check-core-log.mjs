@@ -5,8 +5,9 @@
 //   node tools/check-core-log.mjs [--base <commit>] [--doc <path to templates-and-library.md>]
 //
 // The base is .shots/base-dist/BASE.json's head unless --base is given. A changed core source file must be named in the
-// record by its file name (`icons.ts`, `check-project.mjs`, `ribbon.css`), or a .tsx or .css by its component
-// (`Ribbon`, `ScrollArea`); a core token added since the base, or one whose resolved value changed, must be named by
+// record by its file name (`icons.ts`, `check-project.mjs`, `ribbon.css`, case-insensitively), a .tsx by its component
+// (`Ribbon`), or a .css by any component it styles (`controls.css` by `Checkbox`, read from its [data-dl] selectors, F27);
+// a change of line endings only is skipped (F23). A core token added since the base, or one whose resolved value changed, must be named by
 // its dotted name (`c.button.pressed-edge`). Generated output, stories, guides and the agent index are not core changes.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
@@ -38,13 +39,24 @@ const changed = [...new Set([...git('diff', '--name-only', base, '--', 'packages
   .filter((f) => f && !GENERATED.test(f) && /\.(tsx?|css|mjs|js|json)$/.test(f) && !/^packages\/core\/tokens\//.test(f));
 
 const missing = [];
+const lower = doc.toLowerCase();
+const has = (/** @type {string} */ n) => new RegExp(`(^|[^\\w-])${n.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\w-])`).test(lower);
+const hasComponent = (/** @type {string} */ n) => new RegExp(`(^|[^\\w-])${n}(?![\\w-])`).test(doc);
+const pascalOf = (/** @type {string} */ s) => s.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase());
 for (const f of changed) {
+  // F23, F27: a change of line endings only isn't a core change.
+  try {
+    git('diff', '--quiet', '--ignore-cr-at-eol', base, '--', f);
+    if (existsSync(join(root, f)) && git('ls-files', '--', f).trim()) continue;
+  } catch {}
   const name = basename(f);
   const stem = basename(f, extname(f));
-  const pascal = stem.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase());
-  const component = extname(f) === '.tsx' ? stem : extname(f) === '.css' ? pascal : undefined;
-  const named = doc.includes(name) || (component && new RegExp(`\`${component}\\b`).test(doc));
-  if (!named) missing.push(`${f}: name \`${component ?? name}\` in the record`);
+  // F27: a shared stylesheet (controls.css) is recorded under any component it styles, read from its [data-dl] selectors.
+  const styled = extname(f) === '.css' && existsSync(join(root, f))
+    ? [...new Set([...readFileSync(join(root, f), 'utf8').matchAll(/\[data-dl\s*=\s*['"]?([\w-]+)['"]?\s*\]/g)].map((m) => m[1]))]
+    : [];
+  const components = [...(extname(f) === '.tsx' ? [stem] : []), ...styled.map(pascalOf)];
+  if (![name, f].some(has) && !components.some(hasComponent)) missing.push(`${f}: name \`${name}\`${components.length ? ` or a component it ${extname(f) === '.css' ? 'styles' : 'is'} (${components.slice(0, 4).join(', ')})` : ''} in the record`);
 }
 
 // Tokens: the resolved set at the base and now, light and dark.

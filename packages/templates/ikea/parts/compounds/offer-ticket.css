@@ -21,8 +21,8 @@
     color: var(--t-ikea-offer-ticket-on);
     font-family: var(--font-ui);
     mask:
-      radial-gradient(circle at 0 50%, transparent calc(var(--t-ikea-offer-ticket-notch) / 2), #000 calc(var(--t-ikea-offer-ticket-notch) / 2)) left / 51% 100% no-repeat,
-      radial-gradient(circle at 100% 50%, transparent calc(var(--t-ikea-offer-ticket-notch) / 2), #000 calc(var(--t-ikea-offer-ticket-notch) / 2)) right / 51% 100% no-repeat;
+      radial-gradient(circle at 0 50%, transparent calc(var(--t-ikea-offer-ticket-notch) / 2), black calc(var(--t-ikea-offer-ticket-notch) / 2)) left / 51% 100% no-repeat,
+      radial-gradient(circle at 100% 50%, transparent calc(var(--t-ikea-offer-ticket-notch) / 2), black calc(var(--t-ikea-offer-ticket-notch) / 2)) right / 51% 100% no-repeat;
   }
 
   [data-dl='ikea-offer-ticket'] > [data-dl-part='words'] {

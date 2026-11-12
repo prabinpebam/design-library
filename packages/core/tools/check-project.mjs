@@ -62,7 +62,14 @@ const coreTokens = new Set([...tokensCss.matchAll(/(--[\w-]+)\s*:/g)].map((m) =>
 const settingsJson = existsSync(join(PKG, 'tokens/settings.json')) ? JSON.parse(readFileSync(join(PKG, 'tokens/settings.json'), 'utf8')) : {};
 const settings = new Map(Object.entries(settingsJson).filter(([k]) => !k.startsWith('$')).flatMap(([component, names]) => Object.keys(names).map((n) => [n, component])));
 const coreCss = (/** @type {string} */ dir) => (existsSync(dir) ? walk(dir, /\.css$/) : []);
-const coreParts = new Set(coreCss(join(PKG, 'css')).flatMap((f) => [...readFileSync(f, 'utf8').matchAll(/\[data-dl='([\w-]+)'\]/g)].map((m) => m[1])));
+const coreParts = new Set(coreCss(join(PKG, 'css')).flatMap((f) => [...readFileSync(f, 'utf8').matchAll(/\[data-dl\s*=\s*(['"]?)([\w-]+)\1\s*\]/g)].map((m) => m[2])));
+// S2 (F19): a data-dl attribute selector in any quote form (single, double or none) and with any operator.
+const DL_ATTR = /\[\s*data-dl\s*([~|^$*]?)=\s*(?:'([^']*)'|"([^"]*)"|([\w-]+))\s*[is]?\s*\]/g;
+/** The core names a data-dl attribute selector can reach, by its operator. */
+const reachedCoreParts = (/** @type {string} */ op, /** @type {string} */ v) =>
+  [...coreParts].filter((n) => (op === '' || op === '~' ? n === v : op === '|' ? n === v || n.startsWith(`${v}-`) : op === '^' ? n.startsWith(v) : op === '$' ? n.endsWith(v) : n.includes(v)));
+// P3 (F20): colour literals in a template part; a colour is a role or a template token, never a value in part CSS.
+const COLOUR_LITERAL = /#[0-9a-fA-F]{3,8}\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\(/;
 
 function walk(/** @type {string} */ dir, /** @type {RegExp} */ ext) {
   /** @type {string[]} */
@@ -242,21 +249,27 @@ for (const file of parts) {
   // R7 (F5, LG7): a drawing in a part is a picture file or an Icon, so check:svg and the icon set see it. A drawing
   // computed live (a ruler) says why in a comment within the two lines above: {/* inline-svg: <why> */}.
   const lines = text.split('\n');
-  for (const m of text.matchAll(/<svg\b/g)) {
+  for (const m of text.matchAll(/<svg\b|\bcreateElement(?:NS)?\(\s*(?:[^,()]*,\s*)?['"`]svg['"`]/g)) {
     const line = lineAt(text, m.index ?? 0);
     if (!/inline-svg:\s*[^\s*/}][^\n]{9,}/.test(lines.slice(Math.max(0, line - 3), line).join('\n')))
       add('error', 'inline-svg', file, line, 'an inline <svg> in a custom part: make it a picture file (checked by check:svg) or an Icon from a --custom pack; a drawing computed live says why on the line above: {/* inline-svg: <why> */}');
   }
   // S4 (F2, F3): a widget role on plain markup rebuilds a core component without its keys, focus and dismissal.
-  for (const m of text.matchAll(/<[a-z][\w-]*\b[^>]*\brole=["'](dialog|alertdialog|menu|menubar|menuitem|listbox|option|table|grid|tree|tablist|tab|tabpanel|combobox)["']/g))
+  for (const m of text.matchAll(/<[a-z][\w-]*\b[^>]*\brole=(?:["']|\{\s*["'`])(dialog|alertdialog|menu|menubar|menuitem|listbox|option|table|grid|tree|tablist|tab|tabpanel|combobox)["'`]/g))
     add('error', 'widget-role', file, lineAt(text, m.index ?? 0), `role="${m[1]}" on plain markup: compose the core component that owns it (Popover, Dialog, Menu, Select, DataTable, Tabs…) so keys, focus and dismissal come with it`);
+  for (const m of text.matchAll(/<[a-z][\w-]*\b[^>]*\baria-modal\b/g))
+    add('error', 'widget-role', file, lineAt(text, m.index ?? 0), 'aria-modal on plain markup: compose core Dialog or Sheet, so focus trapping and dismissal come with it');
+  // K9 (F21): a part's style prop carries layout values only; a literal look value (type, colour) is a role or a template token.
+  for (const m of text.matchAll(/\bstyle=\{\{([^}]*)\}\}/g))
+    for (const d of m[1].matchAll(/\b(fontSize|letterSpacing|lineHeight|fontWeight|color|background|backgroundColor|borderColor|fill|stroke)\s*:\s*(\d[\d.]*|['"`](?:#|rgb|hsl|\d)[^'"`]*['"`])/g))
+      add('error', 'style-literal', file, lineAt(text, (m.index ?? 0) + (d.index ?? 0)), `a literal ${d[1]} (${d[2]}) in a part's style prop: read a role or a template token (var(--…)) (K9)`);
   // R8 (F6, LG8): a template's own icon names are typed by its pack (defineIconPack), never cast.
   for (const m of text.matchAll(/\bas\s+IconName\b/g))
     add('error', 'icon-cast', file, lineAt(text, m.index ?? 0), "an `as IconName` cast: type the template's own names with defineIconPack(pack) and pass them as they are");
 }
 
 // ---- CSS ----
-const DESCENDANT = /\[data-dl(?:-part)?='[^']+'\](?:\[[^\]]*\]|:[\w-]+(?:\((?:[^()]|\([^()]*\))*\))?)*\s+(?::is\()?\[data-dl-part=/;
+const DESCENDANT = /\[data-dl(?:-part)?[~|^$*]?=(?:'[^']+'|"[^"]+"|[\w-]+)\](?:\[[^\]]*\]|:[\w-]+(?:\((?:[^()]|\([^()]*\))*\))?)*\s+(?::is\()?\[data-dl-part[~|^$*]?=/;
 const LAYOUT = /^(width|height|inline-size|block-size|min-[\w-]+|max-[\w-]+|top|left|right|bottom|inset(-.+)?|margin(-.+)?|padding(-.+)?|grid-template-(rows|columns)|flex-basis|font-size)$/;
 const SCALE = /--duration-(instant|fast|medium|slow|xslow)\b/;
 const bare = (/** @type {string} */ v) => {
@@ -282,9 +295,13 @@ for (const file of css) {
     if (selector.startsWith('@')) continue;
     const line = lineAt(text, (rule.index ?? 0) + rule[0].indexOf('{'));
     const body = rule[2];
-    for (const m of selector.matchAll(/\[data-dl='([\w-]+)'\]/g))
-      if (coreParts.has(m[1]) && !templateIds.some((id) => m[1].startsWith(`${id}-`)))
-        add('error', 'core-selector', file, line, `selects the core component [data-dl='${m[1]}']: use a prop, slot, context attribute or theme setting (Never 2, the seam ladder)`);
+    for (const m of selector.matchAll(DL_ATTR)) {
+      const value = m[2] ?? m[3] ?? m[4] ?? '';
+      if (templateIds.some((id) => value.startsWith(`${id}-`))) continue;
+      const reached = value ? reachedCoreParts(m[1], value) : [];
+      if (reached.length)
+        add('error', 'core-selector', file, line, `selects the core component ${m[0]} (reaches ${reached.slice(0, 3).join(', ')}${reached.length > 3 ? '…' : ''}): use a prop, slot, context attribute or theme setting (Never 2, the seam ladder)`);
+    }
     if (DESCENDANT.test(selector)) add('error', 'part-path', file, line, `a descendant part path (${selector}): reach your own parts by child paths (\`> [data-dl-part=…]\`)`);
     if (/::-webkit-scrollbar|(?:^|[;\s{])scrollbar-(?:width|color|gutter)\s*:/.test(rule[0])) add('error', 'scroll-region', file, line, `scrollbar styling on ${selector}: scrollbars are drawn only by ScrollArea`);
     const declarationsOnlyVars = body.split(';').every((d) => !d.trim() || d.trim().startsWith('--'));
@@ -297,6 +314,8 @@ for (const file of css) {
       if (at < 0) continue;
       const prop = d.slice(0, at).trim();
       const value = d.slice(at + 1).trim();
+      if (templatePart && COLOUR_LITERAL.test(value))
+        add('error', 'colour-literal', file, line, `a colour literal (${prop}: ${value.match(COLOUR_LITERAL)?.[0]}…) in part CSS: read a colour role, or a template token from tokens/tokens.json; a mask stop is \`black\` or \`transparent\` (P3, K9)`);
       if (/!important/.test(value)) add('warning', 'important', file, line, `!important on ${prop} in ${selector}: find the seam instead; a template's layer already wins over core`);
       if (!generatedTheme && /var\(--p-[\w-]+/.test(value)) add('warning', 'primitive', file, line, `${prop} reads a primitive (${value.match(/var\(--p-[\w-]+/)?.[0]}): read a semantic role (Never 3)`);
       if (!generatedTheme && prop.startsWith('--') && !prop.startsWith('--t-') && (coreTokens.has(prop) || prop.startsWith('--c-'))) {
