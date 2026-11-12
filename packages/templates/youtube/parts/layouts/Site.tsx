@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Avatar, Badge, Button, ChipGroup, Icon, ScrollArea, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
+import { Avatar, Badge, Button, ChipGroup, Heading, Icon, ScrollArea, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
 
@@ -31,20 +31,19 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         <div data-dl-part="start">
           <Button label={c.guide} icon="menu" iconOnly emphasis="quiet" />
           <a data-dl-part="wordmark" href="#home" aria-label={`${view.wordmark} ${c.home}`}>
-            <span data-dl-part="mark" aria-hidden="true"><Icon name="play" /></span>
+            <span data-dl-part="mark" aria-hidden="true" />
             <span data-dl-part="word">{view.wordmark}</span>
           </a>
         </div>
         <form data-dl-part="center" role="search" onSubmit={(e) => e.preventDefault()}>
           <div data-dl-part="search">
-            <TextField label={c.search} hideLabel type="search" placeholder={c.search} value={query} onChange={setQuery} />
-            <span data-dl-part="search-button"><Button label={c.search} icon="search" iconOnly /></span>
+            <TextField label={c.search} hideLabel type="search" placeholder={c.search} value={query} onChange={setQuery} action={{ label: c.search, icon: 'search', iconOnly: true, onAction: () => undefined }} />
           </div>
           <span data-dl-part="voice"><Button label={c.voiceSearch} icon="mic" iconOnly emphasis="quiet" /></span>
         </form>
         <div data-dl-part="end">
           <Button label={c.settings} icon="more-vertical" iconOnly emphasis="quiet" />
-          <span data-dl-part="sign-in"><Button label={c.signIn} icon="person" /></span>
+          <Button label={c.signIn} icon="person" tone="link" />
         </div>
       </header>
       <nav data-dl-part="guide" aria-label={c.guide}>
@@ -56,7 +55,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
                 {s.prompt && (
                   <div data-dl-part="prompt">
                     <p>{s.prompt}</p>
-                    <span data-dl-part="sign-in"><Button label={c.signIn} icon="person" /></span>
+                    <Button label={c.signIn} icon="person" tone="link" />
                   </div>
                 )}
                 {s.entries?.map((e) => (
@@ -90,12 +89,12 @@ function VideoCard({ video }: { video: YoutubeVideo }) {
   return (
     <article data-dl="youtube-video">
       <a data-dl-part="frame" href={`#${video.id}`} aria-label={video.title}>
-        <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="strong">{video.duration}</Badge></span>
+        <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{video.duration}</Badge></span>
       </a>
       <div data-dl-part="details">
         <Avatar name={video.channel} size={36} decorative />
         <div data-dl-part="text">
-          <h3 data-dl-part="title">{video.title}</h3>
+          <Heading level={3} size={4} lines={2}>{video.title}</Heading>
           <p data-dl-part="meta">{video.channel}</p>
           <p data-dl-part="meta">{video.views} <span aria-hidden="true">•</span> {video.age}</p>
         </div>

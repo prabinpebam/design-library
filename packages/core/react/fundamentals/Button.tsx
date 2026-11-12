@@ -18,8 +18,8 @@ interface ButtonBase extends DataAttributes {
   align?: 'start' | 'center';
   /** The icon above the label and larger, for a command that leads its group (an app ribbon's Paste); beside it by default. */
   stacked?: boolean;
-  /** Inherit the enclosing surface's text colour for a quiet action. */
-  tone?: 'inherit';
+  /** `inherit`: the enclosing surface's text colour, for a quiet action. `link`: a call to action that reads as a link (an outlined Sign in): link-coloured words and no fill; with `emphasis="default"` it keeps its edge. */
+  tone?: 'inherit' | 'link';
   /** A verb first, 3 words or fewer. Shown, or the accessible name of an icon-only button. */
   label: string;
   /** Leading icon; required when `iconOnly`. */

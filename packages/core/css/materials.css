@@ -67,12 +67,17 @@
     --material-floating-bg: color-mix(in oklab, var(--color-bg-raised) var(--material-tint), transparent);
     /* The veil is black in both schemes, by definition (Apple's 35 % dimming layer; Fluent smoke): a tier-0 value. */
     --material-veil: color-mix(in oklab, black 35%, transparent);
+    /* Q145.Y: a label over a picture or video (a media Badge: a length, a live mark) is black at 60 % in both schemes, so
+       it reads on any frame and the picture still shows through; a tier-0 value like the veil. */
+    --material-media-label: color-mix(in oklab, black 60%, transparent);
+    --material-media-label-text: white;
   }
 
   [data-material='solid'],
   [data-material='solid'] [data-material],
   [data-contrast='more'],
   [data-contrast='more'] [data-material] {
+    --material-media-label: black;
     --material-chrome-bg: var(--color-bg);
     --material-floating-bg: var(--color-bg-raised);
   }

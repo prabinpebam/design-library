@@ -386,10 +386,10 @@
       "reason": "Motion: a rounded element's view-transition snapshot keeps its corners only while it moves; nothing is clipped at rest"
     },
     {
-      "file": "packages/templates/youtube/parts/layouts/site.css",
-      "selector": "[data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] > [data-dl-part='title']",
+      "file": "packages/core/css/fundamentals/type-and-media.css",
+      "selector": "[data-dl='heading'][data-lines]",
       "kind": "text truncation",
-      "reason": "Video titles show at most two lines, as in the reference (C-1280-L 16/22, two lines max, Q145.Y); the full title is the frame link's accessible name and holds no focusable element"
+      "reason": "Heading lines (Q145.Y): a heading held to 1-3 lines ends in an ellipsis, as a video title in a feed card; headings hold no focusable element, so no focus ring is cut, and the full words stay in the document"
     }
   ],
   "scrollRegions": [

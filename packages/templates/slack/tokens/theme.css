@@ -166,6 +166,7 @@
     --c-button-radius-lg: var(--radius-lg);
     --c-button-fill-track: var(--color-map-brand-tint);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-link-text: var(--color-text-link);
     --c-skeleton-fill: var(--color-border);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);

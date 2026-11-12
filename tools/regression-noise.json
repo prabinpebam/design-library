@@ -1,6 +1,14 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--badge": {
+      "reason": "catalogue inventory: (Q145.Y Y.2b) the generic opt-in Badge emphasis media (defaults unchanged) adds a source-derived prop value and an 'On media' story at the end of the page, below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--heading": {
+      "reason": "catalogue inventory: (Q145.Y Y.2b) the generic opt-in Heading lines prop (default unchanged) adds a source-derived prop row and a 'Held to two lines' story at the end of the page, below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--chip": {
       "reason": "catalogue inventory: (Q145.Y Y.2a) the generic c.chip.selected-text token (default {color.text}, every chip unchanged) adds a source-derived token row, and youtube.Site joins the Used by list, below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

@@ -417,5 +417,12 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Link tone',
+      description: 'A call to action that reads as a link, such as Sign in: link-coloured words, no fill, and the default button’s edge.',
+      arrangement: 'row',
+      code: `<Button icon="person" label="Sign in" tone="link" />`,
+      render: () => <Button icon="person" label="Sign in" tone="link" />,
+    },
   ],
 } satisfies StoryFile;

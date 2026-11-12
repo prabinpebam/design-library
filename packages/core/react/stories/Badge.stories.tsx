@@ -199,5 +199,17 @@ export default {
       ),
       arrangement: 'row',
     },
+    {
+      title: 'On media',
+      description: 'A label over a picture or video, such as its length or a live mark: a see-through dark fill with white words in every scheme, so it reads on any frame.',
+      code: `<Badge size="s" tone="neutral" emphasis="media">12:07</Badge>`,
+      render: () => (
+        <>
+          <Badge size="s" tone="neutral" emphasis="media">12:07</Badge>
+          <Badge size="s" tone="neutral" emphasis="media">1:04:10</Badge>
+        </>
+      ),
+      arrangement: 'row',
+    },
   ],
 } satisfies StoryFile;

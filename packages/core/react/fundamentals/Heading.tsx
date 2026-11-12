@@ -12,6 +12,8 @@ export interface HeadingProps extends DataAttributes {
   id?: string;
   /** `accent` (IP22): the whole heading in the brand colour, on the accent display role at size 2 and larger (3:1, large text) and the accent text role below. For one phrase, wrap it in `<Text as="span" variant="inherit" tone="accent">` instead. Default: the text colour. */
   tone?: 'default' | 'accent';
+  /** Holds the heading to this many lines, ending in an ellipsis (a video's title in a feed card); the full words stay in the document for assistive technology and find in page. Default: every line shows. */
+  lines?: 1 | 2 | 3;
 }
 
 /**
@@ -21,11 +23,11 @@ export interface HeadingProps extends DataAttributes {
  * @family text
  * @a11y Renders `h1`-`h6` from `level`; the outline follows the page structure, never the visual size.
  */
-export function Heading({ children, level, size, id, tone, ...data }: HeadingProps) {
+export function Heading({ children, level, size, id, tone, lines, ...data }: HeadingProps) {
   const Element = `h${level}` as const;
   const visual = size ?? (Math.min(level, 4) as 1 | 2 | 3 | 4);
   return (
-    <Element {...data} id={id} data-dl="heading" data-size={visual} data-tone={tone === 'accent' ? tone : undefined}>
+    <Element {...data} id={id} data-dl="heading" data-size={visual} data-tone={tone === 'accent' ? tone : undefined} data-lines={lines}>
       {children}
     </Element>
   );

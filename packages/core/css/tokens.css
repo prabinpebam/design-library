@@ -417,6 +417,7 @@
   --c-button-border-width: var(--border-hairline);
   --c-button-default-fill: var(--color-bg-control);
   --c-button-default-edge: var(--color-border-control);
+  --c-button-link-text: var(--color-text-link);
   --c-button-weight: var(--type-label-weight);
   --c-button-unavailable-fill: transparent;
   --c-button-unavailable-edge: var(--color-border-strong);

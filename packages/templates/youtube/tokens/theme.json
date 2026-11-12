@@ -18,5 +18,14 @@
   "c.chip.fill": { "$value": { "light": "rgba(0, 0, 0, 0.05)", "dark": "rgba(255, 255, 255, 0.1)" }, "$description": "A chip at rest: unmeasured on the chip itself; the tonal fill measured on the watch page's pills (W-1280-L/D)." },
   "color.map.chip": { "$value": { "light": "#0f0f0f", "dark": "#f1f1f1" }, "$description": "The on chip's fill (and edge): S-1280-L #0F0F0F, S-1280-D #F1F1F1." },
   "color.map.chip-tint": { "$value": "{color.map.chip}", "$description": "The on chip is a solid fill: S-1280-L/D." },
-  "c.chip.selected-text": { "$value": { "light": "#f1f1f1", "dark": "#0f0f0f" }, "$description": "The on chip's words: S-1280-L #F1F1F1, S-1280-D #0F0F0F." }
+  "c.chip.selected-text": { "$value": { "light": "#f1f1f1", "dark": "#0f0f0f" }, "$description": "The on chip's words: S-1280-L #F1F1F1, S-1280-D #0F0F0F." },
+  "c.button.size": { "$value": "2.5rem", "$description": "Every masthead and guide button is 40 high: guide 40×40, voice 40×40, settings 40×40, Sign in 104.6×40 (H-1280-L)." },
+  "c.field.size": { "$value": "{size.control-md}", "$description": "The search box is 40 high (H-1280-L, 536×40)." },
+  "c.field.radius": { "$value": "{radius.pill}", "$description": "The search capsule's outer ends are fully round: box radius 40 0 0 40, button 0 40 40 0 (H-1280-L)." },
+  "c.badge.radius": { "$value": "{radius.sm}", "$description": "The length badge's radius 4 (C-1280-L)." },
+  "c.badge.padding-inline": { "$value": "{space.1}", "$description": "The length badge's padding 1 4 (C-1280-L)." },
+  "type.caption.size": { "$value": "{text.xs}", "$description": "The length badge's words 12/18 w500 (C-1280-L)." },
+  "type.label.size": { "$value": "{text.s}", "$description": "Chip words 14/20 w500 (S-1280-L) and Sign in 14 w500 (H-1280-L)." },
+  "type.heading-4.size": { "$value": "{text.m}", "$description": "A video's title in the feed 16/22 w500 (C-1280-L)." },
+  "type.heading-4.weight": { "$value": "{weight.medium}", "$description": "A video's title in the feed 16/22 w500 (C-1280-L)." }
 }

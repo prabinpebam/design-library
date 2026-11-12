@@ -107,6 +107,13 @@
     color: var(--color-status-neutral-on-fill);
   }
 
+  /* Q145.Y: a label over a picture or video (a length, a live mark): the see-through media-label material with white
+     words in every scheme, whatever the tone, so it reads on any frame. */
+  [data-dl='badge'][data-emphasis='media'] {
+    background-color: var(--material-media-label);
+    color: var(--material-media-label-text);
+  }
+
   [data-dl='badge'][data-tone='info'][data-emphasis='subtle'] {
     background-color: var(--color-status-info-bg);
     color: var(--color-status-info-fg);

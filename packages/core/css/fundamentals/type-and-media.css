@@ -84,6 +84,18 @@
     color: var(--dl-accent-ink, var(--color-text-accent));
   }
 
+  /* Q145.Y: a heading held to a number of lines (a video's title in a feed card); the rest ends in an ellipsis and the
+     full words stay in the document. Headings hold no focusable element, so the clip cuts no focus ring. */
+  [data-dl='heading'][data-lines] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  [data-dl='heading'][data-lines='1'] { -webkit-line-clamp: 1; }
+  [data-dl='heading'][data-lines='2'] { -webkit-line-clamp: 2; }
+  [data-dl='heading'][data-lines='3'] { -webkit-line-clamp: 3; }
+
   /* A long word in a large heading wraps rather than pushing the page sideways at 320 px (WCAG 1.4.10), even where
      its container shrinks to fit it (anywhere, unlike break-word, lowers its min-content width). */
   [data-dl='heading'] {

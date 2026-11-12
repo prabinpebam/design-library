@@ -44,6 +44,11 @@
           "name": "tone",
           "type": "'default' | 'accent'",
           "description": "`accent` (IP22): the whole heading in the brand colour, on the accent display role at size 2 and larger (3:1, large text) and the accent text role below. For one phrase, wrap it in `<Text as=\"span\" variant=\"inherit\" tone=\"accent\">` instead. Default: the text colour."
+        },
+        {
+          "name": "lines",
+          "type": "1 | 2 | 3",
+          "description": "Holds the heading to this many lines, ending in an ellipsis (a video's title in a feed card); the full words stay in the document for assistive technology and find in page. Default: every line shows."
         }
       ]
     }
@@ -139,7 +144,8 @@
     "Hero",
     "conference.SponsorWall",
     "slack.Workspace",
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "ui-copy"

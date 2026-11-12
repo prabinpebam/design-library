@@ -41,8 +41,8 @@
         },
         {
           "name": "emphasis",
-          "type": "'subtle' | 'strong'",
-          "description": "`subtle` (default): a tint with coloured text. `strong`: a solid fill, for the one thing on the screen that needs attention."
+          "type": "'subtle' | 'strong' | 'media'",
+          "description": "`subtle` (default): a tint with coloured text. `strong`: a solid fill, for the one thing on the screen that needs attention. `media`: a label over a picture or video (a length, a live mark): a see-through dark fill with white words in every scheme."
         },
         {
           "name": "icon",

@@ -113,6 +113,7 @@
     --c-data-table-radius: var(--radius-lg);
     --c-data-table-head-bg: var(--color-bg-sunken);
     --c-data-table-head-fg: var(--color-text-muted);
+    --c-button-link-text: var(--color-text-link);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);
     --c-field-ring-color: var(--color-focus);

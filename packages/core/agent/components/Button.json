@@ -41,8 +41,8 @@
         },
         {
           "name": "tone",
-          "type": "'inherit'",
-          "description": "Inherit the enclosing surface's text colour for a quiet action."
+          "type": "'inherit' | 'link'",
+          "description": "`inherit`: the enclosing surface's text colour, for a quiet action. `link`: a call to action that reads as a link (an outlined Sign in): link-coloured words and no fill; with `emphasis=\"default\"` it keeps its edge."
         },
         {
           "name": "label",
@@ -236,6 +236,7 @@
     "--c-button-gap",
     "--c-button-group-focus-layer",
     "--c-button-inherit-disabled",
+    "--c-button-link-text",
     "--c-button-padding-inline",
     "--c-button-padding-inline-lg",
     "--c-button-padding-inline-sm",

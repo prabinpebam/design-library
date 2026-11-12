@@ -60,6 +60,8 @@
   /* IP8: a Button with href is a link that looks like a button: the same box, no underline. */
   [data-dl='button'][data-align='start'] { justify-items: start; }
   [data-dl='button'][data-emphasis='quiet'][data-tone='inherit'] { color: inherit; }
+  /* Q145.Y: a call to action that reads as a link (an outlined Sign in): link-coloured words, no fill; a default button keeps its edge. */
+  [data-dl='button'][data-tone='link'] { background-color: transparent; color: var(--c-button-link-text); }
 
   a[data-dl='button'] {
     box-sizing: border-box;

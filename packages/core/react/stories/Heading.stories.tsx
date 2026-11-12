@@ -35,5 +35,13 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Held to two lines',
+      description: 'A heading in a dense card held to a number of lines; the rest ends in an ellipsis and the full words stay in the document.',
+      code: `<Heading level={3} size={4} lines={2}>A long title that wraps…</Heading>`,
+      render: () => (
+        <Heading level={3} size={4} lines={2}>Restoring a rusted hand plane to a mirror finish, with every step from flattening the sole to honing the iron and setting the mouth</Heading>
+      ),
+    },
   ],
 } satisfies StoryFile;
