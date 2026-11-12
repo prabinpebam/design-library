@@ -14,6 +14,11 @@ export interface PictureRevealFrame {
   height: number;
   /** 0 at rest (the picture) to 1 (its pair), eased on the standard curve; it runs back down when the pointer or focus leaves. */
   progress: number;
+  /**
+   * The same change at an even pace (the share of the reveal time), for a reveal that keeps its own pacing (a brand's
+   * linear stipple): use it instead of `progress` (LR26).
+   */
+  linear: number;
   /** Whether the picture is heading to its pair (hovered or focused) or back. */
   active: boolean;
   /** Milliseconds since the reveal began, for drawing that moves on its own (a stipple's drift). */
@@ -124,7 +129,7 @@ export function useReveal(
         const box = fitted(img, w, h, fit, spot);
         context.drawImage(img, box.x, box.y, box.w, box.h);
       };
-      fn({ context, width: w, height: h, progress: ease(linear), active: hovered || focused, time: now - started, paint });
+      fn({ context, width: w, height: h, progress: ease(linear), linear, active: hovered || focused, time: now - started, paint });
     };
 
     const step = (now: number) => {
