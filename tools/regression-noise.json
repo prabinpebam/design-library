@@ -1,0 +1,81 @@
+{
+  "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
+  "catalogueInventory": {
+    "lib--menubutton": {
+      "reason": "catalogue inventory: (Q143 regions 25-27) the generic opt-in MenuButtonItem icon, tone and startsGroup and MenuButton.tone (defaults unchanged) add source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--popover": {
+      "reason": "catalogue inventory: (Q143 region 27) the generic opt-in PopoverTrigger.tone (default unchanged) adds source-derived prop documentation below the viewport and slack.Workspace joins its Used by list; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--menubutton": {
+      "reason": "catalogue inventory: (Q143 region 25, packet K) the generic MenuButtonItem.items submenu and plate props: the source-derived lead says \"nested once\" instead of \"no nesting\" (same line breaks; only the words on that line from x 594 change) and the prop rows below the viewport lengthen the page (scrollbar track).",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }, { "x": 590, "y": 184, "width": 680, "height": 70 }]
+    },
+    "lib--listitem": {
+      "reason": "catalogue inventory: (Q143 region 25, packet K) the generic ListItem.plate prop (default no plate) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--switch": {
+      "reason": "catalogue inventory: (Q145.W W6) the generic Switch tone and stateText props (defaults unchanged) add source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--button": {
+      "reason": "catalogue inventory: (Q145.W) the generic opt-in Button.stacked prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--dialog": {
+      "reason": "catalogue inventory: (Q146 Packet B) the generic opt-in Dialog.aside prop and tokens (defaults unchanged) add source-derived prop and token rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--icon": {
+      "reason": "catalogue inventory: (Q145.W) 29 generic editing icons (bold, paste, undo and the rest, packages/core/icons/icons.ts) lengthen the source-derived icon inventory below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--overview": {
+      "reason": "catalogue inventory: source-derived token count grows from 1293 to 1303 (eight navigation roles, two dimensions), then with the Ribbon, Button.stacked and Tabs tokens (Q145.W). Only the count sentence at the viewport foot and, as the inventory lengthens, the right scrollbar track change.",
+      "regions": [{ "x": 400, "y": 890, "width": 640, "height": 10 }, { "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--avatar": {
+      "reason": "catalogue inventory: Avatar.shape adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--colour": {
+      "reason": "catalogue inventory: eight generic navigation colour roles lengthen the role inventory below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--space": {
+      "reason": "catalogue inventory: rail-width and app-bar-height lengthen the dimension inventory (scrollbar track); space.5 (Q143/Q145.3: the 4 px grid's skipped five-unit step, a theme gutter of 20 px) adds a row to the source-derived scale list, shifting the list below it. Only the list from the space-5 row down (evaluator's measured change box x 380-788, y 676-874) and the track change; the title, lead and rows above stay exact.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }, { "x": 380, "y": 676, "width": 890, "height": 224 }]
+    },
+    "lib--templates": {
+      "reason": "catalogue inventory: the new workspace template lengthens the manifest-derived template inventory below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--avatargroup": {
+      "reason": "catalogue inventory: the generic opt-in AvatarGroup.shape prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--type": {
+      "reason": "catalogue inventory: the weight scale gains weight.black 900 (source-derived token row below the viewport); only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--scrollarea": {
+      "reason": "catalogue inventory: the source-derived Used by list gains slack.Workspace (packages/core/agent/components/ScrollArea.json), lengthening metadata below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--textarea": {
+      "reason": "catalogue inventory: TextArea.width adds a prop row and slack.Workspace adds a Used by entry (packages/core/agent/components/TextArea.json), lengthening metadata below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    }
+  },
+  "pages": {
+    "blog--topic@dark": { "maxPct": 0.01, "regions": [{ "x": 1119, "y": 339, "width": 80, "height": 82 }, { "x": 1119, "y": 507, "width": 80, "height": 82 }, { "x": 1119, "y": 675, "width": 80, "height": 82 }], "reason": "Chromium rasterizes the dark lake photo nondeterministically: the frozen base against itself differed (6726 channels, max delta 28) with identical image URL, natural size and rect (.shots/w78-photo-proof/result.json, round 1)." },
+    "chat--chat": { "maxPct": 4, "reason": "ImageGeneration's stipple field places its dots at random on every load (held still under reduced motion, but a new layout each time)." },
+    "lib--chat-chat": { "maxPct": 0.06, "reason": "The same random ImageGeneration stipple, its first row at the viewport's foot." },
+    "lib--chatlayout": { "maxPct": 1.2, "reason": "An ImageGeneration example's random stipple at the viewport's foot." },
+    "lib--imagegeneration": { "maxPct": 2, "reason": "The ImageGeneration examples' random stipple." },
+    "lib--screenpreview": { "maxPct": 0.08, "reason": "An ImageGeneration example's random stipple at the viewport's foot." }
+  }
+}
