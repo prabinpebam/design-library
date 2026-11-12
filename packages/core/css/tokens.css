@@ -373,6 +373,7 @@
   --c-description-list-gap: var(--space-stack-item);
   --c-description-list-term-width: 12rem;
   --c-description-list-column-gap: var(--space-inline-group);
+  --c-button-inherit-disabled: 40;
   --c-button-pressed-fill: var(--state-selected);
   --c-button-stack-gap: var(--space-stack-pair);
   --c-button-stack-padding: var(--space-inset-xs);

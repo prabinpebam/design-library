@@ -27,6 +27,10 @@ export interface SwitchProps extends DataAttributes {
   disabled?: boolean;
   /** What happened and what was kept, when a save fails. Defaults to naming the setting and its stored value. */
   failedText?: string;
+  /** `inherit`: the words, edge and knob take the surroundings' text colour while off, on a coloured title bar or toolbar, as Button's `tone`. */
+  tone?: 'inherit';
+  /** Short words for each state shown inside the track beside the knob ("On", "Off"), for a product that writes the state in the switch. Decorative: the switch's checked state is what's announced. Widen the track with `c.switch.track-inline-*`. */
+  stateText?: { on: string; off: string };
 }
 
 /**
@@ -44,7 +48,7 @@ export interface SwitchProps extends DataAttributes {
  * @key Space: toggles
  * @key Enter: toggles
  */
-export function Switch({ label, checked, onChange, description, size = 'normal', labelPosition = 'end', disabled = false, failedText, hideLabel = false, ...data }: SwitchProps) {
+export function Switch({ label, checked, onChange, description, size = 'normal', labelPosition = 'end', disabled = false, failedText, hideLabel = false, tone, stateText, ...data }: SwitchProps) {
   const descriptionId = useId();
   const { phase, run } = useCommit('--duration-confirm-min');
   const [value, setValue] = useState(checked);
@@ -67,7 +71,7 @@ export function Switch({ label, checked, onChange, description, size = 'normal',
   };
 
   return (
-    <span {...data} data-dl="switch" data-size={size} data-label={labelPosition === 'start' ? 'start' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-to={pending ? (value ? 'off' : 'on') : undefined}>
+    <span {...data} data-dl="switch" data-size={size} data-tone={tone} data-label={labelPosition === 'start' ? 'start' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-to={pending ? (value ? 'off' : 'on') : undefined}>
       <button
         ref={control}
         type="button"
@@ -83,6 +87,7 @@ export function Switch({ label, checked, onChange, description, size = 'normal',
         <span data-dl-part="mark" aria-hidden="true">
           <span data-dl-part="track">
             <span data-dl-part="thumb">{pending && <Progress />}</span>
+            {stateText && <span data-dl-part="state">{value ? stateText.on : stateText.off}</span>}
           </span>
         </span>
         <span data-dl-part="words">

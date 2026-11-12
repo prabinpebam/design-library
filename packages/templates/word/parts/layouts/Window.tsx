@@ -71,14 +71,16 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
       <header data-dl-part="titlebar">
         <div data-dl-part="quick">
           <span data-dl-part="app-mark" role="img" aria-label={c.appMark} />
-          <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-          <span data-dl-part="qat-chevron"><Button label={c.undoOptions} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+          <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+          <span data-dl-part="qat-chevron"><Button label={c.undoOptions} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled /></span>
           <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <div data-dl-part="autosave">
             {/* binary-setting: AutoSave is an on/off setting, so it is a Switch, as in the reference. */}
-            <Switch label={c.autoSave} labelPosition="start" size="xs" checked={autoSave} onChange={setAutoSave} />
+            <Switch label={c.autoSave} labelPosition="start" size="xs" tone="inherit" stateText={{ on: c.on, off: c.off }} checked={autoSave} onChange={setAutoSave} />
           </div>
+          <Button label={c.touchMode} icon="hand" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+          <span data-dl-part="qat-chevron"><Button label={c.touchModeOptions} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
           <span data-dl-part="qat-chevron"><Button label={c.customize} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
         </div>
         <div data-dl-part="doc-title">
@@ -190,7 +192,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
           <Button label={c.webLayout} icon="globe" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <div data-dl-part="zoom">
             <Button label={c.zoomOut} icon="minus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.max(10, z - 10))} />
-            <Slider label={c.zoom} hideLabel showValue={false} size="s" valueLabel="none" min={10} max={500} value={zoom} onChange={(v) => setZoom(v as number)} />
+            <Slider label={c.zoom} hideLabel showValue={false} size="s" valueLabel="none" min={0} max={100} value={zoomPosition(zoom)} format={(p) => `${zoomAt(p)}%`} onChange={(v) => setZoom(zoomAt(v as number))} />
             <Button label={c.zoomIn} icon="plus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.min(500, z + 10))} />
           </div>
           <Button label={`${zoom}%`} size="xs" emphasis="quiet" tone="inherit" />
@@ -198,6 +200,15 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
       </footer>
     </div>
   );
+}
+
+/** Word's zoom slider is two scales joined at its centre: 10–100% on the first half, 100–500% on the second. */
+function zoomAt(position: number) {
+  return Math.round(position <= 50 ? 10 + (position / 50) * 90 : 100 + ((position - 50) / 50) * 400);
+}
+
+function zoomPosition(zoom: number) {
+  return zoom <= 100 ? ((zoom - 10) / 90) * 50 : 50 + ((zoom - 100) / 400) * 50;
 }
 
 function paneFor(screen: string) {

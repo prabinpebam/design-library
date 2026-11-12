@@ -235,6 +235,7 @@
     "--c-button-fill-track-danger",
     "--c-button-gap",
     "--c-button-group-focus-layer",
+    "--c-button-inherit-disabled",
     "--c-button-padding-inline",
     "--c-button-padding-inline-lg",
     "--c-button-padding-inline-sm",

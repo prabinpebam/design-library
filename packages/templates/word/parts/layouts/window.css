@@ -10,7 +10,8 @@
 
   /* Title bar: quick actions and the document's name at the start, search in the middle, the account and window controls at the end. */
   [data-dl='word-window'] > [data-dl-part='titlebar'] { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-inline-item); block-size: var(--size-app-bar-height); padding-inline: var(--space-inset-sm); background: var(--color-map-nav-shell); color: var(--color-map-nav-shell-on); font-size: var(--type-label-size); }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] { display: flex; align-items: center; gap: var(--space-0-5); }
+  /* Quick-access glyphs: undo's ink is ≈16 px tall in w-theme-07 (31 px at ≈2×), a 20 px icon box. */
+[data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] { display: flex; align-items: center; gap: var(--space-0-5); --size-icon-sm: var(--size-icon-md); }
   /* A neutral app mark: a plain tile, never a product logo. */
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='app-mark'] { inline-size: var(--size-icon-md); block-size: var(--size-icon-md); margin-inline-end: var(--space-inline-pair); border-radius: var(--radius-sm); background: var(--color-map-nav-shell-on); }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='autosave'] { display: flex; padding-inline: var(--space-inset-sm); }
@@ -40,9 +41,9 @@
   [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='nav-pane'] { flex: 0 0 var(--size-nav-width); display: grid; min-block-size: 0; background: var(--color-bg-raised); }
   [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='comments-pane'] { flex: 0 0 var(--size-pane-width); display: grid; min-block-size: 0; background: var(--color-bg-raised); }
 
-  /* The page: US Letter at 100% zoom with one-inch margins, white in both themes, edged by a hairline. */
-  [data-dl='word-page-stage'] { display: grid; justify-items: center; padding-block: var(--space-3); padding-inline: var(--space-inset-md); }
-  [data-dl='word-page-stage'] > [data-dl-part='page'] { display: grid; align-content: start; gap: var(--space-3); inline-size: 8.5in; min-block-size: 11in; padding: 1in; background: var(--color-bg-control); box-shadow: 0 0 0 var(--border-hairline) var(--color-border-strong); color: var(--color-text); font-family: var(--font-text); font-size: var(--text-l); line-height: var(--leading-normal); }
+  /* The page: US Letter at 100% zoom with one-inch margins, white in both themes, no edge (w-copilot-01); 18 px below the ribbon card (≈22 px at ≈1.25×). */
+  [data-dl='word-page-stage'] { display: grid; justify-items: center; padding-block: calc(var(--space-4) + var(--space-0-5)) var(--space-3); padding-inline: var(--space-inset-md); }
+  [data-dl='word-page-stage'] > [data-dl-part='page'] { display: grid; align-content: start; gap: var(--space-3); inline-size: 8.5in; min-block-size: 11in; padding: 1in; background: var(--color-bg-control); color: var(--color-text); font-family: var(--font-text); font-size: var(--text-l); line-height: var(--leading-normal); }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='block'] { margin: 0; font-weight: 400; }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='title'] { font-family: var(--font-display); font-size: var(--text-xxxl); line-height: var(--leading-tight); }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='heading-1'] { padding-block-start: var(--space-1); font-family: var(--font-display); font-size: var(--text-xxl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }

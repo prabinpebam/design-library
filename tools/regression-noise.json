@@ -17,6 +17,10 @@
       "reason": "catalogue inventory: (Q143 region 25, packet K) the generic ListItem.plate prop (default no plate) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
+    "lib--switch": {
+      "reason": "catalogue inventory: (Q145.W W6) the generic Switch tone and stateText props (defaults unchanged) add source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--button": {
       "reason": "catalogue inventory: (Q145.W) the generic opt-in Button.stacked prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

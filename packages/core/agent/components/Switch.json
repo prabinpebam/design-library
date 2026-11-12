@@ -78,6 +78,21 @@
           "name": "failedText",
           "type": "string",
           "description": "What happened and what was kept, when a save fails. Defaults to naming the setting and its stored value."
+        },
+        {
+          "name": "tone",
+          "type": "'inherit'",
+          "description": "`inherit`: the words, edge and knob take the surroundings' text colour while off, on a coloured title bar or toolbar, as Button's `tone`."
+        },
+        {
+          "name": "stateText",
+          "type": "{ on: string",
+          "description": "Short words for each state shown inside the track beside the knob (\"On\", \"Off\"), for a product that writes the state in the switch. Decorative: the switch's checked state is what's announced. Widen the track with `c.switch.track-inline-*`."
+        },
+        {
+          "name": "off",
+          "type": "string }",
+          "required": true
         }
       ]
     }
@@ -131,6 +146,7 @@
     "--state-pressed",
     "--type-body-sm-leading",
     "--type-body-sm-size",
+    "--type-caption-size",
     "--type-heading-4-leading",
     "--type-heading-4-size",
     "--type-label-compact-leading",

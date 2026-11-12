@@ -1,4 +1,20 @@
 {
+ "c.button.inherit-disabled": {
+  "$value": 35,
+  "$description": "Undo with nothing to undo: #6794D7 on the #185ABD title bar in w-theme-07, white at about 35%."
+ },
+ "c.switch.track-inline-xs": {
+  "$value": "2.625rem",
+  "$description": "Title bar AutoSave switch: 84 px wide at ≈2× in w-theme-07, so 42 px; it holds the knob and the word Off."
+ },
+ "c.switch.track-block-xs": {
+  "$value": "1.25rem",
+  "$description": "AutoSave switch: 40 px tall at ≈2× in w-theme-07, so 20 px."
+ },
+ "c.switch.thumb-inset-xs": {
+  "$value": "0.21875rem",
+  "$description": "AutoSave knob: 26 px across at ≈2× (13 px), so (20 − 13) / 2 = 3.5 px from the track on each side."
+ },
  "$description": "Q145.W reference spec .design-library/word-ref/README.md: w-theme-07 (Colorful, 2x), w-theme-03 (Dark Gray, 2x), w-copilot-01 (near-full window, 1.28x). Type: Noto Sans (OFL) stands in for Segoe UI, which isn't openly licensed; Noto is about 5% wider at the same size (recorded difference). Dark values are the Dark Gray theme; unmeasured values are marked.",
  "font.text": {
   "$value": "'Noto Sans Variable', system-ui, sans-serif",
