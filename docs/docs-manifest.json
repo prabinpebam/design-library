@@ -123,6 +123,15 @@
       "updated": "2026-11-10"
     },
     {
+      "path": "designup-template.md",
+      "title": "DesignUp as a library template",
+      "order": 9.15,
+      "icon": "sync_alt",
+      "type": "page",
+      "status": "draft",
+      "updated": "2026-11-12"
+    },
+    {
       "path": "materials.md",
       "title": "Materials and backgrounds",
       "order": 10,
