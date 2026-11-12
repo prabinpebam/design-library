@@ -1446,6 +1446,21 @@
         "$description": "A contained toned section's space at its sides, inside the fill: never less than the gap between its parts (spacing SC4); a bleeding one keeps the column's edges (echoed for space contexts)"
       }
     },
+    "sectioned-form": {
+      "$extensions": {
+        "owner": "SectionedForm"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between the list and the sections, and between sections in one column (echoed for space contexts)"
+      },
+      "list-inset": {
+        "$type": "dimension",
+        "$value": "{space.inline-group}",
+        "$description": "Between the list's rows and its divider (echoed for space contexts)"
+      }
+    },
     "segmented-control": {
       "$extensions": {
         "owner": "SegmentedControl"

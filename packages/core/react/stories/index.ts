@@ -74,6 +74,7 @@ export { default as gridStories } from './Grid.stories';
 export { default as paneStories } from './Pane.stories';
 export { default as toolbarStories } from './Toolbar.stories';
 export { default as propertySectionStories } from './PropertySection.stories';
+export { default as sectionedFormStories } from './SectionedForm.stories';
 export { default as propertyRowStories } from './PropertyRow.stories';
 export { default as colourFieldStories } from './ColourField.stories';
 export { default as menuButtonStories } from './MenuButton.stories';

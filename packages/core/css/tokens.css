@@ -486,6 +486,9 @@
   --c-alignment-picker-bar-gap: var(--border-thick);
   --c-alignment-picker-hover-fill: var(--state-hover);
   --c-alignment-picker-pressed-fill: var(--state-pressed);
+  --c-sectioned-form-list: 13rem;
+  --c-sectioned-form-list-inset: var(--space-inline-group);
+  --c-sectioned-form-gap: var(--space-stack-group);
   --c-property-section-head: var(--size-target-dense);
   --c-property-section-head-compact: var(--size-target-min);
   --c-property-section-divider-width: 0px;
@@ -1750,6 +1753,8 @@
   --c-section-nested-head-gap: var(--space-stack-pair);
   --c-section-tone-inset-block: var(--space-stack-section);
   --c-section-tone-inset-inline: var(--space-stack-section);
+  --c-sectioned-form-gap: var(--space-stack-group);
+  --c-sectioned-form-list-inset: var(--space-inline-group);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2033,6 +2038,8 @@
   --c-section-nested-head-gap: var(--space-stack-pair);
   --c-section-tone-inset-block: var(--space-stack-section);
   --c-section-tone-inset-inline: var(--space-stack-section);
+  --c-sectioned-form-gap: var(--space-stack-group);
+  --c-sectioned-form-list-inset: var(--space-inline-group);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2316,6 +2323,8 @@
   --c-section-nested-head-gap: var(--space-stack-pair);
   --c-section-tone-inset-block: var(--space-stack-section);
   --c-section-tone-inset-inline: var(--space-stack-section);
+  --c-sectioned-form-gap: var(--space-stack-group);
+  --c-sectioned-form-list-inset: var(--space-inline-group);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);
@@ -2599,6 +2608,8 @@
   --c-section-nested-head-gap: var(--space-stack-pair);
   --c-section-tone-inset-block: var(--space-stack-section);
   --c-section-tone-inset-inline: var(--space-stack-section);
+  --c-sectioned-form-gap: var(--space-stack-group);
+  --c-sectioned-form-list-inset: var(--space-inline-group);
   --c-segmented-control-gap: var(--space-inline-pair);
   --c-segmented-control-inset: var(--space-inset-xs);
   --c-segmented-control-padding-inline: var(--space-inset-sm);

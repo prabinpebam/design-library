@@ -69,6 +69,9 @@
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/propertysection",
+  "usedBy": [
+    "SectionedForm"
+  ],
   "principles": [
     "visual-noise"
   ]

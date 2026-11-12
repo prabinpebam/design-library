@@ -167,6 +167,8 @@ export type { PaneProps } from './compounds/Pane';
 export { Toolbar } from './compounds/Toolbar';
 export { PropertySection } from './compounds/PropertySection';
 export type { PropertySectionProps } from './compounds/PropertySection';
+export { SectionedForm } from './compounds/SectionedForm';
+export type { SectionedFormProps, SectionedFormSection } from './compounds/SectionedForm';
 export { PropertyRow } from './compounds/PropertyRow';
 export type { PropertyRowProps } from './compounds/PropertyRow';
 export type { ToolbarProps } from './compounds/Toolbar';

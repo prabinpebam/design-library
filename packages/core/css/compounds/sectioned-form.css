@@ -1,0 +1,38 @@
+/*
+ * Tier 2 compound: SectionedForm (DesignUp template 2, gap b). One column: every section in turn, a group gap apart.
+ * Two columns (data-columns, set from the form's own width): the list of sections beside the chosen one, the list ruled
+ * off by one divider (the Shared --border-divider setting can remove it).
+ */
+@layer compounds {
+  [data-dl='sectioned-form'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-sectioned-form-gap);
+    /* Fills its container's line, so its own width (which picks the columns) is the room it has, even in a shrink-wrapping parent. */
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-dl='sectioned-form'][data-columns='two'] {
+    grid-template-columns: var(--dl-sectioned-form-list, var(--c-sectioned-form-list)) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  [data-dl='sectioned-form'] > [data-dl-part='list'][hidden],
+  [data-dl='sectioned-form'] > [data-dl-part='sections'] > [data-dl-part='section'][hidden] {
+    display: none;
+  }
+
+  [data-dl='sectioned-form'] > [data-dl-part='list'] {
+    min-inline-size: 0;
+    padding-inline-end: var(--c-sectioned-form-list-inset);
+    border-inline-end: var(--border-divider) solid var(--color-border);
+  }
+
+  [data-dl='sectioned-form'] > [data-dl-part='sections'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--c-sectioned-form-gap);
+    min-inline-size: 0;
+  }
+}

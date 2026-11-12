@@ -87,6 +87,7 @@
 @import url('./compounds/pane.css');
 @import url('./compounds/toolbar.css');
 @import url('./compounds/property-section.css');
+@import url('./compounds/sectioned-form.css');
 @import url('./compounds/property-row.css');
 @import url('./compounds/colour-field.css');
 @import url('./layouts/library.css');
