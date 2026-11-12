@@ -96,8 +96,8 @@
           "avatar": "avatar06",
           "time": "11:00 AM",
           "dateAbove": "Wednesday, July 22nd",
-          "text": "Hi all! For founders or hiring leads in this group, you might find this live workshop valuable. We’re hosting a virtual session on how to attract the best systems builders on your team, led by a studio director with 15+ years across distributed product teams.",
-          "subText": "You’ll leave with a practical playbook for attracting top candidates, evaluating craft, and building teams that move faster without compromising quality.\nJul 30, 11:00 AM PDT",
+          "text": "Hi all! For founders or hiring leads in this group, you might find this live workshop valuable. We’re hosting a virtual session on how to attract the best systems builders on your team, led by a studio director with 15+ years across distributed product teams and multi-product design organizations.",
+          "subText": "You’ll leave with a practical playbook for attracting top candidates, evaluating craft in real product reviews, structuring collaborative trials, and building teams that move faster without compromising quality or burning out.\nBring your toughest open-role questions for the live Q&A segment at the end.\nJul 30, 11:00 AM PDT",
           "linkText": "luma.com/rethink-xd53",
           "afterLinkText": "We are happy to offer 20% discount for this group only. Use code SH-FRIENDS at checkout to reserve your spot before Friday.",
           "unfurl": {
@@ -179,10 +179,10 @@
       "title": "Directories",
       "tabs": [
         { "id": "people", "label": "People", "icon": "person" },
-        { "id": "channels", "label": "Channels", "icon": "messages" },
+        { "id": "channels", "label": "Channels", "icon": "hash" },
         { "id": "groups", "label": "User Groups", "icon": "people" },
         { "id": "external", "label": "External", "icon": "organisation" },
-        { "id": "invitations", "label": "Invitations", "icon": "send" }
+        { "id": "invitations", "label": "Invitations", "icon": "inbox" }
       ],
       "searchPlaceholder": "Search for people",
       "inviteLabel": "Invite People",
@@ -425,6 +425,151 @@
         { "name": "Kenji Morales", "avatar": "avatar20", "snooze": true }
       ]
     },
+    "slackbotView": {
+      "workspaceInitials": "MT",
+      "searchPlaceholder": "Search Maker Team",
+      "railLabel": "Slackbot",
+      "adminLabel": "Admin",
+      "sidebarTitle": "Slackbot",
+      "navItems": [
+        { "id": "new", "label": "New message", "icon": "compose" },
+        { "id": "artifacts", "label": "Artifacts", "icon": "file" },
+        { "id": "tasks", "label": "Tasks", "icon": "check-circle" },
+        { "id": "apps", "label": "Apps", "icon": "grid" }
+      ],
+      "starredTitle": "Starred",
+      "starredHintBefore": "Click the ",
+      "starredHintEmoji": "⭐",
+      "starredHintAfter": " icon on any chat to add it to this section",
+      "recentsTitle": "Recents",
+      "allConversations": "All conversations",
+      "heroTitle": "Your favorite coworker is ready!",
+      "promptPlaceholder": "Ask anything",
+      "disclaimer": "Slackbot is AI and can make mistakes",
+      "recommendedTitle": "Recommended for you",
+      "prompts": [
+        { "id": "p1", "text": "Find updates from my team this week", "icon": "search", "tone": "mint" },
+        { "id": "p2", "text": "Summarize unread channel highlights", "icon": "bell", "tone": "sky" }
+      ],
+      "bannerText": "Your organization now has access to the all-new Slackbot.",
+      "bannerLink": "Learn more"
+    },
+    "activityView": {
+      "title": "Activity",
+      "countLabel": "26",
+      "unreadsLabel": "Unreads",
+      "items": [
+        {
+          "id": "act-1",
+          "context": "Channel invitation in #ask-me-anything-events",
+          "author": "Slackbot",
+          "avatar": "avatar04",
+          "date": "Oct 29th",
+          "text": "Welcome to #ask-me-anything-events — live sessions and weekly notes.",
+          "unread": true
+        },
+        {
+          "id": "act-2",
+          "context": "Mention in #hangout",
+          "author": "Elena Rostova",
+          "avatar": "avatar01",
+          "date": "Nov 2nd",
+          "mention": "@channel",
+          "text": "Our November systems critique sign-ups are open through Friday.",
+          "badge": 1
+        },
+        {
+          "id": "act-3",
+          "context": "Mention in #ask-me-anything-events",
+          "author": "Marco Silva",
+          "avatar": "avatar05",
+          "date": "Nov 5th",
+          "mention": "@channel",
+          "text": "Drop your questions in the thread ahead of tomorrow’s AMA.",
+          "badge": 1
+        },
+        {
+          "id": "act-4",
+          "context": "Mention in #resources_tools",
+          "author": "Clara Lindqvist",
+          "avatar": "avatar06",
+          "date": "Nov 8th",
+          "mention": "@channel",
+          "text": "Shared the updated component checklist and accessibility notes.",
+          "unread": true
+        },
+        {
+          "id": "act-5",
+          "context": "Thread in #help_designcritique",
+          "author": "Owen Mercer",
+          "avatar": "avatar20",
+          "date": "Nov 10th",
+          "text": "Thanks for the feedback on the navigation hierarchy — much clearer now!",
+          "unread": true
+        },
+        {
+          "id": "act-6",
+          "context": "Mention in #hangout",
+          "author": "Nadia Okafor",
+          "avatar": "avatar09",
+          "date": "Nov 11th",
+          "mention": "@channel",
+          "text": "Weekly community showcase starts in 15 minutes.",
+          "badge": 1
+        }
+      ]
+    },
+    "createHeading": "Create",
+    "filterMenu": [
+      {
+        "value": "filter-sort",
+        "label": "Filter and sort",
+        "meta": "Active only",
+        "items": [
+          {
+            "value": "filter-active",
+            "heading": "Filter conversations by:",
+            "label": "Active only",
+            "description": "New activity within the last 30 days",
+            "checked": true
+          },
+          { "value": "filter-unreads", "label": "Unreads", "checked": false },
+          { "value": "filter-mentions", "label": "Mentions", "checked": false },
+          { "value": "filter-all", "label": "All", "checked": false },
+          { "value": "filter-custom", "label": "Custom by section", "checked": false },
+          {
+            "value": "sort-az",
+            "startsGroup": true,
+            "heading": "Sort conversations by:",
+            "label": "A–Z",
+            "checked": true
+          },
+          { "value": "sort-recency", "label": "Recency", "checked": false },
+          { "value": "sort-priority", "label": "Priority", "checked": false }
+        ]
+      },
+      {
+        "value": "sec-daily",
+        "startsGroup": true,
+        "heading": "Suggested channel sections",
+        "label": "Daily reads",
+        "icon": "book"
+      },
+      { "value": "sec-team", "label": "My team", "icon": "emoji" },
+      { "value": "sec-announce", "label": "Announcements", "icon": "speaker" },
+      { "value": "sec-social", "label": "Social", "icon": "star" },
+      { "value": "sec-custom", "label": "Create your own…", "inset": true },
+      {
+        "value": "tip-clean",
+        "startsGroup": true,
+        "heading": "Quick tips",
+        "label": "Clean up your channel list",
+        "description": "Looking fresh! Come back later for more tips.",
+        "icon": "lightbulb"
+      },
+      { "value": "tip-bulk", "label": "Bulk manage conversations", "icon": "list" },
+      { "value": "edit-defaults", "startsGroup": true, "label": "Edit defaults" }
+    ],
     "rail": [
       { "id": "home", "label": "Home", "icon": "home" },
       { "id": "dms", "label": "DMs", "icon": "messages" },
@@ -670,7 +815,8 @@
         "value": "message",
         "label": "Message",
         "description": "Start a conversation in a DM or channel",
-        "icon": "edit",
+        "shortcut": "Ctrl+N",
+        "icon": "comment",
         "plate": 7
       },
       {
@@ -691,6 +837,8 @@
         "value": "canvas",
         "label": "Canvas",
         "description": "Create and share content",
+        "badge": "New",
+        "shortcut": "Ctrl+Shift+N",
         "icon": "file",
         "plate": 3
       },
@@ -699,13 +847,14 @@
         "label": "List",
         "description": "Track and manage projects",
         "icon": "list",
-        "plate": 2
+        "plate": 2,
+        "highlighted": true
       },
       {
         "value": "workflow",
         "label": "Workflow",
         "description": "Automate everyday tasks",
-        "icon": "play",
+        "icon": "shortcut",
         "plate": 1
       },
       {

@@ -147,6 +147,16 @@
           "description": "For an item that shows or hides child items: the chevron turns and `aria-expanded` is set. The list renders the children. With `submenu`, whether the submenu is open (`aria-expanded` only; the submenu chevron stays)."
         },
         {
+          "name": "badge",
+          "type": "ReactNode",
+          "description": "An inline status or feature tag shown beside the item's primary name (e.g. a \"New\" badge)."
+        },
+        {
+          "name": "highlighted",
+          "type": "boolean",
+          "description": "Shows the pointer-hover highlight without moving keyboard focus, for static demonstrations of a hovered item."
+        },
+        {
           "name": "trailing",
           "type": "ReactNode",
           "description": "A trailing element: a Badge; for a `listitem` also an icon-only Button (remove, more). Never a control inside an option or menu item."
@@ -182,12 +192,17 @@
   ],
   "tokens": [
     "--border-thick",
+    "--c-list-item-checked-text",
     "--c-list-item-danger-text",
+    "--c-list-item-expanded-fill",
+    "--c-list-item-expanded-radius",
+    "--c-list-item-expanded-text",
     "--c-list-item-gap",
     "--c-list-item-hover-fill",
     "--c-list-item-hover-text",
     "--c-list-item-media",
     "--c-list-item-media-l",
+    "--c-list-item-name-weight",
     "--c-list-item-padding-block",
     "--c-list-item-padding-inline",
     "--c-list-item-plate",

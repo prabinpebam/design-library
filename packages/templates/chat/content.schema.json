@@ -1005,6 +1005,14 @@
     "MenuButtonItem": {
       "additionalProperties": false,
       "properties": {
+        "badge": {
+          "description": "Short feature or status tag shown beside the item's label (e.g. \"New\").",
+          "type": "string"
+        },
+        "checked": {
+          "description": "Marks a checkable menu choice (`menuitemcheckbox`): `true` shows a leading check, `false` reserves the check column.",
+          "type": "boolean"
+        },
         "description": {
           "description": "One short line under the name: what choosing it does or gives.",
           "type": "string"
@@ -1013,9 +1021,21 @@
           "$ref": "#/$defs/FlagCode",
           "description": "A country's flag before the name. Decorative."
         },
+        "heading": {
+          "description": "Optional caption heading rendered above this item's section.",
+          "type": "string"
+        },
+        "highlighted": {
+          "description": "Shows the pointer-hover highlight without moving keyboard focus.",
+          "type": "boolean"
+        },
         "icon": {
           "$ref": "#/$defs/IconName",
           "description": "A leading icon from the active set, for menus whose items are kinds of thing to make or do."
+        },
+        "inset": {
+          "description": "Keep the icon column empty so this item's words line up with siblings that have icons.",
+          "type": "boolean"
         },
         "items": {
           "description": "A submenu: the item shows a chevron and opens these choices beside it instead of being chosen. One level only.",
@@ -1027,6 +1047,10 @@
         },
         "label": {
           "description": "The item's name, in sentence case.",
+          "type": "string"
+        },
+        "meta": {
+          "description": "Short trailing words or a state qualifier before any submenu chevron.",
           "type": "string"
         },
         "plate": {
@@ -1052,6 +1076,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "shortcut": {
+          "description": "Keyboard shortcut shown at the end of the item (e.g. \"Ctrl+N\").",
+          "type": "string"
         },
         "startsGroup": {
           "description": "Starts a new group: a hairline across the menu sits above it.",

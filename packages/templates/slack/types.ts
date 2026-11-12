@@ -7,16 +7,19 @@ export type WorkspaceIcon =
   | 'arrow-start' | 'compose' | 'forward' | 'list-search' | 'hash-box' | 'bold' | 'italic' | 'underline'
   | 'strikethrough' | 'pilcrow' | 'link' | 'list-numbered' | 'list-bulleted' | 'code' | 'mic' | 'send'
   | 'chevron-down' | 'chevron-start' | 'chevron-end' | 'close' | 'minus' | 'menu' | 'scheme-dark' | 'text-format'
-  | 'emoji-add' | 'more-vertical' | 'caret-down' | 'globe';
+  | 'emoji-add' | 'more-vertical' | 'caret-down' | 'globe' | 'book' | 'arrow-end';
 
 export interface WorkspaceSubmenuItem {
   value: string;
   label: string;
   description?: string;
+  meta?: string;
   shortcut?: string;
   badge?: string;
+  inset?: boolean;
   checked?: boolean;
   heading?: string;
+  highlighted?: boolean;
   icon?: WorkspaceIcon;
   tone?: 'danger';
   startsGroup?: boolean;
@@ -188,6 +191,45 @@ export interface WorkspaceRecord {
     sayHi: string;
     teammates: { name: string; avatar: string; snooze?: boolean }[];
   };
+  slackbotView: {
+    workspaceInitials: string;
+    searchPlaceholder: string;
+    railLabel: string;
+    adminLabel: string;
+    sidebarTitle: string;
+    navItems: { id: string; label: string; icon: WorkspaceIcon }[];
+    starredTitle: string;
+    starredHintBefore: string;
+    starredHintEmoji: string;
+    starredHintAfter: string;
+    recentsTitle: string;
+    allConversations: string;
+    heroTitle: string;
+    promptPlaceholder: string;
+    disclaimer: string;
+    recommendedTitle: string;
+    prompts: { id: string; text: string; icon: WorkspaceIcon; tone: 'mint' | 'sky' }[];
+    bannerText: string;
+    bannerLink: string;
+  };
+  activityView: {
+    title: string;
+    countLabel: string;
+    unreadsLabel: string;
+    items: {
+      id: string;
+      context: string;
+      author: string;
+      avatar: string;
+      date: string;
+      mention?: string;
+      text: string;
+      unread?: boolean;
+      badge?: number;
+    }[];
+  };
+  createHeading: string;
+  filterMenu: WorkspaceMenuItem[];
   rail: { id: string; label: string; icon: WorkspaceIcon; mentions?: number }[];
   tabs: WorkspaceTabItem[];
   sections: { title?: string; collapsible?: boolean; dividerBefore?: boolean; items: WorkspaceChannelItem[] }[];

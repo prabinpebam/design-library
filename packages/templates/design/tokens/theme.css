@@ -65,6 +65,7 @@
     --c-list-item-radius: var(--radius-md);
     --c-list-item-hover-fill: var(--state-hover);
     --c-list-item-submenu-ink: var(--color-text-muted);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-plate-ink: var(--color-text);
     --c-ribbon-bg: var(--color-bg-raised);
     --c-ribbon-radius: var(--radius-md);
@@ -402,6 +403,7 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
@@ -458,6 +460,7 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
@@ -514,6 +517,7 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
@@ -570,6 +574,7 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
@@ -626,6 +631,7 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
@@ -679,6 +685,7 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
+    --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);

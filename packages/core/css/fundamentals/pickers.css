@@ -177,6 +177,17 @@
 
   [data-dl='menu-button'] > [data-dl-part='popup'] {
     min-inline-size: max(var(--popup-min-inline, 0px), var(--c-menu-button-list-min-width));
+    --popup-inline-offset: var(--c-popup-inline-offset);
+    --popup-submenu-offset: var(--c-popup-submenu-offset);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='popup'] [data-dl-part='menu-heading'] {
+    padding-inline: var(--c-list-item-padding-inline);
+    padding-block: var(--c-list-item-padding-block);
+    font-size: var(--type-heading-4-size);
+    line-height: var(--type-heading-4-leading);
+    font-weight: var(--c-menu-button-heading-weight);
+    color: var(--color-text);
   }
 
   /*
@@ -258,6 +269,29 @@
     background-color: var(--state-selected);
   }
 
+  [data-dl='list-item'][aria-haspopup='menu'][aria-expanded='true'] {
+    background-color: var(--c-list-item-expanded-fill);
+    color: var(--c-list-item-expanded-text);
+    border-radius: var(--c-list-item-expanded-radius);
+  }
+
+  [data-dl='list-item'][aria-haspopup='menu'][aria-expanded='true'] > :is([data-dl-part='item-meta'], [data-dl-part='item-submenu']) {
+    color: inherit;
+  }
+
+  [data-dl='list-item']:is([role='menuitemcheckbox'], [role='menuitemradio'])[aria-checked='true'] {
+    color: var(--c-list-item-checked-text);
+  }
+
+  [data-dl='list-item']:is([role='menuitemcheckbox'], [role='menuitemradio'])[aria-checked='true'] > [data-dl-part='item-words'] > [data-dl-part='item-description'] {
+    color: inherit;
+  }
+
+  [data-dl='list-item'][data-highlighted] {
+    background-color: var(--c-list-item-hover-fill);
+    color: var(--c-list-item-hover-text);
+  }
+
   /* With several chosen, the filled box is the one cue; a tint on every chosen row would only repeat it. */
   [data-dl='list-item']:has(> [data-dl-part='item-mark'][data-kind='box'])[aria-selected='true'] {
     background-color: transparent;
@@ -335,9 +369,12 @@
   }
 
   [data-dl='list-item'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
     font-size: var(--type-label-size);
     line-height: var(--type-label-leading);
-    font-weight: var(--type-label-weight);
+    font-weight: var(--c-list-item-name-weight);
   }
 
   [data-dl='list-item'] > [data-dl-part='item-words'] > [data-dl-part='item-description'] {

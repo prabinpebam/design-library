@@ -37,6 +37,7 @@
   "usedBy": [
     "Icon",
     "Rating",
+    "slack.Workspace",
     "word.Window"
   ],
   "principles": [

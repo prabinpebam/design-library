@@ -109,6 +109,7 @@
     "Heading"
   ],
   "tokens": [
+    "--c-popover-cross-offset",
     "--c-popover-gap",
     "--c-popover-offset",
     "--c-popover-padding",

@@ -1,4 +1,4 @@
-/** Slack workspace: started with design-library-new-template. */
+/** Slack workspace template entry: routes, shared content, assets, registry and stories. */
 import type { StoryFile } from '@design-library/core/components';
 import { loadTemplate } from '../load';
 import manifest from './template.json';

@@ -14,6 +14,7 @@
     inset: auto;
     inset-block-start: var(--anchored-y, 0px);
     inset-inline-start: var(--anchored-start, 0px);
+    --popover-cross-offset: var(--c-popover-cross-offset);
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -21,6 +22,7 @@
     gap: var(--c-popover-gap);
     inline-size: min(var(--c-popover-width), calc(100vw - 2 * var(--space-margin-page)));
     padding: var(--c-popover-padding);
+    overflow: visible;
     border: var(--c-popup-border-width) solid var(--c-popup-border);
     border-radius: var(--c-popup-radius);
     background-color: var(--material-floating-bg, var(--c-popup-bg));

@@ -16,7 +16,7 @@
  * Returns { rows: { ME1: { pass, findings, count }, … } }.
  */
 (function () {
-  const LAYOUTS = '[data-dl="site-layout"],[data-dl="app-layout"],[data-dl="chat-layout"],[data-dl="editor-layout"],[data-dl="library-layout"]';
+  const LAYOUTS = '[data-template],[data-dl="site-layout"],[data-dl="app-layout"],[data-dl="chat-layout"],[data-dl="editor-layout"],[data-dl="library-layout"]';
   const name = (el) => {
     const dl = el.getAttribute('data-dl');
     const part = el.getAttribute('data-dl-part');

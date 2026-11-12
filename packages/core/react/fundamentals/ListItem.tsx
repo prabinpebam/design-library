@@ -61,6 +61,10 @@ export interface ListItemProps extends DataAttributes {
   unread?: boolean;
   /** For an item that shows or hides child items: the chevron turns and `aria-expanded` is set. The list renders the children. With `submenu`, whether the submenu is open (`aria-expanded` only; the submenu chevron stays). */
   expanded?: boolean;
+  /** An inline status or feature tag shown beside the item's primary name (e.g. a "New" badge). */
+  badge?: ReactNode;
+  /** Shows the pointer-hover highlight without moving keyboard focus, for static demonstrations of a hovered item. */
+  highlighted?: boolean;
   /** A trailing element: a Badge; for a `listitem` also an icon-only Button (remove, more). Never a control inside an option or menu item. */
   trailing?: ReactNode;
   /** Needed for `aria-activedescendant`. */
@@ -126,6 +130,8 @@ export function ListItem({
   busy,
   unread,
   expanded,
+  badge,
+  highlighted,
   trailing,
   id,
   onClick,
@@ -172,6 +178,7 @@ export function ListItem({
       data-size={size === 'normal' ? undefined : size}
       data-tone={tone}
       data-active={active ? '' : undefined}
+      data-highlighted={highlighted ? '' : undefined}
       data-inactive={inactive ? '' : undefined}
       data-unread={unread ? '' : undefined}
       data-description={description && descriptionPosition === 'inline' ? 'inline' : undefined}
@@ -205,7 +212,8 @@ export function ListItem({
       {visual}
       <span data-dl-part="item-words" role={cell}>
         <span data-dl-part="item-name">
-          {label}
+          <span>{label}</span>
+          {badge && <span data-dl-part="item-badge">{badge}</span>}
           {unread && <span data-dl-part="item-announce">, unread</span>}
         </span>
         {description && <span data-dl-part="item-description">{description}</span>}

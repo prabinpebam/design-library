@@ -191,6 +191,7 @@
   "usedBy": [
     "Avatar",
     "AvatarGroup",
+    "MenuButton",
     "Persona",
     "Agenda",
     "Board",

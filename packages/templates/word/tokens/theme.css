@@ -103,6 +103,7 @@
     --c-tooltip-width: var(--size-pane-width);
     --c-popover-width: var(--size-pane-width);
     --c-list-item-submenu-ink: var(--color-text-muted);
+    --c-list-item-name-weight: var(--type-label-weight);
     --c-list-item-plate-ink: var(--color-text);
     --c-ribbon-bg: var(--color-bg-raised);
     --c-ribbon-separator: var(--color-border);

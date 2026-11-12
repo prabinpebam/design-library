@@ -135,7 +135,9 @@
         "emoji-add",
         "more-vertical",
         "caret-down",
-        "globe"
+        "globe",
+        "book",
+        "arrow-end"
       ],
       "type": "string"
     },
@@ -154,8 +156,14 @@
         "heading": {
           "type": "string"
         },
+        "highlighted": {
+          "type": "boolean"
+        },
         "icon": {
           "$ref": "#/$defs/WorkspaceIcon"
+        },
+        "inset": {
+          "type": "boolean"
         },
         "items": {
           "description": "A submenu opened beside the item.",
@@ -165,6 +173,9 @@
           "type": "array"
         },
         "label": {
+          "type": "string"
+        },
+        "meta": {
           "type": "string"
         },
         "plate": {
@@ -319,6 +330,71 @@
     "WorkspaceRecord": {
       "additionalProperties": false,
       "properties": {
+        "activityView": {
+          "additionalProperties": false,
+          "properties": {
+            "countLabel": {
+              "type": "string"
+            },
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "author": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "badge": {
+                    "type": "number"
+                  },
+                  "context": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "mention": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "unread": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "context",
+                  "author",
+                  "avatar",
+                  "date",
+                  "text"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "title": {
+              "type": "string"
+            },
+            "unreadsLabel": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "countLabel",
+            "unreadsLabel",
+            "items"
+          ],
+          "type": "object"
+        },
         "amaChannel": {
           "additionalProperties": false,
           "properties": {
@@ -384,6 +460,9 @@
             "type": "string"
           },
           "type": "object"
+        },
+        "createHeading": {
+          "type": "string"
         },
         "createMenu": {
           "items": {
@@ -551,6 +630,12 @@
             "handy"
           ],
           "type": "object"
+        },
+        "filterMenu": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
         },
         "huddlesView": {
           "additionalProperties": false,
@@ -765,6 +850,138 @@
             "type": "object"
           },
           "type": "array"
+        },
+        "slackbotView": {
+          "additionalProperties": false,
+          "properties": {
+            "adminLabel": {
+              "type": "string"
+            },
+            "allConversations": {
+              "type": "string"
+            },
+            "bannerLink": {
+              "type": "string"
+            },
+            "bannerText": {
+              "type": "string"
+            },
+            "disclaimer": {
+              "type": "string"
+            },
+            "heroTitle": {
+              "type": "string"
+            },
+            "navItems": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "icon": {
+                    "$ref": "#/$defs/WorkspaceIcon"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "icon"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "promptPlaceholder": {
+              "type": "string"
+            },
+            "prompts": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "icon": {
+                    "$ref": "#/$defs/WorkspaceIcon"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "tone": {
+                    "enum": [
+                      "mint",
+                      "sky"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "text",
+                  "icon",
+                  "tone"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "railLabel": {
+              "type": "string"
+            },
+            "recentsTitle": {
+              "type": "string"
+            },
+            "recommendedTitle": {
+              "type": "string"
+            },
+            "searchPlaceholder": {
+              "type": "string"
+            },
+            "sidebarTitle": {
+              "type": "string"
+            },
+            "starredHintAfter": {
+              "type": "string"
+            },
+            "starredHintBefore": {
+              "type": "string"
+            },
+            "starredHintEmoji": {
+              "type": "string"
+            },
+            "starredTitle": {
+              "type": "string"
+            },
+            "workspaceInitials": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "workspaceInitials",
+            "searchPlaceholder",
+            "railLabel",
+            "adminLabel",
+            "sidebarTitle",
+            "navItems",
+            "starredTitle",
+            "starredHintBefore",
+            "starredHintEmoji",
+            "starredHintAfter",
+            "recentsTitle",
+            "allConversations",
+            "heroTitle",
+            "promptPlaceholder",
+            "disclaimer",
+            "recommendedTitle",
+            "prompts",
+            "bannerText",
+            "bannerLink"
+          ],
+          "type": "object"
         },
         "tabs": {
           "items": {
@@ -1061,6 +1278,10 @@
         "huddlesView",
         "unreadsView",
         "welcomeBackView",
+        "slackbotView",
+        "activityView",
+        "createHeading",
+        "filterMenu",
         "rail",
         "tabs",
         "sections",
@@ -1090,10 +1311,19 @@
         "heading": {
           "type": "string"
         },
+        "highlighted": {
+          "type": "boolean"
+        },
         "icon": {
           "$ref": "#/$defs/WorkspaceIcon"
         },
+        "inset": {
+          "type": "boolean"
+        },
         "label": {
+          "type": "string"
+        },
+        "meta": {
           "type": "string"
         },
         "plate": {

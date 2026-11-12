@@ -330,6 +330,11 @@
       "$extensions": {
         "owner": "ListItem"
       },
+      "expanded-radius": {
+        "$type": "dimension",
+        "$value": "{c.list-item.radius}",
+        "$description": "Corner radius of an expanded submenu item's fill. (echoed for shape contexts)"
+      },
       "radius": {
         "$type": "dimension",
         "$value": "{radius.md}",

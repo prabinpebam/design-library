@@ -2,6 +2,7 @@ import type { ButtonSize } from './Button';
 import { Fragment, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { usePopup, type ListWidth } from '../behaviour/popup';
 import { useOverlayScroll } from '../behaviour/scroll';
+import { Badge } from './Badge';
 import { Flag, flagSrc, type FlagCode } from './Flag';
 import { Icon } from './Icon';
 import { Progress } from './Progress';
@@ -25,6 +26,20 @@ export interface MenuButtonItem {
   icon?: IconName;
   /** Sets `icon` on a round plate, neutral or tinted by a category 1-8 (ListItem `plate`). Decorative. */
   plate?: 'neutral' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  /** Keep the icon column empty so this item's words line up with siblings that have icons. */
+  inset?: boolean;
+  /** Short trailing words or a state qualifier before any submenu chevron. */
+  meta?: string;
+  /** Keyboard shortcut shown at the end of the item (e.g. "Ctrl+N"). */
+  shortcut?: string;
+  /** Short feature or status tag shown beside the item's label (e.g. "New"). */
+  badge?: string;
+  /** Marks a checkable menu choice (`menuitemcheckbox`): `true` shows a leading check, `false` reserves the check column. */
+  checked?: boolean;
+  /** Optional caption heading rendered above this item's section. */
+  heading?: string;
+  /** Shows the pointer-hover highlight without moving keyboard focus. */
+  highlighted?: boolean;
   /** `danger` for an item that destroys something (Delete). Its words carry the meaning; the colour repeats it. */
   tone?: 'danger';
   /** Starts a new group: a hairline across the menu sits above it. */
@@ -67,6 +82,12 @@ export interface MenuButtonProps extends DataAttributes {
   open?: boolean;
   /** Called when the menu asks to open or close in controlled mode. */
   onOpenChange?: (open: boolean) => void;
+  /** Optional visible heading rendered at the top of the popup menu (e.g. "Create"). */
+  heading?: string;
+  /** Placement axis relative to the trigger: `block` (default, below/above) or `inline` (beside a rail trigger). */
+  side?: 'block' | 'inline';
+  /** Controlled value of the item whose submenu is open; omit for uncontrolled hover/keyboard behaviour. */
+  openSubmenu?: string;
 }
 
 /**
@@ -93,7 +114,7 @@ export interface MenuButtonProps extends DataAttributes {
  * @key Arrow left (right in right-to-left) or Escape in a submenu: closes it and returns to its item
  * @key Escape: closes the menu and returns to the button
  */
-export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, open: controlledOpen, onOpenChange, ...data }: MenuButtonProps) {
+export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, open: controlledOpen, onOpenChange, heading, side = 'block', openSubmenu, ...data }: MenuButtonProps) {
   const id = useId();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const open = controlledOpen ?? uncontrolledOpen;
@@ -107,9 +128,15 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [focusOnOpen, setFocusOnOpen] = useState<'first' | 'last'>('first');
   const focusByKeyboard = useRef(false);
-  const [sub, setSub] = useState<number | null>(null);
+  const controlledSubIdx = openSubmenu !== undefined ? items.findIndex((it) => it.value === openSubmenu && it.items?.length) : -1;
+  const [uncontrolledSub, setUncontrolledSub] = useState<number | null>(null);
+  const sub = openSubmenu !== undefined ? (controlledSubIdx >= 0 ? controlledSubIdx : null) : uncontrolledSub;
+  const setSub = (next: number | null) => {
+    if (openSubmenu === undefined) setUncontrolledSub(next);
+  };
   const subMenu = useRef<HTMLDivElement>(null);
   const subAnchor = useRef<HTMLElement | null>(null);
+  if (sub !== null && itemRefs.current[sub]) subAnchor.current = itemRefs.current[sub];
   const subRefs = useRef<(HTMLDivElement | null)[]>([]);
   const subItems = sub === null ? [] : (items[sub]?.items ?? []);
 
@@ -140,8 +167,8 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
     setOpen(true);
   };
 
-  usePopup(open, trigger, menu, root, () => close(false));
-  usePopup(sub !== null, subAnchor, subMenu, root, () => setSub(null), 'inline');
+  usePopup(open, trigger, menu, root, () => close(false), side);
+  usePopup(open && sub !== null, subAnchor, subMenu, root, () => setSub(null), 'inline');
   const scroll = useOverlayScroll(undefined, open);
   const subScroll = useOverlayScroll(undefined, sub !== null);
   useEffect(() => {
@@ -242,22 +269,31 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
               if (items[i].items?.length) openSub(i, false);
               else setSub(null);
             }}>
+              {heading && <div data-dl-part="menu-heading" role="presentation">{heading}</div>}
               {items.map((item, i) => (
                 <Fragment key={item.value}>
                   {item.startsGroup && i > 0 && <div role="separator" data-dl-part="separator" />}
+                  {item.heading && <div data-dl-part="group-heading" role="presentation">{item.heading}</div>}
                   <ListItem
-                    role="menuitem"
+                    role={item.checked !== undefined ? 'menuitemcheckbox' : 'menuitem'}
+                    selected={item.checked}
                     label={item.label}
                     description={item.description}
                     preview={item.preview}
                     icon={item.icon}
                     plate={item.plate}
+                    inset={item.inset}
+                    meta={item.meta}
+                    shortcut={item.shortcut}
+                    badge={item.badge ? <Badge label={item.badge} tone="info" size="s" /> : undefined}
+                    highlighted={item.highlighted}
                     tone={item.tone}
                     submenu={!!item.items?.length}
                     expanded={item.items?.length ? sub === i : undefined}
                     thumbnail={item.flag && flagSrc(item.flag)}
                     itemRef={(el) => {
                       itemRefs.current[i] = el;
+                      if (sub === i && el) subAnchor.current = el;
                     }}
                     onClick={() => {
                       if (item.items?.length) return openSub(i, true);
@@ -273,19 +309,26 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
         </div>
       </div>
       {items.some((item) => item.items?.length) && (
-        <div ref={subMenu} data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={sub === null} inert={sub === null} onKeyDown={onSubKey}>
+        <div ref={subMenu} data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open || sub === null} inert={!open || sub === null} onKeyDown={onSubKey}>
           <div ref={subScroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
             <div ref={subScroll.setViewport} data-dl-part="viewport">
               <div data-dl-part="content" role="menu" aria-label={sub === null ? undefined : items[sub].label}>
                 {subItems.map((item, i) => (
                   <Fragment key={item.value}>
                     {item.startsGroup && i > 0 && <div role="separator" data-dl-part="separator" />}
+                    {item.heading && <div data-dl-part="group-heading" role="presentation">{item.heading}</div>}
                     <ListItem
-                      role="menuitem"
+                      role={item.checked !== undefined ? 'menuitemcheckbox' : 'menuitem'}
+                      selected={item.checked}
                       label={item.label}
                       description={item.description}
                       icon={item.icon}
                       plate={item.plate}
+                      inset={item.inset}
+                      meta={item.meta}
+                      shortcut={item.shortcut}
+                      badge={item.badge ? <Badge label={item.badge} tone="info" size="s" /> : undefined}
+                      highlighted={item.highlighted}
                       tone={item.tone}
                       itemRef={(el) => {
                         subRefs.current[i] = el;

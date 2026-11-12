@@ -9,11 +9,13 @@ import {
   EmptyState,
   Heading,
   Icon,
+  IconOverrides,
   Image,
   Link,
   MenuButton,
   Popover,
   ScrollArea,
+  Switch,
   Text,
   TextArea,
   TextField,
@@ -44,22 +46,29 @@ export interface WorkspaceProps extends DataAttributes {
 export function Workspace({ view, screen = 'channel', settings, picture, ...data }: WorkspaceProps) {
   const c = view.copy;
   const pic = (id?: string) => (id && picture ? picture(id) : { src: '', alt: '' });
-  type BrowsePage = 'channel' | 'directories' | 'huddles' | 'unreads' | 'welcome-back';
+  type BrowsePage = 'channel' | 'slackbot' | 'directories' | 'huddles' | 'unreads' | 'welcome-back';
   const pageFromScreen = (s: string): BrowsePage =>
-    s === 'directories' || s === 'huddles' || s === 'unreads' || s === 'welcome-back' ? s : 'channel';
+    s === 'slackbot' || s === 'directories' || s === 'huddles' || s === 'unreads' || s === 'welcome-back' ? s : 'channel';
   const isDualScreen = (s: string) =>
     s === 'directories' || s === 'huddles' || s === 'unreads' || s === 'welcome-back' || s === 'filter-menu' || s === 'create-menu' || s === 'activity';
+  const isAmaScreen = (s: string) =>
+    s === 'channel-menu' || s === 'filter-menu' || s === 'create-menu' || s === 'activity';
+  const hasNoPromo = (s: string) =>
+    s === 'channel-menu' || s === 'filter-menu' || s === 'create-menu';
 
   const [activePage, setActivePage] = useState<BrowsePage>(pageFromScreen(screen));
   const [dualRail, setDualRail] = useState(isDualScreen(screen));
-  const [welcomeDismissed, setWelcomeDismissed] = useState(false);
+  const [welcomeDismissed, setWelcomeDismissed] = useState(hasNoPromo(screen));
   const [huddlesHeroDismissed, setHuddlesHeroDismissed] = useState(false);
+  const [slackbotBannerDismissed, setSlackbotBannerDismissed] = useState(false);
+  const [slackbotNav, setSlackbotNav] = useState('new');
+  const [slackbotDraft, setSlackbotDraft] = useState('');
   const [dirTab, setDirTab] = useState('people');
   const [dirQuery, setDirQuery] = useState('');
   const [unreadsCollapsed, setUnreadsCollapsed] = useState(false);
 
   const [channel, setChannel] = useState(
-    screen === 'channel-menu' ? view.amaChannel.channel : typeof settings?.channel === 'string' ? settings.channel : view.channel,
+    isAmaScreen(screen) ? view.amaChannel.channel : typeof settings?.channel === 'string' ? settings.channel : view.channel,
   );
   const [thread, setThread] = useState<WorkspaceMessage | undefined>(screen === 'thread' ? view.messages[0] : undefined);
   const [tab, setTab] = useState(screen === 'files' ? 'files' : 'messages');
@@ -67,10 +76,14 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   const [vipOpen, setVipOpen] = useState(screen === 'vip-modal');
   const [vipSearch, setVipSearch] = useState('');
   const [channelMenuOpen, setChannelMenuOpen] = useState(screen === 'channel-menu');
+  const [filterMenuOpen, setFilterMenuOpen] = useState(screen === 'filter-menu');
+  const [createMenuOpen, setCreateMenuOpen] = useState(screen === 'create-menu');
+  const [activityOpen, setActivityOpen] = useState(screen === 'activity');
+  const [activityUnreadsOnly, setActivityUnreadsOnly] = useState(false);
   const [query, setQuery] = useState('');
   const [sidebarFilter, setSidebarFilter] = useState('');
   const [finding, setFinding] = useState(false);
-  const [vipDismissed, setVipDismissed] = useState(screen === 'channel-menu');
+  const [vipDismissed, setVipDismissed] = useState(hasNoPromo(screen));
   const [newBannerDismissed, setNewBannerDismissed] = useState(false);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [sent, setSent] = useState<Record<string, WorkspaceMessage[]>>({});
@@ -84,6 +97,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   const [formatting, setFormatting] = useState(true);
   const [alsoSend, setAlsoSend] = useState(false);
   const [narrow, setNarrow] = useState(false);
+  const [short, setShort] = useState(false);
 
   const timeline = useRef<HTMLDivElement>(null);
   const dirSearchWrap = useRef<HTMLDivElement>(null);
@@ -100,7 +114,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const observer = new ResizeObserver(([entry]) => setNarrow(entry.contentRect.width <= 640));
+    const observer = new ResizeObserver(([entry]) => {
+      setNarrow(entry.contentRect.width <= 640);
+      setShort(entry.contentRect.height <= 880);
+    });
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -113,10 +130,15 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     setSearch(screen === 'search');
     setVipOpen(screen === 'vip-modal');
     setChannelMenuOpen(screen === 'channel-menu');
-    setVipDismissed(screen === 'channel-menu');
-    if (screen === 'channel-menu') setChannel(view.amaChannel.channel);
+    setFilterMenuOpen(screen === 'filter-menu');
+    setCreateMenuOpen(screen === 'create-menu');
+    setActivityOpen(screen === 'activity');
+    setVipDismissed(hasNoPromo(screen));
+    setWelcomeDismissed(hasNoPromo(screen));
+    if (isAmaScreen(screen)) setChannel(view.amaChannel.channel);
     else if (typeof settings?.channel === 'string') setChannel(settings.channel);
-  }, [screen, settings?.channel, view.amaChannel.channel, view.messages]);
+    else setChannel(view.channel);
+  }, [screen, settings?.channel, view.amaChannel.channel, view.channel, view.messages]);
 
   useEffect(() => {
     if (activePage === 'directories') {
@@ -166,7 +188,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     const viewport = timeline.current;
     if (!viewport || search || tab !== 'messages') return;
     if (localSent.length > 0) viewport.scrollTop = viewport.scrollHeight;
-    else if (isAma) viewport.scrollTop = 54;
+    else if (isAma) viewport.scrollTop = 53;
     else viewport.scrollTop = 152;
   }, [localSent.length, channel, isAma, search, tab]);
 
@@ -336,15 +358,29 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               <div data-dl-part="group">
                 <span data-dl-part="add-circle">{action(c.add, 'plus')}</span>
                 <span data-dl-part="format-toggle" data-active={formatting || undefined}>
-                  <Button
-                    label={c.format}
-                    icon="text-format"
-                    iconOnly
-                    emphasis="quiet"
-                    tone="inherit"
-                    size="xs"
-                    onClick={() => setFormatting(!formatting)}
-                  />
+                  <IconOverrides
+                    icons={
+                      formatting
+                        ? {
+                            'text-format': {
+                              v: '0 0 24 24',
+                              g: { fill: 'none', stroke: 'currentColor', strokeWidth: '1.75', strokeLinecap: 'round', strokeLinejoin: 'round' },
+                              c: [['path', { d: 'M2.5 17.5L8 4.5l5.5 13M4.5 13h7M21 11.5v6M21 15a2.75 2.75 0 1 1-5.5 0 2.75 2.75 0 0 1 5.5 0zM2 21.5h20' }]],
+                            },
+                          }
+                        : {}
+                    }
+                  >
+                    <Button
+                      label={c.format}
+                      icon="text-format"
+                      iconOnly
+                      emphasis="quiet"
+                      tone="inherit"
+                      size="xs"
+                      onClick={() => setFormatting(!formatting)}
+                    />
+                  </IconOverrides>
                 </span>
                 {action(c.emoji, 'emoji')}
                 {action(c.mention, 'at')}
@@ -565,16 +601,35 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     return (
       <div data-dl="slack-directories">
         <header data-dl-part="dir-head" data-density="compact">
-          <Heading level={1} size={3}>
+          <Heading level={1} size={4}>
             {dv.title}
           </Heading>
-          <div data-dl-part="dir-tabs" role="navigation" aria-label={dv.title}>
-            {dv.tabs.map((t) => (
-              <span key={t.id} data-dl-part="dir-tab" data-current={dirTab === t.id || undefined}>
-                <Button label={t.label} icon={t.icon} size="xs" emphasis="quiet" tone="inherit" onClick={() => setDirTab(t.id)} />
-              </span>
-            ))}
-          </div>
+          <IconOverrides
+            icons={{
+              ...(dirTab === 'people'
+                ? {
+                    person: {
+                      v: '0 0 24 24',
+                      g: { fill: 'currentColor', stroke: 'currentColor', strokeWidth: '1.5', strokeLinecap: 'round', strokeLinejoin: 'round' },
+                      c: [['path', { d: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4.5 20.5c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5z' }]],
+                    },
+                  }
+                : {}),
+              inbox: {
+                v: '0 0 24 24',
+                g: { fill: 'none', stroke: 'currentColor', strokeWidth: '1.75', strokeLinecap: 'round', strokeLinejoin: 'round' },
+                c: [['path', { d: 'M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM3.5 7l8.5 6 8.5-6' }]],
+              },
+            }}
+          >
+            <div data-dl-part="dir-tabs" role="navigation" aria-label={dv.title}>
+              {dv.tabs.map((t) => (
+                <span key={t.id} data-dl-part="dir-tab" data-current={dirTab === t.id || undefined}>
+                  <Button label={t.label} icon={t.icon} size="xs" emphasis="quiet" tone="inherit" onClick={() => setDirTab(t.id)} />
+                </span>
+              ))}
+            </div>
+          </IconOverrides>
         </header>
         <ScrollArea label={dv.title}>
           <div data-dl="slack-directories-body">
@@ -592,7 +647,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     onChange={setDirQuery}
                   />
                 </div>
-                <Button label={dv.inviteLabel} />
+                <Button label={dv.inviteLabel} size="s" />
               </div>
               <div data-dl-part="dir-filters" data-density="compact">
                 <div data-dl-part="filter-pills">
@@ -616,7 +671,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 return (
                   <article key={p.name} data-dl="slack-person-card">
                     <div data-dl-part="portrait">
-                      {pPic.src && <Image src={pPic.src} alt={pPic.alt} ratio="natural" width={166} height={144} />}
+                      {pPic.src && <Image src={pPic.src} alt={pPic.alt} ratio="square" width={166} height={166} />}
                     </div>
                     <div data-dl-part="info">
                       <div data-dl-part="name-row">
@@ -639,11 +694,11 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     const hv = view.huddlesView;
     return (
       <div data-dl="slack-huddles">
-        <header data-dl-part="huddles-head">
-          <Heading level={1} size={3}>
+        <header data-dl-part="huddles-head" data-density="compact">
+          <Heading level={1} size={4}>
             {hv.title}
           </Heading>
-          <Button label={hv.newHuddle} icon="plus" size="s" />
+          <Button label={hv.newHuddle} icon="plus" size="xs" />
         </header>
         <ScrollArea label={hv.title}>
           <div data-dl="slack-huddles-body">
@@ -657,7 +712,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     <p data-dl-part="hero-copy">{hv.heroBody}</p>
                   </div>
                   <div data-dl-part="hero-cta">
-                    <Button label={hv.heroAction} icon="headphones" emphasis="primary" />
+                    <Button label={hv.heroAction} icon="headphones" emphasis="primary" size="s" />
                   </div>
                 </div>
                 {huddlesHeroPic.src && (
@@ -721,7 +776,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                       <span data-dl-part="ch-tile" aria-hidden="true">
                         <Icon name="hash" size="sm" />
                       </span>
-                      <strong>#{ch}</strong>
+                      <strong># {ch}</strong>
                     </div>
                   ))}
                 </div>
@@ -739,7 +794,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
       <div data-dl="slack-unreads">
         <header data-dl-part="unreads-head" data-density="compact">
           <div data-dl-part="unreads-title">
-            <Heading level={1} size={3}>
+            <Heading level={1} size={4}>
               {uv.title}
             </Heading>
             <span data-dl-part="mini-ws">{view.workspaceBadge}</span>
@@ -758,7 +813,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
         <div data-dl-part="channel-band" data-density="compact">
           <span data-dl-part="band-title">
             <Button
-              label={`#${uv.channel}`}
+              label={`# ${uv.channel}`}
               icon="caret-down"
               size="xs"
               emphasis="quiet"
@@ -790,115 +845,278 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
   const renderWelcomeBack = () => {
     const wv = view.welcomeBackView;
+    const outerScrolls = narrow || short;
+    const unreadsList = (
+      <div data-dl="slack-welcome-unreads-list">
+        {wv.unreadGroups.map((g) => (
+          <div key={g.date} data-dl="slack-welcome-date-group">
+            <div data-dl-part="date-band">{g.date}</div>
+            {g.items.map((it) => {
+              const itPic = pic(it.avatar);
+              return (
+                <div key={`${g.date}-${it.channel}`} data-dl="slack-welcome-msg-row">
+                  <div data-dl-part="msg-main">
+                    <div data-dl-part="msg-channel">
+                      <strong data-dl-part="unread-tag">Unread</strong>
+                      <span> in #{it.channel}</span>
+                    </div>
+                    <div data-dl-part="msg-content">
+                      <Avatar name={it.author} src={itPic.src || undefined} shape="square" size={32} decorative />
+                      <div data-dl-part="msg-words">
+                        <div data-dl-part="msg-byline">
+                          <strong>{it.author}</strong>
+                          <time>{it.time}</time>
+                        </div>
+                        <p>{it.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-dl-part="msg-action" data-density="compact">
+                    <Button
+                      label={wv.viewMessage}
+                      size="xs"
+                      onClick={() => {
+                        setActivePage('channel');
+                        setChannel(it.channel);
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    );
+
+    const welcomeBody = (
+      <div data-dl="slack-welcome-body">
+        <div data-dl-part="top-label">
+          <Heading level={1} size={4}>
+            {wv.title}
+          </Heading>
+        </div>
+        <div data-dl-part="hero">
+          {welcomeBubblePic.src && (
+            <div data-dl-part="hero-bubble">
+              <Image src={welcomeBubblePic.src} alt={welcomeBubblePic.alt} ratio="natural" width={99} height={69} rounded={false} />
+            </div>
+          )}
+          <strong data-dl-part="hero-title">{wv.heroTitle}</strong>
+        </div>
+
+        <section data-dl="slack-welcome-section" aria-label={wv.unreadHeading}>
+          <div data-dl-part="sec-head">
+            <strong>{wv.unreadHeading}</strong>
+            <p>{wv.unreadSubtitle}</p>
+          </div>
+          <div data-dl="slack-welcome-unreads-card">
+            {outerScrolls ? unreadsList : <ScrollArea label={wv.unreadHeading} mode="always">{unreadsList}</ScrollArea>}
+          </div>
+        </section>
+
+        <section data-dl="slack-welcome-section" aria-label={wv.teammatesHeading}>
+          <div data-dl-part="sec-head">
+            <strong>{wv.teammatesHeading}</strong>
+            <p>{wv.teammatesSubtitle}</p>
+          </div>
+          <div data-dl="slack-welcome-teammates">
+            {wv.teammates.map((tm) => {
+              const tmPic = pic(tm.avatar);
+              return (
+                <article key={tm.name} data-dl="slack-teammate-card">
+                  <div data-dl-part="tm-banner">
+                    {tmPic.src && <Image src={tmPic.src} alt={tmPic.alt} ratio="natural" width={383} height={175} />}
+                  </div>
+                  <div data-dl-part="tm-body">
+                    <div data-dl-part="tm-name">
+                      <strong>{tm.name}</strong>
+                      <span data-dl-part="presence-dot" data-state={tm.snooze ? 'snooze' : 'away'} aria-hidden="true" />
+                    </div>
+                    <div data-dl-part="tm-cta" data-density="compact">
+                      <Button label={wv.sayHi} size="xs" />
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    );
+
     return (
       <div data-dl="slack-welcome">
-        <ScrollArea label={wv.title}>
-          <div data-dl="slack-welcome-body">
-            <div data-dl-part="top-label">
-              <Heading level={1} size={4}>
-                {wv.title}
-              </Heading>
-            </div>
-            <div data-dl-part="hero">
-              {welcomeBubblePic.src && (
-                <div data-dl-part="hero-bubble">
-                  <Image src={welcomeBubblePic.src} alt={welcomeBubblePic.alt} ratio="natural" width={99} height={69} rounded={false} />
+        {outerScrolls ? <ScrollArea label={wv.title}>{welcomeBody}</ScrollArea> : welcomeBody}
+      </div>
+    );
+  };
+
+  const renderSlackbot = () => {
+    const sb = view.slackbotView;
+    const sbReady = Boolean(slackbotDraft.trim());
+    return (
+      <div data-dl="slack-slackbot">
+        <div data-dl-part="sb-top" data-density="compact">
+          {action(c.history, 'clock')}
+        </div>
+        <ScrollArea label={sb.sidebarTitle}>
+          <div data-dl="slack-slackbot-stage">
+            <div data-dl="slack-slackbot-center">
+              <div data-dl-part="sb-hero">
+                {botEmblem.src && (
+                  <span data-dl-part="sb-mark">
+                    <Image src={botEmblem.src} alt={botEmblem.alt} ratio="square" width={30} height={30} rounded={false} />
+                  </span>
+                )}
+                <Heading level={1} size={3}>
+                  {sb.heroTitle}
+                </Heading>
+              </div>
+
+              <div data-dl-part="sb-prompt-wrap">
+                <div data-dl="slack-slackbot-prompt">
+                  <TextArea
+                    label={sb.promptPlaceholder}
+                    hideLabel
+                    grow
+                    width="fill"
+                    rows={1}
+                    placeholder={sb.promptPlaceholder}
+                    value={slackbotDraft}
+                    onChange={setSlackbotDraft}
+                    onEnter={() => setSlackbotDraft('')}
+                    toolbar={
+                      <div data-dl="slack-tools">
+                        <div data-dl-part="group">
+                          <span data-dl-part="add-circle">{action(c.add, 'plus')}</span>
+                          {action(c.mention, 'at')}
+                        </div>
+                        <div data-dl-part="group">
+                          {action(c.audio, 'mic')}
+                          <Button
+                            label={c.send}
+                            icon="send"
+                            iconOnly
+                            size="xs"
+                            emphasis={sbReady ? 'primary' : 'quiet'}
+                            tone={sbReady ? undefined : 'inherit'}
+                            unavailable={!sbReady ? sb.promptPlaceholder : undefined}
+                            onClick={() => setSlackbotDraft('')}
+                          />
+                        </div>
+                      </div>
+                    }
+                  />
                 </div>
-              )}
-              <strong data-dl-part="hero-title">{wv.heroTitle}</strong>
+                <p data-dl-part="sb-disclaimer">{sb.disclaimer}</p>
+              </div>
+
+              <section data-dl="slack-slackbot-recommended" aria-label={sb.recommendedTitle}>
+                <div data-dl-part="rec-head">
+                  <strong>{sb.recommendedTitle}</strong>
+                  <Icon name="chevron-down" size="sm" />
+                </div>
+                <div data-dl-part="rec-grid">
+                  {sb.prompts.map((pr) => (
+                    <div key={pr.id} data-dl="slack-prompt-card" data-tone={pr.tone}>
+                      <span data-dl-part="prompt-chip" aria-hidden="true">
+                        <Icon name={pr.icon} size="sm" />
+                      </span>
+                      <Button
+                        label={pr.text}
+                        size="s"
+                        emphasis="quiet"
+                        tone="inherit"
+                        align="start"
+                        onClick={() => setSlackbotDraft(pr.text)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
             </div>
-
-            <section data-dl="slack-welcome-section" aria-label={wv.unreadHeading}>
-              <div data-dl-part="sec-head">
-                <strong>{wv.unreadHeading}</strong>
-                <p>{wv.unreadSubtitle}</p>
-              </div>
-              <div data-dl="slack-welcome-unreads-card">
-                <ScrollArea label={wv.unreadHeading} mode="always">
-                  <div data-dl="slack-welcome-unreads-list">
-                    {wv.unreadGroups.map((g) => (
-                      <div key={g.date} data-dl="slack-welcome-date-group">
-                        <div data-dl-part="date-band">{g.date}</div>
-                        {g.items.map((it) => {
-                          const itPic = pic(it.avatar);
-                          return (
-                            <div key={`${g.date}-${it.channel}`} data-dl="slack-welcome-msg-row">
-                              <div data-dl-part="msg-main">
-                                <div data-dl-part="msg-channel">
-                                  <strong data-dl-part="unread-tag">Unread</strong>
-                                  <span> in #{it.channel}</span>
-                                </div>
-                                <div data-dl-part="msg-content">
-                                  <Avatar name={it.author} src={itPic.src || undefined} shape="square" size={32} decorative />
-                                  <div data-dl-part="msg-words">
-                                    <div data-dl-part="msg-byline">
-                                      <strong>{it.author}</strong>
-                                      <time>{it.time}</time>
-                                    </div>
-                                    <p>{it.text}</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div data-dl-part="msg-action" data-density="compact">
-                                <Button
-                                  label={wv.viewMessage}
-                                  size="xs"
-                                  onClick={() => {
-                                    setActivePage('channel');
-                                    setChannel(it.channel);
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
-              </div>
-            </section>
-
-            <section data-dl="slack-welcome-section" aria-label={wv.teammatesHeading}>
-              <div data-dl-part="sec-head">
-                <strong>{wv.teammatesHeading}</strong>
-                <p>{wv.teammatesSubtitle}</p>
-              </div>
-              <div data-dl="slack-welcome-teammates">
-                {wv.teammates.map((tm) => {
-                  const tmPic = pic(tm.avatar);
-                  return (
-                    <article key={tm.name} data-dl="slack-teammate-card">
-                      <div data-dl-part="tm-banner">
-                        {tmPic.src && <Image src={tmPic.src} alt={tmPic.alt} ratio="natural" width={411} height={189} />}
-                      </div>
-                      <div data-dl-part="tm-body">
-                        <div data-dl-part="tm-name">
-                          <strong>{tm.name}</strong>
-                          <span data-dl-part="presence-dot" data-state={tm.snooze ? 'snooze' : 'away'} aria-hidden="true" />
-                        </div>
-                        <div data-dl-part="tm-cta" data-density="compact">
-                          <Button label={wv.sayHi} size="xs" />
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
           </div>
         </ScrollArea>
       </div>
     );
   };
 
+  const isSlackbot = activePage === 'slackbot';
+  const activityItems = view.activityView.items.filter((it) => !activityUnreadsOnly || it.unread || it.badge);
+
+  const renderActivityPopover = () => (
+    <div data-dl="slack-activity-panel">
+      <div data-dl-part="act-head">
+        <div data-dl-part="act-title">
+          <strong>{view.activityView.title}</strong>
+          <span data-dl-part="act-count">
+            <Icon name="at" size="sm" />
+            <span>{view.activityView.countLabel}</span>
+          </span>
+        </div>
+        <div data-dl-part="act-toggle">
+          <span>{view.activityView.unreadsLabel}</span>
+          <Switch
+            label={view.activityView.unreadsLabel}
+            hideLabel
+            size="s"
+            checked={activityUnreadsOnly}
+            onChange={setActivityUnreadsOnly}
+          />
+        </div>
+      </div>
+      <div data-dl-part="act-body">
+        <ScrollArea label={view.activityView.title} mode="always">
+          <div data-dl="slack-activity-list">
+            {activityItems.map((it) => {
+              const avPic = pic(it.avatar);
+              return (
+                <article key={it.id} data-dl="slack-activity-row" data-unread={it.unread || undefined}>
+                  <div data-dl-part="act-context">
+                    <Icon name="at" size="sm" />
+                    <span>{it.context}</span>
+                  </div>
+                  <div data-dl-part="act-main">
+                    <Avatar name={it.author} src={avPic.src || undefined} shape="square" size={36} decorative />
+                    <div data-dl-part="act-words">
+                      <div data-dl-part="act-byline">
+                        <strong>{it.author}</strong>
+                        <time>{it.date}</time>
+                      </div>
+                      <p data-dl-part="act-text">
+                        {it.mention && <span data-dl-part="act-mention">{it.mention}</span>}
+                        {it.mention ? ' ' : ''}
+                        <span>{it.text}</span>
+                      </p>
+                    </div>
+                    {it.badge && <span data-dl-part="act-badge">{it.badge}</span>}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </ScrollArea>
+      </div>
+    </div>
+  );
+
   return (
-    <div {...data} ref={root} data-dl="slack-workspace" data-dual-rail={dualRail || undefined} data-material="solid">
+    <div
+      {...data}
+      ref={root}
+      data-dl="slack-workspace"
+      data-dual-rail={dualRail || undefined}
+      data-slackbot={isSlackbot || undefined}
+      data-narrow={narrow || undefined}
+      data-short={short || undefined}
+      data-material="solid"
+    >
       <header data-dl-part="titlebar" data-density="compact">
         <div data-dl-part="left-chrome">
           <div data-dl-part="menu-group">
             {action(c.appMenu, 'menu')}
-            {action(c.toggleSidebar, 'sidebar', () => setDualRail(!dualRail))}
+            {!isSlackbot && action(c.toggleSidebar, 'sidebar', () => setDualRail(!dualRail))}
           </div>
           <div data-dl-part="history">
             {action(c.back, 'arrow-start', () => {
@@ -918,13 +1136,13 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 type="search"
                 icon="search"
                 size="xs"
-                placeholder={c.search}
+                placeholder={isSlackbot ? view.slackbotView.searchPlaceholder : c.search}
                 value={query}
                 onChange={setQuery}
               />
             ) : (
               <Button
-                label={c.search}
+                label={isSlackbot ? view.slackbotView.searchPlaceholder : c.search}
                 icon="search"
                 size="xs"
                 tone="inherit"
@@ -970,42 +1188,78 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
       <nav data-dl-part="rail" data-density="compact" aria-label={view.name}>
         {!dualRail && (
           <div data-dl-part="workspaces">
-            {view.workspaces.map((ws) => (
-              <div key={ws.id} data-dl-part="ws-tile" data-tone={ws.tone} data-current={ws.current || undefined}>
-                <span data-dl-part="ws-letters">{ws.initials}</span>
-                {ws.mentions && (
-                  <span data-dl-part="ws-badge">
-                    <Badge kind="count" emphasis="strong" tone="accent" count={ws.mentions} label={`${ws.mentions} ${c.mentions}`} size="s" />
-                  </span>
-                )}
+            {isSlackbot ? (
+              <div data-dl-part="ws-tile" data-tone="neutral">
+                <span data-dl-part="ws-letters">{view.slackbotView.workspaceInitials}</span>
               </div>
-            ))}
+            ) : (
+              view.workspaces.map((ws) => (
+                <div key={ws.id} data-dl-part="ws-tile" data-tone={ws.tone} data-current={ws.current || undefined}>
+                  <span data-dl-part="ws-letters">{ws.initials}</span>
+                  {ws.mentions && (
+                    <span data-dl-part="ws-badge">
+                      <Badge kind="count" emphasis="strong" tone="accent" count={ws.mentions} label={`${ws.mentions} ${c.mentions}`} size="s" />
+                    </span>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         )}
         <div data-dl-part="rail-items">
+          {isSlackbot && (
+            <div data-dl-part="rail-item" data-current data-slackbot-slot>
+              <span data-dl-part="rail-icon">
+                {botEmblem.src && <Image src={botEmblem.src} alt={botEmblem.alt} ratio="square" width={24} height={24} rounded={false} />}
+              </span>
+              <span data-dl-part="rail-label">{view.slackbotView.railLabel}</span>
+            </div>
+          )}
           {view.rail.map((r, i) => {
-            const railCount = r.id === 'activity' && (isAma || dualRail) ? view.amaChannel.activityMentions : r.mentions;
+            const railCount = isSlackbot
+              ? undefined
+              : r.id === 'activity' && (isAma || dualRail)
+                ? view.amaChannel.activityMentions
+                : r.mentions;
+            const currentSlot = !isSlackbot && (r.id === 'activity' && activityOpen ? true : i === 0 && !activityOpen);
             return (
-              <div data-dl-part="rail-item" data-current={i === 0 || undefined} key={r.id}>
-                <span data-dl-part="rail-icon">
-                  <Button
-                    label={r.label}
-                    icon={r.icon}
-                    iconOnly
-                    emphasis="quiet"
-                    tone="inherit"
-                    onClick={() => {
-                      if (r.id === 'files') {
-                        setActivePage('channel');
-                        setTab('files');
-                      } else {
-                        setActivePage('channel');
-                        setTab('messages');
-                        setSearch(false);
-                      }
-                    }}
-                  />
-                  {i === 0 && !dualRail && <span data-dl-part="home-dot" aria-hidden="true" />}
+              <div data-dl-part="rail-item" data-current={currentSlot || undefined} key={r.id}>
+                <span data-dl-part="rail-icon" data-activity-anchor={r.id === 'activity' || undefined}>
+                  {r.id === 'activity' ? (
+                    <Popover
+                      side="end"
+                      open={activityOpen}
+                      onOpenChange={setActivityOpen}
+                      trigger={{
+                        label: r.label,
+                        icon: r.icon,
+                        iconOnly: true,
+                        emphasis: 'quiet',
+                        tone: 'inherit',
+                      }}
+                    >
+                      {renderActivityPopover()}
+                    </Popover>
+                  ) : (
+                    <Button
+                      label={r.label}
+                      icon={r.icon}
+                      iconOnly
+                      emphasis="quiet"
+                      tone="inherit"
+                      onClick={() => {
+                        if (r.id === 'files') {
+                          setActivePage('channel');
+                          setTab('files');
+                        } else {
+                          setActivePage('channel');
+                          setTab('messages');
+                          setSearch(false);
+                        }
+                      }}
+                    />
+                  )}
+                  {i === 0 && !dualRail && !isSlackbot && <span data-dl-part="home-dot" aria-hidden="true" />}
                   {railCount && (
                     <span data-dl-part="rail-badge">
                       <Badge kind="count" emphasis="strong" tone="accent" count={railCount} label={`${railCount} ${c.mentions}`} size="s" />
@@ -1016,18 +1270,37 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               </div>
             );
           })}
+          {isSlackbot && (
+            <div data-dl-part="rail-item">
+              <span data-dl-part="rail-icon">
+                <Button
+                  label={view.slackbotView.adminLabel}
+                  icon="settings"
+                  iconOnly
+                  emphasis="quiet"
+                  tone="inherit"
+                />
+              </span>
+              <span data-dl-part="rail-label">{view.slackbotView.adminLabel}</span>
+            </div>
+          )}
         </div>
         <div data-dl-part="rail-bottom">
-          <span data-dl-part="rail-circle">
+          <span data-dl-part="rail-circle" data-open={createMenuOpen || undefined}>
             <MenuButton
               label={c.createMenu}
-              icon="plus"
+              icon={createMenuOpen ? 'close' : 'plus'}
               iconOnly
               emphasis="quiet"
               tone="inherit"
               size="s"
+              side="inline"
+              heading={view.createHeading}
+              open={createMenuOpen}
+              onOpenChange={setCreateMenuOpen}
               items={view.createMenu}
               onSelect={(value) => {
+                setCreateMenuOpen(false);
                 if (value === 'channel') setCreating(true);
               }}
             />
@@ -1041,20 +1314,90 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
         </div>
       </nav>
 
-      <div data-dl-part="window">
-        <aside data-dl-part="sidebar" data-density="compact" aria-label={view.name}>
+      <div data-dl-part="window" data-has-banner={(isSlackbot && !slackbotBannerDismissed) || undefined}>
+        <aside data-dl-part="sidebar" data-density="compact" aria-label={isSlackbot ? view.slackbotView.sidebarTitle : view.name}>
           <div data-dl-part="workspace-head">
             <strong data-dl-part="workspace-name">
-              <span>{view.name}</span>
-              <Icon name="chevron-down" size="sm" />
+              <span>{isSlackbot ? view.slackbotView.sidebarTitle : view.name}</span>
+              {!isSlackbot && <Icon name="chevron-down" size="sm" />}
             </strong>
             <span data-dl-part="head-actions">
-              {action(c.sidebarSettings, 'settings')}
+              {!isSlackbot && (
+                <MenuButton
+                  label={c.sidebarSettings}
+                  icon="settings"
+                  iconOnly
+                  emphasis="quiet"
+                  tone="inherit"
+                  size="xs"
+                  items={view.filterMenu}
+                  open={filterMenuOpen}
+                  onOpenChange={setFilterMenuOpen}
+                  openSubmenu={filterMenuOpen ? 'filter-sort' : undefined}
+                  onSelect={() => setFilterMenuOpen(false)}
+                />
+              )}
               {action(c.compose, 'compose')}
             </span>
           </div>
 
-          <ScrollArea label={view.name}>
+          <ScrollArea label={isSlackbot ? view.slackbotView.sidebarTitle : view.name}>
+            {isSlackbot ? (
+              <div data-dl="slack-sidebar-content">
+                <section data-dl="slack-nav-section" aria-label={view.slackbotView.sidebarTitle}>
+                  <div data-dl-part="rows">
+                    {view.slackbotView.navItems.map((navIt) => (
+                      <div
+                        key={navIt.id}
+                        data-dl-part="row"
+                        data-current={slackbotNav === navIt.id || undefined}
+                        data-was-unread={slackbotNav === navIt.id || undefined}
+                      >
+                        <Button
+                          label={navIt.label}
+                          icon={navIt.icon}
+                          size="xs"
+                          emphasis="quiet"
+                          align="start"
+                          tone="inherit"
+                          onClick={() => setSlackbotNav(navIt.id)}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+                <section data-dl="slack-nav-section" data-divider aria-label={view.slackbotView.starredTitle}>
+                  <div data-dl-part="section-title">
+                    <Icon name="caret-down" size="sm" />
+                    <span>{view.slackbotView.starredTitle}</span>
+                  </div>
+                  <p data-dl-part="section-hint">
+                    <span>{view.slackbotView.starredHintBefore}</span>
+                    <span>{view.slackbotView.starredHintEmoji}</span>
+                    <span>{view.slackbotView.starredHintAfter}</span>
+                  </p>
+                </section>
+                <section data-dl="slack-nav-section" aria-label={view.slackbotView.recentsTitle}>
+                  <div data-dl-part="section-title">
+                    <Icon name="caret-down" size="sm" />
+                    <span>{view.slackbotView.recentsTitle}</span>
+                  </div>
+                  <div data-dl-part="rows">
+                    <div data-dl-part="row">
+                      <Button
+                        label={view.slackbotView.allConversations}
+                        icon="clock"
+                        size="xs"
+                        emphasis="quiet"
+                        align="start"
+                        tone="inherit"
+                      />
+                    </div>
+                  </div>
+                </section>
+              </div>
+            ) : (
+              <>
             {dualRail && !welcomeDismissed && (
               <div data-dl="slack-welcome-card" data-active={activePage === 'welcome-back' || undefined}>
                 <div data-dl-part="welcome-top">
@@ -1199,15 +1542,21 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 </section>
               ))}
             </div>
+              </>
+            )}
           </ScrollArea>
 
-          <div data-dl-part="more-unreads" data-elevation="3">
-            <Button label={view.moreUnreadsLabel} size="xs" emphasis="quiet" tone="inherit" />
-          </div>
+          {!isSlackbot && (
+            <div data-dl-part="more-unreads" data-elevation="3">
+              <Button label={view.moreUnreadsLabel} size="xs" emphasis="quiet" tone="inherit" />
+            </div>
+          )}
         </aside>
 
         <main data-dl-part="conversation" data-page={activePage !== 'channel' ? activePage : undefined}>
-          {activePage === 'directories' ? (
+          {activePage === 'slackbot' ? (
+            renderSlackbot()
+          ) : activePage === 'directories' ? (
             renderDirectories()
           ) : activePage === 'huddles' ? (
             renderHuddles()
@@ -1396,6 +1745,17 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             </ScrollArea>
             <div data-dl="slack-composer-wrap">{composer(`thread-${thread.id}`, true)}</div>
           </aside>
+        )}
+        {isSlackbot && !slackbotBannerDismissed && (
+          <div data-dl-part="org-banner" data-density="compact">
+            <p data-dl-part="banner-copy">
+              <span>{view.slackbotView.bannerText} </span>
+              <Link href="#/app/slack/slackbot">{view.slackbotView.bannerLink}</Link>
+            </p>
+            <span data-dl-part="banner-close">
+              {action(c.dismissBanner, 'close', () => setSlackbotBannerDismissed(true))}
+            </span>
+          </div>
         )}
       </div>
 

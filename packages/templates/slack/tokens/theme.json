@@ -28,6 +28,14 @@
   "$value": "1.125rem",
   "$description": "Channel heading 18 px."
  },
+ "type.heading-3.size": {
+  "$value": "1.375rem",
+  "$description": "Owner benchmark 01/02/09: hero and modal headings 22 CSS px (15 PNG)."
+ },
+ "type.heading-3.weight": {
+  "$value": "{weight.black}",
+  "$description": "Owner benchmark 01/02/09: hero and modal headings Lato 800."
+ },
  "type.body-sm.size": {
   "$value": "{text.m}",
   "$description": "Sidebar rows: 15 px r02/r05 even in compact chrome."
@@ -212,6 +220,10 @@
   "$value": "#ffffff",
   "$description": "Glyph on the action-green fill: white in r02/r20; the fill does not change with the scheme, so neither does its glyph."
  },
+ "color.map.button-ring": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Owner benchmark 09 S09.2: primary green buttons stay flat with no contrasting inner ring."
+ },
  "radius.sm": {
   "$value": "0.28125rem",
   "$description": "One shape scale (CX3): the small radius is the selected row and control radius, measured 4.5 px on r05 at 4x (the 110 px row's corner: 14 px in on its first line, flush by line 14, an 18 px circle)."
@@ -256,93 +268,121 @@
   "$value": "0.9375rem",
   "$description": "Owner benchmark 04 S04.3: compact submenu chevron (8x12 CSS ink)."
  },
+ "c.list-item.expanded-fill": {
+  "$value": "#1264a3",
+  "$description": "Owner benchmark 05 S05.1: active parent submenu row fills #1264A3."
+ },
+ "c.list-item.expanded-text": {
+  "$value": "#ffffff",
+  "$description": "Owner benchmark 05 S05.1: active parent submenu row white label, meta and chevron."
+ },
+ "c.list-item.expanded-radius": {
+  "$value": "{radius.sm}",
+  "$description": "Owner benchmark 05 S05.1: 4 PNG / 6 CSS corner radius on expanded submenu row."
+ },
+ "c.list-item.checked-text": {
+  "$value": "{color.text-link}",
+  "$description": "Owner benchmark 05 S05.2: checked submenu rows render in #1264A3."
+ },
+ "c.menu-button.heading-weight": {
+  "$value": "{weight.black}",
+  "$description": "Owner benchmark 06 S06.2: Create menu top heading Lato 800."
+ },
+ "c.popup.submenu-offset": {
+  "$value": "-0.9375rem",
+  "$description": "Owner benchmark 05 S05.2: cascading submenu overlaps parent right edge by 10 PNG (15 CSS px)."
+ },
+ "c.popup.height": {
+  "$value": "32rem",
+  "$description": "Owner benchmark 05/06: full desktop menus up to 286 PNG = 429 CSS px render without clipping."
+ },
  "c.list-item.plate": {
-  "$value": "2.5rem",
-  "$description": "Region 25: the Create menu's icon circles are 74 px across in g-create-01-f70 (Create menu, drawn at about 1.87x), so 40 px."
+  "$value": "2.25rem",
+  "$description": "Owner benchmark 06 S06.2: Create menu circular icon plates are 24x24 PNG = 36x36 CSS px."
  },
  "c.list-item.plate-fill": {
   "$value": {
-   "light": "#f2f3f4",
+   "light": "#eaeaea",
    "dark": "#35373b"
   },
-  "$description": "Region 25: List and Channel sit on a grey circle, #F2F3F4 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional (no reference)."
+  "$description": "Owner benchmark 06 S06.2: Channel neutral grey plate #EAEAEA; dark provisional."
  },
  "c.list-item.plate-ink": {
   "$value": {
-   "light": "#403f40",
+   "light": "#1d1c1d",
    "dark": "#d1d2d3"
   },
-  "$description": "Region 25: the grey circles' glyph core #403F40 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+  "$description": "Owner benchmark 06 S06.2: Channel plate dark glyph; dark provisional."
  },
  "c.list-item.plate-fill-5": {
   "$value": {
-   "light": "#c3f5df",
+   "light": "#c3f6e0",
    "dark": "color-mix(in oklab, #2bac76 24%, transparent)"
   },
-  "$description": "Region 25: Huddle's green circle #C3F5DF in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+  "$description": "Owner benchmark 06 S06.2: Huddle mint plate #C3F6E0; dark provisional."
  },
  "c.list-item.plate-ink-5": {
   "$value": {
    "light": "#196a42",
    "dark": "#5fd3a0"
   },
-  "$description": "Region 25: Huddle's headphones, glyph core #196A42 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+  "$description": "Owner benchmark 06 S06.2: Huddle headphones ink #196A42; dark provisional."
  },
  "c.list-item.plate-fill-3": {
   "$value": {
-   "light": "#c5f6f7",
+   "light": "#c2e6fd",
    "dark": "color-mix(in oklab, #36c5f0 24%, transparent)"
   },
-  "$description": "Region 25: Canvas's cyan circle #C5F6F7 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+  "$description": "Owner benchmark 06 S06.2: Canvas sky plate #C2E6FD; dark provisional."
  },
  "c.list-item.plate-ink-3": {
   "$value": {
-   "light": "#0c5767",
+   "light": "#1264a3",
    "dark": "#7fdcf2"
   },
-  "$description": "Owner benchmark 06: Canvas cyan plate ink #0C5767."
+  "$description": "Owner benchmark 06 S06.2: Canvas sky plate ink #1264A3."
  },
  "c.list-item.plate-fill-7": {
   "$value": {
-   "light": "#f4e8fb",
+   "light": "#f6e4ff",
    "dark": "color-mix(in oklab, #9b51e0 24%, transparent)"
   },
-  "$description": "Owner benchmark 06: Message lilac plate fill."
+  "$description": "Owner benchmark 06 S06.2: Message lilac plate fill #F6E4FF."
  },
  "c.list-item.plate-ink-7": {
   "$value": {
-   "light": "#78298c",
+   "light": "#611f69",
    "dark": "#e0b0ff"
   },
-  "$description": "Owner benchmark 06: Message lilac plate ink."
+  "$description": "Owner benchmark 06 S06.2: Message lilac plate ink."
  },
  "c.list-item.plate-fill-2": {
   "$value": {
-   "light": "#efe2b8",
-   "dark": "color-mix(in oklab, #c79a2b 24%, transparent)"
+   "light": "#8e5b00",
+   "dark": "#8e5b00"
   },
-  "$description": "Owner benchmark 06: List warm gold/olive plate fill."
+  "$description": "Owner benchmark 06 S06.2: List solid ochre plate fill #8E5B00."
  },
  "c.list-item.plate-ink-2": {
   "$value": {
-   "light": "#6e5111",
-   "dark": "#f2d479"
+   "light": "#ffffff",
+   "dark": "#ffffff"
   },
-  "$description": "Owner benchmark 06: List plate ink."
+  "$description": "Owner benchmark 06 S06.2: List plate white icon #FFFFFF."
  },
  "c.list-item.plate-fill-1": {
   "$value": {
-   "light": "#fde2e4",
+   "light": "#ffd6d5",
    "dark": "color-mix(in oklab, #e01e5a 24%, transparent)"
   },
-  "$description": "Owner benchmark 06: Workflow coral plate fill."
+  "$description": "Owner benchmark 06 S06.2: Workflow soft coral plate fill #FFD6D5."
  },
  "c.list-item.plate-ink-1": {
   "$value": {
-   "light": "#b4233b",
+   "light": "#9e1c2e",
    "dark": "#ff9eb0"
   },
-  "$description": "Owner benchmark 06: Workflow coral plate ink."
+  "$description": "Owner benchmark 06 S06.2: Workflow coral plate ink."
  },
  "c.popup.gap": {
   "$value": "0",
@@ -414,8 +454,8 @@
   "$description": "Owner benchmark 02 S02.3: top-right close button sits 16 CSS px from the modal top."
  },
  "c.dialog.heading-padding-top": {
-  "$value": "2rem",
-  "$description": "Owner benchmark 02 S02.3: modal heading starts at y=242 PNG below the top-right close button."
+  "$value": "2.5rem",
+  "$description": "Owner benchmark 02 S02.3: modal heading starts at y=247 PNG below the top-right close button."
  },
  "c.dialog.footer-border-width": {
   "$value": "{border.hairline}",
@@ -466,5 +506,12 @@
    "dark": "#192d22"
   },
   "$description": "Owner benchmark 09 S09.2: Huddles mint hero surface #E9FFEC."
+ },
+ "color.category.4": {
+  "$value": {
+   "light": "#fcf4c7",
+   "dark": "#473b14"
+  },
+  "$description": "Owner benchmark 07 S07.2: @channel broadcast mention badge highlight #FCF4C7."
  }
 }

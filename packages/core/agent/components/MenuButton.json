@@ -142,6 +142,22 @@
           "name": "onOpenChange",
           "type": "(open: boolean) => void",
           "description": "Called when the menu asks to open or close in controlled mode."
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "description": "Optional visible heading rendered at the top of the popup menu (e.g. \"Create\")."
+        },
+        {
+          "name": "side",
+          "type": "'block' | 'inline'",
+          "default": "'block'",
+          "description": "Placement axis relative to the trigger: `block` (default, below/above) or `inline` (beside a rail trigger)."
+        },
+        {
+          "name": "openSubmenu",
+          "type": "string",
+          "description": "Controlled value of the item whose submenu is open; omit for uncontrolled hover/keyboard behaviour."
         }
       ]
     },
@@ -185,6 +201,41 @@
           "description": "Sets `icon` on a round plate, neutral or tinted by a category 1-8 (ListItem `plate`). Decorative."
         },
         {
+          "name": "inset",
+          "type": "boolean",
+          "description": "Keep the icon column empty so this item's words line up with siblings that have icons."
+        },
+        {
+          "name": "meta",
+          "type": "string",
+          "description": "Short trailing words or a state qualifier before any submenu chevron."
+        },
+        {
+          "name": "shortcut",
+          "type": "string",
+          "description": "Keyboard shortcut shown at the end of the item (e.g. \"Ctrl+N\")."
+        },
+        {
+          "name": "badge",
+          "type": "string",
+          "description": "Short feature or status tag shown beside the item's label (e.g. \"New\")."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "description": "Marks a checkable menu choice (`menuitemcheckbox`): `true` shows a leading check, `false` reserves the check column."
+        },
+        {
+          "name": "heading",
+          "type": "string",
+          "description": "Optional caption heading rendered above this item's section."
+        },
+        {
+          "name": "highlighted",
+          "type": "boolean",
+          "description": "Shows the pointer-hover highlight without moving keyboard focus."
+        },
+        {
           "name": "tone",
           "type": "'danger'",
           "description": "`danger` for an item that destroys something (Delete). Its words carry the meaning; the colour repeats it."
@@ -203,6 +254,7 @@
     }
   ],
   "uses": [
+    "Badge",
     "Button",
     "Flag",
     "Icon",
@@ -215,11 +267,14 @@
     "--c-button-group-focus-layer",
     "--c-field-border-width",
     "--c-field-size-xs",
+    "--c-list-item-padding-block",
+    "--c-list-item-padding-inline",
     "--c-menu-button-border",
     "--c-menu-button-border-width",
     "--c-menu-button-expanded-fill",
     "--c-menu-button-fill",
     "--c-menu-button-gap",
+    "--c-menu-button-heading-weight",
     "--c-menu-button-list-min-width",
     "--c-menu-button-padding-block",
     "--c-menu-button-padding-inline",
@@ -236,11 +291,13 @@
     "--c-popup-border",
     "--c-popup-border-width",
     "--c-popup-height",
+    "--c-popup-inline-offset",
     "--c-popup-inset",
     "--c-popup-layer",
     "--c-popup-offset",
     "--c-popup-radius",
     "--c-popup-shadow",
+    "--c-popup-submenu-offset",
     "--c-popup-width",
     "--color-border",
     "--color-map-action-fill",
@@ -257,6 +314,7 @@
     "--state-pressed",
     "--type-body-sm-size",
     "--type-heading-3-size",
+    "--type-heading-4-leading",
     "--type-heading-4-size",
     "--type-label-leading",
     "--type-label-size",

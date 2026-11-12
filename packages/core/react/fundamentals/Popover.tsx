@@ -67,7 +67,7 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
   useLayoutEffect(() => {
     anchor.current = root.current?.querySelector<HTMLElement>(':scope > button, :scope > [data-dl="button"] button, :scope > :first-child') ?? null;
   });
-  useAnchored(open, anchor, surface, side, '--c-popover-offset', 'start');
+  useAnchored(open, anchor, surface, side, '--c-popover-offset', 'start', '--c-popover-cross-offset');
 
   useEffect(() => {
     const el = surface.current;

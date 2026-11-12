@@ -130,6 +130,9 @@ export function Avatar({
           {letters ? <span data-dl-part="initials">{letters}</span> : <Icon name={kindIcon[kind]} />}
           {src && failed !== src && (
             <img
+              ref={(el) => {
+                if (el && el.complete && el.naturalWidth > 0 && loaded !== src) setLoaded(src);
+              }}
               src={src}
               alt=""
               data-loaded={loaded === src ? '' : undefined}

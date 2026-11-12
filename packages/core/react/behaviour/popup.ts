@@ -6,14 +6,15 @@
  * Its width fits its content, snapped up to the next width step (Q130, docs/widths.md), unless pinned with `data-width`.
  */
 import { useEffect, type RefObject } from 'react';
+import { cssPixels } from './anchor';
 
 /** Where a popup goes for an anchor rectangle, in pixels from the viewport's start and top edges. Pure. */
-export function placePopup(anchor: { top: number; bottom: number; left: number; right: number }, popup: { width: number; height: number }, viewport: { width: number; height: number }, rtl = false) {
+export function placePopup(anchor: { top: number; bottom: number; left: number; right: number }, popup: { width: number; height: number }, viewport: { width: number; height: number }, rtl = false, inlineOffset = 0) {
   const below = viewport.height - anchor.bottom;
   const above = anchor.top;
   const flip = popup.height > below && above > below;
-  const rawStart = rtl ? viewport.width - anchor.right : anchor.left;
-  const endAligned = rtl ? viewport.width - anchor.left - popup.width : anchor.right - popup.width;
+  const rawStart = (rtl ? viewport.width - anchor.right : anchor.left) + inlineOffset;
+  const endAligned = (rtl ? viewport.width - anchor.left - popup.width : anchor.right - popup.width) + inlineOffset;
   const preferred = rawStart + popup.width > viewport.width ? endAligned : rawStart;
   return { placement: flip ? ('above' as const) : ('below' as const), edge: flip ? anchor.top : anchor.bottom, room: flip ? above : below, start: Math.max(0, Math.min(preferred, viewport.width - popup.width)) };
 }
@@ -64,14 +65,16 @@ export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, p
       const r = anchor.current.getBoundingClientRect();
       const doc = document.documentElement;
       if (side === 'inline') {
-        // A submenu: beside its item, at the end side, or the start side when the end has no room; top-aligned with it, kept inside the window.
+        // A submenu or side menu: beside its item, at the end side, or the start side when the end has no room; top-aligned with it, kept inside the window.
         const rtl = getComputedStyle(anchor.current).direction === 'rtl';
         const w = el.offsetWidth;
         const h = el.offsetHeight;
+        const subOffset = cssPixels(el, '--c-popup-submenu-offset');
         const endRoom = rtl ? r.left : doc.clientWidth - r.right;
-        const atEnd = endRoom >= w || endRoom >= (rtl ? doc.clientWidth - r.right : r.left);
-        const left = atEnd !== rtl ? r.right : r.left - w;
-        const edge = Math.max(0, Math.min(r.top, doc.clientHeight - h));
+        const atEnd = endRoom >= w + subOffset || endRoom >= (rtl ? doc.clientWidth - r.right : r.left);
+        const left = atEnd !== rtl ? r.right + subOffset : r.left - w - subOffset;
+        const bottomMargin = 6;
+        const edge = Math.max(0, Math.min(r.top, doc.clientHeight - h - bottomMargin));
         el.dataset.placement = 'beside';
         el.style.setProperty('--popup-min-inline', '0px');
         el.style.setProperty('--popup-edge', `${edge}px`);
@@ -83,7 +86,8 @@ export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, p
       // The list's whole height, not the height it's capped to, so a capped list still flips to the roomier side.
       const list = el.querySelector<HTMLElement>("[data-dl-part='content']");
       const natural = Math.max(el.offsetHeight, list?.offsetHeight ?? 0);
-      const p = placePopup(r, { width: el.offsetWidth, height: natural }, { width: doc.clientWidth, height: doc.clientHeight }, getComputedStyle(anchor.current).direction === 'rtl');
+      const inlineOffset = cssPixels(el, '--c-popup-inline-offset');
+      const p = placePopup(r, { width: el.offsetWidth, height: natural }, { width: doc.clientWidth, height: doc.clientHeight }, getComputedStyle(anchor.current).direction === 'rtl', inlineOffset);
       el.dataset.placement = p.placement;
       el.style.setProperty('--popup-edge', `${p.edge}px`);
       el.style.setProperty('--popup-start', `${p.start}px`);

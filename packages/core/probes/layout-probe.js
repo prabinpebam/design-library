@@ -97,8 +97,9 @@
       if (/flex/.test(cs.display) && cs.flexWrap === 'wrap-reverse') fail('LY3', { where: name(el), flexWrap: cs.flexWrap });
     }
 
-    // LY4 sticky and fixed bars at the top of a scroller.
+    // LY4 sticky and fixed bars at the top of a scroller. Top-layer overlays (modal dialogs, popovers) are not scroller bars.
     for (const el of all) {
+      if (el.closest('dialog, [popover], [role="dialog"]')) continue;
       const cs = getComputedStyle(el);
       if (cs.position !== 'sticky' && cs.position !== 'fixed') continue;
       if (cs.top === 'auto') continue;

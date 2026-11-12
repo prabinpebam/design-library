@@ -1066,7 +1066,7 @@ applySettings({
     section: 'foundations',
     title: 'Routing',
     summary: 'One small router for sites: hash or history routes, in-page links that keep the route, focus and an announcement on every page change, and Back that returns to where you were. The site decides what each path shows.',
-    source: { label: 'The plan: data-driven sites', href: docsHref('improvement-plan.md') },
+    source: { label: 'The plan: data-driven sites', href: docsHref('archive/improvement-plan.md') },
     blocks: [
       {
         heading: 'The rules',

@@ -205,9 +205,12 @@
   --c-menu-button-list-min-width: 0px;
   --c-menu-button-padding-block: var(--c-popup-inset);
   --c-menu-button-separator-margin: 0px;
+  --c-menu-button-heading-weight: var(--weight-bold);
   --c-popup-inset: var(--space-inset-xs);
   --c-popup-gap: var(--space-stack-row);
   --c-popup-offset: var(--space-stack-pair);
+  --c-popup-inline-offset: 0px;
+  --c-popup-submenu-offset: 0px;
   --c-popup-width: var(--size-pane-width);
   --c-popup-height: var(--size-pane-width);
   --c-popup-radius: var(--radius-md);
@@ -225,6 +228,7 @@
   --c-popover-padding: var(--space-inset-md);
   --c-popover-gap: var(--space-stack-group);
   --c-popover-offset: var(--space-stack-pair);
+  --c-popover-cross-offset: 0px;
   --c-popover-width: var(--size-pane-width);
   --c-list-item-size: var(--size-target);
   --c-list-item-padding-inline: var(--space-inset-sm);
@@ -241,6 +245,11 @@
   --c-list-item-danger-text: var(--color-status-danger-fg);
   --c-list-item-submenu-ink: var(--color-text-muted);
   --c-list-item-submenu-size: var(--size-icon-md);
+  --c-list-item-name-weight: var(--type-label-weight);
+  --c-list-item-expanded-fill: transparent;
+  --c-list-item-expanded-text: currentColor;
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
+  --c-list-item-checked-text: currentColor;
   --c-list-item-plate: var(--size-icon-lg);
   --c-list-item-plate-fill: var(--color-status-neutral-bg);
   --c-list-item-plate-ink: var(--color-text);
@@ -2926,6 +2935,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
   --c-list-item-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--c-button-radius);
@@ -2993,6 +3003,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
   --c-list-item-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--c-button-radius);
@@ -3060,6 +3071,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
   --c-list-item-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--c-button-radius);
@@ -3127,6 +3139,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
   --c-list-item-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--c-button-radius);
@@ -3194,6 +3207,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
   --c-list-item-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--c-button-radius);
@@ -3253,6 +3267,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-item-expanded-radius: var(--c-list-item-radius);
   --c-list-item-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--c-button-radius);
