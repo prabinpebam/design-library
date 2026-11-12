@@ -130,4 +130,17 @@
   [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: calc(var(--radius-lg) - var(--space-1)); background: var(--color-bg-sunken); }
   [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-1); inset-inline-end: var(--space-1); display: flex; }
   [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='next-text'] { display: grid; gap: var(--space-1); }
+  /* Search (S-1280-L): x96 beside the mini guide, 1160 wide at 1280 (24 each side); filters a 56 row with Filters at the end;
+     rows 16 apart, frame 500 wide 16:9 radius 10 (read from the corner pixels), words 16 after it. */
+  [data-dl='youtube-results'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--t-youtube-site-feed-inset); padding-block-end: var(--space-6); }
+  [data-dl='youtube-results'] > [data-dl-part='chips'] { position: sticky; inset-block-start: 0; z-index: var(--layer-raised); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-block-size: var(--size-app-bar-height); background: var(--color-bg); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] { display: grid; grid-template-columns: minmax(0, 125fr) minmax(0, 161fr); /* frame 500 : words 644 at 1280 (S-1280-L) */ align-items: start; gap: var(--space-4); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--radius-md); background: var(--color-bg-sunken); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
+  /* Words: title 18/26 w400, two lines, the ⋮ menu at its end; views · age 12/18 under it; the channel line padded 12 0 with a 24 avatar and the name 8 after it; the snippet 12/18 (S-1280-L; content keeps it to two lines). */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] { display: grid; min-inline-size: 0; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] { position: relative; display: grid; padding-inline-end: var(--space-12); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: 0; display: grid; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] { display: flex; align-items: center; gap: var(--space-2); padding-block: var(--space-3); }
 }

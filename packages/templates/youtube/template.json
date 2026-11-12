@@ -19,7 +19,7 @@
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout",     "content": "content/home.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "watch", "title": "Watch", "component": "SiteLayout",    "content": "content/browse/watch.json", "regions": [{"id":"main","accepts":["*"]}] },
-        { "id": "search", "title": "Search results", "component": "SiteLayout", "planned": true },
+    { "id": "search", "title": "Search results", "component": "SiteLayout", "content": "content/browse/search.json", "regions": [{"id":"main","accepts":["*"]}] },
         { "id": "dark", "title": "Dark theme", "component": "SiteLayout", "planned": true }
   ],
   "parts": { "layouts": [{ "name": "youtube.Site", "source": "parts/layouts/Site.tsx" }] }

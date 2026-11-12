@@ -47,7 +47,22 @@ export interface YoutubeWatch {
   /** "N Comments". */
   commentCount: string;
   comments: YoutubeComment[];
-}export interface YoutubeRecord {
+}
+/** One search result: a video from `videos` and the matching words under it. */
+export interface YoutubeSearchResult {
+  /** The `id` of the video in `videos`. */
+  video: string;
+  /** The description's matching words, up to two lines. */
+  snippet: string;
+}
+/** The search results page: the query in the masthead, its filters and the results. */
+export interface YoutubeSearch {
+  query: string;
+  /** Result filters; the first is selected. */
+  chips: string[];
+  results: YoutubeSearchResult[];
+}
+export interface YoutubeRecord {
   /** The neutral wordmark beside the guide button: never a product logo. */
   wordmark: string;
   guide: YoutubeGuideSection[];
@@ -56,5 +71,7 @@ export interface YoutubeWatch {
   videos: YoutubeVideo[];
   /** The watch page: the video being watched; up next is every other video. */
   watch: YoutubeWatch;
+  /** The search results page. */
+  search: YoutubeSearch;
   copy: Record<string, string>;
 }

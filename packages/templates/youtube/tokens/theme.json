@@ -77,5 +77,8 @@
   "c.slider.fill": { "$value": "#ff0000", "$description": "The seek line's played part and its dot are the brand red (watch169-1280-L)." },
   "c.slider.thumb-fill": { "$value": "{c.slider.fill}", "$description": "The seek dot, red like the played line (watch169-1280-L)." },
   "c.slider.track-fill": { "$value": "rgba(255, 255, 255, 0.2)", "$description": "The seek line's unplayed part, white at about 20 % over the video (watch169-1280-L, read from the screenshot; the player is always dark)." },
+  "type.heading-2.size": { "$value": "1.125rem", "$description": "A search result's title 18/26 w400 (S-1280-L); the template has no larger heading, so its second step is this one." },
+  "type.heading-2.leading": { "$value": "1.4444", "$description": "A search result's title 18/26: two lines are 52 (S-1280-L)." },
+  "type.heading-2.weight": { "$value": "{weight.regular}", "$description": "A search result's title w400 (S-1280-L)." },
   "color.bg-sunken": { "$value": { "light": "{p.base.50}", "dark": "#000000" }, "$description": "The player is black #000000 in both schemes (W-1280-L, W-1280-D; the player part takes the dark scheme). Light frames keep the core default; dark frames are unmeasured until Y.2d." }
 }

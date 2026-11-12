@@ -21,7 +21,7 @@ export interface SiteProps extends DataAttributes {
  */
 export function Site({ view, screen = 'home', ...data }: SiteProps) {
   const c = view.copy;
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(screen === 'search' ? view.search.query : '');
   const [chip, setChip] = useState([view.chips[0] ?? '']);
   // The guide button: on a wide window it folds the 240 guide to the mini guide; below that it opens the guide as a drawer.
   const [toggled, setToggled] = useState(false);
@@ -53,7 +53,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         <div data-dl-part="start">{start}</div>
         <form data-dl-part="center" role="search" onSubmit={(e) => e.preventDefault()}>
           <div data-dl-part="search">
-            <TextField label={c.search} hideLabel type="search" placeholder={c.search} value={query} onChange={setQuery} action={{ label: c.search, icon: 'search', iconOnly: true, onAction: () => undefined }} />
+            <TextField label={c.search} hideLabel type="search" clearable placeholder={c.search} value={query} onChange={setQuery} action={{ label: c.search, icon: 'search', iconOnly: true, onAction: () => undefined }} />
           </div>
           <span data-dl-part="voice"><Button label={c.voiceSearch} icon="mic" iconOnly /></span>
         </form>
@@ -85,7 +85,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         </ScrollArea>
       </nav>
       <main data-dl-part="main">
-        {screen === 'watch' ? <Watch view={view} /> : (
+        {screen === 'watch' ? <Watch view={view} /> : screen === 'search' ? <Search view={view} /> : (
         <ScrollArea label={c.feed}>
           <div data-dl="youtube-feed">
             <div data-dl-part="chips">
@@ -239,6 +239,50 @@ function Watch({ view }: { view: YoutubeRecord }) {
             ))}
           </ul>
         </aside>
+      </div>
+    </ScrollArea>
+  );
+}
+
+/** Search results (S-1280-L): filters with Filters at the end, then one row per video, its frame beside its words. */
+function Search({ view }: { view: YoutubeRecord }) {
+  const c = view.copy;
+  const s = view.search;
+  const [chip, setChip] = useState([s.chips[0] ?? '']);
+  const results = s.results.flatMap((r) => {
+    const v = view.videos.find((x) => x.id === r.video);
+    return v ? [{ ...r, v }] : [];
+  });
+  return (
+    <ScrollArea label={c.results}>
+      <div data-dl="youtube-results">
+        <div data-dl-part="chips">
+          <ChipGroup label={c.filters} hideLabel selection="single" value={chip} onChange={(x) => setChip(x.length ? x : chip)} chips={s.chips.map((label) => ({ id: label, label }))} />
+          <Button label={c.filtersButton} icon="filter-lines" emphasis="quiet" />
+        </div>
+        <ul data-dl-part="list" aria-label={c.results}>
+          {results.map(({ v, snippet }) => (
+            <li key={v.id} data-dl-part="result">
+              <a data-dl-part="frame" href={`#${v.id}`} aria-label={v.title}>
+                <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
+              </a>
+              <div data-dl-part="text">
+                <div data-dl-part="title">
+                  <Heading level={2} size={2} lines={2}>{v.title}</Heading>
+                  <span data-dl-part="menu">
+                    <MenuButton label={c.videoMenu} icon="more-vertical" iconOnly emphasis="quiet" onSelect={() => undefined} items={[{ value: 'queue', label: c.queue }, { value: 'later', label: c.later }, { value: 'playlist', label: c.playlist }]} />
+                  </span>
+                </div>
+                <Text variant="caption" tone="muted">{v.views} <span aria-hidden="true">•</span> {v.age}</Text>
+                <div data-dl-part="channel">
+                  <Avatar name={v.channel} size={24} decorative />
+                  <Text variant="caption" tone="muted">{v.channel}</Text>
+                </div>
+                <span data-dl-part="snippet"><Text variant="caption">{snippet}</Text></span>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </ScrollArea>
   );

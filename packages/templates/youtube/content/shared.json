@@ -56,7 +56,18 @@
         { "author": "@saturdayshed", "age": "3 days ago", "text": "Built two of these yesterday with offcuts. The jig for the box joints is genius.", "likes": "128" },
         { "author": "@fernandflint", "age": "1 day ago", "text": "Which oil did you use for the finish? Mine went a bit grey after a month outside.", "likes": "41" }
       ]
-    },    "copy": {
+    },    "search": {
+      "query": "woodworking for beginners",
+      "chips": ["All", "Shorts", "Unwatched", "Videos", "Recently uploaded", "Live"],
+      "results": [
+        { "video": "v1", "snippet": "A cedar planter box from rough boards to a finished piece in one afternoon: milling, simple box joints, a drainage gap and an oil finish that weathers well." },
+        { "video": "v7", "snippet": "A flea-market hand plane, rust and all, brought back to a mirror sole with sandpaper on glass, a little oil and a lot of patience." },
+        { "video": "v4", "snippet": "Not woodworking at all, but the same patience: we pour water over a sand table and watch a straight channel learn to bend." },
+        { "video": "v9", "snippet": "Raised beds and planter boxes dry out faster than the ground. Here is how often to water, how to tell, and why the saucer matters." },
+        { "video": "v12", "snippet": "Five tents under forty, pitched side by side on a ridge in a real storm, with a hand-built wooden stake mallet for good measure." }
+      ]
+    },
+    "copy": {
       "skip": "Skip navigation",
       "guide": "Guide",
       "home": "Home",
@@ -80,6 +91,8 @@
       "dislike": "I dislike this",
       "more": "More actions",
       "player": "Video player",
+      "results": "Search results",
+      "filtersButton": "Filters",
       "seek": "Seek",
       "play": "Play",
       "mute": "Mute",

@@ -62,6 +62,7 @@
     "--layer-overlay",
     "--layer-raised",
     "--radius-lg",
+    "--radius-md",
     "--radius-pill",
     "--radius-sm",
     "--size-app-bar-height",

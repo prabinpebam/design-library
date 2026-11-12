@@ -78,6 +78,9 @@
     --c-slider-fill: #ff0000;
     --c-slider-thumb-fill: var(--c-slider-fill);
     --c-slider-track-fill: rgba(255, 255, 255, 0.2);
+    --type-heading-2-size: 1.125rem;
+    --type-heading-2-leading: 1.4444;
+    --type-heading-2-weight: var(--weight-regular);
     --color-bg-sunken: light-dark(var(--p-base-50), #000000);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--c-button-radius);
@@ -117,6 +120,7 @@
     --c-conversation-list-radius: var(--radius-md);
     --c-site-header-name-size: var(--type-heading-4-size);
     --c-site-header-link-radius: var(--radius-md);
+    --c-site-header-name-size-large: var(--type-heading-2-size);
     --c-tree-view-surface: var(--color-bg);
     --c-tree-view-twisty: var(--size-icon-md);
     --c-tree-view-radius: var(--radius-md);
@@ -165,6 +169,7 @@
     --c-illustration-fill: var(--color-bg-sunken);
     --c-illustration-surface: var(--color-bg);
     --c-quote-text-size-m: var(--type-heading-4-size);
+    --c-quote-text-size-l: var(--type-heading-2-size);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-surface: var(--color-bg-sunken);
     --c-scroll-area-surface-radius: var(--radius-md);

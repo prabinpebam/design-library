@@ -108,6 +108,10 @@
           },
           "type": "array"
         },
+        "search": {
+          "$ref": "#/$defs/YoutubeSearch",
+          "description": "The search results page."
+        },
         "videos": {
           "items": {
             "$ref": "#/$defs/YoutubeVideo"
@@ -129,7 +133,55 @@
         "chips",
         "videos",
         "watch",
+        "search",
         "copy"
+      ],
+      "type": "object"
+    },
+    "YoutubeSearch": {
+      "additionalProperties": false,
+      "description": "The search results page: the query in the masthead, its filters and the results.",
+      "properties": {
+        "chips": {
+          "description": "Result filters; the first is selected.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "query": {
+          "type": "string"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/$defs/YoutubeSearchResult"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "query",
+        "chips",
+        "results"
+      ],
+      "type": "object"
+    },
+    "YoutubeSearchResult": {
+      "additionalProperties": false,
+      "description": "One search result: a video from `videos` and the matching words under it.",
+      "properties": {
+        "snippet": {
+          "description": "The description's matching words, up to two lines.",
+          "type": "string"
+        },
+        "video": {
+          "description": "The `id` of the video in `videos`.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "video",
+        "snippet"
       ],
       "type": "object"
     },
