@@ -154,6 +154,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
   const next = view.videos.filter((v) => v.id !== video.id);
   const [seek, setSeek] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
+  const [playing, setPlaying] = useState(true);
   return (
     <ScrollArea label={video.title}>
       <div data-dl="youtube-watch">
@@ -164,14 +165,14 @@ function Watch({ view }: { view: YoutubeRecord }) {
             <div data-dl-part="controls">
               <div data-dl-part="seek"><Slider label={c.seek} hideLabel showValue={false} size="s" min={0} max={100} value={seek} onChange={(v) => setSeek(v as number)} /></div>
               <div data-dl-part="left">
-                <span data-dl-part="round"><Button label={c.play} icon={playerIcons.name('player-play')} iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="round"><Button label={playing ? c.pause : c.play} icon={playerIcons.name(playing ? 'player-pause' : 'player-play')} iconOnly emphasis="quiet" tone="inherit" onClick={() => setPlaying(!playing)} /></span>
                 <span data-dl-part="round"><Button label={c.mute} icon={playerIcons.name('player-volume')} iconOnly emphasis="quiet" tone="inherit" /></span>
                 <span data-dl-part="time"><Text variant="inherit">0:00 / {video.duration}</Text></span>
               </div>
               <div data-dl-part="right">
                 <span data-dl-part="slot"><Switch label={c.autoplay} hideLabel size="xs" checked={autoplay} onChange={setAutoplay} thumbIcon={playerIcons.name('player-play')} /></span>
                 <span data-dl-part="slot"><Button label={c.captions} icon={playerIcons.name('player-captions')} iconOnly emphasis="quiet" tone="inherit" /></span>
-                <span data-dl-part="slot"><Button label={c.settings} icon="settings" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Button label={c.settings} icon={playerIcons.name('player-settings')} iconOnly emphasis="quiet" tone="inherit" /></span>
                 <span data-dl-part="slot"><Button label={c.theatre} icon={playerIcons.name('player-theatre')} iconOnly emphasis="quiet" tone="inherit" /></span>
                 <span data-dl-part="slot"><Button label={c.fullscreen} icon={playerIcons.name('player-fullscreen')} iconOnly emphasis="quiet" tone="inherit" /></span>
               </div>
