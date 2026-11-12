@@ -23,10 +23,14 @@ export interface MenuButtonItem {
   preview?: string[];
   /** A leading icon from the active set, for menus whose items are kinds of thing to make or do. */
   icon?: IconName;
+  /** Sets `icon` on a round plate, neutral or tinted by a category 1-8 (ListItem `plate`). Decorative. */
+  plate?: 'neutral' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   /** `danger` for an item that destroys something (Delete). Its words carry the meaning; the colour repeats it. */
   tone?: 'danger';
   /** Starts a new group: a hairline across the menu sits above it. */
   startsGroup?: boolean;
+  /** A submenu: the item shows a chevron and opens these choices beside it instead of being chosen. One level only. */
+  items?: Omit<MenuButtonItem, 'items'>[];
 }
 
 export interface MenuButtonProps extends DataAttributes {
@@ -62,7 +66,7 @@ export interface MenuButtonProps extends DataAttributes {
 }
 
 /**
- * A button that opens a short menu of actions or starting points, such as presets. One trigger, one list, no nesting.
+ * A button that opens a short menu of actions or starting points, such as presets. One trigger, one list, nested once.
  * Not for a value that stays chosen and shows in the control (use Select or SegmentedControl), for navigation (use
  * Navigation or Link), or for one action (use Button). Added for the Colour page's brand presets (owner, F7d, 2026-11-07).
  * @tier fundamental
@@ -81,6 +85,8 @@ export interface MenuButtonProps extends DataAttributes {
  * @key Home, End: move to the first or last item
  * @key A letter: moves to the next item whose name starts with it
  * @key Enter or Space on an item: chooses it
+ * @key Arrow right (left in right-to-left), Enter or Space on an item with a submenu: opens it at its first item; the pointer opens it on hover
+ * @key Arrow left (right in right-to-left) or Escape in a submenu: closes it and returns to its item
  * @key Escape: closes the menu and returns to the button
  */
 export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, ...data }: MenuButtonProps) {
@@ -91,11 +97,30 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const trigger = useRef<HTMLButtonElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [focusOnOpen, setFocusOnOpen] = useState<'first' | 'last'>('first');
+  const [sub, setSub] = useState<number | null>(null);
+  const subMenu = useRef<HTMLDivElement>(null);
+  const subAnchor = useRef<HTMLElement | null>(null);
+  const subRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const subItems = sub === null ? [] : (items[sub]?.items ?? []);
 
   const focusItem = (i: number) => itemRefs.current[(i + items.length) % items.length]?.focus();
+  const focusSub = (i: number) => subRefs.current[(i + subItems.length) % subItems.length]?.focus();
   const close = (returnFocus: boolean) => {
+    setSub(null);
     setOpen(false);
     if (returnFocus) trigger.current?.focus();
+  };
+  const openSub = (i: number, focus: boolean) => {
+    subAnchor.current = itemRefs.current[i];
+    setSub(i);
+    if (focus) setSubFocus((n) => n + 1);
+  };
+  const [subFocus, setSubFocus] = useState(0);
+  const closeSub = () => {
+    if (sub === null) return;
+    const at = sub;
+    setSub(null);
+    focusItem(at);
   };
   const show = (at: 'first' | 'last') => {
     if (busy) return;
@@ -104,10 +129,15 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   };
 
   usePopup(open, trigger, menu, root, () => close(false));
+  usePopup(sub !== null, subAnchor, subMenu, root, () => setSub(null), 'inline');
   const scroll = useOverlayScroll(undefined, open);
+  const subScroll = useOverlayScroll(undefined, sub !== null);
   useEffect(() => {
     if (busy) setOpen(false);
   }, [busy]);
+  useEffect(() => {
+    if (subFocus) focusSub(0);
+  }, [subFocus]);
   const name = busy ? (pendingLabel ?? label) : label;
   const iconSize = ({ xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' } as const)[size];
   const lead = iconOnly ? (icon ?? 'chevron-down') : icon;
@@ -124,8 +154,10 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
 
   const onMenuKey = (e: KeyboardEvent<HTMLDivElement>) => {
     const current = itemRefs.current.indexOf(document.activeElement as HTMLDivElement);
+    const inward = root.current && getComputedStyle(root.current).direction === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
     if (e.key === 'ArrowDown') focusItem(current + 1);
     else if (e.key === 'ArrowUp') focusItem(current - 1);
+    else if (e.key === inward && current >= 0 && items[current].items?.length) openSub(current, true);
     else if (e.key === 'Home') focusItem(0);
     else if (e.key === 'End') focusItem(items.length - 1);
     else if (e.key === 'Escape') close(true);
@@ -137,6 +169,20 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
       const next = order.find((i) => items[i].label.toLowerCase().startsWith(k));
       if (next !== undefined) focusItem(next);
     } else return;
+    e.preventDefault();
+  };
+
+  const onSubKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    const current = subRefs.current.indexOf(document.activeElement as HTMLDivElement);
+    const outward = root.current && getComputedStyle(root.current).direction === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+    if (e.key === 'ArrowDown') focusSub(current + 1);
+    else if (e.key === 'ArrowUp') focusSub(current - 1);
+    else if (e.key === 'Home') focusSub(0);
+    else if (e.key === 'End') focusSub(subItems.length - 1);
+    else if (e.key === 'Escape' || e.key === outward) closeSub();
+    else if (e.key === 'Tab') return close(false);
+    else if ((e.key === 'Enter' || e.key === ' ') && current >= 0) subRefs.current[current]?.click();
+    else return;
     e.preventDefault();
   };
 
@@ -176,7 +222,12 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
       <div ref={menu} data-dl-part="popup" data-width={listWidth} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open} onKeyDown={onMenuKey}>
         <div ref={scroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
           <div ref={scroll.setViewport} data-dl-part="viewport">
-            <div id={`${id}-menu`} data-dl-part="content" role="menu" aria-label={menuLabel ?? label}>
+            <div id={`${id}-menu`} data-dl-part="content" role="menu" aria-label={menuLabel ?? label} onPointerOver={(e) => {
+              const i = itemRefs.current.findIndex((el) => el?.contains(e.target as Node));
+              if (i < 0 || i === sub) return;
+              if (items[i].items?.length) openSub(i, false);
+              else setSub(null);
+            }}>
               {items.map((item, i) => (
                 <Fragment key={item.value}>
                   {item.startsGroup && i > 0 && <div role="separator" data-dl-part="separator" />}
@@ -186,12 +237,15 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
                     description={item.description}
                     preview={item.preview}
                     icon={item.icon}
+                    plate={item.plate}
                     tone={item.tone}
+                    submenu={!!item.items?.length}
                     thumbnail={item.flag && flagSrc(item.flag)}
                     itemRef={(el) => {
                       itemRefs.current[i] = el;
                     }}
                     onClick={() => {
+                      if (item.items?.length) return openSub(i, true);
                       close(true);
                       onSelect(item.value);
                     }}
@@ -203,6 +257,37 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
           {scroll.tracks('block')}
         </div>
       </div>
+      {items.some((item) => item.items?.length) && (
+        <div ref={subMenu} data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={sub === null} inert={sub === null} onKeyDown={onSubKey}>
+          <div ref={subScroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
+            <div ref={subScroll.setViewport} data-dl-part="viewport">
+              <div data-dl-part="content" role="menu" aria-label={sub === null ? undefined : items[sub].label}>
+                {subItems.map((item, i) => (
+                  <Fragment key={item.value}>
+                    {item.startsGroup && i > 0 && <div role="separator" data-dl-part="separator" />}
+                    <ListItem
+                      role="menuitem"
+                      label={item.label}
+                      description={item.description}
+                      icon={item.icon}
+                      plate={item.plate}
+                      tone={item.tone}
+                      itemRef={(el) => {
+                        subRefs.current[i] = el;
+                      }}
+                      onClick={() => {
+                        close(true);
+                        onSelect(item.value);
+                      }}
+                    />
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+            {subScroll.tracks('block')}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

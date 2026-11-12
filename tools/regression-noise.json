@@ -9,6 +9,14 @@
       "reason": "catalogue inventory: (Q143 region 27) the generic opt-in PopoverTrigger.tone (default unchanged) adds source-derived prop documentation below the viewport and slack.Workspace joins its Used by list; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
     },
+    "lib--menubutton": {
+      "reason": "catalogue inventory: (Q143 region 25, packet K) the generic MenuButtonItem.items submenu and plate props: the source-derived lead says \"nested once\" instead of \"no nesting\" (same line breaks; only the words on that line from x 594 change) and the prop rows below the viewport lengthen the page (scrollbar track).",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }, { "x": 590, "y": 184, "width": 680, "height": 70 }]
+    },
+    "lib--listitem": {
+      "reason": "catalogue inventory: (Q143 region 25, packet K) the generic ListItem.plate prop (default no plate) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--button": {
       "reason": "catalogue inventory: (Q145.W) the generic opt-in Button.stacked prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

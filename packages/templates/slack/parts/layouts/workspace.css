@@ -20,7 +20,13 @@
   [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-dl-part='rail-item'] > [data-dl-part='rail-icon'] { display: grid; border-radius: var(--t-slack-workspace-rail-tile-radius); }
   [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-current] > [data-dl-part='rail-icon'] { background: var(--color-map-nav-hover); }
   [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-dl-part='rail-item'] > [data-dl-part='rail-label'] { font-size: var(--text-xs); font-weight: var(--weight-bold); }
-  [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-bottom'] { flex: 1; display: flex; flex-direction: column; justify-content: end; align-items: center; gap: var(--space-stack-item); }
+  [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-bottom'] { flex: 1; display: flex; flex-direction: column; justify-content: end; align-items: center; gap: var(--space-stack-item);
+  /* Region 25: the Create menu fills its hovered row grey (#F2F3F4 in g-create-01-f70), not the message menu's blue. */
+  --c-list-item-hover-fill: var(--state-hover);
+  --c-list-item-hover-text: currentColor;
+  /* Region 25: Create menu rows are 97 px apart in g-create-01-f70 (≈1.87x), 52 px, around the 40 px circle. */
+  --c-list-item-size: 3.25rem;
+}
   [data-dl='slack-workspace'] > [data-dl-part='window'] { display: flex; min-inline-size: 0; min-block-size: 0; padding-block-end: var(--space-inset-xs); padding-inline-end: var(--space-inset-xs); border-start-start-radius: var(--radius-md); }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] { flex: 0 0 var(--size-nav-width); display: grid; grid-template-rows: auto minmax(0, 1fr); min-block-size: 0; background: var(--color-map-nav); color: var(--color-map-nav-on-muted); border-start-start-radius: var(--radius-md); border-end-start-radius: var(--radius-md); }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] > [data-dl-part='workspace-head'] { display: flex; align-items: center; justify-content: space-between; padding: var(--space-inset-md); color: var(--color-map-nav-on); }
@@ -54,7 +60,8 @@
   [data-dl='slack-message-group'] > [data-dl-part='new-line']::before { content: ''; flex: 1; block-size: var(--border-hairline); background: currentColor; }
   [data-dl='slack-message'] { position: relative; display: grid; grid-template-columns: auto minmax(0,1fr); gap: var(--space-inline-pair); padding-block: var(--space-inset-sm); padding-inline: var(--space-inset-lg); }
   [data-dl='slack-message'] > [data-dl-part='avatar'] { inline-size: var(--size-target-dense); }
-  [data-dl='slack-message'][data-grouped] { padding-block: var(--space-inset-xs); }
+  /* Region 12: a grouped message's words start 23 px below the reaction row above (r02, 1x), 8 px padding above. */
+[data-dl='slack-message'][data-grouped] { padding-block: var(--space-inset-sm) var(--space-inset-xs); }
   [data-dl='slack-message'] > [data-dl-part='body'] { display: grid; gap: var(--space-stack-pair); min-inline-size: 0; }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='byline'] { display: flex; align-items: baseline; gap: var(--space-inline-pair); }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='byline'] > [data-dl-part='author'] { font-weight: var(--weight-black); }

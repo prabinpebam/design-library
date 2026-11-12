@@ -64,6 +64,8 @@
     --c-popup-bg: var(--color-bg-raised);
     --c-list-item-radius: var(--radius-md);
     --c-list-item-hover-fill: var(--state-hover);
+    --c-list-item-submenu-ink: var(--color-text-muted);
+    --c-list-item-plate-ink: var(--color-text);
     --c-ribbon-bg: var(--color-bg-raised);
     --c-ribbon-radius: var(--radius-md);
     --c-ribbon-separator: var(--color-border);
@@ -269,6 +271,7 @@
       --c-example-outline: var(--color-border);
       --c-field-readonly-border: var(--color-border);
       --c-illustration-muted: var(--color-text-muted);
+      --c-list-item-submenu-ink: var(--color-text-muted);
       --c-menu-button-border: var(--c-button-default-edge);
       --c-menu-button-fill: var(--c-button-default-fill);
       --c-popup-border: var(--color-border);
@@ -307,6 +310,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-item-submenu-ink: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-popup-border: var(--color-border);
@@ -344,6 +348,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-item-submenu-ink: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-popup-border: var(--color-border);

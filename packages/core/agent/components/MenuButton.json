@@ -4,7 +4,7 @@
   "tier": "fundamental",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/fundamentals/MenuButton.tsx",
-  "summary": "A button that opens a short menu of actions or starting points, such as presets. One trigger, one list, no nesting. Not for a value that stays chosen and shows in the control (use Select or SegmentedControl), for navigation (use Navigation or Link), or for one action (use Button). Added for the Colour page's brand presets (owner, F7d, 2026-11-07).",
+  "summary": "A button that opens a short menu of actions or starting points, such as presets. One trigger, one list, nested once. Not for a value that stays chosen and shows in the control (use Select or SegmentedControl), for navigation (use Navigation or Link), or for one action (use Button). Added for the Colour page's brand presets (owner, F7d, 2026-11-07).",
   "family": "buttons",
   "a11y": [
     "The WAI-ARIA APG menu button: a native `button` with `aria-haspopup=\"menu\"` and `aria-expanded`, controlling a `role=\"menu\"` of `menuitem` ListItems named by `menuLabel`. Opening moves focus into the menu; choosing, Escape or a click outside closes it and returns focus to the button; Tab closes it and moves on. The menu opens in the top layer (the shared popup rule: under the button, flipping above near the window's end, never clipped) and its items are the one ListItem every popup list uses. A 44 px target from `normal` (36 px at `s`, 24 px at `xs`, dense exceptions). Busy keeps the same focused trigger, locked with `aria-disabled` and `aria-busy`, its present-tense label as the name, and the width of its widest label. Icon-only is named by `label`, also its tooltip; each item is at least 44 px tall. Previews are decorative and hidden from assistive technology."
@@ -33,6 +33,14 @@
     {
       "keys": "Enter or Space on an item",
       "action": "chooses it"
+    },
+    {
+      "keys": "Arrow right (left in right-to-left), Enter or Space on an item with a submenu",
+      "action": "opens it at its first item; the pointer opens it on hover"
+    },
+    {
+      "keys": "Arrow left (right in right-to-left) or Escape in a submenu",
+      "action": "closes it and returns to its item"
     },
     {
       "keys": "Escape",
@@ -162,6 +170,11 @@
           "description": "A leading icon from the active set, for menus whose items are kinds of thing to make or do."
         },
         {
+          "name": "plate",
+          "type": "'neutral' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8",
+          "description": "Sets `icon` on a round plate, neutral or tinted by a category 1-8 (ListItem `plate`). Decorative."
+        },
+        {
           "name": "tone",
           "type": "'danger'",
           "description": "`danger` for an item that destroys something (Delete). Its words carry the meaning; the colour repeats it."
@@ -170,6 +183,11 @@
           "name": "startsGroup",
           "type": "boolean",
           "description": "Starts a new group: a hairline across the menu sits above it."
+        },
+        {
+          "name": "items",
+          "type": "Omit<MenuButtonItem, 'items'>[]",
+          "description": "A submenu: the item shows a chevron and opens these choices beside it instead of being chosen. One level only."
         }
       ]
     }
@@ -204,6 +222,7 @@
     "--c-popup-border",
     "--c-popup-border-width",
     "--c-popup-height",
+    "--c-popup-inset",
     "--c-popup-layer",
     "--c-popup-offset",
     "--c-popup-radius",

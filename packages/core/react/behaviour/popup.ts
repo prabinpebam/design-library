@@ -51,7 +51,7 @@ function fitPopup(el: HTMLElement) {
   el.style.setProperty('--popup-fit', `${snapWidth(natural, stepPixels(el))}px`);
 }
 
-export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, popup: RefObject<HTMLElement | null>, within: RefObject<HTMLElement | null>, onDismiss: () => void) {
+export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, popup: RefObject<HTMLElement | null>, within: RefObject<HTMLElement | null>, onDismiss: () => void, side: 'block' | 'inline' = 'block') {
   useEffect(() => {
     const el = popup.current;
     if (!open || !el || !anchor.current) return;
@@ -61,6 +61,22 @@ export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, p
       if (!anchor.current) return;
       const r = anchor.current.getBoundingClientRect();
       const doc = document.documentElement;
+      if (side === 'inline') {
+        // A submenu: beside its item, at the end side, or the start side when the end has no room; top-aligned with it, kept inside the window.
+        const rtl = getComputedStyle(anchor.current).direction === 'rtl';
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
+        const endRoom = rtl ? r.left : doc.clientWidth - r.right;
+        const atEnd = endRoom >= w || endRoom >= (rtl ? doc.clientWidth - r.right : r.left);
+        const left = atEnd !== rtl ? r.right : r.left - w;
+        const edge = Math.max(0, Math.min(r.top, doc.clientHeight - h));
+        el.dataset.placement = 'beside';
+        el.style.setProperty('--popup-min-inline', '0px');
+        el.style.setProperty('--popup-edge', `${edge}px`);
+        el.style.setProperty('--popup-start', `${Math.max(0, Math.min(rtl ? doc.clientWidth - left - w : left, doc.clientWidth - w))}px`);
+        el.style.setProperty('--popup-room', `${doc.clientHeight - edge}px`);
+        return;
+      }
       el.style.setProperty('--popup-min-inline', `${r.width}px`);
       // The list's whole height, not the height it's capped to, so a capped list still flips to the roomier side.
       const list = el.querySelector<HTMLElement>("[data-dl-part='content']");

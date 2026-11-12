@@ -88,6 +88,8 @@
     --c-popup-radius: var(--radius-md);
     --c-popup-bg: var(--color-bg-raised);
     --c-list-item-radius: var(--radius-md);
+    --c-list-item-submenu-ink: var(--color-text-muted);
+    --c-list-item-plate-ink: var(--color-text);
     --c-ribbon-bg: var(--color-bg-raised);
     --c-ribbon-radius: var(--radius-md);
     --c-token-specimen-mark: var(--color-accent);
@@ -269,6 +271,7 @@
       --c-context-matrix-head-fg: var(--color-text-muted);
       --c-data-table-head-fg: var(--color-text-muted);
       --c-illustration-muted: var(--color-text-muted);
+      --c-list-item-submenu-ink: var(--color-text-muted);
       --c-price-was: var(--color-text-muted);
       --c-progress-bar-track: var(--color-border-group);
       --c-scroll-area-colour: var(--color-border-strong);
@@ -290,6 +293,7 @@
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-item-submenu-ink: var(--color-text-muted);
     --c-price-was: var(--color-text-muted);
     --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
@@ -310,6 +314,7 @@
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-item-submenu-ink: var(--color-text-muted);
     --c-price-was: var(--color-text-muted);
     --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);

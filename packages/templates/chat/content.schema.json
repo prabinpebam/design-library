@@ -987,9 +987,35 @@
           "$ref": "#/$defs/IconName",
           "description": "A leading icon from the active set, for menus whose items are kinds of thing to make or do."
         },
+        "items": {
+          "description": "A submenu: the item shows a chevron and opens these choices beside it instead of being chosen. One level only.",
+          "items": {
+            "additionalProperties": false,
+            "type": "object"
+          },
+          "type": "array"
+        },
         "label": {
           "description": "The item's name, in sentence case.",
           "type": "string"
+        },
+        "plate": {
+          "description": "Sets `icon` on a round plate, neutral or tinted by a category 1-8 (ListItem `plate`). Decorative.",
+          "enum": [
+            "neutral",
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
         },
         "preview": {
           "items": {

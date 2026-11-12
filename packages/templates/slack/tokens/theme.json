@@ -248,6 +248,56 @@
   "$value": "#da2b43",
   "$description": "Region 25: Delete message ink, the most saturated glyph pixel in g-edit-01-f82 (x745-940, y565-592); a GIF palette colour, so within a few units of Slack's red."
  },
+ "c.list-item.submenu-ink": {
+  "$value": "currentColor",
+  "$description": "Region 25: the Remind me chevron is drawn in the words' colour, not muted (g-edit-01-f82)."
+ },
+ "c.list-item.plate": {
+  "$value": "2.5rem",
+  "$description": "Region 25: the Create menu's icon circles are 74 px across in g-create-01-f70 (Create menu, drawn at about 1.87x), so 40 px."
+ },
+ "c.list-item.plate-fill": {
+  "$value": {
+   "light": "#f2f3f4",
+   "dark": "#35373b"
+  },
+  "$description": "Region 25: List and Channel sit on a grey circle, #F2F3F4 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional (no reference)."
+ },
+ "c.list-item.plate-ink": {
+  "$value": {
+   "light": "#403f40",
+   "dark": "#d1d2d3"
+  },
+  "$description": "Region 25: the grey circles' glyph core #403F40 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+ },
+ "c.list-item.plate-fill-5": {
+  "$value": {
+   "light": "#c3f5df",
+   "dark": "color-mix(in oklab, #2bac76 24%, transparent)"
+  },
+  "$description": "Region 25: Huddle's green circle #C3F5DF in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+ },
+ "c.list-item.plate-ink-5": {
+  "$value": {
+   "light": "#196a42",
+   "dark": "#5fd3a0"
+  },
+  "$description": "Region 25: Huddle's headphones, glyph core #196A42 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+ },
+ "c.list-item.plate-fill-3": {
+  "$value": {
+   "light": "#c5f6f7",
+   "dark": "color-mix(in oklab, #36c5f0 24%, transparent)"
+  },
+  "$description": "Region 25: Canvas's cyan circle #C5F6F7 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+ },
+ "c.list-item.plate-ink-3": {
+  "$value": {
+   "light": "#0c5767",
+   "dark": "#7fdcf2"
+  },
+  "$description": "Region 25: Canvas's glyph core #0C5767 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+ },
  "c.popup.gap": {
   "$value": "0",
   "$description": "Region 25: menu rows sit edge to edge at a 32 px pitch with no space between fills (g-edit-01-f82)."

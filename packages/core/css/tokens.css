@@ -235,6 +235,26 @@
   --c-list-item-hover-fill: var(--state-hover);
   --c-list-item-hover-text: currentColor;
   --c-list-item-danger-text: var(--color-status-danger-fg);
+  --c-list-item-submenu-ink: var(--color-text-muted);
+  --c-list-item-plate: var(--size-icon-lg);
+  --c-list-item-plate-fill: var(--color-status-neutral-bg);
+  --c-list-item-plate-ink: var(--color-text);
+  --c-list-item-plate-fill-1: color-mix(in oklab, var(--color-category-1) 16%, transparent);
+  --c-list-item-plate-ink-1: var(--color-category-1);
+  --c-list-item-plate-fill-2: color-mix(in oklab, var(--color-category-2) 16%, transparent);
+  --c-list-item-plate-ink-2: var(--color-category-2);
+  --c-list-item-plate-fill-3: color-mix(in oklab, var(--color-category-3) 16%, transparent);
+  --c-list-item-plate-ink-3: var(--color-category-3);
+  --c-list-item-plate-fill-4: color-mix(in oklab, var(--color-category-4) 16%, transparent);
+  --c-list-item-plate-ink-4: var(--color-category-4);
+  --c-list-item-plate-fill-5: color-mix(in oklab, var(--color-category-5) 16%, transparent);
+  --c-list-item-plate-ink-5: var(--color-category-5);
+  --c-list-item-plate-fill-6: color-mix(in oklab, var(--color-category-6) 16%, transparent);
+  --c-list-item-plate-ink-6: var(--color-category-6);
+  --c-list-item-plate-fill-7: color-mix(in oklab, var(--color-category-7) 16%, transparent);
+  --c-list-item-plate-ink-7: var(--color-category-7);
+  --c-list-item-plate-fill-8: color-mix(in oklab, var(--color-category-8) 16%, transparent);
+  --c-list-item-plate-ink-8: var(--color-category-8);
   --c-pane-gap: var(--space-stack-group);
   --c-pane-head-gap: var(--space-inline-item);
   --c-pane-status-gap: var(--space-stack-pair);
@@ -1455,6 +1475,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-item-submenu-ink: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-popup-border: var(--color-border);
@@ -1499,6 +1520,7 @@
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
+  --c-list-item-submenu-ink: var(--color-text-muted);
   --c-menu-button-border: var(--c-button-default-edge);
   --c-menu-button-fill: var(--c-button-default-fill);
   --c-popup-border: var(--color-border);
@@ -1543,6 +1565,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-item-submenu-ink: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-popup-border: var(--color-border);
@@ -1587,6 +1610,7 @@
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
+  --c-list-item-submenu-ink: var(--color-text-muted);
   --c-menu-button-border: var(--c-button-default-edge);
   --c-menu-button-fill: var(--c-button-default-fill);
   --c-popup-border: var(--color-border);

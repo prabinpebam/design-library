@@ -204,6 +204,13 @@
             "count": 1
           }
         ]
+      },
+      {
+        "id": "m7",
+        "author": "Maya Chen",
+        "time": "10:06 AM",
+        "text": "Thoughts on the opening are welcome in the thread too.",
+        "grouped": true
       }
     ],
     "replies": [
@@ -243,7 +250,34 @@
       },
       {
         "value": "remind",
-        "label": "Remind me about this"
+        "label": "Remind me about this",
+        "items": [
+          {
+            "value": "remind-20m",
+            "label": "In 20 minutes"
+          },
+          {
+            "value": "remind-1h",
+            "label": "In 1 hour"
+          },
+          {
+            "value": "remind-3h",
+            "label": "In 3 hours"
+          },
+          {
+            "value": "remind-tomorrow",
+            "label": "Tomorrow"
+          },
+          {
+            "value": "remind-next-week",
+            "label": "Next week"
+          },
+          {
+            "value": "remind-custom",
+            "label": "Custom…",
+            "startsGroup": true
+          }
+        ]
       },
       {
         "value": "pin",
@@ -269,25 +303,29 @@
         "value": "huddle",
         "label": "Huddle",
         "description": "Start a call with audio and video",
-        "icon": "headphones"
+        "icon": "headphones",
+        "plate": 5
       },
       {
         "value": "canvas",
         "label": "Canvas",
         "description": "Write and share a document",
-        "icon": "file"
+        "icon": "file",
+        "plate": 3
       },
       {
         "value": "list",
         "label": "List",
-        "description": "Track work and projects together",
-        "icon": "list"
+        "description": "Track projects together",
+        "icon": "list",
+        "plate": "neutral"
       },
       {
         "value": "channel",
         "label": "Channel",
-        "description": "Start a conversation around a topic",
-        "icon": "hash"
+        "description": "Talk about a topic together",
+        "icon": "hash",
+        "plate": "neutral"
       },
       {
         "value": "invite",

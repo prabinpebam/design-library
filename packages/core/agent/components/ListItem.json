@@ -53,6 +53,11 @@
           "description": "Leading icon from the active set."
         },
         {
+          "name": "plate",
+          "type": "'neutral' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8",
+          "description": "Sets the icon on a round plate, for menus whose items are kinds of thing to make: `neutral`, or a category 1-8 that tints the plate and icon (`c.list-item.plate-*`). Decorative: the label names it."
+        },
+        {
           "name": "inset",
           "type": "boolean",
           "description": "Keep the icon column empty so this item's words line up with siblings that have icons."
@@ -185,11 +190,15 @@
     "--c-list-item-media-l",
     "--c-list-item-padding-block",
     "--c-list-item-padding-inline",
+    "--c-list-item-plate",
+    "--c-list-item-plate-fill",
+    "--c-list-item-plate-ink",
     "--c-list-item-preview",
     "--c-list-item-radius",
     "--c-list-item-size",
     "--c-list-item-size-l",
     "--c-list-item-size-s",
+    "--c-list-item-submenu-ink",
     "--color-accent",
     "--color-accent-subtle",
     "--color-border-strong",

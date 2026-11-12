@@ -25,6 +25,8 @@ export interface ListItemProps extends DataAttributes {
   size?: 's' | 'normal' | 'l';
   /** Leading icon from the active set. */
   icon?: IconName;
+  /** Sets the icon on a round plate, for menus whose items are kinds of thing to make: `neutral`, or a category 1-8 that tints the plate and icon (`c.list-item.plate-*`). Decorative: the label names it. */
+  plate?: 'neutral' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
   /** Keep the icon column empty so this item's words line up with siblings that have icons. */
   inset?: boolean;
   /** A person or team: a round picture, or the initials of `name` when there's no picture. Decorative: the label names it. */
@@ -106,6 +108,7 @@ export function ListItem({
   descriptionPosition = 'block',
   size = 'normal',
   icon,
+  plate,
   inset,
   avatar,
   thumbnail,
@@ -148,6 +151,10 @@ export function ListItem({
   ) : thumbnail ? (
     <span data-dl-part="item-thumbnail" aria-hidden="true">
       <img src={thumbnail} alt="" />
+    </span>
+  ) : icon && plate ? (
+    <span data-dl-part="item-plate" data-category={plate === 'neutral' ? undefined : plate} aria-hidden="true">
+      <Icon name={icon} />
     </span>
   ) : icon ? (
     <Icon name={icon} />

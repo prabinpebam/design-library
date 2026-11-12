@@ -1,11 +1,17 @@
 export type WorkspaceIcon = 'organisation' | 'comment' | 'speaker' | 'file' | 'more' | 'list' | 'edit' | 'frame' | 'person' | 'plus' | 'thumb-up' | 'heart' | 'headphones' | 'hash' | 'person-add' | 'clock' | 'emoji' | 'leaf' | 'food' | 'ball' | 'plane' | 'lightbulb' | 'flag';
-export interface WorkspaceMenuItem {
+export interface WorkspaceSubmenuItem {
   value: string;
   label: string;
   description?: string;
   icon?: WorkspaceIcon;
   tone?: 'danger';
   startsGroup?: boolean;
+  /** A round plate behind the icon: neutral, or a category 1-8 the theme tints. */
+  plate?: 'neutral' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+}
+export interface WorkspaceMenuItem extends WorkspaceSubmenuItem {
+  /** A submenu opened beside the item. */
+  items?: WorkspaceSubmenuItem[];
 }
 export interface WorkspaceEmoji {
   char: string;

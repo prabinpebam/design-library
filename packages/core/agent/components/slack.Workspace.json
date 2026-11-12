@@ -98,6 +98,7 @@
     "--space-stack-group",
     "--space-stack-item",
     "--space-stack-pair",
+    "--state-hover",
     "--t-slack-workspace-rail-tile-radius",
     "--text-l",
     "--text-s",
