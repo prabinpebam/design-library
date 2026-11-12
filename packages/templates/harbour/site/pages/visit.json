@@ -41,8 +41,8 @@
   "grid": {
     "rows": [
       { "id": "opening", "cells": [{ "id": "hero", "section": 0 }] },
-      { "id": "practical", "split": "halves", "cells": [{ "id": "hours", "section": 1 }, { "id": "travel", "section": 2 }] },
-      { "id": "reserve", "cells": [{ "id": "cta", "section": 3 }] }
+      { "id": "practical", "split": "halves", "gap": "page", "cells": [{ "id": "hours", "section": 1 }, { "id": "travel", "section": 2 }] },
+      { "id": "reserve", "gap": "page", "cells": [{ "id": "cta", "section": 3 }] }
     ]
   }
 }
