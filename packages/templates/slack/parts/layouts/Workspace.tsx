@@ -1210,7 +1210,11 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           {isSlackbot && (
             <div data-dl-part="rail-item" data-current data-slackbot-slot>
               <span data-dl-part="rail-icon">
-                {botEmblem.src && <Image src={botEmblem.src} alt={botEmblem.alt} ratio="square" width={24} height={24} rounded={false} />}
+                {botEmblem.src && (
+                  <span data-dl-part="rail-emblem">
+                    <Image src={botEmblem.src} alt={botEmblem.alt} ratio="square" width={24} height={24} rounded={false} />
+                  </span>
+                )}
               </span>
               <span data-dl-part="rail-label">{view.slackbotView.railLabel}</span>
             </div>

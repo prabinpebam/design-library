@@ -289,8 +289,8 @@
   "$description": "Owner benchmark 06 S06.2: Create menu top heading Lato 800."
  },
  "c.popup.submenu-offset": {
-  "$value": "-0.9375rem",
-  "$description": "Owner benchmark 05 S05.2: cascading submenu overlaps parent right edge by 10 PNG (15 CSS px)."
+  "$value": "-0.625rem",
+  "$description": "Owner benchmark 05 S05.2: cascading submenu overlaps parent right edge so x=412..622 PNG."
  },
  "c.popup.height": {
   "$value": "32rem",

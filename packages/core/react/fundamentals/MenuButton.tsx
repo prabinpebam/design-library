@@ -309,7 +309,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
         </div>
       </div>
       {items.some((item) => item.items?.length) && (
-        <div ref={subMenu} data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open || sub === null} inert={!open || sub === null} onKeyDown={onSubKey}>
+        <div ref={subMenu} data-dl-part="popup" data-submenu="" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open || sub === null} inert={!open || sub === null} onKeyDown={onSubKey}>
           <div ref={subScroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
             <div ref={subScroll.setViewport} data-dl-part="viewport">
               <div data-dl-part="content" role="menu" aria-label={sub === null ? undefined : items[sub].label}>

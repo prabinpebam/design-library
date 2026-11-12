@@ -67,7 +67,7 @@
     --c-list-item-expanded-radius: var(--radius-sm);
     --c-list-item-checked-text: var(--color-text-link);
     --c-menu-button-heading-weight: var(--weight-black);
-    --c-popup-submenu-offset: -0.9375rem;
+    --c-popup-submenu-offset: -0.625rem;
     --c-popup-height: 32rem;
     --c-list-item-plate: 2.25rem;
     --c-list-item-plate-fill: light-dark(#eaeaea, #35373b);
@@ -123,8 +123,10 @@
     --type-code-leading: var(--leading-normal);
     --type-heading-4-size: var(--text-l);
     --c-menu-button-border: var(--c-button-default-edge);
+    --c-menu-button-submenu-min-width: var(--c-menu-button-list-min-width);
     --c-popup-inset: var(--space-inset-xs);
     --c-popup-width: var(--size-pane-width);
+    --c-popup-submenu-width: var(--c-popup-width);
     --c-popup-border: var(--color-border);
     --c-popup-bg: var(--color-bg-raised);
     --c-tooltip-width: var(--size-pane-width);

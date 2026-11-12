@@ -215,12 +215,6 @@
     display: grid;
     border-radius: var(--t-slack-workspace-rail-tile-radius);
   }
-  [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-slackbot-slot] > [data-dl-part='rail-icon'] {
-    place-items: center;
-    inline-size: var(--c-button-size);
-    block-size: var(--c-button-size);
-    --color-bg-sunken: transparent;
-  }
   [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-dl-part='rail-item'] > [data-activity-anchor] {
     --c-popover-width: 24.125rem;
     --c-popover-padding: 0px;
@@ -232,6 +226,18 @@
   [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-current] > [data-dl-part='rail-icon'] {
     background: var(--color-map-nav-hover);
     --c-icon-fill: currentColor;
+  }
+  [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-slackbot-slot] > [data-dl-part='rail-icon'] {
+    place-items: center;
+    inline-size: var(--c-button-size);
+    block-size: var(--c-button-size);
+    background: color-mix(in srgb, var(--color-map-nav-on) 6%, var(--color-map-nav-hover));
+    --color-bg-sunken: transparent;
+  }
+  [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-slackbot-slot] > [data-dl-part='rail-icon'] > [data-dl-part='rail-emblem'] {
+    display: inline-grid;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
   }
   [data-dl='slack-workspace'] > [data-dl-part='rail'] > [data-dl-part='rail-items'] > [data-dl-part='rail-item'] > [data-dl-part='rail-icon'] > [data-dl-part='home-dot'] {
     position: absolute;
@@ -305,11 +311,8 @@
     min-inline-size: 0;
     min-block-size: 0;
   }
-  [data-dl='slack-workspace'] > [data-dl-part='window'][data-has-banner] > [data-dl-part='sidebar'] {
-    border-end-start-radius: 0;
-  }
-  [data-dl='slack-workspace'] > [data-dl-part='window'][data-has-banner] > [data-dl-part='conversation'] {
-    border-end-end-radius: 0;
+  [data-dl='slack-workspace'] > [data-dl-part='window'][data-has-banner] {
+    row-gap: var(--space-1);
   }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='org-banner'] {
     grid-column: 1 / -1;
@@ -318,19 +321,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-block-size: 2.875rem;
+    min-block-size: 2.8125rem;
     padding-inline: var(--space-8);
     background: var(--color-text-link);
     color: var(--color-map-nav-on);
-    border-end-start-radius: var(--radius-lg);
-    border-end-end-radius: var(--radius-lg);
-    --color-text-link: var(--color-map-nav-on);
+    border-radius: var(--radius-lg);
   }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='org-banner'] > [data-dl-part='banner-copy'] {
     margin: 0;
     font-size: var(--text-s);
     font-weight: var(--weight-bold);
     text-align: center;
+    --color-text-link: var(--color-map-nav-on);
   }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='org-banner'] > [data-dl-part='banner-close'] {
     position: absolute;
@@ -340,6 +342,8 @@
 
   /* Sidebar (C5-C8: 308 CSS / 205 PNG, #5C2C5E -> #4E1F50, 9 CSS outer left corners). */
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] {
+    grid-column: 1;
+    grid-row: 1;
     position: relative;
     inline-size: var(--size-nav-width);
     display: grid;
@@ -372,6 +376,8 @@
     gap: var(--space-1);
     --c-menu-button-list-min-width: 19.3125rem;
     --c-popup-width: 19.3125rem;
+    --c-menu-button-submenu-min-width: 19.75rem;
+    --c-popup-submenu-width: 19.75rem;
     --c-popup-inline-offset: -1.875rem;
     --c-popup-offset: 0.625rem;
     --c-popup-inset: var(--space-2);
@@ -578,7 +584,8 @@
 
   /* Main conversation pane (S03.1-S03.2: 45 CSS header + 40 CSS tabs = 85 CSS -> #EEEEEE rule at y=83 PNG). */
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] {
-    flex: 1;
+    grid-column: 2;
+    grid-row: 1;
     min-inline-size: 0;
     min-block-size: 0;
     display: grid;
@@ -1053,13 +1060,17 @@
 
   /* Thread panel. */
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='thread'] {
-    flex: 0 1 var(--size-pane-width);
+    grid-column: 3;
+    grid-row: 1;
+    inline-size: var(--size-pane-width);
     min-inline-size: 0;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr) auto;
     background: var(--color-bg);
     border-inline-start: var(--border-hairline) solid var(--color-border);
+    border-start-end-radius: var(--radius-lg);
+    border-end-end-radius: var(--radius-lg);
   }
   [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='thread'] > [data-dl-part='thread-head'] {
     display: flex;
@@ -1291,8 +1302,7 @@
     flex-wrap: wrap;
     gap: var(--space-2);
   }
-  [data-dl='slack-directories-body'] > [data-dl-part='dir-controls'] > [data-dl-part='dir-filters'] > [data-dl-part='filter-pills'] > [data-dl-part='filter-pill'],
-  [data-dl='slack-directories-body'] > [data-dl-part='dir-controls'] > [data-dl-part='dir-filters'] > [data-dl-part='sort-trigger'] {
+  [data-dl='slack-directories-body'] > [data-dl-part='dir-controls'] > [data-dl-part='dir-filters'] > [data-dl-part='filter-pills'] > [data-dl-part='filter-pill'] {
     display: inline-flex;
     align-items: center;
     gap: var(--space-1);
@@ -1302,6 +1312,15 @@
     border-radius: var(--radius-md);
     background: var(--color-bg);
     font-weight: var(--weight-bold);
+  }
+  [data-dl='slack-directories-body'] > [data-dl-part='dir-controls'] > [data-dl-part='dir-filters'] > [data-dl-part='sort-trigger'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding-block: var(--space-1);
+    padding-inline: var(--space-1);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-muted);
   }
   [data-dl='slack-people-grid'] {
     display: grid;
@@ -1791,6 +1810,7 @@
     min-block-size: 0;
     background: var(--color-bg);
     border-start-end-radius: var(--radius-lg);
+    border-end-end-radius: var(--radius-lg);
   }
   [data-dl='slack-slackbot'] > [data-dl-part='sb-top'] {
     position: absolute;
@@ -1806,7 +1826,7 @@
     align-content: center;
     min-block-size: 66rem;
     padding-block-start: var(--space-12);
-    padding-block-end: var(--space-8);
+    padding-block-end: var(--space-4);
     padding-inline: var(--space-6);
   }
   [data-dl='slack-slackbot-center'] {
@@ -1834,29 +1854,30 @@
     --color-bg-sunken: transparent;
   }
   [data-dl='slack-slackbot-center'] > [data-dl-part='sb-prompt-wrap'] {
-    position: relative;
-    isolation: isolate;
     display: grid;
     gap: var(--space-2);
   }
-  [data-dl='slack-slackbot-center'] > [data-dl-part='sb-prompt-wrap']::before {
-    content: '';
-    position: absolute;
-    inset: calc(-1 * var(--space-4));
-    z-index: var(--layer-behind);
-    pointer-events: none;
-    border-radius: var(--radius-lg);
-    background-image:
-      radial-gradient(ellipse at 25% 15%, var(--color-accent-subtle) 0%, transparent 66%),
-      radial-gradient(ellipse at 50% 90%, color-mix(in srgb, var(--color-map-badge) 34%, var(--color-bg)) 0%, transparent 68%),
-      radial-gradient(ellipse at 85% 45%, var(--color-map-brand-tint) 0%, transparent 66%);
-  }
   [data-dl='slack-slackbot-prompt'] {
+    position: relative;
+    isolation: isolate;
     display: grid;
     border-radius: var(--radius-lg);
     background: var(--color-bg);
     --c-text-area-composer-radius: var(--radius-lg);
     --color-border-control: color-mix(in srgb, var(--color-text-link) 12%, color-mix(in srgb, var(--color-map-badge) 18%, var(--color-border)));
+  }
+  [data-dl='slack-slackbot-prompt']::before {
+    content: '';
+    position: absolute;
+    inset-block: calc(-1 * var(--space-5));
+    inset-inline: calc(-1 * var(--space-3));
+    z-index: var(--layer-behind);
+    pointer-events: none;
+    border-radius: var(--radius-lg);
+    background-image:
+      radial-gradient(ellipse 64% 78% at 42% 14%, color-mix(in srgb, var(--color-text-link) 2%, color-mix(in srgb, var(--color-map-nav) 6%, var(--color-bg))) 0%, transparent 74%),
+      radial-gradient(ellipse 62% 78% at 50% 88%, color-mix(in srgb, var(--color-promo-offer) 4%, color-mix(in srgb, var(--color-map-nav) 20%, var(--color-bg))) 0%, transparent 74%),
+      radial-gradient(ellipse 52% 68% at 80% 28%, var(--color-map-brand-tint) 0%, transparent 68%);
   }
   [data-dl='slack-slackbot-center'] > [data-dl-part='sb-prompt-wrap'] > [data-dl-part='sb-disclaimer'] {
     margin: 0;
@@ -2020,14 +2041,24 @@
 
   /* Responsive containers & breakpoint.sm (40rem): sidebar stays visible down to 42rem (672 px), so 906 px benchmark windows show the full shell. */
   [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] {
-    min-inline-size: min(100%, var(--size-pane-width));
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
   }
   [data-dl='slack-workspace']:is([data-narrow], [data-short]) [data-dl='slack-welcome-unreads-card'] {
     block-size: auto;
   }
   @container (max-width: 72rem) {
-    [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='sidebar'] {
+    [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='sidebar'],
+    [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] > [data-dl-part='channel-head'] > [data-dl-part='channel-actions'] > [data-dl-part='facepile'] {
       display: none;
+    }
+    [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] {
+      border-start-start-radius: var(--radius-lg);
+      border-end-start-radius: var(--radius-lg);
+    }
+    [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] > [data-dl-part='tabs'] {
+      gap: var(--space-0-5);
+      padding-block: var(--space-0-5);
     }
   }
   @container (max-width: 68rem) {
@@ -2102,7 +2133,10 @@
       padding-inline: var(--space-4);
     }
     [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='thread'] {
+      grid-column: 1 / -1;
       inline-size: 100%;
+      border-inline-start: 0;
+      border-radius: var(--radius-lg);
     }
     [data-dl='slack-workspace'] > [data-dl-part='window']:has(> [data-dl-part='thread']) > [data-dl-part='conversation'] {
       display: none;

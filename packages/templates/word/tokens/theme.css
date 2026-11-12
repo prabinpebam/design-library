@@ -97,6 +97,7 @@
     --c-colour-field-border: var(--color-border-strong);
     --c-menu-button-radius: var(--c-button-radius);
     --c-popup-width: var(--size-pane-width);
+    --c-popup-submenu-width: var(--c-popup-width);
     --c-popup-height: var(--size-pane-width);
     --c-popup-border: var(--color-border);
     --c-popup-bg: var(--color-bg-raised);

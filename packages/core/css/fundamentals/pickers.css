@@ -181,6 +181,11 @@
     --popup-submenu-offset: var(--c-popup-submenu-offset);
   }
 
+  [data-dl='menu-button'] > [data-dl-part='popup'][data-submenu] {
+    min-inline-size: max(var(--popup-min-inline, 0px), var(--c-menu-button-submenu-min-width));
+    max-inline-size: min(var(--c-popup-submenu-width), calc(100vw - 2 * var(--space-margin-page)));
+  }
+
   [data-dl='menu-button'] > [data-dl-part='popup'] [data-dl-part='menu-heading'] {
     padding-inline: var(--c-list-item-padding-inline);
     padding-block: var(--c-list-item-padding-block);

@@ -203,6 +203,7 @@
   --c-menu-button-fill: var(--c-button-default-fill);
   --c-menu-button-expanded-fill: var(--state-selected);
   --c-menu-button-list-min-width: 0px;
+  --c-menu-button-submenu-min-width: var(--c-menu-button-list-min-width);
   --c-menu-button-padding-block: var(--c-popup-inset);
   --c-menu-button-separator-margin: 0px;
   --c-menu-button-heading-weight: var(--weight-bold);
@@ -212,6 +213,7 @@
   --c-popup-inline-offset: 0px;
   --c-popup-submenu-offset: 0px;
   --c-popup-width: var(--size-pane-width);
+  --c-popup-submenu-width: var(--c-popup-width);
   --c-popup-height: var(--size-pane-width);
   --c-popup-radius: var(--radius-md);
   --c-popup-border-width: var(--border-hairline);

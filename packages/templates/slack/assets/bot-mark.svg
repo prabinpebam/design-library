@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect x="2" y="2" width="44" height="44" rx="11" fill="#4f2554"/>
-  <path d="M8 22c0-7.7 6.3-14 14-14h4v14c0 7.7-6.3 14-14 14H8V22z" fill="#36c5f0"/>
-  <path d="M26 8h4c7.7 0 14 6.3 14 14v4H30c-7.7 0-14-6.3-14-14V8h10z" fill="#2eb67d"/>
-  <path d="M40 26c0 7.7-6.3 14-14 14h-4V26c0-7.7 6.3-14 14-14h4v14z" fill="#ecb22e"/>
-  <path d="M22 40h-4c-7.7 0-14-6.3-14-14v-4h14c7.7 0 14 6.3 14 14v4H22z" fill="#e01e5a"/>
-  <circle cx="24" cy="24" r="9" fill="#ffffff"/>
-  <path d="M24 18l1.6 4.4L30 24l-4.4 1.6L24 30l-1.6-4.4L18 24l4.4-1.6z" fill="#611f69"/>
+  <path d="M12 0h12v24H0V12A12 12 0 0 1 12 0z" fill="#36c5f0"/>
+  <path d="M24 0h12a12 12 0 0 1 12 12v12H24V0z" fill="#2eb67d"/>
+  <path d="M24 24h24v12a12 12 0 0 1-12 12H24V24z" fill="#ecb22e"/>
+  <path d="M0 24h24v24H12A12 12 0 0 1 0 36V24z" fill="#e01e5a"/>
+  <path d="M24 8c2.6 8.8 7.2 13.4 16 16-8.8 2.6-13.4 7.2-16 16-2.6-8.8-7.2-13.4-16-16 8.8-2.6 13.4-7.2 16-16z" fill="#ffffff"/>
 </svg>
