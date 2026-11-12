@@ -28,11 +28,15 @@
             },
             "name": {
               "type": "string"
+            },
+            "owner": {
+              "type": "string"
             }
           },
           "required": [
             "name",
-            "modified"
+            "modified",
+            "owner"
           ],
           "type": "object"
         },
@@ -50,6 +54,9 @@
             "$ref": "#/$defs/WordRecentFile"
           },
           "type": "array"
+        },
+        "filterLabel": {
+          "type": "string"
         },
         "footerNav": {
           "items": {
@@ -142,6 +149,7 @@
         "recommended",
         "tabs",
         "searchPlaceholder",
+        "filterLabel",
         "columns",
         "files"
       ],
@@ -491,10 +499,27 @@
         "author": {
           "type": "string"
         },
+        "date": {
+          "type": "string"
+        },
+        "icon": {
+          "enum": [
+            "comment",
+            "edit",
+            "people"
+          ],
+          "type": "string"
+        },
         "id": {
           "type": "string"
         },
-        "snippet": {
+        "preview": {
+          "enum": [
+            "survey",
+            "tide",
+            "mooring",
+            "inspection"
+          ],
           "type": "string"
         },
         "title": {
@@ -504,9 +529,10 @@
       "required": [
         "id",
         "title",
-        "snippet",
-        "author",
-        "activity"
+        "activity",
+        "date",
+        "icon",
+        "preview"
       ],
       "type": "object"
     },

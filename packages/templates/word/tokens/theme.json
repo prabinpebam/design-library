@@ -618,31 +618,31 @@
   "$description": "4 CSS px popup corner radius matching 05-design-gallery.png."
  },
  "c.data-table.outline": {
-  "$value": "transparent",
-  "$description": "Backstage Recent table sits inside its rounded panel with no outer frame."
+  "$value": "{color.border}",
+  "$description": "Backstage Recent file table card #DCDCDC border (12-backstage-home.png)."
  },
  "c.data-table.divider": {
   "$value": "{color.border}",
   "$description": "Hairline between Backstage recent-file rows."
  },
  "c.data-table.head-bg": {
-  "$value": "transparent",
-  "$description": "Backstage table column headers sit bare over the panel."
+  "$value": "{color.bg-control}",
+  "$description": "Backstage table column headers on the white card surface."
  },
  "c.data-table.head-fg": {
   "$value": "{color.text-muted}",
-  "$description": "Muted column header labels (Name, Date modified)."
+  "$description": "Muted column header labels (Name, Date modified, Owner)."
  },
  "c.data-table.cell-block": {
   "$value": "{space.2}",
   "$description": "Compact 8 CSS px row padding in Backstage Recent list."
  },
  "c.data-table.cell-inline": {
-  "$value": "{space.2}",
-  "$description": "Compact 8 CSS px inline cell padding."
+  "$value": "{space.3}",
+  "$description": "12 CSS px inline cell padding inside the Backstage Recent table card."
  },
  "c.data-table.radius": {
-  "$value": "0",
-  "$description": "Flush row dividers inside the Backstage files panel."
+  "$value": "{radius.md}",
+  "$description": "8 CSS px rounded corners on the Backstage Recent DataTable card (12-backstage-home.png)."
  }
 }

@@ -1131,31 +1131,38 @@
       "recommended": [
         {
           "id": "rec-1",
-          "title": "Harbour survey Q4 summary",
-          "snippet": "Breakwater depth readings, tide conditions and mooring checks across fourteen sections.",
-          "author": "Jamie Park",
-          "activity": "You edited · 2h ago"
+          "author": "Maya Chen",
+          "activity": "commented on",
+          "title": "Harbour_Survey_Q4_Proposal.docx",
+          "date": "12 November",
+          "icon": "comment",
+          "preview": "survey"
         },
         {
           "id": "rec-2",
-          "title": "East jetty maintenance plan",
-          "snippet": "Scheduled diver inspection, capping stone reset and seasonal fender replacement.",
-          "author": "Maya Chen",
-          "activity": "Maya Chen shared · Yesterday"
+          "activity": "You opened this file",
+          "title": "Breakwater Tide Analysis.docx",
+          "date": "10 November",
+          "icon": "edit",
+          "preview": "tide"
         },
         {
           "id": "rec-3",
-          "title": "Coastal mooring guidelines",
-          "snippet": "Updated harbour speed limits, visitor berth allocations and winter storm procedures.",
           "author": "Alex Rivera",
-          "activity": "Alex Rivera commented · Tue"
+          "activity": "shared this file",
+          "title": "Coastal Mooring Entry Guidelines.docx",
+          "date": "8 November",
+          "icon": "people",
+          "preview": "mooring"
         },
         {
           "id": "rec-4",
-          "title": "Spring tide inspection log",
-          "snippet": "Weekly low-water sounding notes from the lighthouse steps to the fuel jetty.",
           "author": "Sam Patel",
-          "activity": "Sam Patel edited · Mon"
+          "activity": "shared this file",
+          "title": "Spring Tide Inspection Report.docx",
+          "date": "5 November",
+          "icon": "people",
+          "preview": "inspection"
         }
       ],
       "tabs": [
@@ -1164,7 +1171,8 @@
         { "id": "shared", "label": "Shared with Me" }
       ],
       "searchPlaceholder": "Search for a file",
-      "columns": { "name": "Name", "modified": "Date modified" },
+      "filterLabel": "Filter list",
+      "columns": { "name": "Name", "modified": "Date modified", "owner": "Owner" },
       "files": [
         { "id": "f1", "name": "Harbour survey notes.docx", "location": "Documents › Surveys", "modified": "Just now", "owner": "Jamie Park", "favorite": true },
         { "id": "f2", "name": "East breakwater tide log.docx", "location": "Shared › Coastal Ops", "modified": "Yesterday at 4:18 PM", "owner": "Maya Chen", "shared": true },
@@ -1175,8 +1183,9 @@
       ]
     },
     "copy": {
-      "backstageHome": "File backstage home",
-      "feedbackTitle": "Send feedback",
+      "backstageHome": "File home",
+      "backstageNav": "File menu",
+      "feedbackTitle": "Share thoughts",
       "helpTitle": "Help",
       "thisDocument": "This Document",
       "builtIn": "Built-In",

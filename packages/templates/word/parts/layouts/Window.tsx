@@ -325,15 +325,35 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
         {backstageOpen && bs ? (
           <div data-dl="word-backstage">
-            <nav data-dl-part="rail" data-density="compact" aria-label={c.backstageHome}>
+            <nav data-dl-part="rail" data-density="compact" aria-label={c.backstageNav ?? c.backstageHome}>
               <div data-dl-part="back">
-                <Button label={bs.backLabel} icon={'bs-back' as IconName} iconOnly size="s" emphasis="quiet" onClick={() => setBackstageOpen(false)} />
+                <Button
+                  label={bs.backLabel}
+                  icon={'bs-back' as IconName}
+                  iconOnly
+                  size="s"
+                  emphasis="quiet"
+                  onClick={() => {
+                    setBackstageOpen(false);
+                    setTab((prev) => (prev === 'file' ? 'home' : prev));
+                  }}
+                />
               </div>
               <div data-dl-part="nav-group">
                 {bs.primaryNav.map((item) => (
                   <div key={item.id} data-dl-part="nav-item" data-active={item.active ? '' : undefined}>
                     {/* binary-setting: active Backstage section in the File navigation rail, matching 12-backstage-home.png. */}
-                    <Button label={item.label} icon={item.icon as IconName} size="s" emphasis="quiet" align="start" pressed={item.active} onClick={() => { if (item.id !== 'home') setBackstageOpen(false); }} />
+                    <Button
+                      label={item.label}
+                      icon={item.icon as IconName}
+                      size="s"
+                      emphasis="quiet"
+                      align="start"
+                      pressed={item.active}
+                      onClick={() => {
+                        if (item.id !== 'home') setBackstageOpen(false);
+                      }}
+                    />
                   </div>
                 ))}
               </div>
@@ -361,51 +381,57 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               <ScrollArea label={c.backstageHome} mode="always" bar="gutter">
                 <div data-dl="word-backstage-stage">
                   <section data-dl-part="hero">
-                    <Heading level={1} size={3}>{bs.heroHeading}</Heading>
+                    <Heading level={1} size={2}>{bs.heroHeading}</Heading>
                     <div data-dl-part="hero-controls">
-                      {bsPromptOpen ? (
-                        <div data-dl-part="prompt-field">
-                          <TextField label={bs.promptPlaceholder} hideLabel icon="plus" size="s" placeholder={bs.promptPlaceholder} value={bsPrompt} onChange={setBsPrompt} />
-                        </div>
-                      ) : (
-                        <div data-dl="word-bs-prompt">
-                          <span data-dl-part="lead">
-                            <Button label={bs.promptPlaceholder} icon="plus" size="s" emphasis="quiet" tone="inherit" align="start" onClick={() => setBsPromptOpen(true)} />
-                          </span>
-                          <span data-dl-part="actions">
-                            <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" />
-                            <span data-dl-part="create-pill">
-                              <Button label={bs.createLabel} size="xs" disabled />
+                      <div data-dl-part="prompt-box">
+                        {bsPromptOpen ? (
+                          <div data-dl-part="prompt-field">
+                            <TextField label={bs.promptPlaceholder} hideLabel icon="plus" size="s" placeholder={bs.promptPlaceholder} value={bsPrompt} onChange={setBsPrompt} />
+                          </div>
+                        ) : (
+                          <div data-dl="word-bs-prompt">
+                            <span data-dl-part="lead">
+                              <Button label={bs.promptPlaceholder} icon="plus" size="s" emphasis="quiet" tone="inherit" align="start" onClick={() => setBsPromptOpen(true)} />
                             </span>
-                          </span>
-                        </div>
-                      )}
+                            <span data-dl-part="actions">
+                              <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" />
+                              <span data-dl-part="create-pill">
+                                <Button label={bs.createLabel} size="xs" disabled />
+                              </span>
+                            </span>
+                          </div>
+                        )}
+                      </div>
                       <div data-dl-part="suggestions" data-density="compact">
                         {bs.suggestions.map((s) => (
-                          <Button key={s} label={s} size="s" onClick={() => { setBsPrompt(s); setBsPromptOpen(true); }} />
+                          <span key={s} data-dl-part="suggestion-chip">
+                            <Button label={s} size="s" onClick={() => { setBsPrompt(s); setBsPromptOpen(true); }} />
+                          </span>
                         ))}
                       </div>
                     </div>
                   </section>
 
                   <section data-dl-part="new-section">
-                    <div data-dl-part="sec-head">
-                      <span data-dl-part="sec-title">
-                        <Icon name={'qat-chevron' as IconName} size="sm" />
-                        <Heading level={2} size="label">{bs.newHeading}</Heading>
-                      </span>
-                      <span data-dl-part="more-link">
-                        <Button label={bs.moreTemplates} size="xs" emphasis="quiet" />
-                        <Icon name={'bs-arrow-right' as IconName} size="sm" />
-                      </span>
+                    <div data-dl-part="head">
+                      <div data-dl-part="sec-head">
+                        <span data-dl-part="sec-title">
+                          <Icon name={'chevron-down' as IconName} size="sm" />
+                          <Heading level={2} size={4}>{bs.newHeading}</Heading>
+                        </span>
+                        <span data-dl-part="more-link">
+                          <Button label={bs.moreTemplates} size="xs" emphasis="quiet" tone="inherit" />
+                          <Icon name={'bs-arrow-right' as IconName} size="sm" />
+                        </span>
+                      </div>
+                      <p data-dl-part="cloud-note">
+                        <span>{bs.cloudNotice} </span>
+                        <span data-dl-part="cloud-link">{bs.cloudLink}</span>
+                      </p>
                     </div>
-                    <p data-dl-part="cloud-note">
-                      <span>{bs.cloudNotice} </span>
-                      <span data-dl-part="cloud-link">{bs.cloudLink}</span>
-                    </p>
                     <div data-dl-part="template-row">
                       {bs.templates.map((t) => (
-                        <div key={t.id} data-dl="word-bs-template">
+                        <div key={t.id} data-dl="word-bs-template" data-dl-part="template-card">
                           <div data-dl-part="thumb-box">
                             <Button label={t.title} icon="file" iconOnly size="xs" emphasis="quiet" onClick={() => setBackstageOpen(false)} />
                             {templateThumb(t)}
@@ -417,27 +443,35 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                   </section>
 
                   <section data-dl-part="rec-section">
-                    <div data-dl-part="sec-head">
-                      <span data-dl-part="sec-title">
-                        <Icon name={'qat-chevron' as IconName} size="sm" />
-                        <Heading level={2} size="label">{bs.recommendedHeading}</Heading>
-                      </span>
+                    <div data-dl-part="head">
+                      <div data-dl-part="sec-head">
+                        <span data-dl-part="sec-title">
+                          <Icon name={'chevron-down' as IconName} size="sm" />
+                          <Heading level={2} size={4}>{bs.recommendedHeading}</Heading>
+                        </span>
+                      </div>
                     </div>
                     <div data-dl-part="rec-grid">
                       {bs.recommended.map((rc) => (
-                        <article key={rc.id} data-dl="word-rec-card">
+                        <article key={rc.id} data-dl="word-rec-card" data-dl-part="rec-card" aria-label={rc.title}>
                           <div data-dl-part="card-top">
-                            <div data-dl-part="card-head">
+                            <div data-dl-part="card-activity">
                               <span data-dl-part="doc-badge">
                                 <Icon name={'app-doc-mark' as IconName} size="sm" />
                               </span>
-                              <Heading level={3} size="label">{rc.title}</Heading>
+                              <Icon name={rc.icon as IconName} size="sm" />
+                              <span data-dl-part="activity-words">
+                                {rc.author && <strong data-dl-part="actor">{rc.author} </strong>}
+                                <span>{rc.activity}</span>
+                              </span>
                             </div>
-                            <p data-dl-part="snippet">{rc.snippet}</p>
+                            <strong data-dl-part="card-title">{rc.title}</strong>
+                            <span data-dl-part="card-date">{rc.date}</span>
                           </div>
-                          <div data-dl-part="card-foot">
-                            <Avatar name={rc.author} size={24} />
-                            <Text variant="caption" tone="muted">{rc.activity}</Text>
+                          <div data-dl-part="card-well" aria-hidden="true">
+                            <span data-dl-part="mini-doc">
+                              <Icon name={`bs-rec-${rc.preview}` as IconName} />
+                            </span>
                           </div>
                         </article>
                       ))}
@@ -460,37 +494,46 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                           </span>
                         ))}
                       </div>
-                      <div data-dl-part="file-search">
-                        <TextField label={bs.searchPlaceholder} hideLabel type="search" icon="search" size="s" placeholder={bs.searchPlaceholder} value={fileQuery} onChange={setFileQuery} />
+                      <div data-dl-part="filter-end">
+                        <div data-dl-part="file-search">
+                          <TextField label={bs.searchPlaceholder} hideLabel type="search" icon="search" size="s" placeholder={bs.searchPlaceholder} value={fileQuery} onChange={setFileQuery} />
+                        </div>
+                        <span data-dl-part="filter-btn">
+                          <Button label={bs.filterLabel} icon="filter-lines" iconOnly size="s" emphasis="quiet" />
+                        </span>
                       </div>
                     </div>
-                    <DataTable
-                      label={bs.tabs.find((t) => t.id === fileFilter)?.label ?? 'Recent'}
-                      columns={[
-                        { key: 'name', header: bs.columns.name },
-                        { key: 'modified', header: bs.columns.modified },
-                      ]}
-                      rows={bs.files
-                        .filter((f) => (fileFilter === 'favorites' ? f.favorite : fileFilter === 'shared' ? f.shared : true))
-                        .filter((f) => !fileQuery || f.name.toLowerCase().includes(fileQuery.toLowerCase()))
-                        .map((f) => ({
-                          id: f.id,
-                          cells: {
-                            name: (
-                              <span data-dl="word-file-cell">
-                                <span data-dl-part="doc-badge">
-                                  <Icon name={'app-doc-mark' as IconName} size="sm" />
+                    <div data-dl-part="table-card">
+                      <DataTable
+                        label={bs.tabs.find((t) => t.id === fileFilter)?.label ?? 'Recent'}
+                        columns={[
+                          { key: 'name', header: bs.columns.name },
+                          { key: 'modified', header: bs.columns.modified },
+                          { key: 'owner', header: bs.columns.owner },
+                        ]}
+                        rows={bs.files
+                          .filter((f) => (fileFilter === 'favorites' ? f.favorite : fileFilter === 'shared' ? f.shared : true))
+                          .filter((f) => !fileQuery || f.name.toLowerCase().includes(fileQuery.toLowerCase()))
+                          .map((f) => ({
+                            id: f.id,
+                            cells: {
+                              name: (
+                                <span data-dl="word-file-cell">
+                                  <span data-dl-part="doc-badge">
+                                    <Icon name={'app-doc-mark' as IconName} size="sm" />
+                                  </span>
+                                  <span data-dl-part="file-meta">
+                                    <span data-dl-part="file-title">{f.name}</span>
+                                    <span data-dl-part="file-loc">{f.location}</span>
+                                  </span>
                                 </span>
-                                <span data-dl-part="file-meta">
-                                  <span data-dl-part="file-title">{f.name}</span>
-                                  <span data-dl-part="file-loc">{f.location} · {f.owner}</span>
-                                </span>
-                              </span>
-                            ),
-                            modified: <span data-dl="word-file-mod">{f.modified}</span>,
-                          },
-                        }))}
-                    />
+                              ),
+                              modified: <span data-dl="word-file-mod">{f.modified}</span>,
+                              owner: <span data-dl="word-file-owner">{f.owner}</span>,
+                            },
+                          }))}
+                      />
+                    </div>
                   </section>
                 </div>
               </ScrollArea>

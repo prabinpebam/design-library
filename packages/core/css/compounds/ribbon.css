@@ -54,6 +54,10 @@
     padding: var(--c-ribbon-padding);
   }
 
+  [data-dl='ribbon-groups'] :is(button, input, select, [tabindex]):focus-visible {
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
   [data-dl='ribbon-groups'] > [data-dl-part='group'] {
     position: relative;
     display: grid;

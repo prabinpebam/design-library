@@ -102,9 +102,11 @@ export interface WordBackstageTemplate {
 export interface WordRecommendedCard {
   id: string;
   title: string;
-  snippet: string;
-  author: string;
+  author?: string;
   activity: string;
+  date: string;
+  icon: 'comment' | 'edit' | 'people';
+  preview: 'survey' | 'tide' | 'mooring' | 'inspection';
 }
 
 export interface WordRecentFile {
@@ -135,7 +137,8 @@ export interface WordBackstage {
   recommended: WordRecommendedCard[];
   tabs: { id: 'recent' | 'favorites' | 'shared'; label: string }[];
   searchPlaceholder: string;
-  columns: { name: string; modified: string };
+  filterLabel: string;
+  columns: { name: string; modified: string; owner: string };
   files: WordRecentFile[];
 }
 

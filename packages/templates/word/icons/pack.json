@@ -764,6 +764,14 @@
         [
           "path",
           {
+            "d": "M5.2 8.5L10 4.6l4.8 3.9V16h-3.4v-4.2H8.6V16H5.2z",
+            "data-dl-part": "accent-fill",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
             "d": "M3.5 9.5L10 4l6.5 5.5M5.2 8.5V16h3.4v-4.2h2.8V16h3.4V8.5"
           }
         ]
@@ -895,6 +903,332 @@
         ]
       ],
       "from": "bs-print",
+      "custom": true
+    },
+    "bs-rec-inspection": {
+      "v": "0 0 202 148",
+      "g": {
+        "fill": "none",
+        "stroke": "currentColor",
+        "strokeWidth": "1"
+      },
+      "c": [
+        [
+          "rect",
+          {
+            "x": "0.5",
+            "y": "0.5",
+            "width": "201",
+            "height": "147",
+            "data-dl-part": "surface",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M0.5 147.5V0.5h201v147",
+            "data-dl-part": "muted"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 24h142M22 31h84",
+            "strokeWidth": "2.8"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 44h54M22 50h46",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 64h66",
+            "strokeWidth": "2.2"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 74h156M22 80h150M22 86h154M22 92h144M22 98h152M22 104h108",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 118h154M22 124h146M22 130h136M22 136h94",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ]
+      ],
+      "from": "bs-rec-inspection",
+      "custom": true
+    },
+    "bs-rec-mooring": {
+      "v": "0 0 202 148",
+      "g": {
+        "fill": "none",
+        "stroke": "currentColor",
+        "strokeWidth": "1"
+      },
+      "c": [
+        [
+          "rect",
+          {
+            "x": "0.5",
+            "y": "0.5",
+            "width": "201",
+            "height": "147",
+            "data-dl-part": "surface",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M0.5 147.5V0.5h201v147",
+            "data-dl-part": "muted"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 24h136",
+            "strokeWidth": "3"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 38h64",
+            "data-dl-part": "accent",
+            "strokeWidth": "2.2"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 48h158M22 54h152M22 60h156M22 66h148M22 72h154M22 78h112",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 92h156M22 98h150M22 104h154M22 110h142M22 116h98",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 130h152M22 136h128",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ]
+      ],
+      "from": "bs-rec-mooring",
+      "custom": true
+    },
+    "bs-rec-survey": {
+      "v": "0 0 202 148",
+      "g": {
+        "fill": "none",
+        "stroke": "currentColor",
+        "strokeWidth": "1"
+      },
+      "c": [
+        [
+          "rect",
+          {
+            "x": "0.5",
+            "y": "0.5",
+            "width": "201",
+            "height": "147",
+            "data-dl-part": "surface",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M0.5 147.5V0.5h201v147",
+            "data-dl-part": "muted"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M32 30h138",
+            "data-dl-part": "accent",
+            "strokeWidth": "3"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 44h36",
+            "data-dl-part": "accent",
+            "strokeWidth": "2.2"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 54h156M22 60h148M22 66h152M22 72h96",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 86h154M22 92h142M22 98h118",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "circle",
+          {
+            "cx": "28",
+            "cy": "112",
+            "r": "1.4",
+            "fill": "currentColor",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M34 112h88",
+            "strokeWidth": "1.6"
+          }
+        ],
+        [
+          "circle",
+          {
+            "cx": "28",
+            "cy": "121",
+            "r": "1.4",
+            "fill": "currentColor",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M34 121h76",
+            "strokeWidth": "1.6"
+          }
+        ],
+        [
+          "circle",
+          {
+            "cx": "28",
+            "cy": "130",
+            "r": "1.4",
+            "fill": "currentColor",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M34 130h94",
+            "strokeWidth": "1.6"
+          }
+        ]
+      ],
+      "from": "bs-rec-survey",
+      "custom": true
+    },
+    "bs-rec-tide": {
+      "v": "0 0 202 148",
+      "g": {
+        "fill": "none",
+        "stroke": "currentColor",
+        "strokeWidth": "1"
+      },
+      "c": [
+        [
+          "rect",
+          {
+            "x": "0.5",
+            "y": "0.5",
+            "width": "201",
+            "height": "147",
+            "data-dl-part": "surface",
+            "stroke": "none"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M0.5 147.5V0.5h201v147",
+            "data-dl-part": "muted"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 26h144",
+            "data-dl-part": "accent",
+            "strokeWidth": "3.2"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 44h48",
+            "strokeWidth": "2.2"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 54h156M22 60h150M22 66h144M22 72h82",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 84h154M22 90h146M22 96h132M22 102h90",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 118h56",
+            "strokeWidth": "2.2"
+          }
+        ],
+        [
+          "path",
+          {
+            "d": "M22 128h148M22 134h120",
+            "data-dl-part": "muted",
+            "strokeWidth": "1.5"
+          }
+        ]
+      ],
+      "from": "bs-rec-tide",
       "custom": true
     },
     "bs-save-as": {

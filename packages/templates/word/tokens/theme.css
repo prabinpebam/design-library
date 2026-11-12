@@ -120,13 +120,13 @@
     --c-popover-padding: 0;
     --c-popover-gap: var(--space-1-5);
     --c-popup-radius: 0.25rem;
-    --c-data-table-outline: transparent;
+    --c-data-table-outline: var(--color-border);
     --c-data-table-divider: var(--color-border);
-    --c-data-table-head-bg: transparent;
+    --c-data-table-head-bg: var(--color-bg-control);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-data-table-cell-block: var(--space-2);
-    --c-data-table-cell-inline: var(--space-2);
-    --c-data-table-radius: 0;
+    --c-data-table-cell-inline: var(--space-3);
+    --c-data-table-radius: var(--radius-md);
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);
