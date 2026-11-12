@@ -124,9 +124,9 @@
     "Icon"
   ],
   "tokens": [
-    "--border-hairline",
     "--c-chip-check",
     "--c-chip-edge",
+    "--c-chip-edge-width",
     "--c-chip-fill",
     "--c-chip-gap",
     "--c-chip-media",

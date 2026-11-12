@@ -22,6 +22,7 @@
   "c.chip.weight": { "$value": "500", "$description": "Chip words 14/20 w500: S-1280-L." },
   "c.chip.check": { "$value": "none", "$description": "The on chip has no check mark; it reads by its solid fill (S-1280-L)." },
   "c.chip.edge": { "$value": "transparent", "$description": "Chips have no outline; the fill is the boundary (S-1280-L)." },
+  "c.chip.edge-width": { "$value": "0rem", "$description": "No outline at all, so \"All\" is 40.4 wide (12 + words + 12) and the chips sit centred at y66.5 in the 56 row (S-1280-L, H-1280-L)." },
   "c.chip.fill": { "$value": { "light": "rgba(0, 0, 0, 0.05)", "dark": "rgba(255, 255, 255, 0.1)" }, "$description": "A chip at rest: unmeasured on the chip itself; the tonal fill measured on the watch page's pills (W-1280-L/D)." },
   "color.map.chip": { "$value": { "light": "#0f0f0f", "dark": "#f1f1f1" }, "$description": "The on chip's fill (and edge): S-1280-L #0F0F0F, S-1280-D #F1F1F1." },
   "color.map.chip-tint": { "$value": "{color.map.chip}", "$description": "The on chip is a solid fill: S-1280-L/D." },

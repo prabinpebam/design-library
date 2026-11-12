@@ -17,6 +17,7 @@
     --c-chip-weight: 500;
     --c-chip-check: none;
     --c-chip-edge: transparent;
+    --c-chip-edge-width: 0rem;
     --c-chip-fill: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
     --color-map-chip: light-dark(#0f0f0f, #f1f1f1);
     --color-map-chip-tint: var(--color-map-chip);

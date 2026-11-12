@@ -819,6 +819,7 @@
   --c-chip-media: var(--size-icon-md);
   --c-chip-fill: var(--color-bg-control);
   --c-chip-edge: var(--color-border-control);
+  --c-chip-edge-width: var(--border-hairline);
   --c-chip-selected-ring: var(--border-hairline);
   --c-chip-selected-text: var(--color-text);
   --c-chip-weight: var(--weight-regular);
