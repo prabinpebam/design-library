@@ -176,6 +176,12 @@
     transition: opacity var(--duration-change) var(--easing-standard);
   }
 
+  /* Reduced motion with a reveal that asks to swap (`reducedMotion: 'swap'`): the tone and the pair change at once. */
+  [data-dl='image'][data-reveal-swap] > img,
+  [data-dl='image'][data-reveal-swap]::after {
+    transition: none;
+  }
+
   :is([data-dl='image']:hover, :is(a, button, [data-dl='card'], [data-tone-area]):is(:hover, :focus-visible) [data-dl='image'], :is([data-dl='card'], [data-tone-area]):focus-within [data-dl='image'])[data-alternate=''] > img[data-dl-part='alternate'][data-ready] {
     opacity: 1;
   }

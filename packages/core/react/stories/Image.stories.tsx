@@ -49,6 +49,8 @@ const stipple: PictureReveal = ({ context, width, height, progress, time, paint 
   paint('alternate');
   context.restore();
 };
+/** Under reduced motion this one swaps at once rather than fading, as a brand's stipple may ask. */
+stipple.reducedMotion = 'swap';
 /** A generic shape set (MP8), the library's own art: drawn in currentColor on a 100-unit square, spilling past it. */
 const dots = (
   <svg viewBox="0 0 100 100" focusable="false">
@@ -284,7 +286,7 @@ export default {
     {
       title: 'Your own reveal: a wipe and a stipple',
       description:
-        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows. Left, a wipe from the start edge; right, a stipple built on the library’s own field from @design-library/core/effects (the dots ImageGeneration draws), growing darker noise first. Same hook, different drawing. From data, a template registers its reveals by name (registry.reveals, G4) and a picture in a media block with reveal: true rests grey and draws its colour with the template’s default reveal (a name picks another); without one it fades from grey. A reveal that keeps its own pacing reads linear (the even share of the time) instead of the eased progress.',
+        'reveal draws the change to the pair yourself, on a canvas over the picture: the library calls it every frame with the progress (0 to 1 while pointed at or focused, back to 0 after) and paint, which draws either picture as the frame fits it. The library keeps the triggers, the timing and reduced motion: with reduced motion your drawing isn’t called and the plain fade shows (a reveal that sets reducedMotion: “swap”, as the stipple here does, changes at once instead). Left, a wipe from the start edge; right, a stipple built on the library’s own field from @design-library/core/effects (the dots ImageGeneration draws), growing darker noise first. Same hook, different drawing. From data, a template registers its reveals by name (registry.reveals, G4) and a picture in a media block with reveal: true rests grey and draws its colour with the template’s default reveal (a name picks another); without one it fades from grey. A reveal that keeps its own pacing reads linear (the even share of the time) instead of the eased progress.',
       code: `const wipe: PictureReveal = ({ context, width, height, progress, paint }) => {
   paint('picture');
   context.save(); context.beginPath(); context.rect(0, 0, width * progress, height); context.clip();

@@ -138,7 +138,7 @@
         {
           "name": "reveal",
           "type": "PictureReveal",
-          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the crossfade shows instead. Needs `alternate`. With a `treatment` whose `active` differs, the tone holds at rest while a reveal draws (the reveal owns the change); reduced motion keeps the tone's change. A template's reveal presets (`registry.reveals`) reach a picture through its block's `reveal`."
+          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the crossfade shows instead (or the change at once, when the reveal declares `reducedMotion: 'swap'`). Needs `alternate`. With a `treatment` whose `active` differs, the tone holds at rest while a reveal draws (the reveal owns the change); reduced motion keeps the tone's change. A template's reveal presets (`registry.reveals`) reach a picture through its block's `reveal`."
         }
       ]
     },

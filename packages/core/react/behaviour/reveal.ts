@@ -27,8 +27,12 @@ export interface PictureRevealFrame {
   paint: (which: 'picture' | 'alternate') => void;
 }
 
-/** Draws one frame of a reveal: called by the library on every animation frame while the reveal runs. */
-export type PictureReveal = (frame: PictureRevealFrame) => void;
+/**
+ * Draws one frame of a reveal: called by the library on every animation frame while the reveal runs. Under reduced
+ * motion it isn't called; the picture's own change shows instead, as a fade (`reducedMotion: 'fade'`, the default) or at
+ * once (`'swap'`, for a brand whose reveal swaps without motion).
+ */
+export type PictureReveal = ((frame: PictureRevealFrame) => void) & { reducedMotion?: 'fade' | 'swap' };
 
 const ms = (v: string, fallback: number) => {
   const n = parseFloat(v);
@@ -70,7 +74,7 @@ export function useReveal(
   frame: RefObject<HTMLElement | null>,
   canvas: RefObject<HTMLCanvasElement | null>,
   options: { reveal?: PictureReveal; picture: () => HTMLImageElement | null; alternate: () => HTMLImageElement | null; ready: boolean; fit: 'cover' | 'contain'; focal?: { x: number; y: number } },
-): { drawing: boolean; owns: boolean } {
+): { drawing: boolean; owns: boolean; swap: boolean } {
   const { reveal, ready } = options;
   const latest = useRef(options);
   latest.current = options;
@@ -175,5 +179,6 @@ export function useReveal(
   }, [drawing, frame, canvas]);
 
   // `owns`: a reveal will draw the change (given, motion allowed), so a picture's tone holds at rest meanwhile (G4).
-  return { drawing, owns: !!reveal && !reduce };
+  // `swap`: reduced motion, and the reveal asks for its change at once instead of the fade.
+  return { drawing, owns: !!reveal && !reduce, swap: !!reveal && reduce && reveal.reducedMotion === 'swap' };
 }
