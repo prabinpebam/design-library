@@ -1080,6 +1080,11 @@
         "$value": "{space.inline-pair}",
         "$description": "Between an icon, the words and the chevron (echoed for space contexts)"
       },
+      "padding-block": {
+        "$type": "dimension",
+        "$value": "{c.popup.inset}",
+        "$description": "Block padding at the top and bottom of a MenuButton's popup list. (echoed for space contexts)"
+      },
       "padding-inline": {
         "$type": "dimension",
         "$value": "{space.inset-sm}",

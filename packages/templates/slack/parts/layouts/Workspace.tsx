@@ -143,7 +143,8 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     const viewport = timeline.current;
     if (!viewport || search || tab !== 'messages') return;
     if (localSent.length > 0) viewport.scrollTop = viewport.scrollHeight;
-    else if (!isAma) viewport.scrollTop = 64;
+    else if (isAma) viewport.scrollTop = 36;
+    else viewport.scrollTop = 152;
   }, [localSent.length, channel, isAma, search, tab]);
 
   const send = async (target: string) => {
@@ -245,8 +246,9 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   };
 
   const sections: WorkspaceRecord['sections'] = view.sections.map((section) => {
+    const baseItems = section.collapsible && isAma && view.amaChannel.channels ? view.amaChannel.channels : section.items;
     const extra = section.collapsible && made.length ? made.map((name) => ({ name, icon: 'hash' as const, unread: true })) : [];
-    const filtered = [...section.items, ...extra].filter(
+    const filtered = [...baseItems, ...extra].filter(
       (item) => !sidebarFilter.trim() || item.name.toLowerCase().includes(sidebarFilter.trim().toLowerCase()),
     );
     return { ...section, items: filtered };
@@ -377,11 +379,14 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               <time data-dl-part="time">{m.time}</time>
             </div>
           )}
-          <Text>
-            {m.mention && <span data-dl-part="mention">{m.mention} </span>}
-            {m.text}
-            {m.edited && <span data-dl-part="edited"> ({c.edited ?? 'edited'})</span>}
-          </Text>
+          {(m.text || m.mention || m.edited) && (
+            <Text>
+              {m.mention && <span data-dl-part="mention">{m.mention} </span>}
+              {m.text}
+              {m.edited && <span data-dl-part="edited"> ({c.edited ?? 'edited'})</span>}
+            </Text>
+          )}
+          {m.subText && m.subText.split('\n').map((line, i) => <Text key={i}>{line}</Text>)}
           {m.linkText && (
             <div data-dl-part="link-row">
               <span data-dl-part="link-chip">
@@ -390,6 +395,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               </span>
             </div>
           )}
+          {m.afterLinkText && <Text>{m.afterLinkText}</Text>}
           {bannerPic.src && (
             <div data-dl-part="banner-media">
               <Image src={bannerPic.src} alt={bannerPic.alt} ratio="photo" width={308} height={205} rounded />
@@ -460,7 +466,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   />
                 </span>
               ))}
-              <span data-dl-part="reaction">{action(c.react, 'emoji-add', () => setPicker(m.id))}</span>
+              <span data-dl-part="reaction" data-add-reaction>{action(c.react, 'emoji-add', () => setPicker(m.id))}</span>
             </div>
           )}
           {Boolean(m.replies) && !inThread && (
@@ -479,17 +485,19 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             </div>
           )}
         </div>
-        <div data-dl-part="hover-actions" data-elevation="3" role="toolbar" aria-label={c.more}>
-          {view.quickReactions.map((qr) => (
-            <Button key={qr.label} label={qr.emoji} emphasis="quiet" size="xs" onClick={() => react(m.id, qr.emoji)} />
-          ))}
-          {emojiPicker(m)}
-          {action(c.replyAction, 'comment', () => openThread(m))}
-          {action(c.share, 'forward')}
-          {action(c.save, 'bookmark')}
-          {action(c.summarize, 'compose')}
-          <MenuButton label={c.more} icon="more-vertical" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.messageMenu} onSelect={() => undefined} />
-        </div>
+        {!narrow && (
+          <div data-dl-part="hover-actions" data-elevation="3" role="toolbar" aria-label={c.more}>
+            {view.quickReactions.map((qr) => (
+              <Button key={qr.label} label={qr.emoji} emphasis="quiet" size="xs" onClick={() => react(m.id, qr.emoji)} />
+            ))}
+            {emojiPicker(m)}
+            {action(c.replyAction, 'comment', () => openThread(m))}
+            {action(c.share, 'forward')}
+            {action(c.save, 'bookmark')}
+            {action(c.summarize, 'compose')}
+            <MenuButton label={c.more} icon="more-vertical" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.messageMenu} onSelect={() => undefined} />
+          </div>
+        )}
       </article>
     );
   };
@@ -613,7 +621,9 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             />
           </span>
           <span data-dl-part="rail-circle">{action(c.themeToggle, 'scheme-dark')}</span>
-          <Avatar name={view.currentUser} src={currentUserPic.src || undefined} shape="square" presence="available" size={36} />
+          <span data-dl-part="rail-avatar">
+            <Avatar name={view.currentUser} src={currentUserPic.src || undefined} shape="square" presence="available" size={36} />
+          </span>
         </div>
       </nav>
 
@@ -698,7 +708,8 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     {section.items.map((item) => {
                       const itemPic = pic(item.avatar);
                       const overrideBadge = isAma ? view.amaChannel.channelBadges[item.name] : undefined;
-                      const badgeLabel = overrideBadge ?? (item.mentions ? (item.mentionsLabel ?? String(item.mentions)) : undefined);
+                      const rawBadge = overrideBadge ?? (item.mentions ? (item.mentionsLabel ?? String(item.mentions)) : undefined);
+                      const badgeLabel = isAma && item.name === channel ? undefined : rawBadge;
                       const isUnread = item.name !== channel && (item.unread || Boolean(overrideBadge));
                       return (
                         <div
@@ -835,6 +846,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 {action(c.dismissBanner, 'close', () => setNewBannerDismissed(true))}
               </div>
             )}
+            {isAma && !search && tab === 'messages' && messages[0]?.dateAbove && (
+              <div data-dl="slack-sticky-date" data-elevation="3">
+                <span>{messages[0].dateAbove}</span>
+                <Icon name="chevron-down" size="sm" />
+              </div>
+            )}
             <ScrollArea label={search ? c.results : c.messages} mode="always" viewportRef={timeline}>
               {search ? (
                 <div data-dl="slack-search-results">
@@ -863,9 +880,9 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 </div>
               ) : (
                 <div data-dl="slack-timeline">
-                  {messages.map((m) => (
+                  {messages.map((m, idx) => (
                     <div key={m.id} data-dl="slack-message-group">
-                      {m.dateAbove && (
+                      {m.dateAbove && !(isAma && idx === 0) && (
                         <div data-dl-part="date">
                           <span data-dl-part="date-pill">
                             <span>{m.dateAbove}</span>
@@ -963,12 +980,13 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
         open={vipOpen}
         onClose={() => setVipOpen(false)}
         size="l"
+        initialFocus="heading"
         title={view.vipModal.title}
         description={view.vipModal.description}
         aside={
           pic('vipPreview').src && (
             <div data-dl="slack-vip-aside">
-              <Image src={pic('vipPreview').src} alt={pic('vipPreview').alt} ratio="natural" width={220} height={260} />
+              <Image src={pic('vipPreview').src} alt={pic('vipPreview').alt} ratio="natural" width={168} height={234} rounded={false} />
             </div>
           )
         }
@@ -990,6 +1008,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             hideLabel
             type="search"
             icon="search"
+            size="s"
             placeholder={view.vipModal.searchPlaceholder}
             value={vipSearch}
             onChange={setVipSearch}

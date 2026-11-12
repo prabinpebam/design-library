@@ -239,6 +239,7 @@
     --color-status-neutral-fg: var(--color-text-muted);
     --color-border-strong: var(--p-standard-border-strong);
     --color-border-control: var(--p-standard-border-control);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-progress-bar-track: var(--color-border-group);
@@ -266,6 +267,7 @@
       --color-map-nav-on-muted: var(--color-text-muted);
       --color-status-neutral-fg: var(--color-text-muted);
       --c-alignment-picker-dot-colour: var(--color-text-muted);
+      --c-button-unavailable-edge: var(--color-border-strong);
       --c-canvas-name-selected: var(--color-text-muted);
       --c-code-key-outline: var(--color-border-strong);
       --c-colour-field-border: var(--color-border-strong);
@@ -288,6 +290,7 @@
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-canvas-name-selected: var(--color-text-muted);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
@@ -309,6 +312,7 @@
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-canvas-name-selected: var(--color-text-muted);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);

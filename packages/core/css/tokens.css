@@ -201,6 +201,10 @@
   --c-menu-button-border-width: var(--border-hairline);
   --c-menu-button-border: var(--c-button-default-edge);
   --c-menu-button-fill: var(--c-button-default-fill);
+  --c-menu-button-expanded-fill: var(--state-selected);
+  --c-menu-button-list-min-width: 0px;
+  --c-menu-button-padding-block: var(--c-popup-inset);
+  --c-menu-button-separator-margin: 0px;
   --c-popup-inset: var(--space-inset-xs);
   --c-popup-gap: var(--space-stack-row);
   --c-popup-offset: var(--space-stack-pair);
@@ -236,6 +240,7 @@
   --c-list-item-hover-text: currentColor;
   --c-list-item-danger-text: var(--color-status-danger-fg);
   --c-list-item-submenu-ink: var(--color-text-muted);
+  --c-list-item-submenu-size: var(--size-icon-md);
   --c-list-item-plate: var(--size-icon-lg);
   --c-list-item-plate-fill: var(--color-status-neutral-bg);
   --c-list-item-plate-ink: var(--color-text);
@@ -401,6 +406,9 @@
   --c-button-border-width: var(--border-hairline);
   --c-button-default-fill: var(--color-bg-control);
   --c-button-default-edge: var(--color-border-control);
+  --c-button-weight: var(--type-label-weight);
+  --c-button-unavailable-fill: transparent;
+  --c-button-unavailable-edge: var(--color-border-strong);
   --c-switch-track-inline: var(--size-control-md);
   --c-switch-track-block: var(--size-icon-lg);
   --c-switch-thumb: var(--size-icon-sm);
@@ -899,6 +907,11 @@
   --c-dialog-aside-width: 16rem;
   --c-dialog-aside-bg: var(--color-bg-sunken);
   --c-dialog-aside-padding: var(--space-5);
+  --c-dialog-header-padding-top: var(--c-dialog-padding);
+  --c-dialog-heading-padding-top: 0px;
+  --c-dialog-footer-border-width: 0px;
+  --c-dialog-footer-border: transparent;
+  --c-dialog-footer-padding-top: 0px;
   --c-grid-aside: var(--size-column-min);
   --c-grid-section-gap: var(--space-12);
   --c-hero-gap: var(--space-stack-section);
@@ -1476,6 +1489,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-canvas-name-selected: var(--color-text-muted);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
@@ -1521,6 +1535,7 @@
   --c-alignment-picker-dot-colour: var(--color-text-muted);
   --c-button-default-edge: var(--color-border-control);
   --c-button-default-fill: var(--color-bg-control);
+  --c-button-unavailable-edge: var(--color-border-strong);
   --c-canvas-name-selected: var(--color-text-muted);
   --c-chip-edge: var(--color-border-control);
   --c-chip-fill: var(--color-bg-control);
@@ -1566,6 +1581,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-canvas-name-selected: var(--color-text-muted);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
@@ -1611,6 +1627,7 @@
   --c-alignment-picker-dot-colour: var(--color-text-muted);
   --c-button-default-edge: var(--color-border-control);
   --c-button-default-fill: var(--color-bg-control);
+  --c-button-unavailable-edge: var(--color-border-strong);
   --c-canvas-name-selected: var(--color-text-muted);
   --c-chip-edge: var(--color-border-control);
   --c-chip-fill: var(--color-bg-control);
@@ -1873,6 +1890,7 @@
   --c-list-option-gap: var(--space-stack-row);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
+  --c-menu-button-padding-block: var(--c-popup-inset);
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
@@ -2166,6 +2184,7 @@
   --c-list-option-gap: var(--space-stack-row);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
+  --c-menu-button-padding-block: var(--c-popup-inset);
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
@@ -2459,6 +2478,7 @@
   --c-list-option-gap: var(--space-stack-row);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
+  --c-menu-button-padding-block: var(--c-popup-inset);
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
@@ -2752,6 +2772,7 @@
   --c-list-option-gap: var(--space-stack-row);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
+  --c-menu-button-padding-block: var(--c-popup-inset);
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);

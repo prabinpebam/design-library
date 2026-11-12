@@ -49,6 +49,8 @@ export interface WorkspaceMessage {
   statusEmoji?: string;
   time: string;
   text: string;
+  subText?: string;
+  afterLinkText?: string;
   mention?: string;
   edited?: boolean;
   linkText?: string;
@@ -128,6 +130,7 @@ export interface WorkspaceRecord {
     activityMentions: number;
     tabs: WorkspaceTabItem[];
     channelBadges: Record<string, string>;
+    channels?: WorkspaceChannelItem[];
     messages: WorkspaceMessage[];
   };
   workspaces: WorkspaceTile[];

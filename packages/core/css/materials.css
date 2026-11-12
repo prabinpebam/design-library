@@ -68,4 +68,12 @@
     /* The veil is black in both schemes, by definition (Apple's 35 % dimming layer; Fluent smoke): a tier-0 value. */
     --material-veil: color-mix(in oklab, black 35%, transparent);
   }
+
+  [data-material='solid'],
+  [data-material='solid'] [data-material],
+  [data-contrast='more'],
+  [data-contrast='more'] [data-material] {
+    --material-chrome-bg: var(--color-bg);
+    --material-floating-bg: var(--color-bg-raised);
+  }
 }

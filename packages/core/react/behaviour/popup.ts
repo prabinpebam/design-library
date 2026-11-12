@@ -12,8 +12,10 @@ export function placePopup(anchor: { top: number; bottom: number; left: number; 
   const below = viewport.height - anchor.bottom;
   const above = anchor.top;
   const flip = popup.height > below && above > below;
-  const start = rtl ? viewport.width - anchor.right : anchor.left;
-  return { placement: flip ? ('above' as const) : ('below' as const), edge: flip ? anchor.top : anchor.bottom, room: flip ? above : below, start: Math.max(0, Math.min(start, viewport.width - popup.width)) };
+  const rawStart = rtl ? viewport.width - anchor.right : anchor.left;
+  const endAligned = rtl ? viewport.width - anchor.left - popup.width : anchor.right - popup.width;
+  const preferred = rawStart + popup.width > viewport.width ? endAligned : rawStart;
+  return { placement: flip ? ('above' as const) : ('below' as const), edge: flip ? anchor.top : anchor.bottom, room: flip ? above : below, start: Math.max(0, Math.min(preferred, viewport.width - popup.width)) };
 }
 
 /** The width steps a popup list may take (Q130, `size.width-*`), narrowest first. Lists never snap wider than `md`. */

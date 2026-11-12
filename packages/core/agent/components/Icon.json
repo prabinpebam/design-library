@@ -49,6 +49,7 @@
   "tokens": [
     "--c-icon-fill",
     "--c-icon-stroke-width",
+    "--c-list-item-submenu-size",
     "--size-icon-lg",
     "--size-icon-md",
     "--size-icon-sm",

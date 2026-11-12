@@ -47,7 +47,7 @@
     color: var(--color-text);
     font-size: var(--type-label-size);
     line-height: var(--type-label-leading);
-    font-weight: var(--type-label-weight);
+    font-weight: var(--c-button-weight);
     cursor: pointer;
     /* Q65 C2 / M5: every value interpolates at the default; the release of a press eases back over the same. */
     transition:
@@ -217,8 +217,8 @@
   }
 
   [data-dl='button'][data-unavailable]:is([data-emphasis='primary'], [data-emphasis='danger'], [data-emphasis='strong']) {
-    border-color: var(--color-border-strong);
-    background-color: transparent;
+    border-color: var(--c-button-unavailable-edge);
+    background-color: var(--c-button-unavailable-fill);
     /* The brand map's ring belongs to the fill; without the fill it would read as a live button (Q142). */
     box-shadow: none;
   }

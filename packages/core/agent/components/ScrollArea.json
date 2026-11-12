@@ -96,6 +96,7 @@
   ],
   "uses": [],
   "tokens": [
+    "--c-menu-button-padding-block",
     "--c-popup-border-width",
     "--c-popup-gap",
     "--c-popup-inset",

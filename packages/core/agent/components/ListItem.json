@@ -199,6 +199,7 @@
     "--c-list-item-size-l",
     "--c-list-item-size-s",
     "--c-list-item-submenu-ink",
+    "--c-list-item-submenu-size",
     "--color-accent",
     "--color-accent-subtle",
     "--color-border-strong",

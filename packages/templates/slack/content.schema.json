@@ -207,6 +207,9 @@
     "WorkspaceMessage": {
       "additionalProperties": false,
       "properties": {
+        "afterLinkText": {
+          "type": "string"
+        },
         "author": {
           "type": "string"
         },
@@ -285,6 +288,9 @@
         "statusEmoji": {
           "type": "string"
         },
+        "subText": {
+          "type": "string"
+        },
         "text": {
           "type": "string"
         },
@@ -320,6 +326,12 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "channels": {
+              "items": {
+                "$ref": "#/$defs/WorkspaceChannelItem"
+              },
+              "type": "array"
             },
             "memberCountText": {
               "type": "string"

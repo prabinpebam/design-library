@@ -231,6 +231,7 @@
     --color-border-group: var(--color-bg-sunken);
     --color-status-neutral-fg: var(--color-text-muted);
     --color-border-strong: var(--p-standard-border-strong);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-menu-button-border: var(--c-button-default-edge);
@@ -259,6 +260,7 @@
       --c-alignment-picker-dot-colour: var(--color-text-muted);
       --c-button-default-edge: var(--color-border-control);
       --c-button-default-fill: var(--color-bg-control);
+      --c-button-unavailable-edge: var(--color-border-strong);
       --c-chip-edge: var(--color-border-control);
       --c-chip-fill: var(--color-bg-control);
       --c-code-key-outline: var(--color-border-strong);
@@ -298,6 +300,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
     --c-code-key-outline: var(--color-border-strong);
@@ -336,6 +339,7 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
+    --c-button-unavailable-edge: var(--color-border-strong);
     --c-chip-edge: var(--color-border-control);
     --c-chip-fill: var(--color-bg-control);
     --c-code-key-outline: var(--color-border-strong);

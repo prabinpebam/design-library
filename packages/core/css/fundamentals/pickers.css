@@ -107,7 +107,7 @@
   }
 
   [data-dl='menu-button'] > [data-dl-part='trigger'][aria-expanded='true'] {
-    background-color: var(--state-selected);
+    background-color: var(--c-menu-button-expanded-fill);
   }
 
   [data-dl='menu-button'] > [data-dl-part='trigger']:disabled {
@@ -122,7 +122,7 @@
     }
 
     [data-dl='menu-button'] > [data-dl-part='trigger'][aria-expanded='true']:hover {
-      background-color: var(--state-selected);
+      background-color: var(--c-menu-button-expanded-fill);
       background-image: none;
     }
   }
@@ -164,6 +164,8 @@
     max-inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
     max-block-size: min(var(--c-popup-height), calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset)));
     padding: 0;
+    overflow: visible;
+    outline: none;
     border: var(--c-popup-border-width) solid var(--c-popup-border);
     border-radius: var(--c-popup-radius);
     background-color: var(--material-floating-bg, var(--c-popup-bg));
@@ -171,6 +173,10 @@
     backdrop-filter: var(--material-backdrop);
     box-shadow: var(--c-popup-shadow);
     color: var(--color-text);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='popup'] {
+    min-inline-size: max(var(--popup-min-inline, 0px), var(--c-menu-button-list-min-width));
   }
 
   /*
@@ -189,12 +195,20 @@
     padding: var(--c-popup-inset);
   }
 
+  [data-dl='menu-button'] > [data-dl-part='popup'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    padding-block: var(--c-menu-button-padding-block);
+  }
+
   /* A menu's groups: a hairline across the whole list, edge to edge, between the last item of one and the first of the next. */
   [data-dl-part='popup'] [data-dl-part='content'] > [data-dl-part='separator'] {
     flex: none;
     block-size: var(--c-popup-border-width);
     margin-inline: calc(-1 * var(--c-popup-inset));
     background-color: var(--c-popup-border);
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='popup'] [data-dl-part='content'] > [data-dl-part='separator'] {
+    margin-block: var(--c-menu-button-separator-margin);
   }
 
   /* Q130: a list pinned to a width step (`listWidth`), so menus that sit together match; still never past the window. */
@@ -499,6 +513,17 @@
     display: inline-flex;
     flex: none;
     color: var(--c-list-item-submenu-ink);
+  }
+
+  [data-dl='list-item'] > [data-dl-part='item-submenu'] > [data-dl='icon'] {
+    inline-size: var(--c-list-item-submenu-size);
+    block-size: var(--c-list-item-submenu-size);
+  }
+
+  @media (hover: hover) {
+    [data-dl='list-item']:hover > [data-dl-part='item-submenu'] {
+      color: inherit;
+    }
   }
 
   /* A destructive action: the word says it, the status colour adds to it. */

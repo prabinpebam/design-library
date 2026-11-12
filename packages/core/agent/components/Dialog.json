@@ -81,6 +81,12 @@
           "name": "state",
           "type": "string",
           "description": "Names what the dialog is showing, e.g. `form`, `done`, `failed` (Q65 C1). A new value morphs the title, body and answers in the same box: the old ones fade out, the new ones fade in and the box eases to its new height; focus moves to the new title. Change it only when the new state is ready (keep the form's pending button until then)."
+        },
+        {
+          "name": "initialFocus",
+          "type": "'control' | 'heading'",
+          "default": "'control'",
+          "description": "Where focus lands when the dialog opens: the first body control (`control`, default) or the dialog heading (`heading`, for feature or onboarding modals whose filter input should stay unfocused until chosen)."
         }
       ]
     }
@@ -97,8 +103,13 @@
     "--c-dialog-aside-bg",
     "--c-dialog-aside-padding",
     "--c-dialog-aside-width",
+    "--c-dialog-footer-border",
+    "--c-dialog-footer-border-width",
+    "--c-dialog-footer-padding-top",
     "--c-dialog-gap",
+    "--c-dialog-header-padding-top",
     "--c-dialog-heading-gap",
+    "--c-dialog-heading-padding-top",
     "--c-dialog-margin",
     "--c-dialog-padding",
     "--c-dialog-radius",

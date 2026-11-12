@@ -77,6 +77,7 @@
     "--color-bg",
     "--color-bg-sunken",
     "--color-border",
+    "--color-border-control",
     "--color-map-action-fill",
     "--color-map-action-fill-on",
     "--color-map-badge",
@@ -109,6 +110,7 @@
     "--size-rail-width",
     "--space-0-5",
     "--space-1",
+    "--space-12",
     "--space-2",
     "--space-3",
     "--space-4",
@@ -125,6 +127,8 @@
     "--text-xs",
     "--type-body-sm-size",
     "--weight-black",
-    "--weight-bold"
+    "--weight-bold",
+    "--weight-regular",
+    "--weight-semibold"
   ]
 }

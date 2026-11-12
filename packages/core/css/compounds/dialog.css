@@ -16,6 +16,11 @@
     color: var(--color-text);
     box-shadow: var(--shadow-overlay);
     overflow: hidden;
+    --dialog-header-top: var(--c-dialog-header-padding-top);
+    --dialog-heading-top: var(--c-dialog-heading-padding-top);
+    --dialog-footer-border-width: var(--c-dialog-footer-border-width);
+    --dialog-footer-border: var(--c-dialog-footer-border);
+    --dialog-footer-top: var(--c-dialog-footer-padding-top);
     opacity: 1;
     scale: 1;
     /* Q65 C17: fades in and grows from dialog-scale; leaves one step shorter, accelerating. Reduced motion: fade only. */
@@ -94,12 +99,13 @@
     align-items: start;
     justify-content: space-between;
     gap: var(--space-inline-group);
-    padding: var(--c-dialog-padding) var(--c-dialog-padding) var(--c-dialog-gap);
+    padding: var(--dialog-header-top) var(--c-dialog-padding) var(--c-dialog-gap);
   }
 
   :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl-part='split'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']) > [data-dl-part='header'] > [data-dl-part='heading'] {
     display: grid;
     gap: var(--c-dialog-heading-gap);
+    padding-block-start: var(--dialog-heading-top);
     min-inline-size: 0;
     overflow-wrap: anywhere;
   }
@@ -128,7 +134,8 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: var(--c-dialog-actions-gap);
-    padding: 0 var(--c-dialog-padding) var(--c-dialog-padding);
+    border-block-start: var(--dialog-footer-border-width) solid var(--dialog-footer-border);
+    padding: var(--dialog-footer-top) var(--c-dialog-padding) var(--c-dialog-padding);
   }
 
   /* A narrow window: the dialog fills it, square, so nothing peeks around it. */

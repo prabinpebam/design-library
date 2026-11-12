@@ -24,6 +24,11 @@
         "$type": "color",
         "$value": "{color.bg-control}",
         "$description": "Q141: the default button's fill. A brand whose secondary button is an outline sets it transparent. (echoed for contrast contexts)"
+      },
+      "unavailable-edge": {
+        "$type": "color",
+        "$value": "{color.border-strong}",
+        "$description": "Border colour of an unavailable primary, danger or strong Button; set transparent when unavailable buttons are filled without an outline. (echoed for contrast contexts)"
       }
     },
     "canvas": {

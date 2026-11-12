@@ -254,13 +254,15 @@
     "--c-button-size-xxl",
     "--c-button-stack-gap",
     "--c-button-stack-padding",
+    "--c-button-unavailable-edge",
+    "--c-button-unavailable-fill",
+    "--c-button-weight",
     "--c-field-border-width",
     "--c-field-size-xs",
     "--color-bg",
     "--color-bg-control",
     "--color-bg-sunken",
     "--color-border",
-    "--color-border-strong",
     "--color-map-action-fill",
     "--color-map-action-fill-hover",
     "--color-map-action-fill-on",
@@ -290,8 +292,7 @@
     "--type-heading-3-size",
     "--type-heading-4-size",
     "--type-label-leading",
-    "--type-label-size",
-    "--type-label-weight"
+    "--type-label-size"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/button",
   "usedBy": [

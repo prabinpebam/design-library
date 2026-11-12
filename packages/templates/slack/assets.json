@@ -21,6 +21,7 @@
     "avatar18": { "src": "assets/avatar-18.webp", "alt": "Portrait of a bearded man outdoors." },
     "avatar19": { "src": "assets/avatar-19.webp", "alt": "Portrait of a woman with dark hair smiling." },
     "avatar20": { "src": "assets/avatar-20.webp", "alt": "Portrait of a man with short dark hair." },
+    "avatarUser": { "src": "assets/avatar-user.webp", "alt": "Portrait of a person at a desk with monitor glow." },
     "unfurlChart": { "src": "assets/unfurl-chart.webp", "alt": "Illustrated contour chart showing changing trends over time." },
     "unfurlSketches": { "src": "assets/unfurl-sketches.webp", "alt": "Editorial illustration of directional sketches on paper." },
     "unfurlFlight": { "src": "assets/unfurl-flight.webp", "alt": "Airport tarmac and aircraft wing at dusk." },

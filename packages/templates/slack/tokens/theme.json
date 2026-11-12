@@ -229,12 +229,12 @@
   "$description": "Region 25: white words on the blue hover row (g-edit-01-f82)."
  },
  "c.list-item.size": {
-  "$value": "2rem",
-  "$description": "Region 25: menu row pitch 59 px in g-edit-01-f82, drawn at about 1.87x (its 15 px body text is 28 px), so 32 px; a dense desktop menu exception."
+  "$value": "1.75rem",
+  "$description": "Owner benchmark 04 S04.3: menu row pitch 19 px at 2/3 scale = 28 CSS px."
  },
  "c.list-item.padding-block": {
   "$value": "0.25rem",
-  "$description": "Region 25: the two-line Unfollow row is about 120 px in g-edit-01-f82 (≈1.87x), 64 px; 4 px above and below its two lines."
+  "$description": "Owner benchmark 04 S04.3: 4 CSS px on-scale menu row block padding."
  },
  "c.list-item.padding-inline": {
   "$value": "1.5rem",
@@ -245,12 +245,16 @@
   "$description": "Region 25: the hover row's blue fill is square and reaches the menu's sides (g-edit-01-f82)."
  },
  "c.list-item.danger-text": {
-  "$value": "#da2b43",
-  "$description": "Region 25: Delete message ink, the most saturated glyph pixel in g-edit-01-f82 (x745-940, y565-592); a GIF palette colour, so within a few units of Slack's red."
+  "$value": "#cb3b63",
+  "$description": "Owner benchmark 04 S04.3: Leave channel destructive rose-red #CB3B63."
  },
  "c.list-item.submenu-ink": {
-  "$value": "currentColor",
-  "$description": "Region 25: the Remind me chevron is drawn in the words' colour, not muted (g-edit-01-f82)."
+  "$value": "{color.text-muted}",
+  "$description": "Owner benchmark 04 S04.3: resting submenu chevron #616061."
+ },
+ "c.list-item.submenu-size": {
+  "$value": "0.9375rem",
+  "$description": "Owner benchmark 04 S04.3: compact submenu chevron (8x12 CSS ink)."
  },
  "c.list-item.plate": {
   "$value": "2.5rem",
@@ -342,15 +346,57 @@
  },
  "c.popup.gap": {
   "$value": "0",
-  "$description": "Region 25: menu rows sit edge to edge at a 32 px pitch with no space between fills (g-edit-01-f82)."
+  "$description": "Region 25: menu rows sit edge to edge with no space between fills."
+ },
+ "color.bg-overlay": {
+  "$value": "rgba(0, 0, 0, 0.624)",
+  "$description": "Owner benchmark 02 S02.1: full-window modal scrim dims #FFFFFF to #606060."
+ },
+ "c.button.weight": {
+  "$value": "700",
+  "$description": "Owner benchmark 02/08/09/10/11: Slack action and outlined buttons use bold 700 labels."
+ },
+ "c.button.default-edge": {
+  "$value": {
+   "light": "#cfcfcf",
+   "dark": "#565656"
+  },
+  "$description": "Owner benchmark 02/08/09/10/11: outlined default button border #CFCFCF."
+ },
+ "c.button.unavailable-fill": {
+  "$value": {
+   "light": "#eaeaea",
+   "dark": "#35373b"
+  },
+  "$description": "Owner benchmark 02 S02.3: disabled primary Save button has flat #EAEAEA fill."
+ },
+ "c.button.unavailable-edge": {
+  "$value": "transparent",
+  "$description": "Owner benchmark 02 S02.3: disabled primary Save button is borderless."
+ },
+ "c.menu-button.expanded-fill": {
+  "$value": "transparent",
+  "$description": "Owner benchmark 04 S04.3: open overflow kebab button keeps a clean surface."
+ },
+ "c.menu-button.list-min-width": {
+  "$value": "18.625rem",
+  "$description": "Owner benchmark 04 S04.3: channel overflow menu 199 PNG = 298 CSS px."
+ },
+ "c.menu-button.padding-block": {
+  "$value": "0.5rem",
+  "$description": "Owner benchmark 04 S04.3: 8 CSS px top and bottom menu inset."
+ },
+ "c.menu-button.separator-margin": {
+  "$value": "0.25rem",
+  "$description": "Owner benchmark 04 S04.3: 4 CSS px on-scale block space either side of group dividers."
  },
  "c.dialog.width-l": {
-  "$value": "50.25rem",
-  "$description": "Owner benchmark 02: VIP modal 536 px at 2/3 scale = 804 CSS px."
+  "$value": "49.3125rem",
+  "$description": "Owner benchmark 02 S02.2: VIP modal 526 px at 2/3 scale = 789 CSS px."
  },
  "c.dialog.aside-width": {
-  "$value": "17.625rem",
-  "$description": "Owner benchmark 02: left lavender panel 188 px at 2/3 scale = 282 CSS px."
+  "$value": "16rem",
+  "$description": "Owner benchmark 02 S02.2: left lavender panel 171 px at 2/3 scale = 256 CSS px."
  },
  "c.dialog.aside-bg": {
   "$value": {
@@ -358,6 +404,30 @@
    "dark": "#39487a"
   },
   "$description": "Owner benchmark 02: left lavender panel #A0B3F3."
+ },
+ "c.dialog.padding": {
+  "$value": "2.25rem",
+  "$description": "Owner benchmark 02 S02.3: right column 24 PNG = 36 CSS px inset."
+ },
+ "c.dialog.header-padding-top": {
+  "$value": "1rem",
+  "$description": "Owner benchmark 02 S02.3: top-right close button sits 16 CSS px from the modal top."
+ },
+ "c.dialog.heading-padding-top": {
+  "$value": "1.25rem",
+  "$description": "Owner benchmark 02 S02.3: modal heading starts at y=242 PNG below the top-right close button."
+ },
+ "c.dialog.footer-border-width": {
+  "$value": "{border.hairline}",
+  "$description": "Owner benchmark 02 S02.3: full-bleed 1 px #EAEAEA top rule above modal footer."
+ },
+ "c.dialog.footer-border": {
+  "$value": "{color.border}",
+  "$description": "Owner benchmark 02 S02.3: #EAEAEA modal footer divider."
+ },
+ "c.dialog.footer-padding-top": {
+  "$value": "1.125rem",
+  "$description": "Owner benchmark 02 S02.3: 18 CSS px space between footer top rule (y=508 PNG) and buttons (y=520 PNG)."
  },
  "c.text-area.tray-inset": {
   "$value": "0",

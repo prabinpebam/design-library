@@ -33,6 +33,8 @@ export interface DialogProps extends DataAttributes {
    * moves to the new title. Change it only when the new state is ready (keep the form's pending button until then).
    */
   state?: string;
+  /** Where focus lands when the dialog opens: the first body control (`control`, default) or the dialog heading (`heading`, for feature or onboarding modals whose filter input should stay unfocused until chosen). */
+  initialFocus?: 'control' | 'heading';
 }
 
 /**
@@ -52,7 +54,7 @@ export interface DialogProps extends DataAttributes {
  * @key Escape: closes (not an alert dialog)
  * @key Tab, Shift+Tab: move through the dialog's controls only
  */
-export function Dialog({ open, onClose, title, description, children, aside, actions, size = 'm', alert = false, state, ...data }: DialogProps) {
+export function Dialog({ open, onClose, title, description, children, aside, actions, size = 'm', alert = false, state, initialFocus = 'control', ...data }: DialogProps) {
   const id = useId();
   const ref = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -68,17 +70,21 @@ export function Dialog({ open, onClose, title, description, children, aside, act
       const body = d.querySelector<HTMLElement>('[data-dl-part="body"]');
       const actionsArea = d.querySelector<HTMLElement>('[data-dl-part="actions"]');
       const focusable = 'input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])';
-      const first = alert ? actionsArea?.querySelector<HTMLElement>(focusable) : body?.querySelector<HTMLElement>(focusable);
+      const first = alert
+        ? actionsArea?.querySelector<HTMLElement>(focusable)
+        : initialFocus === 'heading'
+          ? null
+          : body?.querySelector<HTMLElement>(focusable);
       (first ?? d.querySelector<HTMLElement>('[data-dl-part="heading"]'))?.focus({ preventScroll: true });
     } else if (!open && d.open) {
       d.close();
       opener.current?.focus({ preventScroll: true });
     }
-  }, [open, alert]);
+  }, [open, alert, initialFocus]);
 
   const surface = (
     <div data-dl-part="surface">
-      <header data-dl-part="header">
+      <div data-dl-part="header">
         <div data-dl-part="heading" tabIndex={-1} data-morph-focus="">
           <Heading level={2} size={3} id={`${id}-title`}>
             {title}
@@ -90,13 +96,13 @@ export function Dialog({ open, onClose, title, description, children, aside, act
           )}
         </div>
         {!alert && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" onClick={() => close.current()} />}
-      </header>
+      </div>
       {children && (
         <ScrollArea data-dl-part="body" contain>
           {children}
         </ScrollArea>
       )}
-      {actions && <footer data-dl-part="actions">{actions}</footer>}
+      {actions && <div data-dl-part="actions">{actions}</div>}
     </div>
   );
 

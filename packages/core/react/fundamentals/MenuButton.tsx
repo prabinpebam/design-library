@@ -106,6 +106,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const trigger = useRef<HTMLButtonElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [focusOnOpen, setFocusOnOpen] = useState<'first' | 'last'>('first');
+  const focusByKeyboard = useRef(false);
   const [sub, setSub] = useState<number | null>(null);
   const subMenu = useRef<HTMLDivElement>(null);
   const subAnchor = useRef<HTMLElement | null>(null);
@@ -116,6 +117,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const focusSub = (i: number) => subRefs.current[(i + subItems.length) % subItems.length]?.focus({ preventScroll: true });
   const close = (returnFocus: boolean) => {
     setSub(null);
+    focusByKeyboard.current = false;
     setOpen(false);
     if (returnFocus) trigger.current?.focus({ preventScroll: true });
   };
@@ -131,8 +133,9 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
     setSub(null);
     focusItem(at);
   };
-  const show = (at: 'first' | 'last') => {
+  const show = (at: 'first' | 'last', byKeyboard = false) => {
     if (busy) return;
+    focusByKeyboard.current = byKeyboard;
     setFocusOnOpen(at);
     setOpen(true);
   };
@@ -151,13 +154,15 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const iconSize = ({ xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' } as const)[size];
   const lead = iconOnly ? (icon ?? 'chevron-down') : icon;
   useEffect(() => {
-    if (open) focusItem(focusOnOpen === 'first' ? 0 : items.length - 1);
+    if (!open) return;
+    if (focusByKeyboard.current) focusItem(focusOnOpen === 'first' ? 0 : items.length - 1);
+    else menu.current?.focus({ preventScroll: true });
   }, [open]);
 
   const onTriggerKey = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      show(e.key === 'ArrowDown' ? 'first' : 'last');
+      show(e.key === 'ArrowDown' ? 'first' : 'last', true);
     }
   };
 
@@ -215,7 +220,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
         aria-disabled={busy || undefined}
         aria-label={iconOnly ? name : undefined}
         disabled={disabled}
-        onClick={() => (open ? close(false) : show('first'))}
+        onClick={(e) => (open ? close(false) : show('first', e.detail === 0))}
         onKeyDown={onTriggerKey}
         {...(hint.tip ? hint.handlers : {})}
       >
@@ -228,7 +233,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
         ))}
         {hint.tip}
       </button>
-      <div ref={menu} data-dl-part="popup" data-width={listWidth} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open} onKeyDown={onMenuKey}>
+      <div ref={menu} tabIndex={-1} data-dl-part="popup" data-width={listWidth} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open} onKeyDown={onMenuKey}>
         <div ref={scroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
           <div ref={scroll.setViewport} data-dl-part="viewport">
             <div id={`${id}-menu`} data-dl-part="content" role="menu" aria-label={menuLabel ?? label} onPointerOver={(e) => {
