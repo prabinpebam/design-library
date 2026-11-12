@@ -261,6 +261,7 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
     settings,
     href,
     picture: (id) => assets[id] ?? { src: '', alt: '' },
+    decoration: (name) => registry?.decorations?.[name]?.(),
     blocks: (blocks) => list(blocks, ctx, undefined),
   };
   function one(block: Block, i: number, at: RenderContext, path: string): ReactNode {

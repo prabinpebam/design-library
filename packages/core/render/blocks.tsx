@@ -7,7 +7,7 @@ import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { Block, BlockRenderer, CoreBlock, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
+import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
 
 /** A picture from assets drawn inline as an Illustration, when its asset says so (MP22); null for any other picture. */
 const illustrationOf = (ctx: RenderContext, id: string, ratio?: TemplateAsset['ratio']) => {
@@ -297,7 +297,7 @@ const CONTENT = ['illustration', 'prose', 'points', 'details', 'quote', 'stats',
  */
 export const SLOTS: Record<string, readonly string[]> = {
   'hero.media': ['gallery', 'illustration'],
-  // MP9: decoration is art, so only a template's own (namespaced) blocks; no core block draws shapes.
+  // MP9: decoration is art, so only a template's own (namespaced) blocks. Deprecated (LR20): a decoration names a preset.
   'hero.decoration': [],
   'image.decoration': [],
   'split.start': CONTENT,
@@ -314,6 +314,18 @@ function slot(ctx: RenderContext, name: string, blocks: Block[] | undefined): Re
     return ok;
   });
   return taken.length ? ctx.blocks(taken) : null;
+}
+
+/**
+ * A decoration over a picture (MP9, LR20): a template preset by name. The deprecated list of blocks still draws through
+ * its old slot. An unknown name draws nothing and is reported.
+ */
+function decorate(ctx: RenderContext, slotName: string, value: Decoration | undefined): ReactNode {
+  if (Array.isArray(value)) return value.length ? slot(ctx, slotName, value) : undefined;
+  if (!value) return undefined;
+  const art = ctx.decoration?.(value);
+  if (art === undefined) ctx.problem?.(`there's no decoration called “${value}” (a template registers its decorations in registry.decorations)`);
+  return art ?? undefined;
 }
 
 /** The registry: one entry per core block type. */
@@ -347,7 +359,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
         lead={richText(b.lead)}
         actions={actionButtons(b.actions)}
         note={b.note}
-        picture={b.picture ? { ...ctx.picture(b.picture), decoration: b.decoration?.length ? slot(ctx, 'hero.decoration', b.decoration) : undefined } : undefined}
+        picture={b.picture ? { ...ctx.picture(b.picture), decoration: decorate(ctx, 'hero.decoration', b.decoration) } : undefined}
         media={!b.picture && b.media?.length ? slot(ctx, 'hero.media', b.media) : undefined}
         layout={(b.picture || b.media?.length) && isFramed(ctx, i) ? 'split' : b.layout}
         reserve={b.reserve}
@@ -466,7 +478,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
             );
           case 'picture':
             if (ctx.picture(item.picture).illustration) return <Fragment key={n}>{illustrationOf(ctx, item.picture)}</Fragment>;
-            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} dark={ctx.picture(item.picture).dark} contrast={ctx.picture(item.picture).contrast} alternate={ctx.picture(item.picture).alternate} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} decoration={item.decoration?.length ? slot(ctx, 'image.decoration', item.decoration) : undefined} rounded />;
+            return <Image key={n} src={ctx.picture(item.picture).src} alt={ctx.picture(item.picture).alt} caption={item.caption} ratio={ctx.picture(item.picture).ratio ?? 'wide'} focal={ctx.picture(item.picture).focal} dark={ctx.picture(item.picture).dark} contrast={ctx.picture(item.picture).contrast} alternate={ctx.picture(item.picture).alternate} treatment={ctx.picture(item.picture).treatment} priority={ctx.picture(item.picture).priority} decoration={decorate(ctx, 'image.decoration', item.decoration)} rounded />;
           case 'list':
             return <List key={n} variant="bulleted" items={item.items.map((t, m) => ({ id: String(m), content: t }))} />;
           case 'code':

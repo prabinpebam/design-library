@@ -214,13 +214,13 @@ import { richText } from '@design-library/core/render';
     {
       title: 'A decorated opening picture',
       description:
-        'picture.decoration draws a brand’s marks over the opening’s picture and picture.under a shape behind it, offset so it shows past the edge: Image’s decoration layer, hidden from screen readers and never in the way. From data, a hero block’s decoration slot takes a template’s own block (a part that draws the shapes); core blocks are refused there.',
+        'picture.decoration draws a brand’s marks over the opening’s picture and picture.under a shape behind it, offset so it shows past the edge: Image’s decoration layer, hidden from screen readers and never in the way. From data, a hero block names one of the template’s decoration presets (registry.decorations, LR20): the art is the template’s, the block stays a fixed configuration; an unknown name draws nothing and is reported.',
       code: `<Hero title="Books for slow evenings" lead="…"
   picture={{ src, alt: '…', decoration: <BrandMarks />, under: <BrandBackdrop /> }} />
 
+// the template registers its presets: registry: { decorations: { marks: () => <BrandMarks /> } }
 // hero block in a page document:
-{ "type": "hero", "title": "Books for slow evenings", "picture": "shopfront",
-  "decoration": [{ "type": "harbour.marks" }] }   // a template's own block`,
+{ "type": "hero", "title": "Books for slow evenings", "picture": "shopfront", "decoration": "marks" }`,
       render: () => (
         <Hero
           eyebrow="Harbour Books"

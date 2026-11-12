@@ -491,8 +491,8 @@
           "$ref": "#/$defs/slot"
         },
         "decoration": {
-          "description": "Slot hero.decoration (MP9): a template's own blocks drawn over the opening's picture as decoration (shapes, marks), hidden from screen readers. Only with a picture.",
-          "$ref": "#/$defs/slot"
+          "description": "Decoration over the opening's picture (MP9, LR20): the name of one of the template's decoration presets (shapes, marks), hidden from screen readers. Only with a picture.",
+          "$ref": "#/$defs/decoration"
         },
         "reserve": {
           "description": "Lines of room kept for the title and the lead (MP7), so a series of pages (a project's, a year's) keeps one opening height. Longer text still grows the opening.",
@@ -1176,8 +1176,8 @@
                     "$ref": "#/$defs/text"
                   },
                   "decoration": {
-                    "description": "Slot image.decoration (MP9): a template's own blocks drawn over the picture as decoration (shapes, marks), hidden from screen readers.",
-                    "$ref": "#/$defs/slot"
+                    "description": "Decoration over the picture (MP9, LR20): the name of one of the template's decoration presets (shapes, marks), hidden from screen readers.",
+                    "$ref": "#/$defs/decoration"
                   }
                 },
                 "required": [
@@ -1649,6 +1649,13 @@
         }
       },
       "additionalProperties": false
+    },
+    "decoration": {
+      "description": "A decoration preset by name (LR20): the template registers its decorations (registry.decorations) and a block names one; art is the template's, the block stays a fixed configuration. The older form, a list of the template's own blocks, is deprecated and still drawn.",
+      "oneOf": [
+        { "type": "string", "pattern": "^[a-z][a-zA-Z0-9-]*$" },
+        { "$ref": "#/$defs/slot", "deprecated": true }
+      ]
     },
     "slot": {
       "description": "Blocks a block holds (DP11 named slots). Each is a block by its type; which types a slot takes is listed with the slot, and a template's own (namespaced) block types are taken in every slot.",

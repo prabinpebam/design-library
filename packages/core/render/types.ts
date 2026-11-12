@@ -77,9 +77,15 @@ export type ProseItem =
   | { kind: 'heading'; text: RichText }
   | { kind: 'text'; text: RichText }
   | { kind: 'quote'; text: string; name?: string }
-  | { kind: 'picture'; picture: string; caption: string; /** Slot image.decoration (MP9): a template's own blocks drawn over the picture. */ decoration?: Block[] }
+  | { kind: 'picture'; picture: string; caption: string; /** Decoration over the picture (MP9, LR20): a template decoration preset's name. A list of blocks is deprecated. */ decoration?: Decoration }
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; label: string; code: string };
+
+/**
+ * A decoration over a picture (MP9, LR20): the name of one of the template's decoration presets (`registry.decorations`).
+ * A list of the template's own blocks is the deprecated older form, still drawn: it opened a block to any content.
+ */
+export type Decoration = string | Block[];
 
 /** A block's section title at the top steps of the type ramp (MP16); without it the usual section size. */
 export type SectionTitleSize = 'display' | 'jumbo';
@@ -101,8 +107,8 @@ export type CoreBlock =
       standalone?: boolean;
       /** Blocks in the picture's place (DP11 slot `hero.media`), when there's no `picture`. */
       media?: Block[];
-      /** Slot hero.decoration (MP9): a template's own blocks drawn over the picture, as decoration. Only with picture. */
-      decoration?: Block[];
+      /** Decoration over the picture (MP9, LR20): a template decoration preset's name. Only with picture. A list of blocks is deprecated. */
+      decoration?: Decoration;
       /** Lines of room kept for the title and the lead (MP7), so a series of pages keeps one opening height. */
       reserve?: { title?: number; lead?: number };
     }
@@ -305,6 +311,8 @@ export interface RenderContext {
   neighbours?: Block[];
   /** The layout region being filled, for its top-level blocks only: framing applies in the page's `main` region, never in a side column or inside another block (Q89.2). */
   region?: string;
+  /** A template decoration preset by name (LR20), or undefined when the template has none by that name. */
+  decoration?: (name: string) => ReactNode | undefined;
   /** Told of a content problem the renderer finds (a block a slot doesn't accept); `SiteView` lists them in development. */
   problem?: (what: string) => void;
 }
@@ -332,7 +340,9 @@ export interface Template {
   /** The stories of its own parts (parts/), shown on its Parts page in the library. */
   stories?: StoryFile[];
   registry?: { // eslint-disable-next-line @typescript-eslint/no-explicit-any -- each entry narrows its own block
-  blocks?: Record<string, BlockRenderer<any>>; layouts?: Record<string, LayoutBinding> };
+  blocks?: Record<string, BlockRenderer<any>>; layouts?: Record<string, LayoutBinding>;
+  /** Decoration presets (LR20): art drawn over a picture (shapes, marks), by name; a hero or picture names one in `decoration`. */
+  decorations?: Record<string, () => ReactNode> };
 }
 
 /** A site's navigation place (site.schema.json `navigation`). */
