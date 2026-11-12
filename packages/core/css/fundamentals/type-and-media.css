@@ -190,6 +190,15 @@
     align-self: center;
   }
 
+  /* plain: a whole picture or mark that links. No link colour or line at any state (its place in a card or bar says it
+     links, not colour); the focus ring stays. Not for words in running text. */
+  [data-dl='link'][data-presentation='plain'],
+  [data-dl='link'][data-presentation='plain']:is(:hover, :focus-visible, :active, [aria-current='page']) {
+    display: block;
+    color: inherit;
+    text-decoration-line: none;
+  }
+
   [data-dl='icon'] {
     display: inline-block;
     flex: none;

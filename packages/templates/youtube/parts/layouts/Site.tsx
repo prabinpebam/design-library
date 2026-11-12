@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
+import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, Link, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
 
@@ -39,10 +39,11 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
   const start: ReactNode = (
     <>
       <Button label={c.guide} icon="menu" iconOnly emphasis="quiet" onClick={() => setToggled(!toggled)} />
-      <a data-dl-part="wordmark" href="#home" aria-label={`${view.wordmark} ${c.home}`}>
+      <Link plain data-dl-part="wordmark" href="#home">
         <span data-dl-part="mark" aria-hidden="true"><Icon name="play" size="sm" /></span>
         <span data-dl-part="word">{view.wordmark}</span>
-      </a>
+        <span data-dl-spoken> {c.home}</span>
+      </Link>
     </>
   );
   const mini = view.guide.flatMap((s) => s.entries?.filter((e) => e.mini) ?? []);
@@ -108,9 +109,10 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
 function VideoCard({ video, copy: c }: { video: YoutubeVideo; copy: Record<string, string> }) {
   return (
     <article data-dl="youtube-video">
-      <a data-dl-part="frame" href={`#${video.id}`} aria-label={video.title}>
+      <div data-dl-part="frame">
+        <Link plain data-dl-part="link" href={`#${video.id}`}><span data-dl-spoken>{video.title}</span></Link>
         <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{video.duration}</Badge></span>
-      </a>
+      </div>
       <div data-dl-part="details">
         <Avatar name={video.channel} size={36} decorative />
         <div data-dl-part="text">
@@ -230,9 +232,10 @@ function Watch({ view }: { view: YoutubeRecord }) {
           <ul data-dl-part="next">
             {next.map((v) => (
               <li key={v.id} data-dl-part="next-item">
-                <a data-dl-part="frame" href={`#${v.id}`} aria-label={v.title}>
+                <div data-dl-part="frame">
+                  <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
                   <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
-                </a>
+                </div>
                 <div data-dl-part="next-text">
                   <Heading level={3} size="label" lines={2}>{v.title}</Heading>
                   <Text variant="caption" tone="muted">{v.channel}</Text>
@@ -266,9 +269,10 @@ function Search({ view }: { view: YoutubeRecord }) {
         <ul data-dl-part="list" aria-label={c.results}>
           {results.map(({ v, snippet }) => (
             <li key={v.id} data-dl-part="result">
-              <a data-dl-part="frame" href={`#${v.id}`} aria-label={v.title}>
+              <div data-dl-part="frame">
+                <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
                 <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
-              </a>
+              </div>
               <div data-dl-part="text">
                 <div data-dl-part="title">
                   <Heading level={2} size={2} lines={2}>{v.title}</Heading>

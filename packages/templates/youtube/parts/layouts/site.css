@@ -68,6 +68,10 @@
   [data-dl='youtube-video'] { display: grid; gap: var(--space-3); }
   [data-dl='youtube-video'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--radius-lg); background: var(--color-bg-sunken); }
   /* Length: 8 from the frame's bottom and end, 20 high, white on black at 60% (C-1280-L). */
+  /* Each frame is one plain core Link filling it (named by the video's title), with the length badge beside it on top; the
+     badge lets the pointer through, so the whole frame follows the link and its focus ring follows the frame's corners. */
+  :is([data-dl='youtube-video'], [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='link'] { position: absolute; inset: 0; border-radius: inherit; }
+  :is([data-dl='youtube-video'], [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='duration'] { pointer-events: none; }
   [data-dl='youtube-video'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
   [data-dl='youtube-video'] > [data-dl-part='details'] { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-inline-end: var(--space-6); }
   /* Title 16/22, two lines; meta 4 below it, 14/20 (C-1280-L, T-1280-L). */

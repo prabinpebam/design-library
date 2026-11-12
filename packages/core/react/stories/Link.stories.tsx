@@ -90,5 +90,20 @@ export default {
 </Link>`,
       render: () => <PreviewOnPoint />,
     },
+    {
+      title: 'Plain: a whole mark or picture that links',
+      description:
+        'plain drops the link colour and line at every state for a link that is a block, such as a wordmark or a thumbnail, whose place says it links; the focus ring stays. Its words name it: a picture-only link gets a data-dl-spoken child. Never for words in running text.',
+      code: `<Link href="#/" plain>
+  <Text>Design library</Text>
+  <span data-dl-spoken> home</span>
+</Link>`,
+      render: () => (
+        <Link href="#/" plain>
+          <Text>Design library</Text>
+          <span data-dl-spoken> home</span>
+        </Link>
+      ),
+    },
   ],
 } satisfies StoryFile;
