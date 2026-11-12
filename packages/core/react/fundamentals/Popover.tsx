@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { useAnchored, type AnchorSide } from '../behaviour/anchor';
 import { Button, type ButtonProps } from './Button';
 import { Heading } from './Heading';
@@ -23,8 +23,10 @@ export interface PopoverProps extends DataAttributes {
   title?: string;
   /** What it holds: a few words of help with a link, a short form, filters, a confirmation's question and Buttons. */
   children: ReactNode;
-  /** The side it prefers; it flips when there's no room there. Default `bottom`. */
+  /** The side it prefers; it flips when there's no room there, or `'over'` when an inline gallery strip expands in place. Default `bottom`. */
   side?: AnchorSide;
+  /** Optional enclosing strip or group whose box the surface aligns to instead of the trigger button alone. */
+  anchorRef?: RefObject<HTMLElement | null>;
   /** Controlled: shown while true. Leave out to let the trigger open and close it. */
   open?: boolean;
   /** Asked to open or close: the trigger, Escape, a press outside, or focus leaving. */
@@ -50,7 +52,7 @@ export interface PopoverProps extends DataAttributes {
  * @key Escape: closes it; focus returns to the trigger
  * @key Tab: moves through its controls; past the last one it closes and focus moves on
  */
-export function Popover({ trigger, title, children, side = 'bottom', open: controlled, onOpenChange, width, ...data }: PopoverProps) {
+export function Popover({ trigger, title, children, side = 'bottom', anchorRef, open: controlled, onOpenChange, width, ...data }: PopoverProps) {
   const id = useId();
   const root = useRef<HTMLSpanElement>(null);
   const anchor = useRef<HTMLElement | null>(null);
@@ -67,7 +69,7 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
   useLayoutEffect(() => {
     anchor.current = root.current?.querySelector<HTMLElement>(':scope > button, :scope > [data-dl="button"] button, :scope > :first-child') ?? null;
   });
-  useAnchored(open, anchor, surface, side, '--c-popover-offset', 'start', '--c-popover-cross-offset');
+  useAnchored(open, anchorRef ?? anchor, surface, side, '--c-popover-offset', 'start', '--c-popover-cross-offset');
 
   useEffect(() => {
     const el = surface.current;
@@ -75,7 +77,7 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
     const first = el.querySelector<HTMLElement>('input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])');
     (first ?? el).focus({ preventScroll: true });
     const outside = (e: PointerEvent) => {
-      if (!root.current?.contains(e.target as Node)) {
+      if (!root.current?.contains(e.target as Node) && !anchorRef?.current?.contains(e.target as Node)) {
         away.current = true;
         change(false);
       }

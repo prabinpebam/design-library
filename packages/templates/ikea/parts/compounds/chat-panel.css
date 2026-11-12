@@ -20,7 +20,6 @@
   }
 
   [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='head'] {
-    --color-text: var(--t-ikea-chat-panel-head-on);
     display: flex;
     align-items: center;
     gap: var(--space-inline-pair);

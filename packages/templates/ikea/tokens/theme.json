@@ -381,5 +381,30 @@
   "color.bg-control": {
     "$value": "{color.bg}",
     "$description": "Q141: ikea.com controls (choice cards, steppers, fields) are white with a grey edge, not grey-filled"
-  }
+  },
+  "$parts": [
+    {
+      "selector": "[data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='head']",
+      "$description": "head: core component tokens for this part, moved from parts/compounds/chat-panel.css (LG3).",
+      "tokens": {
+        "color.text": "var(--t-ikea-chat-panel-head-on)"
+      }
+    },
+    {
+      "selector": "[data-dl='ikea-offer-ticket']",
+      "$description": "ikea-offer-ticket: core component tokens for this part, moved from parts/compounds/offer-ticket.css (LG3).",
+      "tokens": {
+        "color.text": "var(--t-ikea-offer-ticket-on)"
+      }
+    },
+    {
+      "selector": "[data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='search']",
+      "$description": "search: core component tokens for this part, moved from parts/compounds/store-header.css (LG3).",
+      "tokens": {
+        "c.field.radius": "var(--t-ikea-store-header-search-radius)",
+        "color.bg-control": "var(--t-ikea-store-header-search-fill)",
+        "color.border-control": "var(--t-ikea-store-header-search-fill)"
+      }
+    }
+  ]
 }

@@ -64,7 +64,7 @@
     padding: var(--t-ikea-store-header-wordmark-padding) calc(var(--t-ikea-store-header-wordmark-padding) * 2);
     background-color: var(--t-ikea-store-header-wordmark-fill);
     color: var(--t-ikea-store-header-wordmark-color);
-    letter-spacing: 0.02em;
+    letter-spacing: var(--t-ikea-store-header-wordmark-tracking);
     font-family: var(--font-display);
     font-size: var(--t-ikea-store-header-wordmark-size);
     font-weight: var(--t-ikea-store-header-wordmark-weight);
@@ -72,9 +72,6 @@
   }
 
   [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='search'] {
-    --c-field-radius: var(--t-ikea-store-header-search-radius);
-    --color-bg-control: var(--t-ikea-store-header-search-fill);
-    --color-border-control: var(--t-ikea-store-header-search-fill);
     flex: 1 1 auto;
     min-inline-size: 0;
     max-inline-size: var(--t-ikea-store-header-search-max);

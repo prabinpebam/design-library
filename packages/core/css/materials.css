@@ -85,4 +85,10 @@
     --material-chrome-bg: var(--color-bg);
     --material-floating-bg: var(--color-bg-raised);
   }
+
+  [data-material='solid'],
+  [data-material='solid'] [data-material] {
+    --material-chrome-bg: var(--color-bg);
+    --material-floating-bg: var(--color-bg-raised);
+  }
 }

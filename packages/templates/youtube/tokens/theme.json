@@ -63,7 +63,7 @@
   "c.navigation.mini-padding-block-start": { "$value": "{space.4}", "$description": "Mini entry padding 16 0 14 (H-1280-L)." },
   "c.navigation.mini-padding-block-end": { "$value": "0.875rem", "$description": "Mini entry padding 16 0 14 (H-1280-L)." },
   "c.navigation.mini-padding-inline": { "$value": "0rem", "$description": "Mini entry padding 16 0 14: the label centres in the 64 entry (H-1280-L)." },
-  "c.navigation.mini-label-size": { "$value": "0.625rem", "$description": "Mini entry label 10/16 w400 (H-1280-L)." },
+  "c.navigation.mini-label-size": { "$value": "{t.youtube.guide.mini-label-size}", "$description": "Mini entry label 10/16 w400 (H-1280-L); the measured template token." },
   "c.navigation.mini-label-leading": { "$value": "1.6", "$description": "Mini entry label 10/16 (H-1280-L)." },
   "c.navigation.mini-current-fill": { "$value": "transparent", "$description": "The mini guide's current entry has no fill (H-1280-L Home)." },
   "c.navigation.mini-current-weight": { "$value": "{weight.regular}", "$description": "Mini entry label w400, current or not (H-1280-L)." },

@@ -29,7 +29,7 @@ const draw = (nodes: IconNode[]): ReactNode[] => nodes.map(([tag, attrs, kids], 
  */
 export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
   useIconSetVersion();
-  const icon: { d: string; flipInRtl?: boolean; fill?: string; accent?: string; accentFill?: string } = icons[name];
+  const icon: { d: string; flipInRtl?: boolean; fill?: string; accent?: string; accentFill?: string } | undefined = (icons as Record<string, { d: string; flipInRtl?: boolean; fill?: string; accent?: string; accentFill?: string } | undefined>)[name];
   // Q113: a brand's glyph for this name (nearest IconOverrides, then site-wide) wins over the set; `from` shows a set as it is.
   const brand = useIconOverride(name);
   const set = !from && brand ? { glyph: brand, fallback: false } : glyphFor(name, from);
@@ -37,7 +37,7 @@ export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
     ...data,
     'data-dl': 'icon',
     'data-size': size,
-    'data-flip': icon.flipInRtl ? '' : undefined,
+    'data-flip': icon?.flipInRtl ? '' : undefined,
     focusable: 'false' as const,
     ...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true }),
   };
@@ -47,6 +47,9 @@ export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
         <g {...set.glyph.g}>{draw(set.glyph.c)}</g>
       </svg>
     );
+  }
+  if (!icon) {
+    return <svg {...common} viewBox="0 0 24 24" />;
   }
   return (
     <svg {...common} viewBox="0 0 24 24">

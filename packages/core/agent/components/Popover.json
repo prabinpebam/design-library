@@ -52,7 +52,12 @@
           "name": "side",
           "type": "AnchorSide",
           "default": "'bottom'",
-          "description": "The side it prefers; it flips when there's no room there. Default `bottom`."
+          "description": "The side it prefers; it flips when there's no room there, or `'over'` when an inline gallery strip expands in place. Default `bottom`."
+        },
+        {
+          "name": "anchorRef",
+          "type": "RefObject<HTMLElement | null>",
+          "description": "Optional enclosing strip or group whose box the surface aligns to instead of the trigger button alone."
         },
         {
           "name": "open",
@@ -128,7 +133,8 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/popover",
   "usedBy": [
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "elevation",

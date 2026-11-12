@@ -252,6 +252,8 @@
     --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-button-fill-track: var(--color-map-brand-tint);
     --c-switch-spinner: var(--color-map-progress);
     --c-progress-bar-fill: var(--color-map-progress);
@@ -290,6 +292,8 @@
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
       --c-site-header-current-rule: var(--color-border-strong);
+      --c-switch-off-border: var(--color-border-strong);
+      --c-switch-off-thumb: var(--color-border-strong);
       --c-tabs-text: var(--color-text-muted);
     }
   }
@@ -316,6 +320,8 @@
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-contrast='more'] [data-template='ikea'], [data-template='ikea'][data-contrast='more'] {
@@ -341,6 +347,8 @@
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-space='compact'] [data-template='ikea'], [data-template='ikea'][data-space='compact'] {
@@ -719,5 +727,16 @@
     font-size: var(--type-body-size);
     line-height: var(--type-body-leading);
     font-weight: var(--type-body-weight);
+  }
+  [data-dl='ikea-chat-panel'] > [data-dl-part='panel'] > [data-dl-part='head'] {
+    --color-text: var(--t-ikea-chat-panel-head-on);
+  }
+  [data-dl='ikea-offer-ticket'] {
+    --color-text: var(--t-ikea-offer-ticket-on);
+  }
+  [data-dl='ikea-store-header'] > [data-dl-part='row'] > [data-dl-part='search'] {
+    --c-field-radius: var(--t-ikea-store-header-search-radius);
+    --color-bg-control: var(--t-ikea-store-header-search-fill);
+    --color-border-control: var(--t-ikea-store-header-search-fill);
   }
 }

@@ -1,0 +1,150 @@
+{
+  "$description": "check:copy findings that existed when the check was added (C3, Worker 109, 2026-11-12). Fixing them changes rendered pages, so it is a copy packet of its own. Never add to this list to make a packet pass.",
+  "findings": [
+    {
+      "file": "packages/core/react/stories/Avatar.stories.tsx",
+      "rule": "CP4",
+      "text": "kind=\"organisation\", \"team\" or \"bot\" draws a rounded square whose corner grow…"
+    },
+    {
+      "file": "packages/core/react/stories/AvatarGroup.stories.tsx",
+      "rule": "CP4",
+      "text": "Several people or teams in one row, overlapping or side by side, with a \"+n\" …"
+    },
+    {
+      "file": "packages/core/react/stories/GradientEditor.stories.tsx",
+      "rule": "CP2",
+      "text": "Drag a stop to move it; click the bar to add one in the colour already there;…"
+    },
+    {
+      "file": "packages/core/react/stories/Grid.stories.tsx",
+      "rule": "CP4",
+      "text": "ratio=\"3:2\" for a softer split, here words beside a short list of facts; \"1:2…"
+    },
+    {
+      "file": "packages/core/react/stories/InlineEdit.stories.tsx",
+      "rule": "CP2",
+      "text": "Press the title (or Tab to it and press Enter) to edit it. The field takes th…"
+    },
+    {
+      "file": "packages/core/react/stories/List.stories.tsx",
+      "rule": "CP2",
+      "text": "Each option has a box. Space toggles, Shift+arrows extend, Shift+Space choose…"
+    },
+    {
+      "file": "packages/core/react/stories/List.stories.tsx",
+      "rule": "CP2",
+      "text": "Drag the handle to move an item; click or press Enter on it for Move up, down…"
+    },
+    {
+      "file": "packages/core/react/stories/List.stories.tsx",
+      "rule": "CP2",
+      "text": "Rows can be chosen (Space or a click on the row) and also hold buttons and a …"
+    },
+    {
+      "file": "packages/core/react/stories/NumberField.stories.tsx",
+      "rule": "CP2",
+      "text": "With a visible label, drag the label sideways to change the value, as with a …"
+    },
+    {
+      "file": "packages/core/react/stories/NumberField.stories.tsx",
+      "rule": "CP4",
+      "text": "The type section of an inspector. Font size offers common sizes in a list; li…"
+    },
+    {
+      "file": "packages/core/react/stories/Rating.stories.tsx",
+      "rule": "CP2",
+      "text": "Hover previews a value in a lighter tone; a click or Space chooses it; pressi…"
+    },
+    {
+      "file": "packages/core/react/stories/Section.stories.tsx",
+      "rule": "CP4",
+      "text": "size=\"display\" sets a section’s title at the display step and size=\"jumbo\" at…"
+    },
+    {
+      "file": "packages/core/react/stories/SegmentedControl.stories.tsx",
+      "rule": "CP2",
+      "text": "Click across the segments: the fill slides from the old choice to the new one…"
+    },
+    {
+      "file": "packages/core/react/stories/Select.stories.tsx",
+      "rule": "CP2",
+      "text": "With multiple, each option has a box, and choosing keeps the list open so sev…"
+    },
+    {
+      "file": "packages/core/react/stories/Tabs.stories.tsx",
+      "rule": "CP2",
+      "text": "Related content in one place, one panel at a time. Click across the tabs: the…"
+    },
+    {
+      "file": "packages/core/react/stories/TextArea.stories.tsx",
+      "rule": "CP4",
+      "text": "Say what should change and why. It's saved with the selected blocks."
+    },
+    {
+      "file": "packages/core/react/stories/TimeField.stories.tsx",
+      "rule": "CP2",
+      "text": "Click a part or Tab to it, then type: two digits (or one that can’t start two…"
+    },
+    {
+      "file": "packages/core/react/stories/Tooltip.stories.tsx",
+      "rule": "CP2",
+      "text": "kind=\"description\": a few extra words read after the control’s name, for a co…"
+    },
+    {
+      "file": "packages/templates/conference/content/programme/speakers/cfp.json",
+      "rule": "CP1",
+      "text": "Submit a talk"
+    },
+    {
+      "file": "packages/templates/conference/content/programme/speakers/submit-talk.json",
+      "rule": "CP1",
+      "text": "Submit another"
+    },
+    {
+      "file": "packages/templates/design/content/edit/design/editor.json",
+      "rule": "CP2",
+      "text": "On click"
+    },
+    {
+      "file": "packages/templates/ikea/content/shared.json",
+      "rule": "CP4",
+      "text": "Deep seats, loose cushions and covers you can take off and wash. The birch le…"
+    },
+    {
+      "file": "packages/templates/ikea/content/shared.json",
+      "rule": "CP4",
+      "text": "Three hand-woven baskets that nest inside each other when you don't need them."
+    },
+    {
+      "file": "packages/templates/word/content/shared.json",
+      "rule": "CP4",
+      "text": "What's New"
+    },
+    {
+      "file": "packages/templates/word/content/shared.json",
+      "rule": "CP4",
+      "text": "We walked the breakwater from the lighthouse steps to the fuel jetty at low w…"
+    },
+    {
+      "file": "packages/templates/word/content/shared.json",
+      "rule": "CP4",
+      "text": "The depth at section 14 reads shallower than last year, which doesn't match t…"
+    },
+    {
+      "file": "packages/templates/word/content/shared.json",
+      "rule": "CP4",
+      "text": "Was this measured from the old paint mark or from the joint? Worth saying whi…"
+    },
+    {
+      "file": "packages/templates/word/content/shared.json",
+      "rule": "CP4",
+      "text": "I can take the boat out on Thursday's low tide and repeat the sounding."
+    },
+    {
+      "file": "packages/templates/word/content/shared.json",
+      "rule": "CP3",
+      "text": "Insert your first table of cont..."
+    }
+  ]
+}

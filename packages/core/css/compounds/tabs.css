@@ -39,6 +39,7 @@
     gap: var(--c-tabs-gap);
     margin: 0;
     padding: 0;
+    padding-inline-start: var(--c-tabs-list-padding-inline-start);
     list-style: none;
   }
 
@@ -56,6 +57,7 @@
   [data-dl='tabs'][data-orientation='vertical'] [data-dl-part='list'] {
     flex: 1 1 auto;
     flex-direction: column;
+    padding-inline-start: 0;
   }
 
   [data-dl='tabs'] [data-dl-part='list'] > li {

@@ -118,7 +118,8 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/checkbox",
   "usedBy": [
-    "slack.Workspace"
+    "slack.Workspace",
+    "word.Window"
   ],
   "principles": [
     "ui-states"

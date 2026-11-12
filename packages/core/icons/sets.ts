@@ -57,6 +57,8 @@ export interface BrandGlyph {
   /** The shapes as `IconNode`s: `[tag, attributes, children?]`. Typed loosely so imported JSON needs no cast. */
   c: readonly (IconNode | readonly unknown[])[];
   from?: string;
+  /** Domain-specific icon name declared by `design-library-icons --custom`. */
+  custom?: boolean;
 }
 
 /** A brand's own icon set (MP24): drawn by name like a curated set, chosen with `setIconSet(id)`. */
@@ -68,6 +70,8 @@ export interface BrandIconSet {
   /** The licence the brand holds the glyphs under, recorded with the set. */
   licence: string;
   author?: string;
+  /** Whether the pack extends the semantic icon vocabulary with domain-specific names (`design-library-icons --custom`). */
+  custom?: boolean;
   /** One style's glyphs by semantic name; or use `styles`. */
   glyphs?: Record<string, BrandGlyph>;
   /** Several styles, each glyphs by name; the first is the fallback for the others. */
@@ -76,15 +80,17 @@ export interface BrandIconSet {
 
 /** The names a brand may draw: every Icon name, and `star`, Rating's mark. */
 const known = () => new Set([...Object.keys(ownIcons), 'star']);
+const customSlug = /^[a-z][a-z0-9-]*$/;
 const development = () => Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
 
 /** In development, warns once per problem: a name no component draws, or a glyph without a viewBox (ID48). */
 const warned = new Set<string>();
-export function checkGlyphs(where: string, glyphs: Record<string, BrandGlyph | undefined>) {
+export function checkGlyphs(where: string, glyphs: Record<string, BrandGlyph | undefined>, allowCustom = false) {
   if (!development()) return;
   const names = known();
   for (const [name, glyph] of Object.entries(glyphs)) {
-    const problem = !names.has(name) ? `"${name}" isn't an icon name; it draws nowhere (names: ${[...names].join(', ')})` : !glyph?.v ? `"${name}" has no viewBox (v)` : null;
+    const validName = names.has(name) || ((allowCustom || glyph?.custom) && customSlug.test(name));
+    const problem = !validName ? `"${name}" isn't an icon name; it draws nowhere (names: ${[...names].join(', ')})` : !glyph?.v ? `"${name}" has no viewBox (v)` : null;
     if (problem && !warned.has(`${where}:${problem}`)) {
       warned.add(`${where}:${problem}`);
       console.warn(`[design-library] ${where}: ${problem}`);
@@ -101,7 +107,7 @@ const registered = new Map<string, IconSetInfo>();
  */
 export function registerIconSet(set: BrandIconSet) {
   const styles = set.styles ?? { default: set.glyphs ?? {} };
-  for (const [style, glyphs] of Object.entries(styles)) checkGlyphs(`registerIconSet(${set.id}/${style})`, glyphs);
+  for (const [style, glyphs] of Object.entries(styles)) checkGlyphs(`registerIconSet(${set.id}/${style})`, glyphs, Boolean(set.custom));
   const info: IconSetInfo = {
     id: set.id,
     name: set.name,

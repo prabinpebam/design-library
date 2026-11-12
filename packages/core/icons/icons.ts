@@ -202,4 +202,33 @@ export const icons = {
   'hash-box': { d: 'M5.5 4.5h13a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1zM10.5 8l-1 8M14.5 8l-1 8M8 10.5h8M7.5 13.5h8' },
 } satisfies Record<string, IconData>;
 
-export type IconName = keyof typeof icons;
+export type CoreIconName = keyof typeof icons;
+
+declare const customIconBrand: unique symbol;
+/** A template's own icon name from a `--custom` pack, typed by `defineIconPack` (LG8): it reaches `Icon` without a cast. */
+export type CustomIconName = string & { readonly [customIconBrand]: 'custom-icon' };
+
+/** A semantic name the library draws, or a template's own name typed by `defineIconPack`. */
+export type IconName = CoreIconName | CustomIconName;
+
+/**
+ * Types a template's `--custom` icon pack (the `design-library-icons --custom` JSON, imported as is), so its own names
+ * reach `Icon`, `Button` and every `icon` prop without an `as IconName` cast (LG8, R8):
+ *   const wordIcons = defineIconPack(pack);  wordIcons.name('step-first');  wordIcons.of(command.icon)
+ * `name` takes only the pack's names, checked by TypeScript. `of` reads a name from content: a core or pack name passes
+ * as it is; any other name warns in development and draws an empty icon, as an unknown name always has.
+ */
+export function defineIconPack<P extends { glyphs?: Record<string, unknown>; styles?: Record<string, Record<string, unknown>> }>(pack: P) {
+  type Own = (P['glyphs'] extends Record<string, unknown> ? keyof P['glyphs'] : never) | (P['styles'] extends Record<string, infer S> ? (S extends Record<string, unknown> ? keyof S : never) : never);
+  const own = new Set<string>([...Object.keys(pack.glyphs ?? {}), ...Object.values(pack.styles ?? {}).flatMap((s) => Object.keys(s))]);
+  const name = (n: Own & string) => n as unknown as CustomIconName;
+  function of(n: string): IconName;
+  function of(n: string | undefined): IconName | undefined;
+  function of(n: string | undefined): IconName | undefined {
+    if (n === undefined) return undefined;
+    if (!(n in icons) && !own.has(n) && (import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV)
+      console.warn(`[design-library] defineIconPack: "${n}" is neither a core icon name nor one of this pack's`);
+    return n as unknown as IconName;
+  }
+  return { pack, name, of };
+}

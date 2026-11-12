@@ -6,6 +6,8 @@
  * the same folder as custom properties in `@layer templates`. Every token must be named `t.{template}.{part}.{name}`,
  * carry a `$description`, and alias a core **semantic** token (`{space.stack-item}`), never a primitive (`p.*`), a core
  * component's token (`c.*`) or a raw value, so a template's parts follow the theme, every context and every core change.
+ * The one exception is a measured replica value: a `dimension` in rem or em with
+ * `$extensions["org.design-library"].measured` naming its reference (LG3, K9).
  * An alias stays live: `--t-…: var(--space-stack-item)`. Rename a token in tokens.json, run this, and tokens.css follows.
  *
  *   --templates <folder>   the folder holding one folder per template (default packages/templates, this repository's)
@@ -46,6 +48,13 @@ for (const template of readdirSync(dir, { withFileTypes: true }).filter((d) => d
     if (!path.startsWith(`t.${template}.`)) errors.push(`${rel(source)} · ${path} · isn't named t.${template}.{part}.{name}`);
     if (!node.$description) errors.push(`${rel(source)} · ${path} · has no $description`);
     const alias = typeof node.$value === 'string' ? /^\{([a-z0-9.-]+)\}$/.exec(node.$value)?.[1] : undefined;
+    // A measured replica value (LG3, K9): a raw rem or em length is allowed only as a `dimension` that names the
+    // reference it was measured from, so the brand value lives in token data rather than in part CSS.
+    const measured = node.$extensions?.['org.design-library']?.measured;
+    if (!alias && node.$type === 'dimension' && typeof measured === 'string' && measured.trim() && typeof node.$value === 'string' && /^-?\d*\.?\d+(rem|em)$/.test(node.$value)) {
+      lines.push(`    --${path.replaceAll('.', '-')}: ${node.$value};`);
+      continue;
+    }
     if (!alias) {
       errors.push(`${rel(source)} · ${path} · is a raw value (${JSON.stringify(node.$value)}); alias a core semantic token like {space.stack-item}`);
       continue;
@@ -135,6 +144,34 @@ for (const template of readdirSync(dir, { withFileTypes: true }).filter((d) => d
   // inherited text was computed at :root. One that only rescales text.* steps keeps the inherited text (Q142).
   if ([...set.keys()].some((n) => /^--(font|axes|type)-/.test(n)))
     out.push(`  ${scope} {`, '    font-family: var(--font-ui);', '    font-variation-settings: var(--axes-ui);', '    font-size: var(--type-body-size);', '    line-height: var(--type-body-leading);', '    font-weight: var(--type-body-weight);', '  }');
+  // Part-scoped settings (LG3, K9): `$parts` is an ordered list of `{ selector, at?, $description, tokens }`, where
+  // `selector` reaches one of the template's own parts and `tokens` re-decides core tokens there (`{ "c.popup.width":
+  // "22.125rem" }`). They're written last and in order, so they cascade as they would from part CSS, and part CSS keeps
+  // no core-token settings (check:project `core-token` is an error in templates).
+  const parts = JSON.parse(readFileSync(source, 'utf8')).$parts ?? [];
+  if (!Array.isArray(parts)) errors.push(`${rel(source)} · $parts · must be a list of { selector, at?, $description, tokens }`);
+  else
+    parts.forEach((p, i) => {
+      const where = `${rel(source)} · $parts[${i}]`;
+      const top = (s) => s.split(/,(?![^()]*\))/);
+      if (typeof p?.selector !== 'string' || !top(p.selector).every((s) => s.includes(`[data-dl='${template}-`) || s.includes(`[data-template='${template}']`)))
+        return errors.push(`${where} · every selector must reach one of the template's own parts ([data-dl='${template}-…'])`);
+      if (!p.$description) errors.push(`${where} · has no $description`);
+      if (p.at !== undefined && !/^@(media|container|supports) /.test(p.at)) errors.push(`${where} · at must be an @media, @container or @supports condition`);
+      const decls = [];
+      for (const [name, v] of Object.entries(p.tokens ?? {})) {
+        if (/^(p|t|spectrum|set)\./.test(name)) errors.push(`${where} · ${name} · a theme re-decides semantic roles and component tokens only`);
+        else if (/^color\.status\./.test(name)) errors.push(`${where} · ${name} · a theme may not re-colour status`);
+        else if (!coreTokens.has(name)) errors.push(`${where} · ${name} · isn't a core token`);
+        else if (/var\(--p-/.test(JSON.stringify(v))) errors.push(`${where} · ${name} · reads a primitive; read a semantic role`);
+        const one = (x) => (typeof x === 'string' && /^\{[a-z0-9.-]+\}$/.test(x) ? `var(--${x.slice(1, -1).replaceAll('.', '-')})` : String(x));
+        decls.push(`--${name.replaceAll('.', '-')}: ${v && typeof v === 'object' ? `light-dark(${one(v.light)}, ${one(v.dark)})` : one(v)};`);
+      }
+      if (!decls.length) return errors.push(`${where} · sets no tokens`);
+      const pad = p.at ? '      ' : '    ';
+      const rule = [`${pad.slice(2)}${p.selector} {`, ...decls.map((d) => `${pad}${d}`), `${pad.slice(2)}}`];
+      out.push(...(p.at ? [`  ${p.at} {`, ...rule, '  }'] : rule));
+    });
   const css = `/* Generated by design-library-template-tokens from ${template}/tokens/theme.json: do not edit. */\n@layer templates {\n${out.join('\n')}\n}\n`;
   const target = join(dir, template, 'tokens', 'theme.css');
   if (check) {

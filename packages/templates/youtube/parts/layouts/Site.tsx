@@ -1,7 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
+import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
+
+/** Guide icons are core names read from content; `of` types them without a cast (LG8). */
+const contentIcons = defineIconPack({});
 
 export interface SiteProps extends DataAttributes {
   /** Validated shared content: the guide, the filters, the videos and every label. */
@@ -43,7 +46,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
     </>
   );
   const mini = view.guide.flatMap((s) => s.entries?.filter((e) => e.mini) ?? []);
-  const item = (e: { label: string; icon: string }) => ({ id: slug(e.label), label: e.label, href: `#${slug(e.label)}`, icon: e.icon as IconName });
+  const item = (e: { label: string; icon: string }) => ({ id: slug(e.label), label: e.label, href: `#${slug(e.label)}`, icon: contentIcons.of(e.icon) });
   const current = view.guide.flatMap((s) => s.entries ?? []).find((e) => e.current);
   const currentId = current && slug(current.label);
 

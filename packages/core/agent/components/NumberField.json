@@ -103,9 +103,9 @@
         },
         {
           "name": "steppers",
-          "type": "boolean",
+          "type": "boolean | 'stacked'",
           "default": "false",
-          "description": "Adds − and + buttons; hold one to repeat."
+          "description": "Adds − and + buttons (`true`), or stacked up/down spinbox chevrons (`'stacked'`) on dense inspector boxes; hold one to repeat."
         },
         {
           "name": "size",
@@ -220,6 +220,7 @@
     "--radius-sm",
     "--size-icon-md",
     "--size-target-min",
+    "--space-4",
     "--space-inline-pair",
     "--state-hover",
     "--state-pressed",
@@ -232,7 +233,8 @@
     "ColourPicker",
     "Slider",
     "AllocationSlider",
-    "GradientEditor"
+    "GradientEditor",
+    "word.Window"
   ],
   "principles": [
     "ui-states"

@@ -110,6 +110,8 @@
     "--c-switch-border-width",
     "--c-switch-disabled-opacity",
     "--c-switch-gap",
+    "--c-switch-off-border",
+    "--c-switch-off-thumb",
     "--c-switch-size",
     "--c-switch-size-l",
     "--c-switch-size-s",

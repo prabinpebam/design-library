@@ -10,6 +10,7 @@
 //       --scheme light|dark|both (default both)   --only blog,chat   --pages-only   --templates-only
 //       --self                 compare the base with itself (finds noisy pages to declare)
 //       --no-build             reuse .shots/wt-dist as it is      --jobs 6   parallel pages
+//       --axe                  also run axe-core on every working-copy screen (a probe: .shots/regression/axe.json)
 //       --match REGEX          only the screens whose id matches (ids: template--layout, lib--route)
 //   node tools/template-regression.mjs serve [--port 8769]   serve the frozen base for side-by-side viewing
 import { spawnSync } from 'node:child_process';
@@ -174,7 +175,11 @@ if (!targets.length) {
 }
 const partial = Boolean(only.size || match || flag('pages-only') || flag('templates-only'));
 
-async function grab(originUrl, t, scheme, file) {
+// --axe (F14, A2, A3, A5): run axe-core on each working-copy screen after its screenshot, in every scheme. A probe: the
+// results go to .shots/regression/axe.json and the summary line, and never fail the sweep.
+const axeRuns = [];
+const axeSource = flag('axe') ? readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8') : '';
+async function grab(originUrl, t, scheme, file, audit) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', colorScheme: scheme, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
   await page.goto(`${originUrl}/${t.path}`, { waitUntil: 'networkidle', timeout: 60000 }).catch(() => {});
@@ -191,6 +196,10 @@ async function grab(originUrl, t, scheme, file) {
   await page.waitForLoadState('networkidle').catch(() => {});
   await page.waitForTimeout(700);
   await page.screenshot({ path: file, fullPage: true, animations: 'disabled', caret: 'hide' });
+  if (audit && axeSource) {
+    const r = await page.evaluate(async (src) => { eval(src); const res = await window.axe.run(document, { resultTypes: ['violations'] }); return res.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length })); }, axeSource).catch((e) => [{ id: 'axe-failed', impact: 'n/a', nodes: 0, error: String(e).slice(0, 120) }]);
+    axeRuns.push({ screen: audit, scheme, violations: r });
+  }
   await ctx.close();
 }
 
@@ -252,12 +261,12 @@ for (const scheme of schemes) {
   const check = async (t) => {
     const a = join(out, `${t.id}-base.png`);
     const b = join(out, `${t.id}-wt.png`);
-    await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b)]);
+    await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b, t.id)]);
     const inventory = catalogueInventory[`${t.id}@${scheme}`] ?? catalogueInventory[t.id];
     let r = await compare(a, b, join(out, `${t.id}-diff.png`), inventory);
     // Up to two retakes of both before a difference counts: late pictures and timers settle under load, real changes stay.
     for (let retake = 0; retake < 2 && (!r.sameSize || (r.pixels && !(inventory && r.outsideInventoryExactPixels === 0))); retake += 1) {
-      await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b)]);
+      await Promise.all([grab(BASE, t, scheme, a), grab(WT, t, scheme, b, t.id)]);
       r = await compare(a, b, join(out, `${t.id}-diff.png`), inventory);
     }
     const declared = noise[t.id] ?? noise[`${t.id}@${scheme}`];
@@ -307,6 +316,15 @@ writeFileSync(join(outRoot, partial ? 'result-partial.json' : 'result.json'), JS
 const base = JSON.parse(readFileSync(join(baseDist, 'BASE.json'), 'utf8'));
 console.log(`template-regression: ${results.length} screens (${targets.length} pages × ${schemes.join(' + ')}), base frozen ${base.frozenAt}${exclude.size ? `, excluding ${[...exclude].join(', ')}` : ''}.`);
 console.log(`  ${results.length - failed.length - noisy.length - inventoryChanges.length} identical, ${noisy.length} within declared noise, ${inventoryChanges.length} catalogue inventory (remaining pixels exactly identical), ${failed.length} different${loadOnly.length ? `; ${loadOnly.length} differed only under parallel load and were identical taken alone` : ''}.`);
+if (axeSource) {
+  const runs = [...new Map(axeRuns.map((r) => [`${r.screen} ${r.scheme}`, r])).values()];
+  const byRule = {};
+  for (const r of runs) for (const v of r.violations) (byRule[v.id] ??= { impact: v.impact, screens: 0, nodes: 0 }), byRule[v.id].screens++, (byRule[v.id].nodes += v.nodes);
+  const clean = runs.filter((r) => !r.violations.length).length;
+  writeFileSync(join(outRoot, 'axe.json'), JSON.stringify({ at: new Date().toISOString(), screens: runs.length, clean, byRule, runs }, null, 2));
+  const top = Object.entries(byRule).sort((a, b) => b[1].screens - a[1].screens).slice(0, 6).map(([id, v]) => `${id} (${v.impact}) ${v.screens}`);
+  console.log(`  axe (probe): ${runs.length} screens audited, ${clean} with no violations; ${Object.keys(byRule).length} rules violated${top.length ? `: ${top.join(', ')}` : ''}. Detail: .shots/regression/axe.json`);
+}
 if (failed.length) {
   console.error(`template-regression: ${failed.length} unexplained screen change(s). Fix at source; only proven same-build noise or explicitly authorized catalogue inventory may be declared. Diffs: .shots/regression/<scheme>/<id>-diff.png`);
   process.exit(1);

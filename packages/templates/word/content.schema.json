@@ -8,6 +8,203 @@
     "record.shared": {
       "$ref": "#/$defs/WordRecord"
     },
+    "WordBackstage": {
+      "additionalProperties": false,
+      "properties": {
+        "backLabel": {
+          "type": "string"
+        },
+        "cloudLink": {
+          "type": "string"
+        },
+        "cloudNotice": {
+          "type": "string"
+        },
+        "columns": {
+          "additionalProperties": false,
+          "properties": {
+            "modified": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "modified",
+            "owner"
+          ],
+          "type": "object"
+        },
+        "createLabel": {
+          "type": "string"
+        },
+        "docNav": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageNavItem"
+          },
+          "type": "array"
+        },
+        "files": {
+          "items": {
+            "$ref": "#/$defs/WordRecentFile"
+          },
+          "type": "array"
+        },
+        "filterLabel": {
+          "type": "string"
+        },
+        "footerNav": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageNavItem"
+          },
+          "type": "array"
+        },
+        "heroHeading": {
+          "type": "string"
+        },
+        "moreTemplates": {
+          "type": "string"
+        },
+        "newHeading": {
+          "type": "string"
+        },
+        "primaryNav": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageNavItem"
+          },
+          "type": "array"
+        },
+        "promptPlaceholder": {
+          "type": "string"
+        },
+        "recommended": {
+          "items": {
+            "$ref": "#/$defs/WordRecommendedCard"
+          },
+          "type": "array"
+        },
+        "recommendedHeading": {
+          "type": "string"
+        },
+        "searchPlaceholder": {
+          "type": "string"
+        },
+        "suggestions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tabs": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "enum": [
+                  "recent",
+                  "favorites",
+                  "shared"
+                ],
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "templates": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageTemplate"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "backLabel",
+        "primaryNav",
+        "docNav",
+        "footerNav",
+        "heroHeading",
+        "promptPlaceholder",
+        "createLabel",
+        "suggestions",
+        "newHeading",
+        "moreTemplates",
+        "cloudNotice",
+        "cloudLink",
+        "templates",
+        "recommendedHeading",
+        "recommended",
+        "tabs",
+        "searchPlaceholder",
+        "filterLabel",
+        "columns",
+        "files"
+      ],
+      "type": "object"
+    },
+    "WordBackstageNavItem": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "type": "object"
+    },
+    "WordBackstageTemplate": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "variant": {
+          "enum": [
+            "blank",
+            "tour",
+            "toc",
+            "grant",
+            "minutes",
+            "proposal"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "variant"
+      ],
+      "type": "object"
+    },
     "WordBlock": {
       "additionalProperties": false,
       "properties": {
@@ -34,41 +231,68 @@
       "additionalProperties": false,
       "description": "One ribbon command: a stacked lead command, an icon command (optionally with a menu chevron), or a value field.",
       "properties": {
+        "checked": {
+          "description": "Initial checked state for a `checkbox` command (Ruler on the View tab).",
+          "type": "boolean"
+        },
+        "disabled": {
+          "description": "Unavailable in the current selection state (Cut, Copy, Sensitivity on an empty selection).",
+          "type": "boolean"
+        },
+        "hideFieldLabel": {
+          "description": "Hides the text caption before a `labelled-field` when only its leading icon precedes the select box (All Markup).",
+          "type": "boolean"
+        },
         "icon": {
-          "description": "A core icon name.",
+          "description": "Icon name from core or the template's custom icon pack.",
           "type": "string"
         },
         "kind": {
-          "description": "labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks); separator: the thin line between sets on a row (its label stays empty).",
+          "description": "labelled: a small icon with its name beside it; checkbox: a compact show/hide checkbox row; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets.",
           "enum": [
             "stacked",
             "icon",
             "labelled",
+            "checkbox",
             "field",
-            "separator"
+            "labelled-field",
+            "record-stepper",
+            "separator",
+            "pen",
+            "tool",
+            "style-gallery"
           ],
           "type": "string"
         },
         "label": {
           "type": "string"
         },
+        "lines": {
+          "description": "Explicit multi-line stacked caption lines when a ribbon wraps at a specific break.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "menu": {
           "description": "A split command with a menu of options.",
           "type": "boolean"
         },
         "pressed": {
-          "description": "A toggle that's on (left alignment).",
+          "description": "A toggle that's on (left alignment), or initial checked state for a `checkbox` command.",
           "type": "boolean"
         },
         "value": {
-          "description": "A field's current value (\"Aptos (Body)\", \"12\").",
+          "description": "A field's current value (\"Aptos (Body)\", \"11\", \"APA\", \"All Markup\").",
           "type": "string"
         },
         "width": {
-          "description": "A field's width class: `wide` for a font name, `narrow` for a size.",
+          "description": "A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style, `markup` for All Markup.",
           "enum": [
             "wide",
-            "narrow"
+            "narrow",
+            "medium",
+            "markup"
           ],
           "type": "string"
         }
@@ -103,9 +327,88 @@
       ],
       "type": "object"
     },
+    "WordCopilotPane": {
+      "additionalProperties": false,
+      "properties": {
+        "allowEditing": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "heading": {
+          "type": "string"
+        },
+        "menuLabel": {
+          "type": "string"
+        },
+        "moreLabel": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string"
+        },
+        "prompts": {
+          "items": {
+            "$ref": "#/$defs/WordCopilotPrompt"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "heading",
+        "body",
+        "prompts",
+        "allowEditing",
+        "placeholder",
+        "menuLabel",
+        "moreLabel"
+      ],
+      "type": "object"
+    },
+    "WordCopilotPrompt": {
+      "additionalProperties": false,
+      "properties": {
+        "emphasis": {
+          "type": "string"
+        },
+        "prefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "prefix",
+        "emphasis"
+      ],
+      "type": "object"
+    },
     "WordGroup": {
       "additionalProperties": false,
       "properties": {
+        "columns": {
+          "description": "Multiple side-by-side stacks of command rows (Illustrations, Text).",
+          "items": {
+            "items": {
+              "items": {
+                "$ref": "#/$defs/WordCommand"
+              },
+              "type": "array"
+            },
+            "type": "array"
+          },
+          "type": "array"
+        },
+        "endLead": {
+          "description": "Lead commands placed at the group's end after its rows (Change Provider in References).",
+          "items": {
+            "$ref": "#/$defs/WordCommand"
+          },
+          "type": "array"
+        },
+        "hideLabel": {
+          "description": "Hides redundant group caption under a single-command collapsed group.",
+          "type": "boolean"
+        },
         "id": {
           "type": "string"
         },
@@ -131,6 +434,20 @@
             "type": "array"
           },
           "type": "array"
+        },
+        "spinColumns": {
+          "description": "Headed columns of numeric spinboxes (Indent and Spacing in Layout).",
+          "items": {
+            "$ref": "#/$defs/WordSpinColumn"
+          },
+          "type": "array"
+        },
+        "trailLead": {
+          "description": "Lead commands placed after an inline gallery (Colors, Fonts in Design).",
+          "items": {
+            "$ref": "#/$defs/WordCommand"
+          },
+          "type": "array"
         }
       },
       "required": [
@@ -139,14 +456,100 @@
       ],
       "type": "object"
     },
+    "WordRecentFile": {
+      "additionalProperties": false,
+      "properties": {
+        "favorite": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "modified": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "shared": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "location",
+        "modified",
+        "owner"
+      ],
+      "type": "object"
+    },
+    "WordRecommendedCard": {
+      "additionalProperties": false,
+      "properties": {
+        "activity": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "icon": {
+          "enum": [
+            "comment",
+            "edit",
+            "people"
+          ],
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "preview": {
+          "enum": [
+            "survey",
+            "tide",
+            "mooring",
+            "inspection"
+          ],
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "activity",
+        "date",
+        "icon",
+        "preview"
+      ],
+      "type": "object"
+    },
     "WordRecord": {
       "additionalProperties": false,
       "properties": {
+        "backstage": {
+          "$ref": "#/$defs/WordBackstage"
+        },
         "comments": {
           "items": {
             "$ref": "#/$defs/WordComment"
           },
           "type": "array"
+        },
+        "copilotPane": {
+          "$ref": "#/$defs/WordCopilotPane"
         },
         "copy": {
           "additionalProperties": {
@@ -204,6 +607,12 @@
           ],
           "type": "object"
         },
+        "styleSets": {
+          "items": {
+            "$ref": "#/$defs/WordStyleSet"
+          },
+          "type": "array"
+        },
         "tabs": {
           "description": "Ribbon tabs; each tab but Home carries its own groups (Home's are home).",
           "items": {
@@ -244,6 +653,98 @@
         "comments",
         "status",
         "copy"
+      ],
+      "type": "object"
+    },
+    "WordSpinColumn": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/WordSpinField"
+          },
+          "type": "array"
+        },
+        "heading": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "heading",
+        "fields"
+      ],
+      "type": "object"
+    },
+    "WordSpinField": {
+      "additionalProperties": false,
+      "properties": {
+        "icon": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "step": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "label",
+        "icon",
+        "value",
+        "unit"
+      ],
+      "type": "object"
+    },
+    "WordStyleSet": {
+      "additionalProperties": false,
+      "properties": {
+        "headingText": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "titleText": {
+          "type": "string"
+        },
+        "variant": {
+          "enum": [
+            "default",
+            "caps-blue",
+            "caps-rule",
+            "serif",
+            "caps-dark",
+            "bar-num",
+            "numbered",
+            "caps-centered",
+            "warm",
+            "boxed",
+            "minimal",
+            "bold-sans",
+            "editorial",
+            "classic",
+            "slate",
+            "compact"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "titleText",
+        "headingText",
+        "variant"
       ],
       "type": "object"
     }

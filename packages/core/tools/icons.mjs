@@ -34,12 +34,14 @@ const flag = (name) => {
 };
 const folder = args.find((a, i) => !a.startsWith('--') && !['--out', '--id', '--name', '--licence'].includes(args[i - 1]));
 if (!folder || args.includes('--help')) {
-  console.log('Usage: design-library-icons <folder of name.svg files> --out <file.json> [--id brand] [--name "Brand"] [--licence "Own work"] [--check]');
+  console.log('Usage: design-library-icons <folder of name.svg files> --out <file.json> [--id brand] [--name "Brand"] [--licence "Own work"] [--custom] [--check]');
   process.exit(folder ? 0 : 2);
 }
 const dir = resolve(folder);
 const out = resolve(flag('--out') ?? join(dir, 'icons.json'));
 const check = args.includes('--check');
+const custom = args.includes('--custom');
+const customSlug = /^[a-z][a-z0-9-]*$/;
 const rel = (p) => relative(process.cwd(), p) || '.';
 if (!existsSync(dir)) {
   console.error(`design-library-icons: ${rel(dir)} doesn't exist`);
@@ -47,7 +49,7 @@ if (!existsSync(dir)) {
 }
 
 const SHAPES = new Set(['path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse', 'g']);
-const ATTRS = new Set(['d', 'cx', 'cy', 'r', 'rx', 'ry', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'width', 'height', 'points', 'transform', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'fill-rule', 'clip-rule', 'opacity', 'fill-opacity', 'stroke-opacity']);
+const ATTRS = new Set(['d', 'cx', 'cy', 'r', 'rx', 'ry', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'width', 'height', 'points', 'transform', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'fill-rule', 'clip-rule', 'opacity', 'fill-opacity', 'stroke-opacity', 'data-dl-part']);
 const ROOT_PAINT = ['stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'fill-rule', 'clip-rule'];
 const UNSAFE = [
   [/<script\b/i, 'a script'],
@@ -59,7 +61,7 @@ const UNSAFE = [
   [/url\(\s*["']?(?!#)/i, 'an external url()'],
 ];
 const PAINT = (v) => (v === 'none' ? 'none' : 'currentColor');
-const camel = (a) => a.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+const camel = (a) => (a.startsWith('data-') ? a : a.replace(/-([a-z])/g, (_, c) => c.toUpperCase()));
 
 function attrs(text) {
   const o = {};
@@ -127,7 +129,8 @@ const notes = [];
 for (const f of files) {
   const name = basename(f, '.svg').toLowerCase();
   const file = rel(join(dir, f));
-  if (!NAMES.includes(name)) {
+  const isKnown = NAMES.includes(name);
+  if (!isKnown && !(custom && customSlug.test(name))) {
     problems.push(`${file} · "${name}" isn't an icon name · rename it to one of the names it replaces, such as ${nearest(name).join(', ')} (all names: npx design-library-icons --names)`);
     continue;
   }
@@ -137,7 +140,7 @@ for (const f of files) {
     continue;
   }
   if (r.dropped.length) notes.push(`${file} · not drawn: ${r.dropped.map((t) => `<${t}>`).join(', ')} (icons are shapes in one colour)`);
-  glyphs[name] = { ...r.glyph, from: basename(f, '.svg') };
+  glyphs[name] = { ...r.glyph, from: basename(f, '.svg'), ...(isKnown ? {} : { custom: true }) };
 }
 
 const data = {
@@ -145,6 +148,7 @@ const data = {
   id: flag('--id') ?? 'brand',
   name: flag('--name') ?? 'Brand icons',
   licence: flag('--licence') ?? 'Own work',
+  ...(custom ? { custom: true } : {}),
   glyphs,
 };
 const text = `${JSON.stringify(data, null, 2)}\n`;

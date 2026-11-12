@@ -1,4 +1,9 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
-  "assets": {}
+  "assets": {
+    "userAvatar": {
+      "src": "assets/user-avatar.webp",
+      "alt": "Monochrome studio portrait of the signed-in author."
+    }
+  }
 }

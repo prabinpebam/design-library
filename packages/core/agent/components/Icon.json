@@ -50,6 +50,8 @@
     "--c-icon-fill",
     "--c-icon-stroke-width",
     "--c-list-item-submenu-size",
+    "--color-bg-control",
+    "--color-text-muted",
     "--size-icon-lg",
     "--size-icon-md",
     "--size-icon-sm",
@@ -96,6 +98,7 @@
     "ikea.PictureBanner",
     "ikea.StoreHeader",
     "slack.Workspace",
+    "word.Window",
     "youtube.Site"
   ],
   "principles": [

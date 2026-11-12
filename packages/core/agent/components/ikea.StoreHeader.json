@@ -116,13 +116,12 @@
     "--t-ikea-store-header-links-text",
     "--t-ikea-store-header-links-weight",
     "--t-ikea-store-header-row-padding",
-    "--t-ikea-store-header-search-fill",
     "--t-ikea-store-header-search-max",
-    "--t-ikea-store-header-search-radius",
     "--t-ikea-store-header-wordmark-color",
     "--t-ikea-store-header-wordmark-fill",
     "--t-ikea-store-header-wordmark-padding",
     "--t-ikea-store-header-wordmark-size",
+    "--t-ikea-store-header-wordmark-tracking",
     "--t-ikea-store-header-wordmark-weight"
   ]
 }

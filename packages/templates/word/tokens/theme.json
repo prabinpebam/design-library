@@ -1,55 +1,111 @@
 {
  "c.icon.accent-1": {
-  "$value": "#ffff00",
-  "$description": "Highlight's ink bar: w-theme-07 (≈2×), the most common saturated pixel of that part; w-copilot-01 matches (W7)."
+  "$value": {
+   "light": "#ffff00",
+   "dark": "#ffff00"
+  },
+  "$description": "Highlight's ink bar: 01-home.png and 13-dark-home.png #FFFF00."
  },
  "c.icon.accent-2": {
-  "$value": "#c8c8c8",
-  "$description": "Character shading's grey box: by eye from the evaluator's ref-row3-x3 crop of w-copilot-01 (unmeasured, so n/m)."
+  "$value": {
+   "light": "#ee0000",
+   "dark": "#ee0000"
+  },
+  "$description": "Font colour's red bar and PDF loop: 01-home.png and 13-dark-home.png #EE0000."
  },
  "c.icon.accent-3": {
-  "$value": "#1e8bcd",
-  "$description": "Bullets, numbers and the sub/superscript digit: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": {
+   "light": "#1e8bcd",
+   "dark": "#4ba3ee"
+  },
+  "$description": "Bullets, numbers, sub/superscript, font grow/shrink and styles brush: #1E8BCD light, #4BA3EE dark (13-dark-home.png)."
  },
  "c.icon.accent-4": {
-  "$value": "#0063b1",
-  "$description": "The Dictate microphone: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": {
+   "light": "#83beec",
+   "dark": "#2899f5"
+  },
+  "$description": "Dictate microphone capsule fill: #83BEEC light (01-home.png), #2899F5 dark (13-dark-home.png)."
  },
  "c.icon.accent-5": {
-  "$value": "#922e9b",
-  "$description": "Clear formatting's eraser: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": {
+   "light": "#9b40a3",
+   "dark": "#d6d6d6"
+  },
+  "$description": "Title bar Save icon (#9B40A3 light, monochrome #D6D6D6 dark in 13-dark-home.png) and Clear formatting eraser."
  },
  "c.icon.accent-6": {
-  "$value": "#de6c00",
-  "$description": "Paste's clipboard edge and the format painter's brush: w-theme-07 (≈2×), the most common saturated pixel of that part."
+  "$value": {
+   "light": "#dc4e1a",
+   "dark": "#e05328"
+  },
+  "$description": "Add-ins tiles: #DC4E1A light (01-home.png), #E05328 dark (13-dark-home.png)."
  },
  "c.icon.accent-7": {
-  "$value": "#0c6cb9",
-  "$description": "Text effects' outlined A: w-copilot-01 (≈1.25×, the scoring window), measured by the evaluator at W7."
+  "$value": {
+   "light": "#185abd",
+   "dark": "#588de9"
+  },
+  "$description": "Editor nib, Text effects A and Acrobat badges: #185ABD light, #588DE9 dark (13-dark-home.png)."
  },
  "c.icon.accent-8": {
-  "$value": "#d5e6f6",
-  "$description": "Shading's bar, a light block under the bucket: w-copilot-01 (≈1.25×), measured by the evaluator at W7."
+  "$value": {
+   "light": "#d5e6f6",
+   "dark": "#3678a6"
+  },
+  "$description": "Shading bar under the paint bucket: #D5E6F6 light, #3678A6 dark (13-dark-home.png)."
  },
  "c.icon.accent-fill": {
-  "$value": "#fae49b",
-  "$description": "Paste's clipboard board: w-copilot-01 (≈1.25×, the scoring window; w-theme-07 at ≈2× reads #F8DB8F), measured by the evaluator at W7."
+  "$value": {
+   "light": "#f8db8f",
+   "dark": "#e39123"
+  },
+  "$description": "Paste clipboard board and Format Painter bristles: #F8DB8F light, #E39123 dark (13-dark-home.png)."
  },
  "c.button.inherit-disabled": {
-  "$value": 35,
-  "$description": "Undo with nothing to undo: #6794D7 on the #185ABD title bar in w-theme-07, white at about 35%."
+  "$value": 38,
+  "$description": "Unavailable Undo/Redo on the Mica title bar: 01-home.png."
  },
  "c.switch.track-inline-xs": {
   "$value": "2.625rem",
   "$description": "Title bar AutoSave switch: 84 px wide at ≈2× in w-theme-07, so 42 px; it holds the knob and the word Off."
  },
  "c.switch.track-block-xs": {
-  "$value": "1.25rem",
-  "$description": "AutoSave switch: 40 px tall at ≈2× in w-theme-07, so 20 px."
+  "$value": "1.125rem",
+  "$description": "AutoSave switch: 18 CSS px (15 PNG px in 01-home.png and 13-dark-home.png)."
  },
  "c.switch.thumb-inset-xs": {
-  "$value": "0.21875rem",
-  "$description": "AutoSave knob: 26 px across at ≈2× (13 px), so (20 − 13) / 2 = 3.5 px from the track on each side."
+  "$value": "0.1875rem",
+  "$description": "AutoSave knob: 12 CSS px (10 PNG px) centered inside the 18 CSS px track."
+ },
+ "c.switch.off-border": {
+  "$value": {
+   "light": "#616161",
+   "dark": "#aaacae"
+  },
+  "$description": "AutoSave Off track outline: #616161 light (01-home.png), #AAACAE dark (13-dark-home.png)."
+ },
+ "c.switch.off-thumb": {
+  "$value": {
+   "light": "#5c5c5c",
+   "dark": "#ffffff"
+  },
+  "$description": "AutoSave Off knob: #5C5C5C light (01-home.png), #FFFFFF dark (13-dark-home.png)."
+ },
+ "c.checkbox.size-s": {
+  "$value": "1.375rem",
+  "$description": "View tab Show checkboxes (Ruler, Gridlines, Navigation Pane): 22 CSS px row height."
+ },
+ "c.checkbox.box-s": {
+  "$value": "0.875rem",
+  "$description": "View tab Show checkbox square: 14 CSS px (11.7 PNG px in 10-view.png)."
+ },
+ "color.map.on-fill": {
+  "$value": {
+   "light": "#185abd",
+   "dark": "#598fec"
+  },
+  "$description": "Checked Show Ruler checkbox and active Switch fill (#185ABD light, #598FEC dark)."
  },
  "$description": "Q145.W reference spec .design-library/word-ref/README.md: w-theme-07 (Colorful, 2x), w-theme-03 (Dark Gray, 2x), w-copilot-01 (near-full window, 1.28x). Type: Noto Sans (OFL) stands in for Segoe UI, which isn't openly licensed; Noto is about 5% wider at the same size (recorded difference). Dark values are the Dark Gray theme; unmeasured values are marked.",
  "font.text": {
@@ -101,20 +157,24 @@
   "$description": "Chrome labels are regular; the selected tab alone is bold."
  },
  "c.tabs.selected-weight": {
-  "$value": "700",
-  "$description": "Selected tab bold, w-theme-07 'Home'."
+  "$value": "600",
+  "$description": "Selected tab semibold, 01-home.png 'Home'."
  },
  "c.tabs.item-size": {
-  "$value": "1.9375rem",
-  "$description": "Tab row 31 px (62 image px at 2x, w-theme-07 x300 122-184)."
+  "$value": "1.875rem",
+  "$description": "Tab row 30 CSS px (25 PNG px in 01-home.png y=39..63)."
  },
  "c.tabs.item-padding-inline": {
-  "$value": "{space.inset-sm}",
-  "$description": "Tab label inset, by eye: 8 px either side."
+  "$value": "0.4583333rem",
+  "$description": "Tab label inset: 7.33 CSS px either side so Mailings, Review, View and Help land on 01..11 tab coordinates."
+ },
+ "c.tabs.list-padding-inline-start": {
+  "$value": "{space.4}",
+  "$description": "Leading inset on the ribbon tab list so File and Home align with the 01-home.png / 13-dark-home.png tab coordinates."
  },
  "c.tabs.gap": {
   "$value": "{space.0-5}",
-  "$description": "Tabs sit close: the labels are about 20 px apart, their own padding making most of it."
+  "$description": "Tabs sit 2 CSS px apart so all 12 tabs match 01..11 coordinates."
  },
  "c.tabs.indicator": {
   "$value": "0.1875rem",
@@ -122,123 +182,300 @@
  },
  "c.tabs.text": {
   "$value": {
-   "light": "#242424",
-   "dark": "#ffffff"
+   "light": "#424242",
+   "dark": "#e0e0e0"
   },
-  "$description": "Tab labels: w-theme-07 #242424 on the frame; white on Dark Gray (w-theme-03)."
+  "$description": "Tab labels: #424242 light (01-home.png), #E0E0E0 dark (13-dark-home.png)."
  },
  "c.tabs.selected-text": {
-  "$value": "{c.tabs.text}",
-  "$description": "The selected tab keeps the label colour; weight and the underline mark it."
+  "$value": {
+   "light": "#242424",
+   "dark": "#fafafa"
+  },
+  "$description": "Selected tab label: #242424 light, #FAFAFA dark (13-dark-home.png)."
  },
  "color.map.selection-indicator": {
   "$value": {
    "light": "#185abd",
-   "dark": "#a9c4f5"
+   "dark": "#7da4e6"
   },
-  "$description": "Selected-tab underline: w-theme-07 #185ABD; Dark Gray light blue (w-theme-03, by eye)."
+  "$description": "Selected-tab underline: #185ABD light, #7DA4E6 dark (13-dark-home.png)."
  },
  "color.map.nav-shell": {
   "$value": {
-   "light": "#185abd",
-   "dark": "#54585b"
+   "light": "#eceff2",
+   "dark": "#212629"
   },
-  "$description": "Title bar: w-theme-07 x400 #185ABD; Dark Gray w-theme-03 #54585B."
+  "$description": "Title bar and tab row Mica start: #ECEFF2 light (01-home.png), #212629 dark (13-dark-home.png)."
+ },
+ "color.map.nav-hover": {
+  "$value": {
+   "light": "#efecec",
+   "dark": "#1e2224"
+  },
+  "$description": "Title bar Mica right end: #EFECEC light, #1E2224 dark (13-dark-home.png)."
+ },
+ "color.map.nav-selected": {
+  "$value": {
+   "light": "#efedea",
+   "dark": "#1e2425"
+  },
+  "$description": "Tab strip wash: #EFEDEA light, #1E2425 dark (13-dark-home.png)."
  },
  "color.map.nav-shell-on": {
-  "$value": "#ffffff",
-  "$description": "Title bar text and icons: white in both themes."
+  "$value": {
+   "light": "#242424",
+   "dark": "#eaeaea"
+  },
+  "$description": "Title bar text and icons: #242424 light, #EAEAEA dark (13-dark-home.png)."
  },
  "color.map.nav-on": {
   "$value": {
    "light": "#424242",
-   "dark": "#262626"
+   "dark": "#e0e0e0"
   },
-  "$description": "Status bar text (by eye in w-copilot-01); dark on the Dark Gray status bar (unmeasured)."
+  "$description": "Status bar text: #424242 light, #E0E0E0 dark (13-dark-home.png)."
  },
  "color.map.nav": {
   "$value": {
-   "light": "#e9eef2",
-   "dark": "#54585b"
+   "light": "#f2ece7",
+   "dark": "#221b15"
   },
-  "$description": "The window frame behind the tab row and the document canvas: w-theme-07 #E9EEF2; Dark Gray #54585B (w-theme-03)."
+  "$description": "Document canvas: warm stone #F2ECE7 light, warm near-black #221B15 dark (13-dark-home.png)."
+ },
+ "color.map.band": {
+  "$value": {
+   "light": "#faf9f8",
+   "dark": "#181818"
+  },
+  "$description": "Copilot right pane surface: #FAF9F8 light, #181818 dark (13-dark-home.png x=980 y=400)."
+ },
+ "color.map.band-on": {
+  "$value": {
+   "light": "#242424",
+   "dark": "#eaeaea"
+  },
+  "$description": "Copilot right pane text."
+ },
+ "color.map.feature-tint": {
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#292929"
+  },
+  "$description": "Ruler printable strip: #FFFFFF light (01-home.png), #292929 dark (13-dark-home.png)."
+ },
+ "color.map.feature": {
+  "$value": {
+   "light": "#e5e5e5",
+   "dark": "#31302e"
+  },
+  "$description": "Status bar top seam: #E5E5E5 light, #31302E dark (13-dark-home.png)."
+ },
+ "color.promo.offer": {
+  "$value": "#d13438",
+  "$description": "Upgrade plan notification dot (#D13438 in 01-home.png and 13-dark-home.png)."
+ },
+ "color.category.1": {
+  "$value": "#07279b",
+  "$description": "App tile primary spine (#07279B)."
+ },
+ "color.category.2": {
+  "$value": "#159bf0",
+  "$description": "App tile secondary page stripe (#159BF0)."
+ },
+ "color.category.3": {
+  "$value": {
+   "light": "#107c41",
+   "dark": "#49b86e"
+  },
+  "$description": "Positive/sheet accent on Add pen, SmartArt, Comment-new and Set-as-default icons."
+ },
+ "color.category.4": {
+  "$value": {
+   "light": "#f2ece8",
+   "dark": "#26221e"
+  },
+  "$description": "Outer ruler margin band (#F2ECE8 in 01-home.png, #26221E in 13-dark-home.png)."
+ },
+ "color.category.5": {
+  "$value": "#e083b8",
+  "$description": "Stroke Eraser rubber tip on Draw tab (#E083B8 in 03-draw.png)."
+ },
+ "color.category.6": {
+  "$value": {
+   "light": "#849398",
+   "dark": "#9aa6ab"
+  },
+  "$description": "Faceted pencil barrel on Draw tab (#849398 in 03-draw.png)."
+ },
+ "color.category.7": {
+  "$value": {
+   "light": "#7719aa",
+   "dark": "#a855f7"
+  },
+  "$description": "Purple bound notebook accent on Linked Notes (09-review.png)."
+ },
+ "color.category.8": {
+  "$value": {
+   "light": "#038387",
+   "dark": "#2dd4bf"
+  },
+  "$description": "Teal metadata and language globe accent on Review and View tabs (09-review.png, 10-view.png)."
+ },
+ "color.map.chip-tint": {
+  "$value": {
+   "light": "#efefef",
+   "dark": "#2e2e2e"
+  },
+  "$description": "Copilot prompt suggestion chips: #EFEFEF light, #2E2E2E dark (13-dark-home.png y=295)."
+ },
+ "color.accent": {
+  "$value": {
+   "light": "#185abd",
+   "dark": "#598fec"
+  },
+  "$description": "Primary accent (#185ABD light, #598FEC dark)."
  },
  "color.bg": {
   "$value": {
-   "light": "#ffffff",
-   "dark": "#bdbdbd"
+   "light": "#fafafa",
+   "dark": "#1f1f1f"
   },
-  "$description": "Surfaces with text (panes): white; the Dark Gray card grey #BDBDBD (w-theme-03)."
+  "$description": "Base chrome/search-box surface: #FAFAFA light, #1F1F1F dark (13-dark-home.png x=500 y=18)."
  },
  "color.bg-raised": {
   "$value": {
    "light": "#ffffff",
-   "dark": "#bdbdbd"
+   "dark": "#292929"
   },
-  "$description": "Ribbon card: white (w-theme-07); Dark Gray card #BDBDBD (w-theme-03)."
+  "$description": "Ribbon card, Copilot companion card, chrome buttons and ruler printable strip: #FFFFFF light, #292929 dark (13-dark-home.png)."
  },
  "color.bg-sunken": {
   "$value": {
    "light": "#f5f5f5",
-   "dark": "#bdbdbd"
+   "dark": "#141414"
   },
-  "$description": "Status bar: w-copilot-01 #F5F5F5; Dark Gray unmeasured, taken as the card grey."
+  "$description": "Status bar and scrollbar track: #F5F5F5 light, #141414 dark (13-dark-home.png y=758)."
  },
  "color.text": {
   "$value": {
    "light": "#242424",
-   "dark": "#262626"
+   "dark": "#eaeaea"
   },
-  "$description": "Ribbon and document text: w-theme-07 #242424; the Dark Gray card keeps dark text (w-theme-03)."
+  "$description": "Ribbon, pane and dark-page text: #242424 light, #EAEAEA dark (13-dark-home.png)."
  },
  "color.text-muted": {
   "$value": {
    "light": "#616161",
-   "dark": "#424242"
+   "dark": "#a8a8a8"
   },
-  "$description": "Secondary text (comment times), by eye."
+  "$description": "Secondary text (search placeholder, ruler digits, prompt hints): #616161 light, #A8A8A8 dark."
  },
  "color.border": {
   "$value": {
-   "light": "#e1e1e1",
-   "dark": "#a0a0a0"
+   "light": "#dcdcdc",
+   "dark": "#525252"
   },
-  "$description": "Hairlines between ribbon groups: w-copilot-01 #E7E7E7 at 1.28x (a 1 px line blended); Dark Gray by eye."
+  "$description": "Hairlines on ribbon groups, search box, Copilot pane divider and composer: #DCDCDC light, #525252 dark (13-dark-home.png)."
  },
  "color.border-strong": {
   "$value": {
-   "light": "#d6d6d8",
-   "dark": "#3f4245"
+   "light": "#dcdcdc",
+   "dark": "#6d6d6e"
   },
-  "$description": "The page edge on the canvas: w-copilot-01 y500 #D6D6D8; Dark Gray unmeasured."
+  "$description": "Page sheet edge and window frame border: #DCDCDC light, #6D6D6E dark (13-dark-home.png)."
  },
  "color.border-control": {
-  "$value": "#8a8a8a",
-  "$description": "Font and size fields, Comments and Editing outlines: w-theme-07 #8A8A8A."
+  "$value": {
+   "light": "#8a8a8a",
+   "dark": "#626262"
+  },
+  "$description": "Font/size combo fields and spinboxes: #8A8A8A light, #626262 dark (13-dark-home.png)."
  },
  "color.bg-control": {
-  "$value": "#ffffff",
-  "$description": "Fields and outlined buttons are white in both themes (w-theme-03 card fields)."
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#262626"
+  },
+  "$description": "Document page and input controls: #FFFFFF light, #262626 dark (13-dark-home.png x=450 y=400)."
  },
  "color.map.action-fill": {
-  "$value": "#185abd",
-  "$description": "Share: w-copilot-01 #185ABD."
+  "$value": {
+   "light": "#185abd",
+   "dark": "#598fec"
+  },
+  "$description": "Share primary button fill: #185ABD light, #598FEC dark (13-dark-home.png x=1068 y=50)."
  },
  "color.map.action-fill-hover": {
   "$value": "{color.map.action-fill}",
-  "$description": "Hover unmeasured: keeps the measured fill."
+  "$description": "Hover keeps the measured fill."
  },
  "color.map.action-fill-pressed": {
   "$value": "{color.map.action-fill}",
-  "$description": "Pressed unmeasured: keeps the measured fill."
+  "$description": "Pressed keeps the measured fill."
  },
  "color.map.action-fill-on": {
-  "$value": "#ffffff",
-  "$description": "Share label white."
+  "$value": {
+   "light": "#ffffff",
+   "dark": "#0f1726"
+  },
+  "$description": "Share label and icon: white on #185ABD light, dark #0F1726 on #598FEC dark (13-dark-home.png)."
+ },
+ "color.map.button-ring": {
+  "$value": "{color.map.action-fill}",
+  "$description": "Primary button ring matches action-fill in both schemes."
+ },
+ "c.button.default-fill": {
+  "$value": "{color.bg-raised}",
+  "$description": "Outlined chrome buttons (Upgrade, Comments, Editing) match ribbon card surface (#FFFFFF light, #292929 dark)."
+ },
+ "c.button.default-edge": {
+  "$value": {
+   "light": "#ababab",
+   "dark": "#525252"
+  },
+  "$description": "Outlined chrome button border (#ABABAB light, #525252 dark in 13-dark-home.png)."
+ },
+ "c.button.pressed-fill": {
+  "$value": {
+   "light": "#e6e6e6",
+   "dark": "#3f3f3f"
+  },
+  "$description": "Pressed toolbar toggle plate (Align left, Print Layout, Vertical): #E6E6E6 light, #3F3F3F dark (13-dark-home.png)."
+ },
+ "c.button.pressed-edge": {
+  "$value": {
+   "light": "#ababab",
+   "dark": "#6d6d6e"
+  },
+  "$description": "Pressed toolbar toggle border unified with chrome/sheet stroke family (VN4): #ABABAB light, #6D6D6E dark."
+ },
+ "c.checkbox.gap": {
+  "$value": "{space.1}",
+  "$description": "4 CSS px gap between checkbox box and label on the View ribbon."
+ },
+ "c.button.padding-inline-sm": {
+  "$value": "0.25rem",
+  "$description": "Compact inline padding on ribbon and tab-bar controls so Share is 66 CSS px (55 PNG px)."
+ },
+ "c.scroll-area.track": {
+  "$value": "1rem",
+  "$description": "Permanent 16 CSS px (13.3 PNG px) vertical scrollbar gutter on the document canvas."
+ },
+ "c.scroll-area.colour": {
+  "$value": {
+   "light": "#707070",
+   "dark": "#999999"
+  },
+  "$description": "Canvas scrollbar thumb: #707070 light (01-home.png), #999999 dark (13-dark-home.png x=773)."
+ },
+ "c.scroll-area.rest-scale": {
+  "$value": 0.85,
+  "$description": "Desktop editor scrollbar thumb stays clearly visible at rest (7 px)."
  },
  "size.app-bar-height": {
-  "$value": "2.9375rem",
-  "$description": "Title bar 47 px (94 image px at 2x, w-theme-07)."
+  "$value": "2.875rem",
+  "$description": "Title bar 46 CSS px (38 PNG px in 01-home.png y=1..38)."
  },
  "size.nav-width": {
   "$value": "18.75rem",
@@ -249,8 +486,8 @@
   "$description": "Comments pane about 340 px (w-comments, by eye)."
  },
  "c.button.size-xs": {
-  "$value": "1.5rem",
-  "$description": "Small ribbon commands 24 px on a 26 px pitch (w-theme-07 B and I 52 image px apart)."
+  "$value": "1.375rem",
+  "$description": "Small ribbon commands 22 CSS px so 3 rows + 16 px foot + 8 px padding = 96 CSS px (80 PNG px)."
  },
  "c.button.size-s": {
   "$value": "1.5rem",
@@ -264,45 +501,49 @@
   "$value": "0.25rem",
   "$description": "Outlined chrome buttons 4 px."
  },
+ "radius.md": {
+  "$value": "0.5rem",
+  "$description": "Ribbon and companion card radius 8 CSS px (6.5 PNG px in 01-home.png and 13-dark-home.png)."
+ },
  "c.ribbon.radius": {
   "$value": "0.5rem",
-  "$description": "Ribbon card 8 px: the corner's first row starts 13 image px in at 2x (w-theme-07 rows 184-197)."
+  "$description": "Ribbon card 8 CSS px."
  },
  "c.ribbon.shadow": {
-  "$value": "0 1px 4px rgba(0, 0, 0, 0.14)",
-  "$description": "Card foot: #D8D9DD fading to the frame over about 4 px (w-copilot-01 x30 y165-174)."
+  "$value": "none",
+  "$description": "In-flow ribbon card carries no floating shadow (ME3); separated by surface contrast over Mica."
  },
  "c.ribbon.padding": {
   "$value": "{space.1}",
-  "$description": "Card padding: the first row starts 4 px under the card's top (w-theme-07 field at y192)."
+  "$description": "Card padding: 4 px inside the 96 CSS px ribbon card."
  },
  "c.ribbon.gap": {
   "$value": "0",
-  "$description": "The card sits right under the tab row (w-theme-07 y184)."
+  "$description": "The card sits right under the tab row."
  },
  "c.menu-button.size-s": {
   "$value": "1.5rem",
-  "$description": "Editing and Share 24 px, the same as Comments (w-copilot-01 y2-32 at 1.28x)."
+  "$description": "Editing and Share 24 px, the same as Comments."
  },
  "c.slider.hit-s": {
-  "$value": "1.5rem",
-  "$description": "Status bar zoom slider in the 24 px bar (w-copilot-01)."
+  "$value": "1.25rem",
+  "$description": "Status bar zoom slider in the 21 px bar."
  },
  "c.button.stack-padding": {
   "$value": "0",
-  "$description": "Paste and the other lead commands fill the group's height with no extra padding (w-theme-07)."
+  "$description": "Paste and the other lead commands fill the group's height with no extra padding."
  },
  "c.ribbon.launcher-size": {
   "$value": "1rem",
-  "$description": "Group launcher: a 16 px box beside the 9 pt label (w-theme-07 'Clipboard' launcher, 2x)."
+  "$description": "Group launcher: 16 px box so 3 rows + foot + padding = 96 CSS px (80 PNG px)."
  },
  "c.ribbon.command-gap": {
-  "$value": "0.125rem",
-  "$description": "Commands on a 26 px pitch with 24 px buttons: 2 px apart."
+  "$value": "0",
+  "$description": "Dense ribbon command rows sit flush on 22 px targets."
  },
  "c.ribbon.group-gap": {
   "$value": "{space.1}",
-  "$description": "About 4 px either side of a group's hairline."
+  "$description": "4 px either side of a group's hairline."
  },
  "c.button.stack-gap": {
   "$value": "0",
@@ -345,8 +586,8 @@
   "$description": "Zoom slider thumb: square-ended bar with a softened edge (antialiased corner pixels only), 1 px."
  },
  "c.slider.thumb-fill": {
-  "$value": "#616161",
-  "$description": "Zoom slider thumb #616161 in w-copilot-01 (y866-875 at x1368). The Dark Gray status bar is unmeasured and renders light here, so the same ink keeps its contrast."
+  "$value": "#686868",
+  "$description": "Zoom slider thumb unified with track grey #686868."
  },
  "c.slider.track-s": {
   "$value": "0.0625rem",
@@ -357,7 +598,347 @@
   "$description": "Zoom slider line #686868 either side of the thumb (w-copilot-01 y871, x1306-1430); one value for both themes, as the thumb."
  },
  "c.slider.fill": {
-  "$value": "{c.slider.track-fill}",
-  "$description": "Word's zoom line has no fill: the same grey on both sides of the thumb (w-copilot-01)."
- }
+  "$value": "transparent",
+  "$description": "Word's zoom line has no progress fill: track-fill (#686868) shows on both sides of the thumb without adding a redundant fill (VN5)."
+ },
+ "c.popover.width": {
+  "$value": "54.875rem",
+  "$description": "Design style-set gallery popover width: 878 CSS px (732 PNG px in 05-design-gallery.png)."
+ },
+ "c.popover.padding": {
+  "$value": "0",
+  "$description": "Zero outer popover padding so word-style-gallery owns its exact 878 x 313 CSS px (732 x 261 PNG px) box."
+ },
+ "c.popover.gap": {
+  "$value": "{space.1-5}",
+  "$description": "6 CSS px between gallery sections."
+ },
+ "c.popup.radius": {
+  "$value": "0.25rem",
+  "$description": "4 CSS px popup corner radius matching 05-design-gallery.png."
+ },
+ "c.data-table.outline": {
+  "$value": "{color.border}",
+  "$description": "Backstage Recent file table card #DCDCDC border (12-backstage-home.png)."
+ },
+ "c.data-table.divider": {
+  "$value": "{color.border}",
+  "$description": "Hairline between Backstage recent-file rows."
+ },
+ "c.data-table.head-bg": {
+  "$value": "{color.bg-control}",
+  "$description": "Backstage table column headers on the white card surface."
+ },
+ "c.data-table.head-fg": {
+  "$value": "{color.text-muted}",
+  "$description": "Muted column header labels (Name, Date modified, Owner)."
+ },
+ "c.data-table.cell-block": {
+  "$value": "{space.2}",
+  "$description": "Compact 8 CSS px row padding in Backstage Recent list."
+ },
+ "c.data-table.cell-inline": {
+  "$value": "{space.3}",
+  "$description": "12 CSS px inline cell padding inside the Backstage Recent table card."
+ },
+ "c.data-table.radius": {
+  "$value": "{radius.md}",
+  "$description": "8 CSS px rounded corners on the Backstage Recent DataTable card (12-backstage-home.png)."
+ },
+ "$parts": [
+  {
+   "selector": "[data-dl='word-search-box']",
+   "$description": "word-search-box: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.75rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade']",
+   "$description": "upgrade: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.8125rem",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.gap": "var(--space-2)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='flourish']",
+   "$description": "flourish: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='ribbon']",
+   "$description": "ribbon: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.ribbon.radius": "var(--t-word-window-card-radius)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-collapse-btn']",
+   "$description": "word-collapse-btn: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "0.75rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-doc-actions']",
+   "$description": "word-doc-actions: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.5rem",
+    "c.menu-button.size-xs": "1.5rem",
+    "c.button.padding-inline-sm": "var(--space-1)",
+    "c.button.gap": "var(--space-1)",
+    "c.menu-button.padding-inline": "var(--space-1)",
+    "c.menu-button.gap": "var(--space-0-5)",
+    "size.icon-sm": "0.6875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command'][data-stacked], [data-dl='word-split'][data-stacked], [data-dl='word-copilot-card']",
+   "$description": "word-copilot-card: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.75rem",
+    "size.icon-lg": "1.75rem",
+    "c.button.padding-inline-sm": "var(--space-0-5)",
+    "type.body-sm.size": "var(--text-xs)",
+    "type.body-sm.leading": "1.15"
+   }
+  },
+  {
+   "selector": "[data-dl='word-split'][data-icon='design-colors'], [data-dl='word-split'][data-icon='design-fonts']",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-lg": "2rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command'][data-tool], [data-dl='word-split'][data-tool]",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "2.125rem",
+    "c.button.size-xs": "2.5rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command'][data-pen], [data-dl='word-split'][data-pen]",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "3.375rem",
+    "c.button.size-xs": "3.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-command']:not([data-stacked]):not([data-pen]):not([data-tool]), [data-dl='word-split']:not([data-stacked]):not([data-pen]):not([data-tool])",
+   "$description": "word-split: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1rem",
+    "c.button.gap": "var(--space-1)",
+    "c.button.padding-inline-sm": "var(--space-0-5)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-split'] > [data-dl-part='split-menu']",
+   "$description": "split-menu: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "0.625rem",
+    "size.icon-sm": "0.625rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-split'][data-stacked] > [data-dl-part='split-menu']",
+   "$description": "split-menu: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "0.625rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='ribbon'] > [data-dl-part='gallery-host']",
+   "$description": "gallery-host: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-style-tile'] > [data-dl-part='preview']",
+   "$description": "preview: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-style-gallery'] > [data-dl-part='menu-foot']",
+   "$description": "menu-foot: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-field']",
+   "$description": "word-field: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "space.inline-pair": "var(--space-1)",
+    "size.icon-sm": "0.75rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-label']",
+   "$description": "spin-label: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "0.9375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-box']",
+   "$description": "spin-box: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.field.size-xs": "1.375rem",
+    "space.inline-pair": "var(--space-0-5)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-labelled-field']",
+   "$description": "word-labelled-field: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.field.size-xs": "1.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-labelled-field'] > [data-dl-part='field-label']",
+   "$description": "field-label: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-record-stepper']",
+   "$description": "word-record-stepper: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.25rem",
+    "size.icon-sm": "0.875rem",
+    "c.field.size-xs": "1.25rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-ruler-h'] > [data-dl-part='tab-stop']",
+   "$description": "tab-stop: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "1.4375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-copilot-pane'] > [data-dl-part='content'] > [data-dl-part='prompts'] > [data-dl-part='prompt-chip']",
+   "$description": "prompt-chip: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "2.125rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage'] > [data-dl-part='rail']",
+   "$description": "rail: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "2.25rem",
+    "c.button.radius": "var(--radius-md)",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.gap": "var(--space-2)",
+    "size.icon-sm": "1.125rem",
+    "c.button.pressed-fill": "var(--t-word-window-surface)",
+    "c.button.pressed-edge": "var(--t-word-window-border)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='back']",
+   "$description": "back: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "1.375rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage'] > [data-dl-part='rail'] > [data-dl-part='nav-group'] > [data-dl-part='nav-item'][data-active]",
+   "$description": "nav-item: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "type.label.weight": "600",
+    "c.button.weight": "var(--type-label-weight)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-bs-prompt'] > [data-dl-part='actions'] > [data-dl-part='create-pill']",
+   "$description": "create-pill: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.radius-sm": "var(--radius-full)",
+    "c.button.padding-inline-sm": "var(--space-3)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='hero'] > [data-dl-part='hero-controls'] > [data-dl-part='suggestions']",
+   "$description": "suggestions: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "2.125rem",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.radius": "var(--radius-md)"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > :is([data-dl-part='new-section'], [data-dl-part='rec-section']) > [data-dl-part='head'] > [data-dl-part='sec-head'] > [data-dl-part='sec-title']",
+   "$description": "sec-title: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "0.875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-bs-template'] > [data-dl-part='thumb-box'] > [data-dl-part='thumb-svg']",
+   "$description": "thumb-svg: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-rec-card'] > [data-dl-part='card-top'] > [data-dl-part='card-activity']",
+   "$description": "card-activity: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-sm": "0.8125rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-rec-card'] > [data-dl-part='card-well'] > [data-dl-part='mini-doc']",
+   "$description": "mini-doc: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "size.icon-md": "100%"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='pills']",
+   "$description": "pills: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "1.875rem",
+    "c.button.radius": "var(--radius-full)",
+    "c.button.padding-inline-sm": "var(--space-3)",
+    "c.button.pressed-fill": "var(--color-map-action-fill)",
+    "c.button.pressed-edge": "transparent"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='filter-end']",
+   "$description": "filter-end: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-s": "1.875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-backstage-stage'] > [data-dl-part='files-section'] > [data-dl-part='filter-bar'] > [data-dl-part='filter-end'] > [data-dl-part='file-search']",
+   "$description": "file-search: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.field.size-s": "1.875rem"
+   }
+  },
+  {
+   "selector": "[data-dl='word-window'] > [data-dl-part='statusbar']",
+   "$description": "statusbar: core component tokens for this part, moved from parts/layouts/window.css (LG3).",
+   "tokens": {
+    "c.button.size-xs": "1.25rem"
+   }
+  }
+ ]
 }

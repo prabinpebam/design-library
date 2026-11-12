@@ -64,7 +64,7 @@
     --c-navigation-mini-padding-block-start: var(--space-4);
     --c-navigation-mini-padding-block-end: 0.875rem;
     --c-navigation-mini-padding-inline: 0rem;
-    --c-navigation-mini-label-size: 0.625rem;
+    --c-navigation-mini-label-size: var(--t-youtube-guide-mini-label-size);
     --c-navigation-mini-label-leading: 1.6;
     --c-navigation-mini-current-fill: transparent;
     --c-navigation-mini-current-weight: var(--weight-regular);
@@ -190,6 +190,8 @@
     --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
   }
   @media (prefers-contrast: more) {
     [data-template='youtube'] {
@@ -213,6 +215,8 @@
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
       --c-site-header-current-rule: var(--color-border-strong);
+      --c-switch-off-border: var(--color-border-strong);
+      --c-switch-off-thumb: var(--color-border-strong);
       --c-tabs-text: var(--color-text-muted);
     }
   }
@@ -237,6 +241,8 @@
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-contrast='more'] [data-template='youtube'], [data-template='youtube'][data-contrast='more'] {
@@ -260,6 +266,8 @@
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-shape='sharp'] [data-template='youtube'], [data-template='youtube'][data-shape='sharp'] {

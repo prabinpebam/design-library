@@ -208,12 +208,30 @@
   }
 
   /* The colour-cue part of a glyph (a text colour's bar): the icon's own colour unless a product sets --icon-accent. Parts match at any depth, so a brand glyph (IconOverrides, drawn inside a group) can carry them too. */
+  [data-dl='icon'] [data-dl-part='surface'] {
+    fill: var(--icon-surface, var(--color-bg-control));
+    stroke: none;
+  }
+
+  [data-dl='icon'] [data-dl-part='muted'] {
+    stroke: var(--icon-muted, var(--color-text-muted));
+  }
+
   [data-dl='icon'] [data-dl-part='accent'] {
     stroke: var(--icon-accent, currentColor);
   }
 
   [data-dl='icon'] [data-dl-part='accent-fill'] {
     fill: var(--icon-accent-fill, none);
+    stroke: none;
+  }
+
+  [data-dl='icon'] [data-dl-part='accent-2'] {
+    stroke: var(--icon-accent-2, currentColor);
+  }
+
+  [data-dl='icon'] [data-dl-part='accent-2-fill'] {
+    fill: var(--icon-accent-2-fill, none);
     stroke: none;
   }
 

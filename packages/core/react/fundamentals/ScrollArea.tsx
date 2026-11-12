@@ -9,9 +9,10 @@ export interface ScrollAreaProps extends DataAttributes {
   /**
    * How the bar is drawn: `overlay` (default) a thin thumb over the end edge, shown by `mode`; `line` (inline only, Q141)
    * a progress line under the content, its track the row's whole length and its thumb the part in view, shown whenever
-   * the content overflows. `line` is for a row of cards on a page (a Rail), where the line says there's more.
+   * the content overflows; `gutter` (block axis) a permanent sunken scrollbar column with end steppers, reserving the
+   * track width on the content for desktop document canvases.
    */
-  bar?: 'overlay' | 'line';
+  bar?: 'overlay' | 'line' | 'gutter';
   /** Which directions scroll: `block` (down), `inline` (across) or `both`. */
   axis?: 'block' | 'inline' | 'both';
   /** The most the region grows before it scrolls; `fill` takes the height its parent gives it. */
@@ -47,7 +48,7 @@ export function ScrollArea({ children, mode = 'auto', bar = 'overlay', axis = 'b
   const { root, setViewport, tracks } = useOverlayScroll(viewportRef);
 
   return (
-    <div {...data} ref={root} data-dl="scroll-area" data-mode={bar === 'line' ? 'always' : mode} data-bar={bar === 'line' ? 'line' : undefined} data-axis={axis} data-max={maxSize} data-surface={surface} data-contain={contain ? '' : undefined}>
+    <div {...data} ref={root} data-dl="scroll-area" data-mode={bar !== 'overlay' ? 'always' : mode} data-bar={bar !== 'overlay' ? bar : undefined} data-axis={axis} data-max={maxSize} data-surface={surface} data-contain={contain ? '' : undefined}>
       <div
         ref={setViewport}
         data-dl-part="viewport"
