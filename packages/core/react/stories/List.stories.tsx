@@ -7,6 +7,7 @@ import { Link } from '../fundamentals/Link';
 import { MenuButton } from '../fundamentals/MenuButton';
 import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
+import { WithSettings } from './WithSettings';
 
 const revisions: ListOption[] = [
   { id: 'r1', label: 'Button copy review', description: '4 comments', meta: '09:41' },
@@ -145,6 +146,17 @@ export default {
   { id: 'media', heading: 'Pictures', actions: […] },
 ]} />`,
       render: () => <Tiles />,
+    },
+    {
+      title: 'Tiles outlined on the page, names leading',
+      description: 'Two theme settings restyle every tile without a variant: --c-list-tile-fill (default the control surface) set to the page background leaves the hairline outline as the tile’s one boundary, and --c-list-tile-name-weight (default the label weight) set to bold lets the names lead. For a catalogue drawn on paper.',
+      code: `applySettings({ '--c-list-tile-fill': 'var(--color-bg)', '--c-list-tile-name-weight': 'var(--weight-bold)' });
+<List mode="action" layout="tiles" label="Add a block" groups={…} />`,
+      render: () => (
+        <WithSettings settings={onPaper}>
+          <Tiles />
+        </WithSettings>
+      ),
     },
     {
       title: 'Plain list with dividers',
@@ -322,6 +334,8 @@ function DrillIn() {
     </>
   );
 }
+
+const onPaper = { '--c-list-tile-fill': 'var(--color-bg)', '--c-list-tile-name-weight': 'var(--weight-bold)' };
 
 function Tiles() {
   const [last, did] = useLast();

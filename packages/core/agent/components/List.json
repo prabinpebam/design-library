@@ -376,6 +376,16 @@
       "var": "--c-list-tile-min",
       "default": "16rem",
       "description": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length."
+    },
+    {
+      "var": "--c-list-tile-fill",
+      "default": "#e9e9ed",
+      "description": "A tile's surface inside its hairline outline (default color.bg-control). A theme that draws tiles outlined on the page sets var(--color-bg); the outline stays the tile's boundary."
+    },
+    {
+      "var": "--c-list-tile-name-weight",
+      "default": "500",
+      "description": "A tile's name (default type.label.weight). A catalogue whose names lead its tiles sets var(--weight-bold) or var(--weight-semibold)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/list",

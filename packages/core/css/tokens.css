@@ -319,6 +319,8 @@
   --c-list-tile-padding: var(--space-inset-md);
   --c-list-tile-content-gap: var(--space-stack-pair);
   --c-list-tile-radius: var(--radius-md);
+  --c-list-tile-fill: var(--color-bg-control);
+  --c-list-tile-name-weight: var(--type-label-weight);
   --c-list-indent: var(--space-inset-md);
   --c-list-measure: var(--size-measure);
   --c-list-inline-row-gap: var(--space-stack-pair);
@@ -1374,6 +1376,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-tile-fill: var(--color-bg-control);
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
@@ -1407,6 +1410,7 @@
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
+  --c-list-tile-fill: var(--color-bg-control);
   --c-menu-button-border: var(--color-border-control);
   --c-popup-border: var(--color-border);
   --c-progress-bar-track: var(--color-border-group);
@@ -1440,6 +1444,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-tile-fill: var(--color-bg-control);
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
@@ -1473,6 +1478,7 @@
   --c-example-outline: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
+  --c-list-tile-fill: var(--color-bg-control);
   --c-menu-button-border: var(--color-border-control);
   --c-popup-border: var(--color-border);
   --c-progress-bar-track: var(--color-border-group);

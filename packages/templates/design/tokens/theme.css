@@ -83,6 +83,7 @@
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-code-key-radius: var(--radius-sm);
     --c-list-tile-radius: var(--radius-md);
+    --c-list-tile-fill: var(--color-bg-control);
     --c-code-block-radius: var(--radius-md);
     --c-code-block-bg: var(--color-bg-sunken);
     --c-data-table-outline: var(--color-border);
@@ -216,6 +217,7 @@
       --c-example-outline: var(--color-border);
       --c-field-readonly-border: var(--color-border);
       --c-illustration-muted: var(--color-text-muted);
+      --c-list-tile-fill: var(--color-bg-control);
       --c-menu-button-border: var(--color-border-control);
       --c-popup-border: var(--color-border);
       --c-progress-bar-track: var(--color-border-group);
@@ -243,6 +245,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-tile-fill: var(--color-bg-control);
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
@@ -269,6 +272,7 @@
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
+    --c-list-tile-fill: var(--color-bg-control);
     --c-menu-button-border: var(--color-border-control);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);

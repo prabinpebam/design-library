@@ -233,7 +233,11 @@
     padding: var(--c-list-tile-padding);
     border: var(--border-hairline) solid var(--color-border-control);
     border-radius: var(--c-list-tile-radius);
-    background-color: var(--color-bg-control);
+    background-color: var(--c-list-tile-fill);
+  }
+
+  [data-dl='list-item'][data-layout='tile'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
+    font-weight: var(--c-list-tile-name-weight);
   }
 
   [data-dl='list-item'][data-layout='tile'] > [data-dl-part='item-words'] {

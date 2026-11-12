@@ -116,6 +116,16 @@
         "$description": "MP20, ID41: the role class muted, secondary lines and shapes (3:1 or more on the surface) (echoed for contrast contexts)"
       }
     },
+    "list": {
+      "$extensions": {
+        "owner": "List"
+      },
+      "tile-fill": {
+        "$type": "color",
+        "$value": "{color.bg-control}",
+        "$description": "A tile's surface inside its hairline outline: a control's (default); a theme that draws tiles outlined on the page sets the page's own background (echoed for contrast contexts)"
+      }
+    },
     "menu-button": {
       "$extensions": {
         "owner": "MenuButton"

@@ -29,7 +29,9 @@
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
   },
   "List": {
-    "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length."
+    "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length.",
+    "--c-list-tile-fill": "A tile's surface inside its hairline outline (default color.bg-control). A theme that draws tiles outlined on the page sets var(--color-bg); the outline stays the tile's boundary.",
+    "--c-list-tile-name-weight": "A tile's name (default type.label.weight). A catalogue whose names lead its tiles sets var(--weight-bold) or var(--weight-semibold)."
   },
   "Section": {
     "--c-section-gap": "Between a section's head (heading and intro) and its content (default space.stack-section). A theme whose page gap is close to it sets the group gap here, so a heading stays visibly with its content.",
