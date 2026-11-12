@@ -55,6 +55,11 @@
           "type": "string",
           "required": true,
           "description": "What the set is: names the list for screen readers (\"Photos from the trip\")."
+        },
+        {
+          "name": "framed",
+          "type": "boolean",
+          "description": "The pictures carry framing art (items' `under` and `decoration`) that spills past their edges: the gap widens to `--c-image-grid-framed-gap` to keep room for it."
         }
       ]
     },
@@ -147,6 +152,7 @@
   ],
   "tokens": [
     "--c-image-grid-cell",
+    "--c-image-grid-framed-gap",
     "--c-image-grid-gap",
     "--c-image-grid-hover-opacity",
     "--c-image-grid-min",
@@ -155,6 +161,13 @@
     "--color-focus",
     "--size-focus-offset",
     "--size-focus-width"
+  ],
+  "settings": [
+    {
+      "var": "--c-image-grid-framed-gap",
+      "default": "2rem",
+      "description": "Between pictures in a framed grid (framed; a media block with its frame switch on): room for the framing art each picture spills past its edge (default space.8). A template whose art spills further sets a larger length."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/imagegrid",
   "principles": [

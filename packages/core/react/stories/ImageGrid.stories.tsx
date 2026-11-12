@@ -67,10 +67,11 @@ export default {
     {
       title: 'Framed pictures',
       description:
-        'In standard and masonry grids an item takes under and decoration as Image does: framing art behind and over each picture (a template’s frames, which a media block draws with its frame switch). The art may spill past the picture into the gap; quilted and justified tiles leave it out. Screen readers skip it and the pointer passes through it.',
-      code: `<ImageGrid label="…" items={photos.map((p) => ({ ...p, under: <svg viewBox="0 0 100 100">…</svg>, decoration: <svg viewBox="0 0 100 100">…</svg> }))} />`,
+        'In standard and masonry grids an item takes under and decoration as Image does: framing art behind and over each picture (a template’s frames, which a media block draws with its frame switch). The art may spill past the picture: framed widens the gap to keep room for it (--c-image-grid-framed-gap). Quilted and justified tiles leave it out. Screen readers skip it and the pointer passes through it.',
+      code: `<ImageGrid framed label="…" items={photos.map((p) => ({ ...p, under: <svg viewBox="0 0 100 100">…</svg>, decoration: <svg viewBox="0 0 100 100">…</svg> }))} />`,
       render: () => (
         <ImageGrid
+          framed
           label="Framed photos from the trip"
           items={photos.slice(0, 3).map((p) => ({
             ...p,

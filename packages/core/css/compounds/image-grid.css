@@ -18,6 +18,11 @@
     min-inline-size: 0;
   }
 
+  /* Framed pictures (G3) spill their art past their edges: the gap keeps room for it. */
+  [data-dl='image-grid'][data-framed] {
+    --c-image-grid-gap: var(--c-image-grid-framed-gap);
+  }
+
   [data-dl='image-grid'][data-layout='standard'] {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--c-image-grid-min)), 1fr));

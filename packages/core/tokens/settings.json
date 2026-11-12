@@ -32,6 +32,9 @@
     "--c-image-reveal-duration": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it.",
     "--c-image-reveal-reduced-duration": "With reduced motion a reveal isn't drawn: the pair crossfades in over the resting tone for this long (default duration.change, 200 ms). A brand whose approved reduced-motion fade is shorter or longer sets it."
   },
+  "ImageGrid": {
+    "--c-image-grid-framed-gap": "Between pictures in a framed grid (framed; a media block with its frame switch on): room for the framing art each picture spills past its edge (default space.8). A template whose art spills further sets a larger length."
+  },
   "List": {
     "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length.",
     "--c-list-tile-fill": "A tile's surface inside its hairline outline (default color.bg-control). A theme that draws tiles outlined on the page sets var(--color-bg); the outline stays the tile's boundary.",

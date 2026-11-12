@@ -354,6 +354,7 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
         label={label}
         layout={layout}
         ratio={ratio}
+        framed={!!frame}
         items={items.map((item, n) => {
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
           return { id: String(n), ...p, ...framing(frame, n, count), caption: item.caption, credit: item.credit, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };

@@ -79,12 +79,15 @@
   }
 
   /*
-   * A media block's depth group (G3): the box a template's depth motion moves the pictures and their framing in. It
-   * only positions them (the motion measures offsets from it); it adds no space, fill or clip.
+   * A media block's depth group (G3): a template's depth motion moves each picture and its framing in the picture's own
+   * box, so that box is positioned (the motion measures offsets from it). It adds no space, fill or clip.
    */
   [data-dl='media-depth'] {
-    position: relative;
     min-inline-size: 0;
+  }
+
+  [data-dl='media-depth'] :is([data-dl='image-layers'], [data-dl='image']) {
+    position: relative;
   }
 
   /* When a container sizes the picture (a card's media), the frame fills the cell like an undecorated picture would. */

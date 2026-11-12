@@ -47,6 +47,11 @@ export interface ImageGridProps extends DataAttributes {
   onSelect?: (index: number) => void;
   /** What the set is: names the list for screen readers ("Photos from the trip"). */
   label: string;
+  /**
+   * The pictures carry framing art (items' `under` and `decoration`) that spills past their edges: the gap widens to
+   * `--c-image-grid-framed-gap` to keep room for it.
+   */
+  framed?: boolean;
 }
 
 /**
@@ -61,12 +66,12 @@ export interface ImageGridProps extends DataAttributes {
  * @key Tab: the next picture (with `onSelect`)
  * @key Enter, Space: open the picture
  */
-export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, ...data }: ImageGridProps) {
+export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, ...data }: ImageGridProps) {
   // Captions sit under their pictures where each picture has its own row of space; quilted and justified tiles fill
   // their cells by shape, so they leave captions out.
   const captioned = layout === 'standard' || layout === 'masonry';
   return (
-    <ul {...data} data-dl="image-grid" data-layout={layout} aria-label={label}>
+    <ul {...data} data-dl="image-grid" data-layout={layout} data-framed={framed ? '' : undefined} aria-label={label}>
       {items.map((item, i) => {
         const shape = item.width && item.height ? ({ '--w': item.width, '--h': item.height } as CSSProperties) : undefined;
         const words = captioned && (item.caption || item.credit) ? { caption: item.caption, credit: item.credit } : undefined;

@@ -995,6 +995,7 @@
   --c-media-player-screen-gap: var(--space-16);
   --c-media-player-audio-width: 32rem;
   --c-image-grid-gap: var(--space-2);
+  --c-image-grid-framed-gap: var(--space-8);
   --c-image-grid-min: 10rem;
   --c-image-grid-cell: 8rem;
   --c-image-grid-row: 12rem;

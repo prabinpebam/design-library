@@ -156,18 +156,24 @@ export type MediaPresentation = (props: MediaPresentationProps) => ReactNode;
  */
 export type MediaFrame = (picture: { index: number; count: number }) => { under?: ReactNode; over?: ReactNode };
 
-/** The elements a depth motion moves (G3), read again on every call: the pictures, and the framing art's layers. */
-export interface MediaMotionParts {
-  pictures: () => HTMLElement[];
-  shapes: () => HTMLElement[];
+/**
+ * One picture of a media block as its depth motion moves it (G3). Framed: `box` is the picture's layers (positioned),
+ * holding the picture (`pictures`) and its framing art's layers (`shapes`, behind and over). Unframed: `box` is the
+ * picture's own frame, which clips (`clips`), and `pictures` are the files inside it, so a motion pans them.
+ */
+export interface MediaDepthPicture {
+  box: HTMLElement;
+  pictures: HTMLElement[];
+  shapes: HTMLElement[];
+  clips: boolean;
 }
 
 /**
- * A template's depth motion (G3): attached to the block's group (a positioned box holding its pictures and their
- * framing) while the block's `depth` is on and reduced motion isn't; returns its cleanup. The library detaches it when
- * reduced motion turns on and attaches it again when it turns off.
+ * A template's depth motion (G3): attached to the block's group while the block's `depth` is on and reduced motion
+ * isn't, with its pictures (read again on every call); returns its cleanup. The library detaches it when reduced
+ * motion turns on and attaches it again when it turns off. Ranges are best taken from each picture's own box.
  */
-export type MediaMotion = (group: HTMLElement, parts: MediaMotionParts) => (() => void) | void;
+export type MediaMotion = (group: HTMLElement, pictures: () => MediaDepthPicture[]) => (() => void) | void;
 
 /** One picture, or an album shown by a presentation and its variant (blocks.schema `media`; owner, DesignUp 02:36). */
 export type MediaBlock = {
