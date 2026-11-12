@@ -145,6 +145,7 @@
     --c-frame-ground: var(--color-bg-sunken);
     --c-applied-fill: var(--color-accent-subtle);
     --c-applied-border: var(--color-accent);
+    --c-page-grid-selected-color: var(--color-accent);
     --c-screen-preview-radius: var(--radius-md);
     --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
     --c-chat-message-bubble-fill: var(--color-bg-tint);

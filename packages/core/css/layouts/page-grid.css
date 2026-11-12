@@ -1,0 +1,76 @@
+/* PageGrid (DesignUp, owner 2026-11-12 23:54): a page's composition grid. Rows of cells on one set of twelve columns;
+   a cell holds more rows or one block. Rows a chosen stack step apart, columns a fixed gutter apart. A row stacks its
+   cells in source order when its narrowest cell would be under size.column-min (n columns and n - 1 gutters). */
+@layer layouts {
+  [data-dl='page-grid'] {
+    display: flow-root;
+    /* Fills its container's width even where siblings keep their own: rows are size containers, so they contribute no
+       width of their own and the grid must take it from its parent. */
+    align-self: stretch;
+    inline-size: 100%;
+  }
+
+  :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'] {
+    container-type: inline-size;
+    margin-block-start: var(--c-page-grid-gap-section);
+  }
+
+  :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'][data-gap='item'] { margin-block-start: var(--c-page-grid-gap-item); }
+  :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'][data-gap='group'] { margin-block-start: var(--c-page-grid-gap-group); }
+  :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'][data-gap='page'] { margin-block-start: var(--c-page-grid-gap-page); }
+
+  /* The first row of the page, or of a cell, starts where it is placed. */
+  :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row']:first-child {
+    margin-block-start: 0;
+  }
+
+  [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
+    display: grid;
+    grid-template-columns: repeat(var(--dl-page-grid-columns, 1), minmax(0, 1fr));
+    column-gap: var(--c-page-grid-gutter);
+    row-gap: var(--c-page-grid-stack-gap);
+  }
+
+  [data-dl-part='page-columns'][data-columns='2'] { --dl-page-grid-columns: 2; }
+  [data-dl-part='page-columns'][data-columns='3'] { --dl-page-grid-columns: 3; }
+  [data-dl-part='page-columns'][data-columns='4'] { --dl-page-grid-columns: 4; }
+  [data-dl-part='page-columns'][data-columns='6'] { --dl-page-grid-columns: 6; }
+  [data-dl-part='page-columns'][data-columns='8'] { --dl-page-grid-columns: 8; }
+  [data-dl-part='page-columns'][data-columns='9'] { --dl-page-grid-columns: 9; }
+  [data-dl-part='page-columns'][data-columns='12'] { --dl-page-grid-columns: 12; }
+
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'] {
+    grid-column: span var(--dl-page-grid-span, 1);
+    min-inline-size: 0;
+  }
+
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='2'] { --dl-page-grid-span: 2; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='3'] { --dl-page-grid-span: 3; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='4'] { --dl-page-grid-span: 4; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='6'] { --dl-page-grid-span: 6; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='8'] { --dl-page-grid-span: 8; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='9'] { --dl-page-grid-span: 9; }
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='12'] { --dl-page-grid-span: 12; }
+
+  /* An editor's selection: an outline, so the geometry never moves. */
+  :is([data-dl-part='page-row'], [data-dl-part='page-cell'])[data-selected] {
+    outline: var(--c-page-grid-selected-width) solid var(--c-page-grid-selected-color);
+    outline-offset: var(--c-page-grid-selected-offset);
+  }
+
+  /* Stacked: one column, cells in source order. The thresholds are n × size.column-min (16rem) and n - 1 gutters. */
+  @container (max-width: 33.5rem) {
+    [data-dl-part='page-columns'][data-narrowest='2'] { --dl-page-grid-columns: 1; }
+    [data-dl-part='page-columns'][data-narrowest='2'] > [data-dl-part='page-cell'] { grid-column: 1 / -1; }
+  }
+
+  @container (max-width: 51rem) {
+    [data-dl-part='page-columns'][data-narrowest='3'] { --dl-page-grid-columns: 1; }
+    [data-dl-part='page-columns'][data-narrowest='3'] > [data-dl-part='page-cell'] { grid-column: 1 / -1; }
+  }
+
+  @container (max-width: 68.5rem) {
+    [data-dl-part='page-columns'][data-narrowest='4'] { --dl-page-grid-columns: 1; }
+    [data-dl-part='page-columns'][data-narrowest='4'] > [data-dl-part='page-cell'] { grid-column: 1 / -1; }
+  }
+}

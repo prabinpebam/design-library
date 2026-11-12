@@ -1136,6 +1136,46 @@
         "$description": "At a pill's start and end, so the words clear its rounded ends (echoed for space contexts)"
       }
     },
+    "page-grid": {
+      "$extensions": {
+        "owner": "PageGrid"
+      },
+      "gap-group": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Above a row with gap group: rows of one group (echoed for space contexts)"
+      },
+      "gap-item": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Above a row with gap item: tight, the rows read as one thing (echoed for space contexts)"
+      },
+      "gap-page": {
+        "$type": "dimension",
+        "$value": "{space.stack-page}",
+        "$description": "Above a row with gap page: a new part of the page (echoed for space contexts)"
+      },
+      "gap-section": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Above a row with gap section (default): separate sections (echoed for space contexts)"
+      },
+      "gutter": {
+        "$type": "dimension",
+        "$value": "{space.gutter}",
+        "$description": "Between a row's cells, fixed for the whole grid (echoed for space contexts)"
+      },
+      "selected-offset": {
+        "$type": "dimension",
+        "$value": "{space.inset-xs}",
+        "$description": "The selection outline sits just outside the row or cell (echoed for space contexts)"
+      },
+      "stack-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Between a row's cells once they stack on a narrow screen (echoed for space contexts)"
+      }
+    },
     "page-header": {
       "$extensions": {
         "owner": "PageHeader"

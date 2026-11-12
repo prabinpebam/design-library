@@ -100,6 +100,7 @@
 @import url('./layouts/site-layout.css');
 @import url('./layouts/frame.css');
 @import url('./layouts/sticky-bar.css');
+@import url('./layouts/page-grid.css');
 @import url('./fundamentals/controls.css');
 @import url('./fundamentals/pickers.css');
 @import url('./fundamentals/feedback.css');
