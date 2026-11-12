@@ -302,7 +302,9 @@ function Search({ view }: { view: YoutubeRecord }) {
                     <span data-dl-part="chapter-frame" aria-hidden="true" />
                     <span data-dl-part="chapter-count"><Text variant="inherit" as="span">{chapters.count}</Text></span>
                     <span data-dl-part="chapter-titles"><Text variant="inherit" as="span">{chapters.titles}</Text></span>
-                    <Button label={c.showChapters} icon="chevron-down" iconOnly emphasis="quiet" size="s" />
+                    <IconOverrides icons={playerPack.glyphs}>
+                      <Button label={c.showChapters} icon={playerIcons.name('chapters-expand')} iconOnly emphasis="quiet" size="s" />
+                    </IconOverrides>
                   </div>
                 )}
               </div>

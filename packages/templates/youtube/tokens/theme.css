@@ -477,7 +477,9 @@
     --c-badge-outline-edge: light-dark(#cccccc, rgba(255, 255, 255, 0.2));
   }
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] {
-    --color-bg-control: var(--c-chip-fill);
+    --color-bg-control: light-dark(#f4f1f8, #2c2733);
+    --radius-md: 0.5rem;
+    --size-icon-sm: 1.5rem;
   }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] {
     --c-button-padding-inline: 0rem;
