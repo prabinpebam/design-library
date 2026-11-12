@@ -160,7 +160,7 @@ if (!flag('templates-only') && !only.size) {
   await ctx.close();
   for (const r of routes.sort()) {
     if (!r || r.startsWith('app/')) continue;
-    if ([...exclude].some((t) => r === `templates/${t}` || r.endsWith(`/${t}`) || r === t)) continue;
+    if ([...exclude].some((t) => r === `templates/${t}` || r.endsWith(`/${t}`) || r === t || r.startsWith(`${t}-`) || r.startsWith(`${t}.`))) continue;
     targets.push({ id: `lib--${r.replace(/[^\w-]+/g, '_')}`, path: `#/${r}` });
   }
 }

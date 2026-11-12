@@ -52,16 +52,16 @@
   "$description": "Message list 22 px pitch at 15 px."
  },
  "size.nav-width": {
-  "$value": "16.25rem",
-  "$description": "Sidebar: r02 measured 260 px, current range 220–260."
+  "$value": "19.25rem",
+  "$description": "Owner benchmark 03/04: sidebar 205 px at 2/3 scale = 308 CSS px."
  },
  "size.rail-width": {
-  "$value": "4.75rem",
-  "$description": "Window and rail: r01 approximately 76 px."
+  "$value": "4.375rem",
+  "$description": "Owner benchmark 03/04: rail 46.7 px at 2/3 scale = 70 CSS px."
  },
  "size.app-bar-height": {
-  "$value": "2.4375rem",
-  "$description": "Window and rail: r01 39 px title bar."
+  "$value": "2.5rem",
+  "$description": "Owner benchmark 03/04: title bar 26.7 px at 2/3 scale = 40 CSS px."
  },
  "size.pane-width": {
   "$value": "24rem",
@@ -121,64 +121,64 @@
   "$description": "Sidebar keyboard focus r14."
  },
  "color.map.nav": {
-  "$value": "#501e54",
-  "$description": "Sidebar r05."
+  "$value": "#58285a",
+  "$description": "Owner benchmark 03/04: warm plum sidebar (#5C2C5E top to #512354 bottom)."
  },
  "color.map.nav-on": {
   "$value": "#ffffff",
-  "$description": "Sidebar workspace and unread rows r07."
+  "$description": "Owner benchmark 03/04: workspace header and unread channel rows."
  },
  "color.map.nav-on-muted": {
   "$value": "#cbb7cd",
-  "$description": "Sidebar secondary rows r01/r07."
+  "$description": "Owner benchmark 03/04: read channels and secondary sidebar rows."
  },
  "color.map.nav-hover": {
-  "$value": "#6a3c71",
-  "$description": "Rail current tile r05 #6A3C71; also row hover (unmeasured)."
+  "$value": "#6a416d",
+  "$description": "Owner benchmark 03/04: rail active Home tile and bottom circular buttons #6A416D."
  },
  "color.map.nav-selected": {
-  "$value": "#ffe5ff",
-  "$description": "Current selected row r05."
+  "$value": "#f9edff",
+  "$description": "Owner benchmark 03/04: selected sidebar row #F9EDFF."
  },
  "color.map.nav-selected-on": {
-  "$value": "#39073d",
-  "$description": "Selected text r05."
+  "$value": "#39063a",
+  "$description": "Owner benchmark 03/04: selected sidebar row dark aubergine ink #39063A."
  },
  "color.map.nav-shell": {
-  "$value": "#39073d",
-  "$description": "Rail and window fill r05."
+  "$value": "#39063a",
+  "$description": "Owner benchmark 03/04: outer window shell and rail base #39063A."
  },
  "color.map.nav-shell-on": {
   "$value": "#ffffff",
-  "$description": "Rail labels r05."
+  "$description": "Owner benchmark 03/04: rail labels and titlebar controls."
  },
  "color.map.selection-indicator": {
   "$value": "#611f69",
-  "$description": "Channel tabs r01 default (r05 blue is uncertain)."
+  "$description": "Owner benchmark 03/04: active channel tab bottom indicator."
  },
  "color.map.badge": {
-  "$value": "#cd0459",
-  "$description": "Mention pill r14."
+  "$value": "#eabdfb",
+  "$description": "Owner benchmark 03/04: lilac unread/mention count pill #EABDFB."
  },
  "color.map.badge-on": {
-  "$value": "#ffffff",
-  "$description": "Mention count r14."
+  "$value": "#39063a",
+  "$description": "Owner benchmark 03/04: bold dark aubergine count ink #39063A on lilac pill."
  },
  "c.avatar.square-scale": {
   "$value": "0.1666667",
-  "$description": "r04: 36 px square avatars with approximately 6 px corners."
+  "$description": "36 px square avatars with 6 px corners."
  },
  "c.button.size-xs": {
   "$value": "1.75rem",
-  "$description": "Sidebar row pitch 28 px r02/r05; dense chrome exception, above 24 px."
+  "$description": "Owner benchmark 03/04: sidebar row pitch 28 CSS px (18.7 px at 2/3)."
  },
  "c.text-area.composer-radius": {
   "$value": "0.5rem",
-  "$description": "Expanded composer r01: approximately 8 px."
+  "$description": "Owner benchmark 03/04: composer 8 px radius."
  },
  "space.inset-xs": {
-  "$value": "0.125rem",
-  "$description": "r01 optical chrome inset: 2 px."
+  "$value": "0.25rem",
+  "$description": "Owner benchmark 03/04: 4 CSS px (2.7 px at 2/3) right and bottom shell frame."
  },
  "color.map.action-fill": {
   "$value": "#007a5a",
@@ -296,7 +296,49 @@
    "light": "#0c5767",
    "dark": "#7fdcf2"
   },
-  "$description": "Region 25: Canvas's glyph core #0C5767 in g-create-01-f70 (Create menu, drawn at about 1.87x); dark provisional."
+  "$description": "Owner benchmark 06: Canvas cyan plate ink #0C5767."
+ },
+ "c.list-item.plate-fill-7": {
+  "$value": {
+   "light": "#f4e8fb",
+   "dark": "color-mix(in oklab, #9b51e0 24%, transparent)"
+  },
+  "$description": "Owner benchmark 06: Message lilac plate fill."
+ },
+ "c.list-item.plate-ink-7": {
+  "$value": {
+   "light": "#78298c",
+   "dark": "#e0b0ff"
+  },
+  "$description": "Owner benchmark 06: Message lilac plate ink."
+ },
+ "c.list-item.plate-fill-2": {
+  "$value": {
+   "light": "#efe2b8",
+   "dark": "color-mix(in oklab, #c79a2b 24%, transparent)"
+  },
+  "$description": "Owner benchmark 06: List warm gold/olive plate fill."
+ },
+ "c.list-item.plate-ink-2": {
+  "$value": {
+   "light": "#6e5111",
+   "dark": "#f2d479"
+  },
+  "$description": "Owner benchmark 06: List plate ink."
+ },
+ "c.list-item.plate-fill-1": {
+  "$value": {
+   "light": "#fde2e4",
+   "dark": "color-mix(in oklab, #e01e5a 24%, transparent)"
+  },
+  "$description": "Owner benchmark 06: Workflow coral plate fill."
+ },
+ "c.list-item.plate-ink-1": {
+  "$value": {
+   "light": "#b4233b",
+   "dark": "#ff9eb0"
+  },
+  "$description": "Owner benchmark 06: Workflow coral plate ink."
  },
  "c.popup.gap": {
   "$value": "0",

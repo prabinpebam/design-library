@@ -140,7 +140,7 @@ export const icons = {
   highlight: { d: 'M14.5 4l5 5-7.5 7.5H7v-5z', accent: 'M4 20.5h16' },
   'fill-colour': { d: 'M5 11l6-6 7 7-6 6zM11 5L8.5 2.5M18.5 15s1.5 2 1.5 3a1.5 1.5 0 0 1-3 0c0-1 1.5-3 1.5-3z', accent: 'M4 21h16' },
   borders: { d: 'M4.5 4.5h15v15h-15zM12 4.5v15M4.5 12h15' },
-  'list-bulleted': { d: 'M9.5 6h11M9.5 12h11M9.5 18h11', accent: 'M4.5 6h.01M4.5 12h.01M4.5 18h.01' },
+  'list-bulleted': { d: 'M9.5 6h11M9.5 12h11M9.5 18h11', accent: 'M4.5 6h0M4.5 12h0M4.5 18h0' },
   'list-numbered': { d: 'M10 6h10.5M10 12h10.5M10 18h10.5', accent: 'M4 4.5h1.5v4M4 10.5h3l-3 4h3M4 16.5h3v4H4M5 18.5h2' },
   'indent-increase': { d: 'M4 5h16M11 10h9M11 14h9M4 19h16M4 9.5l3 2.5-3 2.5', flipInRtl: true },
   'indent-decrease': { d: 'M4 5h16M11 10h9M11 14h9M4 19h16M7 9.5L4 12l3 2.5', flipInRtl: true },
@@ -176,6 +176,24 @@ export const icons = {
   flag: { d: 'M5 21V4M5 4h12l-2 4 2 4H5' },
   hash: { d: 'M9.5 4L8 20M16 4l-1.5 16M4.5 9h15M4 15h15' },
   'person-add': { d: 'M10 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2.5 20.5c0-4 3.4-6.5 7.5-6.5 1.5 0 2.9.3 4 1M19 14v6M16 17h6' },
+  // Generic workspace, messaging, navigation and window-chrome actions (Q146): reusable across shells, messengers and editors.
+  home: { d: 'M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z', fill: 'M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z' },
+  messages: { d: 'M4 5.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H9l-3.5 3V13.5H5a1 1 0 0 1-1-1zM16 9.5h3a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1h-1.5v2.5L14.5 18H11a1 1 0 0 1-1-1v-1' },
+  bell: { d: 'M6 16.5h12l-1.5-2V10a4.5 4.5 0 0 0-9 0v4.5zM10 19a2 2 0 0 0 4 0' },
+  'check-circle': { d: 'M12 20.5a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17zM8.5 12.5l2.5 2.5 4.5-5' },
+  star: { d: 'M12 3.8l2.5 5.1 5.6.8-4.05 3.95.96 5.55L12 16.6l-5.01 2.6.96-5.55L3.9 9.7l5.6-.8z' },
+  bookmark: { d: 'M6.5 4.5h11a.5.5 0 0 1 .5.5v15.5l-6-4-6 4V5a.5.5 0 0 1 .5-.5z' },
+  pin: { d: 'M9 4.5h6l-1 5 3 2.5v1.5H7V12l3-2.5zM12 13.5v7' },
+  inbox: { d: 'M4.5 13l2-7.5h11l2 7.5v5.5a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1zM4.5 13h4.5a3 3 0 0 0 6 0h4.5' },
+  contacts: { d: 'M6 4h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM3.5 8h2.5M3.5 12h2.5M3.5 16h2.5M12 11.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM9 16c0-1.8 1.3-3 3-3s3 1.2 3 3' },
+  sidebar: { d: 'M4.5 5h15a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM9.5 5v14' },
+  help: { d: 'M12 20.5a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17zM9.8 9.5a2.3 2.3 0 1 1 3.3 2.1c-.7.35-1.1.8-1.1 1.6v.3M12 16.8v.2' },
+  video: { d: 'M4 7.5a1 1 0 0 1 1-1h9.5a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zM15.5 10.5l4.5-2.5v8l-4.5-2.5' },
+  quote: { d: 'M5.5 6v12M9.5 7.5h9.5M9.5 12h9.5M9.5 16.5h6.5' },
+  'code-block': { d: 'M4.5 5.5h15a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1zM9.5 9.5L7 12l2.5 2.5M14.5 9.5L17 12l-2.5 2.5' },
+  shortcut: { d: 'M5.5 4.5h13a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1zM14.5 8l-5 8' },
+  'filter-lines': { d: 'M4.5 7h15M7 12h10M10 17h4' },
+  'window-maximize': { d: 'M6 6h12v12H6z' },
 } satisfies Record<string, IconData>;
 
 export type IconName = keyof typeof icons;

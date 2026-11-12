@@ -16,6 +16,13 @@ const BLOCKS: Record<string, never> = {
 export const registry: Template['registry'] = {
   blocks: BLOCKS,
   layouts: {
-    SiteLayout: ({ shared, ctx }) => <Workspace view={shared?.record as unknown as WorkspaceRecord} screen={ctx.layout} />,
+    SiteLayout: ({ content, shared, ctx }) => (
+      <Workspace
+        view={shared?.record as unknown as WorkspaceRecord}
+        screen={ctx.layout}
+        settings={content.settings}
+        picture={ctx.picture}
+      />
+    ),
   },
 };

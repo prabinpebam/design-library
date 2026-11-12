@@ -4,234 +4,208 @@
   "shared": true,
   "contentVersion": 1,
   "record": {
-    "name": "Fieldwork",
-    "currentUser": "Jamie Park",
-    "channel": "project-studio",
-    "topic": "A little space for the next big idea",
+    "name": "Studio Hangout",
+    "workspaceBadge": "SH",
+    "currentUser": "Tomas Lind",
+    "currentUserAvatar": "avatar08",
+    "channel": "hangout",
+    "topicPrefix": "Welcome to",
+    "topicMiddle": "Our code of conduct:",
+    "topicLink": "https://studiohangout.org/conduct",
     "members": [
-      "Maya Chen",
-      "Alex Rivera",
-      "Sam Patel"
+      { "name": "Elena Rostova", "avatar": "avatar04" },
+      { "name": "Marco Silva", "avatar": "avatar05" },
+      { "name": "Nadia Okafor", "avatar": "avatar01" }
     ],
-    "memberCount": 24,
-    "date": "Wednesday, November 11",
+    "memberCountText": "23,356",
+    "date": "Wednesday, September 9th",
+    "newMessagesBanner": "↑ 20+ new messages",
+    "moreUnreadsLabel": "↓ More unreads",
+    "vipPrompt": {
+      "body": "Lots of notifications? You’re so popular! Choose VIPs so you don’t miss the important stuff.",
+      "later": "Later",
+      "start": "Get Started"
+    },
+    "welcomePrompt": {
+      "title": "Welcome back",
+      "cta": "Top things to check out"
+    },
+    "workspaces": [
+      { "id": "sh", "initials": "SH", "name": "Studio Hangout", "tone": "coral", "current": true }
+    ],
     "rail": [
-      {
-        "label": "Home",
-        "icon": "organisation"
-      },
-      {
-        "label": "DMs",
-        "icon": "comment"
-      },
-      {
-        "label": "Activity",
-        "icon": "speaker"
-      },
-      {
-        "label": "Files",
-        "icon": "file"
-      },
-      {
-        "label": "More",
-        "icon": "more"
-      }
+      { "id": "home", "label": "Home", "icon": "home" },
+      { "id": "dms", "label": "DMs", "icon": "messages" },
+      { "id": "activity", "label": "Activity", "icon": "bell", "mentions": 85 },
+      { "id": "files", "label": "Files", "icon": "layers" },
+      { "id": "todos", "label": "To-dos", "icon": "check-circle" },
+      { "id": "agents", "label": "Agents & tools", "icon": "grid" }
+    ],
+    "tabs": [
+      { "id": "messages", "label": "Messages", "icon": "comment" },
+      { "id": "pins", "label": "Pins", "icon": "pin" },
+      { "id": "bookmarks", "label": "Bookmarks", "icon": "bookmark" },
+      { "id": "files", "label": "Files & links", "icon": "layers" }
     ],
     "sections": [
       {
         "items": [
-          {
-            "name": "Unreads",
-            "icon": "list",
-            "unread": true
-          },
-          {
-            "name": "Threads",
-            "icon": "comment"
-          },
-          {
-            "name": "Drafts & sent",
-            "icon": "edit"
-          }
+          { "name": "Unreads", "icon": "inbox", "unread": true },
+          { "name": "Threads", "icon": "comment" },
+          { "name": "Huddles", "icon": "headphones" },
+          { "name": "Saved", "icon": "bookmark" },
+          { "name": "Directories", "icon": "contacts" }
         ]
       },
       {
-        "title": "Starred",
         "items": [
-          {
-            "name": "launch-plan",
-            "icon": "frame",
-            "unread": true
-          },
-          {
-            "name": "team-notes",
-            "icon": "frame"
-          }
+          { "name": "Starred", "icon": "star" }
         ]
       },
       {
         "title": "Channels",
+        "collapsible": true,
         "items": [
-          {
-            "name": "general",
-            "icon": "frame"
-          },
-          {
-            "name": "project-studio",
-            "icon": "frame"
-          },
-          {
-            "name": "design-reviews",
-            "icon": "frame",
-            "unread": true,
-            "mentions": 2
-          },
-          {
-            "name": "announcements",
-            "icon": "frame",
-            "unread": true
-          },
-          {
-            "name": "watercooler",
-            "icon": "frame"
-          },
-          {
-            "name": "Add channels",
-            "icon": "plus"
-          }
-        ]
-      },
-      {
-        "title": "Direct messages",
-        "items": [
-          {
-            "name": "Maya Chen",
-            "presence": "available",
-            "unread": true
-          },
-          {
-            "name": "Alex Rivera",
-            "presence": "available"
-          },
-          {
-            "name": "Sam Patel",
-            "presence": "away",
-            "unread": true,
-            "mentions": 1
-          },
-          {
-            "name": "Jamie Park (you)",
-            "presence": "available"
-          },
-          {
-            "name": "Invite people",
-            "icon": "plus"
-          }
+          { "name": "ask-me-anything-events", "icon": "hash", "unread": true },
+          { "name": "hangout", "icon": "hash" },
+          { "name": "measuring-ux", "icon": "hash" },
+          { "name": "partner_abstract", "icon": "hash", "unread": true },
+          { "name": "partner_adobe-xd", "icon": "hash", "unread": true },
+          { "name": "partner_wireframe", "icon": "hash", "unread": true, "mentions": 1 },
+          { "name": "partner_botstudio", "icon": "hash", "unread": true, "mentions": 2 },
+          { "name": "partner_fieldnotes", "icon": "hash", "unread": true, "mentions": 2 },
+          { "name": "partner_usertesting", "icon": "hash", "unread": true, "mentions": 9, "mentionsLabel": "9+" },
+          { "name": "_ask-a-mod", "icon": "hash" },
+          { "name": "help_designcritique", "icon": "hash", "unread": true },
+          { "name": "help_portfolio", "icon": "hash", "unread": true },
+          { "name": "help_writingcritique", "icon": "hash", "unread": true },
+          { "name": "introductions", "icon": "hash", "unread": true },
+          { "name": "jobs", "icon": "hash", "unread": true },
+          { "name": "partner_invision", "icon": "hash" },
+          { "name": "resources_books", "icon": "hash", "unread": true },
+          { "name": "resources_links", "icon": "hash", "unread": true },
+          { "name": "resources_tools", "icon": "hash", "unread": true },
+          { "name": "topic_accessibility", "icon": "hash", "unread": true },
+          { "name": "topic_agile", "icon": "hash", "unread": true },
+          { "name": "topic_automotive", "icon": "hash", "unread": true }
         ]
       }
     ],
     "messages": [
       {
         "id": "m1",
-        "author": "Maya Chen",
-        "time": "9:12 AM",
-        "text": "Morning, team! The updated direction for our autumn collection is ready for a look. I brought the notes from yesterday into one place.",
-        "reactions": [
-          {
-            "emoji": "👍",
-            "label": "Like",
-            "count": 4
-          },
-          {
-            "emoji": "❤️",
-            "label": "Love",
-            "count": 2
-          }
-        ],
-        "replies": 4
+        "author": "Elena Rostova",
+        "avatar": "avatar04",
+        "time": "2:18 AM",
+        "text": "Sharing the latest breakdown on hiring shifts across product, research, and systems roles this quarter.",
+        "unfurl": {
+          "title": "State of the tech job market: late 2026",
+          "site": "fieldnotesnewsletter.com",
+          "text": "PMs are steady, systems engineers are plateauing, craft roles are adapting, and the biggest hiring wave sits outside pure software.",
+          "thumb": "unfurlSketches",
+          "banner": "unfurlChart"
+        },
+        "replies": 4,
+        "replyAvatars": ["avatar02", "avatar06"]
       },
       {
         "id": "m2",
-        "author": "Maya Chen",
-        "time": "9:13 AM",
-        "text": "The main change is a calmer opening and more room for the work. Let me know what feels right.",
-        "grouped": true
+        "author": "Marco Silva",
+        "avatar": "avatar05",
+        "time": "4:00 AM",
+        "text": "This is an interesting article — maybe a bit dramatic in its framing, yet nonetheless it raises sharp points on team pace.",
+        "linkText": "notes.marcosilva.org/p/why-small-teams-move-ahead",
+        "unfurl": {
+          "title": "Why small product teams are moving months ahead",
+          "site": "notes.marcosilva.org",
+          "text": "For ten years, a small group of practitioners predicted tighter loops between research and shipping. Now teams are seeing it firsthand.",
+          "thumb": "unfurlSpeaker"
+        },
+        "replies": 2,
+        "replyAvatars": ["avatar01", "avatar09"]
       },
       {
         "id": "m3",
-        "author": "Alex Rivera",
-        "time": "9:24 AM",
-        "text": "This feels much clearer. I put together a short outline for the review so we can spend more time on the details.",
-        "file": {
-          "name": "Studio review notes.pdf",
-          "detail": "PDF · 248 KB"
-        }
+        "author": "Nadia Okafor",
+        "avatar": "avatar01",
+        "time": "6:14 AM",
+        "text": "Ran across a memorable phrase from a privacy researcher at Georgetown: “marketing by urgency”. Telling teams they have to adopt every tool overnight or fall behind? Yeah, that captures it.",
+        "replies": 3,
+        "replyAvatars": ["avatar03", "avatar07"]
       },
       {
         "id": "m4",
-        "author": "Sam Patel",
-        "time": "9:31 AM",
-        "text": "A small update from the build: the new navigation is in place. The notes below cover what changed and what to try.",
-        "unfurl": {
-          "title": "A new home for the studio",
-          "site": "Fieldwork journal",
-          "text": "The latest workspace update: a simpler way to find the conversations and projects that matter."
+        "author": "Lukas Weber",
+        "avatar": "avatar02",
+        "time": "8:02 AM",
+        "text": "Worth reading if anyone here works on booking or checkout flows:",
+        "file": {
+          "name": "Checkout-verification-brief.pdf",
+          "detail": "PDF · 248 KB"
         },
-        "reactions": [
-          {
-            "emoji": "👍",
-            "label": "Like",
-            "count": 3
-          }
-        ]
-      },
-      {
-        "id": "m5",
-        "author": "Jamie Park",
-        "time": "10:02 AM",
-        "text": "Thanks for bringing this together. I’ll review the opening this morning and leave a few thoughts in the thread.",
-        "isNew": true
-      },
-      {
-        "id": "m6",
-        "author": "Maya Chen",
-        "time": "10:05 AM",
-        "text": "Perfect. We have time to explore both directions before the team review tomorrow.",
-        "reactions": [
-          {
-            "emoji": "❤️",
-            "label": "Love",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "id": "m7",
-        "author": "Maya Chen",
-        "time": "10:06 AM",
-        "text": "Thoughts on the opening are welcome in the thread too.",
-        "grouped": true
+        "unfurl": {
+          "title": "Major Carriers Introduce New Rules for Automated Seat Booking",
+          "site": "The Transit Journal",
+          "text": "Carriers cite passenger data-privacy safeguards and fare-scraping load: “we don’t want an unverified middle layer.”",
+          "thumb": "unfurlFlight"
+        },
+        "replies": 1,
+        "replyAvatars": ["avatar10"]
       }
+    ],
+    "quickReactions": [
+      { "emoji": "✅", "label": "Completed" },
+      { "emoji": "👀", "label": "Looking" },
+      { "emoji": "🙌", "label": "Celebrate" }
     ],
     "replies": [
       {
         "id": "r1",
-        "author": "Alex Rivera",
+        "author": "Marco Silva",
+        "avatar": "avatar05",
         "time": "9:18 AM",
         "text": "The extra space around the opening makes such a difference. I’d keep that direction."
       },
       {
         "id": "r2",
-        "author": "Sam Patel",
+        "author": "Nadia Okafor",
+        "avatar": "avatar01",
         "time": "9:22 AM",
         "text": "Agreed. I’ll check how the longer project names sit in the navigation."
       },
       {
         "id": "r3",
-        "author": "Jamie Park",
+        "author": "Tomas Lind",
+        "avatar": "avatar08",
         "time": "9:28 AM",
         "text": "I added the mobile notes to the review document."
       }
+    ],
+    "channelMenu": [
+      {
+        "value": "details",
+        "label": "Channel details",
+        "items": [
+          { "value": "about", "label": "About" },
+          { "value": "members", "label": "Members" }
+        ]
+      },
+      {
+        "value": "copy-menu",
+        "label": "Copy",
+        "items": [
+          { "value": "copy-name", "label": "Copy name" },
+          { "value": "copy-link", "label": "Copy link" }
+        ]
+      },
+      { "value": "star", "label": "Star channel" },
+      { "value": "move", "label": "Move channel" },
+      { "value": "template", "label": "Add template to channel", "startsGroup": true },
+      { "value": "workflow", "label": "Add a workflow" },
+      { "value": "settings", "label": "Edit settings" },
+      { "value": "split", "label": "Open in split view", "icon": "sidebar", "startsGroup": true },
+      { "value": "window", "label": "Open in new window", "icon": "external" },
+      { "value": "leave", "label": "Leave channel", "tone": "danger", "startsGroup": true }
     ],
     "messageMenu": [
       {
@@ -300,32 +274,46 @@
     ],
     "createMenu": [
       {
+        "value": "message",
+        "label": "Message",
+        "description": "Start a conversation in a DM or channel",
+        "icon": "edit",
+        "plate": 7
+      },
+      {
+        "value": "channel",
+        "label": "Channel",
+        "description": "Start a group conversation by topic",
+        "icon": "hash",
+        "plate": "neutral"
+      },
+      {
         "value": "huddle",
         "label": "Huddle",
-        "description": "Start a call with audio and video",
+        "description": "Start a video or audio chat",
         "icon": "headphones",
         "plate": 5
       },
       {
         "value": "canvas",
         "label": "Canvas",
-        "description": "Write and share a document",
+        "description": "Create and share content",
         "icon": "file",
         "plate": 3
       },
       {
         "value": "list",
         "label": "List",
-        "description": "Track projects together",
+        "description": "Track and manage projects",
         "icon": "list",
-        "plate": "neutral"
+        "plate": 2
       },
       {
-        "value": "channel",
-        "label": "Channel",
-        "description": "Talk about a topic together",
-        "icon": "hash",
-        "plate": "neutral"
+        "value": "workflow",
+        "label": "Workflow",
+        "description": "Automate everyday tasks",
+        "icon": "play",
+        "plate": 1
       },
       {
         "value": "invite",
@@ -609,32 +597,52 @@
       ]
     },
     "copy": {
-      "search": "Search Fieldwork",
-      "members": "View 24 members",
+      "search": "Search Studio Hangout",
+      "findConversation": "Find a conversation…",
+      "appMenu": "Open application menu",
+      "toggleSidebar": "Toggle sidebar",
+      "forward": "Go forward",
+      "history": "Recent history",
+      "assistant": "Open assistant",
+      "help": "Help",
+      "minimize": "Minimize window",
+      "maximize": "Maximize window",
+      "closeWindow": "Close window",
+      "themeToggle": "Switch theme",
+      "starChannel": "Star channel",
+      "notifications": "Channel notifications",
+      "searchChannel": "Search in channel",
+      "dismissBanner": "Dismiss notice",
+      "underline": "Underline",
+      "paragraphStyle": "Text style",
+      "codeBlock": "Code block",
+      "shortcuts": "Run shortcut",
+      "replySingle": "reply",
+      "members": "View 23,356 members",
       "huddle": "Start huddle",
       "channelMenu": "Open channel menu",
       "compose": "Write message",
-      "preferences": "Open preferences",
+      "preferences": "Help",
       "messagePrefix": "Message",
       "mentions": "mentions",
       "messages": "Messages",
       "canvas": "Canvas",
-      "files": "Files",
+      "files": "Files & links",
       "addTab": "Add tab",
       "newMessages": "New",
       "reply": "Reply",
       "thread": "Thread",
       "closeThread": "Close thread",
       "popout": "Open thread separately",
-      "format": "Show formatting",
+      "format": "Formatting",
       "send": "Send message",
       "sending": "Sending…",
       "sent": "Sent",
       "add": "Add attachment",
       "emoji": "Add emoji",
       "mention": "Mention someone",
-      "video": "Record video",
-      "audio": "Record audio",
+      "video": "Record video clip",
+      "audio": "Record audio clip",
       "bold": "Bold",
       "italic": "Italic",
       "strike": "Strikethrough",
@@ -642,26 +650,26 @@
       "list": "Bulleted list",
       "numbered": "Numbered list",
       "quote": "Block quote",
-      "code": "Code",
+      "code": "Inline code",
       "more": "More actions",
       "replies": "replies",
       "replyAction": "Reply in thread",
       "react": "Add reaction",
-      "save": "Save message",
-      "share": "Share message",
-      "lastReply": "Last reply 10:05 AM",
-      "schedule": "Schedule for later",
+      "save": "Save for later",
+      "share": "Forward message",
+      "lastReply": "Last reply today",
+      "schedule": "Schedule message",
       "alsoSend": "Also send to",
       "huddleOptions": "Huddle options",
       "emptySearch": "No messages match. Try another word.",
       "results": "Search results",
       "allFiles": "Shared files",
       "searchHint": "Search messages in this workspace",
-      "back": "Back to channel",
+      "back": "Go back",
       "emojiSearch": "Search emoji",
       "handy": "Handy reactions",
       "createMenu": "Create",
-      "sidebarSettings": "Sidebar settings",
+      "sidebarSettings": "Filter and sort",
       "createChannel": "Create a channel",
       "channelName": "Name",
       "channelNameHint": "e.g. plan-budget",

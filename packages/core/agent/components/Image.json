@@ -198,7 +198,8 @@
     "MediaPlayer",
     "Hero",
     "ikea.PictureBanner",
-    "ikea.ProductTile"
+    "ikea.ProductTile",
+    "slack.Workspace"
   ],
   "principles": [
     "visual-representation"

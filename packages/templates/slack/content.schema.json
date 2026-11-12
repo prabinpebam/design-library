@@ -8,6 +8,40 @@
     "record.shared": {
       "$ref": "#/$defs/WorkspaceRecord"
     },
+    "WorkspaceChannelItem": {
+      "additionalProperties": false,
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "icon": {
+          "$ref": "#/$defs/WorkspaceIcon"
+        },
+        "mentions": {
+          "type": "number"
+        },
+        "mentionsLabel": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "presence": {
+          "enum": [
+            "available",
+            "away"
+          ],
+          "type": "string"
+        },
+        "unread": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
     "WorkspaceEmoji": {
       "additionalProperties": false,
       "properties": {
@@ -48,14 +82,47 @@
         "ball",
         "plane",
         "lightbulb",
-        "flag"
+        "flag",
+        "home",
+        "messages",
+        "bell",
+        "check-circle",
+        "star",
+        "bookmark",
+        "pin",
+        "inbox",
+        "contacts",
+        "sidebar",
+        "help",
+        "video",
+        "quote",
+        "code-block",
+        "shortcut",
+        "filter-lines",
+        "window-maximize",
+        "layers",
+        "grid",
+        "bot",
+        "search",
+        "settings",
+        "external",
+        "play"
       ],
       "type": "string"
     },
     "WorkspaceMenuItem": {
       "additionalProperties": false,
       "properties": {
+        "badge": {
+          "type": "string"
+        },
+        "checked": {
+          "type": "boolean"
+        },
         "description": {
+          "type": "string"
+        },
+        "heading": {
           "type": "string"
         },
         "icon": {
@@ -89,6 +156,9 @@
             "number"
           ]
         },
+        "shortcut": {
+          "type": "string"
+        },
         "startsGroup": {
           "type": "boolean"
         },
@@ -111,6 +181,15 @@
       "properties": {
         "author": {
           "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "dateAbove": {
+          "type": "string"
+        },
+        "edited": {
+          "type": "boolean"
         },
         "file": {
           "additionalProperties": false,
@@ -136,6 +215,12 @@
         },
         "isNew": {
           "type": "boolean"
+        },
+        "linkText": {
+          "type": "string"
+        },
+        "mention": {
+          "type": "string"
         },
         "reactions": {
           "items": {
@@ -163,6 +248,15 @@
         "replies": {
           "type": "number"
         },
+        "replyAvatars": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "statusEmoji": {
+          "type": "string"
+        },
         "text": {
           "type": "string"
         },
@@ -170,24 +264,7 @@
           "type": "string"
         },
         "unfurl": {
-          "additionalProperties": false,
-          "properties": {
-            "site": {
-              "type": "string"
-            },
-            "text": {
-              "type": "string"
-            },
-            "title": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "title",
-            "site",
-            "text"
-          ],
-          "type": "object"
+          "$ref": "#/$defs/WorkspaceUnfurl"
         }
       },
       "required": [
@@ -204,6 +281,12 @@
         "channel": {
           "type": "string"
         },
+        "channelMenu": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
         "copy": {
           "additionalProperties": {
             "type": "string"
@@ -217,6 +300,9 @@
           "type": "array"
         },
         "currentUser": {
+          "type": "string"
+        },
+        "currentUserAvatar": {
           "type": "string"
         },
         "date": {
@@ -280,12 +366,25 @@
           ],
           "type": "object"
         },
-        "memberCount": {
-          "type": "number"
+        "memberCountText": {
+          "type": "string"
         },
         "members": {
           "items": {
-            "type": "string"
+            "additionalProperties": false,
+            "properties": {
+              "avatar": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "avatar"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -301,8 +400,33 @@
           },
           "type": "array"
         },
+        "moreUnreadsLabel": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
+        },
+        "newMessagesBanner": {
+          "type": "string"
+        },
+        "quickReactions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "emoji": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "emoji",
+              "label"
+            ],
+            "type": "object"
+          },
+          "type": "array"
         },
         "rail": {
           "items": {
@@ -311,11 +435,18 @@
               "icon": {
                 "$ref": "#/$defs/WorkspaceIcon"
               },
+              "id": {
+                "type": "string"
+              },
               "label": {
                 "type": "string"
+              },
+              "mentions": {
+                "type": "number"
               }
             },
             "required": [
+              "id",
               "label",
               "icon"
             ],
@@ -333,34 +464,12 @@
           "items": {
             "additionalProperties": false,
             "properties": {
+              "collapsible": {
+                "type": "boolean"
+              },
               "items": {
                 "items": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "icon": {
-                      "$ref": "#/$defs/WorkspaceIcon"
-                    },
-                    "mentions": {
-                      "type": "number"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "presence": {
-                      "enum": [
-                        "available",
-                        "away"
-                      ],
-                      "type": "string"
-                    },
-                    "unread": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "name"
-                  ],
-                  "type": "object"
+                  "$ref": "#/$defs/WorkspaceChannelItem"
                 },
                 "type": "array"
               },
@@ -375,23 +484,91 @@
           },
           "type": "array"
         },
-        "topic": {
+        "tabs": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceTabItem"
+          },
+          "type": "array"
+        },
+        "topicLink": {
           "type": "string"
+        },
+        "topicMiddle": {
+          "type": "string"
+        },
+        "topicPrefix": {
+          "type": "string"
+        },
+        "vipPrompt": {
+          "additionalProperties": false,
+          "properties": {
+            "body": {
+              "type": "string"
+            },
+            "later": {
+              "type": "string"
+            },
+            "start": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "body",
+            "later",
+            "start"
+          ],
+          "type": "object"
+        },
+        "welcomePrompt": {
+          "additionalProperties": false,
+          "properties": {
+            "cta": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "cta"
+          ],
+          "type": "object"
+        },
+        "workspaceBadge": {
+          "type": "string"
+        },
+        "workspaces": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceTile"
+          },
+          "type": "array"
         }
       },
       "required": [
         "name",
+        "workspaceBadge",
         "currentUser",
+        "currentUserAvatar",
         "channel",
-        "topic",
+        "topicPrefix",
+        "topicMiddle",
+        "topicLink",
         "members",
-        "memberCount",
+        "memberCountText",
         "date",
+        "moreUnreadsLabel",
+        "vipPrompt",
+        "welcomePrompt",
+        "workspaces",
         "rail",
+        "tabs",
         "sections",
         "messages",
         "replies",
+        "quickReactions",
         "messageMenu",
+        "channelMenu",
         "createMenu",
         "emojiPicker",
         "copy"
@@ -401,7 +578,16 @@
     "WorkspaceSubmenuItem": {
       "additionalProperties": false,
       "properties": {
+        "badge": {
+          "type": "string"
+        },
+        "checked": {
+          "type": "boolean"
+        },
         "description": {
+          "type": "string"
+        },
+        "heading": {
           "type": "string"
         },
         "icon": {
@@ -428,6 +614,9 @@
             "number"
           ]
         },
+        "shortcut": {
+          "type": "string"
+        },
         "startsGroup": {
           "type": "boolean"
         },
@@ -442,6 +631,86 @@
       "required": [
         "value",
         "label"
+      ],
+      "type": "object"
+    },
+    "WorkspaceTabItem": {
+      "additionalProperties": false,
+      "properties": {
+        "icon": {
+          "$ref": "#/$defs/WorkspaceIcon"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "icon"
+      ],
+      "type": "object"
+    },
+    "WorkspaceTile": {
+      "additionalProperties": false,
+      "properties": {
+        "current": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "initials": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tone": {
+          "enum": [
+            "coral",
+            "sage"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "initials",
+        "name",
+        "tone"
+      ],
+      "type": "object"
+    },
+    "WorkspaceUnfurl": {
+      "additionalProperties": false,
+      "properties": {
+        "banner": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "thumb": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "site",
+        "text"
       ],
       "type": "object"
     }

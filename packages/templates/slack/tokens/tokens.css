@@ -4,5 +4,6 @@
   [data-template='slack'] {
     --t-slack-workspace-gap: var(--space-stack-item);
     --t-slack-workspace-rail-tile-radius: var(--radius-lg);
+    --t-slack-workspace-composer-radius: var(--radius-md);
   }
 }
