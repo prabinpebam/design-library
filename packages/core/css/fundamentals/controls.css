@@ -681,6 +681,22 @@
     background-color: var(--c-switch-on-thumb);
   }
 
+  /* thumbIcon: a decorative glyph cut out of the knob, in the track's colour (the surface's while off), at 3/5 of the knob. */
+  [data-dl='switch'] [data-dl-part='thumb']:has(> [data-dl='icon']) {
+    display: grid;
+    place-items: center;
+    color: var(--color-bg);
+  }
+
+  [data-dl='switch'] [aria-checked='true'] [data-dl-part='thumb']:has(> [data-dl='icon']) {
+    color: var(--c-switch-on-fill);
+  }
+
+  [data-dl='switch'] [data-dl-part='thumb'] > [data-dl='icon'] {
+    inline-size: calc(var(--switch-thumb) * 3 / 5);
+    block-size: calc(var(--switch-thumb) * 3 / 5);
+  }
+
   /* Words for the state inside the track, on the side the knob isn't: "Off" after the knob, "On" before it. */
   [data-dl='switch'] [data-dl-part='track']:has(> [data-dl-part='state']) {
     position: relative;

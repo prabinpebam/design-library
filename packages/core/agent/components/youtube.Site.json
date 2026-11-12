@@ -42,6 +42,7 @@
     "ChipGroup",
     "Heading",
     "Icon",
+    "IconOverrides",
     "Link",
     "MenuButton",
     "Navigation",

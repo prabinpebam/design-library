@@ -1,10 +1,13 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, Link, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
+import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, IconOverrides, Link, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
+import playerPack from '../../icons/pack.json';
 
 /** Guide icons are core names read from content; `of` types them without a cast (LG8). */
 const contentIcons = defineIconPack({});
+/** The player's filled control glyphs (Material Symbols, Apache-2.0; `icons/`), as the reference draws them. */
+const playerIcons = defineIconPack(playerPack);
 
 export interface SiteProps extends DataAttributes {
   /** Validated shared content: the guide, the filters, the videos and every label. */
@@ -157,21 +160,23 @@ function Watch({ view }: { view: YoutubeRecord }) {
         <div data-dl-part="primary">
           <div data-dl-part="player" data-scheme="dark">
             <div data-dl-part="screen" role="img" aria-label={c.player} />
+            <IconOverrides icons={playerPack.glyphs}>
             <div data-dl-part="controls">
               <div data-dl-part="seek"><Slider label={c.seek} hideLabel showValue={false} size="s" min={0} max={100} value={seek} onChange={(v) => setSeek(v as number)} /></div>
               <div data-dl-part="left">
-                <span data-dl-part="round"><Button label={c.play} icon="play" iconOnly emphasis="quiet" tone="inherit" /></span>
-                <span data-dl-part="round"><Button label={c.mute} icon="speaker" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="round"><Button label={c.play} icon={playerIcons.name('player-play')} iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="round"><Button label={c.mute} icon={playerIcons.name('player-volume')} iconOnly emphasis="quiet" tone="inherit" /></span>
                 <span data-dl-part="time"><Text variant="inherit">0:00 / {video.duration}</Text></span>
               </div>
               <div data-dl-part="right">
-                <span data-dl-part="slot"><Switch label={c.autoplay} hideLabel size="xs" checked={autoplay} onChange={setAutoplay} /></span>
-                <span data-dl-part="slot"><Button label={c.captions} icon="captions" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Switch label={c.autoplay} hideLabel size="xs" checked={autoplay} onChange={setAutoplay} thumbIcon={playerIcons.name('player-play')} /></span>
+                <span data-dl-part="slot"><Button label={c.captions} icon={playerIcons.name('player-captions')} iconOnly emphasis="quiet" tone="inherit" /></span>
                 <span data-dl-part="slot"><Button label={c.settings} icon="settings" iconOnly emphasis="quiet" tone="inherit" /></span>
-                <span data-dl-part="slot"><Button label={c.theatre} icon="rectangle" iconOnly emphasis="quiet" tone="inherit" /></span>
-                <span data-dl-part="slot"><Button label={c.fullscreen} icon="corners" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Button label={c.theatre} icon={playerIcons.name('player-theatre')} iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Button label={c.fullscreen} icon={playerIcons.name('player-fullscreen')} iconOnly emphasis="quiet" tone="inherit" /></span>
               </div>
             </div>
+            </IconOverrides>
           </div>
           <div data-dl-part="title">
             <Heading level={1} size={3} lines={2}>{video.title}</Heading>

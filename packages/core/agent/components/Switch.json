@@ -93,6 +93,11 @@
           "name": "off",
           "type": "string }",
           "required": true
+        },
+        {
+          "name": "thumbIcon",
+          "type": "IconName",
+          "description": "A small glyph inside the knob for what the switch runs (a player's autoplay: a play mark), cut out in the track's colour. Decorative: the label names the switch."
         }
       ]
     }
@@ -131,6 +136,7 @@
     "--c-switch-track-inline-l",
     "--c-switch-track-inline-s",
     "--c-switch-track-inline-xs",
+    "--color-bg",
     "--color-border",
     "--color-border-strong",
     "--color-status-danger-fg",

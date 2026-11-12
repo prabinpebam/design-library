@@ -4,6 +4,7 @@ import { Button } from './Button';
 import { Icon } from './Icon';
 import { Progress } from './Progress';
 import { Text } from './Text';
+import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 
 export type SwitchSize = 'xs' | 's' | 'normal' | 'l';
@@ -31,6 +32,8 @@ export interface SwitchProps extends DataAttributes {
   tone?: 'inherit';
   /** Short words for each state shown inside the track beside the knob ("On", "Off"), for a product that writes the state in the switch. Decorative: the switch's checked state is what's announced. Widen the track with `c.switch.track-inline-*`. */
   stateText?: { on: string; off: string };
+  /** A small glyph inside the knob for what the switch runs (a player's autoplay: a play mark), cut out in the track's colour. Decorative: the label names the switch. */
+  thumbIcon?: IconName;
 }
 
 /**
@@ -48,7 +51,7 @@ export interface SwitchProps extends DataAttributes {
  * @key Space: toggles
  * @key Enter: toggles
  */
-export function Switch({ label, checked, onChange, description, size = 'normal', labelPosition = 'end', disabled = false, failedText, hideLabel = false, tone, stateText, ...data }: SwitchProps) {
+export function Switch({ label, checked, onChange, description, size = 'normal', labelPosition = 'end', disabled = false, failedText, hideLabel = false, tone, stateText, thumbIcon, ...data }: SwitchProps) {
   const descriptionId = useId();
   const { phase, run } = useCommit('--duration-confirm-min');
   const [value, setValue] = useState(checked);
@@ -96,7 +99,7 @@ export function Switch({ label, checked, onChange, description, size = 'normal',
         )}
         <span data-dl-part="mark" aria-hidden="true">
           <span data-dl-part="track">
-            <span data-dl-part="thumb">{pending && <Progress />}</span>
+            <span data-dl-part="thumb">{pending ? <Progress /> : thumbIcon && <Icon name={thumbIcon} size="sm" />}</span>
             {stateText && <span data-dl-part="state">{value ? stateText.on : stateText.off}</span>}
           </span>
         </span>
