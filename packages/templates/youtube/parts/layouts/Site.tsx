@@ -208,7 +208,11 @@ function Watch({ view }: { view: YoutubeRecord }) {
           <section data-dl-part="comments" aria-label={c.comments}>
             <div data-dl-part="comments-head">
               <Heading level={2} size={3}>{w.commentCount}</Heading>
-              <Button label={c.sortBy} icon="sort" emphasis="quiet" />
+              <span data-dl-part="sort">
+                <IconOverrides icons={playerPack.glyphs}>
+                  <Button label={c.sortBy} icon={playerIcons.name('comments-sort')} emphasis="quiet" />
+                </IconOverrides>
+              </span>
             </div>
             <div data-dl-part="add">
               <Avatar name={c.signIn} size={24} decorative />

@@ -467,7 +467,11 @@
     --color-text: #eeeeee;
   }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='add'] {
-    --c-field-size-xs: 1.5625rem;
+    --c-field-size-xs: 1.9375rem;
     --size-measure: 100%;
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] {
+    --c-button-padding-inline: 0rem;
+    --c-button-gap: var(--space-2);
   }
 }
