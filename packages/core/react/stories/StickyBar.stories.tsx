@@ -12,7 +12,7 @@ function Part({ heading }: { heading: string }) {
   return (
     <Stack gap="group">
       <StickyBar>
-        <TextField label={`Find in ${heading.toLowerCase()}`} hideLabel placeholder={`Find in ${heading.toLowerCase()}`} icon="search" onCommit={() => undefined} />
+        <TextField value="" label={`Find in ${heading.toLowerCase()}`} hideLabel placeholder={`Find in ${heading.toLowerCase()}`} icon="search" onCommit={() => undefined} />
       </StickyBar>
       <Heading level={3}>{heading}</Heading>
       {talks.map((talk) => (
@@ -32,7 +32,7 @@ export default {
       description: 'Scroll the region: each section’s bar sticks at the top while its section is in view, takes the floating material and a raised shadow while stuck, and leaves with its section. Its height never changes. Under SiteLayout it sticks below the header (--dl-chrome-block); add bleed to reach into the page margin.',
       code: `<Section heading="Talks">
   <StickyBar bleed>
-    <TextField label="Find a talk" hideLabel icon="search" … />
+    <TextField value="" label="Find a talk" hideLabel icon="search" … />
   </StickyBar>
   …
 </Section>`,
