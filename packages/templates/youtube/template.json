@@ -18,7 +18,7 @@
   ],
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout",     "content": "content/home.json", "regions": [{"id":"main","accepts":["*"]}] },
-        { "id": "watch", "title": "Watch", "component": "SiteLayout", "planned": true },
+    { "id": "watch", "title": "Watch", "component": "SiteLayout",    "content": "content/browse/watch.json", "regions": [{"id":"main","accepts":["*"]}] },
         { "id": "search", "title": "Search results", "component": "SiteLayout", "planned": true },
         { "id": "dark", "title": "Dark theme", "component": "SiteLayout", "planned": true }
   ],

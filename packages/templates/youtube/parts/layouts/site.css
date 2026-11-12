@@ -29,9 +29,7 @@
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='end'] { display: flex; align-items: center; gap: var(--space-2); }
 
   /* Mini guide: 72 wide, padding-inline 4; entries 64×76, radius 10, icon 24 at y+16 over a 10/16 label (H-1280-L). */
-  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; padding: var(--t-youtube-guide-mini-inset-block-start) var(--space-1) 0; }
-  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry'] { display: flex; flex-direction: column; align-items: center; gap: calc(var(--t-youtube-guide-mini-gap) - var(--space-0-5)); /* 6 */ inline-size: var(--t-youtube-guide-mini-entry-width); padding-block: var(--t-youtube-guide-mini-padding-block-start) calc(var(--t-youtube-guide-mini-padding-block-end) + var(--space-0-5)); /* 16 0 14 */ border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: 0.625rem; line-height: 1.6; }
-  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
+  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; inline-size: var(--size-rail-width); padding: var(--t-youtube-guide-mini-inset-block-start) var(--space-1) 0; }
 
   /* Guide: 240 wide, each section padded 12 with entries 204 wide (24 free at the end), a rule between sections (G-1280-L).
      Below the wide breakpoint it's a drawer over the content with the masthead's start at its head (G-1280-L). */
@@ -50,13 +48,11 @@
   }
   [data-dl='youtube-site'] > [data-dl-part='mini'],
   [data-dl='youtube-site'] > [data-dl-part='guide'] { grid-column: 1; grid-row: 2; }
-  [data-dl='youtube-guide'] { display: grid; }
+  /* Entries are core Navigation (c.navigation.* in the theme): 40 high, radius 10, icon 24 at 12 in, label 24 after it, 14/20 (G-1280-L). */
+  [data-dl='youtube-guide'] { display: grid; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] { display: grid; padding: var(--space-3) var(--space-6) var(--space-3) var(--space-3); border-block-end: var(--border-hairline) solid var(--color-border); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='section-title'] { display: grid; align-content: end; block-size: var(--t-youtube-guide-title-height); padding: 0 var(--space-3) var(--space-1); }
-  /* Entry: 40 high, radius 10, icon 24 at 12 in, label 24 after it, 14/20 (G-1280-L). */
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'] { display: flex; align-items: center; gap: var(--space-6); block-size: var(--size-control-md); padding-inline: var(--space-3); border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'][aria-current='page'] { background: var(--c-chip-fill); font-weight: var(--weight-medium); }
+  /* A titled section: its title box is 32 with padding 6 12 4 (G-1280-L), so 6 more above the heading. */
+  [data-dl='youtube-guide'] > [data-dl-part='section'][data-titled] { padding-block-start: calc(var(--space-4) + var(--space-0-5)); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] { display: grid; justify-items: start; gap: var(--space-3); padding: var(--space-1) var(--t-youtube-guide-prompt-inset) var(--space-2); font-size: var(--text-s); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] > p { margin: 0; }
 
@@ -79,4 +75,46 @@
   [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] > [data-dl-part='meta'] { display: grid; }
   /* The menu: a 40 round button in the title's end padding, its glyph level with the title's first line and 12 past the item's end (T-1280-L). */
   [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: calc(-1 * var(--space-3)); display: grid; }
+
+  /* Watch (W-1280-L): no mini guide; the guide opens only as a drawer at every width. */
+  [data-dl='youtube-site'][data-screen='watch'] { grid-template-columns: 0 minmax(0, 1fr); }
+  [data-dl='youtube-site'][data-screen='watch'] > [data-dl-part='mini'] { display: none; }
+  @media (min-width: 82.0625rem) {
+    [data-dl='youtube-site'][data-screen='watch']:not([data-guide='toggled']) { grid-template-columns: 0 minmax(0, 1fr); }
+    [data-dl='youtube-site'][data-screen='watch']:not([data-guide='toggled']) > [data-dl-part='guide'] { display: none; }
+  }
+  /* Columns: primary from x16, 880 of content and 16 after it; up next 352 wide and 16 from the end (W-1280-L). At the
+     narrow width up next moves under the primary column (W-720-L). */
+  [data-dl='youtube-watch'] { display: grid; grid-template-columns: minmax(0, 1fr) var(--size-pane-width); column-gap: var(--space-4); padding: var(--space-3) var(--space-4) var(--space-6); }
+  @media (max-width: 64rem) { [data-dl='youtube-watch'] { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); } }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] { display: grid; align-content: start; min-inline-size: 0; }
+  /* Player: 16:9 (the spec computes 880×495 for a 16:9 video), dark in both schemes: the part sets data-scheme="dark", so the page background reads near-black. */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { aspect-ratio: 16 / 9; border-radius: var(--radius-lg); background: var(--color-bg); }
+  /* Title 12 below the player, 20/28 w700, two lines (W-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='title'] { padding-block-start: var(--space-3); }
+  /* Owner row 12 below the title: avatar 40, name 16/22 w500 over subscribers 12/18, Subscribe 24 after them; actions at the end, 8 apart. */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding-block-start: var(--space-3); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] { display: flex; align-items: center; gap: var(--space-3); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > [data-dl-part='owner-text'] { display: grid; }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > [data-dl-part='owner-text'] > [data-dl-part='channel'] { font-size: var(--type-heading-4-size); line-height: var(--type-heading-4-leading); font-weight: var(--weight-medium); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > [data-dl-part='subscribe'] { display: grid; padding-inline-start: var(--space-3); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='actions'] { display: flex; align-items: center; gap: var(--space-2); }
+  /* Description: full width, radius 12, tonal fill, padding 12; first line 14/20 w500, body 14/20 (W-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='description'] { display: grid; margin-block-start: var(--space-3); padding: var(--space-3); border-radius: var(--radius-lg); background: var(--c-chip-fill); font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='description'] > [data-dl-part='stats'] { font-weight: var(--weight-medium); }
+  /* Comments 24 below the description: header, the add row, then threads with a 36 avatar (text at +52), author 12/18 w500, text 14/20, 32 actions (WC-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] { display: grid; gap: var(--space-6); padding-block-start: var(--space-6); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] { display: flex; align-items: center; gap: var(--space-8); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='add'] { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--space-4); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-4); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] { display: grid; gap: var(--space-0-5); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] > [data-dl-part='author'] { display: flex; align-items: baseline; gap: var(--space-1); font-size: var(--type-caption-size); line-height: var(--type-caption-leading); font-weight: var(--weight-medium); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] > [data-dl-part='comment-actions'] { display: flex; align-items: center; gap: var(--space-1); }
+  /* Up next: rows 8 apart; thumbnail 220 wide (176 + 48 − 4), 16:9, radius 8 (12 − 4); text 8 after it; title 14/20 w500, two lines; meta 12/18 (W-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] { display: grid; grid-template-columns: calc(var(--size-column-min-s) + var(--space-12) - var(--space-1)) minmax(0, 1fr); align-items: start; gap: var(--space-2); }
+  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: calc(var(--radius-lg) - var(--space-1)); background: var(--color-bg-sunken); }
+  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-1); inset-inline-end: var(--space-1); display: flex; }
+  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='next-text'] { display: grid; gap: var(--space-1); }
 }

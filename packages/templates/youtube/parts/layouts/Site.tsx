@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ChipGroup, Heading, Icon, MenuButton, ScrollArea, Text, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
+import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, MenuButton, Navigation, ScrollArea, Text, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
 
@@ -43,6 +43,9 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
     </>
   );
   const mini = view.guide.flatMap((s) => s.entries?.filter((e) => e.mini) ?? []);
+  const item = (e: { label: string; icon: string }) => ({ id: slug(e.label), label: e.label, href: `#${slug(e.label)}`, icon: e.icon as IconName });
+  const current = view.guide.flatMap((s) => s.entries ?? []).find((e) => e.current);
+  const currentId = current && slug(current.label);
 
   return (
     <div {...data} data-dl="youtube-site" data-screen={screen} data-guide={toggled ? 'toggled' : undefined}>
@@ -60,12 +63,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         </div>
       </header>
       <nav data-dl-part="mini" aria-label={c.guide}>
-        {mini.map((e) => (
-          <a key={e.label} data-dl-part="entry" href={`#${e.label.toLowerCase().replace(/\s+/g, '-')}`} aria-current={e.current ? 'page' : undefined}>
-            <Icon name={e.icon as IconName} />
-            <span>{e.label}</span>
-          </a>
-        ))}
+        <Navigation presentation="mini" groups={[{ id: 'mini', title: c.guide, items: mini.map(item) }]} current={currentId} />
       </nav>
       <div data-dl-part="scrim" aria-hidden="true" onClick={() => setToggled(false)} />
       <nav data-dl-part="guide" aria-label={c.guide}>
@@ -73,26 +71,21 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         <ScrollArea label={c.guide}>
           <div data-dl="youtube-guide">
             {view.guide.map((s) => (
-              <section key={s.id} data-dl-part="section" aria-label={s.title}>
-                {s.title && <div data-dl-part="section-title"><Heading level={2} size={4}>{s.title}</Heading></div>}
+              <section key={s.id} data-dl-part="section" data-titled={s.title ? '' : undefined} aria-label={s.title}>
                 {s.prompt && (
                   <div data-dl-part="prompt">
                     <p>{s.prompt}</p>
                     <Button label={c.signIn} icon="person" tone="link" />
                   </div>
                 )}
-                {s.entries?.map((e) => (
-                  <a key={e.label} data-dl-part="entry" href={`#${e.label.toLowerCase().replace(/\s+/g, '-')}`} aria-current={e.current ? 'page' : undefined}>
-                    <Icon name={e.icon as IconName} />
-                    <span>{e.label}</span>
-                  </a>
-                ))}
+                {s.entries && <Navigation groups={[{ id: s.id, title: s.title, items: s.entries.map(item) }]} current={currentId} />}
               </section>
             ))}
           </div>
         </ScrollArea>
       </nav>
       <main data-dl-part="main">
+        {screen === 'watch' ? <Watch view={view} /> : (
         <ScrollArea label={c.feed}>
           <div data-dl="youtube-feed">
             <div data-dl-part="chips">
@@ -103,6 +96,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
             </ul>
           </div>
         </ScrollArea>
+        )}
       </main>
     </div>
   );
@@ -143,3 +137,90 @@ function VideoCard({ video, copy: c }: { video: YoutubeVideo; copy: Record<strin
     </article>
   );
 }
+
+/** The watch page (W-1280-L): the player, title, owner row with actions, description and comments; up next beside it. */
+function Watch({ view }: { view: YoutubeRecord }) {
+  const c = view.copy;
+  const w = view.watch;
+  const video = view.videos.find((v) => v.id === w.video) ?? view.videos[0];
+  const next = view.videos.filter((v) => v.id !== video.id);
+  return (
+    <ScrollArea label={video.title}>
+      <div data-dl="youtube-watch">
+        <div data-dl-part="primary">
+          <div data-dl-part="player" data-scheme="dark" role="img" aria-label={c.player} />
+          <div data-dl-part="title">
+            <Heading level={1} size={3} lines={2}>{video.title}</Heading>
+          </div>
+          <div data-dl-part="owner-row">
+            <div data-dl-part="owner">
+              <Avatar name={video.channel} size={40} decorative />
+              <div data-dl-part="owner-text">
+                <span data-dl-part="channel"><Text variant="inherit">{video.channel}</Text></span>
+                <Text variant="caption" tone="muted">{w.subscribers}</Text>
+              </div>
+              <span data-dl-part="subscribe"><Button label={c.subscribe} emphasis="strong" /></span>
+            </div>
+            <div data-dl-part="actions">
+              <ButtonGroup label={c.like} arrangement="attached">
+                <Button label={w.likes} icon="thumb-up" />
+                <Button label={c.dislike} icon="thumb-down" iconOnly />
+              </ButtonGroup>
+              <Button label={c.share} icon="share" iconOnly />
+              <MenuButton label={c.more} icon="more" iconOnly onSelect={() => undefined} items={[{ value: 'later', label: c.later }, { value: 'playlist', label: c.playlist }]} />
+            </div>
+          </div>
+          <div data-dl-part="description">
+            <span data-dl-part="stats"><Text variant="inherit">{w.stats}</Text></span>
+            <Text variant="body-sm">{w.description}</Text>
+          </div>
+          <section data-dl-part="comments" aria-label={c.comments}>
+            <div data-dl-part="comments-head">
+              <Heading level={2} size={3}>{w.commentCount}</Heading>
+              <Button label={c.sortBy} icon="sort" emphasis="quiet" />
+            </div>
+            <div data-dl-part="add">
+              <Avatar name={c.signIn} size={40} decorative />
+              <TextField label={c.addComment} hideLabel placeholder={c.addComment} value="" onChange={() => undefined} />
+            </div>
+            <ul data-dl-part="thread">
+              {w.comments.map((m) => (
+                <li key={m.author} data-dl-part="comment">
+                  <Avatar name={m.author.replace('@', '')} size={36} decorative />
+                  <div data-dl-part="comment-body">
+                    <span data-dl-part="author"><Text variant="inherit">{m.author}</Text> <Text variant="caption" tone="muted">{m.age}</Text></span>
+                    <Text variant="body-sm">{m.text}</Text>
+                    <div data-dl-part="comment-actions">
+                      <Button label={c.like} icon="thumb-up" iconOnly emphasis="quiet" size="s" />
+                      <Text variant="caption" tone="muted">{m.likes}</Text>
+                      <Button label={c.dislike} icon="thumb-down" iconOnly emphasis="quiet" size="s" />
+                      <Button label={c.reply} emphasis="quiet" size="s" />
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+        <aside data-dl-part="secondary" aria-label={c.upNext}>
+          <ul data-dl-part="next">
+            {next.map((v) => (
+              <li key={v.id} data-dl-part="next-item">
+                <a data-dl-part="frame" href={`#${v.id}`} aria-label={v.title}>
+                  <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
+                </a>
+                <div data-dl-part="next-text">
+                  <Heading level={3} size="label" lines={2}>{v.title}</Heading>
+                  <Text variant="caption" tone="muted">{v.channel}</Text>
+                  <Text variant="caption" tone="muted">{v.views} <span aria-hidden="true">•</span> {v.age}</Text>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </ScrollArea>
+  );
+}
+
+const slug = (label: string) => label.toLowerCase().replace(/\s+/g, '-');

@@ -166,6 +166,7 @@
     --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
     --c-colour-picker-width: var(--size-pane-width);
     --c-segmented-control-raised-fill: var(--color-bg-raised);
+    --c-navigation-mini-label-size: var(--type-label-compact-size);
     --c-page-header-lead-size: var(--text-l);
     --c-page-header-lead-leading: var(--leading-normal);
     --c-section-tone-sunken: var(--color-bg-sunken);

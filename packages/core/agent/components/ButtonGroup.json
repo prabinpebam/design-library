@@ -51,6 +51,9 @@
     "--c-button-group-gap"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/buttongroup",
+  "usedBy": [
+    "youtube.Site"
+  ],
   "principles": [
     "ui-states"
   ]

@@ -157,6 +157,8 @@
     --c-segmented-control-raised-fill: var(--color-bg-raised);
     --c-segmented-control-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-navigation-hover-fill: var(--state-hover);
+    --c-navigation-mini-label-size: var(--type-label-compact-size);
     --c-section-tone-sunken: var(--color-bg-sunken);
     --c-section-tone-raised: var(--color-bg-raised);
     --c-section-tone-tint: var(--color-bg-tint);

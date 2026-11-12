@@ -752,6 +752,18 @@
   --c-navigation-item-radius: var(--radius-md);
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-chevron: var(--size-icon-sm);
+  --c-navigation-icon-gap: var(--space-inline-item);
+  --c-navigation-current-fill: var(--state-selected);
+  --c-navigation-current-weight: var(--type-body-weight);
+  --c-navigation-hover-fill: var(--state-hover);
+  --c-navigation-mini-gap: var(--space-1);
+  --c-navigation-mini-padding-block-start: var(--space-2);
+  --c-navigation-mini-padding-block-end: var(--space-2);
+  --c-navigation-mini-padding-inline: var(--space-1);
+  --c-navigation-mini-label-size: var(--type-label-compact-size);
+  --c-navigation-mini-label-leading: var(--type-label-compact-leading);
+  --c-navigation-mini-current-fill: var(--c-navigation-current-fill);
+  --c-navigation-mini-current-weight: var(--c-navigation-current-weight);
   --c-title-bar-gap: var(--space-inline-group);
   --c-title-bar-row-gap: var(--space-stack-item);
   --c-title-bar-brand-size: var(--size-target-dense);
@@ -1925,6 +1937,7 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-icon-gap: var(--space-inline-item);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
@@ -2219,6 +2232,7 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-icon-gap: var(--space-inline-item);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
@@ -2513,6 +2527,7 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-icon-gap: var(--space-inline-item);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
@@ -2807,6 +2822,7 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-icon-gap: var(--space-inline-item);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);

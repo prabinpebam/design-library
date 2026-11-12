@@ -44,7 +44,19 @@
       { "id": "v11", "title": "Rainy day piano for studying, two hours", "channel": "Quiet Keys", "views": "12M views", "age": "4 years ago", "duration": "2:00:01" },
       { "id": "v12", "title": "Testing five budget tents in a real storm", "channel": "Outside Weekly", "views": "780K views", "age": "3 weeks ago", "duration": "19:59" }
     ],
-    "copy": {
+    "watch": {
+      "video": "v1",
+      "subscribers": "286K subscribers",
+      "likes": "9.4K",
+      "stats": "412,309 views  3 days ago  #woodworking",
+      "description": "A cedar planter box from rough boards to a finished piece in one afternoon: milling, simple box joints, a drainage gap and an oil finish that weathers well. Cut list and tool list are in the chapters below.",
+      "commentCount": "1,284 Comments",
+      "comments": [
+        { "author": "@millpondmaker", "age": "2 days ago", "text": "The tip about leaving a drainage gap under the bottom boards saved my last planter. Great pacing too.", "likes": "312" },
+        { "author": "@saturdayshed", "age": "3 days ago", "text": "Built two of these yesterday with offcuts. The jig for the box joints is genius.", "likes": "128" },
+        { "author": "@fernandflint", "age": "1 day ago", "text": "Which oil did you use for the finish? Mine went a bit grey after a month outside.", "likes": "41" }
+      ]
+    },    "copy": {
       "skip": "Skip navigation",
       "guide": "Guide",
       "home": "Home",
@@ -60,7 +72,18 @@
       "later": "Save to Watch later",
       "playlist": "Save to playlist",
       "share": "Share",
-      "notInterested": "Not interested"
+      "notInterested": "Not interested",
+      "subscribe": "Subscribe",
+      "like": "I like this",
+      "dislike": "I dislike this",
+      "more": "More actions",
+      "player": "Video player",
+      "upNext": "Up next",
+      "comments": "Comments",
+      "sortBy": "Sort by",
+      "addComment": "Add a comment…",
+      "reply": "Reply",
+      "showMore": "...more"
     }
   }
 }

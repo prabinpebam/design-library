@@ -8,6 +8,32 @@
     "record.shared": {
       "$ref": "#/$defs/YoutubeRecord"
     },
+    "YoutubeComment": {
+      "additionalProperties": false,
+      "description": "One comment under the video being watched.",
+      "properties": {
+        "age": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "likes": {
+          "description": "Like count as shown (\"1.2K\").",
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "author",
+        "age",
+        "text",
+        "likes"
+      ],
+      "type": "object"
+    },
     "YoutubeGuideEntry": {
       "additionalProperties": false,
       "description": "One guide destination: a core icon and its label.",
@@ -88,6 +114,10 @@
           },
           "type": "array"
         },
+        "watch": {
+          "$ref": "#/$defs/YoutubeWatch",
+          "description": "The watch page: the video being watched; up next is every other video."
+        },
         "wordmark": {
           "description": "The neutral wordmark beside the guide button: never a product logo.",
           "type": "string"
@@ -98,6 +128,7 @@
         "guide",
         "chips",
         "videos",
+        "watch",
         "copy"
       ],
       "type": "object"
@@ -133,6 +164,50 @@
         "views",
         "age",
         "duration"
+      ],
+      "type": "object"
+    },
+    "YoutubeWatch": {
+      "additionalProperties": false,
+      "description": "The video being watched: one of `videos`, with what the watch page adds around it.",
+      "properties": {
+        "commentCount": {
+          "description": "\"N Comments\".",
+          "type": "string"
+        },
+        "comments": {
+          "items": {
+            "$ref": "#/$defs/YoutubeComment"
+          },
+          "type": "array"
+        },
+        "description": {
+          "type": "string"
+        },
+        "likes": {
+          "description": "Like count as shown on the like button (\"12K\").",
+          "type": "string"
+        },
+        "stats": {
+          "description": "The description's first line: views and date (\"412,309 views  3 days ago\").",
+          "type": "string"
+        },
+        "subscribers": {
+          "type": "string"
+        },
+        "video": {
+          "description": "The `id` of the video in `videos`.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "video",
+        "subscribers",
+        "likes",
+        "stats",
+        "description",
+        "commentCount",
+        "comments"
       ],
       "type": "object"
     }
