@@ -8,6 +8,10 @@
         { "x": 340, "y": 870, "width": 380, "height": 30 }
       ]
     },
+    "lib--imagegrid": {
+      "reason": "catalogue inventory: (DesignUp media block, G1) the generic optional item fields treatment, alternate and focal on ImageGrid (passed through to Image; unset by every existing use) add source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--list": {
       "reason": "catalogue inventory: (DesignUp template 2, gap i, LR16) the generic opt-in layout=\"tiles\" on ActionList and layout=\"tile\" on ListItem (defaults rows/row unchanged) add a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

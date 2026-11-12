@@ -93,6 +93,26 @@
           "name": "span",
           "type": "'wide' | 'tall' | 'large'",
           "description": "In `quilted`, a picture that takes two columns (`wide`), two rows (`tall`) or both (`large`)."
+        },
+        {
+          "name": "treatment",
+          "type": "PictureTreatment",
+          "description": "As `Image`: its tone, or one at rest and one while hovered or focused (grey until pointed at)."
+        },
+        {
+          "name": "alternate",
+          "type": "string | PictureSource",
+          "description": "As `Image`: the paired picture shown while it's hovered or focused."
+        },
+        {
+          "name": "focal",
+          "type": "{ x: number",
+          "description": "As `Image`: the point kept in view where a frame crops."
+        },
+        {
+          "name": "y",
+          "type": "number }",
+          "required": true
         }
       ]
     }
