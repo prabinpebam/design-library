@@ -277,7 +277,7 @@ function Search({ view }: { view: YoutubeRecord }) {
           <Button label={c.filtersButton} icon="filter-lines" emphasis="quiet" />
         </div>
         <ul data-dl-part="list" aria-label={c.results}>
-          {results.map(({ v, snippet }) => (
+          {results.map(({ v, snippet, badges, chapters }) => (
             <li key={v.id} data-dl-part="result">
               <div data-dl-part="frame">
                 <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
@@ -293,9 +293,18 @@ function Search({ view }: { view: YoutubeRecord }) {
                 <Text variant="caption" tone="muted">{v.views} <span aria-hidden="true">•</span> {v.age}</Text>
                 <div data-dl-part="channel">
                   <Avatar name={v.channel} size={24} decorative />
-                  <Text variant="caption" tone="muted">{v.channel}</Text>
+                  <span data-dl-part="name"><Text variant="caption" tone="muted">{v.channel}</Text></span>
                 </div>
                 <span data-dl-part="snippet"><Text variant="caption">{snippet}</Text></span>
+                {badges && badges.length > 0 && <span data-dl-part="badges">{badges.map((b) => <Badge key={b} size="s" tone="neutral" emphasis="outline">{b}</Badge>)}</span>}
+                {chapters && (
+                  <div data-dl-part="chapters">
+                    <span data-dl-part="chapter-frame" aria-hidden="true" />
+                    <span data-dl-part="chapter-count"><Text variant="inherit" as="span">{chapters.count}</Text></span>
+                    <span data-dl-part="chapter-titles"><Text variant="inherit" as="span">{chapters.titles}</Text></span>
+                    <Button label={c.showChapters} icon="chevron-down" iconOnly emphasis="quiet" size="s" />
+                  </div>
+                )}
               </div>
             </li>
           ))}

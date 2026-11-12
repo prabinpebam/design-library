@@ -60,7 +60,7 @@
       "query": "woodworking for beginners",
       "chips": ["All", "Shorts", "Unwatched", "Videos", "Recently uploaded", "Live"],
       "results": [
-        { "video": "v1", "snippet": "A cedar planter box from rough boards to a finished piece in one afternoon: milling, simple box joints, a drainage gap and an oil finish that weathers well." },
+        { "video": "v1", "snippet": "A cedar planter box from rough boards to a finished piece in one afternoon: milling, simple box joints, a drainage gap and an oil finish that weathers well.", "badges": ["4K"], "chapters": { "count": "6 chapters", "titles": "Rough boards | Milling square | Laying out the joints | Cutting the box joints | A drainage gap | The oil finish" } },
         { "video": "v7", "snippet": "A flea-market hand plane, rust and all, brought back to a mirror sole with sandpaper on glass, a little oil and a lot of patience." },
         { "video": "v4", "snippet": "Not woodworking at all, but the same patience: we pour water over a sand table and watch a straight channel learn to bend." },
         { "video": "v9", "snippet": "Raised beds and planter boxes dry out faster than the ground. Here is how often to water, how to tell, and why the saucer matters." },
@@ -96,6 +96,7 @@
       "seek": "Seek",
       "play": "Play",
       "pause": "Pause",
+      "showChapters": "Show chapters",
       "mute": "Mute",
       "autoplay": "Autoplay",
       "captions": "Subtitles",

@@ -211,5 +211,17 @@ export default {
       ),
       arrangement: 'row',
     },
+    {
+      title: 'Format mark',
+      description: 'A fact about an item in a media list, such as its resolution or captions: no fill, a hairline edge and muted words, so it never reads as a status or a promotion.',
+      code: `<Badge size="s" tone="neutral" emphasis="outline">4K</Badge>`,
+      render: () => (
+        <>
+          <Badge size="s" tone="neutral" emphasis="outline">4K</Badge>
+          <Badge size="s" tone="neutral" emphasis="outline">CC</Badge>
+        </>
+      ),
+      arrangement: 'row',
+    },
   ],
 } satisfies StoryFile;

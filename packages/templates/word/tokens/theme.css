@@ -248,6 +248,7 @@
     --c-page-header-lead-leading: var(--leading-normal);
     --c-section-tone-sunken: var(--color-bg-sunken);
     --c-section-tone-raised: var(--color-bg-raised);
+    --c-badge-outline-edge: var(--color-border);
     --c-chip-fill: var(--color-bg-control);
     --c-chip-edge: var(--color-border-control);
     --c-chip-selected-text: var(--color-text);
@@ -310,6 +311,7 @@
       --color-map-nav-on-muted: var(--color-text-muted);
       --color-status-neutral-fg: var(--color-text-muted);
       --c-alignment-picker-dot-colour: var(--color-text-muted);
+      --c-badge-outline-edge: var(--color-border);
       --c-button-link-edge: var(--c-button-default-edge);
       --c-button-unavailable-edge: var(--color-border-strong);
       --c-canvas-name-selected: var(--color-text-muted);
@@ -346,6 +348,7 @@
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-badge-outline-edge: var(--color-border);
     --c-button-link-edge: var(--c-button-default-edge);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-canvas-name-selected: var(--color-text-muted);
@@ -381,6 +384,7 @@
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-badge-outline-edge: var(--color-border);
     --c-button-link-edge: var(--c-button-default-edge);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-canvas-name-selected: var(--color-text-muted);

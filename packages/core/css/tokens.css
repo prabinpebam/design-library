@@ -802,6 +802,7 @@
   --c-badge-size-s: var(--size-icon-md);
   --c-badge-padding-inline: var(--space-inset-sm);
   --c-badge-padding-inline-count: var(--space-stack-pair);
+  --c-badge-outline-edge: var(--color-border);
   --c-badge-gap: var(--space-stack-pair);
   --c-badge-dot: var(--size-indicator);
   --c-badge-dot-s: var(--size-indicator-s);
@@ -1530,6 +1531,7 @@
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-badge-outline-edge: var(--color-border);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
     --c-button-link-edge: var(--c-button-default-edge);
@@ -1582,6 +1584,7 @@
   --color-map-nav-on-muted: var(--color-text-muted);
   --color-status-neutral-fg: var(--color-text-muted);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
+  --c-badge-outline-edge: var(--color-border);
   --c-button-default-edge: var(--color-border-control);
   --c-button-default-fill: var(--color-bg-control);
   --c-button-link-edge: var(--c-button-default-edge);
@@ -1634,6 +1637,7 @@
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-badge-outline-edge: var(--color-border);
     --c-button-default-edge: var(--color-border-control);
     --c-button-default-fill: var(--color-bg-control);
     --c-button-link-edge: var(--c-button-default-edge);
@@ -1686,6 +1690,7 @@
   --color-map-nav-on-muted: var(--color-text-muted);
   --color-status-neutral-fg: var(--color-text-muted);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
+  --c-badge-outline-edge: var(--color-border);
   --c-button-default-edge: var(--color-border-control);
   --c-button-default-fill: var(--color-bg-control);
   --c-button-link-edge: var(--c-button-default-edge);

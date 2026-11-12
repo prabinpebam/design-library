@@ -11,6 +11,16 @@
         "$description": "A point at rest (echoed for contrast contexts)"
       }
     },
+    "badge": {
+      "$extensions": {
+        "owner": "Badge"
+      },
+      "outline-edge": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "An outline badge's hairline edge (emphasis outline: a format mark such as 4K or HD on a media row) (echoed for contrast contexts)"
+      }
+    },
     "button": {
       "$extensions": {
         "owner": "Button"

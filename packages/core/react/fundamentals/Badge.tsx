@@ -16,8 +16,8 @@ export interface BadgeProps extends DataAttributes {
   tone?: BadgeTone;
   /** A category colour, 1-8 (`color.category.*`, Q44), for a badge that names a category (a project, a topic, a series), never a status. Replaces `tone`. Subtle: a quiet fill with a dot in the colour; strong: the colour as the fill. Keep one number per category everywhere it appears. */
   category?: number;
-  /** `subtle` (default): a tint with coloured text. `strong`: a solid fill, for the one thing on the screen that needs attention. `media`: a label over a picture or video (a length, a live mark): a see-through dark fill with white words in every scheme. */
-  emphasis?: 'subtle' | 'strong' | 'media';
+  /** `subtle` (default): a tint with coloured text. `strong`: a solid fill, for the one thing on the screen that needs attention. `media`: a label over a picture or video (a length, a live mark): a see-through dark fill with white words in every scheme. `outline`: a format or quality mark on a media row (4K, HD, CC): no fill, a hairline edge (`c.badge.outline-edge`) and muted words, whatever the tone. */
+  emphasis?: 'subtle' | 'strong' | 'media' | 'outline';
   /** A leading icon for a `label` badge, such as a state's (open, closed), or the glyph of an `icon` badge. Decorative: the words or `label` carry the meaning. */
   icon?: IconName;
   /** `count`: the number. */

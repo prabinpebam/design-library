@@ -54,6 +54,10 @@ export interface YoutubeSearchResult {
   video: string;
   /** The description's matching words, up to two lines. */
   snippet: string;
+  /** Format marks under the snippet, such as "4K". */
+  badges?: string[];
+  /** The chapters strip on a row whose video has chapters: "N chapters" and the chapter titles, one line. */
+  chapters?: { count: string; titles: string };
 }
 /** The search results page: the query in the masthead, its filters and the results. */
 export interface YoutubeSearch {

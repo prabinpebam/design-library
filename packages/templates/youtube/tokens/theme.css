@@ -471,6 +471,14 @@
     --c-field-size-xs: 1.9375rem;
     --size-measure: 100%;
   }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='badges'] {
+    --c-badge-size-s: 1.125rem;
+    --c-badge-radius: 0.125rem;
+    --c-badge-outline-edge: light-dark(#cccccc, rgba(255, 255, 255, 0.2));
+  }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] {
+    --color-bg-control: var(--c-chip-fill);
+  }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] {
     --c-button-padding-inline: 0rem;
     --c-button-gap: var(--space-2);

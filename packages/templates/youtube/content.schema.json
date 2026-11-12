@@ -170,6 +170,30 @@
       "additionalProperties": false,
       "description": "One search result: a video from `videos` and the matching words under it.",
       "properties": {
+        "badges": {
+          "description": "Format marks under the snippet, such as \"4K\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "chapters": {
+          "additionalProperties": false,
+          "description": "The chapters strip on a row whose video has chapters: \"N chapters\" and the chapter titles, one line.",
+          "properties": {
+            "count": {
+              "type": "string"
+            },
+            "titles": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "count",
+            "titles"
+          ],
+          "type": "object"
+        },
         "snippet": {
           "description": "The description's matching words, up to two lines.",
           "type": "string"
