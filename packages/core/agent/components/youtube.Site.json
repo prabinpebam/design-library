@@ -55,6 +55,8 @@
   "tokens": [
     "--border-hairline",
     "--c-chip-fill",
+    "--c-scroll-area-inset-sm",
+    "--c-scroll-area-track",
     "--color-bg",
     "--color-bg-control",
     "--color-bg-overlay",
@@ -82,6 +84,7 @@
     "--space-0-5",
     "--space-1",
     "--space-12",
+    "--space-16",
     "--space-2",
     "--space-3",
     "--space-4",

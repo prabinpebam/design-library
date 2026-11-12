@@ -96,7 +96,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         <ScrollArea label={c.feed}>
           <div data-dl="youtube-feed">
             <div data-dl-part="chips">
-              <ChipGroup label={c.filters} hideLabel selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} />
+              <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
             </div>
             <ul data-dl-part="grid" aria-label={c.feed}>
               {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} /></li>)}
@@ -273,7 +273,7 @@ function Search({ view }: { view: YoutubeRecord }) {
     <ScrollArea label={c.results}>
       <div data-dl="youtube-results">
         <div data-dl-part="chips">
-          <ChipGroup label={c.filters} hideLabel selection="single" value={chip} onChange={(x) => setChip(x.length ? x : chip)} chips={s.chips.map((label) => ({ id: label, label }))} />
+          <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(x) => setChip(x.length ? x : chip)} chips={s.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
           <Button label={c.filtersButton} icon="filter-lines" emphasis="quiet" />
         </div>
         <ul data-dl-part="list" aria-label={c.results}>

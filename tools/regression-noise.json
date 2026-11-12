@@ -1,6 +1,10 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
     "catalogueInventory": {
+    "lib--chipgroup": {
+      "reason": "catalogue inventory: (Q145.Y, Worker 120, Y2j-F38) the generic opt-in ChipGroup wrap={false} (default wraps, unchanged) adds a source-derived prop row and a 'One line that scrolls' story at the end of the page, below the viewport; only the right scrollbar track changes (measured change box x 1271-1275, y 214-231).",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--textfield": {
       "reason": "catalogue inventory: (Q145.Y, Worker 115, Y2f-F28) the generic opt-in TextField appearance=\"underline\" (default box unchanged) and its c.field.underline-edge token add a source-derived prop row, a token row and an 'Underline' story at the end of the page, below the viewport; only the right scrollbar track changes (measured change box x 1271-1275, y 96-100).",
       "regions": [

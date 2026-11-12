@@ -209,6 +209,15 @@
     gap: var(--c-chip-group-gap);
   }
 
+  /* One line, for a filter bar inside an inline ScrollArea. */
+  [data-dl='chip-group'][data-wrap='none'] > [data-dl-part='chips'] {
+    flex-wrap: nowrap;
+  }
+
+  [data-dl='chip-group'][data-wrap='none'] > [data-dl-part='chips'] > [data-dl-part='item'] {
+    max-inline-size: none;
+  }
+
   [data-dl='chip-group'] > [data-dl-part='chips'] > [data-dl-part='item'] {
     display: inline-flex;
     max-inline-size: 100%;

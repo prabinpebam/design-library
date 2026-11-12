@@ -1019,6 +1019,7 @@
   }
 
   [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'] {
+    flex: none; /* a narrow field gives way in its text box, never in its joined action */
     border-start-start-radius: 0;
     border-end-start-radius: 0;
     border-inline-start-width: 0;
