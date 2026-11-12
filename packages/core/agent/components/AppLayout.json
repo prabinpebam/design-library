@@ -111,6 +111,29 @@
           "type": "'fill' | 'screen' | 'lg'",
           "default": "'fill'",
           "description": "`fill` takes the height its parent gives it; `screen` the whole window (an app on its own); `lg` holds a set height (a demonstration)."
+        },
+        {
+          "name": "headerSpan",
+          "type": "'main' | 'across'",
+          "default": "'main'",
+          "description": "`main` (default): the header tops the main area and the sidebar runs the full height beside it. `across`: the header spans the whole layout and the sidebar sits under it, docked or floating (an app whose bar holds its name)."
+        },
+        {
+          "name": "labels",
+          "type": "{ open?: string",
+          "description": "The sidebar controls' names, in the product's words. `open` and `close` name the header's toggle (default \"Open sidebar\", \"Close sidebar\"; give both the same words to keep one name, its state carried by `aria-expanded`). `pin` names the pin (default \"Pin\" and the sidebar's label), announced as pressed while docked; with `unpin` the pin's name changes instead (\"Pin navigation\", \"Unpin navigation\") and it isn't a toggle button."
+        },
+        {
+          "name": "close",
+          "type": "string"
+        },
+        {
+          "name": "pin",
+          "type": "string"
+        },
+        {
+          "name": "unpin",
+          "type": "string }"
         }
       ]
     }
@@ -127,6 +150,7 @@
     "--c-app-layout-gutter",
     "--c-app-layout-head-gap",
     "--c-app-layout-header",
+    "--c-app-layout-header-divider-width",
     "--c-app-layout-header-gap",
     "--c-app-layout-height-lg",
     "--c-app-layout-inset",
@@ -137,7 +161,15 @@
     "--c-app-layout-sidebar-fill",
     "--c-app-layout-sidebar-gap",
     "--color-bg",
+    "--color-border",
     "--color-text"
+  ],
+  "settings": [
+    {
+      "var": "--c-app-layout-header-divider-width",
+      "default": "0px",
+      "description": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/applayout"
 }

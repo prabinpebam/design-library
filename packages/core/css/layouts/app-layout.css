@@ -65,6 +65,7 @@
     gap: var(--c-app-layout-header-gap);
     min-block-size: var(--c-app-layout-header);
     padding-inline: var(--c-app-layout-inset);
+    border-block-end: var(--c-app-layout-header-divider-width) solid var(--color-border);
   }
 
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > :is([data-dl-part='header-start'], [data-dl-part='header-end']) {
@@ -168,6 +169,40 @@
     [data-dl='app-layout'] > [data-dl-part='sidebar'] {
       outline: var(--border-hairline) solid CanvasText;
     }
+  }
+
+  /* headerSpan="across": the header spans the layout and the sidebar sits under it. The main area's parts join the
+     layout's grid (display: contents), so the parts keep their places in the source and their own rules. */
+  [data-dl='app-layout'][data-header='across'] {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  [data-dl='app-layout'][data-header='across'] > [data-dl-part='main'] {
+    display: contents;
+  }
+
+  [data-dl='app-layout'][data-header='across'] > [data-dl-part='main'] > [data-dl-part='header'] {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  [data-dl='app-layout'][data-header='across'] > [data-dl-part='sidebar'] {
+    grid-column: 1;
+    grid-row: 2;
+    min-block-size: 0;
+  }
+
+  [data-dl='app-layout'][data-header='across'] > [data-dl-part='main'] > :is([data-dl-part='scroll'], [data-dl-part='edge']) {
+    grid-column: 2;
+    grid-row: 2;
+    min-inline-size: 0;
+  }
+
+  /* With the sidebar floating or closed, the view takes the whole row under the header. */
+  [data-dl='app-layout'][data-header='across']:is([data-start='floating'], [data-sidebar='closed']) > [data-dl-part='main'] > :is([data-dl-part='scroll'], [data-dl-part='edge']) {
+    grid-column: 1 / -1;
   }
 
   /* startMode: the sidebar's head holds its pin, end-aligned, above the scrolling list. */

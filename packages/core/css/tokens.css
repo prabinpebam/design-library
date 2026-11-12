@@ -546,6 +546,7 @@
   --c-board-drop: var(--color-accent);
   --c-board-dragging-opacity: 0.5;
   --c-board-scroll-room: var(--space-stack-item);
+  --c-app-layout-header-divider-width: 0px;
   --c-app-layout-sidebar: var(--size-column-min);
   --c-app-layout-sidebar-fill: var(--color-bg-sunken);
   --c-app-layout-sidebar-gap: var(--space-stack-group);

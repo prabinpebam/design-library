@@ -8,6 +8,7 @@ import { Text } from '../fundamentals/Text';
 import { AppLayout } from '../layouts/AppLayout';
 import { EditorLayout } from '../layouts/EditorLayout';
 import type { StoryFile } from './story';
+import { WithSettings } from './WithSettings';
 
 function Demo({ details = false }: { details?: boolean }) {
   const [open, setOpen] = useState(true);
@@ -59,6 +60,23 @@ function WithEditor() {
   );
 }
 
+const ruled = { '--c-app-layout-header-divider-width': 'var(--border-hairline)' };
+
+function Across() {
+  const [open, setOpen] = useState(true);
+  const [mode, setMode] = useState<'docked' | 'floating'>('docked');
+  return (
+    <WithSettings settings={ruled} contents>
+      <AppLayout height="lg" label="Pages" headerSpan="across" labels={{ open: 'Site areas', close: 'Site areas', pin: 'Pin areas', unpin: 'Unpin areas' }} startMode={mode} onStartModeChange={setMode} sidebarOpen={open} onSidebarToggle={() => setOpen((x) => !x)} sidebar={areas} header={<Text as="span">Site editor</Text>}>
+        <Heading level={2} size={2}>
+          Pages
+        </Heading>
+        <Text as="p">The bar spans the app, ruled off by a theme setting; the docked areas sit under it.</Text>
+      </AppLayout>
+    </WithSettings>
+  );
+}
+
 export default {
   component: 'AppLayout',
   tier: 'layout',
@@ -94,6 +112,12 @@ export default {
       description: '`width="edge"` gives the view the whole main area under the header, with no margin and no scroller of its own, so it can hold an EditorLayout, which scrolls its own panels. The areas float over it below 76 rem (`startMode="auto"`, `floatBelow="76rem"`).',
       code: `<AppLayout width="edge" startMode="auto" floatBelow="76rem" … ><EditorLayout … /></AppLayout>`,
       render: () => <WithEditor />,
+    },
+    {
+      title: 'The header across, in the product’s words',
+      description: '`headerSpan="across"` runs the header over the whole app, so a docked sidebar sits under it. `labels` names the toggle and the pin in the product’s words; with `unpin` the pin’s name changes with the state instead of being a toggle button. A theme draws a rule under the header with `--c-app-layout-header-divider-width`.',
+      code: `<AppLayout headerSpan="across" labels={{ open: 'Site areas', close: 'Site areas', pin: 'Pin areas', unpin: 'Unpin areas' }} startMode={mode} onStartModeChange={setMode} …>…</AppLayout>`,
+      render: () => <Across />,
     },
   ],
 } satisfies StoryFile;

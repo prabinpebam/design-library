@@ -40,6 +40,10 @@ export interface AppLayoutProps extends DataAttributes {
   onStartModeChange?: (mode: 'docked' | 'floating') => void;
   /** `fill` takes the height its parent gives it; `screen` the whole window (an app on its own); `lg` holds a set height (a demonstration). */
   height?: 'fill' | 'screen' | 'lg';
+  /** `main` (default): the header tops the main area and the sidebar runs the full height beside it. `across`: the header spans the whole layout and the sidebar sits under it, docked or floating (an app whose bar holds its name). */
+  headerSpan?: 'main' | 'across';
+  /** The sidebar controls' names, in the product's words. `open` and `close` name the header's toggle (default "Open sidebar", "Close sidebar"; give both the same words to keep one name, its state carried by `aria-expanded`). `pin` names the pin (default "Pin" and the sidebar's label), announced as pressed while docked; with `unpin` the pin's name changes instead ("Pin navigation", "Unpin navigation") and it isn't a toggle button. */
+  labels?: { open?: string; close?: string; pin?: string; unpin?: string };
 }
 
 /**
@@ -55,7 +59,7 @@ export interface AppLayoutProps extends DataAttributes {
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
@@ -116,13 +120,13 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
       <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         {onStartModeChange && canDock && (
           <div data-dl-part="sidebar-head">
             {/* toggle-button: the sidebar's pin in its own head, docking or floating it, where a Switch would break the head's row of icon buttons */}
-            <Button label={`Pin ${sidebarLabel.toLowerCase()}`} icon="pin" pressedIcon="pin-filled" iconOnly size="xs" emphasis="quiet" pressed={docked} onClick={() => onStartModeChange(docked ? 'floating' : 'docked')} />
+            <Button label={labels?.unpin && docked ? labels.unpin : labels?.pin ?? `Pin ${sidebarLabel.toLowerCase()}`} icon={labels?.unpin && docked ? 'pin-filled' : 'pin'} pressedIcon="pin-filled" iconOnly size="xs" emphasis="quiet" pressed={labels?.unpin ? undefined : docked} onClick={() => onStartModeChange(docked ? 'floating' : 'docked')} />
           </div>
         )}
         <ScrollArea data-dl-part="sidebar-list">
@@ -132,7 +136,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
       <div data-dl-part="main">
         <header data-dl-part="header">
           <span ref={toggle} data-dl-part="toggle">
-            <Button label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'} icon="menu" iconOnly size="s" emphasis="quiet" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} />
+            <Button label={sidebarOpen ? labels?.close ?? 'Close sidebar' : labels?.open ?? 'Open sidebar'} icon="menu" iconOnly size="s" emphasis="quiet" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} />
           </span>
           <span data-dl-part="header-start">{header}</span>
           <span data-dl-part="header-end">{headerEnd}</span>
