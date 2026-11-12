@@ -1673,8 +1673,11 @@
   [data-dl='text-area'] [data-dl-part='tray'] {
     display: block;
     min-inline-size: 0;
-    padding-block-start: var(--c-text-area-inset);
-    padding-inline: var(--c-text-area-inset);
+    padding-block-start: var(--c-text-area-tray-inset);
+    padding-inline: var(--c-text-area-tray-inset);
+    background-color: var(--c-text-area-tray-bg);
+    border-start-start-radius: calc(var(--c-text-area-composer-radius) - var(--c-field-border-width));
+    border-start-end-radius: calc(var(--c-text-area-composer-radius) - var(--c-field-border-width));
   }
 
   [data-dl='text-area'] [data-dl-part='bar'] {

@@ -875,7 +875,12 @@
         "code-block",
         "shortcut",
         "filter-lines",
-        "window-maximize"
+        "window-maximize",
+        "arrow-start",
+        "compose",
+        "forward",
+        "list-search",
+        "hash-box"
       ],
       "type": "string"
     },

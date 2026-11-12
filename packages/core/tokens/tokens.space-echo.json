@@ -1704,6 +1704,11 @@
         "$type": "dimension",
         "$value": "{space.inset-sm}",
         "$description": "Around the tray and the toolbar inside the box; the text keeps the field's own inline padding (echoed for space contexts)"
+      },
+      "tray-inset": {
+        "$type": "dimension",
+        "$value": "{space.inset-sm}",
+        "$description": "Around the tray inside the composer box; set to 0 for a full-bleed formatting strip (echoed for space contexts)"
       }
     },
     "title-bar": {

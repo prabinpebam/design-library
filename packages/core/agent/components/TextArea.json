@@ -169,6 +169,8 @@
     "--c-text-area-bar-gap",
     "--c-text-area-composer-radius",
     "--c-text-area-inset",
+    "--c-text-area-tray-bg",
+    "--c-text-area-tray-inset",
     "--color-bg-control",
     "--color-bg-sunken",
     "--color-border",

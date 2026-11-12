@@ -465,6 +465,8 @@
   --c-text-area-composer-radius: var(--radius-lg);
   --c-text-area-inset: var(--space-inset-sm);
   --c-text-area-bar-gap: var(--space-inline-pair);
+  --c-text-area-tray-inset: var(--space-inset-sm);
+  --c-text-area-tray-bg: color(srgb 0 0 0 / 0);
   --c-composer-gap: var(--space-stack-pair);
   --c-composer-tray-gap: var(--space-inline-item);
   --c-composer-thumb: var(--size-control-xl);
@@ -1965,6 +1967,7 @@
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
+  --c-text-area-tray-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
   --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
@@ -2257,6 +2260,7 @@
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
+  --c-text-area-tray-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
   --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
@@ -2549,6 +2553,7 @@
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
+  --c-text-area-tray-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
   --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);
@@ -2841,6 +2846,7 @@
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
+  --c-text-area-tray-inset: var(--space-inset-sm);
   --c-title-bar-gap: var(--space-inline-group);
   --c-title-bar-row-gap: var(--space-stack-item);
   --c-token-specimen-label-gap: var(--space-stack-pair);

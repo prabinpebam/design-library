@@ -14,8 +14,8 @@
     --color-border-control: light-dark(#e1e1e1, #565656);
     --leading-normal: 1.4666667;
     --size-nav-width: 19.25rem;
-    --size-rail-width: 4.375rem;
-    --size-app-bar-height: 2.5rem;
+    --size-rail-width: 4.3125rem;
+    --size-app-bar-height: 2.4375rem;
     --size-pane-width: 24rem;
     --color-bg: light-dark(#ffffff, #1b1b1b);
     --color-bg-raised: light-dark(#ffffff, #232323);
@@ -28,7 +28,7 @@
     --color-map-nav: #58285a;
     --color-map-nav-on: #ffffff;
     --color-map-nav-on-muted: #cbb7cd;
-    --color-map-nav-hover: #6a416d;
+    --color-map-nav-hover: #6c4070;
     --color-map-nav-selected: #f9edff;
     --color-map-nav-selected-on: #39063a;
     --color-map-nav-shell: #39063a;
@@ -75,6 +75,11 @@
     --c-dialog-width-l: 50.25rem;
     --c-dialog-aside-width: 17.625rem;
     --c-dialog-aside-bg: light-dark(#a0b3f3, #39487a);
+    --c-text-area-tray-inset: 0;
+    --c-text-area-tray-bg: var(--color-bg-sunken);
+    --color-promo-offer: #e83a44;
+    --color-promo-new: #83388a;
+    --color-accent-subtle: light-dark(#e5f7fd, #1c3342);
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);
@@ -212,8 +217,13 @@
     --c-price-sign-size: var(--text-s);
     --c-price-was: var(--color-text-muted);
     --c-price-caption-size: var(--text-xs);
+    --c-price-highlight-offset-colour: var(--color-promo-offer);
     --c-price-highlight-padding: var(--space-inset-xs);
+    --color-map-brand-tint: var(--color-accent-subtle);
+    --color-map-chip-tint: var(--color-accent-subtle);
+    --color-map-badge-tint: var(--color-accent-subtle);
     --color-map-button-ring: var(--color-map-action-fill);
+    --color-map-feature-tint: var(--color-accent-subtle);
     --color-border-group: var(--color-bg-sunken);
     --color-status-neutral-fg: var(--color-text-muted);
     --color-border-strong: var(--p-standard-border-strong);
@@ -252,6 +262,7 @@
     --c-tabs-radius: var(--radius-md);
     --c-token-specimen-colour-radius: var(--radius-md);
     --c-tree-view-radius: var(--radius-md);
+    --c-button-fill-track: var(--color-map-brand-tint);
   }
   @media (prefers-contrast: more) {
     [data-template='slack'] {

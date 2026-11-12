@@ -106,7 +106,35 @@
         "search",
         "settings",
         "external",
-        "play"
+        "play",
+        "arrow-start",
+        "compose",
+        "forward",
+        "list-search",
+        "hash-box",
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "pilcrow",
+        "link",
+        "list-numbered",
+        "list-bulleted",
+        "code",
+        "mic",
+        "send",
+        "chevron-down",
+        "chevron-start",
+        "chevron-end",
+        "close",
+        "minus",
+        "menu",
+        "scheme-dark",
+        "text-format",
+        "emoji-add",
+        "more-vertical",
+        "caret-down",
+        "globe"
       ],
       "type": "string"
     },
@@ -512,6 +540,9 @@
               "collapsible": {
                 "type": "boolean"
               },
+              "dividerBefore": {
+                "type": "boolean"
+              },
               "items": {
                 "items": {
                   "$ref": "#/$defs/WorkspaceChannelItem"
@@ -583,7 +614,13 @@
         "vipPrompt": {
           "additionalProperties": false,
           "properties": {
-            "body": {
+            "after": {
+              "type": "string"
+            },
+            "before": {
+              "type": "string"
+            },
+            "bold": {
               "type": "string"
             },
             "later": {
@@ -594,7 +631,9 @@
             }
           },
           "required": [
-            "body",
+            "before",
+            "bold",
+            "after",
             "later",
             "start"
           ],

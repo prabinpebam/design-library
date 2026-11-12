@@ -3,7 +3,11 @@ export type WorkspaceIcon =
   | 'thumb-up' | 'heart' | 'headphones' | 'hash' | 'person-add' | 'clock' | 'emoji' | 'leaf' | 'food' | 'ball'
   | 'plane' | 'lightbulb' | 'flag' | 'home' | 'messages' | 'bell' | 'check-circle' | 'star' | 'bookmark' | 'pin'
   | 'inbox' | 'contacts' | 'sidebar' | 'help' | 'video' | 'quote' | 'code-block' | 'shortcut' | 'filter-lines'
-  | 'window-maximize' | 'layers' | 'grid' | 'bot' | 'search' | 'settings' | 'external' | 'play';
+  | 'window-maximize' | 'layers' | 'grid' | 'bot' | 'search' | 'settings' | 'external' | 'play'
+  | 'arrow-start' | 'compose' | 'forward' | 'list-search' | 'hash-box' | 'bold' | 'italic' | 'underline'
+  | 'strikethrough' | 'pilcrow' | 'link' | 'list-numbered' | 'list-bulleted' | 'code' | 'mic' | 'send'
+  | 'chevron-down' | 'chevron-start' | 'chevron-end' | 'close' | 'minus' | 'menu' | 'scheme-dark' | 'text-format'
+  | 'emoji-add' | 'more-vertical' | 'caret-down' | 'globe';
 
 export interface WorkspaceSubmenuItem {
   value: string;
@@ -98,7 +102,9 @@ export interface WorkspaceRecord {
   newMessagesBanner?: string;
   moreUnreadsLabel: string;
   vipPrompt: {
-    body: string;
+    before: string;
+    bold: string;
+    after: string;
     later: string;
     start: string;
   };
@@ -127,7 +133,7 @@ export interface WorkspaceRecord {
   workspaces: WorkspaceTile[];
   rail: { id: string; label: string; icon: WorkspaceIcon; mentions?: number }[];
   tabs: WorkspaceTabItem[];
-  sections: { title?: string; collapsible?: boolean; items: WorkspaceChannelItem[] }[];
+  sections: { title?: string; collapsible?: boolean; dividerBefore?: boolean; items: WorkspaceChannelItem[] }[];
   messages: WorkspaceMessage[];
   replies: WorkspaceMessage[];
   quickReactions: { emoji: string; label: string }[];

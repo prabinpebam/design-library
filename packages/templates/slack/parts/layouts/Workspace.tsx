@@ -141,10 +141,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
   useEffect(() => {
     const viewport = timeline.current;
-    if (viewport && localSent.length > 0 && !search && tab === 'messages') {
-      viewport.scrollTop = viewport.scrollHeight;
-    }
-  }, [localSent.length, channel, search, tab]);
+    if (!viewport || search || tab !== 'messages') return;
+    if (localSent.length > 0) viewport.scrollTop = viewport.scrollHeight;
+    else if (!isAma) viewport.scrollTop = 64;
+  }, [localSent.length, channel, isAma, search, tab]);
 
   const send = async (target: string) => {
     const text = drafts[target]?.trim();
@@ -295,6 +295,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   {action(c.quote, 'quote')}
                   {action(c.code, 'code')}
                   {action(c.codeBlock, 'code-block')}
+                  {action(c.checkList, 'list')}
                 </div>
               </div>
             )
@@ -304,7 +305,6 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               <div data-dl-part="group">
                 <span data-dl-part="add-circle">{action(c.add, 'plus')}</span>
                 <span data-dl-part="format-toggle" data-active={formatting || undefined}>
-                  {/* binary-setting: dense editor toolbar formatting bar visibility toggle, matching Slack's Aa bar toggle. */}
                   <Button
                     label={c.format}
                     icon="text-format"
@@ -312,7 +312,6 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     emphasis="quiet"
                     tone="inherit"
                     size="xs"
-                    pressed={formatting}
                     onClick={() => setFormatting(!formatting)}
                   />
                 </span>
@@ -322,7 +321,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 {action(c.video, 'video')}
                 {action(c.audio, 'mic')}
                 <span data-dl-part="divider" aria-hidden="true" />
-                {action(c.shortcuts, 'shortcut')}
+                {action(c.shortcuts, 'compose')}
               </div>
               <div data-dl-part="send" data-ready={ready || undefined}>
                 <Button
@@ -393,7 +392,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           )}
           {bannerPic.src && (
             <div data-dl-part="banner-media">
-              <Image src={bannerPic.src} alt={bannerPic.alt} ratio="wide" width={480} height={270} rounded />
+              <Image src={bannerPic.src} alt={bannerPic.alt} ratio="photo" width={308} height={205} rounded />
             </div>
           )}
           {m.file && (
@@ -421,7 +420,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               </div>
               {thumbPic.src && (
                 <div data-dl-part="thumb">
-                  <Image src={thumbPic.src} alt={thumbPic.alt} ratio="photo" width={120} height={80} rounded />
+                  <Image src={thumbPic.src} alt={thumbPic.alt} ratio="square" width={106} height={106} rounded={false} />
                 </div>
               )}
             </div>
@@ -480,14 +479,15 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             </div>
           )}
         </div>
-        <div data-dl-part="hover-actions" data-material="floating" role="toolbar" aria-label={c.more}>
+        <div data-dl-part="hover-actions" data-elevation="3" role="toolbar" aria-label={c.more}>
           {view.quickReactions.map((qr) => (
             <Button key={qr.label} label={qr.emoji} emphasis="quiet" size="xs" onClick={() => react(m.id, qr.emoji)} />
           ))}
           {emojiPicker(m)}
           {action(c.replyAction, 'comment', () => openThread(m))}
-          {action(c.share, 'arrow-end')}
+          {action(c.share, 'forward')}
           {action(c.save, 'bookmark')}
+          {action(c.summarize, 'compose')}
           <MenuButton label={c.more} icon="more-vertical" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.messageMenu} onSelect={() => undefined} />
         </div>
       </article>
@@ -506,8 +506,8 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             {action(c.toggleSidebar, 'sidebar')}
           </div>
           <div data-dl-part="history">
-            {action(c.back, 'chevron-start', () => setSearch(false))}
-            <Button label={c.forward} icon="chevron-end" iconOnly emphasis="quiet" tone="inherit" size="xs" unavailable={c.forward} />
+            {action(c.back, 'arrow-start', () => setSearch(false))}
+            <Button label={c.forward} icon="arrow-end" iconOnly emphasis="quiet" tone="inherit" size="xs" unavailable={c.forward} />
             {action(c.history, 'clock')}
           </div>
         </div>
@@ -541,15 +541,15 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           </div>
           {botEmblem.src && (
             <span data-dl-part="bot-trigger">
-              <Image src={botEmblem.src} alt={botEmblem.alt} ratio="square" width={20} height={20} rounded />
+              <Image src={botEmblem.src} alt={botEmblem.alt} ratio="square" width={20} height={20} rounded={false} />
             </span>
           )}
         </div>
         <div data-dl-part="window-controls">
-          {action(c.help, 'help')}
-          {action(c.minimize, 'minus')}
-          {action(c.maximize, 'window-maximize')}
-          {action(c.closeWindow, 'close')}
+          <span data-dl-part="help-slot">{action(c.help, 'help')}</span>
+          <span data-dl-part="win-btn">{action(c.minimize, 'minus')}</span>
+          <span data-dl-part="win-btn">{action(c.maximize, 'window-maximize')}</span>
+          <span data-dl-part="win-btn">{action(c.closeWindow, 'close')}</span>
         </div>
       </header>
 
@@ -626,7 +626,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             </strong>
             <span data-dl-part="head-actions">
               {action(c.sidebarSettings, 'settings')}
-              {action(c.compose, 'edit')}
+              {action(c.compose, 'compose')}
             </span>
           </div>
 
@@ -637,7 +637,9 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   <div data-dl-part="vip-top">
                     <p data-dl-part="vip-copy">
                       <Icon name="comment" size="sm" />
-                      <span> {view.vipPrompt.body}</span>
+                      <span> {view.vipPrompt.before}</span>
+                      <strong>{view.vipPrompt.bold}</strong>
+                      <span>{view.vipPrompt.after}</span>
                     </p>
                     <span data-dl-part="vip-close">{action(c.dismissBanner, 'close', () => setVipDismissed(true))}</span>
                   </div>
@@ -646,7 +648,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                       <Button label={view.vipPrompt.later} size="xs" emphasis="quiet" tone="inherit" onClick={() => setVipDismissed(true)} />
                     </span>
                     <span data-dl-part="vip-start">
-                      <Button label={view.vipPrompt.start} size="xs" emphasis="primary" onClick={() => setVipOpen(true)} />
+                      <Button label={view.vipPrompt.start} size="xs" emphasis="quiet" tone="inherit" onClick={() => setVipOpen(true)} />
                     </span>
                   </div>
                 </div>
@@ -658,7 +660,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     label={c.findConversation}
                     hideLabel
                     type="search"
-                    icon="search"
+                    icon="list-search"
                     size="xs"
                     placeholder={c.findConversation}
                     value={sidebarFilter}
@@ -668,27 +670,27 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   <div data-dl="slack-find-pill">
                     <Button
                       label={c.findConversation}
-                      icon="search"
+                      icon="list-search"
                       size="xs"
                       emphasis="quiet"
                       tone="inherit"
                       align="start"
                       onClick={() => setFinding(true)}
                     />
-                    <span data-dl-part="find-icon" aria-hidden="true">
-                      <Icon name="filter-lines" size="sm" />
-                    </span>
                   </div>
                 )}
               </div>
 
               {sections.map((section, sIdx) => (
-                <section data-dl="slack-nav-section" key={section.title ?? `sec-${sIdx}`}>
+                <section
+                  data-dl="slack-nav-section"
+                  data-divider={section.dividerBefore || undefined}
+                  data-channels={section.collapsible || undefined}
+                  key={section.title ?? `sec-${sIdx}`}
+                >
                   {section.title && (
                     <div data-dl-part="section-title">
-                      <span data-dl-part="caret-box" aria-hidden="true">
-                        <Icon name="caret-down" size="sm" />
-                      </span>
+                      <Icon name={section.collapsible ? 'hash-box' : 'caret-down'} size="sm" />
                       <span>{section.title}</span>
                     </div>
                   )}
@@ -741,7 +743,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             </div>
           </ScrollArea>
 
-          <div data-dl-part="more-unreads" data-material="floating">
+          <div data-dl-part="more-unreads" data-elevation="3">
             <Button label={view.moreUnreadsLabel} size="xs" emphasis="quiet" tone="inherit" />
           </div>
         </aside>
@@ -774,7 +776,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 <AvatarGroup
                   members={view.members.map((m) => ({ name: m.name, src: pic(m.avatar).src || undefined }))}
                   label={c.members}
-                  size={20}
+                  size={24}
                   shape="square"
                   max={3}
                 />
@@ -828,12 +830,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
           <div data-dl-part="timeline-stage">
             {!newBannerDismissed && !isAma && view.newMessagesBanner && !search && tab === 'messages' && (
-              <div data-dl="slack-new-pill" data-material="floating">
+              <div data-dl="slack-new-pill" data-elevation="3">
                 <span>{view.newMessagesBanner}</span>
                 {action(c.dismissBanner, 'close', () => setNewBannerDismissed(true))}
               </div>
             )}
-            <ScrollArea label={search ? c.results : c.messages} viewportRef={timeline}>
+            <ScrollArea label={search ? c.results : c.messages} mode="always" viewportRef={timeline}>
               {search ? (
                 <div data-dl="slack-search-results">
                   <div data-dl-part="results-head">

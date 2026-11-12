@@ -56,12 +56,12 @@
   "$description": "Owner benchmark 03/04: sidebar 205 px at 2/3 scale = 308 CSS px."
  },
  "size.rail-width": {
-  "$value": "4.375rem",
-  "$description": "Owner benchmark 03/04: rail 46.7 px at 2/3 scale = 70 CSS px."
+  "$value": "4.3125rem",
+  "$description": "Owner benchmark 03/04: rail 46 px at 2/3 scale = 69 CSS px."
  },
  "size.app-bar-height": {
-  "$value": "2.5rem",
-  "$description": "Owner benchmark 03/04: title bar 26.7 px at 2/3 scale = 40 CSS px."
+  "$value": "2.4375rem",
+  "$description": "Owner benchmark 03/04: title bar 26 px at 2/3 scale = 39 CSS px."
  },
  "size.pane-width": {
   "$value": "24rem",
@@ -133,8 +133,8 @@
   "$description": "Owner benchmark 03/04: read channels and secondary sidebar rows."
  },
  "color.map.nav-hover": {
-  "$value": "#6a416d",
-  "$description": "Owner benchmark 03/04: rail active Home tile and bottom circular buttons #6A416D."
+  "$value": "#6c4070",
+  "$description": "Owner benchmark 03/04: rail active Home tile and sidebar Find base #6C4070."
  },
  "color.map.nav-selected": {
   "$value": "#f9edff",
@@ -358,5 +358,28 @@
    "dark": "#39487a"
   },
   "$description": "Owner benchmark 02: left lavender panel #A0B3F3."
+ },
+ "c.text-area.tray-inset": {
+  "$value": "0",
+  "$description": "Owner benchmark 03 S03.8: formatting bar bleeds flush to the composer's top and side borders."
+ },
+ "c.text-area.tray-bg": {
+  "$value": "{color.bg-sunken}",
+  "$description": "Owner benchmark 03 S03.8: formatting bar #F8F8F8 surface."
+ },
+ "color.promo.offer": {
+  "$value": "#e83a44",
+  "$description": "Owner benchmark 03 C3/S03.1: coral workspace emblem #E83A44."
+ },
+ "color.promo.new": {
+  "$value": "#83388a",
+  "$description": "Owner benchmark 03 C8: opaque #83388A More unreads pill."
+ },
+ "color.accent-subtle": {
+  "$value": {
+   "light": "#e5f7fd",
+   "dark": "#1c3342"
+  },
+  "$description": "Owner benchmark 03 S03.4: inline URL link chip #E5F7FD."
  }
 }
