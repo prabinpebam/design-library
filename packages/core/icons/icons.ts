@@ -152,6 +152,17 @@ export const icons = {
   share: { d: 'M14 4.5l6 5.5-6 5.5v-3c-4.5 0-7.5 1.5-10 5.5.5-5.5 3.5-9 10-9.5z', flipInRtl: true },
   'open-dialog': { d: 'M4.5 13V4.5H13M9 9l10.5 10.5M19.5 12v7.5H12', flipInRtl: true },
   book: { d: 'M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5c-3.5-.5-6.5 0-8.5 1.5zM12 6.5v13' },
+  // Pickers and create menus (Q143 Slack regions 25-27): an emoji picker's categories and kinds of thing to make.
+  clock: { d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2' },
+  'emoji-add': { d: 'M20.5 12A8.5 8.5 0 1 1 12 3.5M8.5 14a4.5 4.5 0 0 0 7 0M9 9.5v.5M15 9.5v.5M19 2.5v5M16.5 5h5' },
+  leaf: { d: 'M5 19C5 10 10 5 20 4c-1 10-6 15-15 15zM5 19l8-8' },
+  food: { d: 'M4.5 10.5a7.5 5.5 0 0 1 15 0zM4 13.5h16M5 16.5h14v1a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z' },
+  ball: { d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM5.6 5.6l12.8 12.8M3.5 13.5a8 8 0 0 0 7-7M13.5 20.5a8 8 0 0 1 7-7' },
+  plane: { d: 'M21 3L3 10.5l7 3 3 7zM10 13.5L21 3' },
+  lightbulb: { d: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.6.5 1.1v1h5v-1c0-.5.1-.8.5-1.1A6 6 0 0 0 12 3z' },
+  flag: { d: 'M5 21V4M5 4h12l-2 4 2 4H5' },
+  hash: { d: 'M9.5 4L8 20M16 4l-1.5 16M4.5 9h15M4 15h15' },
+  'person-add': { d: 'M10 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2.5 20.5c0-4 3.4-6.5 7.5-6.5 1.5 0 2.9.3 4 1M19 14v6M16 17h6' },
 } satisfies Record<string, IconData>;
 
 export type IconName = keyof typeof icons;

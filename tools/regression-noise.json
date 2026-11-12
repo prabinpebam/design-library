@@ -1,6 +1,14 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--menubutton": {
+      "reason": "catalogue inventory: (Q143 regions 25-27) the generic opt-in MenuButtonItem icon, tone and startsGroup and MenuButton.tone (defaults unchanged) add source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--popover": {
+      "reason": "catalogue inventory: (Q143 region 27) the generic opt-in PopoverTrigger.tone (default unchanged) adds source-derived prop documentation below the viewport and slack.Workspace joins its Used by list; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--button": {
       "reason": "catalogue inventory: (Q145.W) the generic opt-in Button.stacked prop (default unchanged) adds a source-derived prop row below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

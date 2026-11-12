@@ -1,5 +1,5 @@
 import type { ButtonSize } from './Button';
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { Fragment, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { usePopup, type ListWidth } from '../behaviour/popup';
 import { useOverlayScroll } from '../behaviour/scroll';
 import { Flag, flagSrc, type FlagCode } from './Flag';
@@ -21,6 +21,12 @@ export interface MenuButtonItem {
   /** A country's flag before the name. Decorative. */
   flag?: FlagCode;
   preview?: string[];
+  /** A leading icon from the active set, for menus whose items are kinds of thing to make or do. */
+  icon?: IconName;
+  /** `danger` for an item that destroys something (Delete). Its words carry the meaning; the colour repeats it. */
+  tone?: 'danger';
+  /** Starts a new group: a hairline across the menu sits above it. */
+  startsGroup?: boolean;
 }
 
 export interface MenuButtonProps extends DataAttributes {
@@ -44,6 +50,8 @@ export interface MenuButtonProps extends DataAttributes {
   emphasis?: 'primary' | 'default' | 'quiet';
   /** Shows only the icon (`chevron-down` when none is given); `label` becomes its accessible name and tooltip. Square at every size; the menu half of a split button. */
   iconOnly?: boolean;
+  /** `inherit`: a quiet trigger takes its surroundings' text colour, as Button's `tone`, on a coloured rail or toolbar. */
+  tone?: 'inherit';
   /** Something the menu started is still running (applying a preset, exporting): a spinner takes the icon's place, the menu won't open and presses are ignored until false. */
   busy?: boolean;
   /** Present tense while `busy`, e.g. "Applying…"; the label stays when left out. */
@@ -75,7 +83,7 @@ export interface MenuButtonProps extends DataAttributes {
  * @key Enter or Space on an item: chooses it
  * @key Escape: closes the menu and returns to the button
  */
-export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, busy = false, pendingLabel, listWidth, ...data }: MenuButtonProps) {
+export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, ...data }: MenuButtonProps) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -143,6 +151,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
         data-dl-part="trigger"
         data-size={size}
         data-emphasis={emphasis}
+        data-tone={tone}
         data-icon-only={iconOnly ? '' : undefined}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -169,21 +178,25 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
           <div ref={scroll.setViewport} data-dl-part="viewport">
             <div id={`${id}-menu`} data-dl-part="content" role="menu" aria-label={menuLabel ?? label}>
               {items.map((item, i) => (
-                <ListItem
-                  key={item.value}
-                  role="menuitem"
-                  label={item.label}
-                  description={item.description}
-                  preview={item.preview}
-                  thumbnail={item.flag && flagSrc(item.flag)}
-                  itemRef={(el) => {
-                    itemRefs.current[i] = el;
-                  }}
-                  onClick={() => {
-                    close(true);
-                    onSelect(item.value);
-                  }}
-                />
+                <Fragment key={item.value}>
+                  {item.startsGroup && i > 0 && <div role="separator" data-dl-part="separator" />}
+                  <ListItem
+                    role="menuitem"
+                    label={item.label}
+                    description={item.description}
+                    preview={item.preview}
+                    icon={item.icon}
+                    tone={item.tone}
+                    thumbnail={item.flag && flagSrc(item.flag)}
+                    itemRef={(el) => {
+                      itemRefs.current[i] = el;
+                    }}
+                    onClick={() => {
+                      close(true);
+                      onSelect(item.value);
+                    }}
+                  />
+                </Fragment>
               ))}
             </div>
           </div>

@@ -50,6 +50,13 @@
     --color-map-action-fill-on: #ffffff;
     --radius-sm: 0.28125rem;
     --radius-lg: 0.5625rem;
+    --c-list-item-hover-fill: #1264a3;
+    --c-list-item-hover-text: #ffffff;
+    --c-list-item-size: 2rem;
+    --c-list-item-padding-block: 0.25rem;
+    --c-list-item-padding-inline: 1.5rem;
+    --c-list-item-radius: 0;
+    --c-popup-gap: 0;
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);
@@ -69,7 +76,6 @@
     --c-popup-bg: var(--color-bg-raised);
     --c-tooltip-width: var(--size-pane-width);
     --c-popover-width: var(--size-pane-width);
-    --c-list-item-padding-block: var(--space-inset-xs);
     --c-ribbon-bg: var(--color-bg-raised);
     --c-ribbon-separator: var(--color-border);
     --c-token-specimen-tile-surface: var(--color-bg-raised);
@@ -214,7 +220,6 @@
     --c-field-radius: var(--radius-md);
     --c-file-upload-zone-radius: var(--radius-md);
     --c-gradient-editor-radius: var(--radius-md);
-    --c-list-item-radius: var(--radius-md);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
@@ -347,7 +352,6 @@
     --c-empty-state-padding-view: var(--space-inset-lg);
     --c-example-inset: var(--space-inset-lg);
     --c-floating-bar-padding: var(--space-inset-xs);
-    --c-list-item-padding-block: var(--space-inset-xs);
     --c-popup-inset: var(--space-inset-xs);
     --c-price-highlight-padding: var(--space-inset-xs);
     --c-segmented-control-inset: var(--space-inset-xs);
@@ -361,7 +365,6 @@
     --c-empty-state-padding-view: var(--space-inset-lg);
     --c-example-inset: var(--space-inset-lg);
     --c-floating-bar-padding: var(--space-inset-xs);
-    --c-list-item-padding-block: var(--space-inset-xs);
     --c-popup-inset: var(--space-inset-xs);
     --c-price-highlight-padding: var(--space-inset-xs);
     --c-segmented-control-inset: var(--space-inset-xs);
@@ -375,7 +378,6 @@
     --c-empty-state-padding-view: var(--space-inset-lg);
     --c-example-inset: var(--space-inset-lg);
     --c-floating-bar-padding: var(--space-inset-xs);
-    --c-list-item-padding-block: var(--space-inset-xs);
     --c-popup-inset: var(--space-inset-xs);
     --c-price-highlight-padding: var(--space-inset-xs);
     --c-segmented-control-inset: var(--space-inset-xs);
@@ -389,7 +391,6 @@
     --c-empty-state-padding-view: var(--space-inset-lg);
     --c-example-inset: var(--space-inset-lg);
     --c-floating-bar-padding: var(--space-inset-xs);
-    --c-list-item-padding-block: var(--space-inset-xs);
     --c-popup-inset: var(--space-inset-xs);
     --c-price-highlight-padding: var(--space-inset-xs);
     --c-segmented-control-inset: var(--space-inset-xs);
@@ -430,7 +431,6 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
-    --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
@@ -488,7 +488,6 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
-    --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
@@ -546,7 +545,6 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
-    --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
@@ -604,7 +602,6 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
-    --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
@@ -662,7 +659,6 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
-    --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
@@ -716,7 +712,6 @@
     --c-gradient-editor-radius: var(--radius-md);
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
-    --c-list-item-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);

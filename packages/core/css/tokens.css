@@ -232,6 +232,8 @@
   --c-list-item-size-l: var(--size-control-xl);
   --c-list-item-media: var(--size-icon-lg);
   --c-list-item-media-l: var(--size-control-md);
+  --c-list-item-hover-fill: var(--state-hover);
+  --c-list-item-hover-text: currentColor;
   --c-pane-gap: var(--space-stack-group);
   --c-pane-head-gap: var(--space-inline-item);
   --c-pane-status-gap: var(--space-stack-pair);

@@ -178,6 +178,8 @@
   "tokens": [
     "--border-thick",
     "--c-list-item-gap",
+    "--c-list-item-hover-fill",
+    "--c-list-item-hover-text",
     "--c-list-item-media",
     "--c-list-item-media-l",
     "--c-list-item-padding-block",

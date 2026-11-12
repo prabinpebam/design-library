@@ -110,6 +110,9 @@
     "--space-inline-group"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/dialog",
+  "usedBy": [
+    "slack.Workspace"
+  ],
   "principles": [
     "elevation",
     "widths"

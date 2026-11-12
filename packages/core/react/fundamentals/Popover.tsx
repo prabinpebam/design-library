@@ -12,6 +12,8 @@ export interface PopoverTrigger {
   iconOnly?: boolean;
   emphasis?: 'primary' | 'default' | 'quiet';
   size?: ButtonProps['size'];
+  /** As Button's `tone`: `inherit` lets a quiet trigger take its surroundings' text colour. */
+  tone?: ButtonProps['tone'];
 }
 
 export interface PopoverProps extends DataAttributes {
@@ -108,7 +110,7 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
         }
       }}
     >
-      <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />
+      <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} tone={trigger.tone} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />
       <div ref={surface} id={`${id}-surface`} role="dialog" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : trigger.label} data-dl-part="surface" data-width={width === 'md' ? undefined : width} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" tabIndex={-1} hidden={!open}>
         {title && (
           <Heading level={3} size={4} id={`${id}-title`}>

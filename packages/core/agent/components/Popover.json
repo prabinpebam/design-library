@@ -95,6 +95,11 @@
         {
           "name": "size",
           "type": "ButtonProps['size']"
+        },
+        {
+          "name": "tone",
+          "type": "ButtonProps['tone']",
+          "description": "As Button's `tone`: `inherit` lets a quiet trigger take its surroundings' text colour."
         }
       ]
     }
@@ -121,6 +126,9 @@
     "--space-margin-page"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/popover",
+  "usedBy": [
+    "slack.Workspace"
+  ],
   "principles": [
     "elevation",
     "widths"

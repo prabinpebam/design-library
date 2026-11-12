@@ -8,42 +8,627 @@
     "currentUser": "Jamie Park",
     "channel": "project-studio",
     "topic": "A little space for the next big idea",
-    "members": ["Maya Chen", "Alex Rivera", "Sam Patel"],
+    "members": [
+      "Maya Chen",
+      "Alex Rivera",
+      "Sam Patel"
+    ],
     "memberCount": 24,
     "date": "Wednesday, November 11",
     "rail": [
-      {"label":"Home","icon":"organisation"},
-      {"label":"DMs","icon":"comment"},
-      {"label":"Activity","icon":"speaker"},
-      {"label":"Files","icon":"file"},
-      {"label":"More","icon":"more"}
+      {
+        "label": "Home",
+        "icon": "organisation"
+      },
+      {
+        "label": "DMs",
+        "icon": "comment"
+      },
+      {
+        "label": "Activity",
+        "icon": "speaker"
+      },
+      {
+        "label": "Files",
+        "icon": "file"
+      },
+      {
+        "label": "More",
+        "icon": "more"
+      }
     ],
     "sections": [
-      {"items":[{"name":"Unreads","icon":"list","unread":true},{"name":"Threads","icon":"comment"},{"name":"Drafts & sent","icon":"edit"}]},
-      {"title":"Starred","items":[{"name":"launch-plan","icon":"frame","unread":true},{"name":"team-notes","icon":"frame"}]},
-      {"title":"Channels","items":[{"name":"general","icon":"frame"},{"name":"project-studio","icon":"frame"},{"name":"design-reviews","icon":"frame","unread":true,"mentions":2},{"name":"announcements","icon":"frame","unread":true},{"name":"watercooler","icon":"frame"},{"name":"Add channels","icon":"plus"}]},
-      {"title":"Direct messages","items":[{"name":"Maya Chen","presence":"available","unread":true},{"name":"Alex Rivera","presence":"available"},{"name":"Sam Patel","presence":"away","unread":true,"mentions":1},{"name":"Jamie Park (you)","presence":"available"},{"name":"Invite people","icon":"plus"}]}
+      {
+        "items": [
+          {
+            "name": "Unreads",
+            "icon": "list",
+            "unread": true
+          },
+          {
+            "name": "Threads",
+            "icon": "comment"
+          },
+          {
+            "name": "Drafts & sent",
+            "icon": "edit"
+          }
+        ]
+      },
+      {
+        "title": "Starred",
+        "items": [
+          {
+            "name": "launch-plan",
+            "icon": "frame",
+            "unread": true
+          },
+          {
+            "name": "team-notes",
+            "icon": "frame"
+          }
+        ]
+      },
+      {
+        "title": "Channels",
+        "items": [
+          {
+            "name": "general",
+            "icon": "frame"
+          },
+          {
+            "name": "project-studio",
+            "icon": "frame"
+          },
+          {
+            "name": "design-reviews",
+            "icon": "frame",
+            "unread": true,
+            "mentions": 2
+          },
+          {
+            "name": "announcements",
+            "icon": "frame",
+            "unread": true
+          },
+          {
+            "name": "watercooler",
+            "icon": "frame"
+          },
+          {
+            "name": "Add channels",
+            "icon": "plus"
+          }
+        ]
+      },
+      {
+        "title": "Direct messages",
+        "items": [
+          {
+            "name": "Maya Chen",
+            "presence": "available",
+            "unread": true
+          },
+          {
+            "name": "Alex Rivera",
+            "presence": "available"
+          },
+          {
+            "name": "Sam Patel",
+            "presence": "away",
+            "unread": true,
+            "mentions": 1
+          },
+          {
+            "name": "Jamie Park (you)",
+            "presence": "available"
+          },
+          {
+            "name": "Invite people",
+            "icon": "plus"
+          }
+        ]
+      }
     ],
     "messages": [
-      {"id":"m1","author":"Maya Chen","time":"9:12 AM","text":"Morning, team! The updated direction for our autumn collection is ready for a look. I brought the notes from yesterday into one place.","reactions":[{"emoji":"👍","label":"Like","count":4},{"emoji":"❤️","label":"Love","count":2}],"replies":4},
-      {"id":"m2","author":"Maya Chen","time":"9:13 AM","text":"The main change is a calmer opening and more room for the work. Let me know what feels right.","grouped":true},
-      {"id":"m3","author":"Alex Rivera","time":"9:24 AM","text":"This feels much clearer. I put together a short outline for the review so we can spend more time on the details.","file":{"name":"Studio review notes.pdf","detail":"PDF · 248 KB"}},
-      {"id":"m4","author":"Sam Patel","time":"9:31 AM","text":"A small update from the build: the new navigation is in place. The notes below cover what changed and what to try.","unfurl":{"title":"A new home for the studio","site":"Fieldwork journal","text":"The latest workspace update: a simpler way to find the conversations and projects that matter."},"reactions":[{"emoji":"👍","label":"Like","count":3}]},
-      {"id":"m5","author":"Jamie Park","time":"10:02 AM","text":"Thanks for bringing this together. I’ll review the opening this morning and leave a few thoughts in the thread.","isNew":true},
-      {"id":"m6","author":"Maya Chen","time":"10:05 AM","text":"Perfect. We have time to explore both directions before the team review tomorrow.","reactions":[{"emoji":"❤️","label":"Love","count":1}]}
+      {
+        "id": "m1",
+        "author": "Maya Chen",
+        "time": "9:12 AM",
+        "text": "Morning, team! The updated direction for our autumn collection is ready for a look. I brought the notes from yesterday into one place.",
+        "reactions": [
+          {
+            "emoji": "👍",
+            "label": "Like",
+            "count": 4
+          },
+          {
+            "emoji": "❤️",
+            "label": "Love",
+            "count": 2
+          }
+        ],
+        "replies": 4
+      },
+      {
+        "id": "m2",
+        "author": "Maya Chen",
+        "time": "9:13 AM",
+        "text": "The main change is a calmer opening and more room for the work. Let me know what feels right.",
+        "grouped": true
+      },
+      {
+        "id": "m3",
+        "author": "Alex Rivera",
+        "time": "9:24 AM",
+        "text": "This feels much clearer. I put together a short outline for the review so we can spend more time on the details.",
+        "file": {
+          "name": "Studio review notes.pdf",
+          "detail": "PDF · 248 KB"
+        }
+      },
+      {
+        "id": "m4",
+        "author": "Sam Patel",
+        "time": "9:31 AM",
+        "text": "A small update from the build: the new navigation is in place. The notes below cover what changed and what to try.",
+        "unfurl": {
+          "title": "A new home for the studio",
+          "site": "Fieldwork journal",
+          "text": "The latest workspace update: a simpler way to find the conversations and projects that matter."
+        },
+        "reactions": [
+          {
+            "emoji": "👍",
+            "label": "Like",
+            "count": 3
+          }
+        ]
+      },
+      {
+        "id": "m5",
+        "author": "Jamie Park",
+        "time": "10:02 AM",
+        "text": "Thanks for bringing this together. I’ll review the opening this morning and leave a few thoughts in the thread.",
+        "isNew": true
+      },
+      {
+        "id": "m6",
+        "author": "Maya Chen",
+        "time": "10:05 AM",
+        "text": "Perfect. We have time to explore both directions before the team review tomorrow.",
+        "reactions": [
+          {
+            "emoji": "❤️",
+            "label": "Love",
+            "count": 1
+          }
+        ]
+      }
     ],
     "replies": [
-      {"id":"r1","author":"Alex Rivera","time":"9:18 AM","text":"The extra space around the opening makes such a difference. I’d keep that direction."},
-      {"id":"r2","author":"Sam Patel","time":"9:22 AM","text":"Agreed. I’ll check how the longer project names sit in the navigation."},
-      {"id":"r3","author":"Jamie Park","time":"9:28 AM","text":"I added the mobile notes to the review document."}
+      {
+        "id": "r1",
+        "author": "Alex Rivera",
+        "time": "9:18 AM",
+        "text": "The extra space around the opening makes such a difference. I’d keep that direction."
+      },
+      {
+        "id": "r2",
+        "author": "Sam Patel",
+        "time": "9:22 AM",
+        "text": "Agreed. I’ll check how the longer project names sit in the navigation."
+      },
+      {
+        "id": "r3",
+        "author": "Jamie Park",
+        "time": "9:28 AM",
+        "text": "I added the mobile notes to the review document."
+      }
     ],
+    "messageMenu": [
+      {
+        "value": "unfollow",
+        "label": "Unfollow message",
+        "description": "You won’t get notified about new replies"
+      },
+      {
+        "value": "copy-link",
+        "label": "Copy link",
+        "startsGroup": true
+      },
+      {
+        "value": "unread",
+        "label": "Mark unread"
+      },
+      {
+        "value": "remind",
+        "label": "Remind me about this"
+      },
+      {
+        "value": "pin",
+        "label": "Pin to channel"
+      },
+      {
+        "value": "edit",
+        "label": "Edit message"
+      },
+      {
+        "value": "delete",
+        "label": "Delete message",
+        "tone": "danger"
+      },
+      {
+        "value": "more",
+        "label": "More message actions…",
+        "startsGroup": true
+      }
+    ],
+    "createMenu": [
+      {
+        "value": "huddle",
+        "label": "Huddle",
+        "description": "Start a call with audio and video",
+        "icon": "headphones"
+      },
+      {
+        "value": "canvas",
+        "label": "Canvas",
+        "description": "Write and share a document",
+        "icon": "file"
+      },
+      {
+        "value": "list",
+        "label": "List",
+        "description": "Track work and projects together",
+        "icon": "list"
+      },
+      {
+        "value": "channel",
+        "label": "Channel",
+        "description": "Start a conversation around a topic",
+        "icon": "hash"
+      },
+      {
+        "value": "invite",
+        "label": "Invite people",
+        "icon": "person-add",
+        "startsGroup": true
+      }
+    ],
+    "emojiPicker": {
+      "categories": [
+        {
+          "label": "Recent",
+          "icon": "clock"
+        },
+        {
+          "label": "Smileys and people",
+          "icon": "emoji"
+        },
+        {
+          "label": "Nature",
+          "icon": "leaf"
+        },
+        {
+          "label": "Food and drink",
+          "icon": "food"
+        },
+        {
+          "label": "Activities",
+          "icon": "ball"
+        },
+        {
+          "label": "Travel and places",
+          "icon": "plane"
+        },
+        {
+          "label": "Objects",
+          "icon": "lightbulb"
+        },
+        {
+          "label": "Symbols",
+          "icon": "heart"
+        },
+        {
+          "label": "Flags",
+          "icon": "flag"
+        }
+      ],
+      "groups": [
+        {
+          "title": "Frequently used",
+          "items": [
+            {
+              "char": "🤞",
+              "label": "crossed fingers"
+            },
+            {
+              "char": "😂",
+              "label": "tears of joy"
+            },
+            {
+              "char": "🐝",
+              "label": "bee"
+            },
+            {
+              "char": "✅",
+              "label": "check mark"
+            },
+            {
+              "char": "❤️",
+              "label": "red heart"
+            },
+            {
+              "char": "👻",
+              "label": "ghost"
+            },
+            {
+              "char": "😭",
+              "label": "crying"
+            },
+            {
+              "char": "😜",
+              "label": "winking tongue"
+            },
+            {
+              "char": "☝️",
+              "label": "index up"
+            },
+            {
+              "char": "👋",
+              "label": "waving hand"
+            },
+            {
+              "char": "💡",
+              "label": "light bulb"
+            },
+            {
+              "char": "👏",
+              "label": "clapping"
+            },
+            {
+              "char": "😞",
+              "label": "disappointed"
+            },
+            {
+              "char": "⭐",
+              "label": "star"
+            },
+            {
+              "char": "😱",
+              "label": "screaming"
+            },
+            {
+              "char": "✨",
+              "label": "sparkles"
+            },
+            {
+              "char": "🙈",
+              "label": "see-no-evil monkey"
+            },
+            {
+              "char": "🎉",
+              "label": "party popper"
+            },
+            {
+              "char": "👊",
+              "label": "fist bump"
+            },
+            {
+              "char": "😻",
+              "label": "heart-eyes cat"
+            },
+            {
+              "char": "🙂",
+              "label": "slight smile"
+            },
+            {
+              "char": "😘",
+              "label": "blowing a kiss"
+            },
+            {
+              "char": "🆗",
+              "label": "OK button"
+            },
+            {
+              "char": "🍕",
+              "label": "pizza"
+            },
+            {
+              "char": "😄",
+              "label": "grinning"
+            },
+            {
+              "char": "😲",
+              "label": "astonished"
+            },
+            {
+              "char": "😬",
+              "label": "grimacing"
+            },
+            {
+              "char": "👍",
+              "label": "thumbs up"
+            },
+            {
+              "char": "😛",
+              "label": "tongue out"
+            },
+            {
+              "char": "🤙",
+              "label": "call me"
+            },
+            {
+              "char": "🎈",
+              "label": "balloon"
+            },
+            {
+              "char": "🔥",
+              "label": "fire"
+            }
+          ]
+        },
+        {
+          "title": "People",
+          "items": [
+            {
+              "char": "😃",
+              "label": "big smile"
+            },
+            {
+              "char": "😁",
+              "label": "beaming"
+            },
+            {
+              "char": "😆",
+              "label": "laughing"
+            },
+            {
+              "char": "🤣",
+              "label": "rolling on the floor"
+            },
+            {
+              "char": "😅",
+              "label": "sweat smile"
+            },
+            {
+              "char": "😉",
+              "label": "winking"
+            },
+            {
+              "char": "😊",
+              "label": "smiling eyes"
+            },
+            {
+              "char": "😇",
+              "label": "halo"
+            },
+            {
+              "char": "🥰",
+              "label": "hearts"
+            },
+            {
+              "char": "😍",
+              "label": "heart eyes"
+            },
+            {
+              "char": "🤩",
+              "label": "star-struck"
+            },
+            {
+              "char": "😋",
+              "label": "yum"
+            },
+            {
+              "char": "🤔",
+              "label": "thinking"
+            },
+            {
+              "char": "🤗",
+              "label": "hugging"
+            },
+            {
+              "char": "🙌",
+              "label": "raised hands"
+            },
+            {
+              "char": "🙏",
+              "label": "folded hands"
+            },
+            {
+              "char": "💪",
+              "label": "flexed biceps"
+            },
+            {
+              "char": "👀",
+              "label": "eyes"
+            }
+          ]
+        }
+      ],
+      "handy": [
+        {
+          "char": "🙂",
+          "label": "slight smile"
+        },
+        {
+          "char": "👍",
+          "label": "thumbs up"
+        },
+        {
+          "char": "✔️",
+          "label": "check"
+        },
+        {
+          "char": "❤️",
+          "label": "red heart"
+        },
+        {
+          "char": "👀",
+          "label": "eyes"
+        }
+      ]
+    },
     "copy": {
-      "search":"Search Fieldwork","members":"View 24 members","huddle":"Start huddle","channelMenu":"Open channel menu","compose":"Write message","preferences":"Open preferences","messagePrefix":"Message","mentions":"mentions",
-      "messages":"Messages","canvas":"Canvas","files":"Files","addTab":"Add tab","newMessages":"New","reply":"Reply","thread":"Thread","closeThread":"Close thread","popout":"Open thread separately",
-      "format":"Show formatting","send":"Send message","sending":"Sending…","sent":"Sent","add":"Add attachment","emoji":"Add emoji","mention":"Mention someone","video":"Record video","audio":"Record audio",
-      "bold":"Bold","italic":"Italic","strike":"Strikethrough","link":"Insert link","list":"Bulleted list","numbered":"Numbered list","quote":"Block quote","code":"Code","more":"More actions",
-      "replies":"replies","replyAction":"Reply in thread","react":"Add reaction","save":"Save message","share":"Share message","lastReply":"Last reply 10:05 AM",
-      "schedule":"Schedule for later","alsoSend":"Also send to","huddleOptions":"Huddle options","emptySearch":"No messages match. Try another word.","results":"Search results","allFiles":"Shared files","searchHint":"Search messages in this workspace","back":"Back to channel"
+      "search": "Search Fieldwork",
+      "members": "View 24 members",
+      "huddle": "Start huddle",
+      "channelMenu": "Open channel menu",
+      "compose": "Write message",
+      "preferences": "Open preferences",
+      "messagePrefix": "Message",
+      "mentions": "mentions",
+      "messages": "Messages",
+      "canvas": "Canvas",
+      "files": "Files",
+      "addTab": "Add tab",
+      "newMessages": "New",
+      "reply": "Reply",
+      "thread": "Thread",
+      "closeThread": "Close thread",
+      "popout": "Open thread separately",
+      "format": "Show formatting",
+      "send": "Send message",
+      "sending": "Sending…",
+      "sent": "Sent",
+      "add": "Add attachment",
+      "emoji": "Add emoji",
+      "mention": "Mention someone",
+      "video": "Record video",
+      "audio": "Record audio",
+      "bold": "Bold",
+      "italic": "Italic",
+      "strike": "Strikethrough",
+      "link": "Insert link",
+      "list": "Bulleted list",
+      "numbered": "Numbered list",
+      "quote": "Block quote",
+      "code": "Code",
+      "more": "More actions",
+      "replies": "replies",
+      "replyAction": "Reply in thread",
+      "react": "Add reaction",
+      "save": "Save message",
+      "share": "Share message",
+      "lastReply": "Last reply 10:05 AM",
+      "schedule": "Schedule for later",
+      "alsoSend": "Also send to",
+      "huddleOptions": "Huddle options",
+      "emptySearch": "No messages match. Try another word.",
+      "results": "Search results",
+      "allFiles": "Shared files",
+      "searchHint": "Search messages in this workspace",
+      "back": "Back to channel",
+      "emojiSearch": "Search emoji",
+      "handy": "Handy reactions",
+      "createMenu": "Create",
+      "createChannel": "Create a channel",
+      "channelName": "Name",
+      "channelNameHint": "e.g. plan-budget",
+      "step": "Step 1 of 2",
+      "next": "Next",
+      "noEmoji": "No emoji match. Try another word."
     }
   }
 }

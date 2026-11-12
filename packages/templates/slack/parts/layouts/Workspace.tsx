@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Avatar, AvatarGroup, Badge, Button, Checkbox, EmptyState, Heading, Icon, ScrollArea, Text, TextArea, TextField, type DataAttributes } from '@design-library/core/components';
+import { Avatar, AvatarGroup, Badge, Button, Checkbox, Dialog, EmptyState, Heading, Icon, MenuButton, Popover, ScrollArea, Text, TextArea, TextField, type DataAttributes } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
-import type { WorkspaceRecord, WorkspaceMessage } from '../../types';
+import type { WorkspaceRecord, WorkspaceMessage} from '../../types';
 
 export interface WorkspaceProps extends DataAttributes {
   /** Validated shared content, including every label and conversation. */
@@ -28,6 +28,12 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [sent, setSent] = useState<Record<string, WorkspaceMessage[]>>({});
   const [reactions, setReactions] = useState<Record<string, boolean>>({});
+  const [added, setAdded] = useState<Record<string, string[]>>({});
+  const [picker, setPicker] = useState<string>();
+  const [emojiQuery, setEmojiQuery] = useState('');
+  const [creating, setCreating] = useState(false);
+  const [channelName, setChannelName] = useState('');
+  const [made, setMade] = useState<string[]>([]);
   const [formatting, setFormatting] = useState(false);
   const [alsoSend, setAlsoSend] = useState(false);
   const [narrow, setNarrow] = useState(false);
@@ -89,6 +95,46 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
     <Button label={label} icon={icon} iconOnly emphasis="quiet" tone="inherit" onClick={onClick} />;
   const action = (label: string, icon: Parameters<typeof Button>[0]['icon'], onClick?: () => void) =>
     <Button label={label} icon={icon} iconOnly emphasis="quiet" tone="inherit" size="xs" onClick={onClick} />;
+  const react = (id: string, char: string) => {
+    setAdded(old => ({ ...old, [id]: old[id]?.includes(char) ? old[id] : [...(old[id] ?? []), char] }));
+    setPicker(undefined);
+    setEmojiQuery('');
+  };
+  const emojiPicker = (m: WorkspaceMessage) => {
+    const p = view.emojiPicker;
+    const q = emojiQuery.trim().toLowerCase();
+    const groups = p.groups.map(g => ({ ...g, items: g.items.filter(e => !q || e.label.includes(q)) })).filter(g => g.items.length);
+    const pick = (e: { char: string; label: string }, key: string) => <Button key={key} label={e.char} emphasis="quiet" size="xs" onClick={() => react(m.id, e.char)} />;
+    return <Popover trigger={{ label: c.react, icon: 'emoji-add', iconOnly: true, emphasis: 'quiet', size: 'xs', tone: 'inherit' }}
+      open={picker === m.id} onOpenChange={open => { setPicker(open ? m.id : undefined); if (!open) setEmojiQuery(''); }}>
+      <div data-dl="slack-emoji-picker">
+        <div data-dl-part="categories" role="toolbar" aria-label={c.react}>{p.categories.map(cat =>
+          <span key={cat.label} data-dl-part="category" data-current={cat === p.categories[0] || undefined}>{action(cat.label, cat.icon)}</span>)}</div>
+        <div data-dl-part="search"><TextField label={c.emojiSearch} hideLabel type="search" icon="search" size="xs" placeholder={c.emojiSearch} value={emojiQuery} onChange={setEmojiQuery} /></div>
+        <div data-dl-part="list"><ScrollArea label={c.react}><div data-dl="slack-emoji-groups">
+          {groups.map(g => <section key={g.title} data-dl-part="group" aria-label={g.title}>
+            <div data-dl-part="group-title">{g.title}</div>
+            <div data-dl-part="grid">{g.items.map((e, i) => pick(e, `${g.title}-${i}`))}</div>
+          </section>)}
+          {!groups.length && <Text>{c.noEmoji}</Text>}
+        </div></ScrollArea></div>
+        <div data-dl-part="handy"><span data-dl-part="group-title">{c.handy}</span><div data-dl-part="handy-row">{p.handy.map((e, i) => pick(e, `handy-${i}`))}</div></div>
+      </div>
+    </Popover>;
+  };
+  const createChannel = () => {
+    const name = channelName.trim().toLowerCase().replace(/\s+/g, '-');
+    if (!name) return;
+    setMade(old => old.includes(name) ? old : [...old, name]);
+    setChannel(name);
+    setSearch(false);
+    setTab('messages');
+    setCreating(false);
+    setChannelName('');
+  };
+  const sections: WorkspaceRecord['sections'] = view.sections.map(section => section.title === view.sections[2]?.title && made.length
+    ? { ...section, items: [...section.items.slice(0, -1), ...made.map(name => ({ name, icon: 'frame' as const })), section.items[section.items.length - 1]] }
+    : section);
 
   const composer = (target: string, reply = false) => (
     <div data-dl="slack-composer">
@@ -129,12 +175,17 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
         <Text>{m.text}</Text>
         {m.file && <div data-dl-part="file"><Icon name="file" size="lg" /><div data-dl-part="file-words"><strong>{m.file.name}</strong><span>{m.file.detail}</span></div></div>}
         {m.unfurl && <div data-dl-part="unfurl"><span data-dl-part="site">{m.unfurl.site}</span><strong data-dl-part="link">{m.unfurl.title}</strong><Text>{m.unfurl.text}</Text></div>}
-        {m.reactions && <div data-dl-part="reactions">
-          {m.reactions.map((r, i) => <span key={r.label} data-dl-part="reaction" data-chosen={reactions[`${m.id}-${i}`] || undefined} role="group" aria-label={r.label}>
+        {(m.reactions || added[m.id]?.length) && <div data-dl-part="reactions">
+          {m.reactions?.map((r, i) => <span key={r.label} data-dl-part="reaction" data-chosen={reactions[`${m.id}-${i}`] || undefined} role="group" aria-label={r.label}>
             {/* binary-setting: a reaction is a reversible message annotation in a dense action row, not a setting. */}
             <Button label={`${r.emoji} ${r.count + (reactions[`${m.id}-${i}`] ? 1 : 0)}`} emphasis="quiet" tone="inherit" size="xs"
               data-reaction-label={r.label} pressed={!!reactions[`${m.id}-${i}`]}
               onClick={() => setReactions(old => ({ ...old, [`${m.id}-${i}`]: !old[`${m.id}-${i}`] }))} />
+          </span>)}
+          {added[m.id]?.map(ch => <span key={ch} data-dl-part="reaction" data-chosen role="group" aria-label={ch}>
+            {/* binary-setting: as the reactions above; pressing your own reaction again takes it back. */}
+            <Button label={`${ch} 1`} emphasis="quiet" tone="inherit" size="xs" pressed
+              onClick={() => setAdded(old => ({ ...old, [m.id]: old[m.id].filter(x => x !== ch) }))} />
           </span>)}
         </div>}
         {!!m.replies && !inThread && <div data-dl-part="reply-line">
@@ -145,14 +196,15 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
         </div>}
       </div>
       <div data-dl-part="hover-actions" aria-label={c.more}>
-        {action(c.react, 'thumb-up', () => setReactions(old => ({...old, [`${m.id}-0`]: !old[`${m.id}-0`]})))}
+        {emojiPicker(m)}
         {action(c.replyAction, 'comment', () => openThread(m))}
-        {action(c.share, 'arrow-end')}{action(c.save, 'file')}{action(c.more, 'more-vertical')}
+        {action(c.share, 'arrow-end')}{action(c.save, 'file')}
+        <MenuButton label={c.more} icon="more-vertical" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.messageMenu} onSelect={() => undefined} />
       </div>
     </article>
   );
   return (
-    <div {...data} ref={root} data-dl="slack-workspace">
+    <div {...data} ref={root} data-dl="slack-workspace" data-material="solid">
       <header data-dl-part="titlebar" data-density="compact">
         <div data-dl-part="history">{action(c.back, 'chevron-start', () => setSearch(false))}{action(c.back, 'chevron-end')}</div>
         <div data-dl-part="search-pill" data-open={search || undefined}>{search
@@ -166,13 +218,14 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
           <span data-dl-part="rail-icon"><Button label={r.label} icon={r.icon} iconOnly emphasis="quiet" tone="inherit" onClick={() => { if (r.icon === 'file') setTab('files'); else { setTab('messages'); setSearch(false); } }} /></span>
           <span data-dl-part="rail-label">{r.label}</span>
         </div>)}</div>
-        <div data-dl-part="rail-bottom">{action(c.add, 'plus')}<Avatar name={view.currentUser} shape="square" presence="available" size={36} /></div>
+        <div data-dl-part="rail-bottom"><MenuButton label={c.createMenu} icon="plus" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.createMenu}
+          onSelect={value => { if (value === 'channel') setCreating(true); }} /><Avatar name={view.currentUser} shape="square" presence="available" size={36} /></div>
       </nav>
       <div data-dl-part="window">
         <aside data-dl-part="sidebar" data-density="compact" aria-label={view.name}>
           <div data-dl-part="workspace-head"><strong data-dl-part="workspace-name">{view.name}<Icon name="chevron-down" size="sm" /></strong>{action(c.compose, 'edit')}</div>
           <ScrollArea label={view.name}><div data-dl="slack-sidebar-content">
-            {view.sections.map(section => <section data-dl="slack-nav-section" key={section.title ?? section.items[0].name}>
+            {sections.map(section => <section data-dl="slack-nav-section" key={section.title ?? section.items[0].name}>
               {section.title && <div data-dl-part="section-title"><Icon name="caret-down" size="sm" /><span>{section.title}</span></div>}
               <div data-dl-part="rows">{section.items.map(item => <div key={item.name} data-dl-part="row" data-person={item.presence ? true : undefined} data-unread={item.unread || undefined} data-current={item.name === channel || undefined}>
                 {item.presence && <span data-dl-part="row-avatar"><Avatar name={item.name} shape="square" size={20} presence={item.presence} decorative /></span>}
@@ -221,6 +274,12 @@ export function Workspace({ view, screen = 'channel', ...data }: WorkspaceProps)
           <div data-dl="slack-composer-wrap">{composer(`thread-${thread.id}`, true)}</div>
         </aside>}
       </div>
+      <Dialog open={creating} onClose={() => { setCreating(false); setChannelName(''); }} title={c.createChannel}
+        actions={<><span data-dl="slack-step">{c.step}</span><Button label={c.next} emphasis="primary" unavailable={!channelName.trim() ? c.channelNameHint : undefined} onClick={createChannel} /></>}>
+        <form data-dl="slack-create-channel" onSubmit={event => { event.preventDefault(); createChannel(); }} onKeyDown={event => { if (event.key === 'Enter') { event.preventDefault(); createChannel(); } }}>
+          <TextField label={c.channelName} prefix="#" placeholder={c.channelNameHint} value={channelName} onChange={setChannelName} />
+        </form>
+      </Dialog>
     </div>
   );
 }

@@ -63,6 +63,7 @@
     --c-popup-border: var(--color-border);
     --c-popup-bg: var(--color-bg-raised);
     --c-list-item-radius: var(--radius-md);
+    --c-list-item-hover-fill: var(--state-hover);
     --c-ribbon-bg: var(--color-bg-raised);
     --c-ribbon-radius: var(--radius-md);
     --c-ribbon-separator: var(--color-border);

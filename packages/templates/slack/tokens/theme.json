@@ -219,5 +219,33 @@
  "radius.lg": {
   "$value": "0.5625rem",
   "$description": "Rail current tile 9 px: r05 at 4x, the 144 px tile's corner is 30 px in on its first line and 2 px in on line 23, a 36 px circle."
+ },
+ "c.list-item.hover-fill": {
+  "$value": "#1264a3",
+  "$description": "Region 25: the message menu's row under the pointer fills Slack blue (g-edit-01-f82, Edit message)."
+ },
+ "c.list-item.hover-text": {
+  "$value": "#ffffff",
+  "$description": "Region 25: white words on the blue hover row (g-edit-01-f82)."
+ },
+ "c.list-item.size": {
+  "$value": "2rem",
+  "$description": "Region 25: menu row pitch 59 px in g-edit-01-f82, drawn at about 1.87x (its 15 px body text is 28 px), so 32 px; a dense desktop menu exception."
+ },
+ "c.list-item.padding-block": {
+  "$value": "0.25rem",
+  "$description": "Region 25: the two-line Unfollow row is about 120 px in g-edit-01-f82 (≈1.87x), 64 px; 4 px above and below its two lines."
+ },
+ "c.list-item.padding-inline": {
+  "$value": "1.5rem",
+  "$description": "Region 25: the words start 51 px inside the menu's edge in g-edit-01-f82 (≈1.87x), so 24 px after the 2 px list inset."
+ },
+ "c.list-item.radius": {
+  "$value": "0",
+  "$description": "Region 25: the hover row's blue fill is square and reaches the menu's sides (g-edit-01-f82)."
+ },
+ "c.popup.gap": {
+  "$value": "0",
+  "$description": "Region 25: menu rows sit edge to edge at a 32 px pitch with no space between fills (g-edit-01-f82)."
  }
 }

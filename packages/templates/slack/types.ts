@@ -1,4 +1,16 @@
-export type WorkspaceIcon = 'organisation' | 'comment' | 'speaker' | 'file' | 'more' | 'list' | 'edit' | 'frame' | 'person' | 'plus' | 'thumb-up' | 'heart';
+export type WorkspaceIcon = 'organisation' | 'comment' | 'speaker' | 'file' | 'more' | 'list' | 'edit' | 'frame' | 'person' | 'plus' | 'thumb-up' | 'heart' | 'headphones' | 'hash' | 'person-add' | 'clock' | 'emoji' | 'leaf' | 'food' | 'ball' | 'plane' | 'lightbulb' | 'flag';
+export interface WorkspaceMenuItem {
+  value: string;
+  label: string;
+  description?: string;
+  icon?: WorkspaceIcon;
+  tone?: 'danger';
+  startsGroup?: boolean;
+}
+export interface WorkspaceEmoji {
+  char: string;
+  label: string;
+}
 export interface WorkspaceMessage {
   id: string;
   author: string;
@@ -23,5 +35,8 @@ export interface WorkspaceRecord {
   sections: { title?: string; items: { name: string; icon?: WorkspaceIcon; presence?: 'available' | 'away'; unread?: boolean; mentions?: number }[] }[];
   messages: WorkspaceMessage[];
   replies: WorkspaceMessage[];
+  messageMenu: WorkspaceMenuItem[];
+  createMenu: WorkspaceMenuItem[];
+  emojiPicker: { categories: { label: string; icon: WorkspaceIcon }[]; groups: { title: string; items: WorkspaceEmoji[] }[]; handy: WorkspaceEmoji[] };
   copy: Record<string, string>;
 }

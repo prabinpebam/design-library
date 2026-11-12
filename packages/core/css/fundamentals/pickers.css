@@ -87,6 +87,10 @@
     background-color: transparent;
   }
 
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='quiet'][data-tone='inherit'] {
+    color: inherit;
+  }
+
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='primary'] {
     border-color: transparent;
     background-color: var(--color-map-action-fill);
@@ -185,6 +189,14 @@
     padding: var(--c-popup-inset);
   }
 
+  /* A menu's groups: a hairline across the whole list, edge to edge, between the last item of one and the first of the next. */
+  [data-dl-part='popup'] [data-dl-part='content'] > [data-dl-part='separator'] {
+    flex: none;
+    block-size: var(--c-popup-border-width);
+    margin-inline: calc(-1 * var(--c-popup-inset));
+    background-color: var(--c-popup-border);
+  }
+
   /* Q130: a list pinned to a width step (`listWidth`), so menus that sit together match; still never past the window. */
   :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width] {
     max-inline-size: calc(100vw - 2 * var(--space-margin-page));
@@ -240,7 +252,8 @@
 
   @media (hover: hover) {
     [data-dl='list-item']:hover {
-      background-color: var(--state-hover);
+      background-color: var(--c-list-item-hover-fill);
+      color: var(--c-list-item-hover-text);
     }
 
     [data-dl='list-item'][aria-selected='true']:hover {

@@ -8,6 +8,22 @@
     "record.shared": {
       "$ref": "#/$defs/WorkspaceRecord"
     },
+    "WorkspaceEmoji": {
+      "additionalProperties": false,
+      "properties": {
+        "char": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "char",
+        "label"
+      ],
+      "type": "object"
+    },
     "WorkspaceIcon": {
       "enum": [
         "organisation",
@@ -21,9 +37,49 @@
         "person",
         "plus",
         "thumb-up",
-        "heart"
+        "heart",
+        "headphones",
+        "hash",
+        "person-add",
+        "clock",
+        "emoji",
+        "leaf",
+        "food",
+        "ball",
+        "plane",
+        "lightbulb",
+        "flag"
       ],
       "type": "string"
+    },
+    "WorkspaceMenuItem": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "icon": {
+          "$ref": "#/$defs/WorkspaceIcon"
+        },
+        "label": {
+          "type": "string"
+        },
+        "startsGroup": {
+          "type": "boolean"
+        },
+        "tone": {
+          "const": "danger",
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "label"
+      ],
+      "type": "object"
     },
     "WorkspaceMessage": {
       "additionalProperties": false,
@@ -129,11 +185,75 @@
           },
           "type": "object"
         },
+        "createMenu": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
         "currentUser": {
           "type": "string"
         },
         "date": {
           "type": "string"
+        },
+        "emojiPicker": {
+          "additionalProperties": false,
+          "properties": {
+            "categories": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "icon": {
+                    "$ref": "#/$defs/WorkspaceIcon"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label",
+                  "icon"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "groups": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "items": {
+                    "items": {
+                      "$ref": "#/$defs/WorkspaceEmoji"
+                    },
+                    "type": "array"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "items"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "handy": {
+              "items": {
+                "$ref": "#/$defs/WorkspaceEmoji"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "categories",
+            "groups",
+            "handy"
+          ],
+          "type": "object"
         },
         "memberCount": {
           "type": "number"
@@ -141,6 +261,12 @@
         "members": {
           "items": {
             "type": "string"
+          },
+          "type": "array"
+        },
+        "messageMenu": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
           },
           "type": "array"
         },
@@ -240,6 +366,9 @@
         "sections",
         "messages",
         "replies",
+        "messageMenu",
+        "createMenu",
+        "emojiPicker",
         "copy"
       ],
       "type": "object"

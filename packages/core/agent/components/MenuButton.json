@@ -105,6 +105,11 @@
           "description": "Shows only the icon (`chevron-down` when none is given); `label` becomes its accessible name and tooltip. Square at every size; the menu half of a split button."
         },
         {
+          "name": "tone",
+          "type": "'inherit'",
+          "description": "`inherit`: a quiet trigger takes its surroundings' text colour, as Button's `tone`, on a coloured rail or toolbar."
+        },
+        {
           "name": "busy",
           "type": "boolean",
           "default": "false",
@@ -150,6 +155,21 @@
         {
           "name": "preview",
           "type": "string[]"
+        },
+        {
+          "name": "icon",
+          "type": "IconName",
+          "description": "A leading icon from the active set, for menus whose items are kinds of thing to make or do."
+        },
+        {
+          "name": "tone",
+          "type": "'danger'",
+          "description": "`danger` for an item that destroys something (Delete). Its words carry the meaning; the colour repeats it."
+        },
+        {
+          "name": "startsGroup",
+          "type": "boolean",
+          "description": "Starts a new group: a hairline across the menu sits above it."
         }
       ]
     }
@@ -220,6 +240,7 @@
     "Board",
     "Composer",
     "ConversationList",
+    "slack.Workspace",
     "word.Window"
   ],
   "principles": [

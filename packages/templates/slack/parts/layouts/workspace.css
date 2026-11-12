@@ -71,7 +71,7 @@
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='unfurl'] > [data-dl-part='site'] { font-size: var(--text-s); color: var(--color-text-muted); }
   [data-dl='slack-message'] > [data-dl-part='body'] > [data-dl-part='unfurl'] > [data-dl-part='link'] { color: var(--color-text-link); }
   [data-dl='slack-message'] > [data-dl-part='hover-actions'] { position: absolute; inset-block-start: 0; inset-inline-end: var(--space-inset-lg); display: flex; border: var(--border-hairline) solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-bg); opacity: 0; pointer-events: none; }
-  [data-dl='slack-message']:focus-within > [data-dl-part='hover-actions'] { opacity: 1; pointer-events: auto; }
+  [data-dl='slack-message']:focus-within > [data-dl-part='hover-actions'], [data-dl='slack-message'] > [data-dl-part='hover-actions']:has([aria-expanded='true']) { opacity: 1; pointer-events: auto; }
   [data-dl='slack-composer-wrap'] { padding-inline: var(--space-inset-lg); padding-block: var(--space-inset-md); }
   [data-dl='slack-composer'] { display: grid; }
   [data-dl='slack-composer'] > [data-dl-part='also-send'] { padding-block-start: var(--space-stack-pair); font-size: var(--text-s); color: var(--color-text-muted); }
@@ -95,6 +95,19 @@
     [data-dl='slack-message']:hover > [data-dl-part='hover-actions'] { opacity: 1; pointer-events: auto; }
   }
   [data-dl='slack-message']:active > [data-dl-part='hover-actions'] { opacity: 1; pointer-events: auto; }
+  /* Regions 25-27 (g-edit-01, g-create-01, g-reactions-01): the emoji picker, the create-channel step line. */
+  [data-dl='slack-emoji-picker'] { display: grid; gap: var(--space-stack-pair); inline-size: min(22rem, calc(100vw - 2 * var(--space-margin-page))); }
+  [data-dl='slack-emoji-picker'] > [data-dl-part='categories'] { display: flex; justify-content: space-between; border-block-end: var(--border-hairline) solid var(--color-border); color: var(--color-text-muted); }
+  [data-dl='slack-emoji-picker'] > [data-dl-part='categories'] > [data-dl-part='category'] { display: grid; padding-block-end: var(--space-stack-pair); border-block-end: var(--border-thick) solid transparent; }
+  [data-dl='slack-emoji-picker'] > [data-dl-part='categories'] > [data-dl-part='category'][data-current] { color: var(--color-text); border-block-end-color: var(--color-map-action-fill); }
+  [data-dl='slack-emoji-picker'] > [data-dl-part='list'] { display: grid; block-size: 15rem; }
+  [data-dl='slack-emoji-groups'] { display: grid; gap: var(--space-stack-pair); }
+  [data-dl='slack-emoji-groups'] > [data-dl-part='group'] { display: grid; gap: var(--space-stack-pair); }
+  [data-dl='slack-emoji-groups'] > [data-dl-part='group'] > [data-dl-part='group-title'], [data-dl='slack-emoji-picker'] > [data-dl-part='handy'] > [data-dl-part='group-title'] { font-weight: var(--weight-bold); color: var(--color-text-muted); }
+  [data-dl='slack-emoji-groups'] > [data-dl-part='group'] > [data-dl-part='grid'] { display: grid; grid-template-columns: repeat(9, 1fr); font-size: var(--text-l); }
+  [data-dl='slack-emoji-picker'] > [data-dl-part='handy'] { display: flex; align-items: center; justify-content: space-between; gap: var(--space-inline-pair); padding-block-start: var(--space-stack-pair); border-block-start: var(--border-hairline) solid var(--color-border); }
+  [data-dl='slack-emoji-picker'] > [data-dl-part='handy'] > [data-dl-part='handy-row'] { display: flex; font-size: var(--text-l); }
+  [data-dl='slack-step'] { margin-inline-end: auto; align-self: center; color: var(--color-text-muted); font-size: var(--text-s); }
   @container (max-width: 56rem) {
     [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='sidebar'] { display: none; }
     [data-dl='slack-workspace'] > [data-dl-part='window'] > [data-dl-part='conversation'] > [data-dl-part='channel-head'] > [data-dl-part='channel-actions'] > [data-dl-part='facepile'] { display: none; }
