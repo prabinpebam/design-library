@@ -610,6 +610,7 @@
   --c-page-grid-selected-width: var(--border-thick);
   --c-page-grid-selected-color: var(--color-accent);
   --c-page-grid-selected-offset: var(--space-inset-xs);
+  --c-page-grid-empty-size: 0px;
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
   --c-screen-preview-desktop: 80rem;

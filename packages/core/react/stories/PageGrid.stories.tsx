@@ -114,7 +114,7 @@ export default {
     {
       title: 'Cells span columns; an empty cell keeps its size',
       description:
-        'A cell spans any whole number of the twelve columns, at least 3 where a row has more than one cell (so at most four across); a row’s spans add up to its span. An empty cell (a slot renderSlot leaves empty) keeps the height of the setting --c-page-grid-empty-size (none by default): an editor’s preview sets it to its canvas’s empty-cell height, so a page previews as it’s edited. Here it’s set to the page stack step.',
+        'A cell spans any whole number of the twelve columns, at least 3 where a row has more than one cell (so at most four across); a row’s spans add up to its span. A row stacks once its narrowest cell would be under the column minimum, so a 3-column cell sits beside others only from 68.5rem (here, in the catalogue’s narrower column, the first row stacks; at a page’s full width it reads 3 + 9). An empty cell (a slot renderSlot leaves empty) keeps the height of the setting --c-page-grid-empty-size (none by default): an editor’s preview sets it to its canvas’s empty-cell height, so a page previews as it’s edited. Here it’s set to the page stack step.',
       code: `<PageGrid
   rows={[
     { id: 's1', cells: [{ id: 'side', span: 3 }, { id: 'main', span: 9 }] },
@@ -124,12 +124,12 @@ export default {
     { id: 's5', cells: [{ id: 'gap' }] },
     { id: 's6', cells: [{ id: 'after' }] },
   ]}
-  renderSlot={(cell) => <Block id={cell.id} />}
+  renderSlot={(cell) => (blocks[cell.id] ? <Block id={cell.id} /> : null)}
 />
 /* theme setting */ --c-page-grid-empty-size: var(--space-stack-page);`,
       render: () => (
         <WithSettings settings={emptySize} contents>
-          <PageGrid rows={spanned} renderSlot={(cell) => <SpanSlot cell={cell} />} />
+          <PageGrid rows={spanned} renderSlot={(cell) => (spanWords[cell.id] ? <SpanSlot cell={cell} /> : null)} />
         </WithSettings>
       ),
     },

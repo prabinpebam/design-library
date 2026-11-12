@@ -4,7 +4,7 @@
   "tier": "layout",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/layouts/PageGrid.tsx",
-  "summary": "A page's composition grid (DesignUp, owner 2026-11-12 23:54): the page is rows; a row splits into cells from a fixed list of splits; a cell holds more rows or is a slot for one block or fundamental. Every split divides the same twelve columns, so a nested split only subdivides its parent's span and every cell lines up with the page's columns. Rows sit a chosen stack step apart (`gap`); columns a fixed gutter apart. A row whose narrowest cell would be under `size.column-min` stacks its cells in source order, so nothing scrolls sideways at 320 px. The only way to put blocks side by side on a page: blocks never nest a page inside themselves. Not for things compared side by side inside a block (use Grid), an app's regions (use AppLayout or EditorLayout) or free positioning (there is none).",
+  "summary": "A page's composition grid (DesignUp, owner 2026-11-12 23:54, 2026-11-13 02:27): the page is rows; a row's cells divide its span of the page's twelve columns (`span`, at least 3 where a row has more than one cell, so at most four across); a cell holds more rows or is a slot for one block or fundamental. Spans are absolute at every depth, so a nested row only subdivides its parent's span and every cell lines up with the page's columns. An empty slot keeps its size (`data-empty`, setting `--c-page-grid-empty-size`), so a preview lays out as the editor does. The edits an editor makes (split in two, merge two empty cells, move a border, add a row) are `@design-library/core/page-grid`. Rows sit a chosen stack step apart (`gap`); columns a fixed gutter apart. A row whose narrowest cell would be under `size.column-min` stacks its cells in source order, so nothing scrolls sideways at 320 px. The only way to put blocks side by side on a page: blocks never nest a page inside themselves. Not for things compared side by side inside a block (use Grid), an app's regions (use AppLayout or EditorLayout) or free positioning (there is none).",
   "family": "layout",
   "a11y": [
     "Plain `div`s with no role: the grid arranges, it doesn't group. Reading order is the source order, row by row and cell by cell, at every width. Pointer selection (`onSelect`) is an editor's shortcut; its keyboard path is the editor's outline of the same rows and cells (a TreeView), which sets `selected`."
@@ -52,6 +52,11 @@
           "description": "Stable id: the key, and `data-cell` on the cell for an editor to find it."
         },
         {
+          "name": "span",
+          "type": "number",
+          "description": "The page columns the cell spans (absolute at every depth, at least 3 of 12 where a row has more than one cell); a row's spans add up to its span. A row of one cell may leave it out (the whole span)."
+        },
+        {
           "name": "rows",
           "type": "PageGridRow[]",
           "description": "Rows inside the cell, each dividing the cell's span again. Without rows the cell is a slot: `renderSlot` fills it."
@@ -70,7 +75,7 @@
         {
           "name": "split",
           "type": "PageGridSplit",
-          "description": "How the row divides its span (default `whole`)."
+          "description": "@deprecated Give the cells `span`s. A preset division of the row's span, still read."
         },
         {
           "name": "gap",
@@ -81,7 +86,7 @@
           "name": "cells",
           "type": "PageGridCell[]",
           "required": true,
-          "description": "One cell per part of the split, in reading order."
+          "description": "The row's cells in reading order."
         }
       ]
     },
@@ -101,12 +106,9 @@
       ]
     }
   ],
-  "types": {
-    "PageGridSplit": "'whole' | 'halves' | 'thirds' | 'quarters' | 'two-thirds-start' | 'two-thirds-end'",
-    "PageGridGap": "'item' | 'group' | 'section' | 'page'"
-  },
   "uses": [],
   "tokens": [
+    "--c-page-grid-empty-size",
     "--c-page-grid-gap-group",
     "--c-page-grid-gap-item",
     "--c-page-grid-gap-page",
@@ -116,6 +118,13 @@
     "--c-page-grid-selected-offset",
     "--c-page-grid-selected-width",
     "--c-page-grid-stack-gap"
+  ],
+  "settings": [
+    {
+      "var": "--c-page-grid-empty-size",
+      "default": "0px",
+      "description": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/pagegrid",
   "principles": [
