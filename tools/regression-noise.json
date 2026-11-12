@@ -1,6 +1,12 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--core-first": {
+      "reason": "catalogue inventory: (DesignUp LR25 G3) the media block schema gains the opt-in frame and depth switches (default off, unchanged), lengthening the source-derived block list below the viewport; only the right scrollbar track changes.",
+      "regions": [
+        { "x": 1270, "y": 54, "width": 10, "height": 846 }
+      ]
+    },
     "lib--screenpreview": {
       "reason": "catalogue inventory: (DesignUp LR17) the generic opt-in width=\"desktop\" on ScreenPreview (default fill, unchanged) adds a story and source-derived prop and settings rows below the viewport; only the right scrollbar track changes. The second region is the phone example's ImageGeneration random stipple at the viewport's foot, already declared as noise for this page.",
       "regions": [
