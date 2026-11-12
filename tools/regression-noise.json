@@ -1,6 +1,18 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--treeview": {
+      "reason": "catalogue inventory: (DesignUp template 2, gap h) the generic opt-in reorderable and onReorder on TreeView (default off) add a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--clipping": {
+      "reason": "catalogue inventory: (DesignUp template 2, gap h) the clipping page lists tools/clipping-allow.json, which gains the TreeView reorder announcement (visually hidden); only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--elevation": {
+      "reason": "catalogue inventory: (DesignUp template 2, gap h) the elevation page lists every layer token reader from source, which gains TreeView's lifted dragged row (layer.raised); only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--applayout": {
       "reason": "catalogue inventory: (DesignUp template 2, gap f) the generic opt-in startMode, floatBelow, onStartModeChange and width=\"edge\" on AppLayout (defaults unchanged) add two stories and source-derived prop rows below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

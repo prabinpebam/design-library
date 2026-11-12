@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactElement, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactElement, type ReactNode } from 'react';
+import { dropIndex, moveItem } from '../behaviour/reorder';
 import type { IconName } from '../../icons/icons';
 import { Icon } from '../fundamentals/Icon';
 import { Reveal } from '../fundamentals/Reveal';
@@ -37,6 +38,10 @@ export interface TreeViewProps extends DataAttributes {
   actionsRoom?: 'held' | 'overlay';
   /** What the chosen row means: `selection` (default) the selection's fill; `current` where you are (a list of pages), a neutral fill (`c.tree-view.current-fill`). */
   mark?: 'selection' | 'current';
+  /** Rows can be moved among their siblings: dragged up or down, or with Alt+ArrowUp and Alt+ArrowDown. Each move is announced. */
+  reorderable?: boolean;
+  /** A row moved: its parent's id (undefined at the top level) and that parent's children's ids in their new order. */
+  onReorder?: (parent: string | undefined, ids: string[]) => void;
 }
 
 interface Row {
@@ -64,13 +69,15 @@ function visibleRows(items: TreeItem[], open: Set<string>, level = 1, parent?: s
  * `aria-expanded` on rows with children and `aria-selected` on the chosen one. One row is in the tab order (the
  * selected one, else the first); the arrow keys move between rows. The kind icon is decorative: the label names it.
  * Row actions are named controls inside the row (each Switch says which item it acts on); only the focused row's take Tab.
+ * With eorderable, a move (a drag or Alt+Arrow) is announced in a status region ("Moved Hero to position 2 of 4."); focus stays on the moved row.
  * @key ArrowDown / ArrowUp: the next or previous visible row
  * @key ArrowRight: opens a closed row; on an open row, moves to its first child
  * @key ArrowLeft: closes an open row; on a closed row or a leaf, moves to its parent
  * @key Home / End: the first or last visible row
  * @key Enter / Space: selects the row
+ * @key Alt+ArrowUp / Alt+ArrowDown (reorderable): moves the row before or after its previous or next sibling
  */
-export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', ...data }: TreeViewProps) {
+export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', reorderable = false, onReorder, ...data }: TreeViewProps) {
   const open = new Set(expanded);
   const rows = visibleRows(items, open);
   const [active, setActive] = useState<string | undefined>(undefined);
@@ -90,9 +97,68 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
   });
   const toggle = (id: string, to: boolean) => onExpandedChange(to ? [...expanded, id] : expanded.filter((x) => x !== id));
 
+  // Reordering among siblings (as List's): a drag past a sibling's centre, or Alt+Arrow; each move is announced.
+  const [said, setSaid] = useState('');
+  const [dragId, setDragId] = useState<string | null>(null);
+  const drag = useRef<{ id: string; parent?: string; y: number; moved: boolean } | null>(null);
+  const refocus = useRef<string | null>(null);
+  const siblingsOf = (parent: string | undefined): TreeItem[] => {
+    if (parent === undefined) return items;
+    const find = (list: TreeItem[]): TreeItem | undefined => {
+      for (const i of list) {
+        if (i.id === parent) return i;
+        const inner = i.children && find(i.children);
+        if (inner) return inner;
+      }
+      return undefined;
+    };
+    return find(items)?.children ?? [];
+  };
+  const reorder = (parent: string | undefined, id: string, to: number) => {
+    const siblings = siblingsOf(parent);
+    const ids = siblings.map((s) => s.id);
+    const from = ids.indexOf(id);
+    if (from < 0 || to < 0 || to >= ids.length || to === from) return;
+    onReorder?.(parent, moveItem(ids, from, to));
+    setSaid(`Moved ${siblings[from].label} to position ${to + 1} of ${ids.length}.`);
+  };
+  // A moved row keeps focus: the browser drops it when the row's element moves.
+  useEffect(() => {
+    const id = refocus.current;
+    refocus.current = null;
+    if (id && document.activeElement !== refs.current.get(id)) refs.current.get(id)?.focus();
+  }, [items]);
+  const onRowDown = (row: Row) => (event: PointerEvent<HTMLSpanElement>) => {
+    if (!reorderable || event.button !== 0 || event.pointerType === 'touch') return;
+    if ((event.target as HTMLElement).closest('[data-dl-part="actions"], [data-dl-part="twisty"]')) return;
+    drag.current = { id: row.item.id, parent: row.parent, y: event.clientY, moved: false };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+  const onRowMove = (event: PointerEvent<HTMLSpanElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    if (!d.moved && Math.abs(event.clientY - d.y) < 4) return;
+    if (!d.moved) setDragId(d.id);
+    d.moved = true;
+    const ids = siblingsOf(d.parent).map((s) => s.id);
+    const boxes = ids.map((id) => refs.current.get(id)?.querySelector(':scope > [data-dl-part="row"]')?.getBoundingClientRect() ?? { top: 0, height: 0 });
+    const from = ids.indexOf(d.id);
+    const at = dropIndex(boxes, event.clientY);
+    reorder(d.parent, d.id, at > from ? at - 1 : at);
+  };
+  const onRowUp = () => {
+    if (!drag.current) return;
+    setDragId(null);
+    setTimeout(() => (drag.current = null));
+  };
   const onKeyDown = (event: KeyboardEvent<HTMLLIElement>, row: Row, index: number) => {
     if (event.target !== event.currentTarget) return;
-    const hasChildren = !!row.item.children?.length;
+    if (reorderable && event.altKey && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+      event.preventDefault();
+      refocus.current = row.item.id;
+      reorder(row.parent, row.item.id, row.position - 1 + (event.key === 'ArrowUp' ? -1 : 1));
+      return;
+    }    const hasChildren = !!row.item.children?.length;
     const isOpen = open.has(row.item.id);
     const keys: Record<string, () => void> = {
       ArrowDown: () => move(rows[index + 1]?.item.id),
@@ -133,6 +199,7 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
           aria-label={item.meta ? `${item.label}, ${item.meta}` : item.label}
           tabIndex={item.id === current ? 0 : -1}
           data-dl-part="item"
+          data-dragging={dragId === item.id ? '' : undefined}
           onKeyDown={(e) => onKeyDown(e, row, index)}
           onFocus={(e) => e.target === e.currentTarget && setActive(item.id)}
         >
@@ -140,7 +207,12 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
             data-dl-part="row"
             data-muted={item.muted ? '' : undefined}
             style={{ '--level': String(level - 1) } as CSSProperties}
+            onPointerDown={onRowDown(row)}
+            onPointerMove={onRowMove}
+            onPointerUp={onRowUp}
+            onPointerCancel={onRowUp}
             onClick={() => {
+              if (drag.current?.moved) return;
               setActive(item.id);
               onSelect?.(item.id);
             }}
@@ -172,9 +244,18 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
       );
     });
 
-  return (
-    <ul {...data} data-dl="tree-view" data-actions={actionsRoom === 'overlay' ? 'overlay' : undefined} data-mark={mark === 'current' ? 'current' : undefined} data-flat={items.some((i) => i.children?.length) ? undefined : ''} role="tree" aria-label={label}>
+  const tree = (
+    <ul {...data} data-dl="tree-view" data-reorder={reorderable ? '' : undefined} data-actions={actionsRoom === 'overlay' ? 'overlay' : undefined} data-mark={mark === 'current' ? 'current' : undefined} data-flat={items.some((i) => i.children?.length) ? undefined : ''} role="tree" aria-label={label}>
       {render(items, 1)}
     </ul>
+  );
+  if (!reorderable) return tree;
+  return (
+    <>
+      {tree}
+      <span data-dl-part="reorder-announce" role="status">
+        {said}
+      </span>
+    </>
   );
 }

@@ -38,6 +38,12 @@
       "reason": "Says where a moved item landed (F15.8e); the list shows it"
     },
     {
+      "file": "packages/core/css/compounds/tree-view.css",
+      "selector": "[data-dl='tree-view'][data-reorder] + [data-dl-part='reorder-announce']",
+      "kind": "visually hidden",
+      "reason": "Says where a moved row landed (TreeView reorderable, DesignUp template 2 gap h); the tree shows it"
+    },
+    {
       "file": "packages/core/css/compounds/gradient-editor.css",
       "selector": "[data-dl='gradient-editor'] > [data-dl-part='announce']",
       "kind": "visually hidden",

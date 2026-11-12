@@ -37,6 +37,24 @@ function Layers({ items, open, start }: { items: TreeItem[]; open: string[]; sta
   return <TreeView label="Layers" items={items} expanded={expanded} onExpandedChange={setExpanded} selected={selected} onSelect={setSelected} />;
 }
 
+const outline: TreeItem[] = [
+  { id: 'hero', label: 'Hero' },
+  { id: 'intro', label: 'Introduction' },
+  { id: 'faq', label: 'Questions', children: [{ id: 'q1', label: 'Who is it for?' }, { id: 'q2', label: 'When is it?' }, { id: 'q3', label: 'Where is it?' }] },
+  { id: 'share', label: 'Sharing' },
+];
+
+function Outline() {
+  const [items, setItems] = useState(outline);
+  const [expanded, setExpanded] = useState(['faq']);
+  const [selected, setSelected] = useState('intro');
+  const reorder = (parent: string | undefined, ids: string[]) => {
+    const order = (list: TreeItem[]) => ids.map((id) => list.find((i) => i.id === id)!);
+    setItems((all) => (parent === undefined ? order(all) : all.map((i) => (i.id === parent ? { ...i, children: order(i.children ?? []) } : i))));
+  };
+  return <TreeView label="Outline" items={items} expanded={expanded} onExpandedChange={setExpanded} selected={selected} onSelect={setSelected} reorderable onReorder={reorder} />;
+}
+
 export default {
   component: 'TreeView',
   tier: 'compound',
@@ -70,6 +88,12 @@ export default {
           <Layers items={layers} open={['signin', 'form']} start="button" />
         </Stack>
       ),
+    },
+    {
+      title: 'Reorder sections',
+      description: 'With `reorderable`, drag a row up or down among its siblings, or press Alt+ArrowUp or Alt+ArrowDown on it; each move is announced (“Moved Hero to position 2 of 4.”) and focus stays on the row. A row never leaves its parent: questions move among questions.',
+      code: `<TreeView label="Outline" items={items} reorderable onReorder={(parent, ids) => …} … />`,
+      render: () => <Outline />,
     },
   ],
 } satisfies StoryFile;

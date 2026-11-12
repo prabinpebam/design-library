@@ -179,4 +179,27 @@
       outline: var(--border-hairline) solid Highlight;
     }
   }
-}
+
+  /* reorderable: a row drags among its siblings; the dragged row lifts above its neighbours (as List's), nothing else moves until it passes one. */
+  [data-dl='tree-view'][data-reorder] {
+    isolation: isolate;
+  }
+
+  [data-dl='tree-view'][data-reorder] [role='treeitem'] > [data-dl-part='row'] {
+    cursor: grab;
+  }
+
+  [data-dl='tree-view'][data-reorder] [role='treeitem'][data-dragging] > [data-dl-part='row'] {
+    position: relative;
+    z-index: var(--layer-raised);
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-raised);
+    cursor: grabbing;
+  }
+
+  [data-dl='tree-view'][data-reorder] + [data-dl-part='reorder-announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }}

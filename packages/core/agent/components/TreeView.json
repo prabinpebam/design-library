@@ -7,7 +7,7 @@
   "summary": "A hierarchy to browse and choose from: layers in a design file, folders and files, sections of a long document. Each row can open to show its children; one row is selected. Not for site navigation (Navigation) or a flat list of options (List, Select).",
   "family": "navigation",
   "a11y": [
-    "The ARIA tree pattern: `role=\"tree\"` with a label, rows as `treeitem`s with their level, position and set size, `aria-expanded` on rows with children and `aria-selected` on the chosen one. One row is in the tab order (the selected one, else the first); the arrow keys move between rows. The kind icon is decorative: the label names it. Row actions are named controls inside the row (each Switch says which item it acts on); only the focused row's take Tab."
+    "The ARIA tree pattern: `role=\"tree\"` with a label, rows as `treeitem`s with their level, position and set size, `aria-expanded` on rows with children and `aria-selected` on the chosen one. One row is in the tab order (the selected one, else the first); the arrow keys move between rows. The kind icon is decorative: the label names it. Row actions are named controls inside the row (each Switch says which item it acts on); only the focused row's take Tab. With \reorderable, a move (a drag or Alt+Arrow) is announced in a status region (\"Moved Hero to position 2 of 4.\"); focus stays on the moved row."
   ],
   "keys": [
     {
@@ -29,6 +29,10 @@
     {
       "keys": "Enter / Space",
       "action": "selects the row"
+    },
+    {
+      "keys": "Alt+ArrowUp / Alt+ArrowDown (reorderable)",
+      "action": "moves the row before or after its previous or next sibling"
     }
   ],
   "sealed": true,
@@ -88,6 +92,17 @@
           "type": "'selection' | 'current'",
           "default": "'selection'",
           "description": "What the chosen row means: `selection` (default) the selection's fill; `current` where you are (a list of pages), a neutral fill (`c.tree-view.current-fill`)."
+        },
+        {
+          "name": "reorderable",
+          "type": "boolean",
+          "default": "false",
+          "description": "Rows can be moved among their siblings: dragged up or down, or with Alt+ArrowUp and Alt+ArrowDown. Each move is announced."
+        },
+        {
+          "name": "onReorder",
+          "type": "(parent: string | undefined, ids: string[]) => void",
+          "description": "A row moved: its parent's id (undefined at the top level) and that parent's children's ids in their new order."
         }
       ]
     },
@@ -180,12 +195,15 @@
     "--c-tree-view-selected-fill",
     "--c-tree-view-surface",
     "--c-tree-view-twisty",
+    "--color-bg-raised",
     "--color-focus",
     "--color-text",
     "--color-text-muted",
     "--duration-move",
     "--duration-quick",
     "--easing-standard",
+    "--layer-raised",
+    "--shadow-raised",
     "--size-focus-width",
     "--type-body-sm-leading",
     "--type-body-sm-size",
