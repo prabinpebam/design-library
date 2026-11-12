@@ -24,5 +24,7 @@
     --t-word-window-ruler-bg: var(--color-category-4);
     --t-word-window-icon-pink: var(--color-category-5);
     --t-word-window-icon-slate: var(--color-category-6);
+    --t-word-window-icon-purple: var(--color-category-7);
+    --t-word-window-icon-teal: var(--color-category-8);
   }
 }

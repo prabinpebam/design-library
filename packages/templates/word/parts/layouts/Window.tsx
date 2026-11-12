@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
+import { Fragment, useEffect, useRef, useState } from 'react';
+import { Avatar, Button, Checkbox, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
 import type { WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
@@ -7,14 +7,13 @@ import type { WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../typ
 export interface WindowProps extends DataAttributes {
   /** Validated shared content: the document, its comments and every label. */
   view: WordRecord;
-  /** A directly openable review state: `home`, `document`, `insert`, `draw`, `design`, `design-gallery`, `layout`, `references`, `mailings`, `navigation`, `comments` or `dark`. */
+  /** A directly openable review state: `home`, `document`, `insert`, `draw`, `design`, `design-gallery`, `layout`, `references`, `mailings`, `review`, `view`, `help`, `navigation`, `comments` or `dark`. */
   screen?: string;
   /** Resolves an entry in the template's `assets.json`. */
   picture?: (id: string) => { src: string; alt: string };
 }
 
 const tags = { title: 'h1', 'heading-1': 'h2', 'heading-2': 'h3', body: 'p' } as const;
-const H_CMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 const V_CMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 
 /**
@@ -36,6 +35,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [galleryOpen, setGalleryOpen] = useState(screen === 'design-gallery');
   const [activeStyle, setActiveStyle] = useState('current');
   const [autoSave, setAutoSave] = useState(false);
+  const [showRuler, setShowRuler] = useState(true);
+  const [showGridlines, setShowGridlines] = useState(false);
   const [zoom, setZoom] = useState(90);
   const [query, setQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
@@ -48,12 +49,17 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   }, [screen]);
   useEffect(() => {
     const tpl = rootRef.current?.closest('[data-template="word"]');
-    if (!tpl) return;
+    const site = rootRef.current?.closest('[data-dl="site-layout"]');
     if (screen === 'dark') {
-      tpl.setAttribute('data-scheme', 'dark');
-      return () => { tpl.removeAttribute('data-scheme'); };
+      tpl?.setAttribute('data-scheme', 'dark');
+      site?.setAttribute('data-scheme', 'dark');
+      return () => {
+        tpl?.removeAttribute('data-scheme');
+        site?.removeAttribute('data-scheme');
+      };
     }
-    tpl.removeAttribute('data-scheme');
+    tpl?.removeAttribute('data-scheme');
+    site?.removeAttribute('data-scheme');
   }, [screen]);
 
   const showSampleDoc = screen === 'navigation' || screen === 'comments';
@@ -63,25 +69,25 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       {/* binary-setting: chooses one document style set in a visual thumbnail strip, as in the reference. */}
       <Button label={s.name} icon="file" iconOnly size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
       {large ? (
-        <svg data-dl-part="preview" viewBox="0 0 104 78" width="104" height="78" aria-hidden="true">
-          <rect x="0.5" y="0.5" width="103" height="77" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-map-selection-indicator)' : 'var(--t-word-window-border)'} strokeWidth={active ? '1.6' : '0.8'} />
-          {s.variant === 'bar-num' && <rect x="6" y="8" width="92" height="10" fill="var(--color-text)" />}
-          {s.variant === 'caps-rule' && <line x1="6" y1="18" x2="98" y2="18" stroke="var(--color-accent)" strokeWidth="1.1" />}
-          {s.variant === 'boxed' && <line x1="6" y1="18" x2="98" y2="18" stroke="var(--color-border-control)" strokeWidth="0.9" />}
+        <svg data-dl-part="preview" viewBox="0 0 62 46" width="62" height="46" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="61" height="45" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-map-selection-indicator)' : 'var(--t-word-window-border)'} strokeWidth={active ? '1.5' : '0.8'} />
+          {s.variant === 'bar-num' && <rect x="4" y="5" width="54" height="6.5" fill="var(--color-text)" />}
+          {s.variant === 'caps-rule' && <line x1="4" y1="12" x2="58" y2="12" stroke="var(--color-accent)" strokeWidth="0.9" />}
+          {s.variant === 'boxed' && <line x1="4" y1="12" x2="58" y2="12" stroke="var(--color-border-control)" strokeWidth="0.8" />}
           <text
-            x={s.variant === 'caps-centered' ? '52' : '7'}
-            y="15"
+            x={s.variant === 'caps-centered' ? '31' : '5'}
+            y="10"
             textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
-            fontSize="10"
+            fontSize="6.8"
             fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
             fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
           >
             {s.titleText}
           </text>
-          <text x="7" y="28" fontSize="7.5" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
+          <text x="5" y="18" fontSize="5.4" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
             {s.headingText}
           </text>
-          <path d="M7 35h88M7 39h84M7 43h86M7 47h72M7 55h88M7 59h82M7 63h85M7 67h64" stroke="currentColor" strokeWidth="1.25" opacity="0.55" />
+          <path d="M5 23h50M5 26.5h47M5 30h49M5 33.5h40M5 38h48M5 41.5h42" stroke="currentColor" strokeWidth="1.05" opacity="0.55" />
         </svg>
       ) : (
         <svg data-dl-part="preview" viewBox="0 0 60 50" width="60" height="50" aria-hidden="true">
@@ -114,12 +120,35 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       const sets = view.styleSets ?? [];
       return (
         <div key={key} data-dl="word-style-strip">
+          <svg data-dl-part="bg" viewBox="0 0 100 56" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="0.5" y="0.5" width="99" height="55" rx="3" fill="var(--t-word-window-ruler-inner)" stroke="var(--t-word-window-border)" vectorEffect="non-scaling-stroke" />
+          </svg>
           <div data-dl-part="tiles">
             {sets.slice(0, 11).map((s) => styleTile(s, activeStyle === s.id, () => setActiveStyle(s.id)))}
           </div>
           <span data-dl-part="expand">
-            <Button label={c.moreStyleSets} icon={'qat-customize' as IconName} iconOnly size="xs" emphasis="quiet" onClick={() => setGalleryOpen((o) => !o)} />
+            <Button label={c.moreStyleSets} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" onClick={() => setGalleryOpen((o) => !o)} />
           </span>
+        </div>
+      );
+    }
+    if (cmd.kind === 'checkbox') {
+      const isRuler = cmd.label === 'Ruler';
+      const isNav = cmd.label === 'Navigation Pane';
+      const isChecked = isRuler ? showRuler : isNav ? pane === 'navigation' : showGridlines;
+      return (
+        <div key={key} data-dl="word-checkbox">
+          {/* binary-setting: dense View ribbon Show toolbar checkboxes (Ruler, Gridlines, Navigation Pane), matching the reference. */}
+          <Checkbox
+            label={cmd.label}
+            size="s"
+            checked={isChecked}
+            onChange={(next) => {
+              if (isRuler) setShowRuler(next);
+              else if (isNav) setPane(next ? 'navigation' : undefined);
+              else setShowGridlines(next);
+            }}
+          />
         </div>
       );
     }
@@ -135,7 +164,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         <div key={key} data-dl="word-labelled-field" data-icon={cmd.icon}>
           <span data-dl-part="field-label">
             {cmd.icon && <Icon name={cmd.icon as IconName} size="sm" />}
-            <span>{cmd.label}</span>
+            {!cmd.hideFieldLabel && <span>{cmd.label}</span>}
           </span>
           <div data-dl="word-field" data-width={cmd.width}>
             <Select label={cmd.label} hideLabel size="xs" value={cmd.value ?? ''} options={[{ value: cmd.value ?? '', label: cmd.value ?? '' }]} onChange={() => undefined} />
@@ -159,11 +188,11 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     const isPen = cmd.kind === 'pen';
     const isTool = cmd.kind === 'tool';
     const isStacked = cmd.kind === 'stacked';
-    const wide = cmd.lines ? (cmd.label.length >= 16 ? 'xl' : cmd.label.includes('&') || cmd.lines[0].length > 9 || (cmd.lines[1]?.length ?? 0) > 10 ? 'lg' : 'md') : undefined;
+    const shownLabel = isStacked && cmd.lines ? cmd.lines.join('\n') : cmd.label;
     /* binary-setting: ribbon formatting and drawing commands are toolbar toggles in a dense command set, as in the reference, not settings. */
     const main = (
       <Button
-        label={cmd.label}
+        label={shownLabel}
         icon={cmd.icon as IconName}
         iconOnly={!isStacked && cmd.kind !== 'labelled'}
         stacked={isStacked}
@@ -171,18 +200,18 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         size="xs"
         emphasis="quiet"
         pressed={cmd.pressed}
-        unavailable={cmd.disabled ? cmd.label : undefined}
+        disabled={cmd.disabled}
       />
     );
     if (!cmd.menu) {
       return (
-        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-wide={wide}>
+        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-pressed={cmd.pressed ? '' : undefined}>
           {main}
         </div>
       );
     }
     return (
-      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined} data-wide={wide}>
+      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined}>
         {main}
         <span data-dl-part="split-menu">
           <Button label={`${cmd.label} options`} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
@@ -221,14 +250,26 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           </div>
         )}
         {g.columns?.map((col, ci) => (
-          <div key={`col-${ci}`} data-dl="word-rows" data-count={col.length}>
-            {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${ci}-${r}-${i}`))}</div>)}
-          </div>
+          <Fragment key={`col-${ci}`}>
+            {ci > 0 && g.id === 'window' && (
+              <svg data-dl="word-col-sep" viewBox="0 0 3 62" width="3" height="62" aria-hidden="true">
+                <line x1="1.5" y1="2" x2="1.5" y2="60" stroke="var(--t-word-window-border)" />
+              </svg>
+            )}
+            <div data-dl="word-rows" data-count={col.length}>
+              {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${ci}-${r}-${i}`))}</div>)}
+            </div>
+          </Fragment>
         ))}
         {g.rows && (
           <div data-dl="word-rows" data-count={g.rows.length} data-compact={g.lead ? '' : undefined}>
             {g.rows.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${r}-${i}`))}</div>)}
           </div>
+        )}
+        {g.columns && g.endLead && (
+          <svg data-dl="word-col-sep" viewBox="0 0 3 62" width="3" height="62" aria-hidden="true">
+            <line x1="1.5" y1="2" x2="1.5" y2="60" stroke="var(--t-word-window-border)" />
+          </svg>
         )}
         {g.endLead?.map((cmd, i) => command(cmd, `end-${i}`))}
       </>
@@ -248,7 +289,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           </defs>
           <rect x="0" y="0" width="100" height="46" fill="url(#word-mica-grad)" />
           <rect x="0" y="46" width="100" height="125" fill="var(--t-word-window-tab-wash)" />
-          <rect x="0" y="171" width="100" height="751" fill="var(--color-map-nav)" />
+          <rect x="0" y="171" width="100" height="730" fill="var(--color-map-nav)" />
+          <rect x="0" y="901" width="100" height="21" fill="var(--color-bg-sunken)" />
         </svg>
         <svg data-dl-part="frame-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <rect x="0" y="0" width="100" height="100" fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
@@ -260,7 +302,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             </span>
             <div data-dl-part="autosave">
               {/* binary-setting: AutoSave is an on/off setting, so it is a Switch, as in the reference. */}
-              <Switch label={c.autoSave} labelPosition="start" size="xs" tone="inherit" stateText={{ on: c.on, off: c.off }} checked={autoSave} onChange={setAutoSave} />
+              <Switch label={c.autoSave} labelPosition="start" size="xs" stateText={{ on: c.on, off: c.off }} checked={autoSave} onChange={setAutoSave} />
             </div>
             <span data-dl-part="qat-save">
               <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" />
@@ -287,6 +329,9 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               <TextField label={c.search} hideLabel type="search" icon="search" size="xs" placeholder={c.search} value={query} onChange={setQuery} />
             ) : (
               <div data-dl="word-search-box">
+                <svg data-dl-part="bg" viewBox="0 0 10 10" preserveAspectRatio="none" aria-hidden="true">
+                  <rect width="10" height="10" fill="var(--t-word-window-search-bg)" />
+                </svg>
                 <span data-dl-part="trigger">
                   <Button label={c.search} icon="search" size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => setSearchOpen(true)} />
                 </span>
@@ -336,93 +381,104 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             }
             tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
           />
-          {tab === 'design' && galleryOpen && view.styleSets && (
-            <div data-dl="word-style-gallery" data-material="floating" data-elevation="3" role="dialog" aria-label={c.styleGallery}>
-              <div data-dl-part="section">
-                <span data-dl-part="section-head">{c.thisDocument}</span>
-                <div data-dl-part="grid">
-                  {styleTile(view.styleSets[0], activeStyle === view.styleSets[0].id, () => { setActiveStyle(view.styleSets[0].id); setGalleryOpen(false); }, true)}
+          {tab === 'design' && galleryOpen && view.styleSets && view.styleSets.length > 0 && (() => {
+            const sets = view.styleSets;
+            const first = sets[0];
+            return (
+              <div data-dl="word-style-gallery" data-material="floating" data-elevation="3" role="dialog" aria-label={c.styleGallery}>
+                <div data-dl-part="section">
+                  <span data-dl-part="section-head">{c.thisDocument}</span>
+                  <div data-dl-part="grid">
+                    {styleTile(first, activeStyle === first.id, () => { setActiveStyle(first.id); setGalleryOpen(false); }, true)}
+                  </div>
+                </div>
+                <div data-dl-part="section" data-grow="">
+                  <span data-dl-part="section-head">{c.builtIn}</span>
+                  <div data-dl-part="grid">
+                    {sets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }, true))}
+                  </div>
+                </div>
+                <div data-dl-part="menu-foot">
+                  <Button label={c.resetStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => { setActiveStyle('current'); setGalleryOpen(false); }} />
+                  <Button label={c.saveStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => setGalleryOpen(false)} />
+                  <span data-dl-part="grip" aria-hidden="true">••••</span>
                 </div>
               </div>
-              <div data-dl-part="section" data-grow="">
-                <span data-dl-part="section-head">{c.builtIn}</span>
-                <div data-dl-part="grid">
-                  {view.styleSets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }, true))}
-                </div>
-              </div>
-              <div data-dl-part="menu-foot">
-                <Button label={c.resetStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => { setActiveStyle('current'); setGalleryOpen(false); }} />
-                <Button label={c.saveStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => setGalleryOpen(false)} />
-                <span data-dl-part="grip" aria-hidden="true">••••</span>
-              </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
 
         <div data-dl-part="workspace">
           <div data-dl-part="editor-col">
-            <div data-dl="word-ruler-h">
-              <span data-dl-part="tab-stop">
-                <svg viewBox="0 0 23 23" width="23" height="23" aria-hidden="true">
-                  <rect x="0" y="0" width="23" height="23" fill="var(--t-word-window-ruler-bg)" />
-                  <path d="M9 7v6.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-                </svg>
-              </span>
-              <div data-dl-part="track-center">
-                {(() => {
-                  const rW = copilotOpen ? 917 : 1326;
-                  const pStart = copilotOpen ? 197 : 394;
-                  const pWidth = copilotOpen ? 497 : 516;
-                  const pEnd = pStart + pWidth;
-                  const ticks = Math.floor(rW / 8.1);
-                  return (
-                    <svg viewBox={`0 0 ${rW} 23`} width="100%" height="23" preserveAspectRatio="none" role="img" aria-label={c.horizontalRuler}>
-                      <rect x="0" y="0" width={rW} height="23" fill="var(--t-word-window-ruler-bg)" />
-                      <rect x={pStart} y="5" width={pWidth} height="12" fill="var(--t-word-window-ruler-inner)" />
-                      {Array.from({ length: ticks }, (_, i) => {
-                        const x = Math.round((pStart - Math.floor(pStart / 8.1) * 8.1 + i * 8.1) * 10) / 10;
-                        if (x <= 4 || x >= rW - 4) return null;
-                        const cmIdx = Math.round((x - pStart) / 32.4);
-                        const isCm = Math.abs(x - (pStart + cmIdx * 32.4)) < 1.2;
-                        const isHalf = !isCm && Math.abs(((x - pStart) % 32.4 + 32.4) % 32.4 - 16.2) < 1.5;
-                        if (isCm && cmIdx !== 0) {
-                          const labelNum = cmIdx > 0 ? cmIdx : Math.abs(cmIdx);
-                          return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{labelNum}</text>;
-                        }
-                        const h = isHalf ? 4 : 2;
-                        return <line key={i} x1={x} y1={11 - h / 2} x2={x} y2={11 + h / 2} stroke="currentColor" strokeWidth="0.9" opacity="0.7" />;
-                      })}
-                      <g transform={`translate(${pStart}, 0)`}>
-                        <polygon points="-4,3 4,3 4,6 0,10 -4,6" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                        <polygon points="-4,18 0,14 4,18 4,20 -4,20" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                        <rect x="-4" y="20" width="8" height="2.5" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                      </g>
-                      <g transform={`translate(${pEnd}, 0)`}>
-                        <polygon points="-4,18 0,14 4,18 4,21 -4,21" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                      </g>
-                    </svg>
-                  );
-                })()}
+            {showRuler && (
+              <div data-dl="word-ruler-h">
+                <span data-dl-part="tab-stop">
+                  <svg viewBox="0 0 23 23" width="23" height="23" aria-hidden="true">
+                    <rect x="0" y="0" width="23" height="23" fill="var(--t-word-window-ruler-bg)" />
+                    <path d="M9 7v6.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+                  </svg>
+                </span>
+                <div data-dl-part="track-center">
+                  {(() => {
+                    const rW = copilotOpen ? 917 : 1326;
+                    const pageW = copilotOpen ? 652 : 677;
+                    const pageStart = Math.round((rW - 16 - pageW) / 2);
+                    const pageEnd = pageStart + pageW;
+                    const pStart = copilotOpen ? 197 : 394;
+                    const pWidth = copilotOpen ? 497 : 516;
+                    const pEnd = pStart + pWidth;
+                    const ticks = Math.floor(rW / 8.1);
+                    return (
+                      <svg viewBox={`0 0 ${rW} 23`} width="100%" height="23" preserveAspectRatio="none" role="img" aria-label={c.horizontalRuler}>
+                        <rect x="0" y="0" width={rW} height="23" fill="var(--t-word-window-ruler-bg)" />
+                        <rect x={pStart} y="5" width={pWidth} height="12" fill="var(--t-word-window-ruler-inner)" />
+                        {Array.from({ length: ticks }, (_, i) => {
+                          const x = Math.round((pStart - Math.floor(pStart / 8.1) * 8.1 + i * 8.1) * 10) / 10;
+                          if (x <= pageStart + 4 || x >= pageEnd - 4) return null;
+                          const cmIdx = Math.round((x - pStart) / 32.4);
+                          const isCm = Math.abs(x - (pStart + cmIdx * 32.4)) < 1.2;
+                          const isHalf = !isCm && Math.abs(((x - pStart) % 32.4 + 32.4) % 32.4 - 16.2) < 1.5;
+                          if (isCm && cmIdx !== 0) {
+                            const labelNum = cmIdx > 0 ? cmIdx : Math.abs(cmIdx);
+                            return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{labelNum}</text>;
+                          }
+                          const h = isHalf ? 4 : 2;
+                          return <line key={i} x1={x} y1={11 - h / 2} x2={x} y2={11 + h / 2} stroke="currentColor" strokeWidth="0.9" opacity="0.7" />;
+                        })}
+                        <g transform={`translate(${pStart}, 0)`}>
+                          <polygon points="-4,3 4,3 4,6 0,10 -4,6" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                          <polygon points="-4,18 0,14 4,18 4,20 -4,20" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                          <rect x="-4" y="20" width="8" height="2.5" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                        </g>
+                        <g transform={`translate(${pEnd}, 0)`}>
+                          <polygon points="-4,18 0,14 4,18 4,21 -4,21" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                        </g>
+                      </svg>
+                    );
+                  })()}
+                </div>
               </div>
-            </div>
+            )}
 
             <div data-dl-part="body">
-              <div data-dl="word-ruler-v">
-                <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
-                  <rect x="0" y="0" width="23" height="700" fill="var(--t-word-window-ruler-bg)" />
-                  <rect x="3" y={copilotOpen ? 82 : 136} width="15" height={copilotOpen ? 618 : 564} fill="var(--t-word-window-ruler-inner)" />
-                  {V_CMS.map((n) => {
-                    const y = (copilotOpen ? 88 : 142) + n * 32.4;
-                    return (
-                      <g key={n}>
-                        <line x1="9" y1={y - 16.2} x2="13" y2={y - 16.2} stroke="currentColor" strokeWidth="0.9" opacity="0.65" />
-                        <text x="11" y={y + 3} textAnchor="middle" fontSize="8.5" fill="currentColor" transform={`rotate(-90 11 ${y})`}>{n}</text>
-                      </g>
-                    );
-                  })}
-                  <line x1="5" y1={copilotOpen ? 88 : 142} x2="17" y2={copilotOpen ? 88 : 142} stroke="currentColor" strokeWidth="0.9" />
-                </svg>
-              </div>
+              {showRuler && (
+                <div data-dl="word-ruler-v">
+                  <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
+                    <rect x="0" y="0" width="23" height="700" fill="var(--t-word-window-ruler-bg)" />
+                    <rect x="3" y={copilotOpen ? 82 : 136} width="15" height={copilotOpen ? 618 : 564} fill="var(--t-word-window-ruler-inner)" />
+                    {V_CMS.map((n) => {
+                      const y = (copilotOpen ? 88 : 142) + n * 32.4;
+                      return (
+                        <g key={n}>
+                          <line x1="9" y1={y - 16.2} x2="13" y2={y - 16.2} stroke="currentColor" strokeWidth="0.9" opacity="0.65" />
+                          <text x="11" y={y + 3} textAnchor="middle" fontSize="8.5" fill="currentColor" transform={`rotate(-90 11 ${y})`}>{n}</text>
+                        </g>
+                      );
+                    })}
+                    <line x1="5" y1={copilotOpen ? 88 : 142} x2="17" y2={copilotOpen ? 88 : 142} stroke="currentColor" strokeWidth="0.9" />
+                  </svg>
+                </div>
+              )}
 
               {pane === 'navigation' && (
                 <div data-dl-part="nav-pane" data-density="compact">
@@ -507,6 +563,9 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
           {copilotOpen && view.copilotPane && (
             <aside data-dl="word-copilot-pane" data-density="compact" aria-label={c.copilot}>
+              <svg data-dl-part="bg" viewBox="0 0 10 10" preserveAspectRatio="none" aria-hidden="true">
+                <rect width="10" height="10" fill="var(--t-word-window-copilot-bg)" />
+              </svg>
               <div data-dl-part="head">
                 <Button label={view.copilotPane.menuLabel} icon="menu" iconOnly size="xs" emphasis="quiet" tone="inherit" />
                 <div data-dl-part="head-end">
@@ -515,11 +574,14 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 </div>
               </div>
               <div data-dl-part="content">
-                <Heading level={2} size="4">{view.copilotPane.heading}</Heading>
+                <Heading level={2} size={4}>{view.copilotPane.heading}</Heading>
                 <Text variant="body-sm">{view.copilotPane.body}</Text>
                 <div data-dl-part="prompts">
                   {view.copilotPane.prompts.map((p, i) => (
                     <div key={i} data-dl-part="prompt-chip">
+                      <svg data-dl-part="bg" viewBox="0 0 200 34" preserveAspectRatio="none" aria-hidden="true">
+                        <rect width="200" height="34" rx="17" fill="var(--t-word-window-copilot-chip)" />
+                      </svg>
                       <Button label={`${p.prefix}${p.emphasis}`} size="xs" emphasis="quiet" tone="inherit" align="start" />
                       <span data-dl-part="chip-words" aria-hidden="true">
                         <span data-dl-part="prefix">{p.prefix}</span>

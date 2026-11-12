@@ -53,11 +53,22 @@
   }
 
   [data-dl='ribbon-groups'] > [data-dl-part='group'] {
+    position: relative;
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto;
     gap: var(--c-ribbon-command-gap);
-    padding-inline: var(--c-ribbon-group-gap);
-    border-inline-end: var(--border-hairline) solid var(--c-ribbon-separator);
+    padding-inline-start: var(--c-ribbon-group-gap);
+    padding-inline-end: calc(var(--c-ribbon-group-gap) + var(--border-hairline));
+  }
+
+  [data-dl='ribbon-groups'] > [data-dl-part='group']::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    inline-size: var(--border-hairline);
+    background: var(--c-ribbon-separator);
+    pointer-events: none;
   }
 
   [data-dl='ribbon-groups'] > [data-dl-part='group']:first-child {

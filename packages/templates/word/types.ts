@@ -5,16 +5,20 @@ export interface WordCommand {
   lines?: string[];
   /** Icon name from core or the template's custom icon pack. */
   icon?: string;
-  /** labelled: a small icon with its name beside it; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets. */
-  kind?: 'stacked' | 'icon' | 'labelled' | 'field' | 'labelled-field' | 'record-stepper' | 'separator' | 'pen' | 'tool' | 'style-gallery';
-  /** A field's current value ("Aptos (Body)", "11", "APA"). */
+  /** labelled: a small icon with its name beside it; checkbox: a compact show/hide checkbox row; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets. */
+  kind?: 'stacked' | 'icon' | 'labelled' | 'checkbox' | 'field' | 'labelled-field' | 'record-stepper' | 'separator' | 'pen' | 'tool' | 'style-gallery';
+  /** Hides the text caption before a `labelled-field` when only its leading icon precedes the select box (All Markup). */
+  hideFieldLabel?: boolean;
+  /** A field's current value ("Aptos (Body)", "11", "APA", "All Markup"). */
   value?: string;
-  /** A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style. */
-  width?: 'wide' | 'narrow' | 'medium';
+  /** A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style, `markup` for All Markup. */
+  width?: 'wide' | 'narrow' | 'medium' | 'markup';
   /** A split command with a menu of options. */
   menu?: boolean;
-  /** A toggle that's on (left alignment). */
+  /** A toggle that's on (left alignment), or initial checked state for a `checkbox` command. */
   pressed?: boolean;
+  /** Initial checked state for a `checkbox` command (Ruler on the View tab). */
+  checked?: boolean;
   /** Unavailable in the current selection state (Cut, Copy, Sensitivity on an empty selection). */
   disabled?: boolean;
 }

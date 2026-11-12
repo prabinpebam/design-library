@@ -13,7 +13,8 @@
     { "id": "editor", "title": "Editor", "summary": "Write, format, structure and review a document.", "flows": [
       { "id": "write", "title": "Write and review", "summary": "The page with the Home ribbon, dark theme, navigation and comments.", "screens": ["home", "document", "dark", "navigation", "comments"] },
       { "id": "authoring", "title": "Insert, Draw and Design", "summary": "Insert elements, draw with ink and choose a document style set.", "screens": ["insert", "draw", "design", "design-gallery"] },
-      { "id": "structure", "title": "Layout, References and Mailings", "summary": "Configure page setup and spacing, manage citations and run mail merge.", "screens": ["layout", "references", "mailings"] }
+      { "id": "structure", "title": "Layout, References and Mailings", "summary": "Configure page setup and spacing, manage citations and run mail merge.", "screens": ["layout", "references", "mailings"] },
+      { "id": "proofing", "title": "Review, View and Help", "summary": "Proofing, markup tracking, page views, rulers and support.", "screens": ["review", "view", "help"] }
     ] }
   ],
   "layouts": [
@@ -26,6 +27,9 @@
     { "id": "layout", "title": "Layout", "component": "SiteLayout", "content": "content/editor/structure/layout.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "references", "title": "References", "component": "SiteLayout", "content": "content/editor/structure/references.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "mailings", "title": "Mailings", "component": "SiteLayout", "content": "content/editor/structure/mailings.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "review", "title": "Review", "component": "SiteLayout", "content": "content/editor/proofing/review.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "view", "title": "View", "component": "SiteLayout", "content": "content/editor/proofing/view.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "help", "title": "Help", "component": "SiteLayout", "content": "content/editor/proofing/help.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "navigation", "title": "Navigation pane", "component": "SiteLayout", "content": "content/editor/write/navigation.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "comments", "title": "Comments", "component": "SiteLayout", "content": "content/editor/write/comments.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "dark", "title": "Dark theme", "component": "SiteLayout", "content": "content/editor/write/dark.json", "regions": [{"id":"main","accepts":["*"]}] }

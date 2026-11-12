@@ -34,8 +34,16 @@
       "additionalProperties": false,
       "description": "One ribbon command: a stacked lead command, an icon command (optionally with a menu chevron), or a value field.",
       "properties": {
+        "checked": {
+          "description": "Initial checked state for a `checkbox` command (Ruler on the View tab).",
+          "type": "boolean"
+        },
         "disabled": {
           "description": "Unavailable in the current selection state (Cut, Copy, Sensitivity on an empty selection).",
+          "type": "boolean"
+        },
+        "hideFieldLabel": {
+          "description": "Hides the text caption before a `labelled-field` when only its leading icon precedes the select box (All Markup).",
           "type": "boolean"
         },
         "icon": {
@@ -43,11 +51,12 @@
           "type": "string"
         },
         "kind": {
-          "description": "labelled: a small icon with its name beside it; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets.",
+          "description": "labelled: a small icon with its name beside it; checkbox: a compact show/hide checkbox row; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets.",
           "enum": [
             "stacked",
             "icon",
             "labelled",
+            "checkbox",
             "field",
             "labelled-field",
             "record-stepper",
@@ -73,19 +82,20 @@
           "type": "boolean"
         },
         "pressed": {
-          "description": "A toggle that's on (left alignment).",
+          "description": "A toggle that's on (left alignment), or initial checked state for a `checkbox` command.",
           "type": "boolean"
         },
         "value": {
-          "description": "A field's current value (\"Aptos (Body)\", \"11\", \"APA\").",
+          "description": "A field's current value (\"Aptos (Body)\", \"11\", \"APA\", \"All Markup\").",
           "type": "string"
         },
         "width": {
-          "description": "A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style.",
+          "description": "A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style, `markup` for All Markup.",
           "enum": [
             "wide",
             "narrow",
-            "medium"
+            "medium",
+            "markup"
           ],
           "type": "string"
         }

@@ -139,7 +139,7 @@
             "id": "tools",
             "label": "Drawing Tools",
             "lead": [
-              { "label": "Select", "icon": "draw-cursor", "kind": "tool" },
+              { "label": "Select", "icon": "draw-cursor", "kind": "tool", "pressed": true },
               { "label": "Lasso Select", "icon": "draw-lasso", "kind": "tool" },
               { "label": "Stroke Eraser", "icon": "draw-eraser", "kind": "pen", "menu": true },
               { "label": "Action Pen", "icon": "pen-action", "kind": "pen" },
@@ -446,178 +446,99 @@
             "id": "proofing",
             "label": "Proofing",
             "lead": [
-              {
-                "label": "Editor",
-                "icon": "pen",
-                "kind": "stacked"
-              }
+              { "label": "Editor", "icon": "editor-pen", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "Thesaurus",
-                  "icon": "book",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Word Count",
-                  "icon": "list-numbered",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Spelling and Grammar", "icon": "spelling-grammar", "kind": "labelled", "menu": true }],
+              [{ "label": "Thesaurus", "icon": "thesaurus-book", "kind": "labelled" }],
+              [{ "label": "Word Count", "icon": "word-count", "kind": "labelled" }]
             ]
           },
           {
             "id": "speech",
             "label": "Speech",
             "lead": [
-              {
-                "label": "Read Aloud",
-                "icon": "speaker",
-                "kind": "stacked"
-              }
+              { "label": "Read Aloud", "lines": ["Read", "Aloud"], "icon": "read-aloud", "kind": "stacked" }
             ]
           },
           {
             "id": "accessibility",
             "label": "Accessibility",
             "lead": [
-              {
-                "label": "Check Accessibility",
-                "icon": "person",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Check Accessibility", "lines": ["Check", "Accessibility"], "icon": "check-accessibility-doc", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "language",
             "label": "Language",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "Language",
-                "icon": "globe",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Language", "icon": "language-doc", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "comments",
             "label": "Comments",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "New Comment",
-                "icon": "comment",
-                "kind": "stacked"
-              }
+              { "label": "Comments", "icon": "review-comments", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "markup",
+            "label": "Markup",
+            "launcher": "Track Changes options",
+            "lead": [
+              { "label": "Filter All Markup", "lines": ["Filter All", "Markup"], "icon": "filter-markup", "kind": "stacked", "menu": true }
             ],
             "rows": [
-              [
-                {
-                  "label": "Delete",
-                  "icon": "close",
-                  "menu": true
-                },
-                {
-                  "label": "Previous",
-                  "icon": "chevron-start"
-                },
-                {
-                  "label": "Next",
-                  "icon": "chevron-end"
-                }
-              ],
-              [
-                {
-                  "label": "Show Comments",
-                  "icon": "comment",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
+              [{ "label": "Display for Review", "icon": "markup-view", "kind": "labelled-field", "hideFieldLabel": true, "value": "All Markup", "width": "markup" }],
+              [{ "label": "Show Markup", "icon": "show-markup", "kind": "labelled", "menu": true }],
+              [{ "label": "Reviewing Pane", "icon": "reviewing-pane", "kind": "labelled", "menu": true }]
             ]
           },
           {
             "id": "tracking",
             "label": "Tracking",
-            "launcher": "Tracking options",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "Track Changes",
-                "icon": "edit",
-                "kind": "stacked",
-                "menu": true
-              }
-            ],
-            "rows": [
-              [
-                {
-                  "label": "All Markup",
-                  "icon": "eye",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Show Markup",
-                  "icon": "list",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ],
-              [
-                {
-                  "label": "Reviewing Pane",
-                  "icon": "layout-stack",
-                  "kind": "labelled",
-                  "menu": true
-                }
-              ]
-            ]
-          },
-          {
-            "id": "changes",
-            "label": "Changes",
-            "lead": [
-              {
-                "label": "Accept",
-                "icon": "check",
-                "kind": "stacked",
-                "menu": true
-              },
-              {
-                "label": "Reject",
-                "icon": "close",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Tracking", "icon": "tracking-doc", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "compare",
             "label": "Compare",
             "lead": [
-              {
-                "label": "Compare",
-                "icon": "copy",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Compare", "icon": "compare-docs", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "protect",
             "label": "Protect",
+            "hideLabel": true,
             "lead": [
-              {
-                "label": "Restrict Editing",
-                "icon": "lock",
-                "kind": "stacked"
-              }
+              { "label": "Protect", "icon": "protect-doc", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "ink",
+            "label": "Ink",
+            "lead": [
+              { "label": "Hide Ink", "lines": ["Hide", "Ink"], "icon": "hide-ink", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "definitions",
+            "label": "Definitions",
+            "lead": [
+              { "label": "Show Defined Terms", "lines": ["Show Defined", "Terms"], "icon": "defined-terms", "kind": "stacked" }
+            ]
+          },
+          {
+            "id": "notes",
+            "label": "Notes",
+            "lead": [
+              { "label": "Linked Notes", "lines": ["Linked", "Notes"], "icon": "linked-notes", "kind": "stacked" }
             ]
           }
         ]
@@ -630,168 +551,84 @@
             "id": "views",
             "label": "Views",
             "lead": [
-              {
-                "label": "Read Mode",
-                "icon": "book",
-                "kind": "stacked"
-              },
-              {
-                "label": "Print Layout",
-                "icon": "file",
-                "kind": "stacked"
-              },
-              {
-                "label": "Web Layout",
-                "icon": "globe",
-                "kind": "stacked"
-              }
+              { "label": "Read Mode", "lines": ["Read", "Mode"], "icon": "view-read-mode", "kind": "stacked" },
+              { "label": "Print Layout", "lines": ["Print", "Layout"], "icon": "view-print-layout", "kind": "stacked", "pressed": true },
+              { "label": "Web Layout", "lines": ["Web", "Layout"], "icon": "view-web-layout", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "Outline",
-                  "icon": "list",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Draft",
-                  "icon": "text",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Outline", "icon": "view-outline", "kind": "labelled" }],
+              [{ "label": "Draft", "icon": "view-draft", "kind": "labelled" }]
             ]
           },
           {
             "id": "immersive",
             "label": "Immersive",
             "lead": [
-              {
-                "label": "Focus",
-                "icon": "frame",
-                "kind": "stacked"
-              },
-              {
-                "label": "Immersive Reader",
-                "icon": "book",
-                "kind": "stacked"
-              }
+              { "label": "Focus", "icon": "view-focus", "kind": "stacked" },
+              { "label": "Immersive Reader", "lines": ["Immersive", "Reader"], "icon": "immersive-reader", "kind": "stacked" }
             ]
           },
           {
             "id": "movement",
             "label": "Page Movement",
             "lead": [
-              {
-                "label": "Vertical",
-                "icon": "arrow-down",
-                "kind": "stacked"
-              },
-              {
-                "label": "Side to Side",
-                "icon": "arrow-end",
-                "kind": "stacked"
-              }
+              { "label": "Vertical", "icon": "page-vertical", "kind": "stacked", "pressed": true },
+              { "label": "Side to Side", "lines": ["Side", "to Side"], "icon": "page-side-to-side", "kind": "stacked" }
             ]
           },
           {
             "id": "show",
             "label": "Show",
             "rows": [
-              [
-                {
-                  "label": "Ruler",
-                  "icon": "size-width",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Gridlines",
-                  "icon": "grid",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Navigation Pane",
-                  "icon": "list",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "Ruler", "kind": "checkbox", "checked": true }],
+              [{ "label": "Gridlines", "kind": "checkbox" }],
+              [{ "label": "Navigation Pane", "kind": "checkbox" }]
             ]
           },
           {
             "id": "zoom",
             "label": "Zoom",
             "lead": [
-              {
-                "label": "Zoom",
-                "icon": "search",
-                "kind": "stacked"
-              },
-              {
-                "label": "100%",
-                "icon": "size-width",
-                "kind": "stacked"
-              }
+              { "label": "Zoom", "icon": "zoom-loupe", "kind": "stacked" },
+              { "label": "100%", "icon": "zoom-100", "kind": "stacked" }
             ],
             "rows": [
-              [
-                {
-                  "label": "One Page",
-                  "icon": "file",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Multiple Pages",
-                  "icon": "copy",
-                  "kind": "labelled"
-                }
-              ],
-              [
-                {
-                  "label": "Page Width",
-                  "icon": "size-width",
-                  "kind": "labelled"
-                }
-              ]
+              [{ "label": "One Page", "icon": "one-page", "kind": "labelled" }],
+              [{ "label": "Multiple Pages", "icon": "multiple-pages", "kind": "labelled" }],
+              [{ "label": "Page Width", "icon": "page-width", "kind": "labelled" }]
             ]
           },
           {
             "id": "window",
             "label": "Window",
-            "lead": [
-              {
-                "label": "New Window",
-                "icon": "external",
-                "kind": "stacked"
-              },
-              {
-                "label": "Arrange All",
-                "icon": "layout-stack",
-                "kind": "stacked"
-              },
-              {
-                "label": "Split",
-                "icon": "layout-free",
-                "kind": "stacked"
-              }
+            "columns": [
+              [
+                [{ "label": "New Window", "icon": "window-new", "kind": "labelled" }],
+                [{ "label": "Arrange All", "icon": "window-arrange", "kind": "labelled" }],
+                [{ "label": "Split", "icon": "window-split", "kind": "labelled" }]
+              ],
+              [
+                [{ "label": "View Side by Side", "icon": "window-side-by-side", "kind": "labelled", "disabled": true }],
+                [{ "label": "Synchronous Scrolling", "icon": "window-sync-scroll", "kind": "labelled", "disabled": true }],
+                [{ "label": "Reset Window Position", "icon": "window-reset-pos", "kind": "labelled", "disabled": true }]
+              ]
+            ],
+            "endLead": [
+              { "label": "Switch Windows", "lines": ["Switch", "Windows"], "icon": "switch-windows", "kind": "stacked", "menu": true }
             ]
           },
           {
             "id": "macros",
             "label": "Macros",
             "lead": [
-              {
-                "label": "Macros",
-                "icon": "code",
-                "kind": "stacked",
-                "menu": true
-              }
+              { "label": "Macros", "icon": "macros-doc", "kind": "stacked", "menu": true }
+            ]
+          },
+          {
+            "id": "document-props",
+            "label": "Document",
+            "lead": [
+              { "label": "Properties", "icon": "doc-properties", "kind": "stacked" }
             ]
           }
         ]
@@ -804,26 +641,20 @@
             "id": "help",
             "label": "Help",
             "lead": [
-              {
-                "label": "Help",
-                "icon": "info",
-                "kind": "stacked"
-              },
-              {
-                "label": "Contact Support",
-                "icon": "people",
-                "kind": "stacked"
-              },
-              {
-                "label": "Feedback",
-                "icon": "comment",
-                "kind": "stacked"
-              },
-              {
-                "label": "Show Training",
-                "icon": "play",
-                "kind": "stacked"
-              }
+              { "label": "Help", "icon": "help-circle", "kind": "stacked" },
+              { "label": "Contact Support", "lines": ["Contact", "Support"], "icon": "contact-support", "kind": "stacked" },
+              { "label": "Feedback", "icon": "feedback-person", "kind": "stacked" },
+              { "label": "Show Training", "lines": ["Show", "Training"], "icon": "show-training", "kind": "stacked" }
+            ],
+            "rows": [
+              [{ "label": "What's New", "icon": "whats-new", "kind": "labelled" }]
+            ]
+          },
+          {
+            "id": "mobile",
+            "label": "Mobile",
+            "lead": [
+              { "label": "Get Mobile App", "lines": ["Get Mobile", "App"], "icon": "mobile-phone", "kind": "stacked" }
             ]
           }
         ]
@@ -1176,7 +1007,9 @@
       { "id": "minimalist", "name": "Minimalist", "titleText": "TITLE", "headingText": "Heading 1", "variant": "editorial" },
       { "id": "shaded", "name": "Shaded", "titleText": "TITLE", "headingText": "HEADING 1", "variant": "classic" },
       { "id": "word-2003", "name": "Classic", "titleText": "Title", "headingText": "Heading 1", "variant": "slate" },
-      { "id": "word-2010", "name": "Modern", "titleText": "Title", "headingText": "Heading 1", "variant": "compact" }
+      { "id": "word-2010", "name": "Modern", "titleText": "Title", "headingText": "Heading 1", "variant": "compact" },
+      { "id": "traditional", "name": "Traditional", "titleText": "Title", "headingText": "Heading 1", "variant": "serif" },
+      { "id": "structured", "name": "Structured", "titleText": "TITLE", "headingText": "Heading 1", "variant": "caps-blue" }
     ],
     "document": [
       {

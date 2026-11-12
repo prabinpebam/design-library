@@ -71,12 +71,41 @@
   "$description": "Title bar AutoSave switch: 84 px wide at ≈2× in w-theme-07, so 42 px; it holds the knob and the word Off."
  },
  "c.switch.track-block-xs": {
-  "$value": "1.25rem",
-  "$description": "AutoSave switch: 40 px tall at ≈2× in w-theme-07, so 20 px."
+  "$value": "1.125rem",
+  "$description": "AutoSave switch: 18 CSS px (15 PNG px in 01-home.png and 13-dark-home.png)."
  },
  "c.switch.thumb-inset-xs": {
-  "$value": "0.21875rem",
-  "$description": "AutoSave knob: 26 px across at ≈2× (13 px), so (20 − 13) / 2 = 3.5 px from the track on each side."
+  "$value": "0.1875rem",
+  "$description": "AutoSave knob: 12 CSS px (10 PNG px) centered inside the 18 CSS px track."
+ },
+ "c.switch.off-border": {
+  "$value": {
+   "light": "#616161",
+   "dark": "#aaacae"
+  },
+  "$description": "AutoSave Off track outline: #616161 light (01-home.png), #AAACAE dark (13-dark-home.png)."
+ },
+ "c.switch.off-thumb": {
+  "$value": {
+   "light": "#5c5c5c",
+   "dark": "#ffffff"
+  },
+  "$description": "AutoSave Off knob: #5C5C5C light (01-home.png), #FFFFFF dark (13-dark-home.png)."
+ },
+ "c.checkbox.size-s": {
+  "$value": "1.375rem",
+  "$description": "View tab Show checkboxes (Ruler, Gridlines, Navigation Pane): 22 CSS px row height."
+ },
+ "c.checkbox.box-s": {
+  "$value": "0.875rem",
+  "$description": "View tab Show checkbox square: 14 CSS px (11.7 PNG px in 10-view.png)."
+ },
+ "color.map.on-fill": {
+  "$value": {
+   "light": "#185abd",
+   "dark": "#598fec"
+  },
+  "$description": "Checked Show Ruler checkbox and active Switch fill (#185ABD light, #598FEC dark)."
  },
  "$description": "Q145.W reference spec .design-library/word-ref/README.md: w-theme-07 (Colorful, 2x), w-theme-03 (Dark Gray, 2x), w-copilot-01 (near-full window, 1.28x). Type: Noto Sans (OFL) stands in for Segoe UI, which isn't openly licensed; Noto is about 5% wider at the same size (recorded difference). Dark values are the Dark Gray theme; unmeasured values are marked.",
  "font.text": {
@@ -128,24 +157,24 @@
   "$description": "Chrome labels are regular; the selected tab alone is bold."
  },
  "c.tabs.selected-weight": {
-  "$value": "700",
-  "$description": "Selected tab bold, w-theme-07 'Home'."
+  "$value": "600",
+  "$description": "Selected tab semibold, 01-home.png 'Home'."
  },
  "c.tabs.item-size": {
   "$value": "1.875rem",
   "$description": "Tab row 30 CSS px (25 PNG px in 01-home.png y=39..63)."
  },
  "c.tabs.item-padding-inline": {
-  "$value": "{space.2}",
-  "$description": "Tab label inset: 8 px either side."
+  "$value": "0.4583333rem",
+  "$description": "Tab label inset: 7.33 CSS px either side so Mailings, Review, View and Help land on 01..11 tab coordinates."
  },
  "c.tabs.list-padding-inline-start": {
-  "$value": "{space.3}",
+  "$value": "{space.4}",
   "$description": "Leading inset on the ribbon tab list so File and Home align with the 01-home.png / 13-dark-home.png tab coordinates."
  },
  "c.tabs.gap": {
-  "$value": "{space.1}",
-  "$description": "Tabs sit 4 CSS px apart so Home underline lands on x=54..82 PNG."
+  "$value": "{space.0-5}",
+  "$description": "Tabs sit 2 CSS px apart so all 12 tabs match 01..11 coordinates."
  },
  "c.tabs.indicator": {
   "$value": "0.1875rem",
@@ -153,10 +182,10 @@
  },
  "c.tabs.text": {
   "$value": {
-   "light": "#242424",
+   "light": "#424242",
    "dark": "#e0e0e0"
   },
-  "$description": "Tab labels: #242424 light (01-home.png), #E0E0E0 dark (13-dark-home.png)."
+  "$description": "Tab labels: #424242 light (01-home.png), #E0E0E0 dark (13-dark-home.png)."
  },
  "c.tabs.selected-text": {
   "$value": {
@@ -279,6 +308,20 @@
   },
   "$description": "Faceted pencil barrel on Draw tab (#849398 in 03-draw.png)."
  },
+ "color.category.7": {
+  "$value": {
+   "light": "#7719aa",
+   "dark": "#a855f7"
+  },
+  "$description": "Purple bound notebook accent on Linked Notes (09-review.png)."
+ },
+ "color.category.8": {
+  "$value": {
+   "light": "#038387",
+   "dark": "#2dd4bf"
+  },
+  "$description": "Teal metadata and language globe accent on Review and View tabs (09-review.png, 10-view.png)."
+ },
  "color.map.chip-tint": {
   "$value": {
    "light": "#efefef",
@@ -395,10 +438,21 @@
  },
  "c.button.pressed-fill": {
   "$value": {
-   "light": "#e0e0e0",
+   "light": "#e6e6e6",
    "dark": "#3f3f3f"
   },
-  "$description": "Pressed toolbar toggle plate (Align left, Print Layout): #E0E0E0 light, #3F3F3F dark (13-dark-home.png)."
+  "$description": "Pressed toolbar toggle plate (Align left, Print Layout, Vertical): #E6E6E6 light, #3F3F3F dark (13-dark-home.png)."
+ },
+ "c.button.pressed-edge": {
+  "$value": {
+   "light": "#ababab",
+   "dark": "#6d6d6e"
+  },
+  "$description": "Pressed toolbar toggle border unified with chrome/sheet stroke family (VN4): #ABABAB light, #6D6D6E dark."
+ },
+ "c.checkbox.gap": {
+  "$value": "{space.1}",
+  "$description": "4 CSS px gap between checkbox box and label on the View ribbon."
  },
  "c.button.padding-inline-sm": {
   "$value": "0.25rem",
@@ -544,7 +598,7 @@
   "$description": "Zoom slider line #686868 either side of the thumb (w-copilot-01 y871, x1306-1430); one value for both themes, as the thumb."
  },
  "c.slider.fill": {
-  "$value": "{c.slider.track-fill}",
-  "$description": "Word's zoom line has no fill: the same grey on both sides of the thumb (w-copilot-01)."
+  "$value": "transparent",
+  "$description": "Word's zoom line has no progress fill: track-fill (#686868) shows on both sides of the thumb without adding a redundant fill (VN5)."
  }
 }

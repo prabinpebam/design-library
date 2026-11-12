@@ -238,6 +238,8 @@
     --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-site-header-current-rule: var(--color-border-strong);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-menu-button-radius: var(--c-button-radius);
     --c-button-fill-track: var(--color-map-brand-tint);
     --c-switch-spinner: var(--color-map-progress);
@@ -287,6 +289,8 @@
       --c-site-header-current-rule: var(--color-border-strong);
       --c-skeleton-fill: var(--color-border);
       --c-slider-track-fill: var(--color-border);
+      --c-switch-off-border: var(--color-border-strong);
+      --c-switch-off-thumb: var(--color-border-strong);
       --c-tabs-text: var(--color-text-muted);
     }
   }
@@ -326,6 +330,8 @@
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
     --c-slider-track-fill: var(--color-border);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-contrast='more'] [data-template='design'], [data-template='design'][data-contrast='more'] {
@@ -364,6 +370,8 @@
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
     --c-slider-track-fill: var(--color-border);
+    --c-switch-off-border: var(--color-border-strong);
+    --c-switch-off-thumb: var(--color-border-strong);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-shape='sharp'] [data-template='design'], [data-template='design'][data-shape='sharp'] {

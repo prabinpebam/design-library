@@ -281,6 +281,21 @@
         "$description": "The bare track either side of the fill (echoed for contrast contexts)"
       }
     },
+    "switch": {
+      "$extensions": {
+        "owner": "Switch"
+      },
+      "off-border": {
+        "$type": "color",
+        "$value": "{color.border-strong}",
+        "$description": "Track outline colour in the off state (echoed for contrast contexts)"
+      },
+      "off-thumb": {
+        "$type": "color",
+        "$value": "{color.border-strong}",
+        "$description": "Thumb fill colour in the off state (echoed for contrast contexts)"
+      }
+    },
     "tabs": {
       "$extensions": {
         "owner": "Tabs"

@@ -239,6 +239,7 @@
     "--c-button-padding-inline",
     "--c-button-padding-inline-lg",
     "--c-button-padding-inline-sm",
+    "--c-button-pressed-edge",
     "--c-button-pressed-fill",
     "--c-button-radius",
     "--c-button-radius-lg",
