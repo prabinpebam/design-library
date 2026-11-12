@@ -912,6 +912,8 @@
   --c-dialog-footer-border-width: 0px;
   --c-dialog-footer-border: transparent;
   --c-dialog-footer-padding-top: 0px;
+  --c-dialog-footer-padding-bottom: var(--c-dialog-padding);
+  --c-dialog-close-icon-size: var(--size-icon-sm);
   --c-grid-aside: var(--size-column-min);
   --c-grid-section-gap: var(--space-12);
   --c-hero-gap: var(--space-stack-section);

@@ -44,6 +44,20 @@ export interface WorkspaceProps extends DataAttributes {
 export function Workspace({ view, screen = 'channel', settings, picture, ...data }: WorkspaceProps) {
   const c = view.copy;
   const pic = (id?: string) => (id && picture ? picture(id) : { src: '', alt: '' });
+  type BrowsePage = 'channel' | 'directories' | 'huddles' | 'unreads' | 'welcome-back';
+  const pageFromScreen = (s: string): BrowsePage =>
+    s === 'directories' || s === 'huddles' || s === 'unreads' || s === 'welcome-back' ? s : 'channel';
+  const isDualScreen = (s: string) =>
+    s === 'directories' || s === 'huddles' || s === 'unreads' || s === 'welcome-back' || s === 'filter-menu' || s === 'create-menu' || s === 'activity';
+
+  const [activePage, setActivePage] = useState<BrowsePage>(pageFromScreen(screen));
+  const [dualRail, setDualRail] = useState(isDualScreen(screen));
+  const [welcomeDismissed, setWelcomeDismissed] = useState(false);
+  const [huddlesHeroDismissed, setHuddlesHeroDismissed] = useState(false);
+  const [dirTab, setDirTab] = useState('people');
+  const [dirQuery, setDirQuery] = useState('');
+  const [unreadsCollapsed, setUnreadsCollapsed] = useState(false);
+
   const [channel, setChannel] = useState(
     screen === 'channel-menu' ? view.amaChannel.channel : typeof settings?.channel === 'string' ? settings.channel : view.channel,
   );
@@ -72,6 +86,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   const [narrow, setNarrow] = useState(false);
 
   const timeline = useRef<HTMLDivElement>(null);
+  const dirSearchWrap = useRef<HTMLDivElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const threadPanel = useRef<HTMLElement>(null);
   const threadOpener = useRef<HTMLElement | null>(null);
@@ -91,6 +106,8 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   }, []);
 
   useEffect(() => {
+    setActivePage(pageFromScreen(screen));
+    setDualRail(isDualScreen(screen));
     setThread(screen === 'thread' ? view.messages[0] : undefined);
     setTab(screen === 'files' ? 'files' : 'messages');
     setSearch(screen === 'search');
@@ -100,6 +117,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     if (screen === 'channel-menu') setChannel(view.amaChannel.channel);
     else if (typeof settings?.channel === 'string') setChannel(settings.channel);
   }, [screen, settings?.channel, view.amaChannel.channel, view.messages]);
+
+  useEffect(() => {
+    if (activePage === 'directories') {
+      dirSearchWrap.current?.querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true });
+    }
+  }, [activePage]);
 
   useEffect(() => {
     if (thread && threadOpener.current && !threadOpener.current.getClientRects().length) {
@@ -143,7 +166,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     const viewport = timeline.current;
     if (!viewport || search || tab !== 'messages') return;
     if (localSent.length > 0) viewport.scrollTop = viewport.scrollHeight;
-    else if (isAma) viewport.scrollTop = 36;
+    else if (isAma) viewport.scrollTop = 54;
     else viewport.scrollTop = 152;
   }, [localSent.length, channel, isAma, search, tab]);
 
@@ -246,7 +269,13 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   };
 
   const sections: WorkspaceRecord['sections'] = view.sections.map((section) => {
-    const baseItems = section.collapsible && isAma && view.amaChannel.channels ? view.amaChannel.channels : section.items;
+    const baseItems = section.collapsible
+      ? dualRail
+        ? view.dualRailChannels
+        : isAma && view.amaChannel.channels
+          ? view.amaChannel.channels
+          : section.items
+      : section.items;
     const extra = section.collapsible && made.length ? made.map((name) => ({ name, icon: 'hash' as const, unread: true })) : [];
     const filtered = [...baseItems, ...extra].filter(
       (item) => !sidebarFilter.trim() || item.name.toLowerCase().includes(sidebarFilter.trim().toLowerCase()),
@@ -367,7 +396,13 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     const bannerPic = pic(m.unfurl?.banner);
     const replyWord = m.replies === 1 ? c.replySingle : c.replies;
     return (
-      <article key={m.id} data-dl="slack-message" data-grouped={m.grouped || undefined} aria-label={`${m.author}, ${m.time}`}>
+      <article
+        key={m.id}
+        data-dl="slack-message"
+        data-grouped={m.grouped || undefined}
+        data-hovered={m.hovered || undefined}
+        aria-label={`${m.author}, ${m.time}`}
+      >
         <div data-dl-part="avatar">
           {!m.grouped && <Avatar name={m.author} src={avatarPic.src || undefined} size={36} shape="square" decorative />}
         </div>
@@ -379,14 +414,21 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               <time data-dl-part="time">{m.time}</time>
             </div>
           )}
-          {(m.text || m.mention || m.edited) && (
-            <Text>
-              {m.mention && <span data-dl-part="mention">{m.mention} </span>}
-              {m.text}
-              {m.edited && <span data-dl-part="edited"> ({c.edited ?? 'edited'})</span>}
-            </Text>
+          {(m.text || m.mention) && (
+            <div data-dl-part="msg-text">
+              {m.mention && <span data-dl-part="mention">{m.mention}</span>}
+              {m.mention && m.text ? ' ' : ''}
+              {m.italic ? <em>{m.text}</em> : <span>{m.text}</span>}
+              {m.edited && !m.subText && <span data-dl-part="edited"> ({c.edited ?? 'edited'})</span>}
+            </div>
           )}
-          {m.subText && m.subText.split('\n').map((line, i) => <Text key={i}>{line}</Text>)}
+          {m.subText &&
+            m.subText.split('\n').map((line, i, arr) => (
+              <div key={i} data-dl-part="msg-text">
+                <span>{line}</span>
+                {m.edited && i === arr.length - 1 && <span data-dl-part="edited"> ({c.edited ?? 'edited'})</span>}
+              </div>
+            ))}
           {m.linkText && (
             <div data-dl-part="link-row">
               <span data-dl-part="link-chip">
@@ -504,17 +546,365 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
   const botEmblem = pic('botMark');
   const currentUserPic = pic(view.currentUserAvatar);
+  const huddlesHeroPic = pic('huddlesHero');
+  const welcomeBubblePic = pic('welcomeBubble');
+
+  const isRowSelected = (itemName: string, collapsible?: boolean) => {
+    if (activePage === 'directories') return !collapsible && itemName === 'Directories';
+    if (activePage === 'huddles') return !collapsible && itemName === 'Huddles';
+    if (activePage === 'unreads') return !collapsible && itemName === 'Unreads';
+    if (activePage === 'welcome-back') return false;
+    return collapsible ? itemName === channel : false;
+  };
+
+  const renderDirectories = () => {
+    const dv = view.directoriesView;
+    const filteredPeople = dv.people.filter(
+      (p) => !dirQuery.trim() || p.name.toLowerCase().includes(dirQuery.trim().toLowerCase()) || p.role?.toLowerCase().includes(dirQuery.trim().toLowerCase()),
+    );
+    return (
+      <div data-dl="slack-directories">
+        <header data-dl-part="dir-head" data-density="compact">
+          <Heading level={1} size={3}>
+            {dv.title}
+          </Heading>
+          <div data-dl-part="dir-tabs" role="navigation" aria-label={dv.title}>
+            {dv.tabs.map((t) => (
+              <span key={t.id} data-dl-part="dir-tab" data-current={dirTab === t.id || undefined}>
+                <Button label={t.label} icon={t.icon} size="xs" emphasis="quiet" tone="inherit" onClick={() => setDirTab(t.id)} />
+              </span>
+            ))}
+          </div>
+        </header>
+        <ScrollArea label={dv.title}>
+          <div data-dl="slack-directories-body">
+            <div data-dl-part="dir-controls">
+              <div data-dl-part="dir-toolbar">
+                <div ref={dirSearchWrap} data-dl-part="dir-search">
+                  <TextField
+                    label={dv.searchPlaceholder}
+                    hideLabel
+                    type="search"
+                    icon="search"
+                    size="s"
+                    placeholder={dv.searchPlaceholder}
+                    value={dirQuery}
+                    onChange={setDirQuery}
+                  />
+                </div>
+                <Button label={dv.inviteLabel} />
+              </div>
+              <div data-dl-part="dir-filters" data-density="compact">
+                <div data-dl-part="filter-pills">
+                  {dv.filters.map((f) => (
+                    <span key={f.label} data-dl-part="filter-pill">
+                      {f.icon && <Icon name={f.icon} size="sm" />}
+                      <span>{f.label}</span>
+                      <Icon name="chevron-down" size="sm" />
+                    </span>
+                  ))}
+                </div>
+                <span data-dl-part="sort-trigger">
+                  <span>{dv.sortLabel}</span>
+                  <Icon name="chevron-down" size="sm" />
+                </span>
+              </div>
+            </div>
+            <div data-dl="slack-people-grid">
+              {filteredPeople.map((p) => {
+                const pPic = pic(p.avatar);
+                return (
+                  <article key={p.name} data-dl="slack-person-card">
+                    <div data-dl-part="portrait">
+                      {pPic.src && <Image src={pPic.src} alt={pPic.alt} ratio="natural" width={166} height={144} />}
+                    </div>
+                    <div data-dl-part="info">
+                      <div data-dl-part="name-row">
+                        <strong>{p.name.trim()}</strong>
+                        <span data-dl-part="presence-dot" data-state={p.presence} aria-hidden="true" />
+                      </div>
+                      {p.role && <p data-dl-part="role">{p.role}</p>}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
+    );
+  };
+
+  const renderHuddles = () => {
+    const hv = view.huddlesView;
+    return (
+      <div data-dl="slack-huddles">
+        <header data-dl-part="huddles-head">
+          <Heading level={1} size={3}>
+            {hv.title}
+          </Heading>
+          <Button label={hv.newHuddle} icon="plus" size="s" />
+        </header>
+        <ScrollArea label={hv.title}>
+          <div data-dl="slack-huddles-body">
+            {!huddlesHeroDismissed && (
+              <section data-dl="slack-huddles-hero" aria-label={hv.heroTitle}>
+                <div data-dl-part="hero-words">
+                  <div data-dl-part="hero-text">
+                    <Heading level={2} size={3}>
+                      {hv.heroTitle}
+                    </Heading>
+                    <p data-dl-part="hero-copy">{hv.heroBody}</p>
+                  </div>
+                  <div data-dl-part="hero-cta">
+                    <Button label={hv.heroAction} icon="headphones" emphasis="primary" />
+                  </div>
+                </div>
+                {huddlesHeroPic.src && (
+                  <div data-dl-part="hero-art">
+                    <Image src={huddlesHeroPic.src} alt={huddlesHeroPic.alt} ratio="natural" width={279} height={204} rounded={false} />
+                  </div>
+                )}
+                <span data-dl-part="hero-close" data-density="compact">
+                  {action(c.dismissBanner, 'close', () => setHuddlesHeroDismissed(true))}
+                </span>
+              </section>
+            )}
+            <div data-dl="slack-huddles-sections">
+              <section data-dl="slack-huddles-group" aria-label={hv.dmTitle}>
+                <div data-dl-part="group-head">
+                  <strong>{hv.dmTitle}</strong>
+                  <span> {hv.dmSubtitle}</span>
+                </div>
+                <div data-dl-part="dm-grid">
+                  {hv.dms.map((dm) => {
+                    const bPic = pic(dm.banner);
+                    const lPic = pic(dm.leftAvatar);
+                    const rPic = pic(dm.rightAvatar);
+                    return (
+                      <article key={dm.name} data-dl="slack-huddle-dm-card">
+                        <div data-dl-part="dm-stage">
+                          {bPic.src && <Image src={bPic.src} alt={bPic.alt} ratio="natural" width={288} height={108} />}
+                          <div data-dl-part="dm-pair">
+                            <span data-dl-part="pair-face" data-elevation="3">
+                              <Avatar name={view.currentUser} src={lPic.src || undefined} shape="square" size={48} decorative />
+                            </span>
+                            <span data-dl-part="pair-face" data-elevation="3">
+                              <Avatar name={dm.name} src={rPic.src || undefined} shape="square" size={48} decorative />
+                            </span>
+                          </div>
+                        </div>
+                        <div data-dl-part="dm-meta">
+                          <div data-dl-part="dm-name">
+                            <strong>{dm.name}</strong>
+                            {dm.statusEmoji ? (
+                              <span> {dm.statusEmoji}</span>
+                            ) : (
+                              <span data-dl-part="presence-dot" data-state={dm.presence ?? 'away'} aria-hidden="true" />
+                            )}
+                          </div>
+                          <p data-dl-part="dm-status">{dm.status}</p>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+              <section data-dl="slack-huddles-group" aria-label={hv.channelsTitle}>
+                <div data-dl-part="group-head">
+                  <strong>{hv.channelsTitle}</strong>
+                  <span> {hv.channelsSubtitle}</span>
+                </div>
+                <div data-dl="slack-huddle-channel-list">
+                  {hv.channels.map((ch, idx) => (
+                    <div key={ch} data-dl-part="ch-row" data-divided={idx > 0 || undefined}>
+                      <span data-dl-part="ch-tile" aria-hidden="true">
+                        <Icon name="hash" size="sm" />
+                      </span>
+                      <strong>#{ch}</strong>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+        </ScrollArea>
+      </div>
+    );
+  };
+
+  const renderUnreads = () => {
+    const uv = view.unreadsView;
+    return (
+      <div data-dl="slack-unreads">
+        <header data-dl-part="unreads-head" data-density="compact">
+          <div data-dl-part="unreads-title">
+            <Heading level={1} size={3}>
+              {uv.title}
+            </Heading>
+            <span data-dl-part="mini-ws">{view.workspaceBadge}</span>
+          </div>
+          <div data-dl-part="unreads-filters">
+            <span data-dl-part="filter-drop">
+              <span>{uv.filterLabel}</span>
+              <Icon name="chevron-down" size="sm" />
+            </span>
+            <span data-dl-part="filter-drop">
+              <span>{uv.sortLabel}</span>
+              <Icon name="chevron-down" size="sm" />
+            </span>
+          </div>
+        </header>
+        <div data-dl-part="channel-band" data-density="compact">
+          <span data-dl-part="band-title">
+            <Button
+              label={`#${uv.channel}`}
+              icon="caret-down"
+              size="xs"
+              emphasis="quiet"
+              tone="inherit"
+              onClick={() => setUnreadsCollapsed(!unreadsCollapsed)}
+            />
+          </span>
+          <div data-dl-part="band-actions">
+            <span data-dl-part="band-hint">{uv.countLabel}</span>
+            <span data-dl-part="band-hint">
+              {uv.pressLabel} <kbd data-dl-part="keycap">{uv.keycap}</kbd> {uv.toLabel}
+            </span>
+            <Button label={uv.markRead} size="xs" onClick={() => setUnreadsCollapsed(true)} />
+          </div>
+        </div>
+        <ScrollArea label={uv.title} mode="always">
+          {!unreadsCollapsed && (
+            <div data-dl="slack-unreads-stream">
+              <div data-dl-part="date-line">
+                <span data-dl-part="date-pill">{uv.date}</span>
+              </div>
+              {uv.messages.map((m) => renderMessage(m))}
+            </div>
+          )}
+        </ScrollArea>
+      </div>
+    );
+  };
+
+  const renderWelcomeBack = () => {
+    const wv = view.welcomeBackView;
+    return (
+      <div data-dl="slack-welcome">
+        <ScrollArea label={wv.title}>
+          <div data-dl="slack-welcome-body">
+            <div data-dl-part="top-label">
+              <Heading level={1} size={4}>
+                {wv.title}
+              </Heading>
+            </div>
+            <div data-dl-part="hero">
+              {welcomeBubblePic.src && (
+                <div data-dl-part="hero-bubble">
+                  <Image src={welcomeBubblePic.src} alt={welcomeBubblePic.alt} ratio="natural" width={99} height={69} rounded={false} />
+                </div>
+              )}
+              <strong data-dl-part="hero-title">{wv.heroTitle}</strong>
+            </div>
+
+            <section data-dl="slack-welcome-section" aria-label={wv.unreadHeading}>
+              <div data-dl-part="sec-head">
+                <strong>{wv.unreadHeading}</strong>
+                <p>{wv.unreadSubtitle}</p>
+              </div>
+              <div data-dl="slack-welcome-unreads-card">
+                <ScrollArea label={wv.unreadHeading} mode="always">
+                  <div data-dl="slack-welcome-unreads-list">
+                    {wv.unreadGroups.map((g) => (
+                      <div key={g.date} data-dl="slack-welcome-date-group">
+                        <div data-dl-part="date-band">{g.date}</div>
+                        {g.items.map((it) => {
+                          const itPic = pic(it.avatar);
+                          return (
+                            <div key={`${g.date}-${it.channel}`} data-dl="slack-welcome-msg-row">
+                              <div data-dl-part="msg-main">
+                                <div data-dl-part="msg-channel">
+                                  <strong data-dl-part="unread-tag">Unread</strong>
+                                  <span> in #{it.channel}</span>
+                                </div>
+                                <div data-dl-part="msg-content">
+                                  <Avatar name={it.author} src={itPic.src || undefined} shape="square" size={32} decorative />
+                                  <div data-dl-part="msg-words">
+                                    <div data-dl-part="msg-byline">
+                                      <strong>{it.author}</strong>
+                                      <time>{it.time}</time>
+                                    </div>
+                                    <p>{it.text}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-dl-part="msg-action" data-density="compact">
+                                <Button
+                                  label={wv.viewMessage}
+                                  size="xs"
+                                  onClick={() => {
+                                    setActivePage('channel');
+                                    setChannel(it.channel);
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              </div>
+            </section>
+
+            <section data-dl="slack-welcome-section" aria-label={wv.teammatesHeading}>
+              <div data-dl-part="sec-head">
+                <strong>{wv.teammatesHeading}</strong>
+                <p>{wv.teammatesSubtitle}</p>
+              </div>
+              <div data-dl="slack-welcome-teammates">
+                {wv.teammates.map((tm) => {
+                  const tmPic = pic(tm.avatar);
+                  return (
+                    <article key={tm.name} data-dl="slack-teammate-card">
+                      <div data-dl-part="tm-banner">
+                        {tmPic.src && <Image src={tmPic.src} alt={tmPic.alt} ratio="natural" width={411} height={189} />}
+                      </div>
+                      <div data-dl-part="tm-body">
+                        <div data-dl-part="tm-name">
+                          <strong>{tm.name}</strong>
+                          <span data-dl-part="presence-dot" data-state={tm.snooze ? 'snooze' : 'away'} aria-hidden="true" />
+                        </div>
+                        <div data-dl-part="tm-cta" data-density="compact">
+                          <Button label={wv.sayHi} size="xs" />
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          </div>
+        </ScrollArea>
+      </div>
+    );
+  };
 
   return (
-    <div {...data} ref={root} data-dl="slack-workspace" data-material="solid">
+    <div {...data} ref={root} data-dl="slack-workspace" data-dual-rail={dualRail || undefined} data-material="solid">
       <header data-dl-part="titlebar" data-density="compact">
         <div data-dl-part="left-chrome">
           <div data-dl-part="menu-group">
             {action(c.appMenu, 'menu')}
-            {action(c.toggleSidebar, 'sidebar')}
+            {action(c.toggleSidebar, 'sidebar', () => setDualRail(!dualRail))}
           </div>
           <div data-dl-part="history">
-            {action(c.back, 'arrow-start', () => setSearch(false))}
+            {action(c.back, 'arrow-start', () => {
+              setSearch(false);
+              setActivePage('channel');
+            })}
             <Button label={c.forward} icon="arrow-end" iconOnly emphasis="quiet" tone="inherit" size="xs" unavailable={c.forward} />
             {action(c.history, 'clock')}
           </div>
@@ -561,9 +951,9 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
         </div>
       </header>
 
-      <nav data-dl-part="rail" data-density="compact" aria-label={view.name}>
-        <div data-dl-part="workspaces">
-          {view.workspaces.map((ws) => (
+      {dualRail && (
+        <nav data-dl-part="ws-switcher" data-density="compact" aria-label={c.addWorkspace}>
+          {view.dualRailWorkspaces.map((ws) => (
             <div key={ws.id} data-dl-part="ws-tile" data-tone={ws.tone} data-current={ws.current || undefined}>
               <span data-dl-part="ws-letters">{ws.initials}</span>
               {ws.mentions && (
@@ -573,10 +963,28 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               )}
             </div>
           ))}
-        </div>
+          <span data-dl-part="ws-add">{action(c.addWorkspace, 'plus')}</span>
+        </nav>
+      )}
+
+      <nav data-dl-part="rail" data-density="compact" aria-label={view.name}>
+        {!dualRail && (
+          <div data-dl-part="workspaces">
+            {view.workspaces.map((ws) => (
+              <div key={ws.id} data-dl-part="ws-tile" data-tone={ws.tone} data-current={ws.current || undefined}>
+                <span data-dl-part="ws-letters">{ws.initials}</span>
+                {ws.mentions && (
+                  <span data-dl-part="ws-badge">
+                    <Badge kind="count" emphasis="strong" tone="accent" count={ws.mentions} label={`${ws.mentions} ${c.mentions}`} size="s" />
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
         <div data-dl-part="rail-items">
           {view.rail.map((r, i) => {
-            const railCount = r.id === 'activity' && isAma ? view.amaChannel.activityMentions : r.mentions;
+            const railCount = r.id === 'activity' && (isAma || dualRail) ? view.amaChannel.activityMentions : r.mentions;
             return (
               <div data-dl-part="rail-item" data-current={i === 0 || undefined} key={r.id}>
                 <span data-dl-part="rail-icon">
@@ -587,13 +995,17 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     emphasis="quiet"
                     tone="inherit"
                     onClick={() => {
-                      if (r.id === 'files') setTab('files');
-                      else {
+                      if (r.id === 'files') {
+                        setActivePage('channel');
+                        setTab('files');
+                      } else {
+                        setActivePage('channel');
                         setTab('messages');
                         setSearch(false);
                       }
                     }}
                   />
+                  {i === 0 && !dualRail && <span data-dl-part="home-dot" aria-hidden="true" />}
                   {railCount && (
                     <span data-dl-part="rail-badge">
                       <Badge kind="count" emphasis="strong" tone="accent" count={railCount} label={`${railCount} ${c.mentions}`} size="s" />
@@ -613,14 +1025,16 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               iconOnly
               emphasis="quiet"
               tone="inherit"
-              size="xs"
+              size="s"
               items={view.createMenu}
               onSelect={(value) => {
                 if (value === 'channel') setCreating(true);
               }}
             />
           </span>
-          <span data-dl-part="rail-circle">{action(c.themeToggle, 'scheme-dark')}</span>
+          <span data-dl-part="rail-circle">
+            <Button label={c.themeToggle} icon="scheme-dark" iconOnly emphasis="quiet" tone="inherit" size="s" />
+          </span>
           <span data-dl-part="rail-avatar">
             <Avatar name={view.currentUser} src={currentUserPic.src || undefined} shape="square" presence="available" size={36} />
           </span>
@@ -641,8 +1055,33 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           </div>
 
           <ScrollArea label={view.name}>
+            {dualRail && !welcomeDismissed && (
+              <div data-dl="slack-welcome-card" data-active={activePage === 'welcome-back' || undefined}>
+                <div data-dl-part="welcome-top">
+                  <span data-dl-part="welcome-title">
+                    <Icon name="emoji" size="sm" />
+                    <strong>{view.welcomePrompt.title}</strong>
+                  </span>
+                  {action(c.dismissBanner, 'close', () => setWelcomeDismissed(true))}
+                </div>
+                <div data-dl-part="welcome-cta">
+                  <Button
+                    label={view.welcomePrompt.cta}
+                    size="s"
+                    align="start"
+                    emphasis="quiet"
+                    tone="inherit"
+                    onClick={() => setActivePage('welcome-back')}
+                  />
+                  <span data-dl-part="welcome-chevron" aria-hidden="true">
+                    <Icon name="chevron-end" size="sm" />
+                  </span>
+                </div>
+              </div>
+            )}
             <div data-dl="slack-sidebar-content">
-              {!vipDismissed && (
+
+              {!dualRail && !vipDismissed && (
                 <div data-dl="slack-vip-card">
                   <div data-dl-part="vip-top">
                     <p data-dl-part="vip-copy">
@@ -707,17 +1146,19 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   <div data-dl-part="rows">
                     {section.items.map((item) => {
                       const itemPic = pic(item.avatar);
-                      const overrideBadge = isAma ? view.amaChannel.channelBadges[item.name] : undefined;
+                      const overrideBadge = !dualRail && isAma ? view.amaChannel.channelBadges[item.name] : undefined;
                       const rawBadge = overrideBadge ?? (item.mentions ? (item.mentionsLabel ?? String(item.mentions)) : undefined);
-                      const badgeLabel = isAma && item.name === channel ? undefined : rawBadge;
-                      const isUnread = item.name !== channel && (item.unread || Boolean(overrideBadge));
+                      const selected = isRowSelected(item.name, section.collapsible);
+                      const badgeLabel = !dualRail && isAma && selected ? undefined : rawBadge;
+                      const isUnread = !selected && (item.unread || Boolean(overrideBadge));
                       return (
                         <div
                           key={item.name}
                           data-dl-part="row"
                           data-person={item.presence ? true : undefined}
                           data-unread={isUnread || undefined}
-                          data-current={item.name === channel || undefined}
+                          data-was-unread={item.unread || undefined}
+                          data-current={selected || undefined}
                         >
                           {item.presence && (
                             <span data-dl-part="row-avatar">
@@ -739,9 +1180,15 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                             align="start"
                             tone="inherit"
                             onClick={() => {
-                              setChannel(item.name);
-                              setSearch(false);
-                              setTab('messages');
+                              if (!section.collapsible && item.name === 'Directories') setActivePage('directories');
+                              else if (!section.collapsible && item.name === 'Huddles') setActivePage('huddles');
+                              else if (!section.collapsible && item.name === 'Unreads') setActivePage('unreads');
+                              else if (section.collapsible) {
+                                setActivePage('channel');
+                                setChannel(item.name);
+                                setSearch(false);
+                                setTab('messages');
+                              }
                             }}
                           />
                           {badgeLabel && <span data-dl-part="count-pill">{badgeLabel}</span>}
@@ -759,8 +1206,18 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           </div>
         </aside>
 
-        <main data-dl-part="conversation">
-          <header data-dl-part="channel-head" data-density="compact">
+        <main data-dl-part="conversation" data-page={activePage !== 'channel' ? activePage : undefined}>
+          {activePage === 'directories' ? (
+            renderDirectories()
+          ) : activePage === 'huddles' ? (
+            renderHuddles()
+          ) : activePage === 'unreads' ? (
+            renderUnreads()
+          ) : activePage === 'welcome-back' ? (
+            renderWelcomeBack()
+          ) : (
+            <>
+              <header data-dl-part="channel-head" data-density="compact">
             <div data-dl-part="channel-lead">
               {headAction(c.starChannel, 'star')}
               <div data-dl-part="channel-title">
@@ -904,6 +1361,8 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           </div>
 
           <div data-dl="slack-composer-wrap">{composer(channel)}</div>
+            </>
+          )}
         </main>
 
         {thread && (

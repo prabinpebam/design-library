@@ -145,6 +145,286 @@
     "workspaces": [
       { "id": "sh", "initials": "SH", "name": "Studio Hangout", "tone": "coral", "current": true }
     ],
+    "dualRailWorkspaces": [
+      { "id": "mt", "initials": "MT", "name": "Maker Team", "tone": "sage" },
+      { "id": "sh", "initials": "SH", "name": "Studio Hangout", "tone": "coral", "current": true, "mentions": 26 }
+    ],
+    "dualRailChannels": [
+      { "name": "hangout", "icon": "hash", "unread": true, "mentions": 4 },
+      { "name": "partner_canvas", "icon": "hash", "unread": true, "mentions": 3 },
+      { "name": "partner_vector", "icon": "hash", "unread": true, "mentions": 1 },
+      { "name": "partner_wireframe", "icon": "hash", "unread": true, "mentions": 1 },
+      { "name": "partner_botstudio", "icon": "hash", "unread": true, "mentions": 2 },
+      { "name": "partner_fieldnotes", "icon": "hash", "unread": true, "mentions": 2 },
+      { "name": "partner_usertesting", "icon": "hash", "unread": true, "mentions": 9, "mentionsLabel": "9+" },
+      { "name": "_ask-a-mod", "icon": "hash", "unread": true },
+      { "name": "ask-me-anything-events", "icon": "hash" },
+      { "name": "help_designcritique", "icon": "hash", "unread": true },
+      { "name": "help_portfolio", "icon": "hash", "unread": true },
+      { "name": "help_writingcritique", "icon": "hash", "unread": true },
+      { "name": "introductions", "icon": "hash", "unread": true },
+      { "name": "jobs", "icon": "hash", "unread": true },
+      { "name": "measuring-ux", "icon": "hash" },
+      { "name": "partner_prototype", "icon": "hash" },
+      { "name": "resources_books", "icon": "hash", "unread": true },
+      { "name": "resources_links", "icon": "hash", "unread": true },
+      { "name": "resources_tools", "icon": "hash", "unread": true },
+      { "name": "topic_accessibility", "icon": "hash", "unread": true },
+      { "name": "topic_agile", "icon": "hash", "unread": true },
+      { "name": "topic_ar-and-vr", "icon": "hash", "unread": true },
+      { "name": "topic_automotive", "icon": "hash", "unread": true },
+      { "name": "topic_craft", "icon": "hash", "unread": true }
+    ],
+    "directoriesView": {
+      "title": "Directories",
+      "tabs": [
+        { "id": "people", "label": "People", "icon": "person" },
+        { "id": "channels", "label": "Channels", "icon": "messages" },
+        { "id": "groups", "label": "User Groups", "icon": "people" },
+        { "id": "external", "label": "External", "icon": "organisation" },
+        { "id": "invitations", "label": "Invitations", "icon": "send" }
+      ],
+      "searchPlaceholder": "Search for people",
+      "inviteLabel": "Invite People",
+      "filters": [
+        { "label": "Title" },
+        { "label": "Location" },
+        { "label": "More", "icon": "filter-lines" }
+      ],
+      "sortLabel": "Most recommended",
+      "people": [
+        { "name": "covalentstudio", "avatar": "avatar02", "presence": "away" },
+        { "name": "Milo K.", "avatar": "avatar05", "presence": "away", "role": "Senior Experience Designer based in Los Angeles" },
+        { "name": "tmk", "avatar": "avatar03", "presence": "snooze", "role": "Interaction Designer. Do I have books to recommend? Of cours…" },
+        { "name": "Bram V.", "avatar": "avatar10", "presence": "snooze" },
+        { "name": "ronaldkern", "avatar": "avatar14", "presence": "snooze", "role": "UX strategy, research & shipping surveys" },
+        { "name": "martin_reed", "avatar": "avatar15", "presence": "snooze", "role": "Systems Lead in Training" },
+        { "name": "rchesters", "avatar": "avatar06", "presence": "away", "role": "UX Researcher & Strategist · She/Her" },
+        { "name": "clarasilva", "avatar": "avatar01", "presence": "snooze" },
+        { "name": " Petra", "avatar": "avatar07", "presence": "snooze", "role": "Designer" },
+        { "name": "jnessa", "avatar": "avatar09", "presence": "snooze", "role": "User Researcher · studio/@jnessa.social" },
+        { "name": "pixelbug", "avatar": "avatar04", "presence": "snooze", "role": "Information Architect and General Troublemaker" },
+        { "name": "Soraia", "avatar": "avatar11", "presence": "away", "role": "UX Nerd, Runner, Traveler" },
+        { "name": "benjaminh", "avatar": "avatar18", "presence": "available" },
+        { "name": "Owen Mercer", "avatar": "avatar20", "presence": "snooze", "role": "UX Lead in Seattle, author of Systems Practice · He/Him" },
+        { "name": "nora", "avatar": "avatar13", "presence": "snooze", "role": "Senior Product Designer @ London, UK · she/her" },
+        { "name": "david_hall", "avatar": "avatar08", "presence": "away", "role": "Principal Designer" },
+        { "name": "mei_lin", "avatar": "avatar12", "presence": "away", "role": "Staff Product Researcher" },
+        { "name": "caleb_ross", "avatar": "avatar16", "presence": "snooze", "role": "Design Systems" },
+        { "name": "tessa_w", "avatar": "avatar17", "presence": "away", "role": "Content Designer" },
+        { "name": "leo_park", "avatar": "avatar19", "presence": "snooze", "role": "Prototyper" }
+      ]
+    },
+    "huddlesView": {
+      "title": "Huddles",
+      "newHuddle": "New Huddle",
+      "heroTitle": "Instantly connect over audio or video",
+      "heroBody": "Talk it out in real time on a huddle, with screen-sharing, expressive reactions and a message thread that automatically saves for later reference.",
+      "heroAction": "Start a Huddle",
+      "dmTitle": "Direct messages",
+      "dmSubtitle": "— Talk privately 1:1 with someone",
+      "dms": [
+        { "name": "covalentstudio", "presence": "away", "status": "Away", "banner": "huddleSpace", "leftAvatar": "avatarUser", "rightAvatar": "avatar02" },
+        { "name": "Milo K.", "presence": "away", "status": "Away", "banner": "huddleGarden", "leftAvatar": "avatarUser", "rightAvatar": "avatar05" },
+        { "name": "sam turner", "statusEmoji": "🦒", "status": "doesn’t have a lawn but still", "banner": "huddleCoast", "leftAvatar": "avatarUser", "rightAvatar": "avatar03" }
+      ],
+      "channelsTitle": "Channels",
+      "channelsSubtitle": "— Meet with a whole team, or just let people drop in and out",
+      "channels": ["hangout", "resources_tools", "help_designcritique"]
+    },
+    "unreadsView": {
+      "title": "Unreads",
+      "filterLabel": "All conversations",
+      "sortLabel": "Sorted by recommended order",
+      "channel": "hangout",
+      "countLabel": "54+ messages",
+      "pressLabel": "Press",
+      "keycap": "Esc",
+      "toLabel": "to",
+      "markRead": "Mark as Read",
+      "date": "May 30th, 2026",
+      "messages": [
+        {
+          "id": "u1",
+          "author": "Severin",
+          "statusEmoji": "🇫🇷",
+          "avatar": "avatar10",
+          "time": "5:41 PM",
+          "italic": true,
+          "text": "9,300 people here HYPE",
+          "subText": "🙌",
+          "reactions": [
+            { "emoji": "🎉", "label": "Party", "count": 3 },
+            { "emoji": "1️⃣", "label": "One", "count": 2 },
+            { "emoji": "0️⃣", "label": "Zero", "count": 2 },
+            { "emoji": "🔟", "label": "Ten", "count": 2 },
+            { "emoji": "😮", "label": "Surprised", "count": 3 },
+            { "emoji": "☕", "label": "Coffee", "count": 1 }
+          ]
+        },
+        {
+          "id": "u2",
+          "author": "jennifers",
+          "statusEmoji": "🙈",
+          "avatar": "avatar09",
+          "time": "6:26 PM",
+          "text": "dang"
+        },
+        {
+          "id": "u3",
+          "author": "birdsong",
+          "avatar": "avatar14",
+          "time": "7:39 PM",
+          "text": "this is the quietest crowd of thousands I have ever experienced!"
+        },
+        {
+          "id": "u4",
+          "author": "liam",
+          "avatar": "avatar05",
+          "time": "7:54 PM",
+          "mention": "@birdsong",
+          "text": "We’re global, many of us are sleeping 💤"
+        },
+        {
+          "id": "u5",
+          "author": "Mateo",
+          "avatar": "avatar02",
+          "time": "7:55 PM",
+          "text": "Or we have stage fright 😅",
+          "reactions": [
+            { "emoji": "👍", "label": "Thumbs up", "count": 2 }
+          ]
+        },
+        {
+          "id": "u6",
+          "author": "liam",
+          "avatar": "avatar05",
+          "time": "7:56 PM",
+          "mention": "@Mateo",
+          "text": "What are you working on these days?"
+        },
+        {
+          "id": "u7",
+          "author": "Mateo",
+          "avatar": "avatar02",
+          "time": "7:56 PM",
+          "hovered": true,
+          "text": "Higher ed sites! Doing information architecture for an engineering school and a graduate seminary right now",
+          "reactions": [
+            { "emoji": "🤔", "label": "Thinking", "count": 1 },
+            { "emoji": "📚", "label": "Books", "count": 1 }
+          ]
+        },
+        {
+          "id": "u8",
+          "author": "liam",
+          "avatar": "avatar05",
+          "time": "7:57 PM",
+          "text": "Oh nice! Those are deep sites"
+        },
+        {
+          "id": "u9",
+          "author": "liam",
+          "grouped": true,
+          "time": "7:57 PM",
+          "text": "thousands and thousands of pages, right?"
+        },
+        {
+          "id": "u10",
+          "author": "Mateo",
+          "avatar": "avatar02",
+          "time": "7:57 PM",
+          "text": "Sometimes, but not always. We typically aren’t doing that degree of structure though"
+        },
+        {
+          "id": "u11",
+          "author": "Mateo",
+          "avatar": "avatar02",
+          "time": "7:58 PM",
+          "text": "More about trying to get the site to accurately reflect their values and then giving them tools to manage that complexity",
+          "reactions": [
+            { "emoji": "👍", "label": "Thumbs up", "count": 2 }
+          ],
+          "replies": 2,
+          "replyAvatars": ["avatar09", "avatar02"]
+        },
+        {
+          "id": "u12",
+          "author": "birdsong",
+          "avatar": "avatar14",
+          "time": "7:58 PM",
+          "text": "what kind of tools?"
+        },
+        {
+          "id": "u13",
+          "author": "Mateo",
+          "avatar": "avatar02",
+          "time": "7:58 PM",
+          "text": "Mainly content strategy, but also giving them good documentation to help them create those structures themselves",
+          "subText": "Our IAs have become much more data heavy in recent years because of that",
+          "edited": true
+        },
+        {
+          "id": "u14",
+          "author": "birdsong",
+          "avatar": "avatar14",
+          "time": "7:59 PM",
+          "text": "makes sense"
+        }
+      ]
+    },
+    "welcomeBackView": {
+      "title": "Welcome back",
+      "heroTitle": "Ready to dive back in? Start here.",
+      "unreadHeading": "Respond to unread messages",
+      "unreadSubtitle": "These teammates may be waiting for your reply.",
+      "viewMessage": "View Message",
+      "unreadGroups": [
+        {
+          "date": "Tuesday, Nov 10",
+          "items": [
+            {
+              "channel": "_ask-a-mod",
+              "author": "Owen Mercer",
+              "avatar": "avatar18",
+              "time": "12:45 AM",
+              "text": "👋 Hey! Quick question before I post anything: I just launched a small shop of UX/UXR merch (va…"
+            }
+          ]
+        },
+        {
+          "date": "Tuesday, Nov 3",
+          "items": [
+            {
+              "channel": "topic_craft",
+              "author": "rchesters",
+              "avatar": "avatar06",
+              "time": "3:04 PM",
+              "text": "After emailing someone I had to complete a captcha to prove I’m human so my email goes through.…"
+            }
+          ]
+        },
+        {
+          "date": "Wednesday, Oct 21",
+          "items": [
+            {
+              "channel": "introductions",
+              "author": "Soraia",
+              "avatar": "avatar11",
+              "time": "6:27 PM",
+              "text": "Hello from Lisbon! Excited to meet other folks working on design tooling and research ops."
+            }
+          ]
+        }
+      ],
+      "teammatesHeading": "Welcome new teammates",
+      "teammatesSubtitle": "These people have recently joined your team on Slack.",
+      "sayHi": "Say Hi 👋",
+      "teammates": [
+        { "name": "Henrik Lind", "avatar": "avatar18" },
+        { "name": "Kenji Morales", "avatar": "avatar20", "snooze": true }
+      ]
+    },
     "rail": [
       { "id": "home", "label": "Home", "icon": "home" },
       { "id": "dms", "label": "DMs", "icon": "messages" },
@@ -714,6 +994,7 @@
       "findConversation": "Find a conversation…",
       "appMenu": "Open application menu",
       "toggleSidebar": "Toggle sidebar",
+      "addWorkspace": "Add a workspace",
       "forward": "Go forward",
       "history": "Recent history",
       "assistant": "Open assistant",

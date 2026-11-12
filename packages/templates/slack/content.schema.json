@@ -69,6 +69,7 @@
         "edit",
         "frame",
         "person",
+        "people",
         "plus",
         "thumb-up",
         "heart",
@@ -241,10 +242,16 @@
         "grouped": {
           "type": "boolean"
         },
+        "hovered": {
+          "type": "boolean"
+        },
         "id": {
           "type": "string"
         },
         "isNew": {
+          "type": "boolean"
+        },
+        "italic": {
           "type": "boolean"
         },
         "linkText": {
@@ -393,6 +400,100 @@
         "date": {
           "type": "string"
         },
+        "directoriesView": {
+          "additionalProperties": false,
+          "properties": {
+            "filters": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "icon": {
+                    "$ref": "#/$defs/WorkspaceIcon"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "label"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "inviteLabel": {
+              "type": "string"
+            },
+            "people": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "presence": {
+                    "enum": [
+                      "available",
+                      "away",
+                      "snooze"
+                    ],
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "avatar",
+                  "presence"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "searchPlaceholder": {
+              "type": "string"
+            },
+            "sortLabel": {
+              "type": "string"
+            },
+            "tabs": {
+              "items": {
+                "$ref": "#/$defs/WorkspaceTabItem"
+              },
+              "type": "array"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "tabs",
+            "searchPlaceholder",
+            "inviteLabel",
+            "filters",
+            "sortLabel",
+            "people"
+          ],
+          "type": "object"
+        },
+        "dualRailChannels": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceChannelItem"
+          },
+          "type": "array"
+        },
+        "dualRailWorkspaces": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceTile"
+          },
+          "type": "array"
+        },
         "emojiPicker": {
           "additionalProperties": false,
           "properties": {
@@ -448,6 +549,99 @@
             "categories",
             "groups",
             "handy"
+          ],
+          "type": "object"
+        },
+        "huddlesView": {
+          "additionalProperties": false,
+          "properties": {
+            "channels": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "channelsSubtitle": {
+              "type": "string"
+            },
+            "channelsTitle": {
+              "type": "string"
+            },
+            "dmSubtitle": {
+              "type": "string"
+            },
+            "dmTitle": {
+              "type": "string"
+            },
+            "dms": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "banner": {
+                    "type": "string"
+                  },
+                  "leftAvatar": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "presence": {
+                    "enum": [
+                      "away",
+                      "available"
+                    ],
+                    "type": "string"
+                  },
+                  "rightAvatar": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "statusEmoji": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "status",
+                  "banner",
+                  "leftAvatar",
+                  "rightAvatar"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "heroAction": {
+              "type": "string"
+            },
+            "heroBody": {
+              "type": "string"
+            },
+            "heroTitle": {
+              "type": "string"
+            },
+            "newHuddle": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "newHuddle",
+            "heroTitle",
+            "heroBody",
+            "heroAction",
+            "dmTitle",
+            "dmSubtitle",
+            "dms",
+            "channelsTitle",
+            "channelsSubtitle",
+            "channels"
           ],
           "type": "object"
         },
@@ -587,6 +781,61 @@
         "topicPrefix": {
           "type": "string"
         },
+        "unreadsView": {
+          "additionalProperties": false,
+          "properties": {
+            "channel": {
+              "type": "string"
+            },
+            "countLabel": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            },
+            "filterLabel": {
+              "type": "string"
+            },
+            "keycap": {
+              "type": "string"
+            },
+            "markRead": {
+              "type": "string"
+            },
+            "messages": {
+              "items": {
+                "$ref": "#/$defs/WorkspaceMessage"
+              },
+              "type": "array"
+            },
+            "pressLabel": {
+              "type": "string"
+            },
+            "sortLabel": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "toLabel": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "filterLabel",
+            "sortLabel",
+            "channel",
+            "countLabel",
+            "pressLabel",
+            "keycap",
+            "toLabel",
+            "markRead",
+            "date",
+            "messages"
+          ],
+          "type": "object"
+        },
         "vipModal": {
           "additionalProperties": false,
           "properties": {
@@ -651,6 +900,117 @@
           ],
           "type": "object"
         },
+        "welcomeBackView": {
+          "additionalProperties": false,
+          "properties": {
+            "heroTitle": {
+              "type": "string"
+            },
+            "sayHi": {
+              "type": "string"
+            },
+            "teammates": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "snooze": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "name",
+                  "avatar"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "teammatesHeading": {
+              "type": "string"
+            },
+            "teammatesSubtitle": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "unreadGroups": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "author": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "channel": {
+                          "type": "string"
+                        },
+                        "text": {
+                          "type": "string"
+                        },
+                        "time": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "channel",
+                        "author",
+                        "avatar",
+                        "time",
+                        "text"
+                      ],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "date",
+                  "items"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "unreadHeading": {
+              "type": "string"
+            },
+            "unreadSubtitle": {
+              "type": "string"
+            },
+            "viewMessage": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "title",
+            "heroTitle",
+            "unreadHeading",
+            "unreadSubtitle",
+            "viewMessage",
+            "unreadGroups",
+            "teammatesHeading",
+            "teammatesSubtitle",
+            "sayHi",
+            "teammates"
+          ],
+          "type": "object"
+        },
         "welcomePrompt": {
           "additionalProperties": false,
           "properties": {
@@ -695,6 +1055,12 @@
         "vipModal",
         "amaChannel",
         "workspaces",
+        "dualRailWorkspaces",
+        "dualRailChannels",
+        "directoriesView",
+        "huddlesView",
+        "unreadsView",
+        "welcomeBackView",
         "rail",
         "tabs",
         "sections",

@@ -229,8 +229,8 @@
   "$description": "Region 25: white words on the blue hover row (g-edit-01-f82)."
  },
  "c.list-item.size": {
-  "$value": "1.75rem",
-  "$description": "Owner benchmark 04 S04.3: menu row pitch 19 px at 2/3 scale = 28 CSS px."
+  "$value": "1.875rem",
+  "$description": "Owner benchmark 04 S04.3: 10-row overflow menu totals 231 PNG = 346 CSS px (30 CSS row pitch)."
  },
  "c.list-item.padding-block": {
   "$value": "0.25rem",
@@ -414,7 +414,7 @@
   "$description": "Owner benchmark 02 S02.3: top-right close button sits 16 CSS px from the modal top."
  },
  "c.dialog.heading-padding-top": {
-  "$value": "1.25rem",
+  "$value": "2rem",
   "$description": "Owner benchmark 02 S02.3: modal heading starts at y=242 PNG below the top-right close button."
  },
  "c.dialog.footer-border-width": {
@@ -428,6 +428,14 @@
  "c.dialog.footer-padding-top": {
   "$value": "1.125rem",
   "$description": "Owner benchmark 02 S02.3: 18 CSS px space between footer top rule (y=508 PNG) and buttons (y=520 PNG)."
+ },
+ "c.dialog.footer-padding-bottom": {
+  "$value": "1.25rem",
+  "$description": "Owner benchmark 02 S02.3: 20 CSS px bottom inset so footer rule sits at y=508 PNG and buttons at y=520..544 PNG."
+ },
+ "c.dialog.close-icon-size": {
+  "$value": "{size.icon-md}",
+  "$description": "Owner benchmark 02 S02.3: 20 CSS px close icon."
  },
  "c.text-area.tray-inset": {
   "$value": "0",
@@ -451,5 +459,12 @@
    "dark": "#1c3342"
   },
   "$description": "Owner benchmark 03 S03.4: inline URL link chip #E5F7FD."
+ },
+ "color.map.brand-tint": {
+  "$value": {
+   "light": "#e9ffec",
+   "dark": "#192d22"
+  },
+  "$description": "Owner benchmark 09 S09.2: Huddles mint hero surface #E9FFEC."
  }
 }

@@ -11,7 +11,8 @@
   "home": "channel",
   "sections": [
     { "id": "workspace", "title": "Workspace", "summary": "Read, reply and find a conversation.", "flows": [
-      { "id": "converse", "title": "Conversations", "summary": "A channel, its replies and shared files.", "screens": ["channel", "thread", "files"] },
+      { "id": "converse", "title": "Conversations", "summary": "A channel, its replies, unreads and shared files.", "screens": ["channel", "unreads", "thread", "files"] },
+      { "id": "browse", "title": "Browse workspace", "summary": "Directories, huddles and welcome catch-up.", "screens": ["directories", "huddles", "welcome-back"] },
       { "id": "actions", "title": "Channel actions and VIPs", "summary": "Prioritize VIPs and manage channel settings.", "screens": ["vip-modal", "channel-menu"] },
       { "id": "find", "title": "Find a message", "summary": "Search the workspace.", "screens": ["search"] }
     ] }
@@ -20,8 +21,12 @@
     { "id": "channel", "title": "Channel", "component": "SiteLayout", "content": "content/channel.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "vip-modal", "title": "VIP modal", "component": "SiteLayout", "content": "content/workspace/vip-modal.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "channel-menu", "title": "Channel menu", "component": "SiteLayout", "content": "content/workspace/channel-menu.json", "regions": [{"id":"main","accepts":["*"]}] },
-    { "id": "thread", "title": "Thread", "component": "SiteLayout", "content": "content/workspace/thread.json", "regions": [{"id":"main","accepts":["*"]}] },
-    { "id": "files", "title": "Files", "component": "SiteLayout", "content": "content/workspace/files.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "directories", "title": "Directories", "component": "SiteLayout", "content": "content/workspace/browse/directories.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "huddles", "title": "Huddles", "component": "SiteLayout", "content": "content/workspace/browse/huddles.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "unreads", "title": "Unreads", "component": "SiteLayout", "content": "content/workspace/converse/unreads.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "welcome-back", "title": "Welcome back", "component": "SiteLayout", "content": "content/workspace/browse/welcome-back.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "thread", "title": "Thread", "component": "SiteLayout", "content": "content/workspace/converse/thread.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "files", "title": "Files", "component": "SiteLayout", "content": "content/workspace/converse/files.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "search", "title": "Search", "component": "SiteLayout", "content": "content/workspace/search.json", "regions": [{"id":"main","accepts":["*"]}] }
   ],
   "parts": { "layouts": [{ "name": "slack.Workspace", "source": "parts/layouts/Workspace.tsx" }] }

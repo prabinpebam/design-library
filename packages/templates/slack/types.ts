@@ -1,5 +1,5 @@
 export type WorkspaceIcon =
-  | 'organisation' | 'comment' | 'speaker' | 'file' | 'more' | 'list' | 'edit' | 'frame' | 'person' | 'plus'
+  | 'organisation' | 'comment' | 'speaker' | 'file' | 'more' | 'list' | 'edit' | 'frame' | 'person' | 'people' | 'plus'
   | 'thumb-up' | 'heart' | 'headphones' | 'hash' | 'person-add' | 'clock' | 'emoji' | 'leaf' | 'food' | 'ball'
   | 'plane' | 'lightbulb' | 'flag' | 'home' | 'messages' | 'bell' | 'check-circle' | 'star' | 'bookmark' | 'pin'
   | 'inbox' | 'contacts' | 'sidebar' | 'help' | 'video' | 'quote' | 'code-block' | 'shortcut' | 'filter-lines'
@@ -55,6 +55,8 @@ export interface WorkspaceMessage {
   edited?: boolean;
   linkText?: string;
   grouped?: boolean;
+  hovered?: boolean;
+  italic?: boolean;
   isNew?: boolean;
   dateAbove?: string;
   reactions?: { emoji: string; label: string; count: number }[];
@@ -134,6 +136,58 @@ export interface WorkspaceRecord {
     messages: WorkspaceMessage[];
   };
   workspaces: WorkspaceTile[];
+  dualRailWorkspaces: WorkspaceTile[];
+  dualRailChannels: WorkspaceChannelItem[];
+  directoriesView: {
+    title: string;
+    tabs: WorkspaceTabItem[];
+    searchPlaceholder: string;
+    inviteLabel: string;
+    filters: { label: string; icon?: WorkspaceIcon }[];
+    sortLabel: string;
+    people: { name: string; avatar: string; presence: 'available' | 'away' | 'snooze'; role?: string }[];
+  };
+  huddlesView: {
+    title: string;
+    newHuddle: string;
+    heroTitle: string;
+    heroBody: string;
+    heroAction: string;
+    dmTitle: string;
+    dmSubtitle: string;
+    dms: { name: string; statusEmoji?: string; status: string; presence?: 'away' | 'available'; banner: string; leftAvatar: string; rightAvatar: string }[];
+    channelsTitle: string;
+    channelsSubtitle: string;
+    channels: string[];
+  };
+  unreadsView: {
+    title: string;
+    filterLabel: string;
+    sortLabel: string;
+    channel: string;
+    countLabel: string;
+    pressLabel: string;
+    keycap: string;
+    toLabel: string;
+    markRead: string;
+    date: string;
+    messages: WorkspaceMessage[];
+  };
+  welcomeBackView: {
+    title: string;
+    heroTitle: string;
+    unreadHeading: string;
+    unreadSubtitle: string;
+    viewMessage: string;
+    unreadGroups: {
+      date: string;
+      items: { channel: string; author: string; avatar: string; time: string; text: string }[];
+    }[];
+    teammatesHeading: string;
+    teammatesSubtitle: string;
+    sayHi: string;
+    teammates: { name: string; avatar: string; snooze?: boolean }[];
+  };
   rail: { id: string; label: string; icon: WorkspaceIcon; mentions?: number }[];
   tabs: WorkspaceTabItem[];
   sections: { title?: string; collapsible?: boolean; dividerBefore?: boolean; items: WorkspaceChannelItem[] }[];
