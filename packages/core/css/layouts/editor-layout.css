@@ -69,14 +69,14 @@
     /* Q68 DT6: a resizable panel's dragged width (set by the layout), held between the tokens' least and most. */
     inline-size: var(--dl-panel-size, var(--dl-panel-default, var(--c-editor-layout-panel)));
     min-inline-size: min(var(--c-editor-layout-panel-min), var(--dl-panel-default, var(--c-editor-layout-panel)));
-    max-inline-size: var(--c-editor-layout-panel-max);
+    max-inline-size: var(--dl-panel-max, var(--c-editor-layout-panel-max));
     min-block-size: 0;
     background-color: var(--color-bg);
   }
 
   /* A theme may draw a hairline between a docked panel and the working area (none by default: tone sets them apart). */
-  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { --dl-panel-default: var(--c-editor-layout-panel-start); border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
-  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { --dl-panel-default: var(--c-editor-layout-panel-end); border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { --dl-panel-default: var(--dl-start-size, var(--c-editor-layout-panel-start)); border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { --dl-panel-default: var(--dl-end-size, var(--c-editor-layout-panel-end)); --dl-panel-max: var(--dl-end-max, var(--c-editor-layout-panel-max)); border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
 
   /* The resize handle: a hit strip centred on the panel's inner edge. Nothing is drawn at rest; a line shows only while it
      is hovered, focused or dragged (a transient cue), so the panels stay set apart by tone alone. */
@@ -182,6 +182,11 @@
     min-block-size: 0;
   }
 
+  /* workMin: the working area keeps a floor and the end panel gives way first, down to its least width, so it is never
+     wider than the room minus the start panel and the floor. */
+  [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='work'] { min-inline-size: var(--dl-work-min); }
+  [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { flex-shrink: 1; }
+
   /* Q68: the tools float over the working area, centred at its bottom (Figma UI3's toolbar). The wrapper only places
      the FloatingBar; it lets the pointer through to the canvas around the bar. */
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='tools'] {
@@ -210,6 +215,9 @@
       max-inline-size: calc(100% - var(--c-editor-layout-bar));
       box-shadow: var(--c-editor-layout-overlay-shadow);
     }
+
+    /* Floating panels cover the working area, so it needs no floor. */
+    [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='work'] { min-inline-size: 0; }
 
     /* Floating panels keep their width; they don't resize. */
     [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize'] {

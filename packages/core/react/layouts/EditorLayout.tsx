@@ -35,6 +35,14 @@ export interface EditorLayoutProps extends DataAttributes {
   resizable?: boolean;
   /** With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle). */
   toggles?: 'outer' | 'inner';
+  /** The start panel's opening width, a CSS length such as "16rem" (default the theme's `c.editor-layout.panel-start`). */
+  startSize?: string;
+  /** The end panel's opening width, a CSS length such as "41rem" for a two-column inspector (default the theme's `c.editor-layout.panel-end`). */
+  endSize?: string;
+  /** The widest the end panel can be, opened or dragged (default the theme's `c.editor-layout.panel-max`, 30 rem). Set it with an `endSize` above 30 rem. */
+  endMax?: string;
+  /** The narrowest the working area gets while both panels are docked, such as "24rem". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this. Default: no floor. */
+  workMin?: string;
 }
 
 type Side = 'start' | 'end';
@@ -55,7 +63,7 @@ const STEP = 8;
  * @key Home / End (on a resize handle): the narrowest or the widest
  * @key Enter (on a resize handle): back to the default width
  */
-export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, toggles = 'outer', ...data }: EditorLayoutProps) {
+export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
   const [dragging, setDragging] = useState<Side | null>(null);
   const startId = useId();
@@ -182,8 +190,11 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
     </span>
   );
 
+  // Opening widths and the working area's floor, per instance; unset keeps the theme's tokens.
+  const sizes = { '--dl-start-size': startSize, '--dl-end-size': endSize, '--dl-end-max': endMax, '--dl-work-min': workMin } as CSSProperties;
+
   return (
-    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'inner' ? 'inner' : undefined} data-height={height} data-bar={floating ? 'none' : undefined}>
+    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'inner' ? 'inner' : undefined} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} style={startSize || endSize || endMax || workMin ? sizes : undefined}>
       {!floating && (
         <header data-dl-part="bar">
           {startTogglePart('toggle')}

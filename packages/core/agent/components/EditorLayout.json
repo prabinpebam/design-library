@@ -127,6 +127,26 @@
           "type": "'outer' | 'inner'",
           "default": "'outer'",
           "description": "With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle)."
+        },
+        {
+          "name": "startSize",
+          "type": "string",
+          "description": "The start panel's opening width, a CSS length such as \"16rem\" (default the theme's `c.editor-layout.panel-start`)."
+        },
+        {
+          "name": "endSize",
+          "type": "string",
+          "description": "The end panel's opening width, a CSS length such as \"41rem\" for a two-column inspector (default the theme's `c.editor-layout.panel-end`)."
+        },
+        {
+          "name": "endMax",
+          "type": "string",
+          "description": "The widest the end panel can be, opened or dragged (default the theme's `c.editor-layout.panel-max`, 30 rem). Set it with an `endSize` above 30 rem."
+        },
+        {
+          "name": "workMin",
+          "type": "string",
+          "description": "The narrowest the working area gets while both panels are docked, such as \"24rem\". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this. Default: no floor."
         }
       ]
     }

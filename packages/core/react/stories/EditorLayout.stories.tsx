@@ -12,7 +12,7 @@ import { EditorLayout } from '../layouts/EditorLayout';
 import { signInScreen } from './Canvas.stories';
 import type { StoryFile } from './story';
 
-function Editor({ startOpen: start = true, endOpen: end = true, bare = false }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean }) {
+function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean }) {
   const [startOpen, setStartOpen] = useState(start);
   const [endOpen, setEndOpen] = useState(end);
   const [tool, setTool] = useState('pointer');
@@ -21,6 +21,7 @@ function Editor({ startOpen: start = true, endOpen: end = true, bare = false }: 
   return (
     <EditorLayout
       height="lg"
+      {...(wide ? { startSize: '16rem', endSize: '41rem', endMax: '60rem', workMin: '24rem', resizable: true } : {})}
       startOpen={startOpen}
       onStartToggle={() => setStartOpen((x) => !x)}
       endOpen={endOpen}
@@ -109,6 +110,12 @@ export default {
       description: 'With both panels hidden, the working area takes the whole width. In a narrow window, a panel opened floats over it and Escape closes it.',
       code: `<EditorLayout startOpen={false} endOpen={false} … />`,
       render: () => <Editor startOpen={false} endOpen={false} />,
+    },
+    {
+      title: 'A wide inspector with a canvas floor',
+      description: 'Each panel can open at its own width: here the layers at 16 rem and a two-column inspector at 41 rem, which can be dragged up to 60 rem. The working area keeps at least 24 rem: in a narrower window the inspector gives way first, down to the least panel width, before the canvas shrinks below its floor.',
+      code: `<EditorLayout startSize="16rem" endSize="41rem" endMax="60rem" workMin="24rem" resizable … />`,
+      render: () => <Editor wide />,
     },
   ],
 } satisfies StoryFile;
