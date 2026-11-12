@@ -1,7 +1,8 @@
 {
   "$parts": [
     { "selector": "[data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player']", "$description": "The player (watch169-1280-L): icons white #FFFFFF by pixel; the seek line 4 high (y502–505) with a 12 dot (x28–39, y498–509); autoplay on is a white track 30×18 (x649–678, y526–543) with a black 14 knob inset 2 (x664–677, y528–541), centred in its 48 slot (its label is hidden, so no gap).", "tokens": { "color.text": "#ffffff", "c.slider.track-s": "0.25rem", "c.slider.thumb-s": "0.75rem", "c.switch.on-fill": "#ffffff", "c.switch.on-fill-hover": "#ffffff", "c.switch.on-thumb": "#000000", "c.switch.track-inline-xs": "1.875rem", "c.switch.track-block-xs": "1.125rem", "c.switch.gap": "0rem" } },
-    { "selector": "[data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time']", "$description": "The time pill's words are #EEEEEE, a step under the icons' white (watch169-1280-L).", "tokens": { "color.text": "#eeeeee" } }
+    { "selector": "[data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time']", "$description": "The time pill's words are #EEEEEE, a step under the icons' white (watch169-1280-L).", "tokens": { "color.text": "#eeeeee" } },
+    { "selector": "[data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='add']", "$description": "The add-comment field is 25 high from the text's top to the foot of its line and runs the comments' width to x879 (WC-1280-L: box y111–136, line y135, text from x52).", "tokens": { "c.field.size-xs": "1.5625rem", "size.measure": "100%" } }
   ],
   "$description": "Q145.Y reference spec .design-library/youtube-ref/README.md (headless, signed out, 1280/1440/720, light and dark). Sources are capture ids: H home, S search, G guide open, C channel grid, T hashtag grid, W watch; L light, D dark. Type: Roboto (OFL) from the font registry, the reference's own face. Unmeasured values say so.",
   "font.text": { "$value": "'Roboto Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
@@ -52,6 +53,7 @@
   "c.field.action-fill": { "$value": { "light": "#f8f8f8", "dark": "rgba(255, 255, 255, 0.08)" }, "$description": "The search button's fill (H-1280-L, S-1280-D)." },
   "c.field.action-edge": { "$value": { "light": "#d3d3d3", "dark": "#303030" }, "$description": "The search button's outline (H-1280-L, S-1280-D)." },
   "c.field.action-padding-inline": { "$value": "1.25rem", "$description": "The search button is 64 wide around a 24 icon (H-1280-L)." },
+"c.field.underline-edge": { "$value": { "light": "#cccccc", "dark": "#3f3f3f" }, "$description": "The add-comment field's line: 1 px under the text (WC-1280-L y135, WC-1280-D)." },
   "radius.md": { "$value": "0.625rem", "$description": "Guide entries, expanded and mini: radius 10 (G-1280-L, H-1280-L)." },
   "c.badge.size-s": { "$value": "1.25rem", "$description": "The length badge is 20 high (C-1280-L); icons grow to 24 here, the badge doesn't." },
   "color.bg-overlay": { "$value": "rgba(0, 0, 0, 0.5)", "$description": "The drawer scrim: black at 50 %, reads #7F7F7F on white (G-1280-L); dark unmeasured, same scrim." },

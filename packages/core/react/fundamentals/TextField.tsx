@@ -79,6 +79,8 @@ export interface TextFieldProps extends DataAttributes {
   swatch?: { value: string; onChange: (hex: string) => void };
   /** Hides the visible label where the row already says what it is (an inspector). It still names the field. */
   hideLabel?: boolean;
+  /** `box` (default): the outlined, filled box. `underline`: one line under the text, no box, fill or inline padding, for a row that already frames it (a comment or reply under an avatar). States keep their line colours. */
+  appearance?: 'box' | 'underline';
 }
 
 /** The words a TextField shows and says (IP14). Each defaults to the English shown. */
@@ -144,7 +146,7 @@ const actionSize: Record<ButtonSize, ButtonSize> = { xs: 'xs', s: 'xs', normal: 
  * @key Enter: saves the value now (in a form: submits the form)
  * @key Escape: puts back the stored value (not in a form)
  */
-export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, ...data }: TextFieldProps) {
+export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, appearance = 'box', ...data }: TextFieldProps) {
   const form = mode === 'form';
   const { phase, run, reset } = useCommit('--duration-confirm-read');
   const [draft, setDraft] = useState(value);
@@ -341,7 +343,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
   );
 
   return (
-    <span {...data} data-dl="text-field" data-size={size} data-clearable={clearable ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
+    <span {...data} data-dl="text-field" data-size={size} data-appearance={appearance === 'box' ? undefined : appearance} data-clearable={clearable ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
       <Field
         label={label}
         hint={hint}

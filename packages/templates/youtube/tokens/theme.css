@@ -49,6 +49,7 @@
     --c-field-action-fill: light-dark(#f8f8f8, rgba(255, 255, 255, 0.08));
     --c-field-action-edge: light-dark(#d3d3d3, #303030);
     --c-field-action-padding-inline: 1.25rem;
+    --c-field-underline-edge: light-dark(#cccccc, #3f3f3f);
     --radius-md: 0.625rem;
     --c-badge-size-s: 1.25rem;
     --color-bg-overlay: rgba(0, 0, 0, 0.5);
@@ -464,5 +465,9 @@
   }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time'] {
     --color-text: #eeeeee;
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='add'] {
+    --c-field-size-xs: 1.5625rem;
+    --size-measure: 100%;
   }
 }

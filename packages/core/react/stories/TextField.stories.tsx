@@ -378,5 +378,16 @@ const { shown, status } = useFilter(talks, query, { count: (n, all) => (n === al
 </form>`,
       render: () => <InForm />,
     },
+    {
+      title: 'Underline',
+      description: 'appearance="underline": one line under the text instead of the box, for a row that already frames the field, such as a reply under an avatar. Focus thickens the line in the focus colour; states colour the line.',
+      code: `<TextField label="Add a reply" hideLabel appearance="underline" size="s" placeholder="Add a reply…" value={reply} onChange={setReply} mode="form" />`,
+      render: () => <Underline />,
+    },
   ],
 } satisfies StoryFile;
+
+function Underline() {
+  const [reply, setReply] = useState('');
+  return <TextField label="Add a reply" hideLabel appearance="underline" size="s" placeholder="Add a reply…" value={reply} onChange={setReply} mode="form" />;
+}

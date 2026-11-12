@@ -173,6 +173,7 @@
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);
     --c-field-readonly-border: var(--color-border);
+    --c-field-underline-edge: var(--color-border-control);
     --c-field-action-fill: var(--c-button-default-fill);
     --c-field-action-edge: var(--c-button-default-edge);
     --c-field-ring-color: var(--color-focus);
@@ -327,6 +328,7 @@
       --c-field-action-edge: var(--c-button-default-edge);
       --c-field-action-fill: var(--c-button-default-fill);
       --c-field-readonly-border: var(--color-border);
+      --c-field-underline-edge: var(--color-border-control);
       --c-illustration-muted: var(--color-text-muted);
       --c-menu-button-border: var(--c-button-default-edge);
       --c-menu-button-fill: var(--c-button-default-fill);
@@ -369,6 +371,7 @@
     --c-field-action-edge: var(--c-button-default-edge);
     --c-field-action-fill: var(--c-button-default-fill);
     --c-field-readonly-border: var(--color-border);
+    --c-field-underline-edge: var(--color-border-control);
     --c-illustration-muted: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
@@ -410,6 +413,7 @@
     --c-field-action-edge: var(--c-button-default-edge);
     --c-field-action-fill: var(--c-button-default-fill);
     --c-field-readonly-border: var(--color-border);
+    --c-field-underline-edge: var(--color-border-control);
     --c-illustration-muted: var(--color-text-muted);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);

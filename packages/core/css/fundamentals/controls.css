@@ -938,6 +938,21 @@
     font-size: var(--type-heading-3-size);
   }
 
+  /* appearance="underline": a line under the text in place of the box (a comment or reply row); the text starts at the
+     line's start. Focus thickens the line in the focus colour: the shared ring layer paints its lower edge only. */
+  [data-dl='text-field'][data-appearance='underline'] [data-dl-part='box'] {
+    padding-inline: 0;
+    border-width: 0 0 var(--c-field-border-width);
+    border-color: var(--c-field-underline-edge);
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  [data-dl='text-field'][data-appearance='underline'] [data-dl-part='box'][data-dl-ring]::after {
+    inset: 0 0 calc(-1 * var(--c-field-border-width));
+    padding: 0 0 var(--c-field-ring-width);
+  }
+
   /* At xs the box's inside is 22 px, so its own Clear and Show buttons take that height (the 24 px target holds with the
      box's border: WCAG 2.5.8's spacing allowance), and the field stays exactly 24 px. */
   [data-dl='text-field'][data-size='xs'] [data-dl-part='box'] > [data-dl='button'] {

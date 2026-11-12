@@ -188,6 +188,11 @@
           "name": "hideLabel",
           "type": "boolean",
           "description": "Hides the visible label where the row already says what it is (an inspector). It still names the field."
+        },
+        {
+          "name": "appearance",
+          "type": "'box' | 'underline'",
+          "description": "`box` (default): the outlined, filled box. `underline`: one line under the text, no box, fill or inline padding, for a row that already frames it (a comment or reply under an avatar). States keep their line colours."
         }
       ]
     },
@@ -330,6 +335,7 @@
     "--c-field-padding-inline-sm",
     "--c-field-radius",
     "--c-field-readonly-border",
+    "--c-field-ring-width",
     "--c-field-size",
     "--c-field-size-l",
     "--c-field-size-m",
@@ -339,6 +345,7 @@
     "--c-field-size-xxl",
     "--c-field-swatch",
     "--c-field-trailing",
+    "--c-field-underline-edge",
     "--color-bg-control",
     "--color-bg-sunken",
     "--color-border",

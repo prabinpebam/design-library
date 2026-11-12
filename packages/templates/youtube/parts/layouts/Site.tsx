@@ -207,7 +207,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
             </div>
             <div data-dl-part="add">
               <Avatar name={c.signIn} size={24} decorative />
-              <TextField label={c.addComment} hideLabel placeholder={c.addComment} value="" onChange={() => undefined} />
+              <TextField label={c.addComment} hideLabel appearance="underline" size="xs" placeholder={c.addComment} value="" onChange={() => undefined} />
             </div>
             <ul data-dl-part="thread">
               {w.comments.map((m) => (
