@@ -31,6 +31,16 @@
         "$description": "The finished picture fading in where the wait was (Q65 C14: the change role) (echoed for motion contexts)"
       }
     },
+    "image": {
+      "$extensions": {
+        "owner": "Image"
+      },
+      "reveal-reduced-duration": {
+        "$type": "duration",
+        "$value": "{duration.change}",
+        "$description": "LR26: with reduced motion a reveal isn't drawn; the pair crossfades in over the resting tone for this long. A brand sets it with applySettings (echoed for motion contexts)"
+      }
+    },
     "scroll-area": {
       "$extensions": {
         "owner": "ScrollArea"

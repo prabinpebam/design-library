@@ -138,7 +138,7 @@
         {
           "name": "reveal",
           "type": "PictureReveal",
-          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the crossfade shows instead (or the change at once, when the reveal declares `reducedMotion: 'swap'`). Needs `alternate`. With a `treatment` whose `active` differs, the tone holds at rest while a reveal draws (the reveal owns the change); reduced motion keeps the tone's change. A template's reveal presets (`registry.reveals`) reach a picture through its block's `reveal`."
+          "description": "Draws the change to `alternate` yourself (MP11): a wipe, a stipple. Called on every animation frame while it runs with a canvas over the picture, the eased progress (0 → 1 and back) and `paint` to draw either picture as the frame fits it. The library owns the triggers (as `alternate`), the timing (`--c-image-reveal-duration`) and reduced motion, where it isn't called and the pair crossfades in over the resting tone instead, on `--c-image-reveal-reduced-duration` (default the change duration). Needs `alternate`. With a `treatment` whose `active` differs, the tone holds at rest while a reveal carries the change (the reveal owns it). A template's reveal presets (`registry.reveals`) reach a picture through its block's `reveal`."
         }
       ]
     },
@@ -182,6 +182,7 @@
     "--c-image-fallback-gap",
     "--c-image-fallback-padding",
     "--c-image-radius",
+    "--c-image-reveal-reduced-duration",
     "--color-bg-sunken",
     "--color-text-muted",
     "--count-shimmer-passes",
@@ -199,6 +200,11 @@
       "var": "--c-image-reveal-duration",
       "default": "400ms",
       "description": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it."
+    },
+    {
+      "var": "--c-image-reveal-reduced-duration",
+      "default": "200ms",
+      "description": "With reduced motion a reveal isn't drawn: the pair crossfades in over the resting tone for this long (default duration.change, 200 ms). A brand whose approved reduced-motion fade is shorter or longer sets it."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/image",

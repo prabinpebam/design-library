@@ -29,7 +29,8 @@
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
   },
   "Image": {
-    "--c-image-reveal-duration": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it."
+    "--c-image-reveal-duration": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it.",
+    "--c-image-reveal-reduced-duration": "With reduced motion a reveal isn't drawn: the pair crossfades in over the resting tone for this long (default duration.change, 200 ms). A brand whose approved reduced-motion fade is shorter or longer sets it."
   },
   "List": {
     "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length.",

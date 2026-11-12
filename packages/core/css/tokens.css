@@ -979,6 +979,7 @@
   --c-image-duotone: var(--color-accent);
   --c-image-decoration: var(--color-accent);
   --c-image-reveal-duration: var(--duration-xslow);
+  --c-image-reveal-reduced-duration: var(--duration-change);
   --c-illustration-ink: var(--color-text);
   --c-illustration-muted: var(--color-text-muted);
   --c-illustration-fill: var(--color-bg-sunken);
@@ -1513,6 +1514,7 @@
     --c-button-fill-move: var(--duration-move);
     --c-illustration-float: var(--motion-enter-rise);
     --c-image-generation-fade: var(--duration-change);
+    --c-image-reveal-reduced-duration: var(--duration-change);
     --c-scroll-area-fade: var(--duration-medium);
   }
 }
@@ -1537,6 +1539,7 @@
   --c-button-fill-move: var(--duration-move);
   --c-illustration-float: var(--motion-enter-rise);
   --c-image-generation-fade: var(--duration-change);
+  --c-image-reveal-reduced-duration: var(--duration-change);
   --c-scroll-area-fade: var(--duration-medium);
 }
 
