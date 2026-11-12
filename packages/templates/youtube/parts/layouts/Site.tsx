@@ -167,6 +167,8 @@ function Watch({ view }: { view: YoutubeRecord }) {
                 <Button label={c.dislike} icon="thumb-down" iconOnly />
               </ButtonGroup>
               <Button label={c.share} icon="share" iconOnly />
+              <Button label={c.download} icon="arrow-down" iconOnly />
+              <Button label={c.save} icon="bookmark" iconOnly />
               <MenuButton label={c.more} icon="more" iconOnly onSelect={() => undefined} items={[{ value: 'later', label: c.later }, { value: 'playlist', label: c.playlist }]} />
             </div>
           </div>
@@ -180,7 +182,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
               <Button label={c.sortBy} icon="sort" emphasis="quiet" />
             </div>
             <div data-dl-part="add">
-              <Avatar name={c.signIn} size={40} decorative />
+              <Avatar name={c.signIn} size={24} decorative />
               <TextField label={c.addComment} hideLabel placeholder={c.addComment} value="" onChange={() => undefined} />
             </div>
             <ul data-dl-part="thread">

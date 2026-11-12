@@ -48,7 +48,8 @@
   "tokens": [
     "--border-hairline",
     "--c-button-group-focus-layer",
-    "--c-button-group-gap"
+    "--c-button-group-gap",
+    "--c-button-group-icon-padding-inline"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/buttongroup",
   "usedBy": [

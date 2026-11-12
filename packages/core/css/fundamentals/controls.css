@@ -211,7 +211,7 @@
   /* Strong (Q140): an ink fill, the page's text colour, for the main action on a brand-coloured panel. */
   [data-dl='button'][data-emphasis='strong'] {
     background-color: var(--color-text);
-    color: var(--color-bg);
+    color: var(--c-button-strong-text);
   }
 
   [data-dl='button'][data-emphasis='strong'] > [data-dl-part='ring'] {
@@ -483,6 +483,10 @@
     flex-wrap: nowrap;
     align-items: stretch;
     gap: 0;
+  }
+
+  [data-dl='button-group'][data-arrangement='attached'] > [data-dl='button'][data-icon-only] {
+    padding-inline: var(--c-button-group-icon-padding-inline);
   }
 
   [data-dl='button-group'][data-arrangement='attached'] > [data-dl='button']:not(:first-child) {

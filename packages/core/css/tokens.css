@@ -128,6 +128,7 @@
   --size-nav-width-min: 14rem;
   --size-nav-width-max: 32rem;
   --size-pane-width: 22rem;
+  --size-search-width: 30rem;
   --size-column-min: 16rem;
   --size-column-min-s: 11rem;
   --size-column-min-l: 20rem;
@@ -187,6 +188,7 @@
   --c-colour-field-gap: var(--space-stack-pair);
   --c-colour-field-mark-gap: var(--space-inline-pair);
   --c-button-group-gap: var(--space-inline-pair);
+  --c-button-group-icon-padding-inline: 0rem;
   --c-button-group-focus-layer: var(--layer-raised);
   --c-menu-button-size: var(--size-target);
   --c-menu-button-size-xs: var(--size-target-min);
@@ -419,6 +421,7 @@
   --c-button-default-edge: var(--color-border-control);
   --c-button-link-text: var(--color-text-link);
   --c-button-link-edge: var(--c-button-default-edge);
+  --c-button-strong-text: var(--color-bg);
   --c-button-weight: var(--type-label-weight);
   --c-button-unavailable-fill: transparent;
   --c-button-unavailable-edge: var(--color-border-strong);

@@ -168,6 +168,7 @@
     --c-button-default-fill: var(--color-bg-control);
     --c-button-link-text: var(--color-text-link);
     --c-button-link-edge: var(--c-button-default-edge);
+    --c-button-strong-text: var(--color-bg);
     --c-skeleton-fill: var(--color-border);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);

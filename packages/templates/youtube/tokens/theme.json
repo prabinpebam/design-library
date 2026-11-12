@@ -66,5 +66,13 @@
   "c.navigation.mini-label-size": { "$value": "0.625rem", "$description": "Mini entry label 10/16 w400 (H-1280-L)." },
   "c.navigation.mini-label-leading": { "$value": "1.6", "$description": "Mini entry label 10/16 (H-1280-L)." },
   "c.navigation.mini-current-fill": { "$value": "transparent", "$description": "The mini guide's current entry has no fill (H-1280-L Home)." },
-  "c.navigation.mini-current-weight": { "$value": "{weight.regular}", "$description": "Mini entry label w400, current or not (H-1280-L)." },  "c.menu-button.size": { "$value": "2.5rem", "$description": "The card's ⋮ menu is 40×40 (T-1280-L, C-1280-L)." }
+  "c.navigation.mini-current-weight": { "$value": "{weight.regular}", "$description": "Mini entry label w400, current or not (H-1280-L)." },
+  "c.menu-button.size": { "$value": "2.5rem", "$description": "The card's ⋮ menu is 40×40 (T-1280-L, C-1280-L)." },
+  "size.search-width": { "$value": "37.5rem", "$description": "The search box 536 + its button 64 at 1280 and 1440, shrinking below (H-1280-L, H-1440-L, H-720-L 114 + 64)." },
+  "c.button.gap": { "$value": "0.375rem", "$description": "Sign in 104.6 = 1 + 15 + icon 24 + 6 + words 42.6 + 15 + 1 (H-1280-L); the like pill 90.2 the same way (W-1280-L)." },
+  "c.button.strong-text": { "$value": { "light": "#f1f1f1", "dark": "#0f0f0f" }, "$description": "Subscribe's words #F1F1F1 on #0F0F0F, inverted in dark (W-1280-L/D)." },
+  "c.button-group.icon-padding-inline": { "$value": "{space.4}", "$description": "The dislike half of the like pill is 56: 16 + icon 24 + 16 (W-1280-L)." },
+  "c.button.size-s": { "$value": "{size.control-sm}", "$description": "Comment actions are 32×32, radius 16 (WC-1280-L)." },
+  "c.button.padding-inline-sm": { "$value": "{space.3}", "$description": "Comment actions padding 0 12 (WC-1280-L Reply)." },
+  "color.bg-sunken": { "$value": { "light": "{p.base.50}", "dark": "#000000" }, "$description": "The player is black #000000 in both schemes (W-1280-L, W-1280-D; the player part takes the dark scheme). Light frames keep the core default; dark frames are unmeasured until Y.2d." }
 }

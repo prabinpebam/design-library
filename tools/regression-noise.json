@@ -1,7 +1,17 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
-  "catalogueInventory": {
-    "lib--navigation": {
+    "catalogueInventory": {
+    "lib--buttongroup": {
+      "reason": "catalogue inventory: (Q145.Y, Worker 108, Y2e-F24) the generic c.button-group.icon-padding-inline token (default 0rem, every attached group unchanged) adds a source-derived token row below the viewport; only the right scrollbar track changes (measured change box x 1271-1275, y 291-296).",
+      "regions": [
+        {
+          "x": 1270,
+          "y": 54,
+          "width": 10,
+          "height": 846
+        }
+      ]
+    },    "lib--navigation": {
       "reason": "catalogue inventory: (Q145.Y, Worker 105, Y2c-F11) the generic opt-in Navigation seam (NavigationItem.icon, optional NavigationGroup.title, presentation mini and the c.navigation icon, current, hover and mini tokens; defaults unchanged) adds source-derived prop and token rows and two stories at the end of the page, below the viewport; only the right scrollbar track changes (measured change box x 1271-1275, y 147-170).",
       "regions": [
         {

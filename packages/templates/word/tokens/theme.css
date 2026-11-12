@@ -129,6 +129,7 @@
     --c-button-default-fill: var(--color-bg-control);
     --c-button-default-edge: var(--color-border-control);
     --c-button-link-edge: var(--c-button-default-edge);
+    --c-button-strong-text: var(--color-bg);
     --c-button-weight: var(--type-label-weight);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);

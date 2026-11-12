@@ -115,6 +115,7 @@
     --c-data-table-head-fg: var(--color-text-muted);
     --c-button-link-text: var(--color-text-link);
     --c-button-link-edge: var(--c-button-default-edge);
+    --c-button-strong-text: var(--color-bg);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);
     --c-field-action-fill: var(--c-button-default-fill);

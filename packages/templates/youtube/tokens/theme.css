@@ -69,6 +69,13 @@
     --c-navigation-mini-current-fill: transparent;
     --c-navigation-mini-current-weight: var(--weight-regular);
     --c-menu-button-size: 2.5rem;
+    --size-search-width: 37.5rem;
+    --c-button-gap: 0.375rem;
+    --c-button-strong-text: light-dark(#f1f1f1, #0f0f0f);
+    --c-button-group-icon-padding-inline: var(--space-4);
+    --c-button-size-s: var(--size-control-sm);
+    --c-button-padding-inline-sm: var(--space-3);
+    --color-bg-sunken: light-dark(var(--p-base-50), #000000);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--c-button-radius);
     --c-menu-button-border: var(--c-button-default-edge);
@@ -86,34 +93,47 @@
     --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-plate-ink: var(--color-text);
     --c-ribbon-radius: var(--radius-md);
+    --c-token-specimen-checker-dark: var(--color-bg-sunken);
     --c-token-specimen-colour-radius: var(--radius-md);
+    --c-token-specimen-track: var(--color-bg-sunken);
     --c-example-toggle-fg: var(--color-text-link);
     --c-context-matrix-label-bg: var(--color-bg);
     --c-context-matrix-label-fg: var(--color-text);
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-code-block-radius: var(--radius-md);
+    --c-code-block-bg: var(--color-bg-sunken);
+    --c-data-table-head-bg: var(--color-bg-sunken);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-button-link-text: var(--color-text-link);
     --c-switch-track-block-s: var(--size-icon-md);
     --c-field-swatch: var(--size-icon-md);
     --c-field-trailing: var(--size-icon-md);
+    --c-composer-tile-fill: var(--color-bg-sunken);
     --c-composer-tile-radius: var(--radius-md);
+    --c-image-generation-field: var(--color-bg-sunken);
     --c-conversation-list-radius: var(--radius-md);
     --c-site-header-name-size: var(--type-heading-4-size);
     --c-site-header-link-radius: var(--radius-md);
     --c-tree-view-surface: var(--color-bg);
     --c-tree-view-twisty: var(--size-icon-md);
     --c-tree-view-radius: var(--radius-md);
+    --c-alignment-picker-fill: var(--color-bg-sunken);
     --c-alignment-picker-radius: var(--radius-md);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-canvas-fill: var(--color-bg-sunken);
     --c-canvas-frame-fill: var(--color-bg);
     --c-canvas-handle-fill: var(--color-bg);
     --c-canvas-name-selected: var(--color-text-muted);
+    --c-board-column-fill: var(--color-bg-sunken);
     --c-board-card-radius: var(--radius-md);
+    --c-app-layout-sidebar-fill: var(--color-bg-sunken);
     --c-app-layout-aside: var(--size-pane-width);
     --c-agenda-session-radius: var(--radius-md);
+    --c-agenda-session-fill: var(--color-bg-sunken);
     --c-agenda-title-size: var(--type-heading-4-size);
+    --c-frame-ground: var(--color-bg-sunken);
     --c-screen-preview-radius: var(--radius-md);
+    --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
     --c-chat-thinking-indent: var(--size-icon-md);
     --c-checkbox-box: var(--size-icon-md);
     --c-colour-picker-width: var(--size-pane-width);
@@ -122,6 +142,7 @@
     --c-radio-group-tile-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-section-tone-sunken: var(--color-bg-sunken);
     --c-chip-media: var(--size-icon-md);
     --c-slider-thumb: var(--size-icon-md);
     --c-allocation-slider-radius: var(--radius-md);
@@ -131,33 +152,41 @@
     --c-tabs-text: var(--color-text-muted);
     --c-tabs-selected-text: var(--color-text);
     --c-pagination-radius: var(--radius-md);
+    --c-dialog-aside-bg: var(--color-bg-sunken);
     --c-footer-link: var(--color-text-link);
     --c-alert-radius: var(--radius-md);
     --c-file-upload-zone-radius: var(--radius-md);
     --c-accordion-radius: var(--radius-md);
     --c-illustration-ink: var(--color-text);
     --c-illustration-muted: var(--color-text-muted);
+    --c-illustration-fill: var(--color-bg-sunken);
     --c-illustration-surface: var(--color-bg);
     --c-quote-text-size-m: var(--type-heading-4-size);
     --c-scroll-area-colour-active: var(--color-text-muted);
+    --c-scroll-area-surface: var(--color-bg-sunken);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-scroll-area-line-thumb: var(--color-text);
     --c-price-was: var(--color-text-muted);
+    --color-map-nav: var(--color-bg-sunken);
     --color-map-nav-on: var(--color-text);
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-map-nav-selected-on: var(--color-text);
+    --color-map-nav-shell: var(--color-bg-sunken);
     --color-map-nav-shell-on: var(--color-text);
+    --color-border-group: var(--color-bg-sunken);
     --color-status-neutral-fg: var(--color-text-muted);
     --color-border-strong: var(--p-standard-border-strong);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
+    --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-site-header-current-rule: var(--color-border-strong);
   }
   @media (prefers-contrast: more) {
     [data-template='youtube'] {
       --color-border-strong: var(--color-text);
+      --color-border-group: var(--p-standard-border-strong);
       --color-map-nav-on-muted: var(--color-text-muted);
       --color-status-neutral-fg: var(--color-text-muted);
       --c-alignment-picker-dot-colour: var(--color-text-muted);
@@ -172,6 +201,7 @@
       --c-menu-button-border: var(--c-button-default-edge);
       --c-menu-button-fill: var(--c-button-default-fill);
       --c-price-was: var(--color-text-muted);
+      --c-progress-bar-track: var(--color-border-group);
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
       --c-site-header-current-rule: var(--color-border-strong);
@@ -180,6 +210,7 @@
   }
   [data-contrast='standard'] [data-template='youtube'], [data-template='youtube'][data-contrast='standard'] {
     --color-border-strong: var(--p-standard-border-strong);
+    --color-border-group: var(--color-bg-sunken);
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
@@ -194,6 +225,7 @@
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-price-was: var(--color-text-muted);
+    --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
@@ -201,6 +233,7 @@
   }
   [data-contrast='more'] [data-template='youtube'], [data-template='youtube'][data-contrast='more'] {
     --color-border-strong: var(--color-text);
+    --color-border-group: var(--p-standard-border-strong);
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
@@ -215,6 +248,7 @@
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-price-was: var(--color-text-muted);
+    --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
