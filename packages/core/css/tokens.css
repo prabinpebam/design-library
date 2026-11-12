@@ -243,6 +243,7 @@
   --c-ribbon-group-gap: var(--space-inline-item);
   --c-ribbon-command-gap: var(--space-stack-pair);
   --c-ribbon-separator: var(--color-border);
+  --c-ribbon-launcher-size: var(--size-target-min);
   --c-toolbar-gap: var(--space-inline-item);
   --c-token-specimen-tile: var(--size-specimen);
   --c-token-specimen-mark: var(--color-accent);

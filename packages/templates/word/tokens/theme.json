@@ -40,6 +40,10 @@
   "$value": "{text.s}",
   "$description": "Group labels under the ribbon's commands: 9 pt."
  },
+ "type.caption.leading": {
+  "$value": "1.3333333",
+  "$description": "Group labels on a 16 px line (w-theme-07: label band about 32 image px at 2x)."
+ },
  "type.label.weight": {
   "$value": "400",
   "$description": "Chrome labels are regular; the selected tab alone is bold."
@@ -231,6 +235,14 @@
  "c.slider.hit-s": {
   "$value": "1.5rem",
   "$description": "Status bar zoom slider in the 24 px bar (w-copilot-01)."
+ },
+ "c.button.stack-padding": {
+  "$value": "0",
+  "$description": "Paste and the other lead commands fill the group's height with no extra padding (w-theme-07)."
+ },
+ "c.ribbon.launcher-size": {
+  "$value": "1rem",
+  "$description": "Group launcher: a 16 px box beside the 9 pt label (w-theme-07 'Clipboard' launcher, 2x)."
  },
  "c.ribbon.command-gap": {
   "$value": "0.125rem",

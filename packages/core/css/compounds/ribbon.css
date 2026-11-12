@@ -50,6 +50,7 @@
   }
 
   [data-dl='ribbon-groups'] > [data-dl-part='group'] > [data-dl-part='foot'] {
+    --c-button-size-xs: var(--c-ribbon-launcher-size);
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;

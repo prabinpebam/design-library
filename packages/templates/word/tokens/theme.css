@@ -11,6 +11,7 @@
     --type-label-size: var(--text-m);
     --type-body-sm-size: var(--text-s);
     --type-caption-size: var(--text-s);
+    --type-caption-leading: 1.3333333;
     --type-label-weight: 400;
     --c-tabs-selected-weight: 700;
     --c-tabs-item-size: 1.9375rem;
@@ -50,6 +51,8 @@
     --c-ribbon-gap: 0;
     --c-menu-button-size-s: 1.5rem;
     --c-slider-hit-s: 1.5rem;
+    --c-button-stack-padding: 0;
+    --c-ribbon-launcher-size: 1rem;
     --c-ribbon-command-gap: 0.125rem;
     --c-ribbon-group-gap: var(--space-1);
     --c-button-stack-gap: 0;
@@ -64,7 +67,6 @@
     --type-lead-leading: var(--leading-normal);
     --type-body-sm-leading: var(--leading-normal);
     --type-label-compact-size: var(--text-xs);
-    --type-caption-leading: var(--leading-normal);
     --type-code-size: var(--text-s);
     --type-code-leading: var(--leading-normal);
     --type-heading-1-size: var(--text-xxxl);
