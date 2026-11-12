@@ -6,7 +6,7 @@
   "description": "The library app: presents the Design Library using the Design Library.",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 8766 --strictPort",
-    "build": "vite build"
+    "build": "vite build && node ../../packages/core/tools/check-build-css.mjs dist"
   },
   "dependencies": {
     "@design-library/core": "0.5.0-beta.1",
