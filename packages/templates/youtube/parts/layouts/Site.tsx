@@ -1,7 +1,10 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ChipGroup, Heading, Icon, MenuButton, ScrollArea, Text, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
+import { Avatar, Badge, Button, ChipGroup, Heading, Icon, MenuButton, ScrollArea, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
+
+/** Guide icons are core names read from content; `of` types them without a cast (LG8). */
+const contentIcons = defineIconPack({});
 
 export interface SiteProps extends DataAttributes {
   /** Validated shared content: the guide, the filters, the videos and every label. */
@@ -62,7 +65,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
       <nav data-dl-part="mini" aria-label={c.guide}>
         {mini.map((e) => (
           <a key={e.label} data-dl-part="entry" href={`#${e.label.toLowerCase().replace(/\s+/g, '-')}`} aria-current={e.current ? 'page' : undefined}>
-            <Icon name={e.icon as IconName} />
+            <Icon name={contentIcons.of(e.icon)} />
             <span>{e.label}</span>
           </a>
         ))}
@@ -83,7 +86,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
                 )}
                 {s.entries?.map((e) => (
                   <a key={e.label} data-dl-part="entry" href={`#${e.label.toLowerCase().replace(/\s+/g, '-')}`} aria-current={e.current ? 'page' : undefined}>
-                    <Icon name={e.icon as IconName} />
+                    <Icon name={contentIcons.of(e.icon)} />
                     <span>{e.label}</span>
                   </a>
                 ))}

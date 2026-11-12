@@ -266,6 +266,6 @@ export { Lightbox } from './compounds/Lightbox';
 export type { LightboxProps, LightboxItem } from './compounds/Lightbox';
 export { Quote } from './compounds/Quote';
 export type { QuoteProps, QuoteAuthor, QuoteSource } from './compounds/Quote';
-export { icons, type IconName } from '../icons/icons';
+export { icons, defineIconPack, type IconName, type CoreIconName, type CustomIconName } from '../icons/icons';
 export type { DataAttributes } from './types';
 export type { Story, StoryFile } from './stories/story';

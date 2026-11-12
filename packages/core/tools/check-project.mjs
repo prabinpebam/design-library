@@ -239,6 +239,20 @@ for (const file of parts) {
     const core = { a: 'Link', button: 'Button', img: 'Image', input: 'TextField', textarea: 'TextArea' }[m[1]] ?? 'Heading';
     add('warning', 'raw-markup', file, lineAt(text, m.index ?? 0), `a raw <${m[1]}> in a custom part: compose core ${core}, so focus, names, targets and token updates come with it`);
   }
+  // R7 (F5, LG7): a drawing in a part is a picture file or an Icon, so check:svg and the icon set see it. A drawing
+  // computed live (a ruler) says why in a comment within the two lines above: {/* inline-svg: <why> */}.
+  const lines = text.split('\n');
+  for (const m of text.matchAll(/<svg\b/g)) {
+    const line = lineAt(text, m.index ?? 0);
+    if (!/inline-svg:\s*[^\s*/}][^\n]{9,}/.test(lines.slice(Math.max(0, line - 3), line).join('\n')))
+      add('error', 'inline-svg', file, line, 'an inline <svg> in a custom part: make it a picture file (checked by check:svg) or an Icon from a --custom pack; a drawing computed live says why on the line above: {/* inline-svg: <why> */}');
+  }
+  // S4 (F2, F3): a widget role on plain markup rebuilds a core component without its keys, focus and dismissal.
+  for (const m of text.matchAll(/<[a-z][\w-]*\b[^>]*\brole=["'](dialog|alertdialog|menu|menubar|menuitem|listbox|option|table|grid|tree|tablist|tab|tabpanel|combobox)["']/g))
+    add('error', 'widget-role', file, lineAt(text, m.index ?? 0), `role="${m[1]}" on plain markup: compose the core component that owns it (Popover, Dialog, Menu, Select, DataTable, Tabs…) so keys, focus and dismissal come with it`);
+  // R8 (F6, LG8): a template's own icon names are typed by its pack (defineIconPack), never cast.
+  for (const m of text.matchAll(/\bas\s+IconName\b/g))
+    add('error', 'icon-cast', file, lineAt(text, m.index ?? 0), "an `as IconName` cast: type the template's own names with defineIconPack(pack) and pass them as they are");
 }
 
 // ---- CSS ----

@@ -15,6 +15,8 @@
  *   VN4 strokes   at most three distinct border values in the view, status and accent excepted
  *   VN5 fills     at most four distinct fills in the view, status, accent and selection excepted
  *   VN6 shadows   at most two distinct shadows in the view (raised and overlay)
+ *   VN7 painted   no decorative picture (aria-hidden, alt="", stretched with preserveAspectRatio="none") covers a
+ *                 transparent region to paint its fills; each fill it paints counts toward VN5 (F4, LG6)
  *
  * Content is skipped: pictures, icons, a canvas's document, avatars and colour swatches (their colour is data).
  * Returns { rows: { VN1: { pass, findings, count }, … }, values: { strokes, fills, shadows } }.
@@ -52,7 +54,7 @@
   window.noiseProbe = function noiseProbe(rootSelector) {
     const root = (rootSelector ? document.querySelector(rootSelector) : document.querySelector(LAYOUTS)) ?? document.body;
     const rows = {};
-    for (const id of ['VN1', 'VN2', 'VN3', 'VN4', 'VN5', 'VN6']) rows[id] = { pass: true, findings: [], count: 0 };
+    for (const id of ['VN1', 'VN2', 'VN3', 'VN4', 'VN5', 'VN6', 'VN7']) rows[id] = { pass: true, findings: [], count: 0 };
     const fail = (id, f) => {
       rows[id].pass = false;
       rows[id].count++;
@@ -112,8 +114,37 @@
     };
     walk(root, 0, surface(root.parentElement ?? root), null);
 
-    if (strokes.size > 3) fail('VN4', { count: strokes.size, values: [...strokes].map(([v, w]) => `${v} (${w})`) });
+    // VN7 painted regions (F4, LG6, L2, L4): a decorative picture stretched over a region that keeps itself
+    // transparent paints that region's fills where the rows above can't see them. Each such picture is a finding, and
+    // each fill it paints over a tenth of its area counts as a fill of the view (VN5).
+    for (const pic of root.querySelectorAll('svg, img')) {
+      const cs = getComputedStyle(pic);
+      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      const decorative = pic.matches('[aria-hidden="true"], [alt=""], [role="presentation"], [role="none"]') || !!pic.closest('[aria-hidden="true"]');
+      if (!decorative) continue;
+      const host = pic.parentElement?.closest('*');
+      const region = host && (cs.position === 'absolute' || cs.position === 'fixed' || getComputedStyle(host).position !== 'static') ? host : null;
+      if (!region || !clear(getComputedStyle(region).backgroundColor)) continue;
+      const p = pic.getBoundingClientRect();
+      const r = region.getBoundingClientRect();
+      const area = r.width * r.height;
+      if (area < 40000 || (p.width * p.height) / area < 0.9) continue;
+      const stretched = pic.getAttribute('preserveAspectRatio') === 'none';
+      const painted = [];
+      if (pic.tagName.toLowerCase() === 'svg') {
+        for (const s of pic.querySelectorAll('rect, path, polygon')) {
+          const b = s.getBoundingClientRect();
+          const f = getComputedStyle(s).fill;
+          if (f && f !== 'none' && !clear(f) && (b.width * b.height) / (p.width * p.height) >= 0.1) painted.push(f);
+        }
+      }
+      if (!stretched && painted.length < 2) continue;
+      for (const f of painted) note(fills, f, pic);
+      fail('VN7', { where: name(region), picture: name(pic), stretched, fills: [...new Set(painted)].length });
+    }
+
     if (fills.size > 4) fail('VN5', { count: fills.size, values: [...fills].map(([v, w]) => `${v} (${w})`) });
+    if (strokes.size > 3) fail('VN4', { count: strokes.size, values: [...strokes].map(([v, w]) => `${v} (${w})`) });
     if (shadows.size > 2) fail('VN6', { count: shadows.size, values: [...shadows].map(([v, w]) => `${v.slice(0, 60)} (${w})`) });
 
     return { rows, values: { strokes: strokes.size, fills: fills.size, shadows: shadows.size } };

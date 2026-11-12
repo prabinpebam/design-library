@@ -1,8 +1,11 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Checkbox, DataTable, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
+import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
 import type { WordBackstageTemplate, WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
+
+/** The document editor's own icon names, typed by its pack (LG8). */
+const wordIcons = defineIconPack(wordPack);
 
 export interface WindowProps extends DataAttributes {
   /** Validated shared content: the document, its comments and every label. */
@@ -76,7 +79,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       {/* binary-setting: chooses one document style set in a visual thumbnail strip, as in the reference. */}
       <Button label={s.name} icon="file" iconOnly tooltip={false} size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
       <span data-dl-part="preview" aria-hidden="true">
-        <Icon name={`style-set-${s.variant}` as IconName} />
+        <Icon name={wordIcons.of(`style-set-${s.variant}`)} />
       </span>
     </div>
   );
@@ -125,7 +128,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       return (
         <div key={key} data-dl="word-labelled-field" data-icon={cmd.icon}>
           <span data-dl-part="field-label">
-            {cmd.icon && <Icon name={cmd.icon as IconName} size="sm" />}
+            {cmd.icon && <Icon name={wordIcons.of(cmd.icon)} size="sm" />}
             {!cmd.hideFieldLabel && <span>{cmd.label}</span>}
           </span>
           <div data-dl="word-field" data-width={cmd.width}>
@@ -137,13 +140,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     if (cmd.kind === 'record-stepper') {
       return (
         <div key={key} data-dl="word-record-stepper">
-          <Button label={c.firstRecord} icon={'step-first' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
-          <Button label={c.previousRecord} icon={'step-prev' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={c.firstRecord} icon={wordIcons.name('step-first')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={c.previousRecord} icon={wordIcons.name('step-prev')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
           <div data-dl-part="record-box">
             <TextField label={c.currentRecord} hideLabel size="xs" value="" onChange={() => undefined} disabled={cmd.disabled} />
           </div>
-          <Button label={c.nextRecord} icon={'step-next' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
-          <Button label={c.lastRecord} icon={'step-last' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={c.nextRecord} icon={wordIcons.name('step-next')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={c.lastRecord} icon={wordIcons.name('step-last')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
         </div>
       );
     }
@@ -155,7 +158,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     const main = (
       <Button
         label={shownLabel}
-        icon={cmd.icon as IconName}
+        icon={wordIcons.of(cmd.icon)}
         iconOnly={!isStacked && cmd.kind !== 'labelled'}
         stacked={isStacked}
         align={cmd.kind === 'labelled' ? 'start' : undefined}
@@ -176,7 +179,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined}>
         {main}
         <span data-dl-part="split-menu">
-          <Button label={`${cmd.label} options`} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={`${cmd.label} options`} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
         </span>
       </div>
     );
@@ -199,7 +202,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 {col.fields.map((f) => (
                   <div key={f.label} data-dl-part="spin-row" data-icon={f.icon}>
                     <span data-dl-part="spin-label">
-                      <Icon name={f.icon as IconName} size="sm" />
+                      <Icon name={wordIcons.of(f.icon)} size="sm" />
                       <span>{f.label}</span>
                     </span>
                     <div data-dl-part="spin-box">
@@ -235,7 +238,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
   const templateThumb = (t: WordBackstageTemplate) => (
     <span data-dl-part="thumb-svg" data-variant={t.variant} aria-hidden="true">
-      <Icon name={`bs-tpl-${t.variant}` as IconName} />
+      <Icon name={wordIcons.of(`bs-tpl-${t.variant}`)} />
     </span>
   );
 
@@ -245,12 +248,12 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         <header data-dl-part="titlebar" data-density="compact">
           {backstageOpen && (
             <span data-dl-part="flourish" aria-hidden="true">
-              <Icon name={'backstage-flourish' as IconName} />
+              <Icon name={wordIcons.name('backstage-flourish')} />
             </span>
           )}
           <div data-dl-part="quick">
             <span data-dl-part="app-mark">
-              <Icon name={'app-doc-mark' as IconName} label={c.appMark} size="sm" />
+              <Icon name={wordIcons.name('app-doc-mark')} label={c.appMark} size="sm" />
             </span>
             {!backstageOpen && (
               <>
@@ -265,13 +268,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                   <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
                 </span>
                 <span data-dl-part="qat-chevron">
-                  <Button label={c.undoOptions} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+                  <Button label={c.undoOptions} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
                 </span>
                 <span data-dl-part="qat-item">
                   <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
                 </span>
                 <span data-dl-part="qat-chevron">
-                  <Button label={c.customize} icon={'qat-customize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  <Button label={c.customize} icon={wordIcons.name('qat-customize')} iconOnly size="xs" emphasis="quiet" tone="inherit" />
                 </span>
               </>
             )}
@@ -299,11 +302,11 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           <div data-dl-part="window-actions">
             {backstageOpen ? (
               <span data-dl-part="bs-head-icon">
-                <Button label={c.feedbackTitle} icon={'feedback-person' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                <Button label={c.feedbackTitle} icon={wordIcons.name('feedback-person')} iconOnly size="xs" emphasis="quiet" tone="inherit" />
               </span>
             ) : (
               <div data-dl-part="upgrade">
-                <Button label={c.upgradePlan} icon={'diamond' as IconName} size="xs" />
+                <Button label={c.upgradePlan} icon={wordIcons.name('diamond')} size="xs" />
                 <span data-dl-part="upgrade-dot" aria-hidden="true" />
               </div>
             )}
@@ -312,13 +315,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             </span>
             {backstageOpen && (
               <span data-dl-part="bs-head-icon">
-                <Button label={c.helpTitle} icon={'bs-help-q' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                <Button label={c.helpTitle} icon={wordIcons.name('bs-help-q')} iconOnly size="xs" emphasis="quiet" tone="inherit" />
               </span>
             )}
             <div data-dl-part="caption-buttons">
-              <span data-dl-part="win-btn"><Button label={c.minimise} icon={'win-minimize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
-              <span data-dl-part="win-btn"><Button label={c.maximise} icon={'win-maximize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
-              <span data-dl-part="win-btn"><Button label={c.close} icon={'win-close' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+              <span data-dl-part="win-btn"><Button label={c.minimise} icon={wordIcons.name('win-minimize')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+              <span data-dl-part="win-btn"><Button label={c.maximise} icon={wordIcons.name('win-maximize')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+              <span data-dl-part="win-btn"><Button label={c.close} icon={wordIcons.name('win-close')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
             </div>
           </div>
         </header>
@@ -329,7 +332,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               <div data-dl-part="back">
                 <Button
                   label={bs.backLabel}
-                  icon={'bs-back' as IconName}
+                  icon={wordIcons.name('bs-back')}
                   iconOnly
                   size="s"
                   emphasis="quiet"
@@ -345,7 +348,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     {/* binary-setting: active Backstage section in the File navigation rail, matching 12-backstage-home.png. */}
                     <Button
                       label={item.label}
-                      icon={item.icon as IconName}
+                      icon={wordIcons.of(item.icon)}
                       size="s"
                       emphasis="quiet"
                       align="start"
@@ -361,7 +364,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               <div data-dl-part="nav-group">
                 {bs.docNav.map((item) => (
                   <div key={item.id} data-dl-part="nav-item" data-indented={!item.icon ? '' : undefined}>
-                    <Button label={item.label} icon={item.icon as IconName | undefined} size="s" emphasis="quiet" align="start" onClick={() => { if (item.id === 'close') setBackstageOpen(false); }} />
+                    <Button label={item.label} icon={wordIcons.of(item.icon)} size="s" emphasis="quiet" align="start" onClick={() => { if (item.id === 'close') setBackstageOpen(false); }} />
                   </div>
                 ))}
               </div>
@@ -370,7 +373,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 <div data-dl-part="nav-group">
                   {bs.footerNav.map((item) => (
                     <div key={item.id} data-dl-part="nav-item">
-                      <Button label={item.label} icon={item.icon as IconName} size="s" emphasis="quiet" align="start" />
+                      <Button label={item.label} icon={wordIcons.of(item.icon)} size="s" emphasis="quiet" align="start" />
                     </div>
                   ))}
                 </div>
@@ -416,12 +419,12 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     <div data-dl-part="head">
                       <div data-dl-part="sec-head">
                         <span data-dl-part="sec-title">
-                          <Icon name={'chevron-down' as IconName} size="sm" />
+                          <Icon name={'chevron-down'} size="sm" />
                           <Heading level={2} size={4}>{bs.newHeading}</Heading>
                         </span>
                         <span data-dl-part="more-link">
                           <Button label={bs.moreTemplates} size="xs" emphasis="quiet" tone="inherit" />
-                          <Icon name={'bs-arrow-right' as IconName} size="sm" />
+                          <Icon name={wordIcons.name('bs-arrow-right')} size="sm" />
                         </span>
                       </div>
                       <p data-dl-part="cloud-note">
@@ -446,7 +449,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     <div data-dl-part="head">
                       <div data-dl-part="sec-head">
                         <span data-dl-part="sec-title">
-                          <Icon name={'chevron-down' as IconName} size="sm" />
+                          <Icon name={'chevron-down'} size="sm" />
                           <Heading level={2} size={4}>{bs.recommendedHeading}</Heading>
                         </span>
                       </div>
@@ -457,9 +460,9 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                           <div data-dl-part="card-top">
                             <div data-dl-part="card-activity">
                               <span data-dl-part="doc-badge">
-                                <Icon name={'app-doc-mark' as IconName} size="sm" />
+                                <Icon name={wordIcons.name('app-doc-mark')} size="sm" />
                               </span>
-                              <Icon name={rc.icon as IconName} size="sm" />
+                              <Icon name={wordIcons.of(rc.icon)} size="sm" />
                               <span data-dl-part="activity-words">
                                 {rc.author && <strong data-dl-part="actor">{rc.author} </strong>}
                                 <span>{rc.activity}</span>
@@ -470,7 +473,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                           </div>
                           <div data-dl-part="card-well" aria-hidden="true">
                             <span data-dl-part="mini-doc">
-                              <Icon name={`bs-rec-${rc.preview}` as IconName} />
+                              <Icon name={wordIcons.of(`bs-rec-${rc.preview}`)} />
                             </span>
                           </div>
                         </article>
@@ -520,7 +523,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                               name: (
                                 <span data-dl="word-file-cell">
                                   <span data-dl-part="doc-badge">
-                                    <Icon name={'app-doc-mark' as IconName} size="sm" />
+                                    <Icon name={wordIcons.name('app-doc-mark')} size="sm" />
                                   </span>
                                   <span data-dl-part="file-meta">
                                     <span data-dl-part="file-title">{f.name}</span>
@@ -558,10 +561,10 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 </span>
               </div>
             }
-            end={<span data-dl="word-collapse-btn"><Button label={c.collapse} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" /></span>}
+            end={<span data-dl="word-collapse-btn"><Button label={c.collapse} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" /></span>}
             aside={
               <div data-dl="word-copilot-card" data-open={copilotOpen ? '' : undefined}>
-                <Button label={c.copilot} icon={'assistant-ribbon' as IconName} stacked size="xs" emphasis="quiet" onClick={() => setCopilotOpen((o) => !o)} />
+                <Button label={c.copilot} icon={wordIcons.name('assistant-ribbon')} stacked size="xs" emphasis="quiet" onClick={() => setCopilotOpen((o) => !o)} />
               </div>
             }
             tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
@@ -572,7 +575,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             return (
               <span data-dl-part="gallery-host">
                 <Popover
-                  trigger={{ label: c.moreStyleSets, icon: 'qat-chevron' as IconName, iconOnly: true, size: 'xs', emphasis: 'quiet' }}
+                  trigger={{ label: c.moreStyleSets, icon: wordIcons.name('qat-chevron'), iconOnly: true, size: 'xs', emphasis: 'quiet' }}
                   anchorRef={styleStripRef}
                   side="over"
                   open={galleryOpen}
@@ -608,7 +611,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             {showRuler && (
               <div data-dl="word-ruler-h">
                 <span data-dl-part="tab-stop" aria-hidden="true">
-                  <Icon name={'ruler-tab-stop' as IconName} />
+                  <Icon name={wordIcons.name('ruler-tab-stop')} />
                 </span>
                 <div data-dl-part="track-center">
                   {(() => {
@@ -720,7 +723,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                       {!showSampleDoc && (
                         <div data-dl-part="caret-row" aria-hidden="true">
                           <span data-dl-part="caret-block" />
-                          {copilotOpen && <Icon name={'comment-new' as IconName} size="sm" />}
+                          {copilotOpen && <Icon name={wordIcons.name('comment-new')} size="sm" />}
                         </div>
                       )}
                       {showSampleDoc && view.document.map((b, i) => {
@@ -762,7 +765,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 <Button label={view.copilotPane.menuLabel} icon="menu" iconOnly size="xs" emphasis="quiet" tone="inherit" />
                 <div data-dl-part="head-end">
                   <Button label={view.copilotPane.moreLabel} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-                  <Button label={c.closePane} icon={'win-close' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setCopilotOpen(false)} />
+                  <Button label={c.closePane} icon={wordIcons.name('win-close')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setCopilotOpen(false)} />
                 </div>
               </div>
               <div data-dl-part="content">
@@ -783,7 +786,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               <div data-dl-part="foot">
                 <div data-dl-part="mode">
                   <Button label={view.copilotPane.allowEditing} size="xs" emphasis="quiet" tone="inherit" />
-                  <Icon name={'qat-chevron' as IconName} size="sm" />
+                  <Icon name={wordIcons.name('qat-chevron')} size="sm" />
                 </div>
                 <div data-dl="word-copilot-input">
                   <span data-dl-part="lead">
@@ -802,20 +805,20 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           <div data-dl-part="status-start">
             <span data-dl-part="item">{view.status.page}</span>
             <span data-dl-part="item">{view.status.words}</span>
-            <span data-dl-part="icon-btn"><Button label={c.proofing} icon={'proofing-ok' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="icon-btn"><Button label={c.proofing} icon={wordIcons.name('proofing-ok')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
             <span data-dl-part="item">{view.status.language}</span>
             <span data-dl-part="item">{view.status.predictions}</span>
-            <span data-dl-part="icon-btn"><Button label={c.macros} icon={'macro-record' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
-            <span data-dl-part="text-btn"><Button label={view.status.accessibility} icon={'accessibility-check' as IconName} size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="icon-btn"><Button label={c.macros} icon={wordIcons.name('macro-record')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="text-btn"><Button label={view.status.accessibility} icon={wordIcons.name('accessibility-check')} size="xs" emphasis="quiet" tone="inherit" /></span>
           </div>
           <div data-dl-part="status-end">
-            <span data-dl-part="text-btn"><Button label={c.focus} icon={'focus-mode' as IconName} size="xs" emphasis="quiet" tone="inherit" /></span>
-            <span data-dl-part="view-btn"><Button label={c.readMode} icon={'read-mode' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="text-btn"><Button label={c.focus} icon={wordIcons.name('focus-mode')} size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="view-btn"><Button label={c.readMode} icon={wordIcons.name('read-mode')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
             <span data-dl-part="view-btn">
               {/* binary-setting: the current page view, one of three view buttons in the status bar, as in the reference. */}
-              <Button label={c.printLayout} icon={'print-layout' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" pressed />
+              <Button label={c.printLayout} icon={wordIcons.name('print-layout')} iconOnly size="xs" emphasis="quiet" tone="inherit" pressed />
             </span>
-            <span data-dl-part="view-btn"><Button label={c.webLayout} icon={'web-layout' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="view-btn"><Button label={c.webLayout} icon={wordIcons.name('web-layout')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
             <div data-dl-part="zoom">
               <Button label={c.zoomOut} icon="minus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.max(10, z - 10))} />
               <Slider label={c.zoom} hideLabel showValue={false} size="s" valueLabel="none" min={0} max={100} value={zoomPosition(zoom)} format={(p) => `${zoomAt(p)}%`} onChange={(v) => setZoom(zoomAt(v as number))} />
