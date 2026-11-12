@@ -261,6 +261,16 @@
         "$description": "A placeholder's shape: the standard border colour, visible on the canvas, raised and sunken surfaces; stronger under more contrast (echoed for contrast contexts)"
       }
     },
+    "slider": {
+      "$extensions": {
+        "owner": "Slider"
+      },
+      "track-fill": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "The bare track either side of the fill (echoed for contrast contexts)"
+      }
+    },
     "tabs": {
       "$extensions": {
         "owner": "Tabs"

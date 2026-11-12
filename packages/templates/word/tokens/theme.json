@@ -279,5 +279,33 @@
  "c.field.padding-inline-sm": {
   "$value": "0.25rem",
   "$description": "Ribbon font and size fields: the text starts 6 image px (≈5 CSS px) inside the 54 px size box in w-copilot-01 (≈1.25x), so a 43 px box shows \"12\" beside its chevron."
+ },
+ "c.slider.thumb-s": {
+  "$value": "0.6875rem",
+  "$description": "Zoom slider thumb: 14 image px tall in w-copilot-01 (x1368, y863-877, ≈1.25x), 11 px."
+ },
+ "c.slider.thumb-aspect": {
+  "$value": "0.4545",
+  "$description": "Zoom slider thumb: an upright bar 6 image px wide (x1366-1371), 5 px on an 11 px height."
+ },
+ "c.slider.thumb-radius": {
+  "$value": "0.0625rem",
+  "$description": "Zoom slider thumb: square-ended bar with a softened edge (antialiased corner pixels only), 1 px."
+ },
+ "c.slider.thumb-fill": {
+  "$value": "#616161",
+  "$description": "Zoom slider thumb #616161 in w-copilot-01 (y866-875 at x1368). The Dark Gray status bar is unmeasured and renders light here, so the same ink keeps its contrast."
+ },
+ "c.slider.track-s": {
+  "$value": "0.0625rem",
+  "$description": "Zoom slider line: 1 image px (y871) at ≈1.25x, so a hairline."
+ },
+ "c.slider.track-fill": {
+  "$value": "#686868",
+  "$description": "Zoom slider line #686868 either side of the thumb (w-copilot-01 y871, x1306-1430); one value for both themes, as the thumb."
+ },
+ "c.slider.fill": {
+  "$value": "{c.slider.track-fill}",
+  "$description": "Word's zoom line has no fill: the same grey on both sides of the thumb (w-copilot-01)."
  }
 }

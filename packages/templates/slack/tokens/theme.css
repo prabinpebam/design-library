@@ -163,6 +163,7 @@
     --c-chip-fill: var(--color-bg-control);
     --c-chip-edge: var(--color-border-control);
     --c-slider-bubble-radius: var(--radius-sm);
+    --c-slider-track-fill: var(--color-border);
     --c-carousel-radius: var(--radius-lg);
     --c-breadcrumbs-size: var(--type-body-sm-size);
     --c-tabs-indicator-fill: var(--color-map-selection-indicator);
@@ -269,6 +270,7 @@
       --c-scroll-area-line-track: var(--color-border);
       --c-site-header-current-rule: var(--color-border-strong);
       --c-skeleton-fill: var(--color-border);
+      --c-slider-track-fill: var(--color-border);
       --c-tabs-text: var(--color-text-muted);
     }
   }
@@ -306,6 +308,7 @@
     --c-scroll-area-line-track: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
+    --c-slider-track-fill: var(--color-border);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-contrast='more'] [data-template='slack'], [data-template='slack'][data-contrast='more'] {
@@ -342,6 +345,7 @@
     --c-scroll-area-line-track: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
+    --c-slider-track-fill: var(--color-border);
     --c-tabs-text: var(--color-text-muted);
   }
   [data-space='compact'] [data-template='slack'], [data-template='slack'][data-space='compact'] {

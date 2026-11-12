@@ -62,6 +62,13 @@
     --leading-normal: 1.38;
     --color-text-accent-display: #0f4761;
     --c-field-padding-inline-sm: 0.25rem;
+    --c-slider-thumb-s: 0.6875rem;
+    --c-slider-thumb-aspect: 0.4545;
+    --c-slider-thumb-radius: 0.0625rem;
+    --c-slider-thumb-fill: #616161;
+    --c-slider-track-s: 0.0625rem;
+    --c-slider-track-fill: #686868;
+    --c-slider-fill: var(--c-slider-track-fill);
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);

@@ -248,6 +248,8 @@
     --c-canvas-selection: var(--color-map-drop-target);
     --c-canvas-size-fill: var(--c-canvas-selection);
     --c-board-drop: var(--color-map-drop-target);
+    --c-slider-thumb-fill: var(--color-map-on-fill);
+    --c-slider-fill: var(--color-map-on-fill);
     --c-tabs-indicator-fill: var(--color-map-selection-indicator);
     --c-image-duotone: var(--color-map-illustration);
     --c-image-decoration: var(--color-map-illustration);

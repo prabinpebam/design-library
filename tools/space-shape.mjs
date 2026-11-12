@@ -27,7 +27,7 @@ const OPTIONS = join(SRC, 'space-shape-options.json');
 const BASE_OUT = 'tokens.space-shape.json';
 const VERSION = 'space-shape-config/1';
 /** Tokens allowed to read radius.full: shapes round by nature, which stay round when the theme is sharp. */
-const ROUND_BY_NATURE = new Set(['c.token-specimen.track-radius']);
+const ROUND_BY_NATURE = new Set(['c.token-specimen.track-radius', 'c.slider.thumb-radius']);
 
 const serialise = (/** @type {any} */ tree) => JSON.stringify(tree, null, 2) + '\n';
 const read = (/** @type {string} */ file) => JSON.parse(readFileSync(file, 'utf8'));
