@@ -136,12 +136,16 @@
   "$description": "Tab row 30 CSS px (25 PNG px in 01-home.png y=39..63)."
  },
  "c.tabs.item-padding-inline": {
-  "$value": "{space.inset-sm}",
+  "$value": "{space.2}",
   "$description": "Tab label inset: 8 px either side."
  },
+ "c.tabs.list-padding-inline-start": {
+  "$value": "{space.3}",
+  "$description": "Leading inset on the ribbon tab list so File and Home align with the 01-home.png / 13-dark-home.png tab coordinates."
+ },
  "c.tabs.gap": {
-  "$value": "{space.0-5}",
-  "$description": "Tabs sit close: 2 px gap plus inline padding."
+  "$value": "{space.1}",
+  "$description": "Tabs sit 4 CSS px apart so Home underline lands on x=54..82 PNG."
  },
  "c.tabs.indicator": {
   "$value": "0.1875rem",
@@ -257,6 +261,24 @@
   },
   "$description": "Positive/sheet accent on Add pen, SmartArt, Comment-new and Set-as-default icons."
  },
+ "color.category.4": {
+  "$value": {
+   "light": "#f2ece8",
+   "dark": "#26221e"
+  },
+  "$description": "Outer ruler margin band (#F2ECE8 in 01-home.png, #26221E in 13-dark-home.png)."
+ },
+ "color.category.5": {
+  "$value": "#e083b8",
+  "$description": "Stroke Eraser rubber tip on Draw tab (#E083B8 in 03-draw.png)."
+ },
+ "color.category.6": {
+  "$value": {
+   "light": "#849398",
+   "dark": "#9aa6ab"
+  },
+  "$description": "Faceted pencil barrel on Draw tab (#849398 in 03-draw.png)."
+ },
  "color.map.chip-tint": {
   "$value": {
    "light": "#efefef",
@@ -309,9 +331,9 @@
  "color.border": {
   "$value": {
    "light": "#dcdcdc",
-   "dark": "#484848"
+   "dark": "#525252"
   },
-  "$description": "Hairlines on ribbon groups, Copilot pane divider, composer and status bar: #DCDCDC light, #484848 dark (13-dark-home.png)."
+  "$description": "Hairlines on ribbon groups, search box, Copilot pane divider and composer: #DCDCDC light, #525252 dark (13-dark-home.png)."
  },
  "color.border-strong": {
   "$value": {
@@ -323,9 +345,9 @@
  "color.border-control": {
   "$value": {
    "light": "#8a8a8a",
-   "dark": "#737373"
+   "dark": "#626262"
   },
-  "$description": "Font/size combo fields and outlined chrome buttons (Upgrade, Comments, Editing): #8A8A8A light, #737373 dark (13-dark-home.png)."
+  "$description": "Font/size combo fields and spinboxes: #8A8A8A light, #626262 dark (13-dark-home.png)."
  },
  "color.bg-control": {
   "$value": {
@@ -367,9 +389,9 @@
  "c.button.default-edge": {
   "$value": {
    "light": "#ababab",
-   "dark": "#565656"
+   "dark": "#525252"
   },
-  "$description": "Outlined chrome button border (#ABABAB light, #565656 dark in 13-dark-home.png)."
+  "$description": "Outlined chrome button border (#ABABAB light, #525252 dark in 13-dark-home.png)."
  },
  "c.button.pressed-fill": {
   "$value": {

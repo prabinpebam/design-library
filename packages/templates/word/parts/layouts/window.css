@@ -5,8 +5,10 @@
     position: relative;
     box-sizing: border-box;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto auto minmax(0, 1fr) auto;
     block-size: 100dvh;
+    background-color: transparent;
     color: var(--color-text);
   }
   [data-dl='word-window'] > [data-dl-part='backdrop'] {
@@ -26,6 +28,7 @@
   }
   [data-dl='word-window'] > :is([data-dl-part='titlebar'], [data-dl-part='ribbon'], [data-dl-part='workspace'], [data-dl-part='statusbar']) {
     position: relative;
+    min-inline-size: 0;
   }
   /* Title bar (y=1..38 PNG = 46 CSS px): transparent over color.bg (#ECEFF2) so enclosure depth stays 0 (VN1, VN3). */
   [data-dl='word-window'] > [data-dl-part='titlebar'] {
@@ -94,7 +97,7 @@
     align-items: center;
     min-block-size: 1.8125rem;
     padding-inline: var(--space-1);
-    border: var(--border-hairline) solid var(--t-word-window-border-strong);
+    border: var(--border-hairline) solid var(--t-word-window-border);
     border-radius: var(--radius-sm);
     background: var(--t-word-window-search-bg);
     color: var(--t-word-window-muted);
@@ -118,7 +121,8 @@
   }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='upgrade'] {
     --c-button-size-xs: 1.8125rem;
-    --c-button-padding-inline-sm: 0.625rem;
+    --c-button-padding-inline-sm: var(--space-3);
+    --c-button-gap: var(--space-2);
     position: relative;
     display: inline-flex;
   }
@@ -150,14 +154,22 @@
   [data-dl='word-window'] > [data-dl-part='ribbon'] {
     position: relative;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     padding-inline: var(--space-2);
-    --c-tabs-item-padding-inline: 0.625rem;
+    --c-ribbon-radius: var(--t-word-window-card-radius);
+  }
+  [data-dl='word-collapse-btn'] {
+    --c-button-size-xs: 1rem;
+    display: grid;
   }
   [data-dl='word-doc-actions'] {
     --c-button-size-xs: 1.5rem;
     --c-menu-button-size-xs: 1.5rem;
     --c-button-padding-inline-sm: var(--space-1);
-    --size-icon-sm: 0.875rem;
+    --c-button-gap: var(--space-1);
+    --c-menu-button-padding-inline: var(--space-1);
+    --c-menu-button-gap: var(--space-0-5);
+    --size-icon-sm: 0.6875rem;
     display: flex;
     align-items: center;
     gap: var(--space-1);
@@ -169,13 +181,17 @@
     display: grid;
     align-items: start;
     justify-items: center;
-    min-inline-size: 2.75rem;
+    min-inline-size: 2.5rem;
+    --icon-accent: var(--c-icon-accent-3);
     --icon-accent-fill: var(--c-icon-accent-4);
+    --icon-accent-2: var(--c-icon-accent-6);
     --icon-accent-2-fill: var(--c-icon-accent-6);
     --icon-surface: var(--t-word-window-ruler-inner);
   }
   [data-dl='word-window'][data-scheme='dark'] [data-dl='word-copilot-card'] {
+    --icon-accent: currentColor;
     --icon-accent-fill: none;
+    --icon-accent-2: currentColor;
     --icon-accent-2-fill: none;
   }
 
@@ -187,6 +203,9 @@
   [data-dl='word-rows'] > [data-dl-part='row'] {
     display: flex;
     align-items: center;
+    gap: var(--space-0-5);
+  }
+  [data-dl='word-rows'][data-compact] > [data-dl-part='row'] {
     gap: 0;
   }
   [data-dl='word-rows'] > [data-dl-part='row'] > [data-dl-part='separator'] {
@@ -211,31 +230,48 @@
   [data-dl='word-split'][data-stacked],
   [data-dl='word-copilot-card'] {
     --size-icon-sm: 1.75rem;
+    --type-body-sm-leading: 1.15;
+  }
+  [data-dl='word-command'][data-tool],
+  [data-dl='word-split'][data-tool] {
+    --size-icon-sm: 2.125rem;
+    --c-button-size-xs: 2.5rem;
+    align-self: center;
   }
   [data-dl='word-command'][data-pen],
   [data-dl='word-split'][data-pen] {
-    --size-icon-sm: 2.375rem;
-    --c-button-size-xs: 2.625rem;
+    --size-icon-sm: 3rem;
+    --c-button-size-xs: 3rem;
+    align-self: start;
   }
-  [data-dl='word-command']:not([data-stacked]):not([data-pen]),
-  [data-dl='word-split']:not([data-stacked]):not([data-pen]) {
-    --size-icon-sm: 1.125rem;
+  [data-dl='word-command']:not([data-stacked]):not([data-pen]):not([data-tool]),
+  [data-dl='word-split']:not([data-stacked]):not([data-pen]):not([data-tool]) {
+    --size-icon-sm: 1rem;
+    --c-button-gap: var(--space-1);
+    --c-button-padding-inline-sm: var(--space-0-5);
   }
   [data-dl='word-command'][data-wide='md'],
   [data-dl='word-split'][data-wide='md'] {
-    inline-size: 3.875rem;
+    inline-size: 3.5rem;
   }
   [data-dl='word-command'][data-wide='lg'],
   [data-dl='word-split'][data-wide='lg'] {
+    inline-size: 4.5rem;
+  }
+  [data-dl='word-command'][data-wide='xl'],
+  [data-dl='word-split'][data-wide='xl'] {
     inline-size: 5rem;
   }
   [data-dl='word-split'] > [data-dl-part='split-menu'] {
-    --c-button-size-xs: 0.6875rem;
+    --c-button-size-xs: 0.625rem;
     display: grid;
-    --size-icon-sm: 0.6875rem;
+    --size-icon-sm: 0.625rem;
+  }
+  [data-dl='word-split'][data-stacked][data-wide] {
+    --size-icon-sm: 1.375rem;
   }
   [data-dl='word-split'][data-stacked] > [data-dl-part='split-menu'] {
-    --c-button-size-xs: 0.75rem;
+    --c-button-size-xs: 0.625rem;
   }
   [data-dl='word-split'][data-labelled] {
     justify-content: space-between;
@@ -259,13 +295,17 @@
     display: grid;
     align-items: center;
     border-inline-start: var(--border-hairline) solid var(--t-word-window-border);
-    --c-button-size-xs: 1.125rem;
+    --c-button-size-xs: 1rem;
   }
   [data-dl='word-style-tile'] {
     position: relative;
     display: grid;
-    inline-size: 4.25rem;
+    inline-size: 3.9375rem;
     block-size: 3.125rem;
+  }
+  [data-dl='word-style-tile'][data-large] {
+    inline-size: 6.5rem;
+    block-size: 4.875rem;
   }
   [data-dl='word-style-tile'] > [data-dl-part='preview'] {
     position: absolute;
@@ -277,21 +317,25 @@
 
   [data-dl='word-style-gallery'] {
     position: absolute;
-    inset-block-start: 2.25rem;
-    inset-inline-start: 4.125rem;
+    inset-block-start: 1.875rem;
+    inset-inline-start: 4.1875rem;
     z-index: var(--layer-overlay);
+    box-sizing: border-box;
     display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     gap: var(--space-3);
-    inline-size: 49.125rem;
+    inline-size: 59.3125rem;
+    min-block-size: 40.1875rem;
     padding: var(--space-3);
-    border: var(--border-hairline) solid var(--t-word-window-border-strong);
+    border: var(--border-hairline) solid var(--t-word-window-border);
     border-radius: var(--radius-sm);
-    background: var(--t-word-window-ruler-inner);
+    background: var(--color-bg-raised);
     box-shadow: var(--shadow-overlay);
     color: var(--color-text);
   }
   [data-dl='word-style-gallery'] > [data-dl-part='section'] {
     display: grid;
+    align-content: start;
     gap: var(--space-2);
   }
   [data-dl='word-style-gallery'] > [data-dl-part='section'] > [data-dl-part='section-head'] {
@@ -299,14 +343,21 @@
     font-weight: 600;
   }
   [data-dl='word-style-gallery'] > [data-dl-part='section'] > [data-dl-part='grid'] {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(8, max-content);
     gap: var(--space-2);
   }
   [data-dl='word-style-gallery'] > [data-dl-part='menu-foot'] {
     display: grid;
     padding-block-start: var(--space-2);
     border-block-start: var(--border-hairline) solid var(--t-word-window-border);
+  }
+  [data-dl='word-style-gallery'] > [data-dl-part='menu-foot'] > [data-dl-part='grip'] {
+    justify-self: center;
+    font-size: var(--text-xs);
+    line-height: 1;
+    letter-spacing: 0.125rem;
+    color: var(--t-word-window-muted);
   }
 
   /* Semantic icon role mappings for Word's multi-tone command icons. */
@@ -390,23 +441,116 @@
     --icon-accent-fill: var(--c-icon-accent-1);
   }
   [data-dl='word-split'][data-icon='pen-pencil'] {
-    --icon-accent-fill: var(--t-word-window-muted);
+    --icon-accent-fill: var(--t-word-window-icon-slate);
+    --icon-accent-2-fill: var(--c-icon-accent-fill);
   }
-  [data-dl='word-split'][data-icon='draw-eraser'],
+  [data-dl='word-split'][data-icon='draw-eraser'] {
+    --icon-accent-fill: var(--t-word-window-icon-pink);
+    --icon-accent-2-fill: var(--t-word-window-border);
+  }
   [data-dl='word-split'][data-icon='watermark'] {
     --icon-accent-fill: var(--c-icon-accent-5);
     --icon-accent-2: var(--c-icon-accent-6);
   }
+  /* Layout, References & Mailings semantic icon role bindings. */
+  [data-dl='word-command']:is([data-icon='insert-endnote'], [data-icon='manage-sources'], [data-icon='insert-caption'], [data-icon='table-figures'], [data-icon='mail-labels'], [data-icon='mail-highlight']),
+  [data-dl='word-split']:is([data-icon='layout-margins'], [data-icon='layout-size'], [data-icon='layout-columns'], [data-icon='layout-breaks'], [data-icon='line-numbers'], [data-icon='hyphenation'], [data-icon='arrange-position'], [data-icon='wrap-text'], [data-icon='bring-forward'], [data-icon='send-backward'], [data-icon='align-objects'], [data-icon='group-objects'], [data-icon='rotate-object'], [data-icon='toc-doc'], [data-icon='next-footnote'], [data-icon='bibliography-book'], [data-icon='change-provider'], [data-icon='mail-start-merge'], [data-icon='mail-recipients']),
+  [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'],
+  [data-dl='word-labelled-field'][data-icon='styles-brush'] {
+    --icon-accent: var(--c-icon-accent-3);
+    --icon-accent-fill: var(--c-icon-accent-4);
+  }
+  [data-dl='word-command'][data-icon='selection-pane'] {
+    --icon-accent: var(--c-icon-accent-6);
+    --icon-accent-fill: var(--c-icon-accent-fill);
+  }
+  [data-dl='word-command']:is([data-icon='insert-footnote'], [data-icon='toc-update'], [data-icon='table-authorities']) {
+    --icon-accent-2: var(--c-icon-accent-2);
+    --icon-accent-2-fill: var(--c-icon-accent-2);
+  }
+  [data-dl='word-command']:is([data-icon='mark-entry'], [data-icon='mark-citation'], [data-icon='mail-merge-pdf']),
+  [data-dl='word-split']:is([data-icon='toc-add-text'], [data-icon='insert-citation']) {
+    --icon-accent: var(--t-word-window-icon-green);
+    --icon-accent-fill: var(--t-word-window-icon-green);
+    --icon-accent-2: var(--c-icon-accent-2);
+    --icon-accent-2-fill: var(--c-icon-accent-2);
+  }
 
-  /* Font name (168 CSS px) and Font size (42 CSS px) combo fields. */
+  /* Font name (154 CSS px), Font size (44 CSS px) and Citation style (64 CSS px) combo fields. */
   [data-dl='word-field'] {
     display: grid;
-    inline-size: 10.5rem;
+    inline-size: 9.625rem;
     --space-inline-pair: var(--space-1);
     --size-icon-sm: 0.75rem;
   }
   [data-dl='word-field'][data-width='narrow'] {
-    inline-size: 2.625rem;
+    inline-size: 2.75rem;
+  }
+  [data-dl='word-field'][data-width='medium'] {
+    inline-size: 4rem;
+  }
+
+  /* Layout Paragraph spinbox columns (Indent Left/Right, Spacing Before/After). */
+  [data-dl='word-spin-columns'] {
+    display: flex;
+    align-items: start;
+    gap: var(--space-1);
+  }
+  [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] {
+    display: grid;
+    gap: var(--space-0-5);
+  }
+  [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-head'] {
+    font-size: var(--text-s);
+    line-height: 1.25;
+    color: var(--color-text);
+  }
+  [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-0-5);
+  }
+  [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-label'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-0-5);
+    min-inline-size: 2.5rem;
+    font-size: var(--text-s);
+    white-space: nowrap;
+    --size-icon-sm: 0.9375rem;
+  }
+  [data-dl='word-spin-columns'] > [data-dl-part='spin-col'] > [data-dl-part='spin-row'] > [data-dl-part='spin-box'] {
+    inline-size: 3.375rem;
+    --c-field-size-xs: 1.375rem;
+    --space-inline-pair: var(--space-0-5);
+  }
+
+  /* References Style: APA row & Mailings record stepper. */
+  [data-dl='word-labelled-field'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    --c-field-size-xs: 1.375rem;
+  }
+  [data-dl='word-labelled-field'] > [data-dl-part='field-label'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-s);
+    white-space: nowrap;
+    --size-icon-sm: 1rem;
+  }
+  [data-dl='word-record-stepper'] {
+    --c-button-size-xs: 1.25rem;
+    --size-icon-sm: 0.875rem;
+    --c-field-size-xs: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-0-5);
+  }
+  [data-dl='word-record-stepper'] > [data-dl-part='record-box'] {
+    inline-size: 2.5rem;
   }
 
   /* Workspace: editor column (horizontal ruler + body) on the left, optional 440 CSS px (367 PNG px) Copilot pane on the right. */
@@ -438,8 +582,7 @@
   }
   [data-dl='word-ruler-h'] > [data-dl-part='track-center'] {
     display: grid;
-    justify-items: center;
-    padding-inline-end: var(--space-4);
+    min-inline-size: 0;
   }
 
   /* Body: left vertical ruler + canvas ScrollArea + optional panes. */
@@ -599,7 +742,7 @@
     gap: var(--space-3);
     inline-size: min(100%, 42.375rem);
     min-block-size: 60rem;
-    padding: calc(var(--space-16) + var(--space-4));
+    padding: var(--space-16);
     border: var(--border-hairline) solid var(--t-word-window-border-strong);
     background: var(--color-bg-control);
     color: var(--color-text);
@@ -609,12 +752,13 @@
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'][data-narrow] {
     inline-size: min(100%, 40.75rem);
-    padding-inline: calc(var(--space-12) + var(--space-6));
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='caret-row'] {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-block-start: var(--space-2);
+    padding-inline: var(--space-2);
     --icon-accent-2: var(--t-word-window-icon-green);
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='caret-row'] > [data-dl-part='caret-block'] {

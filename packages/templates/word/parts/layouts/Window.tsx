@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Heading, Icon, IconOverrides, MenuButton, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
+import { Avatar, Button, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
 import type { WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
@@ -7,7 +7,7 @@ import type { WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../typ
 export interface WindowProps extends DataAttributes {
   /** Validated shared content: the document, its comments and every label. */
   view: WordRecord;
-  /** A directly openable review state: `home`, `document`, `insert`, `draw`, `design`, `design-gallery`, `navigation`, `comments` or `dark`. */
+  /** A directly openable review state: `home`, `document`, `insert`, `draw`, `design`, `design-gallery`, `layout`, `references`, `mailings`, `navigation`, `comments` or `dark`. */
   screen?: string;
   /** Resolves an entry in the template's `assets.json`. */
   picture?: (id: string) => { src: string; alt: string };
@@ -58,30 +58,53 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
   const showSampleDoc = screen === 'navigation' || screen === 'comments';
 
-  const styleTile = (s: WordStyleSet, active: boolean, onChoose: () => void) => (
-    <div key={s.id} data-dl="word-style-tile" data-active={active ? '' : undefined}>
+  const styleTile = (s: WordStyleSet, active: boolean, onChoose: () => void, large = false) => (
+    <div key={s.id} data-dl="word-style-tile" data-large={large ? '' : undefined} data-active={active ? '' : undefined}>
       {/* binary-setting: chooses one document style set in a visual thumbnail strip, as in the reference. */}
-      <Button label={s.name} size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
-      <svg data-dl-part="preview" viewBox="0 0 68 50" width="68" height="50" aria-hidden="true">
-        <rect x="0.5" y="0.5" width="67" height="49" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-text)' : 'none'} strokeWidth={active ? '1.2' : '0'} />
-        {s.variant === 'bar-num' && <rect x="4" y="6" width="60" height="7" fill="var(--color-text)" />}
-        {s.variant === 'caps-rule' && <line x1="4" y1="13" x2="64" y2="13" stroke="var(--color-accent)" strokeWidth="1" />}
-        {s.variant === 'boxed' && <line x1="4" y1="13" x2="64" y2="13" stroke="var(--color-border-control)" strokeWidth="0.8" />}
-        <text
-          x={s.variant === 'caps-centered' ? '34' : '5'}
-          y="11"
-          textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
-          fontSize="7.5"
-          fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
-          fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
-        >
-          {s.titleText}
-        </text>
-        <text x="5" y="21" fontSize="6" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
-          {s.headingText}
-        </text>
-        <path d="M5 27h56M5 31h52M5 35h55M5 39h48M5 43h38" stroke="currentColor" strokeWidth="1.2" opacity="0.45" />
-      </svg>
+      <Button label={s.name} icon="file" iconOnly size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
+      {large ? (
+        <svg data-dl-part="preview" viewBox="0 0 104 78" width="104" height="78" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="103" height="77" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-map-selection-indicator)' : 'var(--t-word-window-border)'} strokeWidth={active ? '1.6' : '0.8'} />
+          {s.variant === 'bar-num' && <rect x="6" y="8" width="92" height="10" fill="var(--color-text)" />}
+          {s.variant === 'caps-rule' && <line x1="6" y1="18" x2="98" y2="18" stroke="var(--color-accent)" strokeWidth="1.1" />}
+          {s.variant === 'boxed' && <line x1="6" y1="18" x2="98" y2="18" stroke="var(--color-border-control)" strokeWidth="0.9" />}
+          <text
+            x={s.variant === 'caps-centered' ? '52' : '7'}
+            y="15"
+            textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
+            fontSize="10"
+            fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
+            fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
+          >
+            {s.titleText}
+          </text>
+          <text x="7" y="28" fontSize="7.5" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
+            {s.headingText}
+          </text>
+          <path d="M7 35h88M7 39h84M7 43h86M7 47h72M7 55h88M7 59h82M7 63h85M7 67h64" stroke="currentColor" strokeWidth="1.25" opacity="0.55" />
+        </svg>
+      ) : (
+        <svg data-dl-part="preview" viewBox="0 0 60 50" width="60" height="50" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="59" height="49" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-text)' : 'none'} strokeWidth={active ? '1.2' : '0'} />
+          {s.variant === 'bar-num' && <rect x="4" y="6" width="52" height="7" fill="var(--color-text)" />}
+          {s.variant === 'caps-rule' && <line x1="4" y1="13" x2="56" y2="13" stroke="var(--color-accent)" strokeWidth="1" />}
+          {s.variant === 'boxed' && <line x1="4" y1="13" x2="56" y2="13" stroke="var(--color-border-control)" strokeWidth="0.8" />}
+          <text
+            x={s.variant === 'caps-centered' ? '30' : '5'}
+            y="11"
+            textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
+            fontSize="7.2"
+            fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
+            fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
+          >
+            {s.titleText}
+          </text>
+          <text x="5" y="21" fontSize="5.8" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
+            {s.headingText}
+          </text>
+          <path d="M5 27h48M5 31h45M5 35h47M5 39h40M5 43h32" stroke="currentColor" strokeWidth="1.2" opacity="0.45" />
+        </svg>
+      )}
     </div>
   );
 
@@ -107,9 +130,36 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         </div>
       );
     }
+    if (cmd.kind === 'labelled-field') {
+      return (
+        <div key={key} data-dl="word-labelled-field" data-icon={cmd.icon}>
+          <span data-dl-part="field-label">
+            {cmd.icon && <Icon name={cmd.icon as IconName} size="sm" />}
+            <span>{cmd.label}</span>
+          </span>
+          <div data-dl="word-field" data-width={cmd.width}>
+            <Select label={cmd.label} hideLabel size="xs" value={cmd.value ?? ''} options={[{ value: cmd.value ?? '', label: cmd.value ?? '' }]} onChange={() => undefined} />
+          </div>
+        </div>
+      );
+    }
+    if (cmd.kind === 'record-stepper') {
+      return (
+        <div key={key} data-dl="word-record-stepper">
+          <Button label={c.firstRecord} icon={'step-first' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={c.previousRecord} icon={'step-prev' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <div data-dl-part="record-box">
+            <TextField label={c.currentRecord} hideLabel size="xs" value="" onChange={() => undefined} disabled={cmd.disabled} />
+          </div>
+          <Button label={c.nextRecord} icon={'step-next' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={c.lastRecord} icon={'step-last' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+        </div>
+      );
+    }
     const isPen = cmd.kind === 'pen';
+    const isTool = cmd.kind === 'tool';
     const isStacked = cmd.kind === 'stacked';
-    const wide = cmd.lines ? (cmd.lines[0].length > 10 || (cmd.lines[1]?.length ?? 0) > 12 ? 'lg' : 'md') : undefined;
+    const wide = cmd.lines ? (cmd.label.length >= 16 ? 'xl' : cmd.label.includes('&') || cmd.lines[0].length > 9 || (cmd.lines[1]?.length ?? 0) > 10 ? 'lg' : 'md') : undefined;
     /* binary-setting: ribbon formatting and drawing commands are toolbar toggles in a dense command set, as in the reference, not settings. */
     const main = (
       <Button
@@ -126,13 +176,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     );
     if (!cmd.menu) {
       return (
-        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-wide={wide}>
+        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-wide={wide}>
           {main}
         </div>
       );
     }
     return (
-      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined} data-wide={wide}>
+      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined} data-wide={wide}>
         {main}
         <span data-dl-part="split-menu">
           <Button label={`${cmd.label} options`} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
@@ -150,6 +200,26 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       <>
         {g.lead?.map((cmd, i) => command(cmd, `lead-${i}`))}
         {g.trailLead?.map((cmd, i) => command(cmd, `trail-${i}`))}
+        {g.spinColumns && (
+          <div data-dl="word-spin-columns">
+            {g.spinColumns.map((col) => (
+              <div key={col.heading} data-dl-part="spin-col">
+                <span data-dl-part="spin-head">{col.heading}</span>
+                {col.fields.map((f) => (
+                  <div key={f.label} data-dl-part="spin-row" data-icon={f.icon}>
+                    <span data-dl-part="spin-label">
+                      <Icon name={f.icon as IconName} size="sm" />
+                      <span>{f.label}</span>
+                    </span>
+                    <div data-dl-part="spin-box">
+                      <NumberField label={`${col.heading} ${f.label}`} hideLabel mode="form" size="xs" value={f.value} unit={f.unit} step={f.step ?? 1} steppers="stacked" onCommit={() => undefined} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
         {g.columns?.map((col, ci) => (
           <div key={`col-${ci}`} data-dl="word-rows" data-count={col.length}>
             {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${ci}-${r}-${i}`))}</div>)}
@@ -160,6 +230,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             {g.rows.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${r}-${i}`))}</div>)}
           </div>
         )}
+        {g.endLead?.map((cmd, i) => command(cmd, `end-${i}`))}
       </>
     ),
   });
@@ -176,8 +247,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             </linearGradient>
           </defs>
           <rect x="0" y="0" width="100" height="46" fill="url(#word-mica-grad)" />
-          <rect x="0" y="46" width="100" height="128" fill="var(--t-word-window-tab-wash)" />
-          <rect x="0" y="174" width="100" height="748" fill="var(--color-map-nav)" />
+          <rect x="0" y="46" width="100" height="125" fill="var(--t-word-window-tab-wash)" />
+          <rect x="0" y="171" width="100" height="751" fill="var(--color-map-nav)" />
         </svg>
         <svg data-dl-part="frame-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <rect x="0" y="0" width="100" height="100" fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
@@ -257,7 +328,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 </span>
               </div>
             }
-            end={<Button label={c.collapse} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" />}
+            end={<span data-dl="word-collapse-btn"><Button label={c.collapse} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" /></span>}
             aside={
               <div data-dl="word-copilot-card" data-open={copilotOpen ? '' : undefined}>
                 <Button label={c.copilot} icon={'assistant-ribbon' as IconName} stacked size="xs" emphasis="quiet" onClick={() => setCopilotOpen((o) => !o)} />
@@ -266,22 +337,23 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
           />
           {tab === 'design' && galleryOpen && view.styleSets && (
-            <div data-dl="word-style-gallery" data-material="floating" role="dialog" aria-label={c.styleGallery}>
+            <div data-dl="word-style-gallery" data-material="floating" data-elevation="3" role="dialog" aria-label={c.styleGallery}>
               <div data-dl-part="section">
                 <span data-dl-part="section-head">{c.thisDocument}</span>
                 <div data-dl-part="grid">
-                  {styleTile(view.styleSets[0], activeStyle === view.styleSets[0].id, () => { setActiveStyle(view.styleSets[0].id); setGalleryOpen(false); })}
+                  {styleTile(view.styleSets[0], activeStyle === view.styleSets[0].id, () => { setActiveStyle(view.styleSets[0].id); setGalleryOpen(false); }, true)}
                 </div>
               </div>
-              <div data-dl-part="section">
+              <div data-dl-part="section" data-grow="">
                 <span data-dl-part="section-head">{c.builtIn}</span>
                 <div data-dl-part="grid">
-                  {view.styleSets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }))}
+                  {view.styleSets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }, true))}
                 </div>
               </div>
               <div data-dl-part="menu-foot">
                 <Button label={c.resetStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => { setActiveStyle('current'); setGalleryOpen(false); }} />
                 <Button label={c.saveStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => setGalleryOpen(false)} />
+                <span data-dl-part="grip" aria-hidden="true">••••</span>
               </div>
             </div>
           )}
@@ -292,43 +364,53 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             <div data-dl="word-ruler-h">
               <span data-dl-part="tab-stop">
                 <svg viewBox="0 0 23 23" width="23" height="23" aria-hidden="true">
+                  <rect x="0" y="0" width="23" height="23" fill="var(--t-word-window-ruler-bg)" />
                   <path d="M9 7v6.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
                 </svg>
               </span>
               <div data-dl-part="track-center">
-                <svg viewBox="0 0 678 23" width="678" height="23" role="img" aria-label={c.horizontalRuler}>
-                  <rect x="82" y="5" width="514" height="12" fill="var(--t-word-window-ruler-inner)" />
-                  {Array.from({ length: 84 }, (_, i) => {
-                    const x = Math.round(i * 8.1 * 10) / 10;
-                    if (x <= 2 || x >= 676) return null;
-                    const cmIdx = Math.round((x - 82) / 32.4);
-                    const isCm = Math.abs(x - (82 + cmIdx * 32.4)) < 1.2;
-                    const isHalf = !isCm && Math.abs(((x - 82) % 32.4 + 32.4) % 32.4 - 16.2) < 1.5;
-                    if (isCm && cmIdx >= 1 && cmIdx <= 15) {
-                      return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{cmIdx}</text>;
-                    }
-                    if (isCm && (cmIdx === -1 || cmIdx === -2)) {
-                      return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{Math.abs(cmIdx)}</text>;
-                    }
-                    const h = isHalf ? 4 : 2;
-                    return <line key={i} x1={x} y1={11 - h / 2} x2={x} y2={11 + h / 2} stroke="currentColor" strokeWidth="0.9" opacity="0.7" />;
-                  })}
-                  <g transform="translate(82, 0)">
-                    <polygon points="-4,3 4,3 4,6 0,10 -4,6" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                    <polygon points="-4,18 0,14 4,18 4,20 -4,20" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                    <rect x="-4" y="20" width="8" height="2.5" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                  </g>
-                  <g transform="translate(596, 0)">
-                    <polygon points="-4,18 0,14 4,18 4,21 -4,21" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
-                  </g>
-                </svg>
+                {(() => {
+                  const rW = copilotOpen ? 917 : 1326;
+                  const pStart = copilotOpen ? 197 : 394;
+                  const pWidth = copilotOpen ? 497 : 516;
+                  const pEnd = pStart + pWidth;
+                  const ticks = Math.floor(rW / 8.1);
+                  return (
+                    <svg viewBox={`0 0 ${rW} 23`} width="100%" height="23" preserveAspectRatio="none" role="img" aria-label={c.horizontalRuler}>
+                      <rect x="0" y="0" width={rW} height="23" fill="var(--t-word-window-ruler-bg)" />
+                      <rect x={pStart} y="5" width={pWidth} height="12" fill="var(--t-word-window-ruler-inner)" />
+                      {Array.from({ length: ticks }, (_, i) => {
+                        const x = Math.round((pStart - Math.floor(pStart / 8.1) * 8.1 + i * 8.1) * 10) / 10;
+                        if (x <= 4 || x >= rW - 4) return null;
+                        const cmIdx = Math.round((x - pStart) / 32.4);
+                        const isCm = Math.abs(x - (pStart + cmIdx * 32.4)) < 1.2;
+                        const isHalf = !isCm && Math.abs(((x - pStart) % 32.4 + 32.4) % 32.4 - 16.2) < 1.5;
+                        if (isCm && cmIdx !== 0) {
+                          const labelNum = cmIdx > 0 ? cmIdx : Math.abs(cmIdx);
+                          return <text key={i} x={x} y="14" textAnchor="middle" fontSize="9" fill="currentColor">{labelNum}</text>;
+                        }
+                        const h = isHalf ? 4 : 2;
+                        return <line key={i} x1={x} y1={11 - h / 2} x2={x} y2={11 + h / 2} stroke="currentColor" strokeWidth="0.9" opacity="0.7" />;
+                      })}
+                      <g transform={`translate(${pStart}, 0)`}>
+                        <polygon points="-4,3 4,3 4,6 0,10 -4,6" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                        <polygon points="-4,18 0,14 4,18 4,20 -4,20" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                        <rect x="-4" y="20" width="8" height="2.5" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                      </g>
+                      <g transform={`translate(${pEnd}, 0)`}>
+                        <polygon points="-4,18 0,14 4,18 4,21 -4,21" fill="var(--t-word-window-ruler-inner)" stroke="currentColor" strokeWidth="0.9" />
+                      </g>
+                    </svg>
+                  );
+                })()}
               </div>
             </div>
 
             <div data-dl-part="body">
               <div data-dl="word-ruler-v">
                 <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
-                  <rect x="5" y={copilotOpen ? 88 : 142} width="12" height={copilotOpen ? 612 : 558} fill="var(--t-word-window-ruler-inner)" />
+                  <rect x="0" y="0" width="23" height="700" fill="var(--t-word-window-ruler-bg)" />
+                  <rect x="3" y={copilotOpen ? 82 : 136} width="15" height={copilotOpen ? 618 : 564} fill="var(--t-word-window-ruler-inner)" />
                   {V_CMS.map((n) => {
                     const y = (copilotOpen ? 88 : 142) + n * 32.4;
                     return (

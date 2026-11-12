@@ -43,14 +43,17 @@
           "type": "string"
         },
         "kind": {
-          "description": "labelled: a small icon with its name beside it; pen: a tall drawing tool; style-gallery: inline style-set thumbnail strip; separator: thin line between sets.",
+          "description": "labelled: a small icon with its name beside it; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets.",
           "enum": [
             "stacked",
             "icon",
             "labelled",
             "field",
+            "labelled-field",
+            "record-stepper",
             "separator",
             "pen",
+            "tool",
             "style-gallery"
           ],
           "type": "string"
@@ -74,14 +77,15 @@
           "type": "boolean"
         },
         "value": {
-          "description": "A field's current value (\"Aptos (Body)\", \"11\").",
+          "description": "A field's current value (\"Aptos (Body)\", \"11\", \"APA\").",
           "type": "string"
         },
         "width": {
-          "description": "A field's width class: `wide` for a font name, `narrow` for a size.",
+          "description": "A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style.",
           "enum": [
             "wide",
-            "narrow"
+            "narrow",
+            "medium"
           ],
           "type": "string"
         }
@@ -187,6 +191,13 @@
           },
           "type": "array"
         },
+        "endLead": {
+          "description": "Lead commands placed at the group's end after its rows (Change Provider in References).",
+          "items": {
+            "$ref": "#/$defs/WordCommand"
+          },
+          "type": "array"
+        },
         "hideLabel": {
           "description": "Hides redundant group caption under a single-command collapsed group.",
           "type": "boolean"
@@ -214,6 +225,13 @@
               "$ref": "#/$defs/WordCommand"
             },
             "type": "array"
+          },
+          "type": "array"
+        },
+        "spinColumns": {
+          "description": "Headed columns of numeric spinboxes (Indent and Spacing in Layout).",
+          "items": {
+            "$ref": "#/$defs/WordSpinColumn"
           },
           "type": "array"
         },
@@ -345,6 +363,52 @@
         "comments",
         "status",
         "copy"
+      ],
+      "type": "object"
+    },
+    "WordSpinColumn": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/WordSpinField"
+          },
+          "type": "array"
+        },
+        "heading": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "heading",
+        "fields"
+      ],
+      "type": "object"
+    },
+    "WordSpinField": {
+      "additionalProperties": false,
+      "properties": {
+        "icon": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "step": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "label",
+        "icon",
+        "value",
+        "unit"
       ],
       "type": "object"
     },

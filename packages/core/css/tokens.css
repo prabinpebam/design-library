@@ -864,6 +864,7 @@
   --c-breadcrumbs-step: var(--size-target-min);
   --c-breadcrumbs-size: var(--type-body-sm-size);
   --c-tabs-gap: var(--space-inline-pair);
+  --c-tabs-list-padding-inline-start: 0px;
   --c-tabs-item-size: var(--size-target);
   --c-tabs-item-size-xs: var(--size-target-min);
   --c-tabs-item-size-s: var(--size-target-dense);

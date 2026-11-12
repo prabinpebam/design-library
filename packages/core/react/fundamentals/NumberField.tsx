@@ -30,8 +30,8 @@ export interface NumberFieldProps extends DataAttributes {
   glyph?: string;
   /** An icon before the number (rotation, corner radius). Drag it to change the value. */
   icon?: IconName;
-  /** Adds − and + buttons; hold one to repeat. */
-  steppers?: boolean;
+  /** Adds − and + buttons (`true`), or stacked up/down spinbox chevrons (`'stacked'`) on dense inspector boxes; hold one to repeat. */
+  steppers?: boolean | 'stacked';
   /** The Button size scale; inspector rows use `xs` or `s`. */
   size?: ButtonSize;
   /** Hides the visible label where the glyph or icon and the row's heading already say what it is (an inspector). It still names the field. */
@@ -414,13 +414,26 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
           />
         )}
         {steppers && !variable && (
-          <span data-dl-part="steppers">
-            <button type="button" tabIndex={-1} aria-hidden="true" disabled={disabled || (!mixed && min !== undefined && base <= min)} onPointerDown={hold(-1)}>
-              <Icon name="minus" size="sm" />
-            </button>
-            <button type="button" tabIndex={-1} aria-hidden="true" disabled={disabled || (!mixed && max !== undefined && base >= max)} onPointerDown={hold(1)}>
-              <Icon name="plus" size="sm" />
-            </button>
+          <span data-dl-part="steppers" data-steppers={steppers === 'stacked' ? 'stacked' : undefined}>
+            {steppers === 'stacked' ? (
+              <>
+                <button type="button" tabIndex={-1} aria-hidden="true" disabled={disabled || (!mixed && max !== undefined && base >= max)} onPointerDown={hold(1)}>
+                  <svg viewBox="0 0 8 5" width="8" height="5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1.5 3.8L4 1.2l2.5 2.6" /></svg>
+                </button>
+                <button type="button" tabIndex={-1} aria-hidden="true" disabled={disabled || (!mixed && min !== undefined && base <= min)} onPointerDown={hold(-1)}>
+                  <svg viewBox="0 0 8 5" width="8" height="5" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M1.5 1.2L4 3.8l2.5-2.6" /></svg>
+                </button>
+              </>
+            ) : (
+              <>
+                <button type="button" tabIndex={-1} aria-hidden="true" disabled={disabled || (!mixed && min !== undefined && base <= min)} onPointerDown={hold(-1)}>
+                  <Icon name="minus" size="sm" />
+                </button>
+                <button type="button" tabIndex={-1} aria-hidden="true" disabled={disabled || (!mixed && max !== undefined && base >= max)} onPointerDown={hold(1)}>
+                  <Icon name="plus" size="sm" />
+                </button>
+              </>
+            )}
           </span>
         )}
       </span>

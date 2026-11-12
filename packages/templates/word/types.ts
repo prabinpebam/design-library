@@ -5,18 +5,29 @@ export interface WordCommand {
   lines?: string[];
   /** Icon name from core or the template's custom icon pack. */
   icon?: string;
-  /** labelled: a small icon with its name beside it; pen: a tall drawing tool; style-gallery: inline style-set thumbnail strip; separator: thin line between sets. */
-  kind?: 'stacked' | 'icon' | 'labelled' | 'field' | 'separator' | 'pen' | 'style-gallery';
-  /** A field's current value ("Aptos (Body)", "11"). */
+  /** labelled: a small icon with its name beside it; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets. */
+  kind?: 'stacked' | 'icon' | 'labelled' | 'field' | 'labelled-field' | 'record-stepper' | 'separator' | 'pen' | 'tool' | 'style-gallery';
+  /** A field's current value ("Aptos (Body)", "11", "APA"). */
   value?: string;
-  /** A field's width class: `wide` for a font name, `narrow` for a size. */
-  width?: 'wide' | 'narrow';
+  /** A field's width class: `wide` for a font name, `narrow` for a size, `medium` for a citation style. */
+  width?: 'wide' | 'narrow' | 'medium';
   /** A split command with a menu of options. */
   menu?: boolean;
   /** A toggle that's on (left alignment). */
   pressed?: boolean;
   /** Unavailable in the current selection state (Cut, Copy, Sensitivity on an empty selection). */
   disabled?: boolean;
+}
+export interface WordSpinField {
+  label: string;
+  icon: string;
+  value: number;
+  unit: string;
+  step?: number;
+}
+export interface WordSpinColumn {
+  heading: string;
+  fields: WordSpinField[];
 }
 export interface WordGroup {
   id: string;
@@ -30,8 +41,12 @@ export interface WordGroup {
   rows?: WordCommand[][];
   /** Multiple side-by-side stacks of command rows (Illustrations, Text). */
   columns?: WordCommand[][][];
+  /** Headed columns of numeric spinboxes (Indent and Spacing in Layout). */
+  spinColumns?: WordSpinColumn[];
   /** Lead commands placed after an inline gallery (Colors, Fonts in Design). */
   trailLead?: WordCommand[];
+  /** Lead commands placed at the group's end after its rows (Change Provider in References). */
+  endLead?: WordCommand[];
 }
 
 export interface WordStyleSet {
