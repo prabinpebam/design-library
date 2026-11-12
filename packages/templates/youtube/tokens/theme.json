@@ -1,4 +1,8 @@
 {
+  "$parts": [
+    { "selector": "[data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player']", "$description": "The player (watch169-1280-L): icons white #FFFFFF by pixel; the seek line 4 high (y502–505) with a 12 dot (x28–39, y498–509); autoplay on is a white track 30×18 (x649–678, y526–543) with a black 14 knob inset 2 (x664–677, y528–541), centred in its 48 slot (its label is hidden, so no gap).", "tokens": { "color.text": "#ffffff", "c.slider.track-s": "0.25rem", "c.slider.thumb-s": "0.75rem", "c.switch.on-fill": "#ffffff", "c.switch.on-fill-hover": "#ffffff", "c.switch.on-thumb": "#000000", "c.switch.track-inline-xs": "1.875rem", "c.switch.track-block-xs": "1.125rem", "c.switch.gap": "0rem" } },
+    { "selector": "[data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time']", "$description": "The time pill's words are #EEEEEE, a step under the icons' white (watch169-1280-L).", "tokens": { "color.text": "#eeeeee" } }
+  ],
   "$description": "Q145.Y reference spec .design-library/youtube-ref/README.md (headless, signed out, 1280/1440/720, light and dark). Sources are capture ids: H home, S search, G guide open, C channel grid, T hashtag grid, W watch; L light, D dark. Type: Roboto (OFL) from the font registry, the reference's own face. Unmeasured values say so.",
   "font.text": { "$value": "'Roboto Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
   "font.ui": { "$value": "'Roboto Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
@@ -74,7 +78,7 @@
   "c.button-group.icon-padding-inline": { "$value": "{space.4}", "$description": "The dislike half of the like pill is 56: 16 + icon 24 + 16 (W-1280-L)." },
   "c.button.size-s": { "$value": "{size.control-sm}", "$description": "Comment actions are 32×32, radius 16 (WC-1280-L)." },
   "c.button.padding-inline-sm": { "$value": "{space.3}", "$description": "Comment actions padding 0 12 (WC-1280-L Reply)." },
-  "c.slider.fill": { "$value": "#ff0000", "$description": "The seek line's played part and its dot are the brand red (watch169-1280-L)." },
+  "c.slider.fill": { "$value": "#ff0033", "$description": "The seek line's played part and its dot, #FF0033 by pixel (watch169-1280-L y502–505; the logo's #FF0000 is a different red)." },
   "c.slider.thumb-fill": { "$value": "{c.slider.fill}", "$description": "The seek dot, red like the played line (watch169-1280-L)." },
   "c.slider.track-fill": { "$value": "rgba(255, 255, 255, 0.2)", "$description": "The seek line's unplayed part, white at about 20 % over the video (watch169-1280-L, read from the screenshot; the player is always dark)." },
   "type.heading-2.size": { "$value": "1.125rem", "$description": "A search result's title 18/26 w400 (S-1280-L); the template has no larger heading, so its second step is this one." },

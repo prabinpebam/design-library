@@ -255,6 +255,9 @@
     --c-switch-off-border: var(--color-border-strong);
     --c-switch-off-thumb: var(--color-border-strong);
     --c-button-fill-track: var(--color-map-brand-tint);
+    --c-switch-on-fill: var(--color-map-on-fill);
+    --c-switch-on-fill-hover: var(--color-map-on-fill-hover);
+    --c-switch-on-thumb: var(--color-map-switch-handle);
     --c-switch-spinner: var(--color-map-progress);
     --c-progress-bar-fill: var(--color-map-progress);
     --c-alignment-picker-mark-colour: var(--color-map-drop-target);

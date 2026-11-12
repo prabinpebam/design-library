@@ -75,7 +75,7 @@
     --c-button-group-icon-padding-inline: var(--space-4);
     --c-button-size-s: var(--size-control-sm);
     --c-button-padding-inline-sm: var(--space-3);
-    --c-slider-fill: #ff0000;
+    --c-slider-fill: #ff0033;
     --c-slider-thumb-fill: var(--c-slider-fill);
     --c-slider-track-fill: rgba(255, 255, 255, 0.2);
     --type-heading-2-size: 1.125rem;
@@ -450,5 +450,19 @@
     font-size: var(--type-body-size);
     line-height: var(--type-body-leading);
     font-weight: var(--type-body-weight);
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] {
+    --color-text: #ffffff;
+    --c-slider-track-s: 0.25rem;
+    --c-slider-thumb-s: 0.75rem;
+    --c-switch-on-fill: #ffffff;
+    --c-switch-on-fill-hover: #ffffff;
+    --c-switch-on-thumb: #000000;
+    --c-switch-track-inline-xs: 1.875rem;
+    --c-switch-track-block-xs: 1.125rem;
+    --c-switch-gap: 0rem;
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time'] {
+    --color-text: #eeeeee;
   }
 }

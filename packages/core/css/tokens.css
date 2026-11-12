@@ -445,6 +445,9 @@
   --c-switch-border-width: var(--border-hairline);
   --c-switch-off-border: var(--color-border-strong);
   --c-switch-off-thumb: var(--color-border-strong);
+  --c-switch-on-fill: var(--color-map-on-fill);
+  --c-switch-on-fill-hover: var(--color-map-on-fill-hover);
+  --c-switch-on-thumb: var(--color-map-switch-handle);
   --c-switch-spinner: var(--color-map-progress);
   --c-switch-disabled-opacity: 0.5;
   --c-progress-label-gap: var(--space-stack-pair);

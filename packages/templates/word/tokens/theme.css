@@ -194,6 +194,7 @@
     --c-button-strong-text: var(--color-bg);
     --c-button-weight: var(--type-label-weight);
     --c-button-unavailable-edge: var(--color-border-strong);
+    --c-switch-on-fill: var(--color-map-on-fill);
     --c-skeleton-fill: var(--color-border);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-field-radius: var(--radius-md);

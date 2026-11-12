@@ -41,6 +41,8 @@ const brandValues = [
   { re: /#54585a\b/i, what: "Word's Dark Gray title bar #54585A" },
   // YouTube (Q145.Y): the brand red of the logo mark; spec in .design-library/youtube-ref/README.md.
   { re: /#ff0000\b/i, what: "YouTube's brand red #FF0000" },
+  // The player's seek red, by pixel (watch169-1280-L); Worker 102, Y2g-F30.
+  { re: /#ff0033\b/i, what: "YouTube's player red #FF0033" },
 ];
 // Embedding a provider's real player is a public integration, not an imitated look: MediaPlayer's
 // `from: 'youtube'` source names the service it embeds. Only the product name is allowed, only there.

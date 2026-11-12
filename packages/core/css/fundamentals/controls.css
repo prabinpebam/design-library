@@ -672,13 +672,13 @@
   }
 
   [data-dl='switch'] [aria-checked='true'] [data-dl-part='track'] {
-    border-color: var(--color-map-on-fill);
-    background-color: var(--color-map-on-fill);
+    border-color: var(--c-switch-on-fill);
+    background-color: var(--c-switch-on-fill);
   }
 
   [data-dl='switch'] [aria-checked='true'] [data-dl-part='thumb'] {
     translate: calc(var(--switch-inline) - var(--switch-block));
-    background-color: var(--color-map-switch-handle);
+    background-color: var(--c-switch-on-thumb);
   }
 
   /* Words for the state inside the track, on the side the knob isn't: "Off" after the knob, "On" before it. */
@@ -700,7 +700,7 @@
 
   [data-dl='switch'] [aria-checked='true'] [data-dl-part='state'] {
     inset-inline: var(--switch-inset) calc(var(--switch-inset) + var(--switch-thumb));
-    color: var(--color-map-switch-handle);
+    color: var(--c-switch-on-thumb);
   }
 
   /* tone inherit: off, the words, edge and knob take the surroundings' colour (a coloured title bar). */
@@ -759,7 +759,7 @@
     }
 
     [data-dl='switch'] > [data-dl-part='control'][aria-checked='true']:enabled:not([aria-disabled='true']):hover [data-dl-part='track'] {
-      background-color: var(--color-map-on-fill-hover);
+      background-color: var(--c-switch-on-fill-hover);
     }
   }
 
