@@ -386,6 +386,16 @@
       "var": "--c-list-tile-name-weight",
       "default": "500",
       "description": "A tile's name (default type.label.weight). A catalogue whose names lead its tiles sets var(--weight-bold) or var(--weight-semibold)."
+    },
+    {
+      "var": "--c-list-tile-name-size",
+      "default": "1rem",
+      "description": "A tile's name (default type.label.size). A dense catalogue whose descriptions carry the detail sets a step smaller, such as var(--type-body-sm-size)."
+    },
+    {
+      "var": "--c-list-tile-radius",
+      "default": "0.5rem",
+      "description": "A tile's corners (default radius.md, a control's). A theme whose surfaces are squarer sets var(--radius-sm)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/list",

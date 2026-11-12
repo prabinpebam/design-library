@@ -208,6 +208,7 @@
     "--c-list-item-size-s",
     "--c-list-tile-content-gap",
     "--c-list-tile-fill",
+    "--c-list-tile-name-size",
     "--c-list-tile-name-weight",
     "--c-list-tile-padding",
     "--c-list-tile-radius",

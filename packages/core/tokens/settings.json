@@ -38,7 +38,9 @@
   "List": {
     "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length.",
     "--c-list-tile-fill": "A tile's surface inside its hairline outline (default color.bg-control). A theme that draws tiles outlined on the page sets var(--color-bg); the outline stays the tile's boundary.",
-    "--c-list-tile-name-weight": "A tile's name (default type.label.weight). A catalogue whose names lead its tiles sets var(--weight-bold) or var(--weight-semibold)."
+    "--c-list-tile-name-weight": "A tile's name (default type.label.weight). A catalogue whose names lead its tiles sets var(--weight-bold) or var(--weight-semibold).",
+    "--c-list-tile-name-size": "A tile's name (default type.label.size). A dense catalogue whose descriptions carry the detail sets a step smaller, such as var(--type-body-sm-size).",
+    "--c-list-tile-radius": "A tile's corners (default radius.md, a control's). A theme whose surfaces are squarer sets var(--radius-sm)."
   },
   "PageGrid": {
     "--c-page-grid-empty-size": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in."

@@ -237,6 +237,7 @@
   }
 
   [data-dl='list-item'][data-layout='tile'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
+    font-size: var(--c-list-tile-name-size);
     font-weight: var(--c-list-tile-name-weight);
   }
 

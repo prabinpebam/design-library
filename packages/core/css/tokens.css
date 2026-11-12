@@ -321,6 +321,7 @@
   --c-list-tile-radius: var(--radius-md);
   --c-list-tile-fill: var(--color-bg-control);
   --c-list-tile-name-weight: var(--type-label-weight);
+  --c-list-tile-name-size: var(--type-label-size);
   --c-list-indent: var(--space-inset-md);
   --c-list-measure: var(--size-measure);
   --c-list-inline-row-gap: var(--space-stack-pair);
@@ -3092,6 +3093,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-name-size: var(--type-label-size);
   --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);

@@ -84,6 +84,7 @@
     --c-code-key-radius: var(--radius-sm);
     --c-list-tile-radius: var(--radius-md);
     --c-list-tile-fill: var(--color-bg-control);
+    --c-list-tile-name-size: var(--type-label-size);
     --c-code-block-radius: var(--radius-md);
     --c-code-block-bg: var(--color-bg-sunken);
     --c-data-table-outline: var(--color-border);
@@ -593,6 +594,7 @@
     --c-image-generation-radius: var(--radius-lg);
     --c-image-radius: var(--radius-lg);
     --c-list-item-radius: var(--radius-md);
+    --c-list-tile-name-size: var(--type-label-size);
     --c-list-tile-radius: var(--radius-md);
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);

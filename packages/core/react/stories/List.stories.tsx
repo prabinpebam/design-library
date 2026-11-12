@@ -159,6 +159,17 @@ export default {
       ),
     },
     {
+      title: 'Dense tiles: smaller names, squarer corners',
+      description: 'Two more theme settings: --c-list-tile-name-size (default the label size) set a step smaller for a dense catalogue whose descriptions carry the detail, and --c-list-tile-radius (default a control’s corners) set smaller for a theme whose surfaces are squarer.',
+      code: `applySettings({ '--c-list-tile-name-size': 'var(--type-body-sm-size)', '--c-list-tile-radius': 'var(--radius-sm)' });
+<List mode="action" layout="tiles" label="Add a block" groups={…} />`,
+      render: () => (
+        <WithSettings settings={dense} contents>
+          <Tiles />
+        </WithSettings>
+      ),
+    },
+    {
       title: 'Plain list with dividers',
       description: 'Plain items split by a full-width line, for long items read one after another.',
       code: `<List variant="plain" dividers="between" items={notes} />`,
@@ -336,6 +347,7 @@ function DrillIn() {
 }
 
 const onPaper = { '--c-list-tile-fill': 'var(--color-bg)', '--c-list-tile-name-weight': 'var(--weight-bold)' };
+const dense = { '--c-list-tile-name-size': 'var(--type-body-sm-size)', '--c-list-tile-radius': 'var(--radius-sm)' };
 
 function Tiles() {
   const [last, did] = useLast();

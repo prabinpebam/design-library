@@ -270,6 +270,11 @@
       "$extensions": {
         "owner": "List"
       },
+      "tile-name-size": {
+        "$type": "dimension",
+        "$value": "{type.label.size}",
+        "$description": "A tile's name: a label's size (default); a dense catalogue sets a step smaller (echoed for density contexts)"
+      },
       "tile-radius": {
         "$type": "dimension",
         "$value": "{radius.md}",
