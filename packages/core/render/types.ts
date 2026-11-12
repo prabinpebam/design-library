@@ -87,6 +87,35 @@ export type ProseItem =
  */
 export type Decoration = string | Block[];
 
+/** One picture of an album: an asset id and what this album says about it (blocks.schema `albumItem`). */
+export interface AlbumItem {
+  picture: string;
+  caption?: string;
+  credit?: string;
+  /** Replaces the asset's alternative text here. */
+  alt?: string;
+  /** Grey at rest, its colour while hovered or focused. */
+  reveal?: boolean;
+}
+
+/** Pictures in order, reusable across blocks: an `albums` collection item (by `{ ref }`) or written in the block. */
+export interface Album {
+  id?: string;
+  title?: string;
+  items: AlbumItem[];
+}
+
+/** One picture, or an album shown by a presentation and its variant (blocks.schema `media`; owner, DesignUp 02:36). */
+export type MediaBlock = {
+  type: 'media';
+  heading?: string;
+  size?: SectionTitleSize;
+  label?: string;
+  presentation?: 'single' | 'grid' | 'carousel';
+  variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few';
+  ratio?: TemplateAsset['ratio'];
+} & ({ picture: string; caption?: string; credit?: string; reveal?: boolean; album?: never } | { album: Album; picture?: never });
+
 /** A block's section title at the top steps of the type ramp (MP16); without it the usual section size. */
 export type SectionTitleSize = 'display' | 'jumbo';
 
@@ -133,6 +162,7 @@ export type CoreBlock =
       standalone?: boolean;
     }
   | { type: 'gallery'; heading?: string; size?: SectionTitleSize; label: string; layout?: 'standard' | 'quilted' | 'masonry'; items: string[] }
+  | MediaBlock
   | { type: 'breadcrumbs'; items: { label: string; href?: string }[] }
   | { type: 'illustration'; picture: string; ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural' }
   | { type: 'byline'; name: string; href: string; date: string; read: string; picture?: string }

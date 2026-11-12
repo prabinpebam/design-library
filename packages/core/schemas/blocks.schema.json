@@ -942,7 +942,8 @@
       "additionalProperties": false
     },
     "gallery": {
-      "description": "Pictures in a grid.",
+      "description": "Deprecated (owner, DesignUp 2026-11-13: one Media block): use `media` with an album and presentation grid. Pictures in a grid; still drawn.",
+      "deprecated": true,
       "type": "object",
       "required": [
         "type",
@@ -975,6 +976,51 @@
           }
         }
       },
+      "additionalProperties": false
+    },
+    "albumItem": {
+      "description": "One picture of an album (owner, DesignUp 2026-11-13 02:36): an asset id, and what this album says about it. Its dark-scheme, more-contrast and hover versions are the asset's own (`assets.json`).",
+      "type": "object",
+      "required": ["picture"],
+      "properties": {
+        "picture": { "$ref": "#/$defs/asset" },
+        "caption": { "$ref": "#/$defs/text" },
+        "credit": { "$ref": "#/$defs/text" },
+        "alt": { "$ref": "#/$defs/words", "description": "Replaces the asset's own alternative text here." },
+        "reveal": { "type": "boolean", "description": "Grey at rest, its colour while hovered or focused (the picture's treatment `{ rest: greyscale, active: none }`)." }
+      },
+      "additionalProperties": false
+    },
+    "album": {
+      "description": "A collection of pictures in order, reusable across blocks and pages: an item of an `albums` collection (`{ \"ref\": \"albums/<id>\" }`, resolved before the block draws, so a change shows on every block using it), or written inside the block. Placement isn't the album's: it's the block's presentation.",
+      "type": "object",
+      "required": ["items"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "$ref": "#/$defs/text" },
+        "items": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/albumItem" } }
+      },
+      "additionalProperties": false
+    },
+    "media": {
+      "description": "Pictures as one block (owner, DesignUp 2026-11-13 02:36): one picture (`picture`), or an album (`album`) shown by a presentation and its variant. `single`: the picture (or the album's first) with its caption. `grid`: ImageGrid, variant standard (default), quilted, masonry or justified. `carousel`: Carousel, variant one (default), peek or few. More presentations come as new values. Replaces `gallery`.",
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "media" },
+        "size": { "$ref": "#/$defs/sectionTitleSize" },
+        "heading": { "$ref": "#/$defs/text" },
+        "label": { "$ref": "#/$defs/text", "description": "What the set is, for screen readers (\"Photos from the 2024 edition\"); default the album's title, else the heading." },
+        "picture": { "$ref": "#/$defs/asset" },
+        "caption": { "$ref": "#/$defs/text", "description": "With `picture`: its caption." },
+        "credit": { "$ref": "#/$defs/text", "description": "With `picture`: its credit." },
+        "reveal": { "type": "boolean", "description": "With `picture`: grey at rest, its colour while hovered or focused." },
+        "album": { "$ref": "#/$defs/album" },
+        "presentation": { "enum": ["single", "grid", "carousel"], "description": "Default: single with `picture`, grid with `album`." },
+        "variant": { "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few"], "description": "The presentation's own variant: grid standard, quilted, masonry, justified; carousel one, peek, few. Ignored where it isn't the presentation's." },
+        "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frames' shape where the presentation has one (single; grid standard: wide, photo, square or portrait); default the asset's, else photo." }
+      },
+      "oneOf": [{ "required": ["picture"], "not": { "required": ["album"] } }, { "required": ["album"], "not": { "required": ["picture"] } }],
       "additionalProperties": false
     },
     "illustration": {

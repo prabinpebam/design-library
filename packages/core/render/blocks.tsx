@@ -4,7 +4,7 @@
  * its own (namespaced) types in its registry; it never replaces these.
  */
 import { Fragment, useEffect, useState, type ReactNode } from 'react';
-import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
+import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Carousel, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
 import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
@@ -263,6 +263,67 @@ const inSection = (key: number, heading: string | undefined, body: ReactNode, si
     <Fragment key={key}>{body}</Fragment>
   );
 
+/** An asset as `Image` props, with what an album says about it: its alt text here, and reveal (grey until pointed at). */
+const pictureProps = (ctx: RenderContext, id: string, alt?: string, reveal?: boolean) => {
+  const a = ctx.picture(id);
+  return {
+    src: a.src,
+    dark: a.dark,
+    contrast: a.contrast,
+    alternate: a.alternate,
+    alt: a.decorative ? '' : (alt ?? a.alt),
+    focal: a.focal,
+    treatment: reveal ? { rest: 'greyscale' as const, active: 'none' as const } : a.treatment,
+    ratio: a.ratio,
+    priority: a.priority,
+  };
+};
+
+const GRID_VARIANTS = ['standard', 'quilted', 'masonry', 'justified'] as const;
+const GRID_RATIOS = ['wide', 'photo', 'square', 'portrait'] as const;
+const CAROUSEL_VARIANTS = { one: { perView: 1, peek: false }, peek: { perView: 1, peek: true }, few: { perView: 3, peek: false } } as const;
+
+/** The media block (owner, DesignUp 2026-11-13 02:36): one picture, or an album by its presentation and variant. */
+function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
+  const items = b.album ? b.album.items : [{ picture: b.picture, caption: b.caption, credit: b.credit, reveal: b.reveal }];
+  const presentation = b.presentation ?? (b.album ? 'grid' : 'single');
+  const label = b.label ?? b.album?.title ?? b.heading ?? (items[0] ? pictureProps(ctx, items[0].picture).alt : '');
+  let body: ReactNode;
+  if (presentation === 'grid') {
+    const layout = GRID_VARIANTS.find((v) => v === b.variant) ?? 'standard';
+    const ratio = GRID_RATIOS.find((r) => r === b.ratio);
+    body = (
+      <ImageGrid
+        label={label}
+        layout={layout}
+        ratio={ratio}
+        items={items.map((item, n) => {
+          const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
+          return { id: String(n), ...p, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };
+        })}
+      />
+    );
+  } else if (presentation === 'carousel') {
+    const view = CAROUSEL_VARIANTS[b.variant === 'peek' || b.variant === 'few' ? b.variant : 'one'];
+    body = (
+      <Carousel
+        label={label}
+        perView={view.perView}
+        peek={view.peek}
+        slides={items.map((item) => {
+          const p = pictureProps(ctx, item.picture, item.alt);
+          return { src: p.src, alt: p.alt, caption: item.caption };
+        })}
+      />
+    );
+  } else {
+    const item = items[0];
+    const { ratio, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
+    body = <Image {...p} ratio={b.ratio ?? ratio ?? 'photo'} caption={item.caption} credit={item.credit} />;
+  }
+  return inSection(i, b.heading, body, b.size);
+}
+
 // Framing by block type and context (Q88–Q91). Framing isolates a piece, which interrupts reading, so only what gains
 // from being read alone is framed: a hero or call to action declared `standalone` (a brand opening, a marketing page's
 // closing invitation), a quote and a status message. Anything else flows with its content.
@@ -428,6 +489,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
   ),
   cta: (b, ctx, i) => frame(ctx, i, 'feature', <Hero level={2} layout="divided" title={richText(b.title)} lead={richText(b.lead)} actions={actionButtons(b.actions)} note={b.note} />),
   gallery: (b, ctx, i) => inSection(i, b.heading, <ImageGrid label={b.label} layout={b.layout} items={b.items.map((name, n) => ({ id: String(n), ...ctx.picture(name), span: b.layout === 'quilted' && n === 0 ? 'large' : undefined }))} />, b.size),
+  media: (b, ctx, i) => mediaOf(b, ctx, i),
   breadcrumbs: (b, _ctx, i) => <Breadcrumbs key={i} items={b.items} />,
   illustration: (b, ctx, i) => <Fragment key={i}>{illustrationOf(ctx, b.picture, b.ratio)}</Fragment>,
   byline: (b, ctx, i) => <Persona key={i} name={<Link href={b.href}>{b.name}</Link>} nameText={b.name} secondary={`${b.date} · ${b.read}`} size={40} src={b.picture ? ctx.picture(b.picture).src : undefined} />,

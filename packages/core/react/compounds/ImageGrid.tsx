@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Image, type SchemeSources } from '../fundamentals/Image';
+import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
 import type { DataAttributes } from '../types';
 
 export interface ImageGridItem extends SchemeSources {
@@ -14,6 +14,12 @@ export interface ImageGridItem extends SchemeSources {
   height?: number;
   /** In `quilted`, a picture that takes two columns (`wide`), two rows (`tall`) or both (`large`). */
   span?: 'wide' | 'tall' | 'large';
+  /** As `Image`: its tone, or one at rest and one while hovered or focused (grey until pointed at). */
+  treatment?: PictureTreatment;
+  /** As `Image`: the paired picture shown while it's hovered or focused. */
+  alternate?: string | PictureSource;
+  /** As `Image`: the point kept in view where a frame crops. */
+  focal?: { x: number; y: number };
 }
 
 export interface ImageGridProps extends DataAttributes {
@@ -58,6 +64,9 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             width={item.width}
             height={item.height}
             ratio={layout === 'standard' ? ratio : layout === 'quilted' ? 'square' : 'natural'}
+            treatment={item.treatment}
+            alternate={item.alternate}
+            focal={item.focal}
           />
         );
         return (
