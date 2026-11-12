@@ -275,5 +275,9 @@
  "color.text-accent-display": {
   "$value": "#0f4761",
   "$description": "Document heading colour (the default heading style's dark teal), unchanged on Dark Gray because the page stays white."
+ },
+ "c.field.padding-inline-sm": {
+  "$value": "0.25rem",
+  "$description": "Ribbon font and size fields: the text starts 6 image px (≈5 CSS px) inside the 54 px size box in w-copilot-01 (≈1.25x), so a 43 px box shows \"12\" beside its chevron."
  }
 }

@@ -3,7 +3,8 @@ export interface WordCommand {
   label: string;
   /** A core icon name. */
   icon?: string;
-  kind?: 'stacked' | 'icon' | 'field';
+  /** labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks). */
+  kind?: 'stacked' | 'icon' | 'labelled' | 'field';
   /** A field's current value ("Aptos (Body)", "12"). */
   value?: string;
   /** A field's width class: `wide` for a font name, `narrow` for a size. */
@@ -37,7 +38,8 @@ export interface WordRecord {
   documentName: string;
   saveState: string;
   user: string;
-  tabs: { id: string; label: string }[];
+  /** Ribbon tabs; each tab but Home carries its own groups (Home's are home). */
+  tabs: { id: string; label: string; groups?: WordGroup[] }[];
   home: WordGroup[];
   document: WordBlock[];
   comments: WordComment[];

@@ -39,9 +39,11 @@
           "type": "string"
         },
         "kind": {
+          "description": "labelled: a small icon with its name beside it, on a ribbon row (Header, Breaks).",
           "enum": [
             "stacked",
             "icon",
+            "labelled",
             "field"
           ],
           "type": "string"
@@ -202,9 +204,16 @@
           "type": "object"
         },
         "tabs": {
+          "description": "Ribbon tabs; each tab but Home carries its own groups (Home's are home).",
           "items": {
             "additionalProperties": false,
             "properties": {
+              "groups": {
+                "items": {
+                  "$ref": "#/$defs/WordGroup"
+                },
+                "type": "array"
+              },
               "id": {
                 "type": "string"
               },

@@ -40,7 +40,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
       );
     }
     /* binary-setting: ribbon formatting commands (alignment, bold) are toolbar toggles in a dense command set, as in the reference, not settings. */
-    const main = <Button label={cmd.label} icon={cmd.icon as IconName} iconOnly={cmd.kind !== 'stacked'} stacked={cmd.kind === 'stacked'} size="xs" emphasis="quiet" pressed={cmd.pressed} />;
+    const main = <Button label={cmd.label} icon={cmd.icon as IconName} iconOnly={cmd.kind !== 'stacked' && cmd.kind !== 'labelled'} stacked={cmd.kind === 'stacked'} align={cmd.kind === 'labelled' ? 'start' : undefined} size="xs" emphasis="quiet" pressed={cmd.pressed} />;
     if (!cmd.menu) return <div key={key} data-dl="word-command">{main}</div>;
     return (
       <div key={key} data-dl="word-split" data-stacked={cmd.kind === 'stacked' ? '' : undefined}>
@@ -109,7 +109,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
             </div>
           }
           end={<Button label={c.collapse} icon="chevron-down" iconOnly size="xs" emphasis="quiet" />}
-          tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: t.id === 'home' ? view.home.map(group) : [] }))}
+          tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
         />
       </div>
       <div data-dl-part="body">
@@ -190,7 +190,7 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
           <Button label={c.webLayout} icon="globe" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <div data-dl-part="zoom">
             <Button label={c.zoomOut} icon="minus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.max(10, z - 10))} />
-            <Slider label={c.zoom} hideLabel size="s" valueLabel="none" min={10} max={500} value={zoom} onChange={(v) => setZoom(v as number)} />
+            <Slider label={c.zoom} hideLabel showValue={false} size="s" valueLabel="none" min={10} max={500} value={zoom} onChange={(v) => setZoom(v as number)} />
             <Button label={c.zoomIn} icon="plus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.min(500, z + 10))} />
           </div>
           <Button label={`${zoom}%`} size="xs" emphasis="quiet" tone="inherit" />

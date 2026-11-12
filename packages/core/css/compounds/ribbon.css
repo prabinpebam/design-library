@@ -67,6 +67,9 @@
   [data-dl='ribbon-groups'] > [data-dl-part='group'] > [data-dl-part='foot'] > [data-dl='button'] {
     grid-column: 3;
     justify-self: end;
+    /* The launcher is exactly c.ribbon.launcher-size: a quiet glyph whose box would otherwise add its padding and edge. */
+    padding: 0;
+    border-width: 0;
   }
 
   [data-dl='ribbon-card'] > [data-dl-part='end'] {

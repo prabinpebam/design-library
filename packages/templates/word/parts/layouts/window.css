@@ -30,7 +30,7 @@
   [data-dl='word-command'] { display: flex; --size-icon-lg: var(--size-icon-xl); }
   /* Font name and size fields: 172 and 42 px wide (w-theme-07 x234-578 and 586-671 at 2x). */
   [data-dl='word-field'] { display: grid; inline-size: 10.75rem; }
-  [data-dl='word-field'][data-width='narrow'] { inline-size: 3rem; }
+  [data-dl='word-field'][data-width='narrow'] { inline-size: 2.75rem; }
 
   [data-dl='word-window'] > [data-dl-part='body'] { display: flex; min-block-size: 0; }
   [data-dl='word-window'] > [data-dl-part='body'] > [data-dl-part='canvas'] { flex: 1; display: grid; min-inline-size: 0; min-block-size: 0; }

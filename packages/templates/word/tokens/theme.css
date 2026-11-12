@@ -61,6 +61,7 @@
     --text-xxxl: 2.3333333rem;
     --leading-normal: 1.38;
     --color-text-accent-display: #0f4761;
+    --c-field-padding-inline-sm: 0.25rem;
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);

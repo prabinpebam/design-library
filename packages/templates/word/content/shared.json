@@ -8,57 +8,1373 @@
     "saveState": "Saved to this PC",
     "user": "Jamie Park",
     "tabs": [
-      { "id": "file", "label": "File" },
-      { "id": "home", "label": "Home" },
-      { "id": "insert", "label": "Insert" },
-      { "id": "draw", "label": "Draw" },
-      { "id": "design", "label": "Design" },
-      { "id": "layout", "label": "Layout" },
-      { "id": "references", "label": "References" },
-      { "id": "mailings", "label": "Mailings" },
-      { "id": "review", "label": "Review" },
-      { "id": "view", "label": "View" },
-      { "id": "help", "label": "Help" }
+      {
+        "id": "file",
+        "label": "File"
+      },
+      {
+        "id": "home",
+        "label": "Home"
+      },
+      {
+        "id": "insert",
+        "label": "Insert",
+        "groups": [
+          {
+            "id": "pages",
+            "label": "Pages",
+            "lead": [
+              {
+                "label": "Pages",
+                "icon": "file",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "tables",
+            "label": "Tables",
+            "lead": [
+              {
+                "label": "Table",
+                "icon": "grid",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "illustrations",
+            "label": "Illustrations",
+            "lead": [
+              {
+                "label": "Pictures",
+                "icon": "image",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Shapes",
+                "icon": "ellipse",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Icons",
+                "icon": "emoji",
+                "kind": "stacked"
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "3D Models",
+                  "icon": "layers",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "SmartArt",
+                  "icon": "board",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Chart",
+                  "icon": "trend-up",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "media",
+            "label": "Media",
+            "lead": [
+              {
+                "label": "Online Videos",
+                "icon": "play",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "links",
+            "label": "Links",
+            "lead": [
+              {
+                "label": "Links",
+                "icon": "link",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "comments",
+            "label": "Comments",
+            "lead": [
+              {
+                "label": "Comment",
+                "icon": "comment",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "header-footer",
+            "label": "Header & Footer",
+            "rows": [
+              [
+                {
+                  "label": "Header",
+                  "icon": "layout-stack",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Footer",
+                  "icon": "layout-stack",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Page Number",
+                  "icon": "list-numbered",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "text",
+            "label": "Text",
+            "lead": [
+              {
+                "label": "Text Box",
+                "icon": "text",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Quick Parts",
+                  "icon": "component",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "WordArt",
+                  "icon": "text-format",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Drop Cap",
+                  "icon": "text-larger",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "symbols",
+            "label": "Symbols",
+            "lead": [
+              {
+                "label": "Equation",
+                "icon": "code",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Symbol",
+                "icon": "at",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "draw",
+        "label": "Draw",
+        "groups": [
+          {
+            "id": "tools",
+            "label": "Drawing Tools",
+            "lead": [
+              {
+                "label": "Draw",
+                "icon": "pointer",
+                "kind": "stacked"
+              },
+              {
+                "label": "Pen",
+                "icon": "pen",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Highlighter",
+                "icon": "highlight",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Eraser",
+                "icon": "clear-format",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "convert",
+            "label": "Convert",
+            "lead": [
+              {
+                "label": "Ink to Shape",
+                "icon": "ellipse",
+                "kind": "stacked"
+              },
+              {
+                "label": "Ink to Math",
+                "icon": "code",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "replay",
+            "label": "Replay",
+            "lead": [
+              {
+                "label": "Ink Replay",
+                "icon": "play",
+                "kind": "stacked"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "design",
+        "label": "Design",
+        "groups": [
+          {
+            "id": "formatting",
+            "label": "Document Formatting",
+            "lead": [
+              {
+                "label": "Themes",
+                "icon": "layers",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Colours",
+                  "icon": "fill-colour",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Fonts",
+                  "icon": "text",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Paragraph Spacing",
+                  "icon": "line-spacing",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "background",
+            "label": "Page Background",
+            "lead": [
+              {
+                "label": "Watermark",
+                "icon": "image",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Page Colour",
+                "icon": "fill-colour",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Page Borders",
+                "icon": "borders",
+                "kind": "stacked"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "layout",
+        "label": "Layout",
+        "groups": [
+          {
+            "id": "page-setup",
+            "label": "Page Setup",
+            "launcher": "Page setup",
+            "lead": [
+              {
+                "label": "Margins",
+                "icon": "padding-horizontal",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Orientation",
+                "icon": "rotate",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Size",
+                "icon": "size-width",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Columns",
+                "icon": "layout-free",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Breaks",
+                  "icon": "wrap",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Line Numbers",
+                  "icon": "list-numbered",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Hyphenation",
+                  "icon": "minus",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "paragraph",
+            "label": "Paragraph",
+            "launcher": "Paragraph settings",
+            "rows": [
+              [
+                {
+                  "label": "Indent left",
+                  "icon": "indent-increase",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Indent right",
+                  "icon": "indent-decrease",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "arrange",
+            "label": "Arrange",
+            "lead": [
+              {
+                "label": "Position",
+                "icon": "align-top",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Wrap Text",
+                "icon": "wrap",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Bring Forward",
+                  "icon": "layers",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Send Backward",
+                  "icon": "layers",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Selection Pane",
+                  "icon": "list",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "references",
+        "label": "References",
+        "groups": [
+          {
+            "id": "toc",
+            "label": "Table of Contents",
+            "lead": [
+              {
+                "label": "Table of Contents",
+                "icon": "list",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Add Text",
+                  "icon": "plus",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Update Table",
+                  "icon": "retry",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "footnotes",
+            "label": "Footnotes",
+            "launcher": "Footnote and endnote",
+            "lead": [
+              {
+                "label": "Insert Footnote",
+                "icon": "superscript",
+                "kind": "stacked"
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Insert Endnote",
+                  "icon": "subscript",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Next Footnote",
+                  "icon": "chevron-down",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Show Notes",
+                  "icon": "eye",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "research",
+            "label": "Research",
+            "lead": [
+              {
+                "label": "Search",
+                "icon": "search",
+                "kind": "stacked"
+              },
+              {
+                "label": "Researcher",
+                "icon": "book",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "citations",
+            "label": "Citations & Bibliography",
+            "lead": [
+              {
+                "label": "Insert Citation",
+                "icon": "comment",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Manage Sources",
+                  "icon": "list",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Style: APA",
+                  "icon": "text",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Bibliography",
+                  "icon": "book",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "captions",
+            "label": "Captions",
+            "lead": [
+              {
+                "label": "Insert Caption",
+                "icon": "image",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "index",
+            "label": "Index",
+            "lead": [
+              {
+                "label": "Mark Entry",
+                "icon": "tag",
+                "kind": "stacked"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "mailings",
+        "label": "Mailings",
+        "groups": [
+          {
+            "id": "create",
+            "label": "Create",
+            "lead": [
+              {
+                "label": "Envelopes",
+                "icon": "file",
+                "kind": "stacked"
+              },
+              {
+                "label": "Labels",
+                "icon": "tag",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "merge",
+            "label": "Start Mail Merge",
+            "lead": [
+              {
+                "label": "Start Mail Merge",
+                "icon": "people",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Select Recipients",
+                "icon": "person",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "fields",
+            "label": "Write & Insert Fields",
+            "lead": [
+              {
+                "label": "Address Block",
+                "icon": "list",
+                "kind": "stacked"
+              },
+              {
+                "label": "Greeting Line",
+                "icon": "comment",
+                "kind": "stacked"
+              },
+              {
+                "label": "Insert Merge Field",
+                "icon": "plus",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "preview",
+            "label": "Preview Results",
+            "lead": [
+              {
+                "label": "Preview Results",
+                "icon": "eye",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "finish",
+            "label": "Finish",
+            "lead": [
+              {
+                "label": "Finish & Merge",
+                "icon": "send",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "review",
+        "label": "Review",
+        "groups": [
+          {
+            "id": "proofing",
+            "label": "Proofing",
+            "lead": [
+              {
+                "label": "Editor",
+                "icon": "pen",
+                "kind": "stacked"
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Thesaurus",
+                  "icon": "book",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Word Count",
+                  "icon": "list-numbered",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "speech",
+            "label": "Speech",
+            "lead": [
+              {
+                "label": "Read Aloud",
+                "icon": "speaker",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "accessibility",
+            "label": "Accessibility",
+            "lead": [
+              {
+                "label": "Check Accessibility",
+                "icon": "person",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "language",
+            "label": "Language",
+            "lead": [
+              {
+                "label": "Language",
+                "icon": "globe",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "comments",
+            "label": "Comments",
+            "lead": [
+              {
+                "label": "New Comment",
+                "icon": "comment",
+                "kind": "stacked"
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Delete",
+                  "icon": "close",
+                  "menu": true
+                },
+                {
+                  "label": "Previous",
+                  "icon": "chevron-start"
+                },
+                {
+                  "label": "Next",
+                  "icon": "chevron-end"
+                }
+              ],
+              [
+                {
+                  "label": "Show Comments",
+                  "icon": "comment",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "tracking",
+            "label": "Tracking",
+            "launcher": "Tracking options",
+            "lead": [
+              {
+                "label": "Track Changes",
+                "icon": "edit",
+                "kind": "stacked",
+                "menu": true
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "All Markup",
+                  "icon": "eye",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Show Markup",
+                  "icon": "list",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ],
+              [
+                {
+                  "label": "Reviewing Pane",
+                  "icon": "layout-stack",
+                  "kind": "labelled",
+                  "menu": true
+                }
+              ]
+            ]
+          },
+          {
+            "id": "changes",
+            "label": "Changes",
+            "lead": [
+              {
+                "label": "Accept",
+                "icon": "check",
+                "kind": "stacked",
+                "menu": true
+              },
+              {
+                "label": "Reject",
+                "icon": "close",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "compare",
+            "label": "Compare",
+            "lead": [
+              {
+                "label": "Compare",
+                "icon": "copy",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          },
+          {
+            "id": "protect",
+            "label": "Protect",
+            "lead": [
+              {
+                "label": "Restrict Editing",
+                "icon": "lock",
+                "kind": "stacked"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "view",
+        "label": "View",
+        "groups": [
+          {
+            "id": "views",
+            "label": "Views",
+            "lead": [
+              {
+                "label": "Read Mode",
+                "icon": "book",
+                "kind": "stacked"
+              },
+              {
+                "label": "Print Layout",
+                "icon": "file",
+                "kind": "stacked"
+              },
+              {
+                "label": "Web Layout",
+                "icon": "globe",
+                "kind": "stacked"
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "Outline",
+                  "icon": "list",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Draft",
+                  "icon": "text",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "immersive",
+            "label": "Immersive",
+            "lead": [
+              {
+                "label": "Focus",
+                "icon": "frame",
+                "kind": "stacked"
+              },
+              {
+                "label": "Immersive Reader",
+                "icon": "book",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "movement",
+            "label": "Page Movement",
+            "lead": [
+              {
+                "label": "Vertical",
+                "icon": "arrow-down",
+                "kind": "stacked"
+              },
+              {
+                "label": "Side to Side",
+                "icon": "arrow-end",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "show",
+            "label": "Show",
+            "rows": [
+              [
+                {
+                  "label": "Ruler",
+                  "icon": "size-width",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Gridlines",
+                  "icon": "grid",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Navigation Pane",
+                  "icon": "list",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "zoom",
+            "label": "Zoom",
+            "lead": [
+              {
+                "label": "Zoom",
+                "icon": "search",
+                "kind": "stacked"
+              },
+              {
+                "label": "100%",
+                "icon": "size-width",
+                "kind": "stacked"
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "label": "One Page",
+                  "icon": "file",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Multiple Pages",
+                  "icon": "copy",
+                  "kind": "labelled"
+                }
+              ],
+              [
+                {
+                  "label": "Page Width",
+                  "icon": "size-width",
+                  "kind": "labelled"
+                }
+              ]
+            ]
+          },
+          {
+            "id": "window",
+            "label": "Window",
+            "lead": [
+              {
+                "label": "New Window",
+                "icon": "external",
+                "kind": "stacked"
+              },
+              {
+                "label": "Arrange All",
+                "icon": "layout-stack",
+                "kind": "stacked"
+              },
+              {
+                "label": "Split",
+                "icon": "layout-free",
+                "kind": "stacked"
+              }
+            ]
+          },
+          {
+            "id": "macros",
+            "label": "Macros",
+            "lead": [
+              {
+                "label": "Macros",
+                "icon": "code",
+                "kind": "stacked",
+                "menu": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "help",
+        "label": "Help",
+        "groups": [
+          {
+            "id": "help",
+            "label": "Help",
+            "lead": [
+              {
+                "label": "Help",
+                "icon": "info",
+                "kind": "stacked"
+              },
+              {
+                "label": "Contact Support",
+                "icon": "people",
+                "kind": "stacked"
+              },
+              {
+                "label": "Feedback",
+                "icon": "comment",
+                "kind": "stacked"
+              },
+              {
+                "label": "Show Training",
+                "icon": "play",
+                "kind": "stacked"
+              }
+            ]
+          }
+        ]
+      }
     ],
     "home": [
-      { "id": "clipboard", "label": "Clipboard", "launcher": "Clipboard options",
-        "lead": [{ "label": "Paste", "icon": "paste", "kind": "stacked", "menu": true }],
-        "rows": [[{ "label": "Cut", "icon": "cut" }], [{ "label": "Copy", "icon": "copy" }], [{ "label": "Format Painter", "icon": "format-painter" }]] },
-      { "id": "font", "label": "Font", "launcher": "Font settings",
+      {
+        "id": "clipboard",
+        "label": "Clipboard",
+        "launcher": "Clipboard options",
+        "lead": [
+          {
+            "label": "Paste",
+            "icon": "paste",
+            "kind": "stacked",
+            "menu": true
+          }
+        ],
         "rows": [
-          [{ "label": "Font", "kind": "field", "value": "Aptos (Body)", "width": "wide" }, { "label": "Font size", "kind": "field", "value": "12", "width": "narrow" }, { "label": "Increase font size", "icon": "text-larger" }, { "label": "Decrease font size", "icon": "text-smaller" }, { "label": "Change case", "icon": "text-format", "menu": true }, { "label": "Clear all formatting", "icon": "clear-format" }],
-          [{ "label": "Bold", "icon": "bold" }, { "label": "Italic", "icon": "italic" }, { "label": "Underline", "icon": "underline", "menu": true }, { "label": "Strikethrough", "icon": "strikethrough" }, { "label": "Subscript", "icon": "subscript" }, { "label": "Superscript", "icon": "superscript" }, { "label": "Text highlight colour", "icon": "highlight", "menu": true }, { "label": "Font colour", "icon": "text-colour", "menu": true }]
-        ] },
-      { "id": "paragraph", "label": "Paragraph", "launcher": "Paragraph settings",
+          [
+            {
+              "label": "Cut",
+              "icon": "cut"
+            }
+          ],
+          [
+            {
+              "label": "Copy",
+              "icon": "copy"
+            }
+          ],
+          [
+            {
+              "label": "Format Painter",
+              "icon": "format-painter"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "font",
+        "label": "Font",
+        "launcher": "Font settings",
         "rows": [
-          [{ "label": "Bullets", "icon": "list-bulleted", "menu": true }, { "label": "Numbering", "icon": "list-numbered", "menu": true }, { "label": "Decrease indent", "icon": "indent-decrease" }, { "label": "Increase indent", "icon": "indent-increase" }, { "label": "Sort", "icon": "sort" }, { "label": "Show paragraph marks", "icon": "pilcrow" }],
-          [{ "label": "Align left", "icon": "text-start", "pressed": true }, { "label": "Center", "icon": "text-center" }, { "label": "Align right", "icon": "text-end" }, { "label": "Justify", "icon": "text-justify" }, { "label": "Line and paragraph spacing", "icon": "line-spacing", "menu": true }, { "label": "Shading", "icon": "fill-colour", "menu": true }, { "label": "Borders", "icon": "borders", "menu": true }]
-        ] },
-      { "id": "styles", "label": "Styles", "launcher": "Styles pane",
-        "lead": [{ "label": "Styles", "icon": "text-format", "kind": "stacked", "menu": true }] },
-      { "id": "editing", "label": "Editing",
-        "lead": [{ "label": "Editing", "icon": "search", "kind": "stacked", "menu": true }] },
-      { "id": "voice", "label": "Voice",
-        "lead": [{ "label": "Dictate", "icon": "mic", "kind": "stacked", "menu": true }] },
-      { "id": "editor", "label": "Editor",
-        "lead": [{ "label": "Editor", "icon": "pen", "kind": "stacked" }] }
+          [
+            {
+              "label": "Font",
+              "kind": "field",
+              "value": "Aptos (Body)",
+              "width": "wide"
+            },
+            {
+              "label": "Font size",
+              "kind": "field",
+              "value": "12",
+              "width": "narrow"
+            },
+            {
+              "label": "Increase font size",
+              "icon": "text-larger"
+            },
+            {
+              "label": "Decrease font size",
+              "icon": "text-smaller"
+            },
+            {
+              "label": "Change case",
+              "icon": "text-format",
+              "menu": true
+            },
+            {
+              "label": "Clear all formatting",
+              "icon": "clear-format"
+            }
+          ],
+          [
+            {
+              "label": "Bold",
+              "icon": "bold"
+            },
+            {
+              "label": "Italic",
+              "icon": "italic"
+            },
+            {
+              "label": "Underline",
+              "icon": "underline",
+              "menu": true
+            },
+            {
+              "label": "Strikethrough",
+              "icon": "strikethrough"
+            },
+            {
+              "label": "Subscript",
+              "icon": "subscript"
+            },
+            {
+              "label": "Superscript",
+              "icon": "superscript"
+            },
+            {
+              "label": "Text highlight colour",
+              "icon": "highlight",
+              "menu": true
+            },
+            {
+              "label": "Font colour",
+              "icon": "text-colour",
+              "menu": true
+            }
+          ]
+        ]
+      },
+      {
+        "id": "paragraph",
+        "label": "Paragraph",
+        "launcher": "Paragraph settings",
+        "rows": [
+          [
+            {
+              "label": "Bullets",
+              "icon": "list-bulleted",
+              "menu": true
+            },
+            {
+              "label": "Numbering",
+              "icon": "list-numbered",
+              "menu": true
+            },
+            {
+              "label": "Decrease indent",
+              "icon": "indent-decrease"
+            },
+            {
+              "label": "Increase indent",
+              "icon": "indent-increase"
+            },
+            {
+              "label": "Sort",
+              "icon": "sort"
+            },
+            {
+              "label": "Show paragraph marks",
+              "icon": "pilcrow"
+            }
+          ],
+          [
+            {
+              "label": "Align left",
+              "icon": "text-start",
+              "pressed": true
+            },
+            {
+              "label": "Center",
+              "icon": "text-center"
+            },
+            {
+              "label": "Align right",
+              "icon": "text-end"
+            },
+            {
+              "label": "Justify",
+              "icon": "text-justify"
+            },
+            {
+              "label": "Line and paragraph spacing",
+              "icon": "line-spacing",
+              "menu": true
+            },
+            {
+              "label": "Shading",
+              "icon": "fill-colour",
+              "menu": true
+            },
+            {
+              "label": "Borders",
+              "icon": "borders",
+              "menu": true
+            }
+          ]
+        ]
+      },
+      {
+        "id": "styles",
+        "label": "Styles",
+        "launcher": "Styles pane",
+        "lead": [
+          {
+            "label": "Styles",
+            "icon": "text-format",
+            "kind": "stacked",
+            "menu": true
+          }
+        ]
+      },
+      {
+        "id": "editing",
+        "label": "Editing",
+        "lead": [
+          {
+            "label": "Editing",
+            "icon": "search",
+            "kind": "stacked",
+            "menu": true
+          }
+        ]
+      },
+      {
+        "id": "voice",
+        "label": "Voice",
+        "lead": [
+          {
+            "label": "Dictate",
+            "icon": "mic",
+            "kind": "stacked",
+            "menu": true
+          }
+        ]
+      },
+      {
+        "id": "editor",
+        "label": "Editor",
+        "lead": [
+          {
+            "label": "Editor",
+            "icon": "pen",
+            "kind": "stacked"
+          }
+        ]
+      }
     ],
     "document": [
-      { "style": "title", "text": "Harbour survey notes" },
-      { "style": "body", "text": "These notes collect what the survey team saw along the east breakwater during the spring tides. They are a working draft: add what you measured, and leave a comment where a reading needs a second look." },
-      { "style": "heading-1", "text": "Where we looked" },
-      { "style": "body", "text": "We walked the breakwater from the lighthouse steps to the fuel jetty at low water, logging each section's condition, the depth beside it and anything that had moved since the autumn survey." },
-      { "style": "body", "text": "Most of the wall is sound. Three sections near the jetty show fresh scour at the foot, and one capping stone has shifted about four centimetres seaward." },
-      { "style": "heading-2", "text": "Readings to check" },
-      { "style": "body", "text": "The depth at section 14 reads shallower than last year, which doesn't match the scour we saw. It may be a sounding error; we'll repeat it on the next low tide before drawing anything from it." },
-      { "style": "heading-1", "text": "Next steps" },
-      { "style": "body", "text": "Photograph the shifted capping stone at the same angle each week, ask the harbour office for the dredging log, and book a diver for the jetty end before the summer moorings go in." }
+      {
+        "style": "title",
+        "text": "Harbour survey notes"
+      },
+      {
+        "style": "body",
+        "text": "These notes collect what the survey team saw along the east breakwater during the spring tides. They are a working draft: add what you measured, and leave a comment where a reading needs a second look."
+      },
+      {
+        "style": "heading-1",
+        "text": "Where we looked"
+      },
+      {
+        "style": "body",
+        "text": "We walked the breakwater from the lighthouse steps to the fuel jetty at low water, logging each section's condition, the depth beside it and anything that had moved since the autumn survey."
+      },
+      {
+        "style": "body",
+        "text": "Most of the wall is sound. Three sections near the jetty show fresh scour at the foot, and one capping stone has shifted about four centimetres seaward."
+      },
+      {
+        "style": "heading-2",
+        "text": "Readings to check"
+      },
+      {
+        "style": "body",
+        "text": "The depth at section 14 reads shallower than last year, which doesn't match the scour we saw. It may be a sounding error; we'll repeat it on the next low tide before drawing anything from it."
+      },
+      {
+        "style": "heading-1",
+        "text": "Next steps"
+      },
+      {
+        "style": "body",
+        "text": "Photograph the shifted capping stone at the same angle each week, ask the harbour office for the dredging log, and book a diver for the jetty end before the summer moorings go in."
+      }
     ],
     "comments": [
-      { "author": "Maya Chen", "time": "A few seconds ago", "anchor": "about four centimetres", "text": "Was this measured from the old paint mark or from the joint? Worth saying which, so next week's reading compares like with like." },
-      { "author": "Alex Rivera", "time": "Yesterday", "anchor": "section 14", "text": "I can take the boat out on Thursday's low tide and repeat the sounding." }
+      {
+        "author": "Maya Chen",
+        "time": "A few seconds ago",
+        "anchor": "about four centimetres",
+        "text": "Was this measured from the old paint mark or from the joint? Worth saying which, so next week's reading compares like with like."
+      },
+      {
+        "author": "Alex Rivera",
+        "time": "Yesterday",
+        "anchor": "section 14",
+        "text": "I can take the boat out on Thursday's low tide and repeat the sounding."
+      }
     ],
-    "status": { "page": "Page 1 of 1", "words": "214 words", "language": "English (United Kingdom)", "predictions": "Text Predictions: On", "accessibility": "Accessibility: Good to go", "zoom": "100%" },
+    "status": {
+      "page": "Page 1 of 1",
+      "words": "214 words",
+      "language": "English (United Kingdom)",
+      "predictions": "Text Predictions: On",
+      "accessibility": "Accessibility: Good to go",
+      "zoom": "100%"
+    },
     "copy": {
       "appMark": "Documents",
       "undo": "Undo",
