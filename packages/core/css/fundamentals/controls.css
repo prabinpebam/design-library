@@ -202,6 +202,15 @@
   }
 
   /*
+   * An unavailable icon-only button greys its glyph, as a disabled one does: the glyph is a graphic, not its name (the
+   * name and the reason are its label and description), so it reads as unavailable at a glance (LR27). Still focusable.
+   * Primary and danger already say it by losing their fill, so they keep the muted glyph.
+   */
+  [data-dl='button'][data-unavailable][data-icon-only]:not([data-emphasis='primary'], [data-emphasis='danger']) {
+    color: var(--color-text-disabled);
+  }
+
+  /*
    * In progress, ring: an arc travels around the button's own border, inside its box, so nothing outside moves and
    * nothing is clipped. Accent on the page; the on-fill text colour on a filled button. Same stroke and caps as the
    * inline spinner and the Switch knob's arc.

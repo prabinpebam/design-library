@@ -356,14 +356,18 @@ export default {
     },
     {
       title: 'Unavailable',
-      description: 'With a reason (preferred): the button stays focusable and readable, does nothing, and says why as its tooltip and description. Disabled only when there’s nothing to say; it can’t be focused, so no reason can be heard.',
+      description: 'With a reason (preferred): the button stays focusable and readable, does nothing, and says why as its tooltip and description. An icon-only one greys its glyph beside available ones (a row of tools), so it reads as unavailable at a glance. Disabled only when there’s nothing to say; it can’t be focused, so no reason can be heard.',
       arrangement: 'row',
       code: `<Button emphasis="primary" label="Publish page" unavailable="Add a title first" />
+<Button icon="plus" iconOnly size="xs" label="Add a block" />
+<Button icon="frame" iconOnly size="xs" label="Split into columns" unavailable="A cell this narrow can't split" />
 <Button emphasis="primary" label="Publish page" disabled />`,
       render: () => (
         <>
           <Button emphasis="primary" label="Publish page" unavailable="Add a title first" />
           <Button icon="copy" iconOnly label="Copy link" unavailable="Save the page to get its link" />
+          <Button icon="plus" iconOnly size="xs" label="Add a block" />
+          <Button icon="frame" iconOnly size="xs" label="Split into columns" unavailable="A cell this narrow can't split" />
           <Button emphasis="primary" label="Publish page" disabled />
           <Button label="Preview" disabled />
         </>
