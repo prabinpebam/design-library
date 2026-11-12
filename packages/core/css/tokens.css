@@ -234,6 +234,7 @@
   --c-list-item-media-l: var(--size-control-md);
   --c-list-item-hover-fill: var(--state-hover);
   --c-list-item-hover-text: currentColor;
+  --c-list-item-danger-text: var(--color-status-danger-fg);
   --c-pane-gap: var(--space-stack-group);
   --c-pane-head-gap: var(--space-inline-item);
   --c-pane-status-gap: var(--space-stack-pair);

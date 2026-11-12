@@ -177,6 +177,7 @@
   ],
   "tokens": [
     "--border-thick",
+    "--c-list-item-danger-text",
     "--c-list-item-gap",
     "--c-list-item-hover-fill",
     "--c-list-item-hover-text",
@@ -195,7 +196,6 @@
     "--color-focus",
     "--color-map-mark-on-fill",
     "--color-map-on-fill",
-    "--color-status-danger-fg",
     "--color-text-disabled",
     "--color-text-muted",
     "--duration-move",

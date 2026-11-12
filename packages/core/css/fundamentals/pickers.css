@@ -476,7 +476,7 @@
 
   /* A destructive action: the word says it, the status colour adds to it. */
   [data-dl='list-item'][data-tone='danger']:not([aria-disabled='true']) {
-    color: var(--color-status-danger-fg);
+    color: var(--c-list-item-danger-text);
   }
 
   [data-dl='list-item'][aria-disabled='true'] > :is([data-dl-part='item-meta'], [data-dl-part='item-shortcut'], [data-dl-part='item-submenu']) {

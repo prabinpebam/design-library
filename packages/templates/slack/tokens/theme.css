@@ -56,6 +56,7 @@
     --c-list-item-padding-block: 0.25rem;
     --c-list-item-padding-inline: 1.5rem;
     --c-list-item-radius: 0;
+    --c-list-item-danger-text: #da2b43;
     --c-popup-gap: 0;
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);

@@ -244,6 +244,10 @@
   "$value": "0",
   "$description": "Region 25: the hover row's blue fill is square and reaches the menu's sides (g-edit-01-f82)."
  },
+ "c.list-item.danger-text": {
+  "$value": "#da2b43",
+  "$description": "Region 25: Delete message ink, the most saturated glyph pixel in g-edit-01-f82 (x745-940, y565-592); a GIF palette colour, so within a few units of Slack's red."
+ },
  "c.popup.gap": {
   "$value": "0",
   "$description": "Region 25: menu rows sit edge to edge at a 32 px pitch with no space between fills (g-edit-01-f82)."
