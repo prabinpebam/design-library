@@ -112,6 +112,11 @@
           "description": "A toggle button (Q121): on or off, announced as pressed (`aria-pressed`), shown with `c.button.pressed-fill`. Switch is the default for a binary setting; use this only with a written reason in a `toggle-button:` comment just above it where it's used (a dense toolbar or a list row's eye and lock). Pair it with an icon that shows the state."
         },
         {
+          "name": "pressedIcon",
+          "type": "IconName",
+          "description": "With `pressed`: the icon shown while pressed, e.g. `pin-filled` for `pin`, so the state shows in the glyph as well as the fill."
+        },
+        {
           "name": "onPointerEnter",
           "type": "(event: PointerEvent<HTMLElement>) => void",
           "description": "The pointer arrives over it (IP9), e.g. to preview what it opens. Runs beside the button's own hint handling."

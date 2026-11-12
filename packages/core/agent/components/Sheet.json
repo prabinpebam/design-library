@@ -88,6 +88,18 @@
           "type": "boolean",
           "default": "false",
           "description": "The body's content is on its way: lines of skeleton in its place; the title, close and actions stay usable."
+        },
+        {
+          "name": "dismiss",
+          "type": "'default' | 'outside'",
+          "default": "'default'",
+          "description": "Standard sheets (`modal={false}`): `outside` also closes it on a press outside the sheet and its opener, for a light panel that gets out of the way (a floating navigation). Default: Escape and Close only. A modal sheet already closes on a press on its scrim."
+        },
+        {
+          "name": "closeButton",
+          "type": "boolean",
+          "default": "true",
+          "description": "Draws the Close button (default). `false` only when another control closes it, such as its opener or a press outside (`dismiss=\"outside\"`); Escape still closes it."
         }
       ]
     }

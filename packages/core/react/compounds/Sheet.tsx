@@ -32,6 +32,10 @@ export interface SheetProps extends DataAttributes {
   modal?: boolean;
   /** The body's content is on its way: lines of skeleton in its place; the title, close and actions stay usable. */
   loading?: boolean;
+  /** Standard sheets (`modal={false}`): `outside` also closes it on a press outside the sheet and its opener, for a light panel that gets out of the way (a floating navigation). Default: Escape and Close only. A modal sheet already closes on a press on its scrim. */
+  dismiss?: 'default' | 'outside';
+  /** Draws the Close button (default). `false` only when another control closes it, such as its opener or a press outside (`dismiss="outside"`); Escape still closes it. */
+  closeButton?: boolean;
 }
 
 const focusable = 'input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])';
@@ -64,6 +68,8 @@ export function Sheet({
   size = 'm',
   modal = true,
   loading = false,
+  dismiss = 'default',
+  closeButton = true,
   ...data
 }: SheetProps) {
   const id = useId();
@@ -101,6 +107,18 @@ export function Sheet({
     }
   }, [open, modal]);
 
+  // dismiss="outside" on a standard sheet: a press outside it and its opener closes it.
+  useEffect(() => {
+    if (modal || !open || dismiss !== 'outside') return;
+    const press = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      if (!target || regionRef.current?.contains(target) || opener.current?.contains(target)) return;
+      close.current();
+    };
+    document.addEventListener('pointerdown', press);
+    return () => document.removeEventListener('pointerdown', press);
+  }, [open, modal, dismiss]);
+
   const surface = (
     <div data-dl-part="surface">
       <header data-dl-part="header">
@@ -114,10 +132,12 @@ export function Sheet({
             </p>
           )}
         </div>
-        <div data-dl-part="tools">
-          {headerActions}
-          <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" onClick={() => close.current()} />
-        </div>
+        {(headerActions || closeButton) && (
+          <div data-dl-part="tools">
+            {headerActions}
+            {closeButton && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" onClick={() => close.current()} />}
+          </div>
+        )}
       </header>
       {(children || loading) && (
         <ScrollArea data-dl-part="body" contain>

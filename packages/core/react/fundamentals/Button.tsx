@@ -48,6 +48,8 @@ interface ButtonBase extends DataAttributes {
   controls?: string;
   /** A toggle button (Q121): on or off, announced as pressed (`aria-pressed`), shown with `c.button.pressed-fill`. Switch is the default for a binary setting; use this only with a written reason in a `toggle-button:` comment just above it where it's used (a dense toolbar or a list row's eye and lock). Pair it with an icon that shows the state. */
   pressed?: boolean;
+  /** With `pressed`: the icon shown while pressed, e.g. `pin-filled` for `pin`, so the state shows in the glyph as well as the fill. */
+  pressedIcon?: IconName;
   /** The pointer arrives over it (IP9), e.g. to preview what it opens. Runs beside the button's own hint handling. */
   onPointerEnter?: (event: PointerEvent<HTMLElement>) => void;
   /** The pointer leaves it (IP9). */
@@ -156,7 +158,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, pressedIcon, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -165,6 +167,7 @@ export function Button(props: ButtonProps) {
   const pending = phase === 'on' || busy;
   const shown = pending ? 'on' : phase === 'done' ? 'done' : 'rest';
   const mark = (name: IconName) => <Icon name={name} size={iconSize[size]} />;
+  const glyph = pressed && pressedIcon ? pressedIcon : icon;
   const narrow = useNarrow(self, progress === 'fill');
   const blocker = progress === 'fill' ? fillBlocker(emphasis, iconOnly, value, narrow) : null;
   // `fill` that can't fill shows the inside spinner: one fallback, never a broken fill.
@@ -180,9 +183,9 @@ export function Button(props: ButtonProps) {
     console.warn(`Button "${label}": progress="fill" shows the inside spinner instead: ${blocker}.`);
   }, [blocker, pending, label]);
 
-  const layers: [string, ReactNode, string][] = [['rest', icon && mark(icon), label]];
+  const layers: [string, ReactNode, string][] = [['rest', glyph && mark(glyph), label]];
   // The ring and the fill keep the content as it was (the icon too); inside, the spinner takes the icon's place.
-  const pendingMark = shownProgress === 'inside' ? <Progress /> : icon && mark(icon);
+  const pendingMark = shownProgress === 'inside' ? <Progress /> : glyph && mark(glyph);
   if (onCommit || 'busy' in props) layers.push(['on', pendingMark, pendingLabel ?? label]);
   if (onCommit) layers.push(['done', mark('check'), doneLabel]);
   const name = layers.find(([id]) => id === shown)?.[2] ?? label;
@@ -222,7 +225,7 @@ export function Button(props: ButtonProps) {
         {...events}
       >
         <span data-dl-part="layer" data-shown="">
-          {icon && mark(icon)}
+          {glyph && mark(glyph)}
           {!iconOnly && <span>{label}</span>}
         </span>
         {unavailable && (

@@ -108,6 +108,22 @@ function Details() {
   );
 }
 
+function Light() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button label="Show areas" icon="menu" iconOnly expanded={open} onClick={() => setOpen((o) => !o)} />
+      <Sheet modal={false} dismiss="outside" closeButton={false} side="start" size="s" open={open} onClose={() => setOpen(false)} title="Areas">
+        <Stack gap="item">
+          <Text>Pages</Text>
+          <Text>Talks</Text>
+          <Text>Media</Text>
+        </Stack>
+      </Sheet>
+    </>
+  );
+}
+
 function Loading() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -169,6 +185,12 @@ export default {
       description: 'With `modal={false}` there’s no scrim and the page stays usable. Focus moves to the title and back to the button on close; Escape closes it while focus is inside. An extra action sits beside Close.',
       code: `<Sheet modal={false} open={open} onClose={close} title="Invoice 2041" description="Sent on 3 November." headerActions={<Button label="Open in a new page" icon="external" iconOnly emphasis="quiet" size="s" … />}>…</Sheet>`,
       render: () => <Details />,
+    },
+    {
+      title: 'A light panel that gets out of the way',
+      description: 'With dismiss="outside" a standard sheet also closes on a press anywhere outside it and its opener, and closeButton={false} leaves out Close because the opener and the press outside already close it; Escape still does. For a floating navigation over a busy view.',
+      code: `<Sheet modal={false} dismiss="outside" closeButton={false} side="start" size="s" open={open} onClose={close} title="Areas">…</Sheet>`,
+      render: () => <Light />,
     },
     {
       title: 'Loading',

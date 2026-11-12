@@ -136,10 +136,13 @@ function Disclosure() {
 
 function Toggles() {
   const [snap, setSnap] = useState(true);
+  const [pinned, setPinned] = useState(false);
   return (
     <>
       {/* toggle-button: a dense canvas toolbar's snapping, where a Switch would break the row of icon buttons (Q121) */}
       <Button label="Snap to grid" icon="grid" iconOnly emphasis="quiet" size="s" pressed={snap} onClick={() => setSnap(!snap)} />
+      {/* toggle-button: a panel's pin in its head, docking or floating it, where a Switch would break the head's row of icon buttons */}
+      <Button label="Pin areas" icon="pin" pressedIcon="pin-filled" iconOnly emphasis="quiet" size="s" pressed={pinned} onClick={() => setPinned(!pinned)} />
     </>
   );
 }
@@ -400,9 +403,9 @@ export default {
     },
     {
       title: 'Toggle button (pressed)',
-      description: 'On or off, announced as pressed, with the pressed fill. Switch is the default for a binary setting; a toggle button needs a written reason in a toggle-button comment just above it (a dense toolbar). Showing, hiding or locking one thing in a list is not this: use VisibilityToggle, the named eye and padlock pattern, which needs no reason.',
+      description: 'On or off, announced as pressed, with the pressed fill; pressedIcon swaps the glyph too (a pin that fills when pinned). Switch is the default for a binary setting; a toggle button needs a written reason in a toggle-button comment just above it (a dense toolbar). Showing, hiding or locking one thing in a list is not this: use VisibilityToggle, the named eye and padlock pattern, which needs no reason.',
       arrangement: 'row',
-      code: `{/* toggle-button: a dense canvas toolbar, where a Switch would break the row of icon buttons */}\n<Button label="Snap to grid" icon="grid" iconOnly emphasis="quiet" size="s" pressed={snap} onClick={toggle} />`,
+      code: `{/* toggle-button: a dense canvas toolbar, where a Switch would break the row of icon buttons */}\n<Button label="Snap to grid" icon="grid" iconOnly emphasis="quiet" size="s" pressed={snap} onClick={toggle} />\n<Button label="Pin areas" icon="pin" pressedIcon="pin-filled" iconOnly emphasis="quiet" size="s" pressed={pinned} onClick={togglePin} />`,
       render: () => <Toggles />,
     },
     {

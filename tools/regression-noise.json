@@ -1,6 +1,10 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--sheet": {
+      "reason": "catalogue inventory: (DesignUp template 2, gap g) the generic opt-in dismiss=\"outside\" and closeButton props on Sheet (defaults unchanged) add a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--editorlayout": {
       "reason": "catalogue inventory: (DesignUp template 2, gap a) the generic opt-in startSize, endSize, endMax and workMin props on EditorLayout (defaults unchanged) add a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
