@@ -1003,7 +1003,7 @@
       "additionalProperties": false
     },
     "media": {
-      "description": "Pictures as one block (owner, DesignUp 2026-11-13 02:36): one picture (`picture`), or an album (`album`) shown by a presentation and its variant. `single`: the picture (or the album's first) with its caption. `grid`: ImageGrid, variant standard (default), quilted, masonry or justified. `carousel`: Carousel, variant one (default), peek or few. More presentations come as new values. Replaces `gallery`.",
+      "description": "Pictures as one block (owner, DesignUp 2026-11-13 02:36): one picture (`picture`), or an album (`album`) shown by a presentation and its variant. `single`: the picture (or the album's first) with its caption. `grid`: ImageGrid, variant standard (default), quilted (with `spans`), masonry or justified. `carousel`: Carousel, variant one (default), peek, few or thumbnails. More presentations come as new values. Replaces `gallery`.",
       "type": "object",
       "required": ["type"],
       "properties": {
@@ -1017,7 +1017,8 @@
         "reveal": { "$ref": "#/$defs/reveal", "description": "With `picture`: grey at rest, its colour while hovered or focused (see `reveal`)." },
         "album": { "$ref": "#/$defs/album" },
         "presentation": { "anyOf": [{ "enum": ["single", "grid", "carousel"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)?$" }], "description": "Default: single with `picture`, grid with `album`. Another name is a template's own presentation (`registry.presentations`, G2), such as a collage; a name the template doesn't have is reported and shown as a grid." },
-        "variant": { "anyOf": [{ "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }], "description": "The presentation's own variant: grid standard, quilted, masonry, justified; carousel one, peek, few; a template presentation's own. Ignored where it isn't the presentation's." },
+        "variant": { "anyOf": [{ "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few", "thumbnails"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }], "description": "The presentation's own variant: grid standard, quilted (bento; see `spans`), masonry, justified; carousel one, peek, few, thumbnails (one slide with a row of thumbnails to choose from, LR31); a template presentation's own. Ignored where it isn't the presentation's." },
+        "spans": { "type": "array", "items": { "enum": ["wide", "tall", "large", "none"] }, "description": "Grid quilted (bento), LR30: each picture's cells by position: wide (two columns), tall (two rows), large (both) or none. Placement is the block's, not the album's. Without it the first picture is large." },
         "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frames' shape where the presentation has one (single; grid standard: wide, photo, square or portrait); default the asset's, else photo." },
         "frame": {
           "description": "Framing switch (G3): the template's framing art (shapes) around each picture, behind it and over it. `true` takes the template's `default` frame (registry.frames), a name another; off (default) draws none. Drawn in single and grid standard and masonry; quilted, justified and carousel leave it out (their pictures fill clipped cells). A template presentation gets it as `frame` and draws its own. A name the template doesn't have is reported and draws none.",

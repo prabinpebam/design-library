@@ -7,7 +7,7 @@ import { Fragment, useEffect, useState, type ReactNode } from 'react';
 import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Carousel, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
-import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, MediaFrame, MediaReveal, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
+import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, MediaFrame, MediaReveal, MediaSpan, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
 import type { PictureReveal } from '../react/behaviour/reveal';
 import { DepthGroup } from '../react/behaviour/depth';
 
@@ -298,10 +298,17 @@ const pictureProps = (ctx: RenderContext, id: string, alt?: string, reveal?: Med
 
 const GRID_VARIANTS = ['standard', 'quilted', 'masonry', 'justified'] as const;
 const GRID_RATIOS = ['wide', 'photo', 'square', 'portrait'] as const;
-const CAROUSEL_VARIANTS = { one: { perView: 1, peek: false }, peek: { perView: 1, peek: true }, few: { perView: 3, peek: false } } as const;
+const CAROUSEL_VARIANTS = { one: { perView: 1, peek: false, pager: 'dots' }, peek: { perView: 1, peek: true, pager: 'dots' }, few: { perView: 3, peek: false, pager: 'dots' }, thumbnails: { perView: 1, peek: false, pager: 'thumbnails' } } as const;
 const CORE_PRESENTATIONS = ['single', 'grid', 'carousel'] as const;
 /** Grid layouts whose pictures keep their own box, so framing art can spill into the gap (quilted and justified fill clipped cells). */
 const FRAMED_GRIDS = new Set(['standard', 'masonry']);
+const SPANS = ['wide', 'tall', 'large'] as const;
+
+/** A quilted (bento) picture's cells (LR30): the block's `spans` by position; without them the first picture is large, as before. */
+const spanAt = (spans: MediaSpan[] | undefined, n: number) => {
+  if (!spans) return n === 0 ? ('large' as const) : undefined;
+  return SPANS.find((s) => s === spans[n]);
+};
 
 /** The template's frame for a media block's `frame` switch (G3): `true` takes `default`, a name its frame; an unknown name is reported. */
 function frameOf(ctx: RenderContext, frame: boolean | string | undefined): MediaFrame | undefined {
@@ -357,17 +364,18 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
         framed={!!frame}
         items={items.map((item, n) => {
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-          return { id: String(n), ...p, ...framing(frame, n, count), caption: item.caption, credit: item.credit, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };
+          return { id: String(n), ...p, ...framing(frame, n, count), caption: item.caption, credit: item.credit, span: layout === 'quilted' ? spanAt(b.spans, n) : undefined };
         })}
       />
     );
   } else if (presentation === 'carousel') {
-    const view = CAROUSEL_VARIANTS[b.variant === 'peek' ? 'peek' : b.variant === 'few' ? 'few' : 'one'];
+    const view = CAROUSEL_VARIANTS[b.variant === 'peek' ? 'peek' : b.variant === 'few' ? 'few' : b.variant === 'thumbnails' ? 'thumbnails' : 'one'];
     body = (
       <Carousel
         label={label}
         perView={view.perView}
         peek={view.peek}
+        pager={view.pager}
         slides={items.map((item) => {
           // G5: a slide keeps the picture's scheme versions, tone, pair and reveal, as a single picture does.
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);

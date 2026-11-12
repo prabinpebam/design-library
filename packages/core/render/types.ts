@@ -177,6 +177,9 @@ export interface MediaDepthPicture {
  */
 export type MediaMotion = (group: HTMLElement, pictures: () => MediaDepthPicture[]) => (() => void) | void;
 
+/** A bento picture's cells (LR30). */
+export type MediaSpan = 'wide' | 'tall' | 'large' | 'none';
+
 /** One picture, or an album shown by a presentation and its variant (blocks.schema `media`; owner, DesignUp 02:36). */
 export type MediaBlock = {
   type: 'media';
@@ -185,12 +188,17 @@ export type MediaBlock = {
   label?: string;
   /** Core `single`, `grid` or `carousel`, or a template presentation's name (`registry.presentations`, G2). */
   presentation?: 'single' | 'grid' | 'carousel' | (string & {});
-  variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few' | (string & {});
+  variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few' | 'thumbnails' | (string & {});
   ratio?: TemplateAsset['ratio'];
   /** Framing switch (G3): the template's `default` frame (`true`) or one by name (`registry.frames`); off by default. */
   frame?: boolean | string;
   /** Depth motion switch (G3): the template's `registry.motions.depth`; off by default, and off under reduced motion. */
   depth?: boolean;
+  /**
+   * Grid quilted (bento), LR30: each picture's cells by position: `wide` (two columns), `tall` (two rows), `large`
+   * (both) or `none`. Placement is the block's, not the album's. Without it the first picture is large.
+   */
+  spans?: MediaSpan[];
 } & ({ picture: string; caption?: string; credit?: string; reveal?: MediaReveal; album?: never } | { album: Album; picture?: never });
 
 /** A block's section title at the top steps of the type ramp (MP16); without it the usual section size. */
