@@ -80,6 +80,7 @@ export function TemplateView({ template, layout, hrefFor = defaultHref }: Templa
     picture: (id) => template.assets[id] ?? { src: '', alt: '' },
     decoration: (name) => template.registry?.decorations?.[name]?.(),
     reveal: (name) => template.registry?.reveals?.[name],
+    presentation: (name) => template.registry?.presentations?.[name],
     blocks: (blocks) => renderList(blocks, ctx),
   };
   // A region's blocks know their neighbours and, at the top level, which region they fill (framing, Q88–Q90).

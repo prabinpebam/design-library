@@ -1016,8 +1016,8 @@
         "credit": { "$ref": "#/$defs/text", "description": "With `picture`: its credit." },
         "reveal": { "$ref": "#/$defs/reveal", "description": "With `picture`: grey at rest, its colour while hovered or focused (see `reveal`)." },
         "album": { "$ref": "#/$defs/album" },
-        "presentation": { "enum": ["single", "grid", "carousel"], "description": "Default: single with `picture`, grid with `album`." },
-        "variant": { "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few"], "description": "The presentation's own variant: grid standard, quilted, masonry, justified; carousel one, peek, few. Ignored where it isn't the presentation's." },
+        "presentation": { "anyOf": [{ "enum": ["single", "grid", "carousel"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)?$" }], "description": "Default: single with `picture`, grid with `album`. Another name is a template's own presentation (`registry.presentations`, G2), such as a collage; a name the template doesn't have is reported and shown as a grid." },
+        "variant": { "anyOf": [{ "enum": ["standard", "quilted", "masonry", "justified", "one", "peek", "few"] }, { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }], "description": "The presentation's own variant: grid standard, quilted, masonry, justified; carousel one, peek, few; a template presentation's own. Ignored where it isn't the presentation's." },
         "ratio": { "enum": ["ultrawide", "wide", "photo", "classic", "square", "portrait", "natural"], "description": "The frames' shape where the presentation has one (single; grid standard: wide, photo, square or portrait); default the asset's, else photo." }
       },
       "oneOf": [{ "required": ["picture"], "not": { "required": ["album"] } }, { "required": ["album"], "not": { "required": ["picture"] } }],

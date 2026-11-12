@@ -298,14 +298,30 @@ const pictureProps = (ctx: RenderContext, id: string, alt?: string, reveal?: Med
 const GRID_VARIANTS = ['standard', 'quilted', 'masonry', 'justified'] as const;
 const GRID_RATIOS = ['wide', 'photo', 'square', 'portrait'] as const;
 const CAROUSEL_VARIANTS = { one: { perView: 1, peek: false }, peek: { perView: 1, peek: true }, few: { perView: 3, peek: false } } as const;
+const CORE_PRESENTATIONS = ['single', 'grid', 'carousel'] as const;
 
 /** The media block (owner, DesignUp 2026-11-13 02:36): one picture, or an album by its presentation and variant. */
 function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
   const items = b.album ? b.album.items : [{ picture: b.picture, caption: b.caption, credit: b.credit, reveal: b.reveal }];
-  const presentation = b.presentation ?? (b.album ? 'grid' : 'single');
+  const requested = b.presentation ?? (b.album ? 'grid' : 'single');
   const label = b.label ?? b.album?.title ?? b.heading ?? (items[0] ? pictureProps(ctx, items[0].picture).alt : '');
   let body: ReactNode;
-  if (presentation === 'grid') {
+  const core = CORE_PRESENTATIONS.find((p) => p === requested);
+  const own = core ? undefined : ctx.presentation?.(requested);
+  if (!core && !own) ctx.problem?.(`there's no presentation called “${requested}” (a template registers its presentations in registry.presentations); shown as a grid`);
+  const presentation = core ?? (own ? requested : 'grid');
+  if (own) {
+    // G2: a template's own presentation (a collage) gets the pictures as Image takes them, with the album's words.
+    body = own({
+      label,
+      variant: b.variant,
+      ratio: b.ratio,
+      pictures: items.map((item, n) => {
+        const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
+        return { id: String(n), ...p, caption: item.caption, credit: item.credit };
+      }),
+    });
+  } else if (presentation === 'grid') {
     const layout = GRID_VARIANTS.find((v) => v === b.variant) ?? 'standard';
     const ratio = GRID_RATIOS.find((r) => r === b.ratio);
     body = (
@@ -320,7 +336,7 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
       />
     );
   } else if (presentation === 'carousel') {
-    const view = CAROUSEL_VARIANTS[b.variant === 'peek' || b.variant === 'few' ? b.variant : 'one'];
+    const view = CAROUSEL_VARIANTS[b.variant === 'peek' ? 'peek' : b.variant === 'few' ? 'few' : 'one'];
     body = (
       <Carousel
         label={label}

@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import type { AgendaSlot, FooterLink, FooterSection, IconName, IllustrationPlay, StoryFile } from '../react/components';
 import type { PageGridRecord } from './page-grid';
 import type { PictureReveal } from '../react/behaviour/reveal';
+import type { PictureSource, PictureTreatment } from '../react/fundamentals/Image';
 
 export type SiteAction = {
   label: string;
@@ -113,14 +114,46 @@ export interface Album {
   items: AlbumItem[];
 }
 
+/**
+ * A picture as a template's media presentation receives it (G2): `Image`'s props, resolved from the asset and the album
+ * item (scheme versions, tone, pair and reveal included), with the album's words.
+ */
+export interface MediaPicture {
+  id: string;
+  src: string;
+  alt: string;
+  dark?: string | PictureSource;
+  contrast?: { light?: string | PictureSource; dark?: string | PictureSource };
+  treatment?: PictureTreatment;
+  alternate?: string | PictureSource;
+  reveal?: PictureReveal;
+  focal?: { x: number; y: number };
+  caption?: string;
+  credit?: string;
+}
+
+/** What a template's media presentation draws (G2): the pictures in order, the region's name and the block's choices. */
+export interface MediaPresentationProps {
+  pictures: MediaPicture[];
+  /** Names the set, for a region or a list. */
+  label: string;
+  /** The block's variant, when the presentation has its own. */
+  variant?: string;
+  ratio?: TemplateAsset['ratio'];
+}
+
+/** A template's own presentation of an album (G2): a collage, a stack. Registered by name in `registry.presentations`. */
+export type MediaPresentation = (props: MediaPresentationProps) => ReactNode;
+
 /** One picture, or an album shown by a presentation and its variant (blocks.schema `media`; owner, DesignUp 02:36). */
 export type MediaBlock = {
   type: 'media';
   heading?: string;
   size?: SectionTitleSize;
   label?: string;
-  presentation?: 'single' | 'grid' | 'carousel';
-  variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few';
+  /** Core `single`, `grid` or `carousel`, or a template presentation's name (`registry.presentations`, G2). */
+  presentation?: 'single' | 'grid' | 'carousel' | (string & {});
+  variant?: 'standard' | 'quilted' | 'masonry' | 'justified' | 'one' | 'peek' | 'few' | (string & {});
   ratio?: TemplateAsset['ratio'];
 } & ({ picture: string; caption?: string; credit?: string; reveal?: MediaReveal; album?: never } | { album: Album; picture?: never });
 
@@ -353,6 +386,8 @@ export interface RenderContext {
   decoration?: (name: string) => ReactNode | undefined;
   /** A template reveal preset by name (G4), or undefined when the template has none by that name. */
   reveal?: (name: string) => PictureReveal | undefined;
+  /** A template media presentation by name (G2), or undefined when the template has none by that name. */
+  presentation?: (name: string) => MediaPresentation | undefined;
   /** Told of a content problem the renderer finds (a block a slot doesn't accept); `SiteView` lists them in development. */
   problem?: (what: string) => void;
 }
@@ -387,7 +422,9 @@ export interface Template {
    * Reveal presets (G4): how a picture with `reveal` draws its change from grey to colour, as `Image` `reveal` draws
    * (MP11). `default` serves `reveal: true`; without it the change is the tone's fade.
    */
-  reveals?: Record<string, PictureReveal> };
+  reveals?: Record<string, PictureReveal>;
+  /** Media presentations (G2): a template's own way to show an album (a collage), by name; a media block names one in `presentation`. */
+  presentations?: Record<string, MediaPresentation> };
 }
 
 /** A site's navigation place (site.schema.json `navigation`). */
