@@ -1,0 +1,9 @@
+{
+  "$description": "check:copy glossary (tools/check-copy.mjs). replicas: templates whose content keeps a reference product's own words (RR1), so CP1 and CP2 only warn there. proper: words that keep their capital in sentence case. allow: exact strings a rule may skip, each with its reason.",
+  "replicas": ["slack", "word", "youtube", "ikea"],
+  "proper": [],
+  "allow": [
+    { "text": "And one at dusk, please.", "reason": "A person's own chat message, not the product speaking (ui-copy voice: first person only for a person)." },
+    { "text": "A quiet design for a birthday card, please.", "reason": "A person's own chat message, not the product speaking." }
+  ]
+}
