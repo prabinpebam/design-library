@@ -16,6 +16,11 @@
     min-inline-size: 0;
   }
 
+  /* gap="section": panels holding grouped sections sit a section gap below the tabs. */
+  [data-dl='tabs'][data-gap='section'] {
+    gap: var(--c-tabs-panel-gap-section);
+  }
+
   [data-dl='tabs'][data-orientation='vertical'] {
     grid-template-columns: max-content minmax(0, 1fr);
     align-items: start;

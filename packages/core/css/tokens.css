@@ -820,6 +820,7 @@
   --c-tabs-indicator-fill: var(--color-accent);
   --c-tabs-selected-fill: transparent;
   --c-tabs-panel-gap: var(--space-stack-group);
+  --c-tabs-panel-gap-section: var(--space-stack-section);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-pagination-gap: var(--space-inline-pair);
   --c-pagination-group-gap: var(--space-inline-group);
@@ -1776,6 +1777,7 @@
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
   --c-tabs-panel-gap: var(--space-stack-group);
+  --c-tabs-panel-gap-section: var(--space-stack-section);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
@@ -2058,6 +2060,7 @@
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
   --c-tabs-panel-gap: var(--space-stack-group);
+  --c-tabs-panel-gap-section: var(--space-stack-section);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
@@ -2340,6 +2343,7 @@
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
   --c-tabs-panel-gap: var(--space-stack-group);
+  --c-tabs-panel-gap-section: var(--space-stack-section);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);
@@ -2622,6 +2626,7 @@
   --c-tabs-gap: var(--space-inline-pair);
   --c-tabs-item-gap: var(--space-inline-pair);
   --c-tabs-panel-gap: var(--space-stack-group);
+  --c-tabs-panel-gap-section: var(--space-stack-section);
   --c-tabs-side-gap: var(--space-inline-group);
   --c-text-area-bar-gap: var(--space-inline-pair);
   --c-text-area-inset: var(--space-inset-sm);

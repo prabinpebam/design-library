@@ -90,6 +90,12 @@
           "type": "'xs' | 's' | 'normal'",
           "default": "'normal'",
           "description": "From the Button size scale: `normal` (default, 44 px); `s` (36 px) and `xs` (24 px, for a dense panel such as an inspector, by the written dense-surface exception) take smaller text and padding, so a narrow panel's tabs fit without scrolling."
+        },
+        {
+          "name": "gap",
+          "type": "'group' | 'section'",
+          "default": "'group'",
+          "description": "The space between the tabs and the panel: `group` (default, `c.tabs.panel-gap`) or `section` (`c.tabs.panel-gap-section`), for panels that hold grouped sections (an inspector's PropertySections), so the space around the groups is never smaller than the space inside them."
         }
       ]
     },
@@ -154,6 +160,7 @@
     "--c-tabs-item-size-s",
     "--c-tabs-item-size-xs",
     "--c-tabs-panel-gap",
+    "--c-tabs-panel-gap-section",
     "--c-tabs-radius",
     "--c-tabs-selected-fill",
     "--c-tabs-side-gap",

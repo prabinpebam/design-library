@@ -51,6 +51,8 @@ export interface TabsProps extends DataAttributes {
   extra?: ReactNode;
   /** From the Button size scale: `normal` (default, 44 px); `s` (36 px) and `xs` (24 px, for a dense panel such as an inspector, by the written dense-surface exception) take smaller text and padding, so a narrow panel's tabs fit without scrolling. */
   size?: 'xs' | 's' | 'normal';
+  /** The space between the tabs and the panel: `group` (default, `c.tabs.panel-gap`) or `section` (`c.tabs.panel-gap-section`), for panels that hold grouped sections (an inspector's PropertySections), so the space around the groups is never smaller than the space inside them. */
+  gap?: 'group' | 'section';
 }
 
 /**
@@ -84,6 +86,7 @@ export function Tabs({
   orientation = 'horizontal',
   extra,
   size = 'normal',
+  gap = 'group',
   ...data
 }: TabsProps) {
   const id = useId();
@@ -156,7 +159,7 @@ export function Tabs({
 
   if (variant === 'links') {
     return (
-      <nav {...data} ref={slide.root} {...slide.input} data-dl="tabs" data-orientation={orientation} data-size={size} aria-label={label}>
+      <nav {...data} ref={slide.root} {...slide.input} data-dl="tabs" data-orientation={orientation} data-size={size} data-gap={gap === 'section' ? 'section' : undefined} aria-label={label}>
         <div data-dl-part="bar">
           {strip(
           <ul data-dl-part="list" ref={list}>
@@ -191,7 +194,7 @@ export function Tabs({
 
   const panel = items.find((i) => i.id === current);
   return (
-    <div {...data} ref={slide.root as unknown as Ref<HTMLDivElement>} {...slide.input} data-dl="tabs" data-orientation={orientation} data-size={size}>
+    <div {...data} ref={slide.root as unknown as Ref<HTMLDivElement>} {...slide.input} data-dl="tabs" data-orientation={orientation} data-size={size} data-gap={gap === 'section' ? 'section' : undefined}>
       <div data-dl-part="bar">
         {strip(
         <div data-dl-part="list" ref={list} role="tablist" aria-label={label} aria-orientation={orientation} onKeyDown={onKey}>

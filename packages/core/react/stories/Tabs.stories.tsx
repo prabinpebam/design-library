@@ -1,5 +1,7 @@
+import { PropertySection } from '../compounds/PropertySection';
 import { Tabs } from '../compounds/Tabs';
 import { Button } from '../fundamentals/Button';
+import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
 
@@ -97,6 +99,35 @@ export default {
             { id: 'issues', label: 'Issues', href: '#/tabs', count: 8 },
             { id: 'changes', label: 'Changes', href: '#/tabs', count: 2 },
             { id: 'settings', label: 'Settings', href: '#/tabs' },
+          ]}
+        />
+      ),
+    },
+    {
+      title: 'Panels of grouped sections',
+      description: 'An inspector whose panels hold PropertySections: with gap="section" the panel sits a section gap below the tabs, so the space around the groups is never smaller than the space between them.',
+      code: `<Tabs gap="section" size="s" label="Inspector" items={[{ id: 'design', label: 'Design', panel: <><PropertySection heading="Layout">…</PropertySection>…</> }, …]} />`,
+      render: () => (
+        <Tabs
+          gap="section"
+          size="s"
+          label="Inspector"
+          items={[
+            {
+              id: 'design',
+              label: 'Design',
+              panel: (
+                <Stack gap="group">
+                  <PropertySection heading="Layout">
+                    <Text>Width and height</Text>
+                  </PropertySection>
+                  <PropertySection heading="Fill">
+                    <Text>Colour and opacity</Text>
+                  </PropertySection>
+                </Stack>
+              ),
+            },
+            { id: 'content', label: 'Content', panel: <Text>Words and pictures</Text> },
           ]}
         />
       ),

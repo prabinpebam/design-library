@@ -1625,6 +1625,11 @@
         "$value": "{space.stack-group}",
         "$description": "Between the tabs and the panel under them (echoed for space contexts)"
       },
+      "panel-gap-section": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Between the tabs and a panel of grouped sections (gap=\"section\"), so the space around the groups is never smaller than inside them (echoed for space contexts)"
+      },
       "side-gap": {
         "$type": "dimension",
         "$value": "{space.inline-group}",
