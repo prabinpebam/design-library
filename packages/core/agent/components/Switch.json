@@ -157,7 +157,8 @@
   "usedBy": [
     "SchemeControl",
     "slack.Workspace",
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "ui-states"

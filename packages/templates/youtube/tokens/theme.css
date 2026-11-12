@@ -75,6 +75,9 @@
     --c-button-group-icon-padding-inline: var(--space-4);
     --c-button-size-s: var(--size-control-sm);
     --c-button-padding-inline-sm: var(--space-3);
+    --c-slider-fill: #ff0000;
+    --c-slider-thumb-fill: var(--c-slider-fill);
+    --c-slider-track-fill: rgba(255, 255, 255, 0.2);
     --color-bg-sunken: light-dark(var(--p-base-50), #000000);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--c-button-radius);

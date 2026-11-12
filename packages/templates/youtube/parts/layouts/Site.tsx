@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, MenuButton, Navigation, ScrollArea, Text, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
+import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, type DataAttributes, type IconName } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
 
@@ -144,11 +144,30 @@ function Watch({ view }: { view: YoutubeRecord }) {
   const w = view.watch;
   const video = view.videos.find((v) => v.id === w.video) ?? view.videos[0];
   const next = view.videos.filter((v) => v.id !== video.id);
+  const [seek, setSeek] = useState(0);
+  const [autoplay, setAutoplay] = useState(true);
   return (
     <ScrollArea label={video.title}>
       <div data-dl="youtube-watch">
         <div data-dl-part="primary">
-          <div data-dl-part="player" data-scheme="dark" role="img" aria-label={c.player} />
+          <div data-dl-part="player" data-scheme="dark">
+            <div data-dl-part="screen" role="img" aria-label={c.player} />
+            <div data-dl-part="controls">
+              <div data-dl-part="seek"><Slider label={c.seek} hideLabel showValue={false} size="s" min={0} max={100} value={seek} onChange={(v) => setSeek(v as number)} /></div>
+              <div data-dl-part="left">
+                <span data-dl-part="round"><Button label={c.play} icon="play" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="round"><Button label={c.mute} icon="speaker" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="time"><Text variant="inherit">0:00 / {video.duration}</Text></span>
+              </div>
+              <div data-dl-part="right">
+                <span data-dl-part="slot"><Switch label={c.autoplay} hideLabel size="xs" checked={autoplay} onChange={setAutoplay} /></span>
+                <span data-dl-part="slot"><Button label={c.captions} icon="captions" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Button label={c.settings} icon="settings" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Button label={c.theatre} icon="rectangle" iconOnly emphasis="quiet" tone="inherit" /></span>
+                <span data-dl-part="slot"><Button label={c.fullscreen} icon="corners" iconOnly emphasis="quiet" tone="inherit" /></span>
+              </div>
+            </div>
+          </div>
           <div data-dl-part="title">
             <Heading level={1} size={3} lines={2}>{video.title}</Heading>
           </div>

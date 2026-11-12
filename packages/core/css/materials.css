@@ -71,6 +71,9 @@
        it reads on any frame and the picture still shows through; a tier-0 value like the veil. */
     --material-media-label: color-mix(in oklab, black 60%, transparent);
     --material-media-label-text: white;
+    /* Q145.Y: a control resting over a playing video (play, volume, a player's button group) is black at 30 % in both
+       schemes, lighter than a label so the picture reads through the bar; a tier-0 value like the veil. */
+    --material-media-control: color-mix(in oklab, black 30%, transparent);
   }
 
   [data-material='solid'],
@@ -78,6 +81,7 @@
   [data-contrast='more'],
   [data-contrast='more'] [data-material] {
     --material-media-label: black;
+    --material-media-control: black;
     --material-chrome-bg: var(--color-bg);
     --material-floating-bg: var(--color-bg-raised);
   }

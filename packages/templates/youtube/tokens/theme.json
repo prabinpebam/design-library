@@ -74,5 +74,8 @@
   "c.button-group.icon-padding-inline": { "$value": "{space.4}", "$description": "The dislike half of the like pill is 56: 16 + icon 24 + 16 (W-1280-L)." },
   "c.button.size-s": { "$value": "{size.control-sm}", "$description": "Comment actions are 32×32, radius 16 (WC-1280-L)." },
   "c.button.padding-inline-sm": { "$value": "{space.3}", "$description": "Comment actions padding 0 12 (WC-1280-L Reply)." },
+  "c.slider.fill": { "$value": "#ff0000", "$description": "The seek line's played part and its dot are the brand red (watch169-1280-L)." },
+  "c.slider.thumb-fill": { "$value": "{c.slider.fill}", "$description": "The seek dot, red like the played line (watch169-1280-L)." },
+  "c.slider.track-fill": { "$value": "rgba(255, 255, 255, 0.2)", "$description": "The seek line's unplayed part, white at about 20 % over the video (watch169-1280-L, read from the screenshot; the player is always dark)." },
   "color.bg-sunken": { "$value": { "light": "{p.base.50}", "dark": "#000000" }, "$description": "The player is black #000000 in both schemes (W-1280-L, W-1280-D; the player part takes the dark scheme). Light frames keep the core default; dark frames are unmeasured until Y.2d." }
 }
