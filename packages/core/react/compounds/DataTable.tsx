@@ -1,5 +1,8 @@
-import type { ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
+import { MenuButton } from '../fundamentals/MenuButton';
 import { ScrollArea } from '../fundamentals/ScrollArea';
+import { dropIndex, moveItem, movesFor } from '../behaviour/reorder';
+import { useFlipList } from '../behaviour/flip';
 import type { DataAttributes } from '../types';
 
 /** One column of a data table. */
@@ -18,6 +21,8 @@ export interface DataTableRow {
   id: string;
   /** The row's value in each column, by column key. The first column's value heads the row. */
   cells: Record<string, ReactNode>;
+  /** Names the row in words, for its Move handle and the announcement of a move (with `reorderable`); default its id. */
+  label?: string;
   /** `data-*` attributes for the row, for tooling such as revision anchors. */
   data?: DataAttributes;
 }
@@ -27,26 +32,95 @@ export interface DataTableProps extends DataAttributes {
   label: string;
   columns: DataTableColumn[];
   rows: DataTableRow[];
+  /**
+   * Each row gets a Move handle before its heading cell, as a reorderable List's items do: drag it, or open its menu
+   * (Move up, down, to top, to bottom). Rows need a `label`.
+   */
+  reorderable?: boolean;
+  /** The row ids in their new order, after a drag step or a Move. */
+  onReorder?: (ids: string[]) => void;
 }
 
 /**
  * Structured facts to compare in rows and columns, such as a component's props or its keys. The first column heads
  * each row. Wider than the page, it scrolls sideways in its own region; the page never does. One enclosure, one hairline
- * between rows, a header row set apart by tone.
+ * between rows, a header row set apart by tone. With `reorderable`, rows are put in order by a Move handle, the same
+ * handle and menu as a reorderable List.
  * Not for a list of named values read one by one (a token reference), for term and details pairs (use
  * DescriptionList) or for layout.
  * @tier compound
  * @family data
  * @a11y A native `table` with column headers (`th scope="col"`) and row headers (`th scope="row"`), inside a region named
  * by `label`. The region is focusable only so keyboard users can scroll it. Code in a
- * cell may break at any character, so a long type never forces the page sideways.
- * @key Tab: moves to the table's scroll region
+ * cell may break at any character, so a long type never forces the page sideways. A row's Move handle is a menu button
+ * named "Move" and the row's label; a move is announced ("Moved … to position 2 of 5.") and focus stays on the moved
+ * row's handle.
+ * @key Tab: moves to the table's scroll region, then to each row's Move handle (with `reorderable`)
  * @key Arrow Left / Arrow Right: scroll the table sideways while its region has focus
+ * @key Enter, Space: open a row's Move menu (Move up, Move down, Move to top, Move to bottom)
  */
-export function DataTable({ label, columns, rows, ...data }: DataTableProps) {
+export function DataTable({ label, columns, rows, reorderable = false, onReorder, ...data }: DataTableProps) {
   const [head, ...rest] = columns;
+  const ids = rows.map((r) => r.id);
+  const trs = useRef<(HTMLTableRowElement | null)[]>([]);
+  const drag = useRef<{ y: number; moved: boolean; id: string } | null>(null);
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [said, setSaid] = useState('');
+  // Q65 C11, as List: a Move from the menu slides the rows into their new order; a drag reorders under the pointer at once.
+  const body = useFlipList<HTMLTableSectionElement>(ids.join('|'), { paused: dragId !== null || !reorderable });
+  const name = (id: string) => rows.find((r) => r.id === id)?.label ?? id;
+  const move = (from: number, to: number) => {
+    if (from === to) return;
+    onReorder?.(moveItem(ids, from, to));
+    setSaid(`Moved ${name(ids[from])} to position ${to + 1} of ${ids.length}.`);
+  };
+  const onDown = (i: number) => (e: React.PointerEvent<HTMLSpanElement>) => {
+    if (e.button !== 0) return;
+    drag.current = { y: e.clientY, moved: false, id: ids[i] };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const onMove = (e: React.PointerEvent<HTMLSpanElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    if (!d.moved && Math.abs(e.clientY - d.y) < 4) return;
+    if (!d.moved) setDragId(d.id);
+    d.moved = true;
+    const from = ids.indexOf(d.id);
+    const at = dropIndex(trs.current.slice(0, ids.length).map((r) => r!.getBoundingClientRect()), e.clientY);
+    const to = at > from ? at - 1 : at;
+    if (to !== from) move(from, to);
+  };
+  const onUp = () => {
+    setDragId(null);
+    setTimeout(() => (drag.current = null));
+  };
+  const handle = (r: DataTableRow, i: number) => (
+    <span
+      data-dl-part="handle"
+      onPointerDown={onDown(i)}
+      onPointerMove={onMove}
+      onPointerUp={onUp}
+      onPointerCancel={onUp}
+      onClickCapture={(e) => {
+        if (drag.current?.moved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
+    >
+      <MenuButton
+        label={`Move ${r.label ?? r.id}`}
+        icon="menu"
+        iconOnly
+        emphasis="quiet"
+        size="s"
+        items={movesFor(i, rows.length)}
+        onSelect={(v) => move(i, movesFor(i, rows.length).find((m) => m.value === v)!.to)}
+      />
+    </span>
+  );
   return (
-    <div {...data} data-dl="data-table">
+    <div {...data} data-dl="data-table" data-reorder={reorderable ? '' : undefined}>
       <ScrollArea axis="inline" label={label}>
       <table>
         <thead>
@@ -58,11 +132,24 @@ export function DataTable({ label, columns, rows, ...data }: DataTableProps) {
             ))}
           </tr>
         </thead>
-        <tbody>
-          {rows.map((r) => (
-            <tr key={r.id} {...r.data}>
+        <tbody ref={reorderable ? body : undefined}>
+          {rows.map((r, i) => (
+            <tr
+              key={r.id}
+              {...r.data}
+              data-flip-key={reorderable ? r.id : undefined}
+              data-dragging={reorderable && dragId === r.id ? '' : undefined}
+              ref={reorderable ? (el) => void (trs.current[i] = el) : undefined}
+            >
               <th scope="row" data-stacked={head.stacked ? '' : undefined}>
-                {r.cells[head.key]}
+                {reorderable ? (
+                  <span data-dl-part="row">
+                    {handle(r, i)}
+                    <span data-dl-part="content">{r.cells[head.key]}</span>
+                  </span>
+                ) : (
+                  r.cells[head.key]
+                )}
               </th>
               {rest.map((c) => (
                 <td key={c.key} data-stacked={c.stacked ? '' : undefined}>
@@ -74,6 +161,11 @@ export function DataTable({ label, columns, rows, ...data }: DataTableProps) {
         </tbody>
       </table>
       </ScrollArea>
+      {reorderable && (
+        <span data-dl-part="reorder-announce" role="status">
+          {said}
+        </span>
+      )}
     </div>
   );
 }

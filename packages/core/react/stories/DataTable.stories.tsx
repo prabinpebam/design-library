@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Code } from '../fundamentals/Code';
 import { Text } from '../fundamentals/Text';
 import { DataTable } from '../compounds/DataTable';
@@ -59,5 +60,36 @@ export default {
         />
       ),
     },
+    {
+      title: 'Reorder rows',
+      description: 'With reorderable, each row has a Move handle before its heading cell, the same as a reorderable List: drag it, or press Enter on it for Move up, down, to top or to bottom (only the moves that make sense). Where the row landed is announced and focus stays on its handle. onReorder gets the ids in their new order.',
+      code: `<DataTable label="Navigation" reorderable columns={[{ key: 'title', header: 'Title' }, { key: 'link', header: 'Link' }]} rows={links.map((l) => ({ id: l.id, label: l.title, cells: { title: l.title, link: <code>{l.href}</code> } }))} onReorder={setOrder} />`,
+      render: () => <Navigation />,
+    },
   ],
 } satisfies StoryFile;
+
+const links = [
+  { id: 'talks', title: 'Talks', href: '/talks' },
+  { id: 'speakers', title: 'Speakers', href: '/speakers' },
+  { id: 'editions', title: 'Editions', href: '/editions' },
+  { id: 'about', title: 'About', href: '/about' },
+];
+
+function Navigation() {
+  const [order, setOrder] = useState(links.map((l) => l.id));
+  const rows = order.map((id) => links.find((l) => l.id === id)!);
+  return (
+    <DataTable
+      label="Navigation"
+      reorderable
+      columns={[
+        { key: 'title', header: 'Title' },
+        { key: 'link', header: 'Link' },
+      ]}
+      rows={rows.map((l) => ({ id: l.id, label: l.title, cells: { title: l.title, link: <code>{l.href}</code> } }))}
+      onReorder={setOrder}
+    />
+  );
+}
+

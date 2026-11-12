@@ -219,7 +219,8 @@
     "TextField",
     "Board",
     "Composer",
-    "ConversationList"
+    "ConversationList",
+    "DataTable"
   ],
   "principles": [
     "ui-states"

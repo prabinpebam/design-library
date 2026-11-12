@@ -4,19 +4,23 @@
   "tier": "compound",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/compounds/DataTable.tsx",
-  "summary": "Structured facts to compare in rows and columns, such as a component's props or its keys. The first column heads each row. Wider than the page, it scrolls sideways in its own region; the page never does. One enclosure, one hairline between rows, a header row set apart by tone. Not for a list of named values read one by one (a token reference), for term and details pairs (use DescriptionList) or for layout.",
+  "summary": "Structured facts to compare in rows and columns, such as a component's props or its keys. The first column heads each row. Wider than the page, it scrolls sideways in its own region; the page never does. One enclosure, one hairline between rows, a header row set apart by tone. With `reorderable`, rows are put in order by a Move handle, the same handle and menu as a reorderable List. Not for a list of named values read one by one (a token reference), for term and details pairs (use DescriptionList) or for layout.",
   "family": "data",
   "a11y": [
-    "A native `table` with column headers (`th scope=\"col\"`) and row headers (`th scope=\"row\"`), inside a region named by `label`. The region is focusable only so keyboard users can scroll it. Code in a cell may break at any character, so a long type never forces the page sideways."
+    "A native `table` with column headers (`th scope=\"col\"`) and row headers (`th scope=\"row\"`), inside a region named by `label`. The region is focusable only so keyboard users can scroll it. Code in a cell may break at any character, so a long type never forces the page sideways. A row's Move handle is a menu button named \"Move\" and the row's label; a move is announced (\"Moved … to position 2 of 5.\") and focus stays on the moved row's handle."
   ],
   "keys": [
     {
       "keys": "Tab",
-      "action": "moves to the table's scroll region"
+      "action": "moves to the table's scroll region, then to each row's Move handle (with `reorderable`)"
     },
     {
       "keys": "Arrow Left / Arrow Right",
       "action": "scroll the table sideways while its region has focus"
+    },
+    {
+      "keys": "Enter, Space",
+      "action": "open a row's Move menu (Move up, Move down, Move to top, Move to bottom)"
     }
   ],
   "sealed": true,
@@ -42,6 +46,17 @@
           "name": "rows",
           "type": "DataTableRow[]",
           "required": true
+        },
+        {
+          "name": "reorderable",
+          "type": "boolean",
+          "default": "false",
+          "description": "Each row gets a Move handle before its heading cell, as a reorderable List's items do: drag it, or open its menu (Move up, down, to top, to bottom). Rows need a `label`."
+        },
+        {
+          "name": "onReorder",
+          "type": "(ids: string[]) => void",
+          "description": "The row ids in their new order, after a drag step or a Move."
         }
       ]
     },
@@ -83,6 +98,11 @@
           "description": "The row's value in each column, by column key. The first column's value heads the row."
         },
         {
+          "name": "label",
+          "type": "string",
+          "description": "Names the row in words, for its Move handle and the announcement of a move (with `reorderable`); default its id."
+        },
+        {
           "name": "data",
           "type": "DataAttributes",
           "description": "`data-*` attributes for the row, for tooling such as revision anchors."
@@ -91,6 +111,7 @@
     }
   ],
   "uses": [
+    "MenuButton",
     "ScrollArea"
   ],
   "tokens": [
@@ -104,7 +125,11 @@
     "--c-data-table-outline-width",
     "--c-data-table-radius",
     "--c-data-table-stack-gap",
+    "--color-bg-raised",
     "--color-text",
+    "--layer-raised",
+    "--shadow-raised",
+    "--space-inline-pair",
     "--type-body-weight",
     "--type-label-weight"
   ],

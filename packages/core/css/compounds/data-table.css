@@ -50,4 +50,38 @@
   [data-dl='data-table'] td code {
     overflow-wrap: anywhere;
   }
+
+  /* LR29. Reorderable: the row heading holds a Move handle (drag it, or open its menu) and the row's heading content, as a reorderable List's item. The table keeps a dragged row's raised layer to itself. */
+  [data-dl='data-table'][data-reorder] {
+    isolation: isolate;
+  }
+
+  [data-dl='data-table'][data-reorder] tbody > tr > th > [data-dl-part='row'] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    vertical-align: middle;
+  }
+
+  [data-dl='data-table'][data-reorder] tbody > tr > th > [data-dl-part='row'] > [data-dl-part='handle'] {
+    display: inline-flex;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  /* The row being dragged lifts above its neighbours; nothing else moves until it passes one. */
+  [data-dl='data-table'][data-reorder] tbody > tr[data-dragging] {
+    position: relative;
+    z-index: var(--layer-raised);
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-raised);
+    cursor: grabbing;
+  }
+
+  [data-dl='data-table'][data-reorder] > [data-dl-part='reorder-announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
