@@ -63,6 +63,22 @@ export default {
       ),
     },
     {
+      title: 'A long section in two columns',
+      description:
+        'columns: 2 on a section flows a long list into two columns under its one heading, read down then across, so an archive of years doesn’t make one column far taller than the rest. Where two columns of --c-footer-links-column-min (a theme setting) don’t fit, it falls back to one.',
+      code: `{ id: 'archive', heading: 'Archive', columns: 2, links: years.map((y) => ({ label: y, href: \`#\${y}\` })) }`,
+      render: () => (
+        <Footer
+          sectionsLabel="More from Atlas"
+          sections={[
+            sections[0],
+            { id: 'archive', heading: 'Archive', columns: 2, links: ['2026', '2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016'].map((y) => ({ label: y, href: `#${y}` })) },
+            sections[2],
+          ]}
+          legal="© 2026 Northwind."
+        />
+      ),
+    },    {
       title: 'Small print only',
       description: 'A small site or a single service: the support links and the legal line, nothing else.',
       code: `<Footer links={smallPrint} legal="© 2026 Northwind." />`,

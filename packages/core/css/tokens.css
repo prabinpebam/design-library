@@ -855,6 +855,7 @@
   --c-footer-column-min: 12rem;
   --c-footer-heading-gap: var(--space-stack-item);
   --c-footer-link-gap: var(--space-stack-item);
+  --c-footer-links-column-min: 8em;
   --c-footer-meta-gap: var(--space-stack-item);
   --c-footer-meta-link-gap: var(--space-inline-group);
   --c-footer-identity-width: 18rem;

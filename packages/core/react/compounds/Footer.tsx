@@ -16,6 +16,11 @@ export interface FooterSection {
   /** What the links have in common, e.g. "Services" or "About us". */
   heading: string;
   links: FooterLink[];
+  /**
+   * 2 flows a long list of links into two columns under its one heading, read down then across, and falls back to
+   * one column where two won't fit (`--c-footer-links-column-min`). Default 1.
+   */
+  columns?: 1 | 2;
 }
 
 export interface FooterProps extends DataAttributes {
@@ -73,7 +78,7 @@ export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel =
                 <Heading level={headingLevel} size={4}>
                   {s.heading}
                 </Heading>
-                <ul data-dl-part="links">{s.links.map(item)}</ul>
+                <ul data-dl-part="links" data-columns={s.columns === 2 ? 2 : undefined}>{s.links.map(item)}</ul>
               </div>
             ))}
           </nav>

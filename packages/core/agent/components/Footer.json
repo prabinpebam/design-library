@@ -101,6 +101,11 @@
           "name": "links",
           "type": "FooterLink[]",
           "required": true
+        },
+        {
+          "name": "columns",
+          "type": "1 | 2",
+          "description": "2 flows a long list of links into two columns under its one heading, read down then across, and falls back to one column where two won't fit (`--c-footer-links-column-min`). Default 1."
         }
       ]
     }
@@ -117,12 +122,20 @@
     "--c-footer-heading-gap",
     "--c-footer-identity-width",
     "--c-footer-link-gap",
+    "--c-footer-links-column-min",
     "--c-footer-meta-gap",
     "--c-footer-meta-link-gap",
     "--c-footer-padding-block",
     "--c-footer-padding-inline",
     "--color-bg-sunken",
     "--color-text"
+  ],
+  "settings": [
+    {
+      "var": "--c-footer-links-column-min",
+      "default": "8em",
+      "description": "A two-column section (FooterSection.columns = 2): the narrowest a column of links gets before the section falls back to one column (default 8em). Short labels such as years can take less."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/footer",
   "principles": [

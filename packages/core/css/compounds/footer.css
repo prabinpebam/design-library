@@ -44,6 +44,23 @@
     gap: var(--c-footer-link-gap);
   }
 
+  /* FooterSection.columns = 2: the links flow down then across in two columns under the one heading, and fall back to
+     one column where two of --c-footer-links-column-min don't fit. Margins replace the flex gap; the one before the
+     second column's first link is truncated at the column break. */
+  [data-dl='footer'] > [data-dl-part='content'] > [data-dl-part='sections'] > [data-dl-part='section'] > [data-dl-part='links'][data-columns='2'] {
+    display: block;
+    columns: 2 var(--c-footer-links-column-min);
+    column-gap: var(--c-footer-column-gap);
+  }
+
+  [data-dl='footer'] > [data-dl-part='content'] > [data-dl-part='sections'] > [data-dl-part='section'] > [data-dl-part='links'][data-columns='2'] > li {
+    break-inside: avoid;
+  }
+
+  [data-dl='footer'] > [data-dl-part='content'] > [data-dl-part='sections'] > [data-dl-part='section'] > [data-dl-part='links'][data-columns='2'] > li + li {
+    margin-block-start: var(--c-footer-link-gap);
+  }
+
   [data-dl='footer'] [data-dl-part='meta'] {
     display: flex;
     flex-direction: column;
