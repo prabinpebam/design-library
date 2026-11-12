@@ -56,5 +56,16 @@ export default {
       code: `<Carousel label="Library tiers" slides={cards} arrows={false} perView={2} />`,
       render: () => <Carousel label="Library tiers" slides={cards} arrows={false} perView={2} />,
     },
+    {
+      title: 'Pictures with a dark version and a credit',
+      description: 'A picture slide takes what Image takes: dark and contrast versions (switch the scheme), a treatment (such as grey until pointed at), an alternate with a reveal, and a focal point; the library’s Image draws such a slide. A credit follows the caption.',
+      code: `<Carousel label="Landscapes" slides={scenes.map((s) => ({ ...s, dark: night, focal: { x: 0.5, y: 0.6 }, credit: 'Photo: A. Rivera' }))} />`,
+      render: () => (
+        <Carousel
+          label="Landscapes with a dark version"
+          slides={scenes.slice(0, 4).map((s) => ({ ...s, dark: scenes[2].src, focal: { x: 0.5, y: 0.6 }, credit: 'Photo: A. Rivera' }))}
+        />
+      ),
+    },
   ],
 } satisfies StoryFile;

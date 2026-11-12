@@ -58,5 +58,11 @@ export default {
       code: `<ImageGrid label="…" items={photos} onSelect={(i) => setOpen(i)} />`,
       render: () => <Opening />,
     },
+    {
+      title: 'Captions',
+      description: 'An item’s caption and credit sit under its picture in standard and masonry grids. Quilted and justified tiles fill their cells by shape and leave captions out.',
+      code: `<ImageGrid label="…" items={photos.map((p) => ({ ...p, caption: '…', credit: 'Photo: …' }))} />`,
+      render: () => <ImageGrid label="Captioned photos from the trip" items={scenes.slice(0, 3).map((s, i) => ({ ...photos[i], caption: s.caption, credit: 'Photo: A. Rivera' }))} />,
+    },
   ],
 } satisfies StoryFile;

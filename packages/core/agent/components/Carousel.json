@@ -97,6 +97,7 @@
     },
     {
       "interface": "CarouselSlide",
+      "extends": "SchemeSources",
       "props": [
         {
           "name": "src",
@@ -106,6 +107,31 @@
         {
           "name": "alt",
           "type": "string"
+        },
+        {
+          "name": "treatment",
+          "type": "PictureTreatment",
+          "description": "As `Image`: the picture's tone at rest and while pointed at (with `dark` and `contrast`, its scheme versions)."
+        },
+        {
+          "name": "alternate",
+          "type": "string | PictureSource",
+          "description": "As `Image`: the paired picture shown while pointed at."
+        },
+        {
+          "name": "reveal",
+          "type": "PictureReveal",
+          "description": "As `Image`: draws the change to `alternate` yourself (a template's reveal preset)."
+        },
+        {
+          "name": "focal",
+          "type": "{ x: number",
+          "description": "As `Image`: the point kept in view where the slide crops."
+        },
+        {
+          "name": "y",
+          "type": "number }",
+          "required": true
         },
         {
           "name": "content",
@@ -118,6 +144,11 @@
           "description": "One line under the slide, read with it."
         },
         {
+          "name": "credit",
+          "type": "string",
+          "description": "Who made the picture, after the caption."
+        },
+        {
           "name": "label",
           "type": "string",
           "description": "A short name for the thumbnails picker and the slide's name when there is no caption (\"The pond\")."
@@ -127,6 +158,7 @@
   ],
   "uses": [
     "Button",
+    "Image",
     "ScrollArea"
   ],
   "tokens": [
@@ -163,7 +195,8 @@
     "--space-stack-item",
     "--space-stack-pair",
     "--type-body-sm-leading",
-    "--type-body-sm-size"
+    "--type-body-sm-size",
+    "--type-caption-size"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/carousel",
   "principles": [

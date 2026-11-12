@@ -203,6 +203,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/image",
   "usedBy": [
+    "Carousel",
     "ChatMessage",
     "Composer",
     "EmptyState",

@@ -315,7 +315,7 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
         ratio={ratio}
         items={items.map((item, n) => {
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-          return { id: String(n), ...p, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };
+          return { id: String(n), ...p, caption: item.caption, credit: item.credit, span: layout === 'quilted' && n === 0 ? ('large' as const) : undefined };
         })}
       />
     );
@@ -327,8 +327,9 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
         perView={view.perView}
         peek={view.peek}
         slides={items.map((item) => {
-          const p = pictureProps(ctx, item.picture, item.alt);
-          return { src: p.src, alt: p.alt, caption: item.caption };
+          // G5: a slide keeps the picture's scheme versions, tone, pair and reveal, as a single picture does.
+          const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
+          return { ...p, caption: item.caption, credit: item.credit };
         })}
       />
     );

@@ -87,10 +87,30 @@
     user-select: none;
   }
 
+  /* A slide drawn by the library's Image (scheme versions, a tone or a reveal) fills the slide's frame the same way. */
+  [data-dl='carousel'] > [data-dl-part='track'] > [data-dl-part='slide'] > [data-dl-part='media'] > [data-dl='image'] {
+    inline-size: 100%;
+    block-size: 100%;
+    aspect-ratio: auto;
+    user-select: none;
+  }
+
   [data-dl='carousel'] [data-dl-part='caption'] {
     font-size: var(--type-body-sm-size);
     line-height: var(--type-body-sm-leading);
     color: var(--color-text-muted);
+  }
+
+  /* With a credit the caption lays out as a figure's does: the credit after the words, smaller. */
+  [data-dl='carousel'] > [data-dl-part='track'] > [data-dl-part='slide'] > [data-dl-part='caption'][data-credit] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: var(--space-inline-item);
+  }
+
+  [data-dl='carousel'] > [data-dl-part='track'] > [data-dl-part='slide'] > [data-dl-part='caption'] > [data-dl-part='credit'] {
+    font-size: var(--type-caption-size);
   }
 
   [data-dl='carousel'] > [data-dl-part='controls'] {

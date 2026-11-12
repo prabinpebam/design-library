@@ -21,6 +21,10 @@ export interface ImageGridItem extends SchemeSources {
   alternate?: string | PictureSource;
   /** As `Image`: draws the change to `alternate` yourself (a template's reveal preset). */
   reveal?: PictureReveal;
+  /** Words under the picture, in `standard` and `masonry` (quilted and justified tiles leave them out). */
+  caption?: string;
+  /** Who made it, after the caption. */
+  credit?: string;
   /** As `Image`: the point kept in view where a frame crops. */
   focal?: { x: number; y: number };
 }
@@ -54,10 +58,14 @@ export interface ImageGridProps extends DataAttributes {
  * @key Enter, Space: open the picture
  */
 export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, ...data }: ImageGridProps) {
+  // Captions sit under their pictures where each picture has its own row of space; quilted and justified tiles fill
+  // their cells by shape, so they leave captions out.
+  const captioned = layout === 'standard' || layout === 'masonry';
   return (
     <ul {...data} data-dl="image-grid" data-layout={layout} aria-label={label}>
       {items.map((item, i) => {
         const shape = item.width && item.height ? ({ '--w': item.width, '--h': item.height } as CSSProperties) : undefined;
+        const words = captioned && (item.caption || item.credit) ? { caption: item.caption, credit: item.credit } : undefined;
         const picture = (
           <Image
             src={item.src}
@@ -71,16 +79,26 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             alternate={item.alternate}
             reveal={item.reveal}
             focal={item.focal}
+            {...(onSelect ? {} : words)}
           />
+        );
+        const open = onSelect && (
+          <button type="button" data-dl-part="open" aria-label={`Open: ${item.alt}`} onClick={() => onSelect(i)}>
+            {picture}
+          </button>
         );
         return (
           <li key={item.id} data-dl-part="item" data-span={layout === 'quilted' ? item.span : undefined} style={shape}>
-            {onSelect ? (
-              <button type="button" data-dl-part="open" aria-label={`Open: ${item.alt}`} onClick={() => onSelect(i)}>
-                {picture}
-              </button>
+            {open && words ? (
+              <figure data-dl="figure">
+                {open}
+                <figcaption data-dl-part="caption">
+                  {words.caption}
+                  {words.credit && <span data-dl-part="credit">{words.credit}</span>}
+                </figcaption>
+              </figure>
             ) : (
-              picture
+              (open || picture)
             )}
           </li>
         );

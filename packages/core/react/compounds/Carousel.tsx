@@ -1,16 +1,28 @@
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
 import { ScrollArea } from '../fundamentals/ScrollArea';
+import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
+import type { PictureReveal } from '../behaviour/reveal';
 import type { DataAttributes } from '../types';
 
-export interface CarouselSlide {
+export interface CarouselSlide extends SchemeSources {
   /** A picture: its source and its words (alt text says what it shows; empty only when the caption already does). */
   src?: string;
   alt?: string;
+  /** As `Image`: the picture's tone at rest and while pointed at (with `dark` and `contrast`, its scheme versions). */
+  treatment?: PictureTreatment;
+  /** As `Image`: the paired picture shown while pointed at. */
+  alternate?: string | PictureSource;
+  /** As `Image`: draws the change to `alternate` yourself (a template's reveal preset). */
+  reveal?: PictureReveal;
+  /** As `Image`: the point kept in view where the slide crops. */
+  focal?: { x: number; y: number };
   /** Any content instead of a picture: a card, a chart, a quote. */
   content?: ReactNode;
   /** One line under the slide, read with it. */
   caption?: ReactNode;
+  /** Who made the picture, after the caption. */
+  credit?: string;
   /** A short name for the thumbnails picker and the slide's name when there is no caption ("The pond"). */
   label?: string;
 }
@@ -40,6 +52,13 @@ export interface CarouselProps extends DataAttributes {
 }
 
 const reducedMotion = () => typeof matchMedia === 'function' && (matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduce');
+
+/** A picture slide: a plain picture, or the library's Image when it has scheme versions, a tone, a pair or a reveal. */
+function picture(s: CarouselSlide) {
+  const src = s.src ?? '';
+  if (!(s.dark || s.contrast || s.treatment || s.alternate || s.reveal || s.focal)) return <img src={src} alt={s.alt ?? ''} loading="lazy" draggable={false} />;
+  return <Image src={src} alt={s.alt ?? ''} ratio="natural" rounded={false} dark={s.dark} contrast={s.contrast} treatment={s.treatment} alternate={s.alternate} reveal={s.reveal} focal={s.focal} />;
+}
 
 /**
  * A row of slides shown one (or a few) at a time: a scroll-snap track that a swipe, a trackpad, the arrow keys, the
@@ -252,8 +271,13 @@ export function Carousel({
               inert={!shown ? true : undefined}
               onClick={neighbour ? () => go(i) : undefined}
             >
-              <div data-dl-part="media" data-content={s.content ? '' : undefined}>{s.content ?? (s.src ? <img src={s.src} alt={s.alt ?? ''} loading="lazy" draggable={false} /> : null)}</div>
-              {s.caption && <p data-dl-part="caption">{s.caption}</p>}
+              <div data-dl-part="media" data-content={s.content ? '' : undefined}>{s.content ?? (s.src ? picture(s) : null)}</div>
+              {(s.caption || s.credit) && (
+                <p data-dl-part="caption" data-credit={s.credit ? '' : undefined}>
+                  {s.caption}
+                  {s.credit && <span data-dl-part="credit">{s.credit}</span>}
+                </p>
+              )}
             </div>
           );
         })}

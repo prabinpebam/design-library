@@ -110,6 +110,16 @@
           "description": "As `Image`: draws the change to `alternate` yourself (a template's reveal preset)."
         },
         {
+          "name": "caption",
+          "type": "string",
+          "description": "Words under the picture, in `standard` and `masonry` (quilted and justified tiles leave them out)."
+        },
+        {
+          "name": "credit",
+          "type": "string",
+          "description": "Who made it, after the caption."
+        },
+        {
           "name": "focal",
           "type": "{ x: number",
           "description": "As `Image`: the point kept in view where a frame crops."
