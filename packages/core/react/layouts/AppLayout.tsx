@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
 import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { DataAttributes } from '../types';
@@ -26,8 +26,18 @@ export interface AppLayoutProps extends DataAttributes {
   aside?: ReactNode;
   /** Names the details column: "Details" (default). */
   asideLabel?: string;
-  /** `full` lets the view take the whole width (a board that scrolls sideways); `column` holds it to a readable width. */
-  width?: 'full' | 'column';
+  /** `full` lets the view take the whole width (a board that scrolls sideways); `column` holds it to a readable width; `edge` gives the view the whole main area under the header, with no page margin and no scroller of its own (an EditorLayout with `height="fill"`, which scrolls its own panels). `head` and `aside` don't apply with `edge`. */
+  width?: 'full' | 'column' | 'edge';
+  /**
+   * How the sidebar sits beside the view. Left out: docked, floating over the view below 48 rem of the layout's own
+   * width. `docked`: always beside the view. `floating`: always over the view, under the header, closing on a press
+   * outside it and its toggle (and on Escape). `auto`: docked from `floatBelow` of the layout's own width, floating under it.
+   */
+  startMode?: 'docked' | 'floating' | 'auto';
+  /** With `startMode="auto"`: the layout width below which the sidebar floats, a CSS length in px, rem or em (default "48rem"). */
+  floatBelow?: string;
+  /** Adds a pin at the top of the sidebar while it can dock (not while `auto` floats it): pressed while docked; pressing it asks for the other mode. The parent owns the mode: set `startMode` here. */
+  onStartModeChange?: (mode: 'docked' | 'floating') => void;
   /** `fill` takes the height its parent gives it; `screen` the whole window (an app on its own); `lg` holds a set height (a demonstration). */
   height?: 'fill' | 'screen' | 'lg';
 }
@@ -40,31 +50,81 @@ export interface AppLayoutProps extends DataAttributes {
  * @a11y The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the view is the `main`
  * region, named by `label`; the details column is a labelled `aside` after it in the source. The view's scroller is
  * focusable, so the keyboard can scroll it. In a narrow window the floating sidebar closes with Escape and returns focus
- * to the toggle.
+ * to the toggle. With `startMode`, a floating sidebar also closes on a press outside it and its toggle; the pin (with
+ * `onStartModeChange`) is a toggle button named "Pin" and the sidebar's label, pressed (`aria-pressed`) while docked.
+ * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const [narrow, setNarrow] = useState(false);
+  const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-  // Below 48 rem of its own width (the stylesheet's container query) the open sidebar floats; Escape closes it then.
+  // auto: the layout measures its own width against floatBelow (a prop, so not a stylesheet container query).
+  useEffect(() => {
+    const el = root.current;
+    if (startMode !== 'auto' || !el) return;
+    const limit = () => {
+      const n = parseFloat(floatBelow);
+      return floatBelow.endsWith('rem') ? n * rem() : floatBelow.endsWith('em') ? n * parseFloat(getComputedStyle(el).fontSize) : n;
+    };
+    const observer = new ResizeObserver(([entry]) => setNarrow(entry.contentRect.width < limit()));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [startMode, floatBelow]);
+
+  // The sidebar's resolved placement; undefined keeps the stylesheet's own 48 rem container query.
+  const placement = startMode === 'floating' || (startMode === 'auto' && narrow) ? 'floating' : startMode ? 'docked' : undefined;
+  const floatsNow = () => placement === 'floating' || (placement === undefined && (root.current?.clientWidth ?? Infinity) < rem() * 48);
+
+  // While the sidebar floats, Escape closes it and focus returns to the toggle.
   useEffect(() => {
     if (!sidebarOpen) return;
     const close = (event: KeyboardEvent) => {
-      const el = root.current;
-      if (event.key !== 'Escape' || !el || el.clientWidth >= parseFloat(getComputedStyle(document.documentElement).fontSize) * 48) return;
+      if (event.key !== 'Escape' || !floatsNow()) return;
       onSidebarToggle();
       toggle.current?.querySelector('button')?.focus();
     };
     document.addEventListener('keydown', close);
     return () => document.removeEventListener('keydown', close);
-  }, [sidebarOpen, onSidebarToggle]);
+  });
+
+  // startMode floating (chosen or by auto): a press outside the sidebar and its toggle closes it.
+  useEffect(() => {
+    if (!sidebarOpen || placement !== 'floating') return;
+    const press = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      if (!target || sidebarRef.current?.contains(target) || toggle.current?.contains(target)) return;
+      onSidebarToggle();
+    };
+    document.addEventListener('pointerdown', press);
+    return () => document.removeEventListener('pointerdown', press);
+  }, [sidebarOpen, placement, onSidebarToggle]);
+
+  const docked = placement === 'docked';
+  const canDock = startMode === 'docked' || startMode === 'floating' || (startMode === 'auto' && !narrow);
+  const view = head ? (
+    <>
+      <div data-dl-part="head">{head}</div>
+      <div data-dl-part="content">{children}</div>
+    </>
+  ) : (
+    children
+  );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
-      <aside id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
+      <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
+        {onStartModeChange && canDock && (
+          <div data-dl-part="sidebar-head">
+            {/* toggle-button: the sidebar's pin in its own head, docking or floating it, where a Switch would break the head's row of icon buttons */}
+            <Button label={`Pin ${sidebarLabel.toLowerCase()}`} icon="pin" pressedIcon="pin-filled" iconOnly size="xs" emphasis="quiet" pressed={docked} onClick={() => onStartModeChange(docked ? 'floating' : 'docked')} />
+          </div>
+        )}
         <ScrollArea data-dl-part="sidebar-list">
           <div data-dl-part="sidebar-content">{sidebar}</div>
         </ScrollArea>
@@ -77,25 +137,24 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
           <span data-dl-part="header-start">{header}</span>
           <span data-dl-part="header-end">{headerEnd}</span>
         </header>
-        <ScrollArea data-dl-part="scroll" axis="both" tabIndex={0}>
-          <div data-dl-part="body">
-            <main data-dl-part="view" aria-label={label}>
-              {head ? (
-                <>
-                  <div data-dl-part="head">{head}</div>
-                  <div data-dl-part="content">{children}</div>
-                </>
-              ) : (
-                children
+        {width === 'edge' ? (
+          <main data-dl-part="edge" aria-label={label}>
+            {children}
+          </main>
+        ) : (
+          <ScrollArea data-dl-part="scroll" axis="both" tabIndex={0}>
+            <div data-dl-part="body">
+              <main data-dl-part="view" aria-label={label}>
+                {view}
+              </main>
+              {aside && (
+                <aside data-dl-part="aside" data-density="compact" aria-label={asideLabel}>
+                  {aside}
+                </aside>
               )}
-            </main>
-            {aside && (
-              <aside data-dl-part="aside" data-density="compact" aria-label={asideLabel}>
-                {aside}
-              </aside>
-            )}
-          </div>
-        </ScrollArea>
+            </div>
+          </ScrollArea>
+        )}
       </div>
     </div>
   );

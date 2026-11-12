@@ -6,6 +6,7 @@ import { DescriptionList } from '../compounds/DescriptionList';
 import { Heading } from '../fundamentals/Heading';
 import { Text } from '../fundamentals/Text';
 import { AppLayout } from '../layouts/AppLayout';
+import { EditorLayout } from '../layouts/EditorLayout';
 import type { StoryFile } from './story';
 
 function Demo({ details = false }: { details?: boolean }) {
@@ -25,6 +26,35 @@ function Demo({ details = false }: { details?: boolean }) {
         Backlog
       </Heading>
       <Text as="p">Eleven issues are planned for this sprint and 24 wait in the backlog.</Text>
+    </AppLayout>
+  );
+}
+
+const areas = <Navigation groups={[{ id: 'site', title: 'Site', items: [{ id: 'pages', label: 'Pages', href: '#pages' }, { id: 'talks', label: 'Talks', href: '#talks' }, { id: 'media', label: 'Media', href: '#media' }] }]} current="pages" />;
+
+function Modes() {
+  const [open, setOpen] = useState(true);
+  const [mode, setMode] = useState<'docked' | 'floating'>('docked');
+  return (
+    <AppLayout height="lg" label="Pages" startMode={mode} onStartModeChange={setMode} sidebarOpen={open} onSidebarToggle={() => setOpen((x) => !x)} sidebar={areas} header={<Text as="span">Pages</Text>}>
+      <Heading level={2} size={2}>
+        Pages
+      </Heading>
+      <Text as="p">Unpin the sidebar and it floats over the view; a press anywhere outside it closes it.</Text>
+    </AppLayout>
+  );
+}
+
+function WithEditor() {
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<'docked' | 'floating'>('floating');
+  const [outline, setOutline] = useState(true);
+  const [inspector, setInspector] = useState(true);
+  return (
+    <AppLayout height="lg" width="edge" label="Edit About" startMode={mode === 'docked' ? 'auto' : 'floating'} floatBelow="76rem" onStartModeChange={setMode} sidebarOpen={open} onSidebarToggle={() => setOpen((x) => !x)} sidebar={areas} header={<Text as="span">About</Text>}>
+      <EditorLayout startOpen={outline} onStartToggle={() => setOutline((x) => !x)} start={<Text>Outline</Text>} startLabel="Outline" endOpen={inspector} onEndToggle={() => setInspector((x) => !x)} end={<Text>Inspector</Text>} endLabel="Inspector">
+        <Text>The page</Text>
+      </EditorLayout>
     </AppLayout>
   );
 }
@@ -52,6 +82,18 @@ export default {
       description: '`aside` puts an item’s fields beside the view; in a narrow window they move under it.',
       code: `<AppLayout … aside={<DescriptionList items={…} />}>…</AppLayout>`,
       render: () => <Demo details />,
+    },
+    {
+      title: 'Docked or floating, by choice',
+      description: '`startMode` sets where the sidebar sits. With `onStartModeChange` a pin at the top of the sidebar docks it beside the view (pressed) or floats it over the view; floating, it closes on Escape or a press outside it and the toggle. `auto` docks from `floatBelow` of the layout’s own width and floats under it.',
+      code: `<AppLayout startMode={mode} onStartModeChange={setMode} sidebarOpen={open} onSidebarToggle={…} sidebar={<Navigation … />} …>…</AppLayout>`,
+      render: () => <Modes />,
+    },
+    {
+      title: 'An editor as the view',
+      description: '`width="edge"` gives the view the whole main area under the header, with no margin and no scroller of its own, so it can hold an EditorLayout, which scrolls its own panels. The areas float over it below 76 rem (`startMode="auto"`, `floatBelow="76rem"`).',
+      code: `<AppLayout width="edge" startMode="auto" floatBelow="76rem" … ><EditorLayout … /></AppLayout>`,
+      render: () => <WithEditor />,
     },
   ],
 } satisfies StoryFile;

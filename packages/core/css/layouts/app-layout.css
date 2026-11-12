@@ -169,4 +169,50 @@
       outline: var(--border-hairline) solid CanvasText;
     }
   }
+
+  /* startMode: the sidebar's head holds its pin, end-aligned, above the scrolling list. */
+  [data-dl='app-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-head'] {
+    display: flex;
+    flex: none;
+    justify-content: flex-end;
+    padding-block-start: var(--c-app-layout-inset);
+    padding-inline: var(--c-app-layout-inset);
+  }
+
+  /* startMode floating (chosen, or auto under floatBelow): over the view under the header at any width, as the narrow
+     drawer is; docked: beside the view at any width, even under 48 rem. */
+  [data-dl='app-layout'][data-start='floating'] > [data-dl-part='sidebar'] {
+    position: absolute;
+    inset-block: var(--c-app-layout-header) 0;
+    inset-inline-start: 0;
+    z-index: var(--c-app-layout-layer);
+    background-color: var(--material-floating-bg, var(--c-app-layout-sidebar-fill));
+    -webkit-backdrop-filter: var(--material-backdrop);
+    backdrop-filter: var(--material-backdrop);
+    box-shadow: var(--c-app-layout-overlay-shadow);
+  }
+
+  @container (max-width: 48rem) {
+    [data-dl='app-layout'][data-start='docked'] > [data-dl-part='sidebar'] {
+      position: static;
+      background-color: var(--c-app-layout-sidebar-fill);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
+  }
+
+  /* width="edge": the view is the whole main area under the header, no margin and no scroller; its child fills it. */
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='edge'] {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='edge'] > * {
+    flex: 1;
+    min-block-size: 0;
+  }
 }

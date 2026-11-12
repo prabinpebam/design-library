@@ -6,7 +6,7 @@
   "file": "@design-library/core/react/layouts/AppLayout.tsx",
   "summary": "A working app: a collapsible sidebar of places, a header, and the view, which scrolls on its own; optionally a details column beside it. For tools people work in all day: a tracker, an admin, a dashboard, a mail client. Not for a conversation (ChatLayout), an editor with a canvas (EditorLayout) or a website (SiteLayout).",
   "a11y": [
-    "The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the view is the `main` region, named by `label`; the details column is a labelled `aside` after it in the source. The view's scroller is focusable, so the keyboard can scroll it. In a narrow window the floating sidebar closes with Escape and returns focus to the toggle."
+    "The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`); the view is the `main` region, named by `label`; the details column is a labelled `aside` after it in the source. The view's scroller is focusable, so the keyboard can scroll it. In a narrow window the floating sidebar closes with Escape and returns focus to the toggle. With `startMode`, a floating sidebar also closes on a press outside it and its toggle; the pin (with `onStartModeChange`) is a toggle button named \"Pin\" and the sidebar's label, pressed (`aria-pressed`) while docked. `width=\"edge\"` keeps the view the `main` region, named by `label`, without the layout's scroller."
   ],
   "keys": [
     {
@@ -86,9 +86,25 @@
         },
         {
           "name": "width",
-          "type": "'full' | 'column'",
+          "type": "'full' | 'column' | 'edge'",
           "default": "'column'",
-          "description": "`full` lets the view take the whole width (a board that scrolls sideways); `column` holds it to a readable width."
+          "description": "`full` lets the view take the whole width (a board that scrolls sideways); `column` holds it to a readable width; `edge` gives the view the whole main area under the header, with no page margin and no scroller of its own (an EditorLayout with `height=\"fill\"`, which scrolls its own panels). `head` and `aside` don't apply with `edge`."
+        },
+        {
+          "name": "startMode",
+          "type": "'docked' | 'floating' | 'auto'",
+          "description": "How the sidebar sits beside the view. Left out: docked, floating over the view below 48 rem of the layout's own width. `docked`: always beside the view. `floating`: always over the view, under the header, closing on a press outside it and its toggle (and on Escape). `auto`: docked from `floatBelow` of the layout's own width, floating under it."
+        },
+        {
+          "name": "floatBelow",
+          "type": "string",
+          "default": "'48rem'",
+          "description": "With `startMode=\"auto\"`: the layout width below which the sidebar floats, a CSS length in px, rem or em (default \"48rem\")."
+        },
+        {
+          "name": "onStartModeChange",
+          "type": "(mode: 'docked' | 'floating') => void",
+          "description": "Adds a pin at the top of the sidebar while it can dock (not while `auto` floats it): pressed while docked; pressing it asks for the other mode. The parent owns the mode: set `startMode` here."
         },
         {
           "name": "height",
