@@ -99,6 +99,12 @@ const sizes: [ButtonSize, string][] = [
   ['xxl', 'xxl · 80 px'],
 ];
 
+function AppliedYear() {
+  const [year, setYear] = useState('2024');
+  const years = [{ value: 'all', label: 'All years' }, { value: '2025', label: '2025' }, { value: '2024', label: '2024' }];
+  return <Select mode="form" label="Year" options={years} value={year} onChange={setYear} applied={year !== 'all'} />;
+}
+
 export default {
   component: 'Select',
   tier: 'fundamental',
@@ -219,6 +225,12 @@ export default {
           <Picker label="Milestone" placeholder="Choose a milestone" emptyText="No milestones yet. Add one in Planning." options={[]} />
         </Grid>
       ),
+    },
+    {
+      title: 'An applied filter',
+      description: 'A choice that narrows a list is applied while it differs from its default: the accent fill and outline (c.applied), and its value says which. Pair it with a way to clear it.',
+      code: `<Select mode="form" label="Year" options={years} value={year} onChange={setYear} applied={year !== 'all'} />`,
+      render: () => <AppliedYear />,
     },
   ],
 } satisfies StoryFile;

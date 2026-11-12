@@ -586,6 +586,8 @@
   --c-site-layout-gap: var(--space-stack-page);
   --c-site-layout-padding-block: var(--space-stack-page);
   --c-site-layout-skip-radius: var(--radius-none);
+  --c-applied-fill: var(--color-accent-subtle);
+  --c-applied-border: var(--color-accent);
   --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-sticky-bar-layer: var(--layer-raised);
   --c-screen-preview-phone: 23.4375rem;
@@ -659,6 +661,8 @@
   --c-segmented-control-raised-fill: var(--color-bg-raised);
   --c-segmented-control-raised-text: var(--color-text-accent);
   --c-segmented-control-raised-shadow: var(--shadow-raised);
+  --c-segmented-control-quiet-fill: var(--color-bg-raised);
+  --c-segmented-control-quiet-text: var(--color-text);
   --c-segmented-control-size-xs: var(--size-target-min);
   --c-segmented-control-size-s: var(--size-target-dense);
   --c-segmented-control-size: var(--size-target);

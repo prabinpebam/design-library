@@ -18,6 +18,10 @@
   "Footer": {
     "--c-footer-links-column-min": "A two-column section (FooterSection.columns = 2): the narrowest a column of links gets before the section falls back to one column (default 8em). Short labels such as years can take less."
   },
+  "TextField": {
+    "--c-applied-fill": "An applied filter's fill on TextField, Select and SegmentedControl (applied); default color.accent-subtle.",
+    "--c-applied-border": "An applied filter's outline on the same controls; default color.accent."
+  },
   "StickyBar": {
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
   },

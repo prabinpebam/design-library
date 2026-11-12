@@ -47,6 +47,12 @@ export interface TextFieldProps extends DataAttributes {
   suffix?: string;
   /** Adds a Clear button while there's text; clearing saves the empty value like any other change. */
   clearable?: boolean;
+  /**
+   * A filter is applied: the search or filter text differs from its default, so the control is marked in the accent (`c.applied.fill`
+   * and `c.applied.border`, theme settings) while the value it shows says what. Pair it with a way to clear it; to mark
+   * the clear button too, put `data-applied` (the same mark, as a context attribute) on a wrapper around both.
+   */
+  applied?: boolean;
   /** The most characters allowed; a count shows under the box and is announced as the limit nears. */
   maxLength?: number;
   /** Marks the label "(optional)". Fields are required by default, so only optional ones are marked. */
@@ -144,7 +150,7 @@ const actionSize: Record<ButtonSize, ButtonSize> = { xs: 'xs', s: 'xs', normal: 
  * @key Enter: saves the value now (in a form: submits the form)
  * @key Escape: puts back the stored value (not in a form)
  */
-export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, ...data }: TextFieldProps) {
+export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, applied = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, ...data }: TextFieldProps) {
   const form = mode === 'form';
   const { phase, run, reset } = useCommit('--duration-confirm-read');
   const [draft, setDraft] = useState(value);
@@ -341,7 +347,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
   );
 
   return (
-    <span {...data} data-dl="text-field" data-size={size} data-clearable={clearable ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
+    <span {...data} data-dl="text-field" data-size={size} data-clearable={clearable ? '' : undefined} data-applied={applied ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
       <Field
         label={label}
         hint={hint}

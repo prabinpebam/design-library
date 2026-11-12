@@ -31,8 +31,14 @@ export interface SegmentedControlProps extends DataAttributes {
   size?: ButtonSize;
   /** The choice can't change here. Prefer saying why nearby. */
   disabled?: boolean;
-  /** How the chosen segment shows: `accent` (default) an accent fill with on-accent text; `raised` a raised surface with accent text, for a mode switch that sits beside an accent-filled choice (a design tool's Design and Dev mode beside its tools). */
-  emphasis?: 'accent' | 'raised';
+  /** How the chosen segment shows: `accent` (default) an accent fill with on-accent text; `raised` a raised surface with accent text, for a mode switch that sits beside an accent-filled choice (a design tool's Design and Dev mode beside its tools); `quiet` a raised surface with plain text, for a filter at its default so only an applied choice draws the eye. */
+  emphasis?: 'accent' | 'raised' | 'quiet';
+  /**
+   * A filter is applied: the chosen option differs from its default, so the control is marked in the accent (`c.applied.fill`
+   * and `c.applied.border`, theme settings) while the value it shows says what. Pair it with a way to clear it; to mark
+   * the clear button too, put `data-applied` (the same mark, as a context attribute) on a wrapper around both.
+   */
+  applied?: boolean;
   /** The group's own track (fill and outline). Turn it off where a surrounding bar already encloses the segments (a floating tool bar): one enclosure per boundary. */
   track?: boolean;
   /** The group takes its row's width and the options share it equally (an inspector's choice that lines up with the fields under it). */
@@ -60,11 +66,11 @@ export interface SegmentedControlProps extends DataAttributes {
  */
 const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: 'md', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' };
 
-export function SegmentedControl({ label, options, value, onChange, iconOnly = false, size = 's', disabled = false, emphasis = 'accent', track = true, fill = false, ...data }: SegmentedControlProps) {
+export function SegmentedControl({ label, options, value, onChange, iconOnly = false, size = 's', disabled = false, emphasis = 'accent', track = true, fill = false, applied = false, ...data }: SegmentedControlProps) {
   const name = useId();
   const slide = useSlidingIndicator<HTMLDivElement>(value, (root) => root.querySelector('[data-dl-part="segment"][data-chosen]'), '::before');
   return (
-    <div {...data} ref={slide.root} {...slide.input} data-dl="segmented-control" data-emphasis={emphasis === 'accent' ? undefined : emphasis} data-track={track ? undefined : 'none'} data-fill={fill ? '' : undefined} data-icon-only={iconOnly ? '' : undefined} data-size={size} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
+    <div {...data} ref={slide.root} {...slide.input} data-dl="segmented-control" data-applied={applied ? '' : undefined} data-emphasis={emphasis === 'accent' ? undefined : emphasis} data-track={track ? undefined : 'none'} data-fill={fill ? '' : undefined} data-icon-only={iconOnly ? '' : undefined} data-size={size} role="radiogroup" aria-label={label} aria-disabled={disabled || undefined}>
       {options.map((option) => (
         <label key={option.value} data-dl-part="segment" data-chosen={option.value === value ? '' : undefined} title={iconOnly ? option.label : undefined}>
           <input type="radio" name={name} value={option.value} aria-label={option.trailing ? option.label : undefined} checked={option.value === value} disabled={disabled} onChange={() => {

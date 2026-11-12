@@ -143,6 +143,8 @@
     --c-agenda-session-radius: var(--radius-md);
     --c-agenda-session-fill: var(--color-bg-sunken);
     --c-frame-ground: var(--color-bg-sunken);
+    --c-applied-fill: var(--color-accent-subtle);
+    --c-applied-border: var(--color-accent);
     --c-screen-preview-radius: var(--radius-md);
     --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
     --c-chat-message-bubble-fill: var(--color-bg-tint);
@@ -150,6 +152,8 @@
     --c-checkbox-radius: var(--radius-sm);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-segmented-control-raised-fill: var(--color-bg-raised);
+    --c-segmented-control-quiet-fill: var(--color-bg-raised);
+    --c-segmented-control-quiet-text: var(--color-text);
     --c-segmented-control-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
     --c-section-tone-sunken: var(--color-bg-sunken);

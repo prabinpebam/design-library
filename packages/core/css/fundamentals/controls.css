@@ -1991,6 +1991,24 @@
     box-shadow: var(--c-segmented-control-raised-shadow);
   }
 
+  /* emphasis="quiet": the chosen segment is a raised surface with plain text, so a filter at its default stays quiet. */
+  [data-dl='segmented-control'][data-emphasis='quiet'] > [data-dl-part='segment']:has(input:checked) {
+    color: var(--c-segmented-control-quiet-text);
+  }
+
+  [data-dl='segmented-control'][data-emphasis='quiet'] > [data-dl-part='segment']:has(input:checked)::before {
+    background-color: var(--c-segmented-control-quiet-fill);
+  }
+
+  /* applied: a filter differs from its default. The control-fill and control-outline roles take the applied colours for
+     the subtree, so every part that draws them (box, track, menu) follows; focus rings read --color-focus, unchanged.
+     The prop sets data-applied on the control; as a context attribute on a wrapper it marks a group, such as a control
+     and the Clear button beside it. */
+  [data-applied] {
+    --color-bg-control: var(--c-applied-fill);
+    --color-border-control: var(--c-applied-border);
+  }
+
   /* track={false}: a surrounding bar already encloses the segments, so the group draws no fill or outline of its own. */
   [data-dl='segmented-control'][data-track='none'] {
     background-color: transparent;

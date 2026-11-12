@@ -105,6 +105,11 @@
           "description": "Adds a Clear button while there's text; clearing saves the empty value like any other change."
         },
         {
+          "name": "applied",
+          "type": "boolean",
+          "description": "A filter is applied: the search or filter text differs from its default, so the control is marked in the accent (`c.applied.fill` and `c.applied.border`, theme settings) while the value it shows says what. Pair it with a way to clear it; to mark the clear button too, put `data-applied` (the same mark, as a context attribute) on a wrapper around both."
+        },
+        {
           "name": "maxLength",
           "type": "number",
           "description": "The most characters allowed; a count shows under the box and is announced as the limit nears."
@@ -364,6 +369,18 @@
     "--type-body-sm-size",
     "--type-heading-3-size",
     "--type-heading-4-size"
+  ],
+  "settings": [
+    {
+      "var": "--c-applied-fill",
+      "default": "#e6e8ff",
+      "description": "An applied filter's fill on TextField, Select and SegmentedControl (applied); default color.accent-subtle."
+    },
+    {
+      "var": "--c-applied-border",
+      "default": "#4f5bd5",
+      "description": "An applied filter's outline on the same controls; default color.accent."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/textfield",
   "usedBy": [

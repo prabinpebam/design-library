@@ -4,6 +4,7 @@ import type { ButtonSize } from '../fundamentals/Button';
 import { Cluster } from '../fundamentals/Cluster';
 import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
+import { Button } from '../fundamentals/Button';
 import type { StoryFile } from './story';
 
 const sizes: [ButtonSize, string][] = [
@@ -43,6 +44,22 @@ const views = [
   { value: 'calendar', label: 'Calendar' },
   { value: 'timeline', label: 'Timeline' },
 ];
+
+const formats = [
+  { value: 'talks', label: 'Talks' },
+  { value: 'films', label: 'Films' },
+  { value: 'all', label: 'All' },
+];
+
+function FormatFilter() {
+  const [format, setFormat] = useState('films');
+  return (
+    <Cluster>
+      <SegmentedControl label="Format" options={formats} value={format} onChange={setFormat} emphasis={format === 'talks' ? 'quiet' : 'accent'} applied={format !== 'talks'} size="normal" />
+      {format !== 'talks' && <Button label="Show talks again" icon="close" iconOnly onClick={() => setFormat('talks')} />}
+    </Cluster>
+  );
+}
 
 export default {
   component: 'SegmentedControl',
@@ -120,6 +137,14 @@ export default {
       description: 'The choice can’t change here; say why nearby.',
       code: `<SegmentedControl label="Colour scheme" iconOnly disabled options={schemes} value="dark" onChange={setScheme} />`,
       render: () => <Choice label="Colour scheme" iconOnly disabled options={[...schemes]} initial="dark" />,
+    },
+    {
+      title: 'A filter: quiet at its default, applied when changed',
+      description: 'At its default the chosen segment is quiet (emphasis="quiet"), so nothing draws the eye; changed, the control is applied: marked in the accent, with a Clear button beside it. The chosen words still say which.',
+      code: `<SegmentedControl label="Format" options={formats} value={format} onChange={setFormat}
+  emphasis={format === 'talks' ? 'quiet' : 'accent'} applied={format !== 'talks'} size="normal" />
+{format !== 'talks' && <Button label="Show talks again" icon="close" iconOnly onClick={() => setFormat('talks')} />}`,
+      render: () => <FormatFilter />,
     },
   ],
 } satisfies StoryFile;

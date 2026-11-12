@@ -59,9 +59,15 @@
         },
         {
           "name": "emphasis",
-          "type": "'accent' | 'raised'",
+          "type": "'accent' | 'raised' | 'quiet'",
           "default": "'accent'",
-          "description": "How the chosen segment shows: `accent` (default) an accent fill with on-accent text; `raised` a raised surface with accent text, for a mode switch that sits beside an accent-filled choice (a design tool's Design and Dev mode beside its tools)."
+          "description": "How the chosen segment shows: `accent` (default) an accent fill with on-accent text; `raised` a raised surface with accent text, for a mode switch that sits beside an accent-filled choice (a design tool's Design and Dev mode beside its tools); `quiet` a raised surface with plain text, for a filter at its default so only an applied choice draws the eye."
+        },
+        {
+          "name": "applied",
+          "type": "boolean",
+          "default": "false",
+          "description": "A filter is applied: the chosen option differs from its default, so the control is marked in the accent (`c.applied.fill` and `c.applied.border`, theme settings) while the value it shows says what. Pair it with a way to clear it; to mark the clear button too, put `data-applied` (the same mark, as a context attribute) on a wrapper around both."
         },
         {
           "name": "track",
@@ -115,6 +121,8 @@
     "--c-segmented-control-gap",
     "--c-segmented-control-inset",
     "--c-segmented-control-padding-inline",
+    "--c-segmented-control-quiet-fill",
+    "--c-segmented-control-quiet-text",
     "--c-segmented-control-radius",
     "--c-segmented-control-raised-fill",
     "--c-segmented-control-raised-shadow",

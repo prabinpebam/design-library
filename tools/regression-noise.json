@@ -1,6 +1,18 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--segmentedcontrol": {
+      "reason": "catalogue inventory: (DesignUp LR5) the generic opt-in applied prop and emphasis=\"quiet\" on SegmentedControl (default unchanged) adds a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--select": {
+      "reason": "catalogue inventory: (DesignUp LR5) the generic opt-in applied prop on Select (default unchanged) adds a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
+    "lib--textfield": {
+      "reason": "catalogue inventory: (DesignUp LR5) the generic opt-in applied prop on TextField (default unchanged) adds a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--footer": {
       "reason": "catalogue inventory: (DesignUp LR1) the generic opt-in FooterSection.columns (default 1, unchanged) and the --c-footer-links-column-min setting add a story and source-derived prop and settings rows below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

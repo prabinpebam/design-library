@@ -173,6 +173,11 @@ function InForm() {
   );
 }
 
+function AppliedSearch() {
+  const [query, setQuery] = useState('research');
+  return <TextField type="search" icon="search" label="Find a talk" mode="form" clearable value={query} onChange={setQuery} applied={query.trim() !== ''} />;
+}
+
 export default {
   component: 'TextField',
   tier: 'fundamental',
@@ -377,6 +382,12 @@ const { shown, status } = useFilter(talks, query, { count: (n, all) => (n === al
   <Button type="submit" emphasis="primary" label="Send enquiry" busy={sending} pendingLabel="Sending…" />
 </form>`,
       render: () => <InForm />,
+    },
+    {
+      title: 'An applied filter',
+      description: 'A search that narrows a list is applied while it holds text: the box takes the accent fill and outline (c.applied, theme settings), and clearable gives it its own way back.',
+      code: `<TextField type="search" icon="search" label="Find a talk" mode="form" clearable value={query} onChange={setQuery} applied={query.trim() !== ''} />`,
+      render: () => <AppliedSearch />,
     },
   ],
 } satisfies StoryFile;
