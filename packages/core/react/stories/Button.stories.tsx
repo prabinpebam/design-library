@@ -424,5 +424,12 @@ export default {
       code: `<Button icon="person" label="Sign in" tone="link" />`,
       render: () => <Button icon="person" label="Sign in" tone="link" />,
     },
+    {
+      title: 'Icon after the words',
+      description: 'iconEnd puts the icon after the words, for a command whose glyph follows its name (a filter bar’s Filters). The icon comes first everywhere else.',
+      arrangement: 'row',
+      code: `<Button icon="filter-lines" label="Filters" emphasis="quiet" iconEnd />`,
+      render: () => <Button icon="filter-lines" label="Filters" emphasis="quiet" iconEnd />,
+    },
   ],
 } satisfies StoryFile;

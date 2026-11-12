@@ -25,6 +25,8 @@ export interface YoutubeVideo {
   age: string;
   /** Length shown on the frame ("12:04"). */
   duration: string;
+  /** The video's own shape; the watch page's player is as tall as it makes it. Default `16:9`. */
+  aspect?: '16:9' | '4:3';
 }
 /** One comment under the video being watched. */
 export interface YoutubeComment {

@@ -73,8 +73,8 @@
   /* Length: 8 from the frame's bottom and end, 20 high, white on black at 60% (C-1280-L). */
   /* Each frame is one plain core Link filling it (named by the video's title), with the length badge beside it on top; the
      badge lets the pointer through, so the whole frame follows the link and its focus ring follows the frame's corners. */
-  :is([data-dl='youtube-video'], [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='link'] { position: absolute; inset: 0; border-radius: inherit; }
-  :is([data-dl='youtube-video'], [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='duration'] { pointer-events: none; }
+  :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='link'] { position: absolute; inset: 0; border-radius: inherit; }
+  :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='duration'] { pointer-events: none; }
   [data-dl='youtube-video'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
   [data-dl='youtube-video'] > [data-dl-part='details'] { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-inline-end: var(--space-6); }
   /* Title 16/22, two lines; meta 4 below it, 14/20 (C-1280-L, T-1280-L). */
@@ -97,6 +97,8 @@
   [data-dl='youtube-watch'] > [data-dl-part='primary'] { display: grid; align-content: start; min-inline-size: 0; }
   /* Player: 16:9 (the spec computes 880×495 for a 16:9 video), black in both schemes: the part takes the dark scheme, whose sunken fill the theme makes #000000 (W-1280-L/D). */
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { display: grid; grid-template-areas: 'stack'; aspect-ratio: 16 / 9; border-radius: var(--radius-lg); background: var(--color-bg-sunken); color: var(--color-text); }
+  /* The player is as tall as the video makes it (W-1280-L: 880×660 for a 4:3 video; watch169-1280-L: 880×495 for 16:9). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'][data-aspect='4:3'] { aspect-ratio: 4 / 3; }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > * { grid-area: stack; }
   /* Control bar at rest (watch169-1280-L): 12 in from each side; the seek line 6 high, then a 56 row whose 40 controls sit 8 from
      the player's foot. Left: play and volume circles 12 apart, the time pill 8 after them (14/40 w500); right: one pill, padding
@@ -125,6 +127,8 @@
   /* Comments 24 below the description: the count's 28 line, the add row 24 below it (a 24 avatar, the underline field from
      +36, 25 high), threads 32 below that (WC-1280-L: count y59, field y111–136, first thread y168); a 36 avatar (text at +52), author 12/18 w500, text 14/20, 32 actions from 8 before the text (WC-1280-L). */
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] { display: grid; padding-block-start: var(--space-6); }
+  /* One column (W-720-L): up next between the description and the comments. */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='secondary'] { padding-block-start: var(--space-6); }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] { display: flex; align-items: center; gap: var(--space-8); block-size: calc(var(--type-heading-3-size) * var(--type-heading-3-leading)); }
   /* Sort by sits 3 above the count's centre (WC-1280-L: its ink y63–76 against the count's y66–83). */
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] > [data-dl-part='sort'] { display: inline-flex; margin-block-end: calc(var(--space-1) + var(--space-0-5)); }
@@ -135,11 +139,11 @@
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] > [data-dl-part='author'] { display: flex; align-items: baseline; gap: var(--space-1); font-size: var(--type-caption-size); line-height: var(--type-caption-leading); font-weight: var(--weight-medium); }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] > [data-dl-part='comment-actions'] { display: flex; align-items: center; gap: var(--space-1); margin-inline-start: calc(-1 * var(--space-2)); }
   /* Up next: rows 8 apart; thumbnail 220 wide (176 + 48 − 4), 16:9, radius 8 (12 − 4); text 12 after it; title 14/20 w500, two lines; meta 12/18 (W-1280-L). */
-  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] { display: grid; grid-template-columns: calc(var(--size-column-min-s) + var(--space-12) - var(--space-1)) minmax(0, 1fr); align-items: start; gap: var(--space-3); }
-  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: calc(var(--radius-lg) - var(--space-1)); background: var(--color-bg-sunken); }
-  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-1); inset-inline-end: var(--space-1); display: flex; }
-  [data-dl='youtube-watch'] > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='next-text'] { display: grid; gap: var(--space-1); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] { display: grid; grid-template-columns: calc(var(--size-column-min-s) + var(--space-12) - var(--space-1)) minmax(0, 1fr); align-items: start; gap: var(--space-3); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: calc(var(--radius-lg) - var(--space-1)); background: var(--color-bg-sunken); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-1); inset-inline-end: var(--space-1); display: flex; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='next-text'] { display: grid; gap: var(--space-1); }
   /* Search (S-1280-L): x96 beside the mini guide, 1160 wide at 1280 (24 each side); filters a 56 row with Filters at the end;
      rows 16 apart, frame 500 wide 16:9 radius 10 (read from the corner pixels), words 16 after it. */
   [data-dl='youtube-results'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--t-youtube-site-feed-inset); padding-block-end: var(--space-6); }
@@ -151,11 +155,14 @@
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
   /* Words: title 18/26 w400, two lines, the ⋮ menu at its end; views · age 12/18 under it; the channel line padded 12 0 with a 24 avatar and the name 8 after it; the snippet 12/18 (S-1280-L; content keeps it to two lines). */
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] { display: grid; min-inline-size: 0; }
-  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] { position: relative; display: grid; padding-inline-end: var(--space-12); }
-  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: 0; display: grid; }
+  /* The title's box stops 48 short of the column (S-720-L: 280 of 328); the ⋮ sits in that room, outside it. */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] { position: relative; display: grid; margin-inline-end: var(--space-12); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: calc(-1 * var(--space-12)); display: grid; }
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] { display: flex; align-items: start; gap: var(--space-2); padding-block: var(--space-3); }
   /* The name sits 4.5 below the avatar's top in a 27 high line (S-1280-L: channel 51 high, avatar +12, name +16.5). */
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] > [data-dl-part='name'] { display: grid; padding-block: calc(var(--space-1) + var(--space-0-5) / 4); }
+  /* The snippet stops at two lines, ending in an ellipsis (S-720-L, the reference's line clamp 2). */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='snippet'] { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
   /* Format marks 8 under the snippet: 4K is 22×18, a hairline #CCCCCC edge, radius 2, 12/18 #606060 words padded 4 (S-1280-L y527–544). */
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='badges'] { display: flex; gap: var(--space-1); margin-block-start: var(--space-2); }
   /* Chapters: a 36 high tonal strip, radius 8, 20 under the marks: a 50×28 frame 8 in, "N chapters" 12/18 w500 12 after it, the
@@ -180,7 +187,7 @@
     [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     [data-dl='youtube-watch'] { padding-block-start: 0; padding-inline: 0; }
     [data-dl='youtube-watch'] > [data-dl-part='primary'] > :not([data-dl-part='player']),
-    [data-dl='youtube-watch'] > [data-dl-part='secondary'] { margin-inline: var(--space-4); }
+    :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] { margin-inline: var(--space-4); }
     [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { border-radius: 0; }
   }
 }

@@ -155,11 +155,38 @@ function Watch({ view }: { view: YoutubeRecord }) {
   const [seek, setSeek] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
   const [playing, setPlaying] = useState(true);
+  // One column (W-720-L): up next moves between the description and the comments, in reading order too.
+  const [oneColumn, setOneColumn] = useState(narrowWatch);
+  useEffect(() => {
+    const media = window.matchMedia(oneColumnQuery);
+    const follow = () => setOneColumn(media.matches);
+    media.addEventListener('change', follow);
+    return () => media.removeEventListener('change', follow);
+  }, []);
+  const upNext = (
+    <aside data-dl-part="secondary" aria-label={c.upNext}>
+      <ul data-dl-part="next">
+        {next.map((v) => (
+          <li key={v.id} data-dl-part="next-item">
+            <div data-dl-part="frame">
+              <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
+              <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
+            </div>
+            <div data-dl-part="next-text">
+              <Heading level={3} size="label" lines={2}>{v.title}</Heading>
+              <Text variant="caption" tone="muted">{v.channel}</Text>
+              <Text variant="caption" tone="muted">{v.views} <span aria-hidden="true">•</span> {v.age}</Text>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
   return (
     <ScrollArea label={video.title}>
       <div data-dl="youtube-watch">
         <div data-dl-part="primary">
-          <div data-dl-part="player" data-scheme="dark">
+          <div data-dl-part="player" data-scheme="dark" data-aspect={video.aspect}>
             <div data-dl-part="screen" role="img" aria-label={c.player} />
             <IconOverrides icons={playerPack.glyphs}>
             <div data-dl-part="controls">
@@ -206,6 +233,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
             <span data-dl-part="stats"><Text variant="inherit">{w.stats}</Text></span>
             <Text variant="body-sm">{w.description}</Text>
           </div>
+          {oneColumn && upNext}
           <section data-dl-part="comments" aria-label={c.comments}>
             <div data-dl-part="comments-head">
               <Heading level={2} size={3}>{w.commentCount}</Heading>
@@ -238,23 +266,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
             </ul>
           </section>
         </div>
-        <aside data-dl-part="secondary" aria-label={c.upNext}>
-          <ul data-dl-part="next">
-            {next.map((v) => (
-              <li key={v.id} data-dl-part="next-item">
-                <div data-dl-part="frame">
-                  <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
-                  <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
-                </div>
-                <div data-dl-part="next-text">
-                  <Heading level={3} size="label" lines={2}>{v.title}</Heading>
-                  <Text variant="caption" tone="muted">{v.channel}</Text>
-                  <Text variant="caption" tone="muted">{v.views} <span aria-hidden="true">•</span> {v.age}</Text>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </aside>
+        {!oneColumn && upNext}
       </div>
     </ScrollArea>
   );
@@ -274,7 +286,9 @@ function Search({ view }: { view: YoutubeRecord }) {
       <div data-dl="youtube-results">
         <div data-dl-part="chips">
           <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(x) => setChip(x.length ? x : chip)} chips={s.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
-          <Button label={c.filtersButton} icon="filter-lines" emphasis="quiet" />
+          <IconOverrides icons={playerPack.glyphs}>
+            <Button label={c.filtersButton} icon={playerIcons.name('filters-tune')} emphasis="quiet" iconEnd />
+          </IconOverrides>
         </div>
         <ul data-dl-part="list" aria-label={c.results}>
           {results.map(({ v, snippet, badges, chapters }) => (
@@ -317,3 +331,6 @@ function Search({ view }: { view: YoutubeRecord }) {
 }
 
 const slug = (label: string) => label.toLowerCase().replace(/\s+/g, '-');
+/** The watch page's one-column width, as site.css has it. */
+const oneColumnQuery = '(max-width: 64rem)';
+const narrowWatch = () => typeof window !== 'undefined' && window.matchMedia(oneColumnQuery).matches;

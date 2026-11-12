@@ -144,6 +144,12 @@
     text-align: center;
   }
 
+  /* The icon after the words (a Filters button's tune glyph). */
+  [data-dl='button'][data-icon-end] > [data-dl-part='layer'],
+  [data-dl='button'][data-icon-end] > [data-dl-part='fill'] > [data-dl-part='layer'] {
+    flex-direction: row-reverse;
+  }
+
   /* A disclosure that's open: the selected tint, the one cue for "open". */
   [data-dl='button'][aria-expanded='true'] {
     background-color: var(--c-button-expanded-fill);

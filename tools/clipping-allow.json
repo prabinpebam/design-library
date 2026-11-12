@@ -86,6 +86,12 @@
       "reason": "Q145.Y F34: a search result's chapter titles on one line in the chapters strip, ending in an ellipsis as the reference does; the full titles are in the text and open with Show chapters"
     },
     {
+      "file": "packages/templates/youtube/parts/layouts/site.css",
+      "selector": "[data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='snippet']",
+      "kind": "text truncation",
+      "reason": "Q145.Y F39: a search result's matching words held to two lines, ending in an ellipsis, as the reference clamps them; the video's page holds the full description"
+    },
+    {
       "file": "packages/core/css/fundamentals/controls.css",
       "selector": "[data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl-part='value']",
       "kind": "text truncation",

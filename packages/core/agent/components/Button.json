@@ -40,6 +40,12 @@
           "description": "The icon above the label and larger, for a command that leads its group (an app ribbon's Paste); beside it by default."
         },
         {
+          "name": "iconEnd",
+          "type": "boolean",
+          "default": "false",
+          "description": "The icon after the words instead of before them, for a command whose glyph follows its name (a Filters button with its tune glyph). Before them by default."
+        },
+        {
           "name": "tone",
           "type": "'inherit' | 'link'",
           "description": "`inherit`: the enclosing surface's text colour, for a quiet action. `link`: a call to action that reads as a link (an outlined Sign in): link-coloured words and no fill; with `emphasis=\"default\"` it keeps its edge."

@@ -31,7 +31,7 @@
     ],
     "chips": ["All", "Music", "Cooking", "Live", "Woodworking", "Travel", "Gardening", "Podcasts", "Recently uploaded", "Watched", "New to you"],
     "videos": [
-      { "id": "v1", "title": "Building a cedar planter box in one afternoon, start to finish", "channel": "Grain & Glue", "views": "412K views", "age": "3 days ago", "duration": "18:42" },
+      { "id": "v1", "title": "Building a cedar planter box in one afternoon, start to finish", "channel": "Grain & Glue", "views": "412K views", "age": "3 days ago", "duration": "18:42", "aspect": "16:9" },
       { "id": "v2", "title": "Slow morning in the harbour town: a walking tour with no talking", "channel": "Quiet Streets", "views": "1.2M views", "age": "2 weeks ago", "duration": "1:04:10" },
       { "id": "v3", "title": "Three weeknight noodle soups you can make from the pantry", "channel": "Kitchen Table Notes", "views": "88K views", "age": "5 hours ago", "duration": "12:07" },
       { "id": "v4", "title": "Why do rivers bend? The physics of meanders, explained with sand", "channel": "Field Lab", "views": "2.4M views", "age": "1 year ago", "duration": "14:55" },
