@@ -36,6 +36,12 @@ export interface ActionListProps extends DataAttributes {
   size?: ListItemProps['size'];
   /** Lines between items: `between` full width, `inset` from the words (past the leading visual), `groups` only between groups. One line per boundary. */
   dividers?: 'none' | 'between' | 'inset' | 'groups';
+  /**
+   * `rows` (default) one action per line. `tiles` a grid of tiles, as many across as fit at `--c-list-tile-min`, each
+   * the whole tile a button with its icon above its name and description: a catalogue of things to add. Groups keep
+   * their headings; tiles need no dividers.
+   */
+  layout?: 'rows' | 'tiles';
 }
 
 /** One action of an action list: an id, what ListItem draws, and what it does. */
@@ -332,14 +338,15 @@ function GridList({ label, rows, selection = 'none', value = [], onChange, size,
   );
 }
 
-function ActionList({ label, actions, groups, size, dividers = 'none', mode: _mode, ...data }: ActionListProps) {
+function ActionList({ label, actions, groups, size, dividers = 'none', layout = 'rows', mode: _mode, ...data }: ActionListProps) {
   const base = useId();
+  const tiles = layout === 'tiles';
   const item = ({ id, onSelect, ...shown }: ListAction) => (
     <li key={id}>
-      <ListItem {...shown} role="button" size={size} onClick={onSelect} />
+      <ListItem {...shown} role="button" size={size} layout={tiles ? 'tile' : undefined} onClick={onSelect} />
     </li>
   );
-  const marks = { 'data-dl': 'list', 'data-mode': 'action', 'data-dividers': dividers === 'none' ? undefined : dividers };
+  const marks = { 'data-dl': 'list', 'data-mode': 'action', 'data-layout': tiles ? 'tiles' : undefined, 'data-dividers': dividers === 'none' || tiles ? undefined : dividers };
   if (!groups)
     return (
       <ul {...data} {...marks} aria-label={label}>

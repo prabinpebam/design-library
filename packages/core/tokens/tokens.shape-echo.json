@@ -336,6 +336,16 @@
         "$description": "Corners of an item's hover, selected and pressed fills, the whole shape (echoed for shape contexts)"
       }
     },
+    "list": {
+      "$extensions": {
+        "owner": "List"
+      },
+      "tile-radius": {
+        "$type": "dimension",
+        "$value": "{radius.md}",
+        "$description": "A tile's corners: a control's (echoed for shape contexts)"
+      }
+    },
     "media-player": {
       "$extensions": {
         "owner": "MediaPlayer"

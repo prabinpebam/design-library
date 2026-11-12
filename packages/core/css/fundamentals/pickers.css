@@ -223,6 +223,25 @@
     text-decoration: none;
   }
 
+  /* A tile (ActionList layout tiles): icon above the name and description, on a control's surface; the whole tile is
+     the target. Hover, press, focus and unavailable read the item's usual state rules. */
+  [data-dl='list-item'][data-layout='tile'] {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--c-list-tile-content-gap);
+    padding: var(--c-list-tile-padding);
+    border: var(--border-hairline) solid var(--color-border-control);
+    border-radius: var(--c-list-tile-radius);
+    background-color: var(--color-bg-control);
+  }
+
+  [data-dl='list-item'][data-layout='tile'] > [data-dl-part='item-words'] {
+    flex: none;
+    align-self: stretch;
+    padding-block: 0;
+  }
+
   [data-dl='list-item'][aria-selected='true'] {
     background-color: var(--state-selected);
   }

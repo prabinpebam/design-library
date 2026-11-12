@@ -138,6 +138,15 @@ export default {
       render: () => <Grouped />,
     },
     {
+      title: 'Tiles: a catalogue to add from',
+      description: 'layout="tiles": a grid of tiles, as many across as fit at the tile minimum (--c-list-tile-min); each whole tile is the button, its icon above its name and one line of description. Groups keep their headings. For a palette of things to add, such as an editor’s blocks.',
+      code: `<List mode="action" layout="tiles" label="Add a block" groups={[
+  { id: 'text', heading: 'Text', actions: [{ id: 'heading', label: 'Heading', description: 'A title for a part of the page', icon: 'text', onSelect: add }, …] },
+  { id: 'media', heading: 'Pictures', actions: […] },
+]} />`,
+      render: () => <Tiles />,
+    },
+    {
       title: 'Plain list with dividers',
       description: 'Plain items split by a full-width line, for long items read one after another.',
       code: `<List variant="plain" dividers="between" items={notes} />`,
@@ -307,6 +316,39 @@ function DrillIn() {
           { id: 'appearance', label: 'Appearance', description: 'Theme, contrast and density', icon: 'scheme-light', drillIn: true, onSelect: did('Opened Appearance.') },
           { id: 'notify', label: 'Notifications', meta: '3 on', icon: 'comment', drillIn: true, onSelect: did('Opened Notifications.') },
           { id: 'search', label: 'Search and indexing', icon: 'search', drillIn: true, onSelect: did('Opened Search and indexing.') },
+        ]}
+      />
+      <Text variant="body-sm" tone="muted">{last}</Text>
+    </>
+  );
+}
+
+function Tiles() {
+  const [last, did] = useLast();
+  return (
+    <>
+      <List
+        mode="action"
+        layout="tiles"
+        label="Add a block"
+        groups={[
+          {
+            id: 'text',
+            heading: 'Text',
+            actions: [
+              { id: 'heading', label: 'Heading', description: 'A title for a part of the page', icon: 'text', onSelect: did('Added a heading.') },
+              { id: 'list', label: 'List', description: 'Points read one after another', icon: 'list', onSelect: did('Added a list.') },
+              { id: 'quote', label: 'Quote', description: 'Someone’s words, with their name', icon: 'comment', onSelect: did('Added a quote.') },
+            ],
+          },
+          {
+            id: 'media',
+            heading: 'Pictures',
+            actions: [
+              { id: 'image', label: 'Picture', description: 'One photo with a caption', icon: 'image', onSelect: did('Added a picture.') },
+              { id: 'grid', label: 'Photo grid', description: 'Several photos in a grid', icon: 'grid', onSelect: did('Added a photo grid.') },
+            ],
+          },
         ]}
       />
       <Text variant="body-sm" tone="muted">{last}</Text>

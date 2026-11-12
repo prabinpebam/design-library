@@ -1049,6 +1049,21 @@
         "$type": "dimension",
         "$value": "{space.stack-row}",
         "$description": "Between the options of a selectable list, so neighbouring fills never touch: the one rows role every list of filled rows reads (Q13, Q60) (echoed for space contexts)"
+      },
+      "tile-content-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "Between a tile's icon and its words (echoed for space contexts)"
+      },
+      "tile-gap": {
+        "$type": "dimension",
+        "$value": "{space.inline-item}",
+        "$description": "Between an action list's tiles, across and down (echoed for space contexts)"
+      },
+      "tile-padding": {
+        "$type": "dimension",
+        "$value": "{space.inset-md}",
+        "$description": "Inside a tile, around its icon, name and description (echoed for space contexts)"
       }
     },
     "media-player": {

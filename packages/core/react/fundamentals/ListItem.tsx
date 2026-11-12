@@ -24,6 +24,11 @@ export interface ListItemProps extends DataAttributes {
   descriptionPosition?: 'block' | 'inline';
   /** `s` 32 px for dense desktop menus (44 px on a coarse pointer), `normal` 44 px, `l` 56 px for avatars and pictures. Default `normal`. */
   size?: 's' | 'normal' | 'l';
+  /**
+   * `row` (default) lays the item out in a line. `tile` stacks the icon above the name and the description in a
+   * control's surface, for a catalogue of things to add (ActionList `layout="tiles"` sets it). An action only.
+   */
+  layout?: 'row' | 'tile';
   /** Leading icon from the active set. */
   icon?: IconName;
   /** Keep the icon column empty so this item's words line up with siblings that have icons. */
@@ -130,6 +135,7 @@ export function ListItem({
   description,
   descriptionPosition = 'block',
   size = 'normal',
+  layout = 'row',
   icon,
   inset,
   avatar,
@@ -192,6 +198,7 @@ export function ListItem({
       tabIndex={role === 'listitem' ? undefined : role === 'row' ? (tabbable ? 0 : -1) : role === 'button' && !(disabled && !inactive) ? 0 : -1}
       data-dl="list-item"
       data-size={size === 'normal' ? undefined : size}
+      data-layout={layout === 'tile' ? 'tile' : undefined}
       data-tone={tone}
       data-active={active ? '' : undefined}
       data-active-appearance={activeAppearance === 'tint' ? 'tint' : undefined}

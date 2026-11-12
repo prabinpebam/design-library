@@ -111,6 +111,11 @@
           "name": "dividers",
           "type": "'none' | 'between' | 'inset' | 'groups'",
           "description": "Lines between items: `between` full width, `inset` from the words (past the leading visual), `groups` only between groups. One line per boundary."
+        },
+        {
+          "name": "layout",
+          "type": "'rows' | 'tiles'",
+          "description": "`rows` (default) one action per line. `tiles` a grid of tiles, as many across as fit at `--c-list-tile-min`, each the whole tile a button with its icon above its name and description: a catalogue of things to add. Groups keep their headings; tiles need no dividers."
         }
       ]
     },
@@ -350,6 +355,8 @@
     "--c-list-item-padding-inline",
     "--c-list-measure",
     "--c-list-option-gap",
+    "--c-list-tile-gap",
+    "--c-list-tile-min",
     "--color-bg",
     "--color-bg-raised",
     "--color-border",
@@ -363,6 +370,13 @@
     "--type-caption-leading",
     "--type-caption-size",
     "--type-label-weight"
+  ],
+  "settings": [
+    {
+      "var": "--c-list-tile-min",
+      "default": "16rem",
+      "description": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/list",
   "usedBy": [

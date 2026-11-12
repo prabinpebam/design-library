@@ -1,6 +1,10 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--list": {
+      "reason": "catalogue inventory: (DesignUp template 2, gap i, LR16) the generic opt-in layout=\"tiles\" on ActionList and layout=\"tile\" on ListItem (defaults rows/row unchanged) add a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--treeview": {
       "reason": "catalogue inventory: (DesignUp template 2, gap h) the generic opt-in reorderable and onReorder on TreeView (default off) add a story and source-derived prop rows below the viewport; only the right scrollbar track changes.",
       "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]

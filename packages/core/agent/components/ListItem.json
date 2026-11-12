@@ -46,6 +46,11 @@
           "description": "`s` 32 px for dense desktop menus (44 px on a coarse pointer), `normal` 44 px, `l` 56 px for avatars and pictures. Default `normal`."
         },
         {
+          "name": "layout",
+          "type": "'row' | 'tile'",
+          "description": "`row` (default) lays the item out in a line. `tile` stacks the icon above the name and the description in a control's surface, for a catalogue of things to add (ActionList `layout=\"tiles\"` sets it). An action only."
+        },
+        {
           "name": "icon",
           "type": "IconName",
           "description": "Leading icon from the active set."
@@ -189,6 +194,7 @@
     "Progress"
   ],
   "tokens": [
+    "--border-hairline",
     "--border-thick",
     "--c-list-item-gap",
     "--c-list-item-media",
@@ -200,8 +206,13 @@
     "--c-list-item-size",
     "--c-list-item-size-l",
     "--c-list-item-size-s",
+    "--c-list-tile-content-gap",
+    "--c-list-tile-padding",
+    "--c-list-tile-radius",
     "--color-accent",
     "--color-accent-subtle",
+    "--color-bg-control",
+    "--color-border-control",
     "--color-border-strong",
     "--color-focus",
     "--color-status-danger-fg",

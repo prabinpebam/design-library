@@ -107,6 +107,30 @@
     position: relative;
   }
 
+  /* Tiles: a grid of whole-tile buttons, as many across as fit at the tile minimum; each tile fills its cell's height.
+     The list takes its container's width even where siblings keep their own, so columns can form. */
+  [data-dl='list'][data-mode='action'][data-layout='tiles'] {
+    align-self: stretch;
+  }
+
+  /* A group's heading lines up with its tiles' edges, not with row words. */
+  [data-dl='list'][data-mode='action'][data-layout='tiles'] > [data-dl-part='group'] > [data-dl-part='group-heading'] {
+    padding-inline: 0;
+  }
+
+  [data-dl='list'][data-mode='action'][data-layout='tiles']:is(ul),
+  [data-dl='list'][data-mode='action'][data-layout='tiles'] > [data-dl-part='group'] > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--c-list-tile-min)), 1fr));
+    gap: var(--c-list-tile-gap);
+  }
+
+  [data-dl='list'][data-mode='action'][data-layout='tiles']:is(ul) > li,
+  [data-dl='list'][data-mode='action'][data-layout='tiles'] > [data-dl-part='group'] > ul > li {
+    display: flex;
+    min-inline-size: 0;
+  }
+
   /* Dividers sit in the gap the list already owns, so geometry is the same with or without them. One per boundary. */
   [data-dl='list']:is([data-dividers='between'], [data-dividers='inset']) li {
     position: relative;

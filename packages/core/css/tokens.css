@@ -314,6 +314,11 @@
   --c-list-gap: var(--space-stack-item);
   --c-list-option-gap: var(--space-stack-row);
   --c-list-group-gap: var(--space-stack-group);
+  --c-list-tile-min: var(--size-column-min);
+  --c-list-tile-gap: var(--space-inline-item);
+  --c-list-tile-padding: var(--space-inset-md);
+  --c-list-tile-content-gap: var(--space-stack-pair);
+  --c-list-tile-radius: var(--radius-md);
   --c-list-indent: var(--space-inset-md);
   --c-list-measure: var(--size-measure);
   --c-list-inline-row-gap: var(--space-stack-pair);
@@ -1705,6 +1710,9 @@
   --c-list-inline-gap: var(--space-inline-group);
   --c-list-inline-row-gap: var(--space-stack-pair);
   --c-list-option-gap: var(--space-stack-row);
+  --c-list-tile-content-gap: var(--space-stack-pair);
+  --c-list-tile-gap: var(--space-inline-item);
+  --c-list-tile-padding: var(--space-inset-md);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
   --c-menu-button-padding-inline: var(--space-inset-sm);
@@ -1997,6 +2005,9 @@
   --c-list-inline-gap: var(--space-inline-group);
   --c-list-inline-row-gap: var(--space-stack-pair);
   --c-list-option-gap: var(--space-stack-row);
+  --c-list-tile-content-gap: var(--space-stack-pair);
+  --c-list-tile-gap: var(--space-inline-item);
+  --c-list-tile-padding: var(--space-inset-md);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
   --c-menu-button-padding-inline: var(--space-inset-sm);
@@ -2289,6 +2300,9 @@
   --c-list-inline-gap: var(--space-inline-group);
   --c-list-inline-row-gap: var(--space-stack-pair);
   --c-list-option-gap: var(--space-stack-row);
+  --c-list-tile-content-gap: var(--space-stack-pair);
+  --c-list-tile-gap: var(--space-inline-item);
+  --c-list-tile-padding: var(--space-inset-md);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
   --c-menu-button-padding-inline: var(--space-inset-sm);
@@ -2581,6 +2595,9 @@
   --c-list-inline-gap: var(--space-inline-group);
   --c-list-inline-row-gap: var(--space-stack-pair);
   --c-list-option-gap: var(--space-stack-row);
+  --c-list-tile-content-gap: var(--space-stack-pair);
+  --c-list-tile-gap: var(--space-inline-item);
+  --c-list-tile-padding: var(--space-inset-md);
   --c-media-player-caption-gap: var(--space-stack-item);
   --c-menu-button-gap: var(--space-inline-pair);
   --c-menu-button-padding-inline: var(--space-inset-sm);
@@ -2736,6 +2753,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);
   --c-navigation-item-radius: var(--radius-md);
@@ -2802,6 +2820,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);
   --c-navigation-item-radius: var(--radius-md);
@@ -2868,6 +2887,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);
   --c-navigation-item-radius: var(--radius-md);
@@ -2934,6 +2954,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);
   --c-navigation-item-radius: var(--radius-md);
@@ -3000,6 +3021,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);
   --c-navigation-item-radius: var(--radius-md);
@@ -3058,6 +3080,7 @@
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
+  --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
   --c-menu-button-radius: var(--radius-md);
   --c-navigation-item-radius: var(--radius-md);

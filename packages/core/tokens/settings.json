@@ -28,6 +28,9 @@
   "StickyBar": {
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
   },
+  "List": {
+    "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length."
+  },
   "Section": {
     "--c-section-gap": "Between a section's head (heading and intro) and its content (default space.stack-section). A theme whose page gap is close to it sets the group gap here, so a heading stays visibly with its content.",
     "--c-section-content-gap": "Between the parts of a section's content (default space.stack-group)."
