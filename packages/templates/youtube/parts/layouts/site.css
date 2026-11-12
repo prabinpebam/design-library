@@ -18,18 +18,19 @@
   [data-dl='youtube-site'] > [data-dl-part='masthead'] { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-inline-group); padding-inline: var(--space-4); }
   [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) { display: flex; align-items: center; }
   /* A neutral wordmark in the logo's box (x56, 123 wide, H-1280-L): a plain mark and an original name, never the product logo. */
-  [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) > [data-dl-part='wordmark'] { display: flex; align-items: center; gap: var(--space-1); padding-inline: var(--space-4) var(--space-3); color: var(--color-text); text-decoration: none; font-size: var(--text-l); font-weight: var(--weight-bold); letter-spacing: var(--tracking-display); }
+  [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) > [data-dl-part='wordmark'] { display: flex; flex: none; align-items: center; gap: var(--space-0-5); padding-inline: var(--space-4) var(--space-2); color: var(--color-text); text-decoration: none; font-size: var(--text-m); font-weight: var(--weight-bold); letter-spacing: var(--tracking-display); }
   [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) > [data-dl-part='wordmark'] > [data-dl-part='mark'] { display: grid; place-items: center; flex: none; inline-size: var(--space-6); block-size: var(--space-5); border-radius: var(--radius-sm); background: var(--color-text); color: var(--color-bg); }
-  /* Search: 536 + 64 wide, 40 high (H-1280-L); voice 16 after it. */
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] { display: flex; align-items: center; justify-content: center; gap: var(--space-4); min-inline-size: 0; }
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { display: grid; inline-size: min(100%, 37.5rem); /* 536 + 64 (H-1280-L): no width step holds it */ }
+  /* Search: 536 + 64 wide, 40 high (H-1280-L); voice 16 after it. The group's centre sits 10 right of the window's centre
+     (H-1280-L 650, H-1440-L 730), so the centre column starts 12 later than it ends. */
+  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] { display: flex; align-items: center; justify-content: center; gap: var(--space-4); min-inline-size: 0; padding-inline-start: var(--space-3); }
+  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { display: grid; inline-size: min(100%, 37.5rem); /* 536 + 64 (H-1280-L) */ }
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='voice'] { display: grid; }
   /* Signed-out end: settings, then Sign in 8 after it (H-1280-L). */
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='end'] { display: flex; align-items: center; gap: var(--space-2); }
 
   /* Mini guide: 72 wide, padding-inline 4; entries 64×76, radius 10, icon 24 at y+16 over a 10/16 label (H-1280-L). */
-  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; padding-inline: var(--space-1); }
-  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry'] { display: flex; flex-direction: column; align-items: center; gap: var(--t-youtube-guide-mini-gap); inline-size: var(--t-youtube-guide-mini-entry-width); padding-block: var(--t-youtube-guide-mini-padding-block-start) var(--t-youtube-guide-mini-padding-block-end); border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: 0.625rem; line-height: 1.6; /* 10/16 (H-1280-L): below the core type scale's smallest step */ }
+  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; padding: var(--t-youtube-guide-mini-inset-block-start) var(--space-1) 0; }
+  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry'] { display: flex; flex-direction: column; align-items: center; gap: calc(var(--t-youtube-guide-mini-gap) - var(--space-0-5)); /* 6 */ inline-size: var(--t-youtube-guide-mini-entry-width); padding-block: var(--t-youtube-guide-mini-padding-block-start) calc(var(--t-youtube-guide-mini-padding-block-end) + var(--space-0-5)); /* 16 0 14 */ border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: 0.625rem; line-height: 1.6; }
   [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
 
   /* Guide: 240 wide, each section padded 12 with entries 204 wide (24 free at the end), a rule between sections (G-1280-L).
@@ -39,6 +40,7 @@
   [data-dl='youtube-site'] > [data-dl-part='scrim'] { display: none; }
   [data-dl='youtube-site'][data-guide='toggled'] > [data-dl-part='guide'] { position: fixed; inset-block: 0; inset-inline-start: 0; z-index: var(--layer-overlay); display: grid; inline-size: var(--size-nav-width); background: var(--color-bg); }
   [data-dl='youtube-site'][data-guide='toggled'] > [data-dl-part='scrim'] { position: fixed; inset: 0; z-index: var(--layer-overlay); display: block; background: var(--color-bg-overlay); }
+  /* The guide's change point is the reference's own (1313, H-1280-L vs H-1440-L); a media query can't read a token. */
   @media (min-width: 82.0625rem) {
     [data-dl='youtube-site']:not([data-guide='toggled']) { --youtube-feed-inset: var(--t-youtube-site-feed-inset-guide); grid-template-columns: var(--size-nav-width) minmax(0, 1fr); }
     [data-dl='youtube-site']:not([data-guide='toggled']) > [data-dl-part='mini'] { display: none; }
@@ -55,7 +57,7 @@
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'] { display: flex; align-items: center; gap: var(--space-6); block-size: var(--size-control-md); padding-inline: var(--space-3); border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'][aria-current='page'] { background: var(--c-chip-fill); font-weight: var(--weight-medium); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] { display: grid; justify-items: start; gap: var(--space-3); padding: var(--space-1) var(--space-4) var(--space-2); font-size: var(--text-s); }
+  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] { display: grid; justify-items: start; gap: var(--space-3); padding: var(--space-1) var(--t-youtube-guide-prompt-inset) var(--space-2); font-size: var(--text-s); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] > p { margin: 0; }
 
   [data-dl='youtube-site'] > [data-dl-part='main'] { grid-column: 2; grid-row: 2; display: grid; min-block-size: 0; }

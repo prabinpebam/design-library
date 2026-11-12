@@ -1,8 +1,8 @@
 {
-  "$description": "Q145.Y reference spec .design-library/youtube-ref/README.md (headless, signed out, 1280/1440/720, light and dark). Sources are capture ids: H home, S search, G guide open, C channel grid, T hashtag grid, W watch; L light, D dark. Type: Roboto Flex (OFL) from the font registry stands in for Roboto. Unmeasured values say so.",
-  "font.text": { "$value": "'Roboto Flex Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
-  "font.ui": { "$value": "'Roboto Flex Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
-  "font.display": { "$value": "'Roboto Flex Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
+  "$description": "Q145.Y reference spec .design-library/youtube-ref/README.md (headless, signed out, 1280/1440/720, light and dark). Sources are capture ids: H home, S search, G guide open, C channel grid, T hashtag grid, W watch; L light, D dark. Type: Roboto (OFL) from the font registry, the reference's own face. Unmeasured values say so.",
+  "font.text": { "$value": "'Roboto Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
+  "font.ui": { "$value": "'Roboto Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
+  "font.display": { "$value": "'Roboto Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
   "color.bg": { "$value": { "light": "#ffffff", "dark": "#0f0f0f" }, "$description": "Page: H-1280-L html #FFFFFF, S-1280-D ytd-app #0F0F0F." },
   "color.text": { "$value": { "light": "#0f0f0f", "dark": "#f1f1f1" }, "$description": "Text primary: W-1280-L/D title, G-1280-D guide labels." },
   "color.text-muted": { "$value": { "light": "#606060", "dark": "#aaaaaa" }, "$description": "Meta and subscriber lines: T-1280-L/D, S-1280-L/D." },
@@ -44,5 +44,6 @@
   "c.field.action-padding-inline": { "$value": "1.25rem", "$description": "The search button is 64 wide around a 24 icon (H-1280-L)." },
   "radius.md": { "$value": "0.625rem", "$description": "Guide entries, expanded and mini: radius 10 (G-1280-L, H-1280-L)." },
   "c.badge.size-s": { "$value": "1.25rem", "$description": "The length badge is 20 high (C-1280-L); icons grow to 24 here, the badge doesn't." },
+  "color.bg-overlay": { "$value": "rgba(0, 0, 0, 0.5)", "$description": "The drawer scrim: black at 50 %, reads #7F7F7F on white (G-1280-L); dark unmeasured, same scrim." },
   "c.menu-button.size": { "$value": "2.5rem", "$description": "The card's ⋮ menu is 40×40 (T-1280-L, C-1280-L)." }
 }

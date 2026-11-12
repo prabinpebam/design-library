@@ -12,5 +12,7 @@
     --t-youtube-guide-mini-padding-block-end: var(--space-3);
     --t-youtube-guide-mini-gap: var(--space-2);
     --t-youtube-guide-title-height: var(--size-control-sm);
+    --t-youtube-guide-mini-inset-block-start: var(--space-1);
+    --t-youtube-guide-prompt-inset: var(--space-5);
   }
 }

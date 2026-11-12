@@ -25,7 +25,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
   const [chip, setChip] = useState([view.chips[0] ?? '']);
   // The guide button: on a wide window it folds the 240 guide to the mini guide; below that it opens the guide as a drawer.
   const [toggled, setToggled] = useState(false);
-  useEffect(() => { void loadFace('roboto-flex'); }, []);
+  useEffect(() => { void loadFace('roboto'); }, []);
   useEffect(() => {
     if (!toggled) return undefined;
     const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setToggled(false); };
