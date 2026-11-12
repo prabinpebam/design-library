@@ -8,6 +8,8 @@ export { loadTemplate, loadSite, partsSite, partRoute } from './load';
 export type { SiteFiles } from './load';
 export { SiteView, aliasFor, matchPage, pageFor, titleFor } from './SiteView';
 export type { SiteViewProps, PageMatch } from './SiteView';
+export { usePageHead, PageHead } from './head';
+export type { PageHeadInfo } from './head';
 export { resolveData, deriveValues, findItem, itemPage, itemRoute, isRef, isItemValue, isBinding, isDerived, meets } from './collections';
 export type { ResolveDataOptions, Binding } from './collections';
 export { resolveUnconfirmed, findUnconfirmed, isUnconfirmed } from './unconfirmed';

@@ -14,6 +14,7 @@ import { SectionAnchor } from '../react/behaviour/section-anchor';
 import { matchPath, Router } from '../site';
 import { BLOCKS } from './blocks';
 import { findItem, isBinding, resolveData } from './collections';
+import { usePageHead } from './head';
 import { pageGridPlacements, pageGridRecordProblems, type PageGridRecordCell } from './page-grid';
 import { LAYOUTS, resolveLinks } from './TemplateView';
 import type { Block, BlockRenderer, PageDocument, RenderContext, Site, SiteDocument, TemplateContent } from './types';
@@ -107,40 +108,6 @@ export function titleFor(doc: SiteDocument, page: { title: string; windowTitle?:
   return (doc.titlePattern ?? '{page} · {site}').replace('{page}', page.title).replace('{site}', doc.title);
 }
 
-/** Sets a `meta` or `link` element in the head for the page shown, and takes it away again. */
-function useHead(selector: string, make: () => HTMLElement, attribute: string, value: string | undefined) {
-  useEffect(() => {
-    if (value === undefined) return;
-    let el = document.head.querySelector<HTMLElement>(selector);
-    const added = !el;
-    if (!el) {
-      el = make();
-      document.head.appendChild(el);
-    }
-    const before = el.getAttribute(attribute);
-    el.setAttribute(attribute, value);
-    return () => {
-      if (added) el?.remove();
-      else if (before === null) el?.removeAttribute(attribute);
-      else el?.setAttribute(attribute, before);
-    };
-  }, [selector, attribute, value, make]);
-}
-
-const meta = (key: 'name' | 'property', name: string) => () => {
-  const el = document.createElement('meta');
-  el.setAttribute(key, name);
-  return el;
-};
-const metaDescription = meta('name', 'description');
-const metaRobots = meta('name', 'robots');
-const metaImage = meta('property', 'og:image');
-const linkCanonical = () => {
-  const el = document.createElement('link');
-  el.setAttribute('rel', 'canonical');
-  return el;
-};
-
 interface BoundaryProps {
   path: string;
   development: boolean;
@@ -226,13 +193,7 @@ function SitePage({ site, development }: { site: Site; development: boolean }) {
   const page = data(raw, pageFile) as PageDocument & { title: string; description?: string; picture?: string };
 
   const title = titleFor(doc, page.route === '/' && !page.windowTitle && page.id === doc.home ? { title: page.title, windowTitle: doc.title } : page);
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
-  useHead('meta[name="description"]', metaDescription, 'content', page.description);
-  useHead('meta[name="robots"]', metaRobots, 'content', page.hidden || missing ? 'noindex' : undefined);
-  useHead('meta[property="og:image"]', metaImage, 'content', page.picture ? assets[page.picture]?.src : undefined);
-  useHead('link[rel="canonical"]', linkCanonical, 'href', page.canonical);
+  usePageHead({ title, description: page.description, hidden: page.hidden || missing, picture: page.picture, canonical: page.canonical }, assets);
 
   const href = (to: string) => router.href(`/${to}`);
   const resolve = <T,>(value: T): T => resolveUnconfirmed(resolveLinks(value, href), doc.strings?.unconfirmed);
