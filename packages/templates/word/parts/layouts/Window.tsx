@@ -1,13 +1,13 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Checkbox, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
+import { Avatar, Button, Checkbox, DataTable, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type IconName, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
-import type { WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
+import type { WordBackstageTemplate, WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
 
 export interface WindowProps extends DataAttributes {
   /** Validated shared content: the document, its comments and every label. */
   view: WordRecord;
-  /** A directly openable review state: `home`, `document`, `insert`, `draw`, `design`, `design-gallery`, `layout`, `references`, `mailings`, `review`, `view`, `help`, `navigation`, `comments` or `dark`. */
+  /** A directly openable review state: `home`, `document`, `backstage`, `insert`, `draw`, `design`, `design-gallery`, `layout`, `references`, `mailings`, `review`, `view`, `help`, `navigation`, `comments` or `dark`. */
   screen?: string;
   /** Resolves an entry in the template's `assets.json`. */
   picture?: (id: string) => { src: string; alt: string };
@@ -29,7 +29,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const c = view.copy;
   const userAvatar = picture?.('userAvatar');
   const rootRef = useRef<HTMLDivElement>(null);
+  const styleStripRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState(tabFor(screen));
+  const [backstageOpen, setBackstageOpen] = useState(screen === 'backstage');
+  const [fileFilter, setFileFilter] = useState<'recent' | 'favorites' | 'shared'>('recent');
+  const [fileQuery, setFileQuery] = useState('');
+  const [bsPromptOpen, setBsPromptOpen] = useState(false);
+  const [bsPrompt, setBsPrompt] = useState('');
   const [pane, setPane] = useState<'navigation' | 'comments' | undefined>(paneFor(screen));
   const [copilotOpen, setCopilotOpen] = useState(screen === 'dark');
   const [galleryOpen, setGalleryOpen] = useState(screen === 'design-gallery');
@@ -44,6 +50,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   useEffect(() => {
     setPane(paneFor(screen));
     setTab(tabFor(screen));
+    setBackstageOpen(screen === 'backstage');
     setCopilotOpen(screen === 'dark');
     setGalleryOpen(screen === 'design-gallery');
   }, [screen]);
@@ -67,50 +74,10 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const styleTile = (s: WordStyleSet, active: boolean, onChoose: () => void, large = false) => (
     <div key={s.id} data-dl="word-style-tile" data-large={large ? '' : undefined} data-active={active ? '' : undefined}>
       {/* binary-setting: chooses one document style set in a visual thumbnail strip, as in the reference. */}
-      <Button label={s.name} icon="file" iconOnly size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
-      {large ? (
-        <svg data-dl-part="preview" viewBox="0 0 62 46" width="62" height="46" aria-hidden="true">
-          <rect x="0.5" y="0.5" width="61" height="45" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-map-selection-indicator)' : 'var(--t-word-window-border)'} strokeWidth={active ? '1.5' : '0.8'} />
-          {s.variant === 'bar-num' && <rect x="4" y="5" width="54" height="6.5" fill="var(--color-text)" />}
-          {s.variant === 'caps-rule' && <line x1="4" y1="12" x2="58" y2="12" stroke="var(--color-accent)" strokeWidth="0.9" />}
-          {s.variant === 'boxed' && <line x1="4" y1="12" x2="58" y2="12" stroke="var(--color-border-control)" strokeWidth="0.8" />}
-          <text
-            x={s.variant === 'caps-centered' ? '31' : '5'}
-            y="10"
-            textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
-            fontSize="6.8"
-            fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
-            fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
-          >
-            {s.titleText}
-          </text>
-          <text x="5" y="18" fontSize="5.4" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
-            {s.headingText}
-          </text>
-          <path d="M5 23h50M5 26.5h47M5 30h49M5 33.5h40M5 38h48M5 41.5h42" stroke="currentColor" strokeWidth="1.05" opacity="0.55" />
-        </svg>
-      ) : (
-        <svg data-dl-part="preview" viewBox="0 0 60 50" width="60" height="50" aria-hidden="true">
-          <rect x="0.5" y="0.5" width="59" height="49" fill="var(--t-word-window-ruler-inner)" stroke={active ? 'var(--color-text)' : 'none'} strokeWidth={active ? '1.2' : '0'} />
-          {s.variant === 'bar-num' && <rect x="4" y="6" width="52" height="7" fill="var(--color-text)" />}
-          {s.variant === 'caps-rule' && <line x1="4" y1="13" x2="56" y2="13" stroke="var(--color-accent)" strokeWidth="1" />}
-          {s.variant === 'boxed' && <line x1="4" y1="13" x2="56" y2="13" stroke="var(--color-border-control)" strokeWidth="0.8" />}
-          <text
-            x={s.variant === 'caps-centered' ? '30' : '5'}
-            y="11"
-            textAnchor={s.variant === 'caps-centered' ? 'middle' : 'start'}
-            fontSize="7.2"
-            fontWeight={s.variant === 'default' || s.variant === 'serif' ? '400' : '700'}
-            fill={s.variant === 'bar-num' ? 'var(--t-word-window-ruler-inner)' : s.variant === 'caps-blue' || s.variant === 'caps-rule' ? 'var(--color-text-accent-display)' : 'currentColor'}
-          >
-            {s.titleText}
-          </text>
-          <text x="5" y="21" fontSize="5.8" fontWeight="600" fill={s.variant === 'caps-blue' || s.variant === 'default' ? 'var(--color-text-accent-display)' : 'currentColor'}>
-            {s.headingText}
-          </text>
-          <path d="M5 27h48M5 31h45M5 35h47M5 39h40M5 43h32" stroke="currentColor" strokeWidth="1.2" opacity="0.45" />
-        </svg>
-      )}
+      <Button label={s.name} icon="file" iconOnly tooltip={false} size="xs" emphasis="quiet" pressed={active} onClick={onChoose} />
+      <span data-dl-part="preview" aria-hidden="true">
+        <Icon name={`style-set-${s.variant}` as IconName} />
+      </span>
     </div>
   );
 
@@ -119,16 +86,11 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     if (cmd.kind === 'style-gallery') {
       const sets = view.styleSets ?? [];
       return (
-        <div key={key} data-dl="word-style-strip">
-          <svg data-dl-part="bg" viewBox="0 0 100 56" preserveAspectRatio="none" aria-hidden="true">
-            <rect x="0.5" y="0.5" width="99" height="55" rx="3" fill="var(--t-word-window-ruler-inner)" stroke="var(--t-word-window-border)" vectorEffect="non-scaling-stroke" />
-          </svg>
+        <div key={key} ref={styleStripRef} data-dl="word-style-strip">
           <div data-dl-part="tiles">
             {sets.slice(0, 11).map((s) => styleTile(s, activeStyle === s.id, () => setActiveStyle(s.id)))}
           </div>
-          <span data-dl-part="expand">
-            <Button label={c.moreStyleSets} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" onClick={() => setGalleryOpen((o) => !o)} />
-          </span>
+          <span data-dl-part="expand" aria-hidden="true" />
         </div>
       );
     }
@@ -251,11 +213,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         )}
         {g.columns?.map((col, ci) => (
           <Fragment key={`col-${ci}`}>
-            {ci > 0 && g.id === 'window' && (
-              <svg data-dl="word-col-sep" viewBox="0 0 3 62" width="3" height="62" aria-hidden="true">
-                <line x1="1.5" y1="2" x2="1.5" y2="60" stroke="var(--t-word-window-border)" />
-              </svg>
-            )}
+            {ci > 0 && g.id === 'window' && <span data-dl="word-col-sep" aria-hidden="true" />}
             <div data-dl="word-rows" data-count={col.length}>
               {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${ci}-${r}-${i}`))}</div>)}
             </div>
@@ -266,89 +224,97 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             {g.rows.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${r}-${i}`))}</div>)}
           </div>
         )}
-        {g.columns && g.endLead && (
-          <svg data-dl="word-col-sep" viewBox="0 0 3 62" width="3" height="62" aria-hidden="true">
-            <line x1="1.5" y1="2" x2="1.5" y2="60" stroke="var(--t-word-window-border)" />
-          </svg>
-        )}
+        {g.columns && g.endLead && <span data-dl="word-col-sep" aria-hidden="true" />}
         {g.endLead?.map((cmd, i) => command(cmd, `end-${i}`))}
       </>
     ),
   });
 
   const headings = view.document.filter((b) => b.style === 'heading-1' || b.style === 'heading-2');
+  const bs = view.backstage;
+
+  const templateThumb = (t: WordBackstageTemplate) => (
+    <span data-dl-part="thumb-svg" data-variant={t.variant} aria-hidden="true">
+      <Icon name={`bs-tpl-${t.variant}` as IconName} />
+    </span>
+  );
+
   return (
     <IconOverrides icons={wordPack.glyphs}>
-      <div {...data} ref={rootRef} data-dl="word-window" data-scheme={screen === 'dark' ? 'dark' : undefined}>
-        <svg data-dl-part="backdrop" viewBox="0 0 100 922" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="word-mica-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--color-map-nav-shell)" />
-              <stop offset="100%" stopColor="var(--t-word-window-mica-end)" />
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="100" height="46" fill="url(#word-mica-grad)" />
-          <rect x="0" y="46" width="100" height="125" fill="var(--t-word-window-tab-wash)" />
-          <rect x="0" y="171" width="100" height="730" fill="var(--color-map-nav)" />
-          <rect x="0" y="901" width="100" height="21" fill="var(--color-bg-sunken)" />
-        </svg>
-        <svg data-dl-part="frame-ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <rect x="0" y="0" width="100" height="100" fill="none" stroke="currentColor" strokeWidth="2" vectorEffect="non-scaling-stroke" />
-        </svg>
+      <div {...data} ref={rootRef} data-dl="word-window" data-material="solid" data-backstage={backstageOpen ? '' : undefined} data-scheme={screen === 'dark' ? 'dark' : undefined}>
         <header data-dl-part="titlebar" data-density="compact">
+          {backstageOpen && (
+            <span data-dl-part="flourish" aria-hidden="true">
+              <Icon name={'backstage-flourish' as IconName} />
+            </span>
+          )}
           <div data-dl-part="quick">
             <span data-dl-part="app-mark">
               <Icon name={'app-doc-mark' as IconName} label={c.appMark} size="sm" />
             </span>
-            <div data-dl-part="autosave">
-              {/* binary-setting: AutoSave is an on/off setting, so it is a Switch, as in the reference. */}
-              <Switch label={c.autoSave} labelPosition="start" size="xs" stateText={{ on: c.on, off: c.off }} checked={autoSave} onChange={setAutoSave} />
-            </div>
-            <span data-dl-part="qat-save">
-              <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-            </span>
-            <span data-dl-part="qat-item">
-              <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
-            </span>
-            <span data-dl-part="qat-chevron">
-              <Button label={c.undoOptions} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
-            </span>
-            <span data-dl-part="qat-item">
-              <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
-            </span>
-            <span data-dl-part="qat-chevron">
-              <Button label={c.customize} icon={'qat-customize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
-            </span>
+            {!backstageOpen && (
+              <>
+                <div data-dl-part="autosave">
+                  {/* binary-setting: AutoSave is an on/off setting, so it is a Switch, as in the reference. */}
+                  <Switch label={c.autoSave} labelPosition="start" size="xs" stateText={{ on: c.on, off: c.off }} checked={autoSave} onChange={setAutoSave} />
+                </div>
+                <span data-dl-part="qat-save">
+                  <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                </span>
+                <span data-dl-part="qat-item">
+                  <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+                </span>
+                <span data-dl-part="qat-chevron">
+                  <Button label={c.undoOptions} icon={'qat-chevron' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+                </span>
+                <span data-dl-part="qat-item">
+                  <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+                </span>
+                <span data-dl-part="qat-chevron">
+                  <Button label={c.customize} icon={'qat-customize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                </span>
+              </>
+            )}
           </div>
           <div data-dl-part="doc-title">
             <span data-dl-part="doc-name">{view.documentName}</span>
             <span data-dl-part="save-state">{view.saveState}</span>
           </div>
-          <div data-dl-part="search">
-            {searchOpen ? (
-              <TextField label={c.search} hideLabel type="search" icon="search" size="xs" placeholder={c.search} value={query} onChange={setQuery} />
+          {!backstageOpen && (
+            <div data-dl-part="search">
+              {searchOpen ? (
+                <TextField label={c.search} hideLabel type="search" icon="search" size="xs" placeholder={c.search} value={query} onChange={setQuery} />
+              ) : (
+                <div data-dl="word-search-box">
+                  <span data-dl-part="trigger">
+                    <Button label={c.search} icon="search" size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => setSearchOpen(true)} />
+                  </span>
+                  <span data-dl-part="mic">
+                    <Button label={c.voiceSearch} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+          <div data-dl-part="window-actions">
+            {backstageOpen ? (
+              <span data-dl-part="bs-head-icon">
+                <Button label={c.feedbackTitle} icon={'feedback-person' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+              </span>
             ) : (
-              <div data-dl="word-search-box">
-                <svg data-dl-part="bg" viewBox="0 0 10 10" preserveAspectRatio="none" aria-hidden="true">
-                  <rect width="10" height="10" fill="var(--t-word-window-search-bg)" />
-                </svg>
-                <span data-dl-part="trigger">
-                  <Button label={c.search} icon="search" size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => setSearchOpen(true)} />
-                </span>
-                <span data-dl-part="mic">
-                  <Button label={c.voiceSearch} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-                </span>
+              <div data-dl-part="upgrade">
+                <Button label={c.upgradePlan} icon={'diamond' as IconName} size="xs" />
+                <span data-dl-part="upgrade-dot" aria-hidden="true" />
               </div>
             )}
-          </div>
-          <div data-dl-part="window-actions">
-            <div data-dl-part="upgrade">
-              <Button label={c.upgradePlan} icon={'diamond' as IconName} size="xs" />
-              <span data-dl-part="upgrade-dot" aria-hidden="true" />
-            </div>
             <span data-dl-part="avatar">
               <Avatar name={view.user} src={userAvatar?.src} size={24} />
             </span>
+            {backstageOpen && (
+              <span data-dl-part="bs-head-icon">
+                <Button label={c.helpTitle} icon={'bs-help-q' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+              </span>
+            )}
             <div data-dl-part="caption-buttons">
               <span data-dl-part="win-btn"><Button label={c.minimise} icon={'win-minimize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
               <span data-dl-part="win-btn"><Button label={c.maximise} icon={'win-maximize' as IconName} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
@@ -357,11 +323,187 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           </div>
         </header>
 
+        {backstageOpen && bs ? (
+          <div data-dl="word-backstage">
+            <nav data-dl-part="rail" data-density="compact" aria-label={c.backstageHome}>
+              <div data-dl-part="back">
+                <Button label={bs.backLabel} icon={'bs-back' as IconName} iconOnly size="s" emphasis="quiet" onClick={() => setBackstageOpen(false)} />
+              </div>
+              <div data-dl-part="nav-group">
+                {bs.primaryNav.map((item) => (
+                  <div key={item.id} data-dl-part="nav-item" data-active={item.active ? '' : undefined}>
+                    {/* binary-setting: active Backstage section in the File navigation rail, matching 12-backstage-home.png. */}
+                    <Button label={item.label} icon={item.icon as IconName} size="s" emphasis="quiet" align="start" pressed={item.active} onClick={() => { if (item.id !== 'home') setBackstageOpen(false); }} />
+                  </div>
+                ))}
+              </div>
+              <span data-dl-part="rail-sep" aria-hidden="true" />
+              <div data-dl-part="nav-group">
+                {bs.docNav.map((item) => (
+                  <div key={item.id} data-dl-part="nav-item" data-indented={!item.icon ? '' : undefined}>
+                    <Button label={item.label} icon={item.icon as IconName | undefined} size="s" emphasis="quiet" align="start" onClick={() => { if (item.id === 'close') setBackstageOpen(false); }} />
+                  </div>
+                ))}
+              </div>
+              <div data-dl-part="rail-foot">
+                <span data-dl-part="rail-sep" aria-hidden="true" />
+                <div data-dl-part="nav-group">
+                  {bs.footerNav.map((item) => (
+                    <div key={item.id} data-dl-part="nav-item">
+                      <Button label={item.label} icon={item.icon as IconName} size="s" emphasis="quiet" align="start" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </nav>
+
+            <main data-dl-part="main" aria-label={c.backstageHome}>
+              <ScrollArea label={c.backstageHome} mode="always" bar="gutter">
+                <div data-dl="word-backstage-stage">
+                  <section data-dl-part="hero">
+                    <Heading level={1} size={3}>{bs.heroHeading}</Heading>
+                    <div data-dl-part="hero-controls">
+                      {bsPromptOpen ? (
+                        <div data-dl-part="prompt-field">
+                          <TextField label={bs.promptPlaceholder} hideLabel icon="plus" size="s" placeholder={bs.promptPlaceholder} value={bsPrompt} onChange={setBsPrompt} />
+                        </div>
+                      ) : (
+                        <div data-dl="word-bs-prompt">
+                          <span data-dl-part="lead">
+                            <Button label={bs.promptPlaceholder} icon="plus" size="s" emphasis="quiet" tone="inherit" align="start" onClick={() => setBsPromptOpen(true)} />
+                          </span>
+                          <span data-dl-part="actions">
+                            <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" />
+                            <span data-dl-part="create-pill">
+                              <Button label={bs.createLabel} size="xs" disabled />
+                            </span>
+                          </span>
+                        </div>
+                      )}
+                      <div data-dl-part="suggestions" data-density="compact">
+                        {bs.suggestions.map((s) => (
+                          <Button key={s} label={s} size="s" onClick={() => { setBsPrompt(s); setBsPromptOpen(true); }} />
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+
+                  <section data-dl-part="new-section">
+                    <div data-dl-part="sec-head">
+                      <span data-dl-part="sec-title">
+                        <Icon name={'qat-chevron' as IconName} size="sm" />
+                        <Heading level={2} size="label">{bs.newHeading}</Heading>
+                      </span>
+                      <span data-dl-part="more-link">
+                        <Button label={bs.moreTemplates} size="xs" emphasis="quiet" />
+                        <Icon name={'bs-arrow-right' as IconName} size="sm" />
+                      </span>
+                    </div>
+                    <p data-dl-part="cloud-note">
+                      <span>{bs.cloudNotice} </span>
+                      <span data-dl-part="cloud-link">{bs.cloudLink}</span>
+                    </p>
+                    <div data-dl-part="template-row">
+                      {bs.templates.map((t) => (
+                        <div key={t.id} data-dl="word-bs-template">
+                          <div data-dl-part="thumb-box">
+                            <Button label={t.title} icon="file" iconOnly size="xs" emphasis="quiet" onClick={() => setBackstageOpen(false)} />
+                            {templateThumb(t)}
+                          </div>
+                          <span data-dl-part="caption" aria-hidden="true">{t.title}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  <section data-dl-part="rec-section">
+                    <div data-dl-part="sec-head">
+                      <span data-dl-part="sec-title">
+                        <Icon name={'qat-chevron' as IconName} size="sm" />
+                        <Heading level={2} size="label">{bs.recommendedHeading}</Heading>
+                      </span>
+                    </div>
+                    <div data-dl-part="rec-grid">
+                      {bs.recommended.map((rc) => (
+                        <article key={rc.id} data-dl="word-rec-card">
+                          <div data-dl-part="card-top">
+                            <div data-dl-part="card-head">
+                              <span data-dl-part="doc-badge">
+                                <Icon name={'app-doc-mark' as IconName} size="sm" />
+                              </span>
+                              <Heading level={3} size="label">{rc.title}</Heading>
+                            </div>
+                            <p data-dl-part="snippet">{rc.snippet}</p>
+                          </div>
+                          <div data-dl-part="card-foot">
+                            <Avatar name={rc.author} size={24} />
+                            <Text variant="caption" tone="muted">{rc.activity}</Text>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+
+                  <section data-dl-part="files-section">
+                    <div data-dl-part="filter-bar" data-density="compact">
+                      <div data-dl-part="pills">
+                        {bs.tabs.map((ft) => (
+                          <span key={ft.id} data-dl-part="pill">
+                            {/* binary-setting: chooses Recent, Favorites or Shared with Me filter tab, matching 12-backstage-home.png. */}
+                            <Button
+                              label={ft.label}
+                              size="s"
+                              emphasis={fileFilter === ft.id ? 'primary' : 'default'}
+                              pressed={fileFilter === ft.id}
+                              onClick={() => setFileFilter(ft.id)}
+                            />
+                          </span>
+                        ))}
+                      </div>
+                      <div data-dl-part="file-search">
+                        <TextField label={bs.searchPlaceholder} hideLabel type="search" icon="search" size="s" placeholder={bs.searchPlaceholder} value={fileQuery} onChange={setFileQuery} />
+                      </div>
+                    </div>
+                    <DataTable
+                      label={bs.tabs.find((t) => t.id === fileFilter)?.label ?? 'Recent'}
+                      columns={[
+                        { key: 'name', header: bs.columns.name },
+                        { key: 'modified', header: bs.columns.modified },
+                      ]}
+                      rows={bs.files
+                        .filter((f) => (fileFilter === 'favorites' ? f.favorite : fileFilter === 'shared' ? f.shared : true))
+                        .filter((f) => !fileQuery || f.name.toLowerCase().includes(fileQuery.toLowerCase()))
+                        .map((f) => ({
+                          id: f.id,
+                          cells: {
+                            name: (
+                              <span data-dl="word-file-cell">
+                                <span data-dl-part="doc-badge">
+                                  <Icon name={'app-doc-mark' as IconName} size="sm" />
+                                </span>
+                                <span data-dl-part="file-meta">
+                                  <span data-dl-part="file-title">{f.name}</span>
+                                  <span data-dl-part="file-loc">{f.location} · {f.owner}</span>
+                                </span>
+                              </span>
+                            ),
+                            modified: <span data-dl="word-file-mod">{f.modified}</span>,
+                          },
+                        }))}
+                    />
+                  </section>
+                </div>
+              </ScrollArea>
+            </main>
+          </div>
+        ) : (
+          <>
         <div data-dl-part="ribbon" data-density="compact">
           <Ribbon
             label={c.ribbon}
             selected={tab}
-            onChange={(next) => { if (next !== 'file') setTab(next); }}
+            endPlacement="corner"
+            onChange={(next) => { if (next === 'file') setBackstageOpen(true); else setTab(next); }}
             extra={
               <div data-dl="word-doc-actions">
                 {/* binary-setting: Comments shows or hides its pane, a toolbar toggle beside Editing and Share, as in the reference. */}
@@ -381,29 +523,39 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             }
             tabs={view.tabs.map((t) => ({ id: t.id, label: t.label, groups: (t.id === 'home' ? view.home : t.groups ?? []).map(group) }))}
           />
-          {tab === 'design' && galleryOpen && view.styleSets && view.styleSets.length > 0 && (() => {
+          {tab === 'design' && view.styleSets && view.styleSets.length > 0 && (() => {
             const sets = view.styleSets;
             const first = sets[0];
             return (
-              <div data-dl="word-style-gallery" data-material="floating" data-elevation="3" role="dialog" aria-label={c.styleGallery}>
-                <div data-dl-part="section">
-                  <span data-dl-part="section-head">{c.thisDocument}</span>
-                  <div data-dl-part="grid">
-                    {styleTile(first, activeStyle === first.id, () => { setActiveStyle(first.id); setGalleryOpen(false); }, true)}
+              <span data-dl-part="gallery-host">
+                <Popover
+                  trigger={{ label: c.moreStyleSets, icon: 'qat-chevron' as IconName, iconOnly: true, size: 'xs', emphasis: 'quiet' }}
+                  anchorRef={styleStripRef}
+                  side="over"
+                  open={galleryOpen}
+                  onOpenChange={setGalleryOpen}
+                >
+                  <div data-dl="word-style-gallery">
+                    <div data-dl-part="section">
+                      <span data-dl-part="section-head">{c.thisDocument}</span>
+                      <div data-dl-part="grid">
+                        {styleTile(first, activeStyle === first.id, () => { setActiveStyle(first.id); setGalleryOpen(false); }, true)}
+                      </div>
+                    </div>
+                    <div data-dl-part="section" data-grow="">
+                      <span data-dl-part="section-head">{c.builtIn}</span>
+                      <div data-dl-part="grid">
+                        {sets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }, true))}
+                      </div>
+                    </div>
+                    <div data-dl-part="menu-foot">
+                      <Button label={c.resetStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => { setActiveStyle('current'); setGalleryOpen(false); }} />
+                      <Button label={c.saveStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => setGalleryOpen(false)} />
+                      <span data-dl-part="grip" aria-hidden="true">••••</span>
+                    </div>
                   </div>
-                </div>
-                <div data-dl-part="section" data-grow="">
-                  <span data-dl-part="section-head">{c.builtIn}</span>
-                  <div data-dl-part="grid">
-                    {sets.slice(1).map((s) => styleTile(s, activeStyle === s.id, () => { setActiveStyle(s.id); setGalleryOpen(false); }, true))}
-                  </div>
-                </div>
-                <div data-dl-part="menu-foot">
-                  <Button label={c.resetStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => { setActiveStyle('current'); setGalleryOpen(false); }} />
-                  <Button label={c.saveStyleSet} size="xs" emphasis="quiet" align="start" onClick={() => setGalleryOpen(false)} />
-                  <span data-dl-part="grip" aria-hidden="true">••••</span>
-                </div>
-              </div>
+                </Popover>
+              </span>
             );
           })()}
         </div>
@@ -412,11 +564,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           <div data-dl-part="editor-col">
             {showRuler && (
               <div data-dl="word-ruler-h">
-                <span data-dl-part="tab-stop">
-                  <svg viewBox="0 0 23 23" width="23" height="23" aria-hidden="true">
-                    <rect x="0" y="0" width="23" height="23" fill="var(--t-word-window-ruler-bg)" />
-                    <path d="M9 7v6.5h6.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
-                  </svg>
+                <span data-dl-part="tab-stop" aria-hidden="true">
+                  <Icon name={'ruler-tab-stop' as IconName} />
                 </span>
                 <div data-dl-part="track-center">
                   {(() => {
@@ -429,8 +578,10 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     const pEnd = pStart + pWidth;
                     const ticks = Math.floor(rW / 8.1);
                     return (
+                      /* inline-svg: horizontal metric ruler computes live cm ticks, numerals and indent markers from canvas and pane width (F5). */
                       <svg viewBox={`0 0 ${rW} 23`} width="100%" height="23" preserveAspectRatio="none" role="img" aria-label={c.horizontalRuler}>
                         <rect x="0" y="0" width={rW} height="23" fill="var(--t-word-window-ruler-bg)" />
+                        <rect x={pageStart} y="5" width={pageW} height="12" fill="var(--t-word-window-border)" opacity="0.38" />
                         <rect x={pStart} y="5" width={pWidth} height="12" fill="var(--t-word-window-ruler-inner)" />
                         {Array.from({ length: ticks }, (_, i) => {
                           const x = Math.round((pStart - Math.floor(pStart / 8.1) * 8.1 + i * 8.1) * 10) / 10;
@@ -463,6 +614,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             <div data-dl-part="body">
               {showRuler && (
                 <div data-dl="word-ruler-v">
+                  {/* inline-svg: vertical metric ruler computes live cm ticks and rotated labels from page top margin (F5). */}
                   <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
                     <rect x="0" y="0" width="23" height="700" fill="var(--t-word-window-ruler-bg)" />
                     <rect x="3" y={copilotOpen ? 82 : 136} width="15" height={copilotOpen ? 618 : 564} fill="var(--t-word-window-ruler-inner)" />
@@ -522,10 +674,10 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                       </div>
                     )}
                     <article data-dl-part="page" data-empty={!showSampleDoc ? '' : undefined} data-narrow={copilotOpen ? '' : undefined}>
-                      {!showSampleDoc && copilotOpen && (
+                      {!showSampleDoc && (
                         <div data-dl-part="caret-row" aria-hidden="true">
                           <span data-dl-part="caret-block" />
-                          <Icon name={'comment-new' as IconName} size="sm" />
+                          {copilotOpen && <Icon name={'comment-new' as IconName} size="sm" />}
                         </div>
                       )}
                       {showSampleDoc && view.document.map((b, i) => {
@@ -563,9 +715,6 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
           {copilotOpen && view.copilotPane && (
             <aside data-dl="word-copilot-pane" data-density="compact" aria-label={c.copilot}>
-              <svg data-dl-part="bg" viewBox="0 0 10 10" preserveAspectRatio="none" aria-hidden="true">
-                <rect width="10" height="10" fill="var(--t-word-window-copilot-bg)" />
-              </svg>
               <div data-dl-part="head">
                 <Button label={view.copilotPane.menuLabel} icon="menu" iconOnly size="xs" emphasis="quiet" tone="inherit" />
                 <div data-dl-part="head-end">
@@ -579,9 +728,6 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 <div data-dl-part="prompts">
                   {view.copilotPane.prompts.map((p, i) => (
                     <div key={i} data-dl-part="prompt-chip">
-                      <svg data-dl-part="bg" viewBox="0 0 200 34" preserveAspectRatio="none" aria-hidden="true">
-                        <rect width="200" height="34" rx="17" fill="var(--t-word-window-copilot-chip)" />
-                      </svg>
                       <Button label={`${p.prefix}${p.emphasis}`} size="xs" emphasis="quiet" tone="inherit" align="start" />
                       <span data-dl-part="chip-words" aria-hidden="true">
                         <span data-dl-part="prefix">{p.prefix}</span>
@@ -635,6 +781,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             <span data-dl-part="zoom-pct"><Button label={`${zoom}%`} size="xs" emphasis="quiet" tone="inherit" /></span>
           </div>
         </footer>
+          </>
+        )}
       </div>
     </IconOverrides>
   );

@@ -600,5 +600,49 @@
  "c.slider.fill": {
   "$value": "transparent",
   "$description": "Word's zoom line has no progress fill: track-fill (#686868) shows on both sides of the thumb without adding a redundant fill (VN5)."
+ },
+ "c.popover.width": {
+  "$value": "54.875rem",
+  "$description": "Design style-set gallery popover width: 878 CSS px (732 PNG px in 05-design-gallery.png)."
+ },
+ "c.popover.padding": {
+  "$value": "0",
+  "$description": "Zero outer popover padding so word-style-gallery owns its exact 878 x 313 CSS px (732 x 261 PNG px) box."
+ },
+ "c.popover.gap": {
+  "$value": "{space.1-5}",
+  "$description": "6 CSS px between gallery sections."
+ },
+ "c.popup.radius": {
+  "$value": "0.25rem",
+  "$description": "4 CSS px popup corner radius matching 05-design-gallery.png."
+ },
+ "c.data-table.outline": {
+  "$value": "transparent",
+  "$description": "Backstage Recent table sits inside its rounded panel with no outer frame."
+ },
+ "c.data-table.divider": {
+  "$value": "{color.border}",
+  "$description": "Hairline between Backstage recent-file rows."
+ },
+ "c.data-table.head-bg": {
+  "$value": "transparent",
+  "$description": "Backstage table column headers sit bare over the panel."
+ },
+ "c.data-table.head-fg": {
+  "$value": "{color.text-muted}",
+  "$description": "Muted column header labels (Name, Date modified)."
+ },
+ "c.data-table.cell-block": {
+  "$value": "{space.2}",
+  "$description": "Compact 8 CSS px row padding in Backstage Recent list."
+ },
+ "c.data-table.cell-inline": {
+  "$value": "{space.2}",
+  "$description": "Compact 8 CSS px inline cell padding."
+ },
+ "c.data-table.radius": {
+  "$value": "0",
+  "$description": "Flush row dividers inside the Backstage files panel."
  }
 }

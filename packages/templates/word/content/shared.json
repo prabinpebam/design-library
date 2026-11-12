@@ -1008,8 +1008,7 @@
       { "id": "shaded", "name": "Shaded", "titleText": "TITLE", "headingText": "HEADING 1", "variant": "classic" },
       { "id": "word-2003", "name": "Classic", "titleText": "Title", "headingText": "Heading 1", "variant": "slate" },
       { "id": "word-2010", "name": "Modern", "titleText": "Title", "headingText": "Heading 1", "variant": "compact" },
-      { "id": "traditional", "name": "Traditional", "titleText": "Title", "headingText": "Heading 1", "variant": "serif" },
-      { "id": "structured", "name": "Structured", "titleText": "TITLE", "headingText": "Heading 1", "variant": "caps-blue" }
+      { "id": "traditional", "name": "Traditional", "titleText": "Title", "headingText": "Heading 1", "variant": "serif" }
     ],
     "document": [
       {
@@ -1083,7 +1082,102 @@
       "menuLabel": "Copilot menu",
       "moreLabel": "More Copilot actions"
     },
+    "backstage": {
+      "backLabel": "Back to document",
+      "primaryNav": [
+        { "id": "home", "label": "Home", "icon": "bs-home", "active": true },
+        { "id": "new", "label": "New", "icon": "bs-new" },
+        { "id": "open", "label": "Open", "icon": "bs-open" }
+      ],
+      "docNav": [
+        { "id": "info", "label": "Info", "icon": "bs-info" },
+        { "id": "save", "label": "Save", "icon": "bs-save" },
+        { "id": "save-as", "label": "Save As", "icon": "bs-save-as" },
+        { "id": "save-pdf", "label": "Save as\nPDF" },
+        { "id": "print", "label": "Print", "icon": "bs-print" },
+        { "id": "share", "label": "Share", "icon": "bs-share" },
+        { "id": "share-pdf", "label": "Share as\nPDF link" },
+        { "id": "export", "label": "Export", "icon": "bs-export" },
+        { "id": "close", "label": "Close", "icon": "bs-close-doc" }
+      ],
+      "footerNav": [
+        { "id": "account", "label": "Account", "icon": "bs-account" },
+        { "id": "feedback", "label": "Feedback", "icon": "feedback-person" },
+        { "id": "options", "label": "Options", "icon": "bs-options" }
+      ],
+      "heroHeading": "What would you like to create today?",
+      "promptPlaceholder": "Describe the document you’d like to write",
+      "createLabel": "Create",
+      "suggestions": [
+        "Draft a resume",
+        "Draft a small business plan",
+        "Draft a travel itinerary",
+        "Draft a cover letter",
+        "Draft an interview prep plan"
+      ],
+      "newHeading": "New",
+      "moreTemplates": "More templates",
+      "cloudNotice": "New files are automatically created in your default cloud location. You can always rename the file or move it to a different location.",
+      "cloudLink": "Open default cloud location",
+      "templates": [
+        { "id": "blank", "title": "Blank document", "variant": "blank" },
+        { "id": "tour", "title": "Welcome to Document", "variant": "tour" },
+        { "id": "toc", "title": "Insert your first table of cont...", "variant": "toc" },
+        { "id": "grant", "title": "Grant proposal", "variant": "grant" },
+        { "id": "minutes", "title": "Team meeting minutes", "variant": "minutes" },
+        { "id": "proposal", "title": "One-page business proposal", "variant": "proposal" }
+      ],
+      "recommendedHeading": "Recommended for You",
+      "recommended": [
+        {
+          "id": "rec-1",
+          "title": "Harbour survey Q4 summary",
+          "snippet": "Breakwater depth readings, tide conditions and mooring checks across fourteen sections.",
+          "author": "Jamie Park",
+          "activity": "You edited · 2h ago"
+        },
+        {
+          "id": "rec-2",
+          "title": "East jetty maintenance plan",
+          "snippet": "Scheduled diver inspection, capping stone reset and seasonal fender replacement.",
+          "author": "Maya Chen",
+          "activity": "Maya Chen shared · Yesterday"
+        },
+        {
+          "id": "rec-3",
+          "title": "Coastal mooring guidelines",
+          "snippet": "Updated harbour speed limits, visitor berth allocations and winter storm procedures.",
+          "author": "Alex Rivera",
+          "activity": "Alex Rivera commented · Tue"
+        },
+        {
+          "id": "rec-4",
+          "title": "Spring tide inspection log",
+          "snippet": "Weekly low-water sounding notes from the lighthouse steps to the fuel jetty.",
+          "author": "Sam Patel",
+          "activity": "Sam Patel edited · Mon"
+        }
+      ],
+      "tabs": [
+        { "id": "recent", "label": "Recent" },
+        { "id": "favorites", "label": "Favorites" },
+        { "id": "shared", "label": "Shared with Me" }
+      ],
+      "searchPlaceholder": "Search for a file",
+      "columns": { "name": "Name", "modified": "Date modified" },
+      "files": [
+        { "id": "f1", "name": "Harbour survey notes.docx", "location": "Documents › Surveys", "modified": "Just now", "owner": "Jamie Park", "favorite": true },
+        { "id": "f2", "name": "East breakwater tide log.docx", "location": "Shared › Coastal Ops", "modified": "Yesterday at 4:18 PM", "owner": "Maya Chen", "shared": true },
+        { "id": "f3", "name": "Mooring renewal checklist.docx", "location": "Documents › Operations", "modified": "Tue at 11:05 AM", "owner": "Alex Rivera", "favorite": true, "shared": true },
+        { "id": "f4", "name": "Dredging schedule 2026.docx", "location": "Shared › Engineering", "modified": "Nov 8", "owner": "Sam Patel", "shared": true },
+        { "id": "f5", "name": "Lighthouse steps repair spec.docx", "location": "Documents › Maintenance", "modified": "Nov 4", "owner": "Jamie Park" },
+        { "id": "f6", "name": "Quarterly safety briefing.docx", "location": "Documents › Operations", "modified": "Oct 29", "owner": "Maya Chen" }
+      ]
+    },
     "copy": {
+      "backstageHome": "File backstage home",
+      "feedbackTitle": "Send feedback",
+      "helpTitle": "Help",
       "thisDocument": "This Document",
       "builtIn": "Built-In",
       "resetStyleSet": "Reset to the Default Style Set",

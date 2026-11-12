@@ -43,6 +43,8 @@ export interface RibbonProps extends DataAttributes {
   extra?: ReactNode;
   /** Something at the far end of the command card, after the groups, such as a control that hides the ribbon. */
   end?: ReactNode;
+  /** Places `end` in flow beside the groups (`'flow'`, default) or pinned at the card's bottom-end corner (`'corner'`). */
+  endPlacement?: 'flow' | 'corner';
   /** An optional companion card beside the command card on the same band (an assistant or add-in launcher). */
   aside?: ReactNode;
   /** From the Button size scale, for the tab row: `normal` (default), `s` or `xs`. */
@@ -59,10 +61,10 @@ export interface RibbonProps extends DataAttributes {
  * reader hears "Font, group" before its commands. The launcher is a named button ("Font settings"). The card scrolls
  * sideways to its own edges when the groups don't fit, so no command is clipped or hidden.
  */
-export function Ribbon({ tabs, label, selected, defaultSelected, onChange, extra, end, aside, size = 'normal', ...data }: RibbonProps) {
+export function Ribbon({ tabs, label, selected, defaultSelected, onChange, extra, end, endPlacement = 'flow', aside, size = 'normal', ...data }: RibbonProps) {
   const id = useId();
   const renderCard = (tab: RibbonTab) => (
-    <div data-dl="ribbon-card">
+    <div data-dl="ribbon-card" data-end-placement={endPlacement === 'corner' ? 'corner' : undefined}>
       <ScrollArea axis="inline" data-dl-part="groups">
         <div data-dl="ribbon-groups">
           {tab.groups.map((group) => (

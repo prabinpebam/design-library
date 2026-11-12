@@ -86,6 +86,59 @@ export interface WordCopilotPane {
   moreLabel: string;
 }
 
+export interface WordBackstageNavItem {
+  id: string;
+  label: string;
+  icon?: string;
+  active?: boolean;
+}
+
+export interface WordBackstageTemplate {
+  id: string;
+  title: string;
+  variant: 'blank' | 'tour' | 'toc' | 'grant' | 'minutes' | 'proposal';
+}
+
+export interface WordRecommendedCard {
+  id: string;
+  title: string;
+  snippet: string;
+  author: string;
+  activity: string;
+}
+
+export interface WordRecentFile {
+  id: string;
+  name: string;
+  location: string;
+  modified: string;
+  owner: string;
+  favorite?: boolean;
+  shared?: boolean;
+}
+
+export interface WordBackstage {
+  backLabel: string;
+  primaryNav: WordBackstageNavItem[];
+  docNav: WordBackstageNavItem[];
+  footerNav: WordBackstageNavItem[];
+  heroHeading: string;
+  promptPlaceholder: string;
+  createLabel: string;
+  suggestions: string[];
+  newHeading: string;
+  moreTemplates: string;
+  cloudNotice: string;
+  cloudLink: string;
+  templates: WordBackstageTemplate[];
+  recommendedHeading: string;
+  recommended: WordRecommendedCard[];
+  tabs: { id: 'recent' | 'favorites' | 'shared'; label: string }[];
+  searchPlaceholder: string;
+  columns: { name: string; modified: string };
+  files: WordRecentFile[];
+}
+
 export interface WordRecord {
   documentName: string;
   saveState: string;
@@ -95,6 +148,7 @@ export interface WordRecord {
   home: WordGroup[];
   styleSets?: WordStyleSet[];
   copilotPane?: WordCopilotPane;
+  backstage?: WordBackstage;
   document: WordBlock[];
   comments: WordComment[];
   status: { page: string; words: string; language: string; predictions: string; accessibility: string; zoom: string };

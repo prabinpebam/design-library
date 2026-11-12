@@ -11,7 +11,7 @@
   "home": "document",
   "sections": [
     { "id": "editor", "title": "Editor", "summary": "Write, format, structure and review a document.", "flows": [
-      { "id": "write", "title": "Write and review", "summary": "The page with the Home ribbon, dark theme, navigation and comments.", "screens": ["home", "document", "dark", "navigation", "comments"] },
+      { "id": "write", "title": "Write and review", "summary": "The page with the Home ribbon, File backstage, dark theme, navigation and comments.", "screens": ["home", "document", "backstage", "dark", "navigation", "comments"] },
       { "id": "authoring", "title": "Insert, Draw and Design", "summary": "Insert elements, draw with ink and choose a document style set.", "screens": ["insert", "draw", "design", "design-gallery"] },
       { "id": "structure", "title": "Layout, References and Mailings", "summary": "Configure page setup and spacing, manage citations and run mail merge.", "screens": ["layout", "references", "mailings"] },
       { "id": "proofing", "title": "Review, View and Help", "summary": "Proofing, markup tracking, page views, rulers and support.", "screens": ["review", "view", "help"] }
@@ -20,6 +20,7 @@
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout", "content": "content/editor/write/home.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "document", "title": "Document", "component": "SiteLayout", "content": "content/document.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "backstage", "title": "File backstage", "component": "SiteLayout", "content": "content/editor/write/backstage.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "insert", "title": "Insert", "component": "SiteLayout", "content": "content/editor/authoring/insert.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "draw", "title": "Draw", "component": "SiteLayout", "content": "content/editor/authoring/draw.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "design", "title": "Design", "component": "SiteLayout", "content": "content/editor/authoring/design.json", "regions": [{"id":"main","accepts":["*"]}] },

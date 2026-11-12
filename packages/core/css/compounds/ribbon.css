@@ -32,6 +32,7 @@
   }
 
   [data-dl='ribbon-card'] {
+    position: relative;
     display: flex;
     align-items: stretch;
     min-inline-size: 0;
@@ -43,6 +44,7 @@
   [data-dl='ribbon-card'] > [data-dl-part='groups'] {
     flex: 1 1 auto;
     min-inline-size: 0;
+    border-radius: inherit;
   }
 
   [data-dl='ribbon-groups'] {
@@ -108,5 +110,11 @@
     display: flex;
     align-items: flex-end;
     padding: var(--c-ribbon-padding);
+  }
+
+  [data-dl='ribbon-card'][data-end-placement='corner'] > [data-dl-part='end'] {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
   }
 }

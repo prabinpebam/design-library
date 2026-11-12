@@ -26,5 +26,6 @@
     --t-word-window-icon-slate: var(--color-category-6);
     --t-word-window-icon-purple: var(--color-category-7);
     --t-word-window-icon-teal: var(--color-category-8);
+    --t-word-window-grip-tracking: var(--space-0-5);
   }
 }

@@ -8,6 +8,195 @@
     "record.shared": {
       "$ref": "#/$defs/WordRecord"
     },
+    "WordBackstage": {
+      "additionalProperties": false,
+      "properties": {
+        "backLabel": {
+          "type": "string"
+        },
+        "cloudLink": {
+          "type": "string"
+        },
+        "cloudNotice": {
+          "type": "string"
+        },
+        "columns": {
+          "additionalProperties": false,
+          "properties": {
+            "modified": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "modified"
+          ],
+          "type": "object"
+        },
+        "createLabel": {
+          "type": "string"
+        },
+        "docNav": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageNavItem"
+          },
+          "type": "array"
+        },
+        "files": {
+          "items": {
+            "$ref": "#/$defs/WordRecentFile"
+          },
+          "type": "array"
+        },
+        "footerNav": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageNavItem"
+          },
+          "type": "array"
+        },
+        "heroHeading": {
+          "type": "string"
+        },
+        "moreTemplates": {
+          "type": "string"
+        },
+        "newHeading": {
+          "type": "string"
+        },
+        "primaryNav": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageNavItem"
+          },
+          "type": "array"
+        },
+        "promptPlaceholder": {
+          "type": "string"
+        },
+        "recommended": {
+          "items": {
+            "$ref": "#/$defs/WordRecommendedCard"
+          },
+          "type": "array"
+        },
+        "recommendedHeading": {
+          "type": "string"
+        },
+        "searchPlaceholder": {
+          "type": "string"
+        },
+        "suggestions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tabs": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "enum": [
+                  "recent",
+                  "favorites",
+                  "shared"
+                ],
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "templates": {
+          "items": {
+            "$ref": "#/$defs/WordBackstageTemplate"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "backLabel",
+        "primaryNav",
+        "docNav",
+        "footerNav",
+        "heroHeading",
+        "promptPlaceholder",
+        "createLabel",
+        "suggestions",
+        "newHeading",
+        "moreTemplates",
+        "cloudNotice",
+        "cloudLink",
+        "templates",
+        "recommendedHeading",
+        "recommended",
+        "tabs",
+        "searchPlaceholder",
+        "columns",
+        "files"
+      ],
+      "type": "object"
+    },
+    "WordBackstageNavItem": {
+      "additionalProperties": false,
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "label"
+      ],
+      "type": "object"
+    },
+    "WordBackstageTemplate": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "variant": {
+          "enum": [
+            "blank",
+            "tour",
+            "toc",
+            "grant",
+            "minutes",
+            "proposal"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "variant"
+      ],
+      "type": "object"
+    },
     "WordBlock": {
       "additionalProperties": false,
       "properties": {
@@ -259,9 +448,74 @@
       ],
       "type": "object"
     },
+    "WordRecentFile": {
+      "additionalProperties": false,
+      "properties": {
+        "favorite": {
+          "type": "boolean"
+        },
+        "id": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "modified": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "shared": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "location",
+        "modified",
+        "owner"
+      ],
+      "type": "object"
+    },
+    "WordRecommendedCard": {
+      "additionalProperties": false,
+      "properties": {
+        "activity": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "snippet": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "snippet",
+        "author",
+        "activity"
+      ],
+      "type": "object"
+    },
     "WordRecord": {
       "additionalProperties": false,
       "properties": {
+        "backstage": {
+          "$ref": "#/$defs/WordBackstage"
+        },
         "comments": {
           "items": {
             "$ref": "#/$defs/WordComment"

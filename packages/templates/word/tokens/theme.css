@@ -116,6 +116,17 @@
     --c-slider-track-s: 0.0625rem;
     --c-slider-track-fill: #686868;
     --c-slider-fill: transparent;
+    --c-popover-width: 54.875rem;
+    --c-popover-padding: 0;
+    --c-popover-gap: var(--space-1-5);
+    --c-popup-radius: 0.25rem;
+    --c-data-table-outline: transparent;
+    --c-data-table-divider: var(--color-border);
+    --c-data-table-head-bg: transparent;
+    --c-data-table-head-fg: var(--color-text-muted);
+    --c-data-table-cell-block: var(--space-2);
+    --c-data-table-cell-inline: var(--space-2);
+    --c-data-table-radius: 0;
     --type-body-size: var(--text-m);
     --type-body-leading: var(--leading-normal);
     --type-lead-size: var(--text-l);
@@ -135,11 +146,9 @@
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-popup-width: var(--size-pane-width);
     --c-popup-height: var(--size-pane-width);
-    --c-popup-radius: var(--radius-md);
     --c-popup-border: var(--color-border);
     --c-popup-bg: var(--color-bg-raised);
     --c-tooltip-width: var(--size-pane-width);
-    --c-popover-width: var(--size-pane-width);
     --c-list-item-radius: var(--radius-md);
     --c-list-item-submenu-ink: var(--color-text-muted);
     --c-list-item-plate-ink: var(--color-text);
@@ -178,10 +187,6 @@
     --c-code-key-outline: var(--color-border-strong);
     --c-code-block-radius: var(--radius-md);
     --c-code-block-bg: var(--color-bg-sunken);
-    --c-data-table-outline: var(--color-border);
-    --c-data-table-divider: var(--color-border);
-    --c-data-table-head-bg: var(--color-bg-sunken);
-    --c-data-table-head-fg: var(--color-text-muted);
     --c-skeleton-fill: var(--color-border);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-field-radius: var(--radius-md);
@@ -299,9 +304,6 @@
       --c-colour-field-border: var(--color-border-strong);
       --c-context-matrix-head-fg: var(--color-text-muted);
       --c-context-matrix-outline: var(--color-border);
-      --c-data-table-divider: var(--color-border);
-      --c-data-table-head-fg: var(--color-text-muted);
-      --c-data-table-outline: var(--color-border);
       --c-editor-layout-divider: var(--color-border);
       --c-example-outline: var(--color-border);
       --c-field-readonly-border: var(--color-border);
@@ -333,9 +335,6 @@
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-context-matrix-outline: var(--color-border);
-    --c-data-table-divider: var(--color-border);
-    --c-data-table-head-fg: var(--color-text-muted);
-    --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
@@ -366,9 +365,6 @@
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-context-matrix-outline: var(--color-border);
-    --c-data-table-divider: var(--color-border);
-    --c-data-table-head-fg: var(--color-text-muted);
-    --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
     --c-field-readonly-border: var(--color-border);
@@ -405,7 +401,6 @@
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
-    --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
@@ -433,7 +428,6 @@
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
-    --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
@@ -461,7 +455,6 @@
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
-    --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
@@ -489,7 +482,6 @@
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
-    --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
@@ -517,7 +509,6 @@
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
-    --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-scroll-area-surface-radius: var(--radius-md);
@@ -546,7 +537,6 @@
     --c-menu-button-radius: var(--c-button-radius);
     --c-navigation-item-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
-    --c-popup-radius: var(--radius-md);
     --c-quote-text-size-s: var(--type-body-size);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);

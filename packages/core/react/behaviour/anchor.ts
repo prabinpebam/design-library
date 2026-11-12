@@ -7,7 +7,7 @@
  */
 import { useEffect, type RefObject } from 'react';
 
-export type AnchorSide = 'top' | 'bottom' | 'start' | 'end';
+export type AnchorSide = 'top' | 'bottom' | 'start' | 'end' | 'over';
 
 interface Rect {
   top: number;
@@ -16,19 +16,24 @@ interface Rect {
   right: number;
 }
 
-const opposite: Record<AnchorSide, AnchorSide> = { top: 'bottom', bottom: 'top', start: 'end', end: 'start' };
+const opposite: Record<Exclude<AnchorSide, 'over'>, Exclude<AnchorSide, 'over'>> = { top: 'bottom', bottom: 'top', start: 'end', end: 'start' };
 
 /** Where a surface of `size` goes for an anchor rectangle, in viewport pixels. `margin` is kept clear of the window's edges. Pure. */
 export function placeAnchored(anchor: Rect, size: { width: number; height: number }, viewport: { width: number; height: number }, side: AnchorSide, offset: number, rtl = false, margin = 8, align: 'center' | 'start' = 'center') {
-  const physical = (s: AnchorSide) => (s === 'start' ? (rtl ? 'right' : 'left') : s === 'end' ? (rtl ? 'left' : 'right') : s);
-  const room = (s: AnchorSide) => {
+  const clamp = (v: number, max: number) => Math.max(margin, Math.min(v, max - margin));
+  if (side === 'over') {
+    const x = clamp(rtl ? anchor.right - size.width : anchor.left, viewport.width - size.width);
+    const y = clamp(anchor.top, viewport.height - size.height);
+    return { side: 'over' as AnchorSide, x, y, arrow: 0 };
+  }
+  const physical = (s: Exclude<AnchorSide, 'over'>) => (s === 'start' ? (rtl ? 'right' : 'left') : s === 'end' ? (rtl ? 'left' : 'right') : s);
+  const room = (s: Exclude<AnchorSide, 'over'>) => {
     const p = physical(s);
     return p === 'top' ? anchor.top : p === 'bottom' ? viewport.height - anchor.bottom : p === 'left' ? anchor.left : viewport.width - anchor.right;
   };
-  const need = (s: AnchorSide) => (s === 'top' || s === 'bottom' ? size.height : size.width) + offset + margin;
+  const need = (s: Exclude<AnchorSide, 'over'>) => (s === 'top' || s === 'bottom' ? size.height : size.width) + offset + margin;
   const chosen = room(side) < need(side) && room(opposite[side]) > room(side) ? opposite[side] : side;
   const p = physical(chosen);
-  const clamp = (v: number, max: number) => Math.max(margin, Math.min(v, max - margin));
   if (p === 'top' || p === 'bottom') {
     // Above or below: centred on the anchor, or level with its start edge (a wide surface under a narrow button).
     const x = clamp(align === 'start' ? (rtl ? anchor.right - size.width : anchor.left) : (anchor.left + anchor.right) / 2 - size.width / 2, viewport.width - size.width);
@@ -72,9 +77,11 @@ export function useAnchored(open: boolean, anchor: RefObject<HTMLElement | null>
       const rtl = getComputedStyle(anchor.current).direction === 'rtl';
       const p = placeAnchored(anchor.current.getBoundingClientRect(), { width: el.offsetWidth, height: el.offsetHeight }, { width: doc.clientWidth, height: doc.clientHeight }, side, cssPixels(el, offsetVar), rtl, 8, align);
       el.dataset.side = p.side;
+      const sx = p.side === 'over' ? window.scrollX : 0;
+      const sy = p.side === 'over' ? window.scrollY : 0;
       // Logical, as the popup lists: from the inline start edge of the window.
-      el.style.setProperty('--anchored-start', `${rtl ? doc.clientWidth - p.x - el.offsetWidth : p.x}px`);
-      el.style.setProperty('--anchored-y', `${p.y}px`);
+      el.style.setProperty('--anchored-start', `${(rtl ? doc.clientWidth - p.x - el.offsetWidth : p.x) + sx}px`);
+      el.style.setProperty('--anchored-y', `${p.y + sy}px`);
       el.style.setProperty('--anchored-arrow', `${p.arrow}px`);
     };
     place();
