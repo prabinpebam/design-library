@@ -14,6 +14,8 @@
   /* A neutral app mark: a plain tile, never a product logo. */
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='app-mark'] { inline-size: var(--size-icon-md); block-size: var(--size-icon-md); margin-inline-end: var(--space-inline-pair); border-radius: var(--radius-sm); background: var(--color-map-nav-shell-on); }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='autosave'] { display: flex; padding-inline: var(--space-inset-sm); }
+  /* w-theme-07: the quick-access chevrons are about 6 px of ink, half a button's glyph. */
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='quick'] > [data-dl-part='qat-chevron'] { display: grid; --size-icon-sm: 0.75rem; }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] { display: flex; align-items: baseline; gap: var(--space-inline-pair); min-inline-size: 0; white-space: nowrap; overflow-wrap: normal; }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='doc-title'] > [data-dl-part='save-state'] { font-size: var(--text-s); }
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] { display: grid; justify-self: center; inline-size: min(100%, 30rem); }
@@ -29,7 +31,8 @@
   [data-dl='word-split'][data-stacked] { flex-direction: column; align-items: stretch; --size-icon-lg: var(--size-icon-xl); }
   [data-dl='word-command'] { display: flex; --size-icon-lg: var(--size-icon-xl); }
   /* Font name and size fields: 172 and 42 px wide (w-theme-07 x234-578 and 586-671 at 2x). */
-  [data-dl='word-field'] { display: grid; inline-size: 10.75rem; }
+  /* w-copilot-01: the size box's chevron is a 12 px glyph 4 px after the value, so \"12\" fits a 43 px box. */
+  [data-dl='word-field'] { display: grid; inline-size: 10.75rem; --space-inline-pair: var(--space-1); --size-icon-sm: 0.75rem; }
   [data-dl='word-field'][data-width='narrow'] { inline-size: 2.75rem; }
 
   [data-dl='word-window'] > [data-dl-part='body'] { display: flex; min-block-size: 0; }

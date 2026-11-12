@@ -72,14 +72,14 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
         <div data-dl-part="quick">
           <span data-dl-part="app-mark" role="img" aria-label={c.appMark} />
           <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-          <Button label={c.undoOptions} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+          <span data-dl-part="qat-chevron"><Button label={c.undoOptions} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
           <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" />
           <div data-dl-part="autosave">
             {/* binary-setting: AutoSave is an on/off setting, so it is a Switch, as in the reference. */}
             <Switch label={c.autoSave} labelPosition="start" size="xs" checked={autoSave} onChange={setAutoSave} />
           </div>
-          <Button label={c.customize} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+          <span data-dl-part="qat-chevron"><Button label={c.customize} icon="chevron-down" iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
         </div>
         <div data-dl-part="doc-title">
           <span data-dl-part="doc-name">{view.documentName}</span>
