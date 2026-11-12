@@ -109,6 +109,18 @@
     "--space-stack-item",
     "--weight-bold"
   ],
+  "settings": [
+    {
+      "var": "--c-section-gap",
+      "default": "2rem",
+      "description": "Between a section's head (heading and intro) and its content (default space.stack-section). A theme whose page gap is close to it sets the group gap here, so a heading stays visibly with its content."
+    },
+    {
+      "var": "--c-section-content-gap",
+      "default": "1rem",
+      "description": "Between the parts of a section's content (default space.stack-group)."
+    }
+  ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/section",
   "principles": [
     "visual-noise"

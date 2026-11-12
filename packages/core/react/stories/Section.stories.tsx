@@ -73,5 +73,14 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Head gap from the theme',
+      description:
+        'A section’s head sits a section gap from its content, expecting sections a page gap apart. A theme with a tighter page gap sets --c-section-gap (a theme setting) to the group gap, so each heading stays with its content and sections stay clearly further apart. Use settingsCss with your spacing contexts’ selector when the page re-resolves space below the root.',
+      code: `applySettings({ '--c-section-gap': 'var(--space-stack-group)' });
+// or, where spacing contexts re-resolve space below the root:
+settingsCss({ '--c-section-gap': 'var(--space-stack-group)' }, "[data-template='mine'] [data-space]");`,
+      render: () => <ScreenPreview src="site.html?frame=grouped#/app/harbour/home" title="Harbour home, section heads a group gap from their content" caption="Each section’s heading close to its content; sections a page gap apart." />,
+    },
   ],
 } satisfies StoryFile;

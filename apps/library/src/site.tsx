@@ -36,6 +36,7 @@ const routeOf = () => decodeURIComponent(window.location.hash.replace(/^#\/?/, '
 const FRAMES: Record<string, Record<string, string>> = {
   flush: { '--c-site-layout-padding-start': '0px' },
   skip: { '--c-site-layout-skip-radius': 'var(--radius-md)' },
+  grouped: { '--c-section-gap': 'var(--space-stack-group)' },
   tight: { '--c-site-layout-gap': 'var(--space-stack-section)', '--c-site-layout-padding-block': 'var(--space-stack-section)', '--c-site-layout-width': '60rem' },
 };
 const frame = new URLSearchParams(window.location.search).get('frame');

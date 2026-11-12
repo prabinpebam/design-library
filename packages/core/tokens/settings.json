@@ -15,6 +15,10 @@
     "--c-site-layout-padding-start": "The space above the first band only; follows padding-block when not set. 0 puts the first band right under the header, as opening=\"flush\" does.",
     "--c-site-layout-skip-radius": "The skip link's corners while it shows on focus, in SiteLayout and LibraryLayout (default radius.none, square). Set var(--radius-md) to follow the controls' corners."
   },
+  "Section": {
+    "--c-section-gap": "Between a section's head (heading and intro) and its content (default space.stack-section). A theme whose page gap is close to it sets the group gap here, so a heading stays visibly with its content.",
+    "--c-section-content-gap": "Between the parts of a section's content (default space.stack-group)."
+  },
   "Grid": {
     "--c-grid-aside": "The start column's width when ratio is aside, a heading beside its content (default size.column-min, 16rem)."
   },
