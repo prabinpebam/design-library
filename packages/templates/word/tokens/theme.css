@@ -169,6 +169,7 @@
     --c-section-tone-raised: var(--color-bg-raised);
     --c-chip-fill: var(--color-bg-control);
     --c-chip-edge: var(--color-border-control);
+    --c-chip-selected-text: var(--color-text);
     --c-breadcrumbs-size: var(--type-body-sm-size);
     --c-tabs-indicator-fill: var(--color-map-selection-indicator);
     --c-dialog-aside-bg: var(--color-bg-sunken);

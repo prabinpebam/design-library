@@ -384,6 +384,12 @@
       "selector": "::view-transition-group(*.dl-rounded)",
       "kind": "transient clip",
       "reason": "Motion: a rounded element's view-transition snapshot keeps its corners only while it moves; nothing is clipped at rest"
+    },
+    {
+      "file": "packages/templates/youtube/parts/layouts/site.css",
+      "selector": "[data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] > [data-dl-part='title']",
+      "kind": "text truncation",
+      "reason": "Video titles show at most two lines, as in the reference (C-1280-L 16/22, two lines max, Q145.Y); the full title is the frame link's accessible name and holds no focusable element"
     }
   ],
   "scrollRegions": [

@@ -371,7 +371,8 @@
     "ConversationList",
     "InlineEdit",
     "slack.Workspace",
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "ui-states"

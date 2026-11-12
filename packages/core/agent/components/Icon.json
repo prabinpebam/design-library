@@ -95,7 +95,8 @@
     "ikea.ChipRail",
     "ikea.PictureBanner",
     "ikea.StoreHeader",
-    "slack.Workspace"
+    "slack.Workspace",
+    "youtube.Site"
   ],
   "principles": [
     "ui-copy"

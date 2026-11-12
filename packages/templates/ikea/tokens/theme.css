@@ -170,6 +170,7 @@
     --c-section-tone-raised: var(--color-bg-raised);
     --c-section-tone-inset-block: var(--space-stack-section);
     --c-section-tone-inset-inline: var(--space-stack-section);
+    --c-chip-selected-text: var(--color-text);
     --c-slider-bubble-radius: var(--radius-sm);
     --c-allocation-slider-radius: var(--radius-md);
     --c-gradient-editor-radius: var(--radius-md);

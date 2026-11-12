@@ -1,0 +1,26 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "youtube",
+  "version": "0.1.0",
+  "title": "Video site",
+  "summary": "A reference-led video site: a masthead with search, a guide, feed filters and a grid of videos, on the public core.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "home",
+  "sections": [
+    { "id": "browse", "title": "Browse", "summary": "Find something to watch and watch it.", "flows": [
+      { "id": "feed", "title": "Watch", "summary": "The home feed and a video with its comments and up next.", "screens": ["home", "watch"] },
+      { "id": "find", "title": "Find", "summary": "Search results.", "screens": ["search"] },
+      { "id": "theme", "title": "Dark theme", "summary": "The home feed in the dark theme.", "screens": ["dark"] }
+    ] }
+  ],
+  "layouts": [
+    { "id": "home", "title": "Home", "component": "SiteLayout",     "content": "content/home.json", "regions": [{"id":"main","accepts":["*"]}] },
+        { "id": "watch", "title": "Watch", "component": "SiteLayout", "planned": true },
+        { "id": "search", "title": "Search results", "component": "SiteLayout", "planned": true },
+        { "id": "dark", "title": "Dark theme", "component": "SiteLayout", "planned": true }
+  ],
+  "parts": { "layouts": [{ "name": "youtube.Site", "source": "parts/layouts/Site.tsx" }] }
+}

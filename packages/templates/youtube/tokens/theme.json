@@ -1,0 +1,22 @@
+{
+  "$description": "Q145.Y reference spec .design-library/youtube-ref/README.md (headless, signed out, 1280/1440/720, light and dark). Sources are capture ids: H home, S search, G guide open, C channel grid, T hashtag grid, W watch; L light, D dark. Type: Roboto Flex (OFL) from the font registry stands in for Roboto. Unmeasured values say so.",
+  "font.text": { "$value": "'Roboto Flex Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
+  "font.ui": { "$value": "'Roboto Flex Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
+  "font.display": { "$value": "'Roboto Flex Variable', Roboto, Arial, sans-serif", "$description": "Every capture: Roboto, Arial, sans-serif." },
+  "color.bg": { "$value": { "light": "#ffffff", "dark": "#0f0f0f" }, "$description": "Page: H-1280-L html #FFFFFF, S-1280-D ytd-app #0F0F0F." },
+  "color.text": { "$value": { "light": "#0f0f0f", "dark": "#f1f1f1" }, "$description": "Text primary: W-1280-L/D title, G-1280-D guide labels." },
+  "color.text-muted": { "$value": { "light": "#606060", "dark": "#aaaaaa" }, "$description": "Meta and subscriber lines: T-1280-L/D, S-1280-L/D." },
+  "color.text-link": { "$value": { "light": "#065fd4", "dark": "#3ea6ff" }, "$description": "Sign in: H-1280-L, S-1280-D." },
+  "size.app-bar-height": { "$value": "3.5rem", "$description": "Masthead 56 high: H-1280-L ytd-masthead." },
+  "size.nav-width": { "$value": "15rem", "$description": "Guide 240 wide: G-1280-L, H-1440-L." },
+  "c.chip.size": { "$value": "2rem", "$description": "Chip 32 high: S-1280-L." },
+  "c.chip.radius": { "$value": "0.5rem", "$description": "Chip radius 8: S-1280-L." },
+  "c.chip.padding-inline": { "$value": "0.75rem", "$description": "Chip padding 0 12: S-1280-L." },
+  "c.chip.weight": { "$value": "500", "$description": "Chip words 14/20 w500: S-1280-L." },
+  "c.chip.check": { "$value": "none", "$description": "The on chip has no check mark; it reads by its solid fill (S-1280-L)." },
+  "c.chip.edge": { "$value": "transparent", "$description": "Chips have no outline; the fill is the boundary (S-1280-L)." },
+  "c.chip.fill": { "$value": { "light": "rgba(0, 0, 0, 0.05)", "dark": "rgba(255, 255, 255, 0.1)" }, "$description": "A chip at rest: unmeasured on the chip itself; the tonal fill measured on the watch page's pills (W-1280-L/D)." },
+  "color.map.chip": { "$value": { "light": "#0f0f0f", "dark": "#f1f1f1" }, "$description": "The on chip's fill (and edge): S-1280-L #0F0F0F, S-1280-D #F1F1F1." },
+  "color.map.chip-tint": { "$value": "{color.map.chip}", "$description": "The on chip is a solid fill: S-1280-L/D." },
+  "c.chip.selected-text": { "$value": { "light": "#f1f1f1", "dark": "#0f0f0f" }, "$description": "The on chip's words: S-1280-L #F1F1F1, S-1280-D #0F0F0F." }
+}

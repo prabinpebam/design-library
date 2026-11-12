@@ -20,6 +20,7 @@ const records = {
   ikea: { shared: 'StoreRecord' },
   slack: { shared: 'WorkspaceRecord' },
   word: { shared: 'WordRecord' },
+  youtube: { shared: 'YoutubeRecord' },
 };
 
 const tmp = mkdtempSync(join(tmpdir(), 'content-schemas-'));

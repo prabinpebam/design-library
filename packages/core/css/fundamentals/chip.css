@@ -119,6 +119,7 @@
   [data-dl='chip'][data-selected] {
     border-color: var(--color-map-chip);
     background-color: var(--color-map-chip-tint);
+    color: var(--c-chip-selected-text);
     box-shadow: inset 0 0 0 calc(var(--c-chip-selected-ring) - var(--border-hairline)) var(--color-map-chip);
   }
 

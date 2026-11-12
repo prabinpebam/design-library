@@ -220,6 +220,7 @@
     --c-section-tone-radius: var(--radius-lg);
     --c-chip-fill: var(--color-bg-control);
     --c-chip-edge: var(--color-border-control);
+    --c-chip-selected-text: var(--color-text);
     --c-slider-bubble-radius: var(--radius-sm);
     --c-slider-track-fill: var(--color-border);
     --c-carousel-radius: var(--radius-lg);

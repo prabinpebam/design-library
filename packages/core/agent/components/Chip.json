@@ -133,6 +133,7 @@
     "--c-chip-padding-inline",
     "--c-chip-radius",
     "--c-chip-selected-ring",
+    "--c-chip-selected-text",
     "--c-chip-size",
     "--c-chip-size-l",
     "--c-chip-size-s",

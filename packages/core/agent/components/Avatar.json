@@ -166,7 +166,8 @@
     "Persona",
     "Board",
     "slack.Workspace",
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "visual-representation"

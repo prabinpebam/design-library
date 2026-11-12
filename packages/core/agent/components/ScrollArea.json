@@ -148,7 +148,8 @@
     "LibraryLayout",
     "ListDetail",
     "slack.Workspace",
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "spacing"

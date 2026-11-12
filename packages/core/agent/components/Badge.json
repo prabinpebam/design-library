@@ -201,7 +201,8 @@
     "PageHeader",
     "Tabs",
     "ikea.ProductTile",
-    "slack.Workspace"
+    "slack.Workspace",
+    "youtube.Site"
   ],
   "principles": [
     "ui-copy"
