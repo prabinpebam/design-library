@@ -41,11 +41,11 @@ export function Window({ view, screen = 'document', ...data }: WindowProps) {
     }
     /* binary-setting: ribbon formatting commands (alignment, bold) are toolbar toggles in a dense command set, as in the reference, not settings. */
     const main = <Button label={cmd.label} icon={cmd.icon as IconName} iconOnly={cmd.kind !== 'stacked' && cmd.kind !== 'labelled'} stacked={cmd.kind === 'stacked'} align={cmd.kind === 'labelled' ? 'start' : undefined} size="xs" emphasis="quiet" pressed={cmd.pressed} />;
-    if (!cmd.menu) return <div key={key} data-dl="word-command">{main}</div>;
+    if (!cmd.menu) return <div key={key} data-dl="word-command" data-icon={cmd.icon}>{main}</div>;
     return (
-      <div key={key} data-dl="word-split" data-stacked={cmd.kind === 'stacked' ? '' : undefined}>
+      <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={cmd.kind === 'stacked' ? '' : undefined}>
         {main}
-        <Button label={`${cmd.label} options`} icon="chevron-down" iconOnly size="xs" emphasis="quiet" />
+        <span data-dl-part="split-menu"><Button label={`${cmd.label} options`} icon="chevron-down" iconOnly size="xs" emphasis="quiet" /></span>
       </div>
     );
   };

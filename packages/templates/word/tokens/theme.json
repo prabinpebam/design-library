@@ -1,4 +1,32 @@
 {
+ "c.icon.accent-1": {
+  "$value": "#ffff00",
+  "$description": "Highlight's ink bar: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
+ "c.icon.accent-2": {
+  "$value": "#ff0000",
+  "$description": "Font colour's bar: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
+ "c.icon.accent-3": {
+  "$value": "#1e8bcd",
+  "$description": "Bullets, numbers and the sub/superscript digit: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
+ "c.icon.accent-4": {
+  "$value": "#0063b1",
+  "$description": "Shading's bar and the Dictate microphone: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
+ "c.icon.accent-5": {
+  "$value": "#922e9b",
+  "$description": "Clear formatting's eraser: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
+ "c.icon.accent-6": {
+  "$value": "#de6c00",
+  "$description": "Paste's clipboard edge and the format painter's brush: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
+ "c.icon.accent-fill": {
+  "$value": "#f8db8f",
+  "$description": "Paste's clipboard board: w-theme-07 (≈2×), the most common saturated pixel of that part."
+ },
  "c.button.inherit-disabled": {
   "$value": 35,
   "$description": "Undo with nothing to undo: #6794D7 on the #185ABD title bar in w-theme-07, white at about 35%."

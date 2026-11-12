@@ -31,6 +31,18 @@
   [data-dl='word-split'] { display: flex; align-items: center; }
   [data-dl='word-split'][data-stacked] { flex-direction: column; align-items: stretch; --size-icon-lg: var(--size-icon-xl); }
   [data-dl='word-command'] { display: flex; --size-icon-lg: var(--size-icon-xl); }
+/* W7: ribbon command glyphs are ≈20 px (w-copilot-01); a split command's menu chevron stays small. */
+[data-dl='word-window'] > [data-dl-part='ribbon'] { --size-icon-sm: var(--size-icon-md); }
+[data-dl='word-split'] > [data-dl-part='split-menu'] { display: grid; --size-icon-sm: 0.75rem; }
+/* W7: Word's command icons carry colour in one part (w-theme-07), through the core icon accent seam; outlines are the library's own. */
+[data-dl='word-window'] [data-icon='highlight'] { --icon-accent: var(--c-icon-accent-1); }
+[data-dl='word-window'] [data-icon='text-colour'] { --icon-accent: var(--c-icon-accent-2); }
+[data-dl='word-window'] [data-icon='fill-colour'] { --icon-accent: var(--c-icon-accent-4); }
+[data-dl='word-window'] :is([data-icon='list-bulleted'], [data-icon='list-numbered'], [data-icon='subscript'], [data-icon='superscript']) { --icon-accent: var(--c-icon-accent-3); }
+[data-dl='word-window'] [data-icon='clear-format'] { --icon-accent: var(--c-icon-accent-5); }
+[data-dl='word-window'] [data-icon='format-painter'] { --icon-accent: var(--c-icon-accent-6); }
+[data-dl='word-window'] [data-icon='paste'] { --icon-accent: var(--c-icon-accent-6); --icon-accent-fill: var(--c-icon-accent-fill); }
+[data-dl='word-window'] [data-icon='mic'] { color: var(--c-icon-accent-4); }
   /* Font name and size fields: 172 and 42 px wide (w-theme-07 x234-578 and 586-671 at 2x). */
   /* w-copilot-01: the size box's chevron is a 12 px glyph 4 px after the value, so \"12\" fits a 43 px box. */
   [data-dl='word-field'] { display: grid; inline-size: 10.75rem; --space-inline-pair: var(--space-1); --size-icon-sm: 0.75rem; }

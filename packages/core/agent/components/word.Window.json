@@ -52,6 +52,13 @@
   "tokens": [
     "--border-hairline",
     "--c-button-size-xs",
+    "--c-icon-accent-1",
+    "--c-icon-accent-2",
+    "--c-icon-accent-3",
+    "--c-icon-accent-4",
+    "--c-icon-accent-5",
+    "--c-icon-accent-6",
+    "--c-icon-accent-fill",
     "--c-ribbon-command-gap",
     "--color-bg-control",
     "--color-bg-raised",

@@ -10,6 +10,10 @@ export interface IconData {
   flipInRtl?: boolean;
   /** Path data drawn as a solid area, for a glyph whose meaning is a filled shape (more contrast). */
   fill?: string;
+  /** The stroked part of the glyph that carries a colour cue (a text colour's bar, a highlighter's ink), drawn in `--icon-accent` (the icon's own colour when unset, so the default look is one colour). */
+  accent?: string;
+  /** A solid area of the accent part (a clipboard's board), drawn in `--icon-accent-fill` (none when unset). */
+  accentFill?: string;
 }
 
 export const icons = {
@@ -127,25 +131,25 @@ export const icons = {
   italic: { d: 'M10 4.5h8M6 19.5h8M14 4.5l-4 15' },
   underline: { d: 'M7 4v7a5 5 0 0 0 10 0V4M5.5 20.5h13' },
   strikethrough: { d: 'M4 12h16M16.5 7.5c-.5-1.8-2.3-3-4.5-3-2.5 0-4.5 1.4-4.5 3.4 0 1.6 1.2 2.6 3 3.1M8 16.5c.5 1.8 2.3 3 4.5 3 2.5 0 4.5-1.4 4.5-3.4' },
-  subscript: { d: 'M3.5 6l8 10M11.5 6l-8 10M15 15.5a2 2 0 1 1 3.5 1.3L15 20.5h4' },
-  superscript: { d: 'M3.5 8l8 10M11.5 8l-8 10M15 5a2 2 0 1 1 3.5 1.3L15 10h4' },
-  'clear-format': { d: 'M4 19.5L9.5 4.5l3.5 9.5M6 14h6M14.5 14.5l5 5M19.5 14.5l-5 5' },
+  subscript: { d: 'M3.5 6l8 10M11.5 6l-8 10', accent: 'M15 15.5a2 2 0 1 1 3.5 1.3L15 20.5h4' },
+  superscript: { d: 'M3.5 8l8 10M11.5 8l-8 10', accent: 'M15 5a2 2 0 1 1 3.5 1.3L15 10h4' },
+  'clear-format': { d: 'M4 19.5L9.5 4.5l3.5 9.5M6 14h6', accent: 'M14.5 14.5l5 5M19.5 14.5l-5 5' },
   'text-larger': { d: 'M3 19L8 6l5 13M4.8 14.5h6.4M16 9l2.5-3 2.5 3' },
   'text-smaller': { d: 'M3 19L8 6l5 13M4.8 14.5h6.4M16 6l2.5 3 2.5-3' },
-  'text-colour': { d: 'M6.5 16L12 3.5 17.5 16M8.5 11.5h7M4 20.5h16' },
-  highlight: { d: 'M14.5 4l5 5-7.5 7.5H7v-5zM4 20.5h16' },
-  'fill-colour': { d: 'M5 11l6-6 7 7-6 6zM11 5L8.5 2.5M18.5 15s1.5 2 1.5 3a1.5 1.5 0 0 1-3 0c0-1 1.5-3 1.5-3zM4 21h16' },
+  'text-colour': { d: 'M6.5 16L12 3.5 17.5 16M8.5 11.5h7', accent: 'M4 20.5h16' },
+  highlight: { d: 'M14.5 4l5 5-7.5 7.5H7v-5z', accent: 'M4 20.5h16' },
+  'fill-colour': { d: 'M5 11l6-6 7 7-6 6zM11 5L8.5 2.5M18.5 15s1.5 2 1.5 3a1.5 1.5 0 0 1-3 0c0-1 1.5-3 1.5-3z', accent: 'M4 21h16' },
   borders: { d: 'M4.5 4.5h15v15h-15zM12 4.5v15M4.5 12h15' },
-  'list-bulleted': { d: 'M9.5 6h11M9.5 12h11M9.5 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01' },
-  'list-numbered': { d: 'M10 6h10.5M10 12h10.5M10 18h10.5M4 4.5h1.5v4M4 10.5h3l-3 4h3M4 16.5h3v4H4M5 18.5h2' },
+  'list-bulleted': { d: 'M9.5 6h11M9.5 12h11M9.5 18h11', accent: 'M4.5 6h.01M4.5 12h.01M4.5 18h.01' },
+  'list-numbered': { d: 'M10 6h10.5M10 12h10.5M10 18h10.5', accent: 'M4 4.5h1.5v4M4 10.5h3l-3 4h3M4 16.5h3v4H4M5 18.5h2' },
   'indent-increase': { d: 'M4 5h16M11 10h9M11 14h9M4 19h16M4 9.5l3 2.5-3 2.5', flipInRtl: true },
   'indent-decrease': { d: 'M4 5h16M11 10h9M11 14h9M4 19h16M7 9.5L4 12l3 2.5', flipInRtl: true },
   'line-spacing': { d: 'M11 6h9M11 12h9M11 18h9M6 4v16M3.5 6.5L6 4l2.5 2.5M3.5 17.5L6 20l2.5-2.5' },
   sort: { d: 'M7 4v16M4 17l3 3 3-3M13.5 10l2.5-6 2.5 6M14.3 8h3.4M13.5 14h5l-5 6h5' },
   pilcrow: { d: 'M17 4v16M13 4v16M18.5 4H10a4 4 0 0 0 0 8h3' },
-  paste: { d: 'M9 4.5H7a1.5 1.5 0 0 0-1.5 1.5v13A1.5 1.5 0 0 0 7 20.5h3M15 4.5h2A1.5 1.5 0 0 1 18.5 6v3M9 3.5h6v3H9zM12 10.5h7.5v10H12z' },
+  paste: { d: 'M9 3.5h6v3H9zM12 10.5h7.5v10H12z', accent: 'M9 4.5H7a1.5 1.5 0 0 0-1.5 1.5v13A1.5 1.5 0 0 0 7 20.5h3M15 4.5h2A1.5 1.5 0 0 1 18.5 6v3', accentFill: 'M5.5 6A1.5 1.5 0 0 1 7 4.5h2v2h6v-2h2A1.5 1.5 0 0 1 18.5 6v4.5H12v10H7A1.5 1.5 0 0 1 5.5 19z' },
   cut: { d: 'M6.5 20.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM17.5 20.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM8.2 16.2L16 3.5M15.8 16.2L8 3.5' },
-  'format-painter': { d: 'M5.5 3.5h11v5h-11zM16.5 6h2v5H11v3M9.5 14h3v6.5h-3z' },
+  'format-painter': { d: 'M5.5 3.5h11v5h-11zM16.5 6h2v5H11v3', accent: 'M9.5 14h3v6.5h-3z' },
   undo: { d: 'M9 14.5L4.5 10 9 5.5M4.5 10H14a5.5 5.5 0 0 1 0 11h-3', flipInRtl: true },
   redo: { d: 'M15 14.5l4.5-4.5L15 5.5M19.5 10H10a5.5 5.5 0 0 0 0 11h3', flipInRtl: true },
   save: { d: 'M5.5 3.5h10l3 3v12a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-13a2 2 0 0 1 2-2zM8 3.5v5h7v-5M8 20.5v-6h8v6' },

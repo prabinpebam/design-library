@@ -29,7 +29,7 @@ const draw = (nodes: IconNode[]): ReactNode[] => nodes.map(([tag, attrs, kids], 
  */
 export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
   useIconSetVersion();
-  const icon: { d: string; flipInRtl?: boolean; fill?: string } = icons[name];
+  const icon: { d: string; flipInRtl?: boolean; fill?: string; accent?: string; accentFill?: string } = icons[name];
   // Q113: a brand's glyph for this name (nearest IconOverrides, then site-wide) wins over the set; `from` shows a set as it is.
   const brand = useIconOverride(name);
   const set = !from && brand ? { glyph: brand, fallback: false } : glyphFor(name, from);
@@ -52,6 +52,8 @@ export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
     <svg {...common} viewBox="0 0 24 24">
       <path d={icon.d} />
       {icon.fill && <path data-dl-part="fill" d={icon.fill} />}
+      {icon.accentFill && <path data-dl-part="accent-fill" d={icon.accentFill} />}
+      {icon.accent && <path data-dl-part="accent" d={icon.accent} />}
     </svg>
   );
 }

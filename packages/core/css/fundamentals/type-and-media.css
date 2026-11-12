@@ -195,6 +195,16 @@
     stroke: none;
   }
 
+  /* The colour-cue part of a glyph (a text colour's bar): the icon's own colour unless a product sets --icon-accent. */
+  [data-dl='icon'] > [data-dl-part='accent'] {
+    stroke: var(--icon-accent, currentColor);
+  }
+
+  [data-dl='icon'] > [data-dl-part='accent-fill'] {
+    fill: var(--icon-accent-fill, none);
+    stroke: none;
+  }
+
   [data-dl='icon'][data-size='sm'] {
     inline-size: var(--size-icon-sm);
     block-size: var(--size-icon-sm);
