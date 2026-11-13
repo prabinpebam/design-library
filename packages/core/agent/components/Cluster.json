@@ -39,7 +39,7 @@
           "name": "align",
           "type": "'center' | 'baseline' | 'start' | 'end' | 'control'",
           "default": "'center'",
-          "description": "How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), at the bottom (`end`: a button level with an unhinted field beside it, under that field's label), or `control`: every child that isn't a field level with the fields' controls, under their labels and above their hints (a field and its button in a form row)."
+          "description": "How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), at the bottom (`end`: a button level with an unhinted field beside it, under that field's label), or `control`: a form row, every child that isn't a field level with the fields' controls (under their labels, above their hints) and keeping its own width while the fields share the room, the row no wider than one field (size.measure)."
         },
         {
           "name": "wrap",
@@ -53,6 +53,7 @@
   "uses": [],
   "tokens": [
     "--c-field-gap",
+    "--size-measure",
     "--space-inline-group",
     "--space-inline-item",
     "--space-inline-pair",

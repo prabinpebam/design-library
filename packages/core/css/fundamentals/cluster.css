@@ -55,13 +55,22 @@
     align-items: flex-start;
   }
 
-  /* LR76: level with the fields' controls. Fields keep their top; every other child drops by a field's label block
-     (its label line and the field's gap), so a button beside a labelled field meets the control, whatever hints follow. */
+  /* LR76: a form row, level with the fields' controls (the reference studio's `minmax(0, 1fr) auto` row). Fields keep
+     their top and share the room; every other child keeps its own width and drops by a field's label block (its label
+     line and the field's gap), so a button beside a labelled field meets the control, whatever hints follow. The row
+     is as wide as one field at most (size.measure), so its end lines up with the fields and lists around it. */
   [data-dl='cluster'][data-align='control'] {
     align-items: flex-start;
+    max-inline-size: var(--size-measure);
+  }
+
+  [data-dl='cluster'][data-align='control'] > :is([data-dl='field'], :has(> [data-dl='field'])) {
+    flex: 1 1 0;
+    min-inline-size: 0;
   }
 
   [data-dl='cluster'][data-align='control'] > :not([data-dl='field'], :has(> [data-dl='field'])) {
+    flex: none;
     margin-block-start: calc(var(--type-label-size) * var(--type-label-leading) + var(--c-field-gap));
   }
 }
