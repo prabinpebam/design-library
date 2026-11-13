@@ -98,12 +98,12 @@
   }
 
   /* LR114: a consumer's content (a video's player) takes the stage's width and never more than its height. */
-  [data-dl='lightbox'] [data-dl-part='picture'][data-rendered] {
+  [data-dl='lightbox'] > [data-dl-part='surface'] > [data-dl-part='stage'] > [data-dl-part='picture'][data-rendered] {
     inline-size: 100%;
     min-inline-size: 0;
   }
 
-  [data-dl='lightbox'] [data-dl-part='picture'][data-rendered] > * {
+  [data-dl='lightbox'] > [data-dl-part='surface'] > [data-dl-part='stage'] > [data-dl-part='picture'][data-rendered] > * {
     inline-size: 100%;
     max-block-size: 100%;
   }

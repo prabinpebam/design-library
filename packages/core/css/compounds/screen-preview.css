@@ -92,7 +92,7 @@
   }
 
   /* LR110 showLoading: until the screen has loaded, a shimmer takes the window's place and the frame waits unseen. */
-  [data-dl='screen-preview'] [data-dl-part='frame'][data-waiting] {
+  :is([data-dl='screen-preview'], [data-dl='screen-preview'] > [data-dl-part='viewport']) > [data-dl-part='frame'][data-waiting] {
     opacity: 0;
     pointer-events: none;
   }
@@ -112,7 +112,7 @@
     display: flex;
   }
 
-  [data-dl='screen-preview'] [data-dl-part='loading'] > [data-dl='skeleton'] {
+  :is([data-dl='screen-preview'], [data-dl='screen-preview'] > [data-dl-part='viewport']) > [data-dl-part='loading'] > [data-dl='skeleton'] {
     flex: 1;
     block-size: auto;
     min-block-size: 100%;
