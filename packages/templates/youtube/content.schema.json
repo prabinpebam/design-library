@@ -89,6 +89,22 @@
     "YoutubeRecord": {
       "additionalProperties": false,
       "properties": {
+        "account": {
+          "additionalProperties": false,
+          "description": "The signed-in viewer: their name and picture asset id, shown on the account menu after Sign in.",
+          "properties": {
+            "avatar": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        },
         "chips": {
           "description": "Feed filters; the first is selected.",
           "items": {
@@ -105,6 +121,26 @@
         "guide": {
           "items": {
             "$ref": "#/$defs/YoutubeGuideSection"
+          },
+          "type": "array"
+        },
+        "notifications": {
+          "description": "The notifications menu after Sign in, newest first.",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "age": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "age"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -134,6 +170,8 @@
         "videos",
         "watch",
         "search",
+        "account",
+        "notifications",
         "copy"
       ],
       "type": "object"
@@ -146,6 +184,33 @@
           "description": "Result filters; the first is selected.",
           "items": {
             "type": "string"
+          },
+          "type": "array"
+        },
+        "filters": {
+          "description": "The Filters menu: groups of options, one chosen per group (or none).",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "options": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "title": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "options"
+            ],
+            "type": "object"
           },
           "type": "array"
         },
@@ -162,7 +227,8 @@
       "required": [
         "query",
         "chips",
-        "results"
+        "results",
+        "filters"
       ],
       "type": "object"
     },
@@ -222,6 +288,10 @@
             "16:9",
             "4:3"
           ],
+          "type": "string"
+        },
+        "avatar": {
+          "description": "The asset id of its channel's picture in `assets.json`: the channel's avatar on cards, results and the watch page (initials without it).",
           "type": "string"
         },
         "channel": {

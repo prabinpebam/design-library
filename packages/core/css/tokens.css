@@ -825,6 +825,7 @@
   --c-chip-selected-text: var(--color-text);
   --c-chip-weight: var(--weight-regular);
   --c-chip-check: inline-flex;
+  --c-heading-hyphens: auto;
   --c-chip-group-gap: var(--space-inline-pair);
   --c-chip-group-stack: var(--space-stack-pair);
   --c-slider-track: var(--size-track);

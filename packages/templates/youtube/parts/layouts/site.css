@@ -150,6 +150,11 @@
   :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; --image-radius: calc(var(--radius-lg) - var(--space-1)); border-radius: var(--image-radius); background: var(--color-bg-sunken); }
   :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-1); inset-inline-end: var(--space-1); display: flex; }
   :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='next-text'] { display: grid; gap: var(--space-1); }
+  /* Up next's more menu: over the words' end, shown while the row is hovered or holds focus (the reference's own rest state hides it). */
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] { position: relative; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-1)); inset-inline-end: calc(-1 * var(--space-2)); display: grid; opacity: 0; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item']:is(:hover, :focus-within) > [data-dl-part='menu'] { opacity: 1; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='empty'] { padding-block: var(--space-6); }
   /* Search (S-1280-L): x96 beside the mini guide, 1160 wide at 1280 (24 each side); filters a 56 row with Filters at the end;
      rows 16 apart, frame 500 wide 16:9 radius 10 (read from the corner pixels), words 16 after it. */
   [data-dl='youtube-results'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--t-youtube-site-feed-inset); padding-block-end: var(--space-6); }
@@ -178,6 +183,8 @@
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] > [data-dl-part='chapter-frame'] { inline-size: calc(var(--space-12) + var(--space-0-5)); aspect-ratio: 16 / 9; margin-inline-end: calc(var(--space-1) + var(--space-0-5)); border-radius: var(--radius-sm); background: var(--color-border); }
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] > [data-dl-part='chapter-count'] { font-size: var(--type-caption-size); line-height: var(--type-caption-leading); font-weight: var(--weight-medium); white-space: nowrap; }
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] > [data-dl-part='chapter-titles'] { overflow: hidden; color: var(--color-text-muted); font-size: var(--type-caption-size); line-height: var(--type-caption-leading); white-space: nowrap; text-overflow: ellipsis; }
+  /* Show chapters: the titles wrap to show every chapter. */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'][data-expanded] > [data-dl-part='chapter-titles'] { white-space: normal; }
 
   /* Narrow, below the reference's 792 change point (H-720-L, T-720-L, S-720-L, W-720-L): no mini guide (the guide button
      opens the 240 drawer), content 24 from each edge; the home grid in 2 columns (328 at x24 and x368); search rows a 328

@@ -29,6 +29,8 @@ export interface YoutubeVideo {
   aspect?: '16:9' | '4:3';
   /** The asset id of its thumbnail in `assets.json`: drawn on every card, result and up-next item, and in the player. */
   thumbnail?: string;
+  /** The asset id of its channel's picture in `assets.json`: the channel's avatar on cards, results and the watch page (initials without it). */
+  avatar?: string;
 }
 /** One comment under the video being watched. */
 export interface YoutubeComment {
@@ -69,6 +71,8 @@ export interface YoutubeSearch {
   /** Result filters; the first is selected. */
   chips: string[];
   results: YoutubeSearchResult[];
+  /** The Filters menu: groups of options, one chosen per group (or none). */
+  filters: { id: string; title: string; options: string[] }[];
 }
 export interface YoutubeRecord {
   /** The neutral wordmark beside the guide button: never a product logo. */
@@ -81,5 +85,9 @@ export interface YoutubeRecord {
   watch: YoutubeWatch;
   /** The search results page. */
   search: YoutubeSearch;
+  /** The signed-in viewer: their name and picture asset id, shown on the account menu after Sign in. */
+  account: { name: string; avatar?: string };
+  /** The notifications menu after Sign in, newest first. */
+  notifications: { text: string; age: string }[];
   copy: Record<string, string>;
 }

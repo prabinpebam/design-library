@@ -1,0 +1,12 @@
+{
+  "id": "channel-grain-glue",
+  "set": "youtube",
+  "model": "gpt-image-2.5",
+  "size": "1024x1024",
+  "quality": "high",
+  "reference": "video-v1 (assets-src/youtube/reference)",
+  "date": "2026-11-13",
+  "prompt": "Image 1 is a style reference only: copy its photographic look, light, colour treatment, depth of field and subject scale. Do not copy its subject or composition.\nUse: a video channel's round profile picture, shown in a circle at 24 to 40 px, square 1:1.\nSubject: a wooden mallet and a sharp chisel resting on a block of pale oak with fresh wood shavings.\nComposition: one simple subject centred, filling about 70% of the frame, readable when tiny, plain uncluttered background.\nStyle: a real photograph made for a video thumbnail; natural light, true-to-life colour, slightly bright and saturated, shallow depth of field, crisp focus on the subject, clean uncluttered background, the subject large and filling about 70% of the frame, eye-level or slightly high camera.\nConstraints: no text, no letters or numbers, no captions, no logos or trademarks, no watermark, no frame or border, no faces looking at the camera, no recognisable real people.\r\n",
+  "alt": "A wooden mallet and a chisel on an oak block with wood shavings.",
+  "file": "packages/templates/youtube/assets/channel-grain-glue.webp"
+}

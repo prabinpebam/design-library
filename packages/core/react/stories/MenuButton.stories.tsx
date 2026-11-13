@@ -45,6 +45,21 @@ export default {
       render: () => <MenuButton label="Export" icon="copy" size="s" items={exports} onSelect={() => undefined} />,
     },
     {
+      title: 'Account, sort and filter triggers',
+      description: 'An account menu opened from the person’s avatar; a trigger whose own glyph says a menu opens drops the chevron, and can put the glyph after its words.',
+      code: `<MenuButton label="Account" iconOnly emphasis="quiet" avatar={{ name: 'Ana Ruiz' }} items={account} onSelect={act} />
+<MenuButton label="Sort by" icon="sort" chevron={false} emphasis="quiet" items={sorts} onSelect={sort} />
+<MenuButton label="Filters" icon="filter-lines" iconEnd chevron={false} emphasis="quiet" items={filters} onSelect={filter} />`,
+      render: () => (
+        <>
+          <MenuButton label="Account" iconOnly emphasis="quiet" avatar={{ name: 'Ana Ruiz' }} items={[{ value: 'profile', label: 'Your profile' }, { value: 'out', label: 'Sign out', startsGroup: true }]} onSelect={() => undefined} />
+          <MenuButton label="Sort by" icon="sort" chevron={false} emphasis="quiet" items={[{ value: 'top', label: 'Top', checked: true }, { value: 'new', label: 'Newest first', checked: false }]} onSelect={() => undefined} />
+          <MenuButton label="Filters" icon="filter-lines" iconEnd chevron={false} emphasis="quiet" items={[{ value: 'today', label: 'Today', heading: 'Upload date', checked: false }, { value: 'week', label: 'This week', checked: false }]} onSelect={() => undefined} />
+        </>
+      ),
+      arrangement: 'row',
+    },
+    {
       title: 'Unavailable',
       description: 'The menu can’t open here; say why nearby.',
       code: `<MenuButton label="Presets" disabled items={presets} onSelect={applyPreset} />`,

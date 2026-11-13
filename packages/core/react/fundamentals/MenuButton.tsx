@@ -2,6 +2,7 @@ import type { ButtonSize } from './Button';
 import { Fragment, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { usePopup, type ListWidth } from '../behaviour/popup';
 import { useOverlayScroll } from '../behaviour/scroll';
+import { Avatar, type AvatarSize } from './Avatar';
 import { Badge } from './Badge';
 import { Flag, flagSrc, type FlagCode } from './Flag';
 import { Icon } from './Icon';
@@ -88,6 +89,12 @@ export interface MenuButtonProps extends DataAttributes {
   side?: 'block' | 'inline';
   /** Controlled value of the item whose submenu is open; omit for uncontrolled hover/keyboard behaviour. */
   openSubmenu?: string;
+  /** The chevron after the words that says a menu opens; `false` for a trigger whose own glyph already says so (a sort or filter glyph, a Create button). Shown by default. */
+  chevron?: boolean;
+  /** The icon after the words instead of before them, as Button's `iconEnd` (a Filters trigger with its tune glyph). Before them by default. */
+  iconEnd?: boolean;
+  /** A person's avatar in place of the icon, for an account menu: their name and picture (Avatar `name`, `src`), sized with the trigger. Use with `iconOnly`; `label` stays the accessible name. */
+  avatar?: { name: string; src?: string };
 }
 
 /**
@@ -114,7 +121,7 @@ export interface MenuButtonProps extends DataAttributes {
  * @key Arrow left (right in right-to-left) or Escape in a submenu: closes it and returns to its item
  * @key Escape: closes the menu and returns to the button
  */
-export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, open: controlledOpen, onOpenChange, heading, side = 'block', openSubmenu, ...data }: MenuButtonProps) {
+export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, tone, busy = false, pendingLabel, listWidth, open: controlledOpen, onOpenChange, heading, side = 'block', openSubmenu, chevron = true, iconEnd = false, avatar, ...data }: MenuButtonProps) {
   const id = useId();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
   const open = controlledOpen ?? uncontrolledOpen;
@@ -179,7 +186,10 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   }, [subFocus]);
   const name = busy ? (pendingLabel ?? label) : label;
   const iconSize = ({ xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' } as const)[size];
-  const lead = iconOnly ? (icon ?? 'chevron-down') : icon;
+  const lead = iconOnly && !avatar ? (icon ?? 'chevron-down') : icon;
+  const avatarSize = ({ xs: 20, s: 24, normal: 32, m: 32, l: 40, xl: 48, xxl: 64 } as const satisfies Record<ButtonSize, AvatarSize>)[size];
+  const glyph = (layer: 'rest' | 'on') =>
+    layer === 'on' ? <Progress /> : avatar ? <Avatar name={avatar.name} src={avatar.src} size={avatarSize} decorative /> : lead ? <Icon name={lead} size={iconSize} /> : flag && <Flag code={flag} />;
   useEffect(() => {
     if (!open) return;
     if (focusByKeyboard.current) focusItem(focusOnOpen === 'first' ? 0 : items.length - 1);
@@ -253,9 +263,10 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
       >
         {(['rest', 'on'] as const).map((layer) => (
           <span key={layer} data-dl-part="layer" data-shown={(layer === 'on') === busy ? '' : undefined}>
-            {layer === 'on' ? <Progress /> : lead ? <Icon name={lead} size={iconSize} /> : flag && <Flag code={flag} />}
+            {!iconEnd && glyph(layer)}
             {!iconOnly && <span>{layer === 'on' ? (pendingLabel ?? label) : label}</span>}
-            {!iconOnly && <Icon name="chevron-down" size="sm" />}
+            {iconEnd && glyph(layer)}
+            {!iconOnly && chevron && <Icon name="chevron-down" size="sm" />}
           </span>
         ))}
         {hint.tip}

@@ -48,6 +48,50 @@
     "video-v12": {
       "src": "assets/video-v12.webp",
       "alt": "Five small tents in orange, green, blue, yellow and red pitched on a grassy hillside under a dark stormy sky."
+    },
+    "channel-grain-glue": {
+      "src": "assets/channel-grain-glue.webp",
+      "alt": "A wooden mallet and a chisel on an oak block with wood shavings."
+    },
+    "channel-quiet-streets": {
+      "src": "assets/channel-quiet-streets.webp",
+      "alt": "A pale green bicycle with a flower basket in a cobbled lane of pastel houses."
+    },
+    "channel-kitchen-table-notes": {
+      "src": "assets/channel-kitchen-table-notes.webp",
+      "alt": "A bowl of herb broth with a wooden spoon on a linen napkin."
+    },
+    "channel-field-lab": {
+      "src": "assets/channel-field-lab.webp",
+      "alt": "A glass of water, a heap of sand and a wooden ruler on a bench."
+    },
+    "channel-hilltop-observatory": {
+      "src": "assets/channel-hilltop-observatory.webp",
+      "alt": "A white observatory dome on a hilltop under a starry evening sky."
+    },
+    "channel-front-porch-music": {
+      "src": "assets/channel-front-porch-music.webp",
+      "alt": "An acoustic guitar leaning on a wooden porch railing."
+    },
+    "channel-light-luggage": {
+      "src": "assets/channel-light-luggage.webp",
+      "alt": "A green canvas backpack on a bench at a train platform."
+    },
+    "channel-balcony-garden": {
+      "src": "assets/channel-balcony-garden.webp",
+      "alt": "A tomato plant with ripe red tomatoes in a terracotta pot on a balcony."
+    },
+    "channel-long-read-video": {
+      "src": "assets/channel-long-read-video.webp",
+      "alt": "A brass compass on a folded paper map."
+    },
+    "channel-quiet-keys": {
+      "src": "assets/channel-quiet-keys.webp",
+      "alt": "Piano keys in front of a rain-streaked window."
+    },
+    "channel-outside-weekly": {
+      "src": "assets/channel-outside-weekly.webp",
+      "alt": "A green tent pitched on a grassy ridge above a valley."
     }
   }
 }

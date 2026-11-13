@@ -100,7 +100,7 @@
      its container shrinks to fit it (anywhere, unlike break-word, lowers its min-content width). */
   [data-dl='heading'] {
     overflow-wrap: anywhere;
-    hyphens: auto;
+    hyphens: var(--c-heading-hyphens);
     font-family: var(--font-display);
     font-variation-settings: var(--axes-display);
   }
