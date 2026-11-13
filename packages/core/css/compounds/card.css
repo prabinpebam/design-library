@@ -222,6 +222,42 @@
     block-size: 100%;
   }
 
+  /* Small: a tile in a dense grid of many (an editor's albums). The title takes the label type, the description is a
+     caption, the words sit a pair apart, and the actions are their own row at the card's end, under the words. */
+  [data-dl='card'][data-size='s'] {
+    grid-template-rows: auto 1fr auto;
+  }
+
+  [data-dl='card'][data-size='s'] > [data-dl-part='body'],
+  [data-dl='card'][data-size='s'] > [data-dl-part='body'] > [data-dl-part='message'] {
+    gap: var(--space-stack-pair);
+  }
+
+  [data-dl='card'][data-size='s'][data-variant='outlined'] > [data-dl-part='body'] {
+    padding: calc(var(--space-inset-md) - var(--space-stack-pair)) var(--space-inset-md) 0;
+  }
+
+  [data-dl='card'][data-size='s'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='heading'] > [data-dl='heading'] {
+    font-size: var(--type-label-size);
+    line-height: var(--type-label-leading);
+    font-weight: var(--type-label-weight);
+  }
+
+  [data-dl='card'][data-size='s'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='description'] {
+    font-size: var(--type-caption-size);
+    line-height: var(--type-caption-leading);
+  }
+
+  [data-dl='card'][data-size='s'] > [data-dl-part='actions'] {
+    position: relative;
+    z-index: var(--layer-raised);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: var(--c-card-actions-gap);
+    padding: var(--space-stack-pair) var(--space-inset-sm) var(--space-inset-sm);
+  }
+
   @media (forced-colors: active) {
     [data-dl='card'][data-variant='outlined'] {
       border-color: CanvasText;

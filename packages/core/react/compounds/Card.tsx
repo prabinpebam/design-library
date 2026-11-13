@@ -31,6 +31,9 @@ export interface CardProps extends DataAttributes {
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** Shows the card's shape in shimmer while its content loads; nothing in it can be used. */
   loading?: boolean;
+  /** `normal` (default). `s`: a tile in a dense grid of many (an editor's albums): the title in the label type, the
+   * description a caption, the words close together, and the actions their own row at the card's end. */
+  size?: 'normal' | 's';
 }
 
 /**
@@ -61,8 +64,11 @@ export function Card({
   variant = 'outlined',
   headingLevel = 3,
   loading = false,
+  size = 'normal',
   ...data
 }: CardProps) {
+  // A small tile's actions are their own row under the words, not part of the words' footer.
+  const ownRow = size === 's' && layout === 'stacked' && !!actions;
   // Q65 C13: one card across loading and loaded. When the content arrives, the skeleton stays over it for a moment and
   // fades out (S7: the new content is already under it, so nothing dims or shifts).
   const placeholder = usePresence(loading);
@@ -86,14 +92,14 @@ export function Card({
   );
   if (loading) {
     return (
-      <article {...data} data-dl="card" data-layout={layout} data-variant={variant} data-loading="" aria-busy="true" aria-label={title}>
+      <article {...data} data-dl="card" data-layout={layout} data-variant={variant} data-size={size === 's' ? 's' : undefined} data-loading="" aria-busy="true" aria-label={title}>
         {skeleton}
       </article>
     );
   }
 
   return (
-    <article {...data} data-dl="card" data-layout={layout} data-variant={variant} data-linked={href ? '' : undefined}>
+    <article {...data} data-dl="card" data-layout={layout} data-variant={variant} data-size={size === 's' ? 's' : undefined} data-linked={href ? '' : undefined}>
       {media && layout !== 'row' && (
         <div data-dl-part="media" data-ratio={ratio}>
           {media}
@@ -116,13 +122,14 @@ export function Card({
         {description && <p data-dl-part="description">{description}</p>}
         </div>
         {children && <div data-dl-part="content">{children}</div>}
-        {(meta || actions) && (
+        {(meta || (actions && !ownRow)) && (
           <div data-dl-part="footer">
             {meta && <p data-dl-part="meta">{meta}</p>}
-            {actions && <div data-dl-part="actions">{actions}</div>}
+            {actions && !ownRow && <div data-dl-part="actions">{actions}</div>}
           </div>
         )}
       </div>
+      {ownRow && <div data-dl-part="actions">{actions}</div>}
       {media && layout === 'row' && (
         <div data-dl-part="media" data-ratio="square">
           {media}
