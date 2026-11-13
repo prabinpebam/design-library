@@ -121,14 +121,15 @@ const sections = [
   ['Changes to these rules', 'We tell every owner a month before a rule changes, by email and in the app.'],
 ];
 
-function Long() {
+function Long({ lock = false }: { lock?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Button label="Read the sharing rules" onClick={() => setOpen(true)} />
+      <Button label={lock ? 'Read the rules, page held still' : 'Read the sharing rules'} onClick={() => setOpen(true)} />
       <Dialog
         size="l"
         open={open}
+        lockScroll={lock}
         onClose={() => setOpen(false)}
         title="Sharing rules"
         description="How sharing works for every project in this organisation."
@@ -199,6 +200,12 @@ export default {
       description: 'With no answers to give, the close button, Escape or a press outside close it. Prefer a notification when it doesn’t need to stop the page.',
       code: `<Dialog size="s" open={open} onClose={close} title="What’s new" description="…" />`,
       render: () => <Info />,
+    },
+    {
+      title: 'The page held still',
+      description: 'With lockScroll, scrolling past the end of the dialog’s content never moves the page behind it, and the page’s scrollbar room stays, so nothing shifts when it opens or closes. For a dialog that covers the page with its own scrolling content, such as a site search.',
+      code: `<Dialog size="l" open={open} onClose={close} lockScroll title="Sharing rules" …>…</Dialog>`,
+      render: () => <Long lock />,
     },
   ],
 } satisfies StoryFile;

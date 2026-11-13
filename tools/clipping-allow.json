@@ -129,6 +129,12 @@
     },
     {
       "file": "packages/core/css/fundamentals/scroll-area.css",
+      "selector": ":root[data-dl-scroll-lock]",
+      "kind": "page lock",
+      "reason": "Dialog lockScroll: the page doesn't scroll while such a dialog is open; the root's overflow is the viewport's, so nothing on the page is cut, and the scrollbar's room stays reserved"
+    },
+    {
+      "file": "packages/core/css/fundamentals/scroll-area.css",
       "selector": "[data-dl='scroll-area'][data-axis=",
       "kind": "axis lock",
       "reason": "A one-axis ScrollArea never scrolls the other way; its content inset keeps edge rings and shadows inside"

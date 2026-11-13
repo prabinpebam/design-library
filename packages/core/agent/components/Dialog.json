@@ -76,6 +76,12 @@
           "name": "state",
           "type": "string",
           "description": "Names what the dialog is showing, e.g. `form`, `done`, `failed` (Q65 C1). A new value morphs the title, body and answers in the same box: the old ones fade out, the new ones fade in and the box eases to its new height; focus moves to the new title. Change it only when the new state is ready (keep the form's pending button until then)."
+        },
+        {
+          "name": "lockScroll",
+          "type": "boolean",
+          "default": "false",
+          "description": "While open, the page behind keeps still: it doesn't scroll (wheel, touch or keys), and its scrollbar's room stays reserved so nothing reflows. For a dialog that covers the page with its own scrolling content (a site search). Off by default: the page behind a native modal can still scroll."
         }
       ]
     }

@@ -31,7 +31,20 @@ export interface DialogProps extends DataAttributes {
    * moves to the new title. Change it only when the new state is ready (keep the form's pending button until then).
    */
   state?: string;
+  /**
+   * While open, the page behind keeps still: it doesn't scroll (wheel, touch or keys), and its scrollbar's room stays
+   * reserved so nothing reflows. For a dialog that covers the page with its own scrolling content (a site search).
+   * Off by default: the page behind a native modal can still scroll.
+   */
+  lockScroll?: boolean;
 }
+
+/** Open dialogs that lock the page; the page unlocks when the last one closes. */
+let locks = 0;
+const lockPage = (on: boolean) => {
+  locks = Math.max(0, locks + (on ? 1 : -1));
+  document.documentElement.toggleAttribute('data-dl-scroll-lock', locks > 0);
+};
 
 /**
  * Blocks the page until a question is answered or a short task is done: a title, a description, a body and the
@@ -52,7 +65,7 @@ export interface DialogProps extends DataAttributes {
  * @key Escape: closes (not an alert dialog)
  * @key Tab, Shift+Tab: move through the dialog's controls only
  */
-export function Dialog({ open, onClose, title, description, children, actions, size = 'm', alert = false, state, ...data }: DialogProps) {
+export function Dialog({ open, onClose, title, description, children, actions, size = 'm', alert = false, state, lockScroll = false, ...data }: DialogProps) {
   const id = useId();
   const ref = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -75,6 +88,13 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       opener.current?.focus();
     }
   }, [open, alert]);
+
+  // The page lock follows the dialog being shown, so it holds exactly while the modal is open.
+  useEffect(() => {
+    if (!open || !lockScroll) return;
+    lockPage(true);
+    return () => lockPage(false);
+  }, [open, lockScroll]);
 
   useEffect(() => {
     const d = ref.current;
