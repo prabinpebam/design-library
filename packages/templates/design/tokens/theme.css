@@ -81,6 +81,8 @@
     --c-context-matrix-label-bg: var(--color-bg);
     --c-context-matrix-label-fg: var(--color-text);
     --c-context-matrix-head-fg: var(--color-text-muted);
+    --c-divider-color: var(--color-border);
+    --c-divider-dinkus-color: var(--color-accent);
     --c-code-key-radius: var(--radius-sm);
     --c-list-tile-radius: var(--radius-md);
     --c-list-tile-fill: var(--color-bg-control);
@@ -142,12 +144,15 @@
     --c-board-card-fill: var(--color-bg-raised);
     --c-board-drop: var(--color-accent);
     --c-app-layout-sidebar-fill: var(--color-bg-sunken);
+    --c-app-layout-brand-name-size: var(--type-body-sm-size);
     --c-floating-bar-fill: var(--color-bg-raised);
     --c-agenda-session-radius: var(--radius-md);
     --c-agenda-session-fill: var(--color-bg-sunken);
     --c-frame-ground: var(--color-bg-sunken);
     --c-applied-fill: var(--color-accent-subtle);
     --c-applied-border: var(--color-accent);
+    --c-field-underline-line: var(--color-border);
+    --c-field-underline-line-focus: var(--color-focus);
     --c-page-grid-selected-color: var(--color-accent);
     --c-screen-preview-radius: var(--radius-md);
     --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
@@ -167,6 +172,7 @@
     --c-section-tone-raised: var(--color-bg-raised);
     --c-section-tone-tint: var(--color-bg-tint);
     --c-section-tone-radius: var(--radius-lg);
+    --c-section-outline-color: var(--color-border);
     --c-slider-bubble-radius: var(--radius-sm);
     --c-allocation-slider-radius: var(--radius-md);
     --c-gradient-editor-radius: var(--radius-md);
@@ -219,8 +225,10 @@
       --c-data-table-divider: var(--color-border);
       --c-data-table-head-fg: var(--color-text-muted);
       --c-data-table-outline: var(--color-border);
+      --c-divider-color: var(--color-border);
       --c-editor-layout-divider: var(--color-border);
       --c-example-outline: var(--color-border);
+      --c-field-underline-line: var(--color-border);
       --c-field-readonly-border: var(--color-border);
       --c-illustration-muted: var(--color-text-muted);
       --c-list-tile-fill: var(--color-bg-control);
@@ -232,6 +240,7 @@
       --c-row-list-divider: var(--color-border);
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
+      --c-section-outline-color: var(--color-border);
       --c-site-header-current-rule: var(--color-border-strong);
       --c-skeleton-fill: var(--color-border);
     }
@@ -248,8 +257,10 @@
     --c-data-table-divider: var(--color-border);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-data-table-outline: var(--color-border);
+    --c-divider-color: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-underline-line: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-tile-fill: var(--color-bg-control);
@@ -261,6 +272,7 @@
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
+    --c-section-outline-color: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
   }
@@ -276,8 +288,10 @@
     --c-data-table-divider: var(--color-border);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-data-table-outline: var(--color-border);
+    --c-divider-color: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-underline-line: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-tile-fill: var(--color-bg-control);
@@ -289,6 +303,7 @@
     --c-row-list-divider: var(--color-border);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
+    --c-section-outline-color: var(--color-border);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-skeleton-fill: var(--color-border);
   }
