@@ -76,6 +76,12 @@
           "type": "boolean",
           "default": "false",
           "description": "LR104 (opt-in): the form fills its panel from top to bottom (an inspector): it takes the height its container gives it, the list of sections runs the full height beside the chosen one, and the chosen section's fields start at the top."
+        },
+        {
+          "name": "stickyList",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR107 (opt-in): in two columns the list of sections stays in view while a long section scrolls (a record's edit view), under the window's sticky chrome (`--dl-chrome-block`)."
         }
       ]
     },

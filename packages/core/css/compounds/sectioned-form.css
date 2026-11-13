@@ -48,4 +48,10 @@
   [data-dl='sectioned-form'][data-fill] > [data-dl-part='sections'] {
     align-content: start;
   }
+
+  /* LR107 stickyList: the list stays in view while a long section scrolls past it, under the window's sticky chrome. */
+  [data-dl='sectioned-form'][data-sticky-list][data-columns='two'] > [data-dl-part='list'] {
+    position: sticky;
+    inset-block-start: var(--dl-chrome-block, 0px);
+  }
 }

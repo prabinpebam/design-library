@@ -39,6 +39,11 @@ export interface SectionedFormProps extends DataAttributes {
    * it, the list of sections runs the full height beside the chosen one, and the chosen section's fields start at the top.
    */
   fill?: boolean;
+  /**
+   * LR107 (opt-in): in two columns the list of sections stays in view while a long section scrolls (a record's edit
+   * view), under the window's sticky chrome (`--dl-chrome-block`).
+   */
+  stickyList?: boolean;
 }
 
 const toPx = (length: string, el: HTMLElement) => {
@@ -59,7 +64,7 @@ const toPx = (length: string, el: HTMLElement) => {
  * its section is the only one shown. In one column the list is hidden and every section shows, each a `section` named
  * by its heading. The column mode follows the form's own width, never the window's.
  */
-export function SectionedForm({ label, sections, selected, defaultSelected, onSelect, twoColumnFrom = '40rem', listWidth, details = false, density = 'normal', mark, fill = false, ...data }: SectionedFormProps) {
+export function SectionedForm({ label, sections, selected, defaultSelected, onSelect, twoColumnFrom = '40rem', listWidth, details = false, density = 'normal', mark, fill = false, stickyList = false, ...data }: SectionedFormProps) {
   const [own, setOwn] = useState(defaultSelected ?? sections[0]?.id);
   const [two, setTwo] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -81,7 +86,7 @@ export function SectionedForm({ label, sections, selected, defaultSelected, onSe
   };
   const groups = [...new Set(sections.map((s) => s.group ?? ''))];
   return (
-    <div {...data} ref={root} data-dl="sectioned-form" data-columns={two ? 'two' : 'one'} data-fill={fill ? '' : undefined} style={listWidth ? ({ '--dl-sectioned-form-list': listWidth } as CSSProperties) : undefined}>
+    <div {...data} ref={root} data-dl="sectioned-form" data-columns={two ? 'two' : 'one'} data-fill={fill ? '' : undefined} data-sticky-list={stickyList ? '' : undefined} style={listWidth ? ({ '--dl-sectioned-form-list': listWidth } as CSSProperties) : undefined}>
       <nav data-dl-part="list" aria-label={label} hidden={!two}>
         <List
           mode="select"
