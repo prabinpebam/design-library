@@ -78,7 +78,7 @@
      badge lets the pointer through, so the whole frame follows the link and its focus ring follows the frame's corners. */
   /* Thumbnails fill their frame under its link and duration, with the frame's corners (the Image radius seam). */
   :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='thumb'] { position: absolute; inset: 0; display: grid; }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='screen'] { display: grid; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='screen'] { display: grid; }
   :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='link'] { position: absolute; inset: 0; border-radius: inherit; }
   :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='duration'] { pointer-events: none; }
   [data-dl='youtube-video'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
@@ -102,21 +102,21 @@
   @media (max-width: 64rem) { [data-dl='youtube-watch'] { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); } }
   [data-dl='youtube-watch'] > [data-dl-part='primary'] { display: grid; align-content: start; min-inline-size: 0; }
   /* Player: 16:9 (the spec computes 880×495 for a 16:9 video), black in both schemes: the part takes the dark scheme, whose sunken fill the theme makes #000000 (W-1280-L/D). */
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { display: grid; grid-template-areas: 'stack'; aspect-ratio: 16 / 9; --image-radius: var(--radius-lg); border-radius: var(--image-radius); background: var(--color-bg-sunken); color: var(--color-text); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] { display: grid; grid-template-areas: 'stack'; aspect-ratio: 16 / 9; --image-radius: var(--radius-lg); border-radius: var(--image-radius); background: var(--color-bg-sunken); color: var(--color-text); }
   /* The player is as tall as the video makes it (W-1280-L: 880×660 for a 4:3 video; watch169-1280-L: 880×495 for 16:9). */
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'][data-aspect='4:3'] { aspect-ratio: 4 / 3; }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > * { grid-area: stack; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'][data-aspect='4:3'] { aspect-ratio: 4 / 3; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > * { grid-area: stack; }
   /* Control bar at rest (watch169-1280-L): 12 in from each side; the seek line 6 high, then a 56 row whose 40 controls sit 8 from
      the player's foot. Left: play and volume circles 12 apart, the time pill 8 after them (14/40 w500); right: one pill, padding
      0 4, of 48 × 40 slots (autoplay, subtitles, settings, theatre, full screen). Fills are the media-control material. */
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto var(--size-control-xl); align-items: center; align-self: end; padding-inline: var(--space-3); }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='seek'] { grid-column: 1 / -1; display: grid; align-content: center; block-size: var(--size-track-l); /* the 6 high line; the slider's target overflows it evenly */ }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] { display: flex; align-items: center; gap: var(--space-2); }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='round'] { display: grid; border-radius: var(--radius-pill); background: var(--material-media-control); }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='round']:first-child { margin-inline-end: var(--space-1); }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time'] { display: flex; align-items: center; block-size: var(--size-control-md); padding-inline: var(--space-4); border-radius: var(--radius-pill); background: var(--material-media-control); color: var(--color-text); font-size: var(--type-label-size); font-weight: var(--weight-medium); }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='right'] { grid-column: 3; display: flex; align-items: center; padding-inline: var(--space-1); border-radius: var(--radius-pill); background: var(--material-media-control); }
-  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='right'] > [data-dl-part='slot'] { display: grid; place-items: center; inline-size: var(--size-control-lg); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto var(--size-control-xl); align-items: center; align-self: end; padding-inline: var(--space-3); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='seek'] { grid-column: 1 / -1; display: grid; align-content: center; block-size: var(--size-track-l); /* the 6 high line; the slider's target overflows it evenly */ }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] { display: flex; align-items: center; gap: var(--space-2); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='round'] { display: grid; border-radius: var(--radius-pill); background: var(--material-media-control); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='round']:first-child { margin-inline-end: var(--space-1); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time'] { display: flex; align-items: center; block-size: var(--size-control-md); padding-inline: var(--space-4); border-radius: var(--radius-pill); background: var(--material-media-control); color: var(--color-text); font-size: var(--type-label-size); font-weight: var(--weight-medium); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='right'] { grid-column: 3; display: flex; align-items: center; padding-inline: var(--space-1); border-radius: var(--radius-pill); background: var(--material-media-control); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='right'] > [data-dl-part='slot'] { display: grid; place-items: center; inline-size: var(--size-control-lg); }
   /* Title 12 below the player, 20/28 w700, two lines (W-1280-L). */
   [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='title'] { padding-block-start: var(--space-3); }
   /* Owner row 8 below the title's line: avatar 40 at its top, name and Subscribe 1.5 lower, the action pills 3.5 lower (2 and 4 here, the nearest steps); name 16/22 w500 over subscribers 12/18, Subscribe 24 after them; actions at the end, 8 apart (W-1280-L). */
@@ -202,7 +202,12 @@
     [data-dl='youtube-watch'] { padding-block-start: 0; padding-inline: 0; }
     [data-dl='youtube-watch'] > [data-dl-part='primary'] > :not([data-dl-part='player']),
     :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] { margin-inline: var(--space-4); }
-    [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { --image-radius: 0px; border-radius: var(--image-radius); }
+    :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='player'] { --image-radius: 0px; border-radius: var(--image-radius); }
   }
 }
 [data-dl='youtube-feed'] > [data-dl-part='grid'] > [data-dl-part='empty'] { grid-column: 1 / -1; padding-block: var(--space-6); }
+/* Theatre mode: the player spans the page above both columns, edge to edge, no taller than three quarters of the window. */
+[data-dl='youtube-watch'][data-view='theatre'] { row-gap: var(--space-6); padding-block-start: 0; padding-inline: 0; }
+[data-dl='youtube-watch'][data-view='theatre'] > [data-dl-part='player'] { grid-column: 1 / -1; inline-size: 100%; max-block-size: 75vh; --image-radius: 0px; }
+[data-dl='youtube-watch'][data-view='theatre'] > [data-dl-part='primary'] { padding-inline-start: var(--space-4); }
+[data-dl='youtube-watch'][data-view='theatre'] > [data-dl-part='secondary'] { padding-inline-end: var(--space-4); }

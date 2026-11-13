@@ -82,6 +82,8 @@ export interface YoutubeRecord {
   guide: YoutubeGuideSection[];
   /** Feed filters; the first is selected. */
   chips: string[];
+  /** The videos (by id) each feed filter keeps; the first filter, and any filter missing here, keeps them all. */
+  chipVideos?: Record<string, string[]>;
   videos: YoutubeVideo[];
   /** The watch page: the video being watched; up next is every other video. */
   watch: YoutubeWatch;

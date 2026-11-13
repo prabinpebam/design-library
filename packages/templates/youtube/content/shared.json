@@ -29,6 +29,7 @@
         { "label": "Help", "icon": "help" }
       ] }
     ],
+    "chipVideos": { "Music": ["v6", "v11"], "Cooking": ["v3"], "Live": ["v5"], "Woodworking": ["v1", "v7"], "Travel": ["v2", "v8"], "Gardening": ["v9"], "Podcasts": ["v10"], "Recently uploaded": ["v3", "v5", "v1"], "Watched": ["v6", "v2"], "New to you": ["v4", "v12", "v10"] },
     "chips": ["All", "Music", "Cooking", "Live", "Woodworking", "Travel", "Gardening", "Podcasts", "Recently uploaded", "Watched", "New to you"],
     "videos": [
       { "id": "v1", "thumbnail": "video-v1", "title": "Building a cedar planter box in one afternoon, start to finish", "channel": "Grain & Glue", "avatar": "channel-grain-glue", "views": "412K views", "age": "3 days ago", "duration": "18:42", "aspect": "16:9" },
@@ -65,7 +66,7 @@
     ],
     "search": {
       "query": "woodworking for beginners",
-      "chips": ["All", "Shorts", "Unwatched", "Videos", "Recently uploaded", "Live"],
+    "chips": ["All", "Shorts", "Unwatched", "Videos", "Recently uploaded", "Live"],
       "filters": [
         { "id": "date", "title": "Upload date", "options": ["Today", "This week", "This month", "This year"] },
         { "id": "type", "title": "Type", "options": ["Video", "Channel", "Playlist"] },
@@ -112,6 +113,7 @@
       "mute": "Mute",
       "autoplay": "Autoplay",
       "captions": "Subtitles",
+      "defaultView": "Default view",
       "theatre": "Theatre mode",
       "fullscreen": "Full screen",
       "exitFullscreen": "Exit full screen",

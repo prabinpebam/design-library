@@ -93,6 +93,7 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
   const current = (screen === 'home' && params?.feed && entries.find((e) => slug(e.label) === params.feed)) || entries.find((e) => e.current);
   const currentId = current && slug(current.label);
   const feed = current?.current ? view.videos : view.videos.filter((v) => current?.videos?.includes(v.id));
+  const shown = feed.filter((v) => !hidden.includes(v.id) && (view.chipVideos?.[chip[0]]?.includes(v.id) ?? true));
 
   return (
     <div {...data} data-dl="youtube-site" data-screen={screen} data-guide={toggled ? 'toggled' : undefined} data-scheme={scheme === 'device' ? undefined : scheme}>
@@ -149,8 +150,8 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
               <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
             </div>
             <ul data-dl-part="grid" aria-label={c.feed}>
-              {feed.length === 0 && <li data-dl-part="empty"><Text variant="body-sm" tone="muted">{c.notBuilt}</Text></li>}
-              {feed.filter((v) => !hidden.includes(v.id)).map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} picture={thumb(v)} face={face(v)} onAction={(a) => onVideo(v, a)} /></li>)}
+              {shown.length === 0 && <li data-dl-part="empty"><Text variant="body-sm" tone="muted">{feed.length ? c.noResults : c.notBuilt}</Text></li>}
+              {shown.map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} picture={thumb(v)} face={face(v)} onAction={(a) => onVideo(v, a)} /></li>)}
             </ul>
           </div>
         </ScrollArea>
@@ -220,6 +221,8 @@ function Watch({ view, href, video: chosen, thumb, face, onVideo }: { view: Yout
   const comments = sort === 'top' ? w.comments : [...w.comments].sort((a, b) => ageDays(a.age) - ageDays(b.age));
   const player = useRef<HTMLDivElement>(null);
   const [full, setFull] = useState(false);
+  // Theatre mode: the player leaves the first column and spans the page above both columns.
+  const [theatre, setTheatre] = useState(false);
   useEffect(() => {
     const follow = () => setFull(document.fullscreenElement === player.current);
     document.addEventListener('fullscreenchange', follow);
@@ -254,31 +257,35 @@ function Watch({ view, href, video: chosen, thumb, face, onVideo }: { view: Yout
       </ul>
     </aside>
   );
+  const playerEl = (
+    <div data-dl-part="player" data-scheme="dark" data-aspect={video.aspect} data-state={playing ? 'playing' : 'paused'} ref={player}>
+      {shown ? <span data-dl-part="screen"><Image src={shown.src} alt={shown.alt} ratio="fill" priority /></span> : <div data-dl-part="screen" role="img" aria-label={c.player} />}
+      <IconOverrides icons={playerPack.glyphs}>
+      <div data-dl-part="controls">
+        <div data-dl-part="seek"><Slider label={c.seek} hideLabel showValue={false} size="s" min={0} max={100} value={seek} onChange={(v) => setSeek(v as number)} /></div>
+        <div data-dl-part="left">
+          <span data-dl-part="round"><Button label={playing ? c.pause : c.play} icon={playerIcons.name(playing ? 'player-pause' : 'player-play')} iconOnly emphasis="quiet" tone="inherit" onClick={() => setPlaying(!playing)} /></span>
+          <span data-dl-part="round"><Button label={muted ? c.unmute : c.mute} icon={playerIcons.name('player-volume')} iconOnly emphasis="quiet" tone="inherit" onClick={() => setMuted(!muted)} /></span>
+          <span data-dl-part="time"><Text variant="inherit">0:00 / {video.duration}</Text></span>
+        </div>
+        <div data-dl-part="right">
+          <span data-dl-part="slot"><Switch label={c.autoplay} hideLabel size="xs" checked={autoplay} onChange={setAutoplay} thumbIcon={playerIcons.name('player-play')} /></span>
+          {/* toggle-button: the player's dense control bar, as the reference; the glyph shows the state */}
+          <span data-dl-part="slot"><Button label={c.captions} icon={playerIcons.name('player-captions')} iconOnly emphasis="quiet" tone="inherit" pressed={captions} onClick={() => setCaptions(!captions)} /></span>
+          <span data-dl-part="slot"><MenuButton label={c.settings} icon={playerIcons.name('player-settings')} iconOnly emphasis="quiet" tone="inherit" side="block" onSelect={(v) => setSpeed(v.slice(6))} items={[{ value: 'speed', label: c.speed, meta: speed === '1' ? c.normal : speed, items: speeds.map((x) => ({ value: `speed-${x}`, label: x === '1' ? c.normal : x, checked: x === speed })) }]} /></span>
+          <span data-dl-part="slot"><Button label={theatre ? c.defaultView : c.theatre} icon={playerIcons.name('player-theatre')} iconOnly emphasis="quiet" tone="inherit" onClick={() => setTheatre(!theatre)} /></span>
+          <span data-dl-part="slot"><Button label={full ? c.exitFullscreen : c.fullscreen} icon={playerIcons.name('player-fullscreen')} iconOnly emphasis="quiet" tone="inherit" onClick={() => void (document.fullscreenElement ? document.exitFullscreen() : player.current?.requestFullscreen?.())} /></span>
+        </div>
+      </div>
+      </IconOverrides>
+    </div>
+  );
   return (
     <ScrollArea label={video.title}>
-      <div data-dl="youtube-watch">
+      <div data-dl="youtube-watch" data-view={theatre ? 'theatre' : undefined}>
+        {theatre && playerEl}
         <div data-dl-part="primary">
-          <div data-dl-part="player" data-scheme="dark" data-aspect={video.aspect} data-state={playing ? 'playing' : 'paused'} ref={player}>
-            {shown ? <span data-dl-part="screen"><Image src={shown.src} alt={shown.alt} ratio="fill" priority /></span> : <div data-dl-part="screen" role="img" aria-label={c.player} />}
-            <IconOverrides icons={playerPack.glyphs}>
-            <div data-dl-part="controls">
-              <div data-dl-part="seek"><Slider label={c.seek} hideLabel showValue={false} size="s" min={0} max={100} value={seek} onChange={(v) => setSeek(v as number)} /></div>
-              <div data-dl-part="left">
-                <span data-dl-part="round"><Button label={playing ? c.pause : c.play} icon={playerIcons.name(playing ? 'player-pause' : 'player-play')} iconOnly emphasis="quiet" tone="inherit" onClick={() => setPlaying(!playing)} /></span>
-                <span data-dl-part="round"><Button label={muted ? c.unmute : c.mute} icon={playerIcons.name('player-volume')} iconOnly emphasis="quiet" tone="inherit" onClick={() => setMuted(!muted)} /></span>
-                <span data-dl-part="time"><Text variant="inherit">0:00 / {video.duration}</Text></span>
-              </div>
-              <div data-dl-part="right">
-                <span data-dl-part="slot"><Switch label={c.autoplay} hideLabel size="xs" checked={autoplay} onChange={setAutoplay} thumbIcon={playerIcons.name('player-play')} /></span>
-                {/* toggle-button: the player's dense control bar, as the reference; the glyph shows the state */}
-                <span data-dl-part="slot"><Button label={c.captions} icon={playerIcons.name('player-captions')} iconOnly emphasis="quiet" tone="inherit" pressed={captions} onClick={() => setCaptions(!captions)} /></span>
-                <span data-dl-part="slot"><MenuButton label={c.settings} icon={playerIcons.name('player-settings')} iconOnly emphasis="quiet" tone="inherit" side="block" onSelect={(v) => setSpeed(v.slice(6))} items={[{ value: 'speed', label: c.speed, meta: speed === '1' ? c.normal : speed, items: speeds.map((x) => ({ value: `speed-${x}`, label: x === '1' ? c.normal : x, checked: x === speed })) }]} /></span>
-                <span data-dl-part="slot"><Button label={c.theatre} icon={playerIcons.name('player-theatre')} iconOnly emphasis="quiet" tone="inherit" onClick={() => notify({ subject: 'player', message: c.notBuilt })} /></span>
-                <span data-dl-part="slot"><Button label={full ? c.exitFullscreen : c.fullscreen} icon={playerIcons.name('player-fullscreen')} iconOnly emphasis="quiet" tone="inherit" onClick={() => void (document.fullscreenElement ? document.exitFullscreen() : player.current?.requestFullscreen?.())} /></span>
-              </div>
-            </div>
-            </IconOverrides>
-          </div>
+          {!theatre && playerEl}
           <div data-dl-part="title">
             <Heading level={1} size={3} lines={2}>{video.title}</Heading>
           </div>

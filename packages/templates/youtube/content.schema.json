@@ -112,6 +112,16 @@
           ],
           "type": "object"
         },
+        "chipVideos": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "description": "The videos (by id) each feed filter keeps; the first filter, and any filter missing here, keeps them all.",
+          "type": "object"
+        },
         "chips": {
           "description": "Feed filters; the first is selected.",
           "items": {
