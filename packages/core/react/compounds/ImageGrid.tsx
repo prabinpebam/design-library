@@ -80,8 +80,9 @@ export interface ImageGridItem extends SchemeSources {
   /**
    * LR71 (opt-in): a file that isn't a picture yet (uploading, or refused): the tile is a blank surface at the grid's
    * ratio with this icon in its middle (in the danger colour with `statusTone="danger"`), in place of `src`.
+   * `true` keeps the empty frame without an image or icon (an unfilled picture slot).
    */
-  blank?: IconName;
+  blank?: IconName | true;
 }
 
 /** How a selection change was made: `range` (Shift: from the last item chosen to this one), `toggle` (the check box, Ctrl or Cmd: this one in or out). Neither: a plain press chose this one alone. */
@@ -364,7 +365,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         const isSelected = !!selectable && selected.includes(item.id);
         const picture = item.blank ? (
           <span data-dl-part="blank" data-ratio={layout === 'standard' ? ratio : 'square'} role={opens ? undefined : 'img'} aria-label={opens ? undefined : item.alt}>
-            <Icon name={item.blank} size="lg" />
+            {typeof item.blank === 'string' && <Icon name={item.blank} size="lg" />}
           </span>
         ) : (
           <Image

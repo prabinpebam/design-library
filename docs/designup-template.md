@@ -15,6 +15,16 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR124: a clean empty photo frame (14 November 2026)
+
+DesignUp admin main photo, owner 01:43 + 02:25: ImageGrid's icon-valued blank always renders a glyph which reads as a broken picture. Existing props/slots/context/theme cannot omit it; template replacement would cross sealed markup, so step 6, generic core. Opt-in `ImageGridItem.blank?: IconName | true`: true keeps the existing token-rounded frame and accessible name without img or Icon; icon-valued blanks/defaults unchanged. R1/R6 existing Square album, no new data, block, preset, visible parameter, enclosure or motion. Editor44 owns core and adoption without override. Types/build, generated contract, linked consumer types, checkpoint pin/build and inspected shots only; stories/regressions deferred.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR124 | 2026-11-14 | Empty main-photo frame without broken-picture glyph | ImageGrid.tsx blank always renders Icon | 6 | opt-in blank: true; icon blanks unchanged | none | Editor44 | shipped live; types/build and linked types pass | this LR124 commit | Done: DesignUp uses blank true; no workaround |
+
+Observed live: clickable blank frames were also missing their ratio/fill/radius because LR71's combined child selector never matched the nested blank. The owning core child paths now cover both direct and button-wrapped blanks. The speaker's empty frame measures 192x192, four 12px corners, zero img/SVG nodes. Existing icon-valued blanks retain their glyph. Browser-memory walkthrough covers first save, Square parity, remove/Undo and upload callback without server/history writes. Checkpoint pin/build and inspected captures are recorded with DesignUp adoption; stories deferred to merge night.
+
 ### LR123: opt-in rounded layout panels (14 November 2026)
 
 Owner 01:00: "This navigation panel should have rounded corner. We are not having anything sharp in the Admin template." Admin only; public-site template unchanged. R5 shape parameter, no new block, preset, album presentation, visible control, enclosure, border, fill, shadow, padding or motion. ListDetail's toned list, EditorLayout's panels and AppLayout's sidebar lack radius declarations; existing props, slots, context and theme settings cannot round those sealed surfaces, so step 6. Generic opt-in `roundedPanels` (default false) on those three layouts reads each layout's own `panel-radius` token aliasing `radius.lg`. No clipping is added: resize handles, sticky children, scrollers and focus keep their reach. DesignUp adopts its shared AdminFrame/PageEditor and both ListDetail consumers, and keeps sharp site shapes out of its admin context; segmented inner joins stay square. Merge1 granted this file split, owns deferred stories, final checks and the pin; Editor41 owns library types/build, linked consumer types and targeted Sections light/dark and Albums dark captures.

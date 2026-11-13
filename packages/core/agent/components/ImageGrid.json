@@ -265,8 +265,8 @@
         },
         {
           "name": "blank",
-          "type": "IconName",
-          "description": "LR71 (opt-in): a file that isn't a picture yet (uploading, or refused): the tile is a blank surface at the grid's ratio with this icon in its middle (in the danger colour with `statusTone=\"danger\"`), in place of `src`."
+          "type": "IconName | true",
+          "description": "LR71 (opt-in): a file that isn't a picture yet (uploading, or refused): the tile is a blank surface at the grid's ratio with this icon in its middle (in the danger colour with `statusTone=\"danger\"`), in place of `src`. `true` keeps the empty frame without an image or icon (an unfilled picture slot)."
         }
       ]
     },
