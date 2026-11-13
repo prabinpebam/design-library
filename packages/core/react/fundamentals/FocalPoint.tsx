@@ -96,7 +96,7 @@ export function FocalPoint({ src, alt, label, hint, preview = 'compact', value, 
       onKeyDown={key} onBlur={commit}
       onPointerDown={event => {
         if (locked || event.button !== 0) return;
-        event.preventDefault(); clearTimeout(timer.current); event.currentTarget.focus();
+        event.preventDefault(); clearTimeout(timer.current); event.currentTarget.focus({ preventScroll: true });
         event.currentTarget.setPointerCapture(event.pointerId); origin.current = latest.current;
         update(atPointer(event));
       }}
