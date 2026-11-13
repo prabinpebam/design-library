@@ -576,6 +576,10 @@
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-head-gap-s: var(--space-stack-section);
+  --c-app-layout-brand-gap: var(--space-inline-pair);
+  --c-app-layout-brand-name-size: var(--type-body-sm-size);
+  --c-app-layout-brand-size: var(--size-target);
+  --c-app-layout-brand-end: var(--space-inline-group);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
   --c-app-layout-end: var(--c-app-layout-margin);
@@ -1639,6 +1643,8 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
+  --c-app-layout-brand-end: var(--space-inline-group);
+  --c-app-layout-brand-gap: var(--space-inline-pair);
   --c-app-layout-end: var(--c-app-layout-margin);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
@@ -1942,6 +1948,8 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
+  --c-app-layout-brand-end: var(--space-inline-group);
+  --c-app-layout-brand-gap: var(--space-inline-pair);
   --c-app-layout-end: var(--c-app-layout-margin);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
@@ -2245,6 +2253,8 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
+  --c-app-layout-brand-end: var(--space-inline-group);
+  --c-app-layout-brand-gap: var(--space-inline-pair);
   --c-app-layout-end: var(--c-app-layout-margin);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
@@ -2548,6 +2558,8 @@
   --c-alignment-picker-padding: var(--space-inset-xs);
   --c-allocation-slider-gap: var(--space-stack-pair);
   --c-allocation-slider-legend-gap: var(--space-inline-group);
+  --c-app-layout-brand-end: var(--space-inline-group);
+  --c-app-layout-brand-gap: var(--space-inline-pair);
   --c-app-layout-end: var(--c-app-layout-margin);
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);

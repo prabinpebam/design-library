@@ -47,6 +47,11 @@
           "description": "The sidebar toggle in the header was pressed."
         },
         {
+          "name": "brand",
+          "type": "AppLayoutBrand",
+          "description": "The app's name (and mark) at the header's start, after the toggle, linking to its home view (a dashboard), as SiteHeader's name does (LR90). The name is the link's name; the mark is decorative. Left out: no brand."
+        },
+        {
           "name": "header",
           "type": "ReactNode",
           "description": "The header after the toggle: where you are (Breadcrumbs) or the view's controls."
@@ -153,6 +158,50 @@
           "description": "How wide the view's fields, lists and form rows may grow: measure (default) a reading line (size.measure); wide up to size.wide (LR80), an editing app whose rows fill its panels."
         }
       ]
+    },
+    {
+      "interface": "AppLayoutBrand",
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "mark",
+          "type": "ReactNode } /** * A working app: a collapsible sidebar of places, a header, and the view, which scrolls on its own"
+        },
+        {
+          "name": "day",
+          "type": "a tracker, an admin, a dashboard, a mail client. Not for a * conversation (ChatLayout), an editor with a canvas (EditorLayout) or a website (SiteLayout). * @tier 3 * @a11y The sidebar is a labelled `aside` the header's toggle controls (`aria-expanded`)",
+          "required": true
+        },
+        {
+          "name": "Escape",
+          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) { const sidebarId = useId()",
+          "required": true
+        },
+        {
+          "name": "auto",
+          "type": "the layout measures its own width against floatBelow (a prop, so not a stylesheet container query). useEffect(() => { const el = root.current",
+          "required": true
+        },
+        {
+          "name": "event",
+          "type": "KeyboardEvent) => { if (event.key !== 'Escape' || !floatsNow()) return",
+          "required": true
+        },
+        {
+          "name": "button",
+          "type": "the sidebar's pin in its own head, docking or floating it, where a Switch would break the head's row of icon buttons */} <Button label={labels?.unpin && docked ? labels.unpin : labels?.pin ?? `Pin ${sidebarLabel.toLowerCase()}`} icon={labels?.unpin && docked ? 'pin-filled' : 'pin'} pressedIcon=\"pin-filled\" iconOnly size=\"xs\" emphasis=\"quiet\" pressed={labels?.unpin ? undefined : docked} onClick={() => onStartModeChange(docked ? 'floating' : 'docked')} /> </div> )} <ScrollArea data-dl-part=\"sidebar-list\"> <div data-dl-part=\"sidebar-content\">{sidebar}</div> </ScrollArea> </aside> <div data-dl-part=\"main\"> <header data-dl-part=\"header\"> <span ref={toggle} data-dl-part=\"toggle\"> <Button label={sidebarOpen ? labels?.close ?? 'Close sidebar' : labels?.open ?? 'Open sidebar'} icon=\"menu\" iconOnly size=\"s\" emphasis=\"quiet\" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} /> </span> <span data-dl-part=\"header-start\" data-brand={brand ? '' : undefined}> {brand && ( <a data-dl-part=\"brand\" href={router ? router.href(brand.href) : brand.href}> {brand.mark && <span data-dl-part=\"brand-mark\" aria-hidden=\"true\">{brand.mark}</span>} <span data-dl-part=\"brand-name\">{brand.name}</span> </a> )} {header} </span> <span data-dl-part=\"header-end\">{headerEnd}</span> </header> {width === 'edge' ? ( <main data-dl-part=\"edge\" aria-label={label}> {children} </main> ) : ( <ScrollArea data-dl-part=\"scroll\" axis=\"both\" tabIndex={0}> <div data-dl-part=\"body\"> <main data-dl-part=\"view\" aria-label={label}> {view} </main> {aside && ( <aside data-dl-part=\"aside\" data-density=\"compact\" aria-label={asideLabel}> {aside} </aside> )} </div> </ScrollArea> )} </div> </div> )",
+          "required": true
+        }
+      ]
     }
   ],
   "uses": [
@@ -162,6 +211,10 @@
   "tokens": [
     "--border-hairline",
     "--c-app-layout-aside",
+    "--c-app-layout-brand-end",
+    "--c-app-layout-brand-gap",
+    "--c-app-layout-brand-name-size",
+    "--c-app-layout-brand-size",
     "--c-app-layout-column",
     "--c-app-layout-end",
     "--c-app-layout-gap",

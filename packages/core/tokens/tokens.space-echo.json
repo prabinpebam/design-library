@@ -125,6 +125,16 @@
       "$extensions": {
         "owner": "AppLayout"
       },
+      "brand-end": {
+        "$type": "dimension",
+        "$value": "{space.inline-group}",
+        "$description": "Between the brand and the rest of the header's start: a group's step, so the name reads apart from the controls after it (LR90) (echoed for space contexts)"
+      },
+      "brand-gap": {
+        "$type": "dimension",
+        "$value": "{space.inline-pair}",
+        "$description": "Between the brand's mark and its name (LR90) (echoed for space contexts)"
+      },
       "end": {
         "$type": "dimension",
         "$value": "{c.app-layout.margin}",

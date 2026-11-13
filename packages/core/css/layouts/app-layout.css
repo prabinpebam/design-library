@@ -82,6 +82,26 @@
     min-inline-size: 0;
   }
 
+  /* LR90: the app's name (and mark) linking home, as SiteHeader's name: the text's colour, no underline, a whole target; the ring is base's. */
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'][data-brand] {
+    gap: var(--c-app-layout-brand-end);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] > [data-dl-part='brand'] {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--c-app-layout-brand-gap);
+    min-block-size: var(--c-app-layout-brand-size);
+    font-size: var(--c-app-layout-brand-name-size);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] > [data-dl-part='brand'] > [data-dl-part='brand-mark'] {
+    display: inline-flex;
+  }
+
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-end'] {
     flex: 1;
     justify-content: flex-end;

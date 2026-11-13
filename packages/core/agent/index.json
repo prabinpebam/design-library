@@ -383,6 +383,7 @@
       "AllocationSegment",
       "AllocationSliderProps",
       "AnchorSide",
+      "AppLayoutBrand",
       "AppLayoutProps",
       "AvatarGroupMember",
       "AvatarGroupProps",
@@ -11032,6 +11033,10 @@
       ],
       "app-layout": [
         "--c-app-layout-aside",
+        "--c-app-layout-brand-end",
+        "--c-app-layout-brand-gap",
+        "--c-app-layout-brand-name-size",
+        "--c-app-layout-brand-size",
         "--c-app-layout-column",
         "--c-app-layout-end",
         "--c-app-layout-gap",

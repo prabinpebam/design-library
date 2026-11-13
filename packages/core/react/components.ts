@@ -95,7 +95,7 @@ export type { FloatingBarProps } from './compounds/FloatingBar';
 export { moveCard } from './behaviour/board';
 export type { BoardProps, BoardColumn, BoardCard } from './compounds/Board';
 export { AppLayout } from './layouts/AppLayout';
-export type { AppLayoutProps } from './layouts/AppLayout';
+export type { AppLayoutProps, AppLayoutBrand } from './layouts/AppLayout';
 export { ScreenPreview } from './compounds/ScreenPreview';
 export type { ScreenPreviewProps } from './compounds/ScreenPreview';
 export type { EmptyStateProps } from './compounds/EmptyState';

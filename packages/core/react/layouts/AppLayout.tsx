@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Button } from '../fundamentals/Button';
 import { ScrollArea } from '../fundamentals/ScrollArea';
+import { useRouter } from '../behaviour/router';
 import type { DataAttributes } from '../types';
 
 export interface AppLayoutProps extends DataAttributes {
@@ -12,6 +13,8 @@ export interface AppLayoutProps extends DataAttributes {
   sidebarOpen: boolean;
   /** The sidebar toggle in the header was pressed. */
   onSidebarToggle: () => void;
+  /** The app's name (and mark) at the header's start, after the toggle, linking to its home view (a dashboard), as SiteHeader's name does (LR90). The name is the link's name; the mark is decorative. Left out: no brand. */
+  brand?: AppLayoutBrand;
   /** The header after the toggle: where you are (Breadcrumbs) or the view's controls. */
   header?: ReactNode;
   /** The header's end: search, the main action, the account. */
@@ -52,6 +55,9 @@ export interface AppLayoutProps extends DataAttributes {
   measure?: 'measure' | 'wide';
 }
 
+/** AppLayout's brand (LR90): the app's name, where it leads and an optional mark drawn before the name. */
+export interface AppLayoutBrand { name: string; href: string; mark?: ReactNode }
+
 /**
  * A working app: a collapsible sidebar of places, a header, and the view, which scrolls on its own; optionally a details
  * column beside it. For tools people work in all day: a tracker, an admin, a dashboard, a mail client. Not for a
@@ -65,8 +71,9 @@ export interface AppLayoutProps extends DataAttributes {
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
   const sidebarId = useId();
+  const router = useRouter();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
@@ -151,7 +158,15 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
           <span ref={toggle} data-dl-part="toggle">
             <Button label={sidebarOpen ? labels?.close ?? 'Close sidebar' : labels?.open ?? 'Open sidebar'} icon="menu" iconOnly size="s" emphasis="quiet" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} />
           </span>
-          <span data-dl-part="header-start">{header}</span>
+          <span data-dl-part="header-start" data-brand={brand ? '' : undefined}>
+            {brand && (
+              <a data-dl-part="brand" href={router ? router.href(brand.href) : brand.href}>
+                {brand.mark && <span data-dl-part="brand-mark" aria-hidden="true">{brand.mark}</span>}
+                <span data-dl-part="brand-name">{brand.name}</span>
+              </a>
+            )}
+            {header}
+          </span>
           <span data-dl-part="header-end">{headerEnd}</span>
         </header>
         {width === 'edge' ? (
