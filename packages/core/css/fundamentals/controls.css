@@ -766,7 +766,7 @@
     align-items: stretch;
     gap: var(--c-field-gap);
     inline-size: 100%;
-    max-inline-size: var(--size-measure);
+    max-inline-size: var(--c-field-measure);
   }
 
 
@@ -1374,7 +1374,7 @@
     align-items: stretch;
     gap: var(--c-field-gap);
     inline-size: 100%;
-    max-inline-size: var(--size-measure);
+    max-inline-size: var(--c-field-measure);
   }
 
   /* LR38: as wide as its label and chosen value, never wider than its row. */

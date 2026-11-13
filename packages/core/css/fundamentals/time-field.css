@@ -7,7 +7,7 @@
   [data-dl='time-field'] {
     display: block;
     inline-size: 100%;
-    max-inline-size: var(--size-measure);
+    max-inline-size: var(--c-field-measure);
   }
 
   [data-dl='time-field'] [data-dl-part='box'] {

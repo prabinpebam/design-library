@@ -284,6 +284,7 @@
   "tokens": [
     "--c-field-border-width",
     "--c-field-gap",
+    "--c-field-measure",
     "--c-field-padding-inline",
     "--c-field-padding-inline-lg",
     "--c-field-padding-inline-sm",
@@ -322,7 +323,6 @@
     "--duration-move",
     "--easing-enter",
     "--easing-standard",
-    "--size-measure",
     "--space-inline-item",
     "--space-inline-pair",
     "--space-margin-page",

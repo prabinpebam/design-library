@@ -95,6 +95,7 @@
     "--c-date-field-parts-gap",
     "--c-date-field-year-width",
     "--c-field-border-width",
+    "--c-field-measure",
     "--c-field-padding-inline",
     "--c-field-radius",
     "--c-field-size",
@@ -109,7 +110,6 @@
     "--color-status-danger-fg",
     "--color-text",
     "--color-text-muted",
-    "--size-measure",
     "--type-body-sm-leading",
     "--type-body-sm-size"
   ],

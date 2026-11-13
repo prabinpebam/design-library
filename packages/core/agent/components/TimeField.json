@@ -105,6 +105,7 @@
   ],
   "tokens": [
     "--c-field-border-width",
+    "--c-field-measure",
     "--c-field-padding-inline",
     "--c-field-radius",
     "--c-field-size",
@@ -120,8 +121,7 @@
     "--color-text",
     "--color-text-muted",
     "--duration-change",
-    "--easing-standard",
-    "--size-measure"
+    "--easing-standard"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/timefield",
   "principles": [

@@ -152,6 +152,7 @@
   "tokens": [
     "--c-field-border-width",
     "--c-field-gap",
+    "--c-field-measure",
     "--c-field-padding-inline",
     "--c-field-padding-inline-lg",
     "--c-field-padding-inline-sm",
@@ -171,7 +172,6 @@
     "--color-text",
     "--color-text-disabled",
     "--color-text-muted",
-    "--size-measure",
     "--size-scroll-sm",
     "--space-inline-pair",
     "--space-inset-sm",

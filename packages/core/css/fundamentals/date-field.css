@@ -7,7 +7,7 @@
   [data-dl='date-field'] {
     display: block;
     inline-size: 100%;
-    max-inline-size: var(--size-measure);
+    max-inline-size: var(--c-field-measure);
   }
 
   [data-dl='date-field'] [data-dl-part='parts'] {
