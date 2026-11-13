@@ -13,8 +13,8 @@ export interface ImageProps extends DataAttributes {
   srcSet?: string;
   /** How wide the picture is drawn at each window width (`sizes`), so the browser picks the right file. */
   sizes?: string;
-  /** The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`). */
-  ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural';
+  /** The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, `natural` (the picture's own; give `width` and `height`), or `fill` (its holder's box, any shape: a tile on a grid of cells sized by its holder; the holder must give it a height). */
+  ratio?: 'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural' | 'fill';
   /** The point to keep in the frame when `cover` crops (IP12): `x` and `y` from 0 to 1, across from the start edge and down from the top, e.g. `{ x: 0.3, y: 0.2 }` for a face up and to one side. The centre (0.5, 0.5) when left out. The same field as a picture entry's `focal` in `assets.json`. */
   focal?: { x: number; y: number };
   /** `cover` fills the frame and crops the edges (default); `contain` shows the whole picture inside the frame. */

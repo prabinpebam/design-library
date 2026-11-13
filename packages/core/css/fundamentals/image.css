@@ -24,6 +24,8 @@
   [data-dl='image'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
   /* Natural: the shape from width and height when given, so the frame is right before the picture arrives. */
   [data-dl='image'][data-ratio='natural'] { aspect-ratio: var(--image-ratio, auto); }
+  /* fill: the holder's box at any shape (LR40, DesignUp: a cover tile spanning cells); the holder gives the height. */
+  [data-dl='image'][data-ratio='fill'] { aspect-ratio: auto; block-size: 100%; }
 
   /* `--image-radius` is the one seam a compound may set from its own wrapper: Card's media slot sets it to 0 (Q69), so a
      picture in a card follows only the card's outer corners and stays square where it meets the body. */

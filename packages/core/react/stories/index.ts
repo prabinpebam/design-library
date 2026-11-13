@@ -91,6 +91,7 @@ export { default as calendarStories } from './Calendar.stories';
 export { default as datePickerStories } from './DatePicker.stories';
 export { default as dateRangePickerStories } from './DateRangePicker.stories';
 export { default as timeFieldStories } from './TimeField.stories';
+export { default as tileButtonStories } from './TileButton.stories';
 export { default as dateFieldStories } from './DateField.stories';
 export { default as ratingStories } from './Rating.stories';
 export { default as avatarStories } from './Avatar.stories';

@@ -211,6 +211,8 @@ export { DateRangePicker } from './fundamentals/DateRangePicker';
 export type { DateRangePickerProps } from './fundamentals/DateRangePicker';
 export { TimeField } from './fundamentals/TimeField';
 export type { TimeFieldProps } from './fundamentals/TimeField';
+export { TileButton } from './fundamentals/TileButton';
+export type { TileButtonProps } from './fundamentals/TileButton';
 export { DateField } from './fundamentals/DateField';
 export type { DateFieldProps } from './fundamentals/DateField';
 export type { CalendarProps } from './fundamentals/Calendar';

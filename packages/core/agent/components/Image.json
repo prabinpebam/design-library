@@ -42,9 +42,9 @@
         },
         {
           "name": "ratio",
-          "type": "'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural'",
+          "type": "'ultrawide' | 'wide' | 'photo' | 'classic' | 'square' | 'portrait' | 'natural' | 'fill'",
           "default": "'photo'",
-          "description": "The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, or `natural` (the picture's own; give `width` and `height`)."
+          "description": "The frame's shape: `ultrawide` 21:9 (a band or banner), `wide` 16:9, `photo` 3:2, `classic` 4:3, `square` 1:1, `portrait` 4:5, `natural` (the picture's own; give `width` and `height`), or `fill` (its holder's box, any shape: a tile on a grid of cells sized by its holder; the holder must give it a height)."
         },
         {
           "name": "focal",

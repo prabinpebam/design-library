@@ -1,0 +1,49 @@
+/*
+ * TileButton (LR40): a bare pressable tile that fills its holder; its rings sit inside its edge.
+ */
+@layer fundamentals {
+  [data-dl='tile-button'] {
+    position: relative;
+    display: grid;
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  [data-dl='tile-button'] > [data-dl-part='content'] {
+    display: grid;
+    min-inline-size: 0;
+    min-block-size: 0;
+    border-radius: inherit;
+  }
+
+  [data-dl='tile-button']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='tile-button'][aria-pressed='true'] {
+    outline: var(--size-focus-width) solid var(--color-accent);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='tile-button'][aria-pressed='true']:focus-visible {
+    outline-color: var(--color-focus);
+  }
+
+  [data-dl='tile-button']:disabled {
+    cursor: default;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='tile-button']:is(:focus-visible, [aria-pressed='true']) {
+      outline-color: Highlight;
+    }
+  }
+}
