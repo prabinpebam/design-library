@@ -124,9 +124,9 @@
         },
         {
           "name": "toggles",
-          "type": "'outer' | 'inner'",
+          "type": "'outer' | 'inner' | 'none'",
           "default": "'outer'",
-          "description": "With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle)."
+          "description": "With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle); `none`: no panel toggles at all, for a studio whose panels are always docked (pass `startOpen` and `endOpen` true); a floating panel's Escape doesn't close it, since nothing would open it again."
         },
         {
           "name": "startSize",

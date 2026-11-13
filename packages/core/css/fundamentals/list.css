@@ -132,11 +132,12 @@
   }
 
   /* Dividers sit in the gap the list already owns, so geometry is the same with or without them. One per boundary. */
-  [data-dl='list']:is([data-dividers='between'], [data-dividers='inset']) li {
+  [data-dl='list']:is([data-dividers='between'], [data-dividers='inset'], [data-dividers='all']) li {
     position: relative;
   }
 
   [data-dl='list']:is([data-dividers='between'], [data-dividers='inset']) li + li::before,
+  [data-dl='list'][data-dividers='all'] > li::before,
   [data-dl='list'][data-dividers='groups'] > [data-dl-part='group'] + [data-dl-part='group']::before {
     content: '';
     position: absolute;
@@ -153,6 +154,12 @@
 
   [data-dl='list'][data-dividers='groups'] > [data-dl-part='group'] + [data-dl-part='group']::before {
     inset-block-start: calc((var(--c-list-group-gap) + var(--border-hairline)) / -2);
+  }
+
+  /* LR64: a rule above every item, the first too (a list of entries that each open with a line); the list keeps half
+     its gap above the first so that rule sits at its top edge, and the geometry between items is unchanged. */
+  [data-dl='list'][data-dividers='all'] {
+    padding-block-start: calc(var(--list-gap) / 2);
   }
 
   /* F15.8e. Reorderable: each row is a Move handle (drag it, or open its menu) and the item's content. */

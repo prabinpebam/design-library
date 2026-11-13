@@ -186,6 +186,22 @@ export default {
       ),
     },
     {
+      title: 'A rule above every entry',
+      description: 'dividers="all": a line above every item, the first too, for entries that each open with a rule (a menu’s entries in an editor). The list keeps half its gap above the first line; the space between items is the same as with between.',
+      code: `<List variant="plain" dividers="all" items={entries} />`,
+      render: () => (
+        <List
+          variant="plain"
+          dividers="all"
+          items={[
+            { id: 'a', content: 'Editions: the page, at most 24 characters.' },
+            { id: 'b', content: 'Talks: the page, at most 24 characters.' },
+            { id: 'c', content: 'Play: a link to /play.' },
+          ]}
+        />
+      ),
+    },
+    {
       title: 'Items that come and go',
       description:
         'An item added fades in where it lands; one removed fades out where it is, then the items after it slide up into its place. Several at once are one change: remove three and they fade together and the rest slide once. Sort, and every item travels to its new place. Past 30 moving items (count.flip-max) nothing travels: the list fades its new order in. Reduced motion: nothing slides; the fades stay.',

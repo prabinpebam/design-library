@@ -31,15 +31,15 @@
         },
         {
           "name": "justify",
-          "type": "'start' | 'between'",
+          "type": "'start' | 'end' | 'between'",
           "default": "'start'",
-          "description": "How the row's free room is shared: `start` (default) keeps children together at the start; `between` spreads them across the row, the first and last at its edges (a design tool's alignment row filling its panel)."
+          "description": "How the row's free room is shared: `start` (default) keeps children together at the start; `end` keeps them together at the end (a row of actions closing a form); `between` spreads them across the row, the first and last at its edges (a design tool's alignment row filling its panel)."
         },
         {
           "name": "align",
-          "type": "'center' | 'baseline' | 'start'",
+          "type": "'center' | 'baseline' | 'start' | 'end'",
           "default": "'center'",
-          "description": "How children line up across the row: centred (marks beside text), on the first line of text, or at the top (items of different heights, such as fields)."
+          "description": "How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), or at the bottom (`end`: a button level with the field beside it, under that field's label)."
         },
         {
           "name": "wrap",

@@ -12,7 +12,7 @@ import { EditorLayout } from '../layouts/EditorLayout';
 import { signInScreen } from './Canvas.stories';
 import type { StoryFile } from './story';
 
-function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean }) {
+function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false, docked = false }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean; docked?: boolean }) {
   const [startOpen, setStartOpen] = useState(start);
   const [endOpen, setEndOpen] = useState(end);
   const [tool, setTool] = useState('pointer');
@@ -22,6 +22,7 @@ function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wi
     <EditorLayout
       height="lg"
       {...(wide ? { startSize: '16rem', endSize: '41rem', endMax: '60rem', workMin: '24rem', resizable: true } : {})}
+      {...(docked ? { toggles: 'none' as const, resizable: true } : {})}
       startOpen={startOpen}
       onStartToggle={() => setStartOpen((x) => !x)}
       endOpen={endOpen}
@@ -116,6 +117,12 @@ export default {
       description: 'Each panel can open at its own width: here the layers at 16 rem and a two-column inspector at 41 rem, which can be dragged up to 60 rem. The working area keeps at least 24 rem: in a narrower window the inspector gives way first, down to the least panel width, before the canvas shrinks below its floor.',
       code: `<EditorLayout startSize="16rem" endSize="41rem" endMax="60rem" workMin="24rem" resizable … />`,
       render: () => <Editor wide />,
+    },
+    {
+      title: 'Panels always docked',
+      description: 'toggles="none": no panel toggles, for a studio whose outline and inspector are always there (both open); the resize handles stay. The bar holds only its own content.',
+      code: `<EditorLayout toggles="none" startOpen endOpen resizable onStartToggle={() => {}} onEndToggle={() => {}} … />`,
+      render: () => <Editor docked />,
     },
   ],
 } satisfies StoryFile;

@@ -5,10 +5,10 @@ export interface ClusterProps extends DataAttributes {
   children: ReactNode;
   /** The space between children in the row, by how strongly they belong together: `pair` (an icon and its number) up to `group`; `none` for compact icon buttons that touch, their own hover fill showing each one's bounds (a design tool's alignment row). Wrapped lines keep a pair's space between them. */
   gap?: 'none' | 'pair' | 'item' | 'group';
-  /** How the row's free room is shared: `start` (default) keeps children together at the start; `between` spreads them across the row, the first and last at its edges (a design tool's alignment row filling its panel). */
-  justify?: 'start' | 'between';
-  /** How children line up across the row: centred (marks beside text), on the first line of text, or at the top (items of different heights, such as fields). */
-  align?: 'center' | 'baseline' | 'start';
+  /** How the row's free room is shared: `start` (default) keeps children together at the start; `end` keeps them together at the end (a row of actions closing a form); `between` spreads them across the row, the first and last at its edges (a design tool's alignment row filling its panel). */
+  justify?: 'start' | 'end' | 'between';
+  /** How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), or at the bottom (`end`: a button level with the field beside it, under that field's label). */
+  align?: 'center' | 'baseline' | 'start' | 'end';
   /** Wrap onto more lines when the row runs out of room (default), or keep one line and let text inside shrink and wrap instead. */
   wrap?: boolean;
 }

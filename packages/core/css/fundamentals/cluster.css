@@ -34,6 +34,15 @@
     justify-content: space-between;
   }
 
+  /* LR56: together at the end of the row, and at the bottom of it. */
+  [data-dl='cluster'][data-justify='end'] {
+    justify-content: flex-end;
+  }
+
+  [data-dl='cluster'][data-align='end'] {
+    align-items: flex-end;
+  }
+
   [data-dl='cluster'][data-align='center'] {
     align-items: center;
   }

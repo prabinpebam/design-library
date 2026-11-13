@@ -1,5 +1,7 @@
 import { Cluster } from '../fundamentals/Cluster';
 import { Badge } from '../fundamentals/Badge';
+import { Button } from '../fundamentals/Button';
+import { TextField } from '../fundamentals/TextField';
 import { Heading } from '../fundamentals/Heading';
 import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
@@ -34,6 +36,17 @@ export default {
           <Text as="span" variant="body-sm">
             Built from fundamentals
           </Text>
+        </Cluster>
+      ),
+    },
+    {
+      title: 'At the end, level with the field',
+      description: 'justify="end" keeps the children together at the row’s end; align="end" lines them up at the bottom, so a button sits level with the field beside it rather than with its label.',
+      code: `<Cluster justify="end" align="end"><TextField label="Address" … /><Button label="Add link" /></Cluster>`,
+      render: () => (
+        <Cluster justify="end" align="end">
+          <TextField label="Address" value="/play" />
+          <Button label="Add link" />
         </Cluster>
       ),
     },

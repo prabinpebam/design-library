@@ -16,8 +16,8 @@ export interface StaticListProps extends DataAttributes {
   items: ListEntry[];
   /** `bulleted` notes read one after another; `numbered` steps or a ranking, where order is the meaning; `plain` items with no marker; `inline` short names that wrap in a row. */
   variant?: 'bulleted' | 'numbered' | 'plain' | 'inline';
-  /** Lines between `plain` items: `between` full width. */
-  dividers?: 'none' | 'between';
+  /** Lines between `plain` items: `between` full width; `all` a line above every item, the first too (entries that each open with a rule). */
+  dividers?: 'none' | 'between' | 'all';
   /** Each item gets a Move handle: drag it, or open its menu (Move up, down, to top, to bottom). Items need a `label`. */
   reorderable?: boolean;
   /** The ids in their new order, after a drag step or a Move. */

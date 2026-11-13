@@ -33,8 +33,8 @@ export interface EditorLayoutProps extends DataAttributes {
   height?: 'fill' | 'screen' | 'lg';
   /** Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). Not while the panels float in a narrow window. */
   resizable?: boolean;
-  /** With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle). */
-  toggles?: 'outer' | 'inner';
+  /** With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle); `none`: no panel toggles at all, for a studio whose panels are always docked (pass `startOpen` and `endOpen` true); a floating panel's Escape doesn't close it, since nothing would open it again. */
+  toggles?: 'outer' | 'inner' | 'none';
   /** The start panel's opening width, a CSS length such as "16rem" (default the theme's `c.editor-layout.panel-start`). */
   startSize?: string;
   /** The end panel's opening width, a CSS length such as "41rem" for a two-column inspector (default the theme's `c.editor-layout.panel-end`). */
@@ -65,6 +65,7 @@ const STEP = 8;
  */
 export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
+  const toggled = toggles !== 'none';
   const [dragging, setDragging] = useState<Side | null>(null);
   const startId = useId();
   const endId = useId();
@@ -91,7 +92,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
 
   // Below 48 rem of its own width (the stylesheet's container query) open panels float; Escape closes the one holding focus, else the end one.
   useEffect(() => {
-    if (!startOpen && !endOpen) return;
+    if (!toggled || (!startOpen && !endOpen)) return;
     const close = (event: KeyboardEvent) => {
       const el = root.current;
       if (event.key !== 'Escape' || !el || el.clientWidth >= parseFloat(getComputedStyle(document.documentElement).fontSize) * 48) return;
@@ -103,7 +104,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
     };
     document.addEventListener('keydown', close);
     return () => document.removeEventListener('keydown', close);
-  }, [startOpen, endOpen, onStartToggle, onEndToggle, startId, floating]);
+  }, [startOpen, endOpen, onStartToggle, onEndToggle, startId, floating, toggled]);
 
   // Resizing: the panel's own computed min and max (the tokens) bound the width; the reading direction decides which way grows.
   const panelOf = (side: Side) => document.getElementById(side === 'start' ? startId : endId);
@@ -194,19 +195,19 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   const sizes = { '--dl-start-size': startSize, '--dl-end-size': endSize, '--dl-end-max': endMax, '--dl-work-min': workMin } as CSSProperties;
 
   return (
-    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'inner' ? 'inner' : undefined} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} style={startSize || endSize || endMax || workMin ? sizes : undefined}>
+    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} style={startSize || endSize || endMax || workMin ? sizes : undefined}>
       {!floating && (
         <header data-dl-part="bar">
-          {startTogglePart('toggle')}
+          {toggled && startTogglePart('toggle')}
           <div data-dl-part="bar-content">{bar}</div>
-          {endTogglePart('toggle')}
+          {toggled && endTogglePart('toggle')}
         </header>
       )}
       <div data-dl-part="body">
         <aside id={startId} data-dl-part="panel" data-side="start" aria-label={startLabel} hidden={!startOpen} style={sized('start')}>
-          {(startHead || floating) && (
+          {(startHead || (floating && toggled)) && (
             <div data-dl-part="panel-head">
-              {floating && startOpen && startTogglePart('toggle')}
+              {floating && toggled && startOpen && startTogglePart('toggle')}
               <div data-dl-part="head-content">{startHead}</div>
             </div>
           )}
@@ -217,8 +218,8 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
         </aside>
         <main data-dl-part="work">
           {children}
-          {floating && !startOpen && startTogglePart('corner')}
-          {floating && !endOpen && endTogglePart('corner')}
+          {floating && toggled && !startOpen && startTogglePart('corner')}
+          {floating && toggled && !endOpen && endTogglePart('corner')}
           {tools && (
             <div data-dl-part="tools">
               <FloatingBar label={toolsLabel} placement="inline">
@@ -229,10 +230,10 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
           )}
         </main>
         <aside id={endId} data-dl-part="panel" data-side="end" aria-label={endLabel} hidden={!endOpen} style={sized('end')}>
-          {(endHead || floating) && (
+          {(endHead || (floating && toggled)) && (
             <div data-dl-part="panel-head">
               <div data-dl-part="head-content">{endHead}</div>
-              {floating && endOpen && endTogglePart('toggle')}
+              {floating && toggled && endOpen && endTogglePart('toggle')}
             </div>
           )}
           <ScrollArea>
