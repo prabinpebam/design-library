@@ -42,6 +42,29 @@
           "required": true
         }
       ]
+    },
+    {
+      "interface": "DocState",
+      "props": [
+        {
+          "name": "on",
+          "type": "Partial<Record<WordAction, boolean>>",
+          "required": true
+        },
+        {
+          "name": "font",
+          "type": "string"
+        },
+        {
+          "name": "size",
+          "type": "string"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": true
+        }
+      ]
     }
   ],
   "uses": [
@@ -63,7 +86,8 @@
     "Switch",
     "Tabs",
     "Text",
-    "TextField"
+    "TextField",
+    "WindowControls"
   ],
   "tokens": [
     "--border-hairline",

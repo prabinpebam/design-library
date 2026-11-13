@@ -346,6 +346,7 @@
     "SiteHeader",
     "TagInput",
     "VisibilityToggle",
+    "WindowControls",
     "AppLayout",
     "ChatLayout",
     "EditorLayout",

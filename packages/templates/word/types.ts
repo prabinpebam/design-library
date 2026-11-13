@@ -23,7 +23,18 @@ export interface WordCommand {
   disabled?: boolean;
   /** A formatting toggle: `true` turns on and off by itself (Bold); a set name makes it one of a set where exactly one is on (`align`) or at most one is on (`list`). */
   toggle?: true | 'align' | 'list';
+  /** What the command does to the document at the selection. A toggle with a `run` shows the selection's own state. */
+  run?: WordAction;
+  /** A field's choices (font names, sizes). */
+  options?: string[];
+  /** The split menu's choices; each `value` is a `WordAction` or `style:{block}`, `case:{sentence|lower|upper|title}`, `spacing:{line height}`. The main button opens the menu when it has no `run`. */
+  items?: { value: string; label: string }[];
 }
+export type WordAction =
+  | 'paste' | 'cut' | 'copy' | 'format-painter'
+  | 'font' | 'font-size' | 'bold' | 'italic' | 'underline' | 'strikethrough' | 'subscript' | 'superscript' | 'clear' | 'grow' | 'shrink' | 'highlight' | 'font-colour'
+  | 'bullets' | 'numbering' | 'multilevel' | 'outdent' | 'indent' | 'align-left' | 'center' | 'align-right' | 'justify' | 'marks'
+  | 'find' | 'select-all';
 export interface WordSpinField {
   label: string;
   icon: string;
@@ -63,7 +74,7 @@ export interface WordStyleSet {
   variant: 'default' | 'caps-blue' | 'caps-rule' | 'serif' | 'caps-dark' | 'bar-num' | 'numbered' | 'caps-centered' | 'warm' | 'boxed' | 'minimal' | 'bold-sans' | 'editorial' | 'classic' | 'slate' | 'compact';
 }
 export interface WordBlock {
-  style: 'title' | 'heading-1' | 'heading-2' | 'body';
+  style: 'title' | 'heading-1' | 'heading-2' | 'body' | 'quote';
   text: string;
 }
 export interface WordComment {

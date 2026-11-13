@@ -71,6 +71,12 @@
           "type": "'xs' | 's' | 'normal'",
           "default": "'normal'",
           "description": "From the Button size scale, for the tab row: `normal` (default), `s` or `xs`."
+        },
+        {
+          "name": "collapsed",
+          "type": "boolean",
+          "default": "false",
+          "description": "Shows only the tab row, to give the content more room. Choosing a tab opens its card over the content until a command is used, Escape is pressed or the pointer goes down outside; `end` stays in the card, so the control that pins the ribbon again is reachable. Default `false`."
         }
       ]
     },
@@ -142,7 +148,8 @@
     "Tabs"
   ],
   "tokens": [
-    "--c-ribbon-gap"
+    "--c-ribbon-gap",
+    "--c-ribbon-layer"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/ribbon",
   "usedBy": [

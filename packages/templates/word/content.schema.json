@@ -8,6 +8,40 @@
     "record.shared": {
       "$ref": "#/$defs/WordRecord"
     },
+    "WordAction": {
+      "enum": [
+        "paste",
+        "cut",
+        "copy",
+        "format-painter",
+        "font",
+        "font-size",
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "subscript",
+        "superscript",
+        "clear",
+        "grow",
+        "shrink",
+        "highlight",
+        "font-colour",
+        "bullets",
+        "numbering",
+        "multilevel",
+        "outdent",
+        "indent",
+        "align-left",
+        "center",
+        "align-right",
+        "justify",
+        "marks",
+        "find",
+        "select-all"
+      ],
+      "type": "string"
+    },
     "WordBackstage": {
       "additionalProperties": false,
       "properties": {
@@ -249,7 +283,8 @@
             "title",
             "heading-1",
             "heading-2",
-            "body"
+            "body",
+            "quote"
           ],
           "type": "string"
         },
@@ -283,6 +318,26 @@
           "description": "Icon name from core or the template's custom icon pack.",
           "type": "string"
         },
+        "items": {
+          "description": "The split menu's choices; each `value` is a `WordAction` or `style:{block}`, `case:{sentence|lower|upper|title}`, `spacing:{line height}`. The main button opens the menu when it has no `run`.",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "label"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "kind": {
           "description": "labelled: a small icon with its name beside it; checkbox: a compact show/hide checkbox row; pen: a tall drawing barrel; tool: a large centered drawing cursor/lasso; style-gallery: inline style-set thumbnail strip; labelled-field: an icon+label beside a select box; record-stepper: mail-merge record navigation; separator: thin line between sets.",
           "enum": [
@@ -314,9 +369,20 @@
           "description": "A split command with a menu of options.",
           "type": "boolean"
         },
+        "options": {
+          "description": "A field's choices (font names, sizes).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "pressed": {
           "description": "A toggle that's on (left alignment), or initial checked state for a `checkbox` command.",
           "type": "boolean"
+        },
+        "run": {
+          "$ref": "#/$defs/WordAction",
+          "description": "What the command does to the document at the selection. A toggle with a `run` shows the selection's own state."
         },
         "toggle": {
           "description": "A formatting toggle: `true` turns on and off by itself (Bold); a set name makes it one of a set where exactly one is on (`align`) or at most one is on (`list`).",

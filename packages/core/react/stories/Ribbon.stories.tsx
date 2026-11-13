@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Ribbon } from '../compounds/Ribbon';
 import { Button } from '../fundamentals/Button';
 import type { StoryFile } from './story';
@@ -48,5 +49,29 @@ export default {
         />
       ),
     },
+    {
+      title: 'Collapsed to its tabs',
+      description: 'Only the tab row shows, to give the content room. Choosing a tab opens its card over the content until a command is used; the card’s end keeps the button that pins the ribbon again.',
+      code: `<Ribbon label="Ribbon" collapsed={collapsed} end={<Button label={collapsed ? 'Pin the ribbon' : 'Collapse the ribbon'} icon={collapsed ? 'pin' : 'chevron-down'} iconOnly size="xs" emphasis="quiet" onClick={() => setCollapsed(!collapsed)} />} tabs={…} />`,
+      render: () => <CollapsibleRibbon />,
+    },
   ],
 } satisfies StoryFile;
+
+function CollapsibleRibbon() {
+  const [collapsed, setCollapsed] = useState(true);
+  return (
+    <Ribbon
+      label="Ribbon"
+      collapsed={collapsed}
+      end={<Button label={collapsed ? 'Pin the ribbon' : 'Collapse the ribbon'} icon={collapsed ? 'pin' : 'chevron-down'} iconOnly size="xs" emphasis="quiet" onClick={() => setCollapsed(!collapsed)} />}
+      tabs={[
+        { id: 'home', label: 'Home', groups: [
+          { id: 'clipboard', label: 'Clipboard', commands: clipboard },
+          { id: 'font', label: 'Font', commands: font },
+        ] },
+        { id: 'insert', label: 'Insert', groups: [{ id: 'tables', label: 'Tables', commands: <Button label="Table" icon="grid" /> }] },
+      ]}
+    />
+  );
+}

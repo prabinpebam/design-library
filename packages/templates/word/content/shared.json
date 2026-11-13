@@ -695,6 +695,8 @@
         "lead": [
           {
             "label": "Paste",
+            "run": "paste",
+            "items": [{"value": "paste", "label": "Keep Text Only"}],
             "icon": "paste",
             "kind": "stacked",
             "menu": true
@@ -704,6 +706,7 @@
           [
             {
               "label": "Cut",
+              "run": "cut",
               "icon": "cut",
               "disabled": true
             }
@@ -711,6 +714,7 @@
           [
             {
               "label": "Copy",
+              "run": "copy",
               "icon": "copy",
               "disabled": true
             }
@@ -718,6 +722,7 @@
           [
             {
               "label": "Format Painter",
+              "run": "format-painter",
               "toggle": true,
               "icon": "format-painter"
             }
@@ -732,12 +737,16 @@
           [
             {
               "label": "Font",
+              "run": "font",
+              "options": ["Aptos (Body)", "Aptos Display (Headings)", "Arial", "Calibri", "Cambria", "Georgia", "Times New Roman", "Verdana"],
               "kind": "field",
               "value": "Aptos (Body)",
               "width": "wide"
             },
             {
               "label": "Font size",
+              "run": "font-size",
+              "options": ["8", "9", "10", "10.5", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"],
               "kind": "field",
               "value": "11",
               "width": "narrow"
@@ -746,37 +755,44 @@
           [
             {
               "label": "Bold",
+              "run": "bold",
               "toggle": true,
               "icon": "bold"
             },
             {
               "label": "Italic",
+              "run": "italic",
               "toggle": true,
               "icon": "italic"
             },
             {
               "label": "Underline",
+              "run": "underline",
               "toggle": true,
               "icon": "underline",
               "menu": true
             },
             {
               "label": "Strikethrough",
+              "run": "strikethrough",
               "toggle": true,
               "icon": "strikethrough"
             },
             {
               "label": "Subscript",
+              "run": "subscript",
               "toggle": true,
               "icon": "subscript"
             },
             {
               "label": "Superscript",
+              "run": "superscript",
               "toggle": true,
               "icon": "superscript"
             },
             {
               "label": "Clear all formatting",
+              "run": "clear",
               "icon": "clear-format"
             }
           ],
@@ -788,25 +804,30 @@
             },
             {
               "label": "Text highlight colour",
+              "run": "highlight",
               "icon": "highlight",
               "menu": true
             },
             {
               "label": "Font colour",
+              "run": "font-colour",
               "icon": "text-colour",
               "menu": true
             },
             {
               "label": "Change case",
+              "items": [{"value": "case:sentence", "label": "Sentence case."}, {"value": "case:lower", "label": "lowercase"}, {"value": "case:upper", "label": "UPPERCASE"}, {"value": "case:title", "label": "Capitalise Each Word"}],
               "icon": "change-case",
               "menu": true
             },
             {
               "label": "Increase font size",
+              "run": "grow",
               "icon": "text-larger"
             },
             {
               "label": "Decrease font size",
+              "run": "shrink",
               "icon": "text-smaller"
             }
           ]
@@ -820,18 +841,21 @@
           [
             {
               "label": "Bullets",
+              "run": "bullets",
               "toggle": "list",
               "icon": "list-bulleted",
               "menu": true
             },
             {
               "label": "Numbering",
+              "run": "numbering",
               "toggle": "list",
               "icon": "list-numbered",
               "menu": true
             },
             {
               "label": "Multilevel list",
+              "run": "multilevel",
               "toggle": "list",
               "icon": "list-multilevel",
               "menu": true
@@ -842,32 +866,38 @@
             },
             {
               "label": "Decrease indent",
+              "run": "outdent",
               "icon": "indent-decrease"
             },
             {
               "label": "Increase indent",
+              "run": "indent",
               "icon": "indent-increase"
             }
           ],
           [
             {
               "label": "Align left",
+              "run": "align-left",
               "toggle": "align",
               "icon": "text-start",
               "pressed": true
             },
             {
               "label": "Center",
+              "run": "center",
               "toggle": "align",
               "icon": "text-center"
             },
             {
               "label": "Align right",
+              "run": "align-right",
               "toggle": "align",
               "icon": "text-end"
             },
             {
               "label": "Justify",
+              "run": "justify",
               "toggle": "align",
               "icon": "text-justify"
             },
@@ -877,6 +907,7 @@
             },
             {
               "label": "Line and paragraph spacing",
+              "items": [{"value": "spacing:1", "label": "1.0"}, {"value": "spacing:1.15", "label": "1.15"}, {"value": "spacing:1.5", "label": "1.5"}, {"value": "spacing:2", "label": "2.0"}],
               "icon": "line-spacing",
               "menu": true
             }
@@ -902,6 +933,7 @@
             },
             {
               "label": "Show paragraph marks",
+              "run": "marks",
               "toggle": true,
               "icon": "pilcrow"
             }
@@ -915,6 +947,7 @@
         "lead": [
           {
             "label": "Styles",
+            "items": [{"value": "style:body", "label": "Normal"}, {"value": "style:title", "label": "Title"}, {"value": "style:heading-1", "label": "Heading 1"}, {"value": "style:heading-2", "label": "Heading 2"}, {"value": "style:quote", "label": "Quote"}],
             "icon": "styles-brush",
             "kind": "stacked",
             "menu": true
@@ -928,6 +961,7 @@
         "lead": [
           {
             "label": "Editing",
+            "items": [{"value": "find", "label": "Find"}, {"value": "select-all", "label": "Select All"}],
             "icon": "editing-lens",
             "kind": "stacked",
             "menu": true
@@ -1213,6 +1247,14 @@
       ]
     },
     "copy": {
+      "pinRibbon": "Pin the ribbon",
+      "cutDone": "Cut to the clipboard.",
+      "copyDone": "Copied to the clipboard.",
+      "findHint": "Type in Search document to find words in the page.",
+      "resultsCount": "{count} results",
+      "resultOne": "1 result",
+      "noResults": "No results",
+      "pasteBlocked": "Press Ctrl+V to paste here. The browser keeps the clipboard private until you do.",
       "notBuilt": "{label} isn’t part of the replica yet.",
       "restoreDown": "Restore Down",
       "minimised": "{name} is minimised.",

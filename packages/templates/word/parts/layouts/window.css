@@ -82,6 +82,9 @@
     display: grid;
     inline-size: 21.75rem;
   }
+  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='search'] > [data-dl-part='field'] {
+    display: grid;
+  }
   [data-dl='word-search-box'] {
     display: flex;
     align-items: center;
@@ -142,11 +145,6 @@
   [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='caption-buttons'] {
     display: flex;
     align-self: stretch;
-  }
-  [data-dl='word-window'] > [data-dl-part='titlebar'] > [data-dl-part='window-actions'] > [data-dl-part='caption-buttons'] > [data-dl-part='win-btn'] {
-    display: grid;
-    place-items: center;
-    inline-size: 2.875rem;
   }
 
   /* Tab row + Ribbon + Copilot companion card (y=39..143 PNG): tab-wash band from template tokens. */
@@ -756,7 +754,7 @@
   [data-dl='word-page-stage'] > [data-dl-part='page'] {
     box-sizing: border-box;
     display: grid;
-    align-content: start;
+    grid-template-rows: minmax(0, 1fr);
     gap: var(--space-3);
     inline-size: min(100%, 42.375rem);
     min-block-size: 60rem;
@@ -772,6 +770,8 @@
     inline-size: min(100%, 40.75rem);
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='caret-row'] {
+    grid-area: 1 / 1;
+    pointer-events: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -784,12 +784,26 @@
     block-size: 1.125rem;
     background: var(--t-word-window-muted);
   }
-  [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='block'] { margin: 0; font-weight: 400; }
-  [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='title'] { font-family: var(--font-display); font-size: var(--text-xxxl); line-height: var(--leading-tight); }
+  /* The editing surface fills the page; its blocks are the document's paragraphs, headings and lists, styled by tag. */
+  [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl='word-doc'] {
+    grid-area: 1 / 1;
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    outline: none;
+    caret-color: currentColor;
+  }
+  [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl='word-doc'][data-painter] { cursor: copy; }
+  [data-dl='word-doc'] > :is(p, h1, h2, h3, blockquote, ul, ol) { margin: 0; font-weight: 400; }
+  [data-dl='word-doc'] > h1 { font-family: var(--font-display); font-size: var(--text-xxxl); line-height: var(--leading-tight); }
   /* F24: a heading sits nearer the paragraph it heads than the one above (Word's heading styles: space before, none after). */
-  [data-dl='word-page-stage'] > [data-dl-part='page'] > :is([data-style='heading-1'], [data-style='heading-2']) { margin-block: var(--space-2) calc(-1 * var(--space-2)); }
-  [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='heading-1'] { padding-block-start: var(--space-1); font-family: var(--font-display); font-size: var(--text-xxl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
-  [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='heading-2'] { font-family: var(--font-display); font-size: var(--text-xl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
+  [data-dl='word-doc'] > :is(h2, h3) { margin-block: var(--space-2) calc(-1 * var(--space-2)); }
+  [data-dl='word-doc'] > h2 { padding-block-start: var(--space-1); font-family: var(--font-display); font-size: var(--text-xxl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
+  [data-dl='word-doc'] > h3 { font-family: var(--font-display); font-size: var(--text-xl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
+  [data-dl='word-doc'] > blockquote { padding-inline: var(--space-8); font-style: italic; color: var(--t-word-window-muted); }
+  [data-dl='word-doc'] > :is(ul, ol) { padding-inline-start: var(--space-6); }
+  [data-dl='word-doc'][data-marks] > :is(p, h1, h2, h3, blockquote)::after { content: '\00B6'; color: var(--t-word-window-muted); }
+  [data-dl='word-doc']::highlight(word-find), [data-dl='word-doc'] :is(p, h1, h2, h3, blockquote, li, b, i, u, s, sub, sup, font, span)::highlight(word-find) { background-color: var(--state-selected); }
 
   [data-dl='word-nav-content'] { display: grid; gap: var(--space-stack-item); }
   [data-dl='word-outline'] { display: grid; }

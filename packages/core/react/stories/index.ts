@@ -23,6 +23,7 @@ export { default as badgeStories } from './Badge.stories';
 export { default as chipStories } from './Chip.stories';
 export { default as chipGroupStories } from './ChipGroup.stories';
 export { default as titleBarStories } from './TitleBar.stories';
+export { default as windowControlsStories } from './WindowControls.stories';
 export { default as pageHeaderStories } from './PageHeader.stories';
 export { default as listDetailStories } from './ListDetail.stories';
 export { default as footerStories } from './Footer.stories';

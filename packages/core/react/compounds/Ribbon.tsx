@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { Button } from '../fundamentals/Button';
 import { ScrollArea } from '../fundamentals/ScrollArea';
@@ -49,6 +49,12 @@ export interface RibbonProps extends DataAttributes {
   aside?: ReactNode;
   /** From the Button size scale, for the tab row: `normal` (default), `s` or `xs`. */
   size?: 'xs' | 's' | 'normal';
+  /**
+   * Shows only the tab row, to give the content more room. Choosing a tab opens its card over the content until a
+   * command is used, Escape is pressed or the pointer goes down outside; `end` stays in the card, so the control that
+   * pins the ribbon again is reachable. Default `false`.
+   */
+  collapsed?: boolean;
 }
 
 /**
@@ -61,8 +67,37 @@ export interface RibbonProps extends DataAttributes {
  * reader hears "Font, group" before its commands. The launcher is a named button ("Font settings"). The card scrolls
  * sideways to its own edges when the groups don't fit, so no command is clipped or hidden.
  */
-export function Ribbon({ tabs, label, selected, defaultSelected, onChange, extra, end, endPlacement = 'flow', aside, size = 'normal', ...data }: RibbonProps) {
+export function Ribbon({ tabs, label, selected, defaultSelected, onChange, extra, end, endPlacement = 'flow', aside, size = 'normal', collapsed = false, ...data }: RibbonProps) {
   const id = useId();
+  const root = useRef<HTMLDivElement>(null);
+  const [peek, setPeek] = useState(false);
+  const open = !collapsed || peek;
+  useEffect(() => {
+    if (!collapsed) setPeek(false);
+  }, [collapsed]);
+  useEffect(() => {
+    if (!peek) return;
+    const away = (e: PointerEvent) => {
+      if (!root.current?.contains(e.target as Node)) setPeek(false);
+    };
+    const esc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setPeek(false);
+    };
+    document.addEventListener('pointerdown', away);
+    document.addEventListener('keydown', esc);
+    return () => {
+      document.removeEventListener('pointerdown', away);
+      document.removeEventListener('keydown', esc);
+    };
+  }, [peek]);
+  const onClickCapture = collapsed
+    ? (e: MouseEvent<HTMLDivElement>) => {
+        const at = e.target as HTMLElement;
+        if (at.closest('[role="tab"]')) setPeek(true);
+        // A command used in the open card closes it after its own click runs.
+        else if (at.closest('[data-dl="ribbon-groups"] :is(button, [role="menuitem"])')) setTimeout(() => setPeek(false));
+      }
+    : undefined;
   const renderCard = (tab: RibbonTab) => (
     <div data-dl="ribbon-card" data-end-placement={endPlacement === 'corner' ? 'corner' : undefined}>
       <ScrollArea axis="inline" data-dl-part="groups">
@@ -88,7 +123,7 @@ export function Ribbon({ tabs, label, selected, defaultSelected, onChange, extra
     </div>
   );
   return (
-    <div {...data} data-dl="ribbon">
+    <div {...data} ref={root} data-dl="ribbon" data-collapsed={collapsed ? '' : undefined} data-open={collapsed && peek ? '' : undefined} onClickCapture={onClickCapture}>
       <Tabs
         label={label}
         size={size}
@@ -99,7 +134,7 @@ export function Ribbon({ tabs, label, selected, defaultSelected, onChange, extra
         items={tabs.map((tab) => ({
           id: tab.id,
           label: tab.label,
-          panel: aside != null ? (
+          panel: !open ? null : aside != null ? (
             <div data-dl="ribbon-band">
               {renderCard(tab)}
               <div data-dl-part="aside">{aside}</div>

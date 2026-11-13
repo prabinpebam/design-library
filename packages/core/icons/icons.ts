@@ -195,6 +195,7 @@ export const icons = {
   shortcut: { d: 'M5.5 4.5h13a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1zM14.5 8l-5 8' },
   'filter-lines': { d: 'M4.5 7h15M7 12h10M10 17h4' },
   'window-maximize': { d: 'M6 6h12v12H6z' },
+  'window-restore': { d: 'M6 9h9v9H6zM9 9V6h9v9h-3' },
   'arrow-start': { d: 'M19.5 12h-15M11 5.5L4.5 12l6.5 6.5', flipInRtl: true },
   compose: { d: 'M13 4.5H6a1.5 1.5 0 0 0-1.5 1.5v12A1.5 1.5 0 0 0 6 19.5h12a1.5 1.5 0 0 0 1.5-1.5v-7M11 13l8.5-8.5M16 4.5h3.5V8', flipInRtl: false },
   forward: { d: 'M14.5 6.5L20 12l-5.5 5.5M20 12h-9a6 6 0 0 0-6 6v1', flipInRtl: true },

@@ -138,6 +138,8 @@ export type { ChipProps } from './fundamentals/Chip';
 export type { ChipGroupProps, ChipEntry } from './fundamentals/ChipGroup';
 export { TitleBar } from './compounds/TitleBar';
 export type { TitleBarProps } from './compounds/TitleBar';
+export { WindowControls } from './compounds/WindowControls';
+export type { WindowControlsProps, WindowState } from './compounds/WindowControls';
 export { PageHeader } from './compounds/PageHeader';
 export type { PageHeaderProps, PageHeaderLink } from './compounds/PageHeader';
 export { Section } from './compounds/Section';

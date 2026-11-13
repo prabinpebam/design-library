@@ -1,0 +1,17 @@
+/*
+ * Tier 2 compound: WindowControls (G5). A desktop window's caption buttons in one row at the end of a title bar. Each
+ * button sits centred in a cell of c.window-controls.cell, so an app with wide caption targets sets one token.
+ */
+@layer compounds {
+  [data-dl='window-controls'] {
+    display: flex;
+    align-self: stretch;
+    gap: var(--c-window-controls-gap);
+  }
+
+  [data-dl='window-controls'] > [data-dl-part='cell'] {
+    display: grid;
+    place-items: center;
+    inline-size: var(--c-window-controls-cell);
+  }
+}

@@ -1815,6 +1815,16 @@
         "$value": "{space.stack-row}",
         "$description": "Between rows, so two fills never touch (Q60) (echoed for space contexts)"
       }
+    },
+    "window-controls": {
+      "$extensions": {
+        "owner": "WindowControls"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.inline-pair}",
+        "$description": "Between the caption buttons' cells (echoed for space contexts)"
+      }
     }
   }
 }

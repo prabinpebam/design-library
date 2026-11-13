@@ -143,6 +143,8 @@
   ],
   "tokens": [
     "--border-hairline",
+    "--c-ribbon-gap",
+    "--c-ribbon-layer",
     "--c-tabs-gap",
     "--c-tabs-gap-sm",
     "--c-tabs-indicator",

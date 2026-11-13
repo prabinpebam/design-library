@@ -10,6 +10,22 @@
     min-inline-size: 0;
   }
 
+  /* Collapsed: the tab row only; a chosen tab opens its card over the content, never pushing it down. */
+  [data-dl='ribbon'][data-collapsed] {
+    position: relative;
+  }
+
+  [data-dl='ribbon'][data-collapsed]:not([data-open]) > [data-dl='tabs'] > [data-dl-part='panel'] {
+    display: none;
+  }
+
+  [data-dl='ribbon'][data-collapsed][data-open] > [data-dl='tabs'] > [data-dl-part='panel'] {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(100% + var(--c-ribbon-gap));
+    z-index: var(--c-ribbon-layer);
+  }
+
   [data-dl='ribbon-band'] {
     display: flex;
     align-items: stretch;

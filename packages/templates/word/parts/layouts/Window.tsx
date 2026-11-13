@@ -1,8 +1,8 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, notify, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type RibbonGroup } from '@design-library/core/components';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, notify, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, WindowControls, type DataAttributes, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
-import type { WordBackstageTemplate, WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
+import type { WordAction, WordBackstageTemplate, WordBlock, WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
 
 /** The document editor's own icon names, typed by its pack (LG8). */
 const wordIcons = defineIconPack(wordPack);
@@ -16,8 +16,23 @@ export interface WindowProps extends DataAttributes {
   picture?: (id: string) => { src: string; alt: string };
 }
 
-const tags = { title: 'h1', 'heading-1': 'h2', 'heading-2': 'h3', body: 'p' } as const;
+const tags = { title: 'h1', 'heading-1': 'h2', 'heading-2': 'h3', body: 'p', quote: 'blockquote' } as const;
 const V_CMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+/** The document commands whose state the selection reports, by the browser's editing command name. */
+const queried: Partial<Record<WordAction, string>> = {
+  bold: 'bold', italic: 'italic', underline: 'underline', strikethrough: 'strikeThrough', subscript: 'subscript', superscript: 'superscript',
+  'align-left': 'justifyLeft', center: 'justifyCenter', 'align-right': 'justifyRight', justify: 'justifyFull', bullets: 'insertUnorderedList', numbering: 'insertOrderedList',
+};
+const executed: Partial<Record<WordAction, string>> = { ...queried, clear: 'removeFormat', outdent: 'outdent', indent: 'indent', cut: 'cut', copy: 'copy', 'select-all': 'selectAll' };
+const BODY_PT = 11;
+const SIZES = ['8', '9', '10', '10.5', '11', '12', '14', '16', '18', '20', '22', '24', '26', '28', '36', '48', '72'];
+
+interface DocState {
+  on: Partial<Record<WordAction, boolean>>;
+  font?: string;
+  size?: string;
+  selected: boolean;
+}
 
 /**
  * A desktop word processor's window: a title bar with quick actions, a command ribbon, rulers, the page on its canvas
@@ -60,12 +75,235 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [docView, setDocView] = useState<'read' | 'print' | 'web'>('print');
   const [focusMode, setFocusMode] = useState(false);
   const [currentHeading, setCurrentHeading] = useState(0);
+  const [ribbonCollapsed, setRibbonCollapsed] = useState(false);
+  const [navTab, setNavTab] = useState('headings');
+  const [doc, setDoc] = useState<DocState>({ on: { 'align-left': true }, selected: false });
+  const [docEmpty, setDocEmpty] = useState(true);
+  const [docFocused, setDocFocused] = useState(false);
+  const [edited, setEdited] = useState(false);
+  const [marks, setMarks] = useState(false);
+  const [painter, setPainter] = useState<DocState['on'] | undefined>(undefined);
+  const [openMenu, setOpenMenu] = useState<string | undefined>(undefined);
+  const [, setDocVersion] = useState(0);
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const rangeRef = useRef<Range | null>(null);
+  const docHtml = useRef<string | null>(null);
+  const screenRef = useRef(screen);
+  screenRef.current = screen;
   const notBuilt = (label: string) => notify({ subject: 'word-command', message: say(c.notBuilt, { label: label.replace(/\n/g, ' ') }) });
   const save = () => {
     setSaveState(`- ${c.saved}`);
     notify({ subject: 'word-save', tone: 'success', message: c.saved });
   };
   useEffect(() => { void loadFace('noto-sans'); }, []);
+
+  /* The page is an editing surface: the ribbon's document commands run on its selection, and the selection's own
+     formatting sets each command's pressed state and the font fields. */
+  const isEmpty = (ed: HTMLElement) => !ed.textContent?.trim() && !ed.querySelector('li');
+  const fillDoc = (ed: HTMLElement) => {
+    const sample = screenRef.current === 'navigation' || screenRef.current === 'comments';
+    const blocks: WordBlock[] = sample ? view.document : [{ style: 'body', text: '' }];
+    ed.replaceChildren(...blocks.map((b) => {
+      const n = document.createElement(tags[b.style]);
+      if (b.text) n.textContent = b.text;
+      else n.append(document.createElement('br'));
+      return n;
+    }));
+    rangeRef.current = null;
+    setDocEmpty(!sample);
+    setEdited(false);
+  };
+  const bindDoc = useCallback((ed: HTMLDivElement | null) => {
+    if (ed) {
+      editorRef.current = ed;
+      if (docHtml.current != null) ed.innerHTML = docHtml.current;
+      else fillDoc(ed);
+      setDocEmpty(isEmpty(ed));
+    } else if (editorRef.current) {
+      docHtml.current = editorRef.current.innerHTML;
+      editorRef.current = null;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    docHtml.current = null;
+    if (editorRef.current) fillDoc(editorRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen]);
+  const readDoc = useCallback(() => {
+    const ed = editorRef.current;
+    const sel = getSelection();
+    if (!ed || !sel?.rangeCount || !ed.contains(sel.anchorNode)) return;
+    rangeRef.current = sel.getRangeAt(0).cloneRange();
+    const at = sel.anchorNode instanceof Element ? sel.anchorNode : sel.anchorNode?.parentElement;
+    const on: DocState['on'] = {};
+    for (const [action, name] of Object.entries(queried)) on[action as WordAction] = document.queryCommandState(name);
+    on.multilevel = !!at?.closest('li li');
+    if (on.multilevel) on.numbering = on.bullets = false;
+    const style = at ? getComputedStyle(at) : undefined;
+    // Sizes read in points against the page's body, which Word calls 11 pt.
+    const pt = style ? Math.round((parseFloat(style.fontSize) / parseFloat(getComputedStyle(ed).fontSize)) * BODY_PT * 2) / 2 : undefined;
+    const family = style?.fontFamily.split(',')[0].replace(/["']/g, '').trim();
+    setDoc({ on, selected: !sel.isCollapsed, size: pt ? String(pt) : undefined, font: family });
+  }, []);
+  useEffect(() => {
+    document.addEventListener('selectionchange', readDoc);
+    return () => document.removeEventListener('selectionchange', readDoc);
+  }, [readDoc]);
+  /** Puts focus and the last selection back in the page, so a ribbon command acts where the person was. */
+  const toDoc = () => {
+    const ed = editorRef.current;
+    const sel = getSelection();
+    if (!ed || !sel) return false;
+    ed.focus({ preventScroll: true });
+    sel.removeAllRanges();
+    if (rangeRef.current && ed.contains(rangeRef.current.startContainer)) sel.addRange(rangeRef.current);
+    else {
+      const r = document.createRange();
+      r.selectNodeContents(ed.lastElementChild ?? ed);
+      r.collapse(false);
+      sel.addRange(r);
+    }
+    return true;
+  };
+  const changed = () => {
+    const ed = editorRef.current;
+    if (ed) setDocEmpty(isEmpty(ed));
+    setEdited(true);
+    setDocVersion((v) => v + 1);
+    readDoc();
+  };
+  const exec = (name: string, value?: string) => {
+    if (!toDoc()) return;
+    document.execCommand('styleWithCSS', false, 'false');
+    document.execCommand(name, false, value);
+    changed();
+  };
+  /** Sets the selection's size in points: the browser's own sizes are 1–7, so size 7 marks the run, then gets its points. */
+  const setSize = (pt: string) => {
+    const ed = editorRef.current;
+    if (!ed) return;
+    exec('fontSize', '7');
+    ed.querySelectorAll('font[size="7"]').forEach((f) => {
+      f.removeAttribute('size');
+      (f as HTMLElement).style.fontSize = `calc(var(--text-l) * ${parseFloat(pt) / BODY_PT})`;
+    });
+    changed();
+  };
+  const stepSize = (by: 1 | -1) => {
+    const now = parseFloat(doc.size ?? '11');
+    const next = by > 0 ? SIZES.find((s) => parseFloat(s) > now) : [...SIZES].reverse().find((s) => parseFloat(s) < now);
+    if (next) setSize(next);
+  };
+  const accent = (n: number) => (rootRef.current ? getComputedStyle(rootRef.current).getPropertyValue(`--c-icon-accent-${n}`).trim() : '') || undefined;
+  /** The blocks the selection touches (paragraphs, headings, list items). */
+  const selectedBlocks = () => {
+    const ed = editorRef.current;
+    const r = rangeRef.current;
+    if (!ed || !r) return [];
+    return [...ed.querySelectorAll<HTMLElement>(':scope > :is(p, h1, h2, h3, blockquote), li')].filter((b) => r.intersectsNode(b));
+  };
+  const setCase = (mode: string) => {
+    if (!toDoc()) return;
+    const words = getSelection()?.toString() ?? '';
+    if (!words) return;
+    const lower = words.toLowerCase();
+    const next = mode === 'upper' ? words.toUpperCase() : mode === 'lower' ? lower : mode === 'title' ? lower.replace(/(^|\s)\S/g, (m) => m.toUpperCase()) : lower.replace(/(^\s*|[.!?]\s+)\S/g, (m) => m.toUpperCase());
+    document.execCommand('insertText', false, next);
+    changed();
+  };
+  const paste = () => {
+    if (!toDoc()) return;
+    const kept = rangeRef.current?.cloneRange();
+    navigator.clipboard?.readText().then(
+      (words) => {
+        toDoc();
+        if (kept) { const sel = getSelection(); sel?.removeAllRanges(); sel?.addRange(kept); }
+        document.execCommand('insertText', false, words);
+        changed();
+      },
+      () => notify({ subject: 'word-paste', message: c.pasteBlocked }),
+    ) ?? notify({ subject: 'word-paste', message: c.pasteBlocked });
+  };
+  const find = () => {
+    setPane('navigation');
+    setNavTab('results');
+    setTimeout(() => rootRef.current?.querySelector<HTMLInputElement>('[data-dl-part="nav-pane"] input')?.focus());
+  };
+  const runAction = (action: string) => {
+    const [kind, arg] = action.split(':');
+    if (kind === 'style') return exec('formatBlock', tags[arg as WordBlock['style']] ?? 'p');
+    if (kind === 'case') return setCase(arg);
+    if (kind === 'spacing') {
+      if (!toDoc()) return;
+      selectedBlocks().forEach((b) => { b.style.lineHeight = arg; });
+      return changed();
+    }
+    const a = kind as WordAction;
+    if (a === 'paste') return paste();
+    if (a === 'find') return find();
+    if (a === 'grow' || a === 'shrink') return stepSize(a === 'grow' ? 1 : -1);
+    if (a === 'highlight') return exec('hiliteColor', accent(1));
+    if (a === 'font-colour') return exec('foreColor', accent(2));
+    if (a === 'marks') return setMarks((m) => !m);
+    if (a === 'format-painter') return setPainter((p) => (p ? undefined : { ...doc.on }));
+    if (a === 'multilevel') {
+      if (!doc.on.numbering && !doc.on.bullets && !doc.on.multilevel) exec('insertOrderedList');
+      return exec(doc.on.multilevel ? 'outdent' : 'indent');
+    }
+    if (a === 'cut' || a === 'copy') {
+      exec(a);
+      return notify({ subject: 'word-clipboard', tone: 'success', message: a === 'cut' ? c.cutDone : c.copyDone });
+    }
+    const name = executed[a];
+    if (name) return exec(name);
+    notBuilt(action);
+  };
+  /** Format Painter: the next selection takes the formatting the painter picked up. */
+  const paint = () => {
+    const sel = getSelection();
+    if (!painter || !sel || sel.isCollapsed) return;
+    readDoc();
+    for (const a of ['bold', 'italic', 'underline', 'strikethrough'] as const) {
+      if (!!painter[a] !== document.queryCommandState(queried[a]!)) document.execCommand(queried[a]!, false);
+    }
+    setPainter(undefined);
+    changed();
+  };
+  /* Find: every match in the page is highlighted while the Results tab lists them. */
+  const matches = (() => {
+    const ed = editorRef.current;
+    const q = query.trim().toLowerCase();
+    if (!ed || !q) return [];
+    return [...ed.querySelectorAll<HTMLElement>(':scope > :is(p, h1, h2, h3, blockquote), li')].filter((b) => b.textContent?.toLowerCase().includes(q));
+  })();
+  useEffect(() => {
+    const ed = editorRef.current;
+    const registry = (CSS as unknown as { highlights?: Map<string, unknown> }).highlights;
+    const q = query.trim().toLowerCase();
+    if (!registry || typeof Highlight === 'undefined') return;
+    if (!ed || !q || pane !== 'navigation') { registry.delete('word-find'); return; }
+    const ranges: Range[] = [];
+    const walk = document.createTreeWalker(ed, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+      const text = n.textContent?.toLowerCase() ?? '';
+      for (let i = text.indexOf(q); i >= 0; i = text.indexOf(q, i + q.length)) {
+        const r = document.createRange();
+        r.setStart(n, i);
+        r.setEnd(n, i + q.length);
+        ranges.push(r);
+      }
+    }
+    registry.set('word-find', new Highlight(...ranges));
+    return () => { registry.delete('word-find'); };
+  });
+  const showMatch = (block: HTMLElement) => {
+    block.scrollIntoView({ block: 'center' });
+    const r = document.createRange();
+    r.selectNodeContents(block);
+    rangeRef.current = r;
+    toDoc();
+  };
   useEffect(() => {
     setPane(paneFor(screen));
     setTab(tabFor(screen));
@@ -137,6 +375,17 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       );
     }
     if (cmd.kind === 'field') {
+      if (cmd.run === 'font' || cmd.run === 'font-size') {
+        const opts = cmd.options ?? [cmd.value ?? ''];
+        const isSize = cmd.run === 'font-size';
+        const now = isSize ? (doc.size ?? cmd.value ?? '') : (opts.find((o) => o.split(' (')[0] === doc.font) ?? cmd.value ?? '');
+        const list = opts.includes(now) ? opts : [...opts, now];
+        return (
+          <div key={key} data-dl="word-field" data-width={cmd.width}>
+            <Select label={cmd.label} hideLabel size="xs" value={now} options={list.map((o) => ({ value: o, label: o }))} onChange={(v) => (isSize ? setSize(v) : exec('fontName', v.split(' (')[0]))} />
+          </div>
+        );
+      }
       return (
         <div key={key} data-dl="word-field" data-width={cmd.width}>
           <Select label={cmd.label} hideLabel size="xs" value={cmd.value ?? ''} options={[{ value: cmd.value ?? '', label: cmd.value ?? '' }]} onChange={() => undefined} />
@@ -174,9 +423,16 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     const isStacked = cmd.kind === 'stacked';
     const shownLabel = isStacked && cmd.lines ? cmd.lines.join('\n') : cmd.label;
     const set = typeof cmd.toggle === 'string' ? cmd.toggle : undefined;
-    const pressed = cmd.toggle === true ? (toggled[cmd.label] ?? !!cmd.pressed) : set ? (set in setOn ? setOn[set] === cmd.label : !!cmd.pressed) : cmd.pressed;
+    const fromDoc = cmd.run && (cmd.run in queried || cmd.run === 'multilevel');
+    const pressed = fromDoc ? !!doc.on[cmd.run!]
+      : cmd.run === 'marks' ? marks
+      : cmd.run === 'format-painter' ? !!painter
+      : cmd.toggle === true ? (toggled[cmd.label] ?? !!cmd.pressed) : set ? (set in setOn ? setOn[set] === cmd.label : !!cmd.pressed) : cmd.pressed;
+    const disabled = cmd.run === 'cut' || cmd.run === 'copy' ? !doc.selected : cmd.disabled;
     const run = () => {
-      if (cmd.toggle === true) setToggled((t) => ({ ...t, [cmd.label]: !pressed }));
+      if (cmd.run) runAction(cmd.run);
+      else if (cmd.items) setOpenMenu(key);
+      else if (cmd.toggle === true) setToggled((t) => ({ ...t, [cmd.label]: !pressed }));
       else if (set) setSetOn((s) => ({ ...s, [set]: set === 'list' && pressed ? undefined : cmd.label }));
       else notBuilt(cmd.label);
     };
@@ -191,7 +447,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         size="xs"
         emphasis="quiet"
         pressed={cmd.toggle ? pressed : cmd.pressed}
-        disabled={cmd.disabled}
+        disabled={disabled}
         onClick={run}
       />
     );
@@ -206,7 +462,23 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined}>
         {main}
         <span data-dl-part="split-menu">
-          <Button label={`${cmd.label} options`} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} onClick={() => notBuilt(`${cmd.label} options`)} />
+          {cmd.items ? (
+            <MenuButton
+              label={`${cmd.label} options`}
+              icon={wordIcons.name('qat-chevron')}
+              iconOnly
+              chevron={false}
+              size="xs"
+              emphasis="quiet"
+              disabled={cmd.disabled}
+              open={openMenu === key}
+              onOpenChange={(o) => setOpenMenu(o ? key : undefined)}
+              items={cmd.items}
+              onSelect={(v) => { setOpenMenu(undefined); runAction(v); }}
+            />
+          ) : (
+            <Button label={`${cmd.label} options`} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} onClick={() => notBuilt(`${cmd.label} options`)} />
+          )}
         </span>
       </div>
     );
@@ -220,8 +492,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     onLaunch: g.launcher ? () => notBuilt(g.launcher!) : undefined,
     commands: (
       <>
-        {g.lead?.map((cmd, i) => command(cmd, `lead-${i}`))}
-        {g.trailLead?.map((cmd, i) => command(cmd, `trail-${i}`))}
+        {g.lead?.map((cmd, i) => command(cmd, `${g.id}-lead-${i}`))}
+        {g.trailLead?.map((cmd, i) => command(cmd, `${g.id}-trail-${i}`))}
         {g.spinColumns && (
           <div data-dl="word-spin-columns">
             {g.spinColumns.map((col) => (
@@ -246,17 +518,17 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           <Fragment key={`col-${ci}`}>
             {ci > 0 && g.id === 'window' && <span data-dl="word-col-sep" aria-hidden="true" />}
             <div data-dl="word-rows" data-count={col.length}>
-              {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${ci}-${r}-${i}`))}</div>)}
+              {col.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${g.id}-${ci}-${r}-${i}`))}</div>)}
             </div>
           </Fragment>
         ))}
         {g.rows && (
           <div data-dl="word-rows" data-count={g.rows.length} data-compact={g.lead ? '' : undefined}>
-            {g.rows.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${r}-${i}`))}</div>)}
+            {g.rows.map((row, r) => <div key={r} data-dl-part="row">{row.map((cmd, i) => command(cmd, `${g.id}-${r}-${i}`))}</div>)}
           </div>
         )}
         {g.columns && g.endLead && <span data-dl="word-col-sep" aria-hidden="true" />}
-        {g.endLead?.map((cmd, i) => command(cmd, `end-${i}`))}
+        {g.endLead?.map((cmd, i) => command(cmd, `${g.id}-end-${i}`))}
       </>
     ),
   });
@@ -302,13 +574,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                   <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={save} />
                 </span>
                 <span data-dl-part="qat-item">
-                  <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+                  <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled={!edited} onClick={() => exec('undo')} />
                 </span>
                 <span data-dl-part="qat-chevron">
                   <Button label={c.undoOptions} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
                 </span>
                 <span data-dl-part="qat-item">
-                  <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
+                  <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled={!edited} onClick={() => exec('redo')} />
                 </span>
                 <span data-dl-part="qat-chevron">
                   <Button label={c.customize} icon={wordIcons.name('qat-customize')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(c.customize)} />
@@ -323,7 +595,9 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           {!backstageOpen && (
             <div data-dl-part="search">
               {searchOpen ? (
-                <TextField label={c.search} hideLabel type="search" icon="search" size="xs" placeholder={c.search} value={query} onChange={setQuery} />
+                <span data-dl-part="field" onKeyDown={(e) => { if (e.key === 'Enter' && query.trim()) find(); }}>
+                  <TextField label={c.search} hideLabel type="search" icon="search" size="xs" placeholder={c.search} value={query} onChange={setQuery} />
+                </span>
               ) : (
                 <div data-dl="word-search-box">
                   <span data-dl-part="trigger">
@@ -356,9 +630,12 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               </span>
             )}
             <div data-dl-part="caption-buttons">
-              <span data-dl-part="win-btn"><Button label={c.minimise} icon={wordIcons.name('win-minimize')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setWindowState('minimised')} /></span>
-              <span data-dl-part="win-btn"><Button label={windowState === 'maximised' ? c.restoreDown : c.maximise} icon={wordIcons.name('win-maximize')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setWindowState((w) => (w === 'maximised' ? 'normal' : 'maximised'))} /></span>
-              <span data-dl-part="win-btn"><Button label={c.close} icon={wordIcons.name('win-close')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setWindowState('closed')} /></span>
+              <WindowControls
+                state={windowState}
+                onChange={setWindowState}
+                labels={{ minimise: c.minimise, maximise: c.maximise, restore: c.restoreDown, close: c.close }}
+                icons={{ minimise: wordIcons.name('win-minimize'), maximise: wordIcons.name('win-maximize'), close: wordIcons.name('win-close') }}
+              />
             </div>
           </div>
         </header>
@@ -624,7 +901,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 </span>
               </div>
             }
-            end={<span data-dl="word-collapse-btn"><Button label={c.collapse} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" onClick={() => notBuilt(c.collapse)} /></span>}
+            end={<span data-dl="word-collapse-btn"><Button label={ribbonCollapsed ? c.pinRibbon : c.collapse} icon={ribbonCollapsed ? 'pin' : wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" onClick={() => setRibbonCollapsed((v) => !v)} /></span>}
+            collapsed={ribbonCollapsed}
             aside={
               <div data-dl="word-copilot-card" data-open={copilotOpen ? '' : undefined}>
                 <Button label={c.copilot} icon={wordIcons.name('assistant-ribbon')} stacked size="xs" emphasis="quiet" onClick={() => setCopilotOpen((o) => !o)} />
@@ -750,18 +1028,29 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                       <Tabs
                         label={c.navigation}
                         size="xs"
+                        selected={navTab}
+                        onChange={setNavTab}
                         items={[
                           { id: 'headings', label: c.headings, panel: (
                             <div data-dl="word-outline">
                               {headings.map((h, i) => (
                                 <div key={i} data-dl-part="outline-item" data-level={h.style === 'heading-2' ? 2 : 1} data-current={i === currentHeading ? '' : undefined}>
-                                  <Button label={h.text} size="xs" emphasis="quiet" align="start" onClick={() => { setCurrentHeading(i); document.querySelectorAll('[data-dl="word-window"] [data-dl-part="block"]')[view.document.indexOf(h)]?.scrollIntoView({ block: 'start' }); }} />
+                                  <Button label={h.text} size="xs" emphasis="quiet" align="start" onClick={() => { setCurrentHeading(i); editorRef.current?.querySelectorAll(':scope > :is(h2, h3)')[i]?.scrollIntoView({ block: 'start' }); }} />
                                 </div>
                               ))}
                             </div>
                           ) },
                           { id: 'pages', label: c.pages, panel: null },
-                          { id: 'results', label: c.results, panel: null },
+                          { id: 'results', label: c.results, panel: (
+                            <div data-dl="word-outline">
+                              <Text variant="caption" tone="muted">{query.trim() ? (matches.length === 1 ? c.resultOne : matches.length ? say(c.resultsCount, { count: String(matches.length) }) : c.noResults) : c.findHint}</Text>
+                              {matches.map((m, i) => (
+                                <div key={i} data-dl-part="outline-item">
+                                  <Button label={m.textContent ?? ''} size="xs" emphasis="quiet" align="start" onClick={() => showMatch(m)} />
+                                </div>
+                              ))}
+                            </div>
+                          ) },
                         ]}
                       />
                     </div>
@@ -788,16 +1077,29 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                       </div>
                     )}
                     <article data-dl-part="page" data-empty={!showSampleDoc ? '' : undefined} data-narrow={copilotOpen ? '' : undefined}>
-                      {!showSampleDoc && (
+                      {docEmpty && !docFocused && (
                         <div data-dl-part="caret-row" aria-hidden="true">
                           <span data-dl-part="caret-block" />
                           {copilotOpen && <Icon name={wordIcons.name('comment-new')} size="sm" />}
                         </div>
                       )}
-                      {showSampleDoc && view.document.map((b, i) => {
-                        const Tag = tags[b.style];
-                        return <Tag key={i} data-dl-part="block" data-style={b.style}>{b.text}</Tag>;
-                      })}
+                      <div
+                        ref={bindDoc}
+                        data-dl="word-doc"
+                        data-marks={marks ? '' : undefined}
+                        data-painter={painter ? '' : undefined}
+                        contentEditable
+                        suppressContentEditableWarning
+                        role="textbox"
+                        aria-multiline="true"
+                        aria-label={view.documentName}
+                        spellCheck={false}
+                        onInput={changed}
+                        onFocus={() => setDocFocused(true)}
+                        onBlur={() => setDocFocused(false)}
+                        onMouseUp={paint}
+                        onKeyUp={paint}
+                      />
                     </article>
                   </div>
                 </ScrollArea>

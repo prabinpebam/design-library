@@ -1,4 +1,12 @@
 {
+ "c.window-controls.cell": {
+  "$value": "2.875rem",
+  "$description": "Caption button cells: 46 CSS px each, as the desktop frame in 01-home.png."
+ },
+ "c.window-controls.gap": {
+  "$value": "0rem",
+  "$description": "The caption cells touch, as in 01-home.png."
+ },
  "c.icon.accent-1": {
   "$value": {
    "light": "#ffff00",
