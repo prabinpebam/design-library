@@ -12,11 +12,13 @@
   "sections": [
     { "id": "editor", "title": "Editor", "summary": "Write, format, find and comment on a document.", "flows": [
       { "id": "write", "title": "Write and format", "summary": "The page with nothing selected, then a heading selected in the outline.", "screens": ["editor", "text"] },
-      { "id": "review", "title": "Find, comment and read", "summary": "Find in the document, comment mode and read mode.", "screens": ["find", "comments", "read"] }
+      { "id": "find", "title": "Find", "summary": "Find words in the document from the left panel.", "screens": ["find"] },
+      { "id": "review", "title": "Comment and read", "summary": "Comment mode and read mode.", "screens": ["comments", "read"] }
     ] }
   ],
+  "works": { "notes": 0 },
   "layouts": [
-    { "id": "editor", "title": "Editor", "component": "EditorLayout", "content": "content/editor/editor.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "editor", "title": "Editor", "component": "EditorLayout", "content": "content/editor.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "text", "title": "Heading selected", "component": "EditorLayout", "content": "content/editor/text.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "comments", "title": "Comments", "component": "EditorLayout", "content": "content/editor/comments.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "find", "title": "Find", "component": "EditorLayout", "content": "content/editor/find.json", "regions": [{"id":"main","accepts":["*"]}] },

@@ -129,17 +129,17 @@
       { "style": "title", "text": "Harbour survey notes" },
       { "style": "body", "text": "These notes collect what the survey team saw along the east breakwater during the spring tides. They are a working draft: add what you measured, and leave a comment where a reading needs a second look." },
       { "style": "heading-1", "text": "Where we looked" },
-      { "style": "body", "text": "We walked the breakwater from the lighthouse steps to the fuel jetty at low water, logging each section's condition, the depth beside it and anything that had moved since the autumn survey." },
+      { "style": "body", "text": "We walked the breakwater from the lighthouse steps to the fuel jetty at low water, logging each section’s condition, the depth beside it and anything that had moved since the autumn survey." },
       { "style": "body", "text": "Most of the wall is sound. Three sections near the jetty show fresh scour at the foot, and one capping stone has shifted about four centimetres seaward." },
       { "style": "heading-2", "text": "Readings to check" },
-      { "style": "body", "text": "The depth at section 14 reads shallower than last year, which doesn't match the scour we saw. It may be a sounding error; we'll repeat it on the next low tide before drawing anything from it." },
+      { "style": "body", "text": "The depth at section 14 reads shallower than last year, which doesn’t match the scour we saw. It may be a sounding error; we’ll repeat it on the next low tide before drawing anything from it." },
       { "style": "quote", "text": "Repeat any reading that disagrees with what you saw before you write it up." },
       { "style": "heading-1", "text": "Next steps" },
       { "style": "body", "text": "Photograph the shifted capping stone at the same angle each week, ask the harbour office for the dredging log, and book a diver for the jetty end before the summer moorings go in." }
     ],
     "threads": [
-      { "id": "t1", "anchor": "about four centimetres", "author": "Maya Chen", "time": "A few seconds ago", "text": "Was this measured from the old paint mark or from the joint? Worth saying which, so next week's reading compares like with like.", "replies": [] },
-      { "id": "t2", "anchor": "section 14", "author": "Alex Rivera", "time": "Yesterday", "text": "I can take the boat out on Thursday's low tide and repeat the sounding.", "replies": [{ "author": "Maya Chen", "time": "Yesterday", "text": "Thanks, that settles it." }] }
+      { "id": "t1", "anchor": "about four centimetres", "author": "Maya Chen", "time": "A few seconds ago", "text": "Was this measured from the old paint mark or from the joint? Worth saying which, so next week’s reading compares like with like.", "replies": [] },
+      { "id": "t2", "anchor": "section 14", "author": "Alex Rivera", "time": "Yesterday", "text": "I can take the boat out on Thursday’s low tide and repeat the sounding.", "replies": [{ "author": "Maya Chen", "time": "Yesterday", "text": "Thanks, that settles it." }] }
     ],
     "copy": {
       "mainMenu": "Main menu",
@@ -156,7 +156,7 @@
       "findClose": "Close find",
       "findCount": "{count} matches",
       "findNone": "No matches. Check the spelling or try fewer words.",
-      "stylesHint": "Choose a style to apply it to the paragraph you're in.",
+      "stylesHint": "Choose a style to apply it to the paragraph you’re in.",
       "working": "Working on this document",
       "present": "Read mode",
       "share": "Share",
@@ -220,13 +220,13 @@
       "addComment": "Add comment",
       "selectFirst": "Select some words in the document first",
       "added": "Comment added",
-      "notInExample": "{label} isn't in this example",
+      "notInExample": "{label} isn’t in this example",
       "saved": "Saved",
       "cutDone": "Cut to the clipboard",
       "copyDone": "Copied to the clipboard",
       "pasteBlocked": "Paste with Ctrl+V: the browser blocked reading the clipboard",
       "wordCountDone": "{count} words",
-      "readOn": "Read mode: the document can't be changed. Switch to Edit to write."
+      "readOn": "Read mode: the document can’t be changed. Switch to Edit to write."
     }
   }
 }

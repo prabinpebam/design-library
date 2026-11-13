@@ -6,19 +6,13 @@
  * Comments). The document is core's rich-text surface (G6) on the canvas (word-figma.Page). No styles.
  */
 import { useEffect, useRef, useState } from 'react';
-import { AvatarGroup, Button, Checkbox, Cluster, EditorLayout, Heading, MenuButton, NumberField, Persona, PropertyRow, PropertySection, Reveal, SegmentedControl, Select, Stack, Switch, Tabs, Text, TextArea, TextField, TreeView, notify, useRichText, type RichTextCommand, type TreeItem } from '@design-library/core/components';
+import { AvatarGroup, Button, Cluster, EditorLayout, Heading, MenuButton, NumberField, Persona, PropertyRow, PropertySection, Reveal, SegmentedControl, Select, Stack, Switch, Tabs, Text, TextArea, TextField, TreeView, notify, useRichText, type RichTextCommand, type TreeItem } from '@design-library/core/components';
 import { fill } from '@design-library/core/render';
-import { Page } from './parts/compounds/Page';
-import type { WfBlock, WfThread, WordFigmaRecord } from './types';
+import { BREAKS, FIRST_HEADING, HEADS, Page, fillDocument, insertBlockAfter, inserts } from './parts/compounds/Page';
+import type { WfThread, WordFigmaRecord } from './types';
 
-const tags: Record<WfBlock['style'], string> = { title: 'h1', 'heading-1': 'h2', 'heading-2': 'h3', body: 'p', quote: 'blockquote' };
-const HEADS = ':scope > :is(h1, h2, h3)';
 const BODY_PT = 11;
-const inserts: Record<string, string> = {
-  table: `<table><tbody>${'<tr>'.concat('<td><br></td>'.repeat(3), '</tr>').repeat(3)}</tbody></table><p><br></p>`,
-  'page-break': '<hr data-break=""><p><br></p>',
-  line: '<hr><p><br></p>',
-};
+
 // tied to EditorLayout's 48rem container change point: panels sit beside the content from the same width
 const wide = () => typeof window === 'undefined' || window.matchMedia('(min-width: 48rem)').matches;
 
@@ -56,14 +50,11 @@ export function WordFigmaApp({ view, screen = 'editor', height = 'screen' }: { v
   useEffect(() => {
     const ed = docRef.current;
     if (!ed) return;
-    ed.replaceChildren(...view.document.map((b) => {
-      const n = document.createElement(tags[b.style]);
-      n.textContent = b.text;
-      return n;
-    }));
+    fillDocument(ed, view.document);
+
     rich.reset();
     if (screen === 'text') {
-      const first = ed.querySelector<HTMLElement>(':scope > h2');
+      const first = ed.querySelector<HTMLElement>(FIRST_HEADING);
       if (first) selectNode(first);
     }
     bump();
@@ -72,7 +63,7 @@ export function WordFigmaApp({ view, screen = 'editor', height = 'screen' }: { v
 
   const ed = docRef.current;
   const heads = ed ? [...ed.querySelectorAll<HTMLElement>(HEADS)] : [];
-  const breaks = ed ? [...ed.querySelectorAll<HTMLElement>(':scope > hr[data-break]')] : [];
+  const breaks = ed ? [...ed.querySelectorAll<HTMLElement>(BREAKS)] : [];
   const words = ed?.innerText.split(/\s+/).filter(Boolean).length ?? 0;
   const characters = ed?.innerText.replace(/\s/g, '').length ?? 0;
   const range = rich.selection();
@@ -127,7 +118,15 @@ export function WordFigmaApp({ view, screen = 'editor', height = 'screen' }: { v
   const insert = (what: string) => {
     if (what === 'date') return exec('insert-text', new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }));
     if (what === 'symbol') return exec('insert-text', 'Ω');
-    exec('insert-html', inserts[what]);
+    if (reading) return notify({ subject: 'wf-read', message: c.readOn });
+    const at = blockOf(rich.selection()?.endContainer) ?? ed?.lastElementChild;
+    const caret = at instanceof HTMLElement && insertBlockAfter(at, what);
+    if (caret) {
+      const r = document.createRange();
+      r.setStart(caret, 0);
+      rich.select(r);
+    }
+    bump();
   };
   const setCase = (how: string) => {
     if (!selectedText) return notify({ subject: 'wf-case', message: c.selectFirst });
@@ -287,6 +286,7 @@ export function WordFigmaApp({ view, screen = 'editor', height = 'screen' }: { v
   const size = s.sizeRatio ? Math.round(s.sizeRatio * BODY_PT * 2) / 2 : BODY_PT;
   const font = view.fonts.find((f) => s.font?.toLowerCase().includes(f.toLowerCase())) ?? view.fonts[0];
   const toggle = (k: 'bold' | 'italic' | 'underline' | 'strikethrough' | 'subscript' | 'superscript', icon: 'bold' | 'italic' | 'underline' | 'strikethrough' | 'subscript' | 'superscript') => (
+    // binary-setting: Bold, Italic, Underline and the rest are the established formatting toggles, pressed while the selection has them
     <Button key={k} label={c[k]} icon={icon} iconOnly tooltip size="xs" emphasis="quiet" pressed={!!s.active[k]} onClick={() => exec(k)} />
   );
 
@@ -326,7 +326,7 @@ export function WordFigmaApp({ view, screen = 'editor', height = 'screen' }: { v
           </Cluster>
         </PropertyRow>
         <SegmentedControl label={c.list} iconOnly size="xs" fill value={list} onChange={(v) => (v === 'none' ? list !== 'none' && exec(list as RichTextCommand) : exec(v as RichTextCommand))} options={view.lists} />
-        <Checkbox label={c.marks} checked={marks} onChange={setMarks} />
+        <Switch label={c.marks} checked={marks} onChange={setMarks} size="s" />
       </PropertySection>
     </>
   ) : (
@@ -467,7 +467,7 @@ export function WordFigmaApp({ view, screen = 'editor', height = 'screen' }: { v
               <Stack gap="item">
                 <Text variant="body-sm" tone="muted">{c.stylesHint}</Text>
                 {view.styles.map((st) => (
-                  <Button key={st.value} label={st.label} size="xs" emphasis="quiet" align="start" pressed={has && blockTag === st.value} onClick={() => exec('block', st.value)} />
+                  <Button key={st.value} label={st.label} size="xs" emphasis="quiet" align="start" onClick={() => exec('block', st.value)} />
                 ))}
               </Stack>
             ) },

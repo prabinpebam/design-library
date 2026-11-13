@@ -1,5 +1,34 @@
 import type { FormEvent, MouseEvent, Ref } from 'react';
 import { ScrollArea, type DataAttributes } from '@design-library/core/components';
+import type { WfBlock } from '../../types';
+
+const tags: Record<WfBlock['style'], string> = { title: 'h1', 'heading-1': 'h2', 'heading-2': 'h3', body: 'p', quote: 'blockquote' };
+/** The document's headings (its outline), its first Heading 1, and its page breaks, inside the surface. */
+export const HEADS = ':scope > :is(h1, h2, h3)';
+export const FIRST_HEADING = ':scope > h2';
+export const BREAKS = ':scope > hr[data-break]';
+/** What the Insert tool puts at the caret, by its value. */
+export const inserts: Record<string, string> = {
+  table: `<table><tbody>${'<tr>'.concat('<td><br></td>'.repeat(3), '</tr>').repeat(3)}</tbody></table><p><br></p>`,
+  'page-break': '<hr data-break=""><p><br></p>',
+  line: '<hr><p><br></p>',
+};
+/** Puts an Insert tool's block after `block`, a direct child of the surface (as Word does at a block's end, never nested in a heading); returns the empty paragraph after it, for the caret. */
+export function insertBlockAfter(block: HTMLElement, what: string): HTMLElement | null {
+  const t = document.createElement('template');
+  t.innerHTML = inserts[what];
+  const last = t.content.lastElementChild as HTMLElement | null;
+  block.after(t.content);
+  return last;
+}
+/** Fills the surface with the record's blocks, each as the tag its style names. */
+export function fillDocument(ed: HTMLElement, blocks: WfBlock[]) {
+  ed.replaceChildren(...blocks.map((b) => {
+    const n = document.createElement(tags[b.style]);
+    n.textContent = b.text;
+    return n;
+  }));
+}
 
 export interface PageProps extends DataAttributes {
   /** Names the canvas region. */
