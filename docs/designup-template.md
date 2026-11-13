@@ -39,9 +39,11 @@ This row joins the table in [pressure-test loop, section 2](pressure-test-loop.m
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR100 | 2026-11-13 | Public chapter timestamps jump the player | MediaPlayer has no seek seam for its sealed YouTube iframe | Step 6 | Optional YouTube source `seek: {seconds, requestId}`; a new request seeks and plays, including before first Play | none | DesignUp; Editor 32 | accepted | pending | Opening film forwards request; no consumer iframe access |
+| LR100 | 2026-11-13 | Public chapter timestamps jump the player | MediaPlayer has no seek seam for its sealed YouTube iframe | Step 6 | Optional YouTube source `seek: {seconds, requestId}`; a new request seeks and plays, including before first Play | none | DesignUp; Editor 32 | implemented | LR100 core checkpoint | Opening film forwards request; no consumer iframe access |
 
 Decision before code: R7 playback behaviour, generic and opt-in. Props/slots/context/theme cannot currently request a seek; template code must not reach into the sealed player, so core owns it at seam 6. No new block, preset, album treatment, tokens or resting decoration. The existing no-key iframe API is loaded only after Play or an explicit timestamp action; unchanged embeds/native files retain defaults. Repeated same-second requests work by requestId; local loading/failure/retry cover API startup without captions too. Core typecheck/build, linked consumer typecheck/build and focused shots; stories/regression deferred to merge night.
+
+As built: the first request waits for the real playing event before applying the pending seek, avoiding an autoplay/startup race. Trusted Day 02 chapter actions at 20 seconds reached 28.82 seconds after a 10-second wait and 21.71 seconds after a repeat and 1.8-second wait without caption tracks; the captioned path also played and repeated the seek. Core typecheck and library build pass. Full-screen permission remains browser-dependent and was not verified as successful. The generated index and final consumer pin are checkpoint work, coordinated with the other core writer.
 
 ## LR97: external YouTube captions (13 November 2026)
 

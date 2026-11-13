@@ -27,9 +27,23 @@ export interface MediaFile {
   type: string;
 }
 
+interface MediaSeekRequest {
+  /** Position in seconds, finite and nonnegative. */
+  seconds: number;
+  /** A different value for each explicit seek action, including a repeat of the same timestamp. */
+  requestId: number;
+}
+
 /** Where the media comes from: files, or YouTube/Vimeo loaded only once played. YouTube tracks opt in to an external
  * caption overlay and labelled language/Off choice, synced through its free iframe API; other embeds are unchanged. */
-export type MediaSource = { from: 'file'; files: MediaFile[]; tracks?: MediaTrack[] } | { from: 'youtube'; id: string; tracks?: MediaTrack[] } | { from: 'vimeo'; id: string };
+export type MediaSource = { from: 'file'; files: MediaFile[]; tracks?: MediaTrack[] } | {
+  from: 'youtube';
+  id: string;
+  tracks?: MediaTrack[];
+  /** Opt-in seek-and-play request, in seconds. Change requestId for every action, including the same timestamp again.
+   * Loads the iframe API only after Play or this request. Leave absent for an unchanged poster-only embed. */
+  seek?: MediaSeekRequest;
+} | { from: 'vimeo'; id: string };
 
 export interface MediaPlayerProps extends DataAttributes {
   /** `video` (default) or `audio`: a compact player with its title above and no picture. */
@@ -81,13 +95,16 @@ const embedSrc = (source: Extract<MediaSource, { from: 'youtube' | 'vimeo' }>) =
     ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(source.id)}?autoplay=1&rel=0`
     : `https://player.vimeo.com/video/${encodeURIComponent(source.id)}?autoplay=1&dnt=1`;
 
-interface YouTubePlayer {
+type YouTubePlayer = {
   getCurrentTime(): number;
+  getPlayerState(): number;
+  seekTo(seconds: number, allowSeekAhead: boolean): void;
+  playVideo(): void;
   destroy(): void;
-}
-interface YouTubeAPI {
-  Player: new (frame: HTMLIFrameElement, options: { events: { onReady: () => void; onError: () => void } }) => YouTubePlayer;
-}
+};
+type YouTubeAPI = {
+  Player: new (frame: HTMLIFrameElement, options: { events: { onReady: () => void; onError: () => void; onStateChange: (event: { data: number }) => void } }) => YouTubePlayer;
+};
 const youtubeWindow = () => window as Window & { YT?: YouTubeAPI; onYouTubeIframeAPIReady?: () => void };
 let youtubeAPI: Promise<YouTubeAPI> | undefined;
 
@@ -125,7 +142,7 @@ function loadYouTubeAPI() {
 }
 
 /** External WebVTT is parsed by the browser, never injected as HTML. No remote API loads before Play. */
-function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { from: 'youtube' }>; title: string }) {
+function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 'youtube' }>; title: string }) {
   const tracks = source.tracks ?? [];
   const [selected, setSelected] = useState(tracks.find(track => track.default)?.src ?? '__off');
   const chosen = tracks.find(track => track.src === selected);
@@ -140,6 +157,19 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
   const [fullscreenFailed, setFullscreenFailed] = useState(false);
   const host = useRef<HTMLDivElement>(null);
   const textTrack = useRef<HTMLTrackElement>(null);
+  const activePlayer = useRef<YouTubePlayer | undefined>(undefined);
+  const seek = useRef(source.seek);
+
+  useEffect(() => {
+    seek.current = source.seek;
+    if (source.seek && activePlayer.current) {
+      if (activePlayer.current.getPlayerState() === 1) {
+        activePlayer.current.seekTo(source.seek.seconds, true);
+        seek.current = undefined;
+      }
+      activePlayer.current.playVideo();
+    }
+  }, [source.seek?.seconds, source.seek?.requestId]);
 
   useEffect(() => {
     let disposed = false;
@@ -148,7 +178,8 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
     setAPIState('loading');
     setTime(0);
     const frame = document.createElement('iframe');
-    frame.src = `${embedSrc(source)}&enablejsapi=1&fs=0&origin=${encodeURIComponent(location.origin)}`;
+    const start = seek.current ? `&start=${Math.floor(seek.current.seconds)}` : '';
+    frame.src = `${embedSrc(source)}&enablejsapi=1&fs=0&origin=${encodeURIComponent(location.origin)}${start}`;
     frame.title = title;
     frame.allow = 'autoplay; encrypted-media';
     frame.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -162,7 +193,14 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
           if (disposed) return;
           clearTimeout(timeout);
           setAPIState('ready');
+          activePlayer.current = player;
+          if (seek.current) player?.playVideo();
           interval = setInterval(() => { if (player) setTime(player.getCurrentTime()); }, 100);
+        },
+        onStateChange: event => {
+          if (disposed || event.data !== 1 || !seek.current || !player) return;
+          player.seekTo(seek.current.seconds, true);
+          seek.current = undefined;
         },
         onError: () => { if (!disposed) { clearTimeout(timeout); setAPIState('failed'); } },
       } });
@@ -171,6 +209,7 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
       disposed = true;
       clearTimeout(timeout);
       clearInterval(interval);
+      activePlayer.current = undefined;
       player?.destroy();
       frame.remove();
     };
@@ -217,9 +256,9 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
       </video>}
     </div>
     <div data-dl-part="caption-controls">
-      <Select label="Captions" width="content" mode="form" value={chosen ? selected : '__off'}
+      {tracks.length > 0 && <Select label="Captions" width="content" mode="form" value={chosen ? selected : '__off'}
         options={[{ value: '__off', label: 'Off' }, ...tracks.map(track => ({ value: track.src, label: track.label }))]}
-        onChange={value => { setSelected(value); setTrackFailed(false); setLoaded(''); setCues([]); }} />
+        onChange={value => { setSelected(value); setTrackFailed(false); setLoaded(''); setCues([]); }} />}
       {document.fullscreenEnabled && <Button label={fullscreen ? 'Exit full screen' : 'Enter full screen'} emphasis="quiet"
         onClick={() => {
           setFullscreenFailed(false);
@@ -228,13 +267,16 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
           void (fullscreen ? document.exitFullscreen() : region.requestFullscreen()).catch(() => setFullscreenFailed(true));
         }} />}
       {fullscreenFailed && <span role="alert"><Text variant="body-sm">Full screen couldn’t be changed. Try the full screen button again.</Text></span>}
-      {chosen && (apiState === 'failed' || trackFailed ? <div data-dl-part="caption-status" role="alert">
+      {apiState === 'failed' ? <div data-dl-part="caption-status" role="alert">
+        <Text variant="body-sm">The video couldn’t be loaded. Try again.</Text>
+        <Button label="Try again" emphasis="quiet" onClick={() => setRetry(value => value + 1)} />
+      </div> : apiState === 'loading' ? <span role="status"><Text variant="body-sm">Loading video…</Text></span> : null}
+      {chosen && (trackFailed ? <div data-dl-part="caption-status" role="alert">
         <Text variant="body-sm">Captions couldn’t be loaded. Try again or turn captions off.</Text>
         <Button label="Try again" emphasis="quiet" onClick={() => {
-          if (apiState === 'failed') setRetry(value => value + 1);
           setTrackFailed(false); setLoaded(''); setCues([]); setTrackRetry(value => value + 1);
         }} />
-      </div> : (apiState === 'loading' || loaded !== selected) && <span role="status"><Text variant="body-sm">Loading captions…</Text></span>)}
+      </div> : apiState === 'ready' && loaded !== selected && <span role="status"><Text variant="body-sm">Loading captions…</Text></span>)}
     </div>
   </>;
 }
@@ -254,11 +296,19 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
  * YouTube sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay.
  * The enhanced player's full-screen action includes captions and their choice. Failures offer Retry;
  * cues are not a live region that interrupts screen-reader speech.
+ * A YouTube source's optional seek request starts playback at that timestamp; a new requestId repeats the action.
  * @key Enter, Space: on an embed's poster, loads and plays the video
  */
 export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
   const [playing, setPlaying] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
+  const seekRequest = source.from === 'youtube' ? source.seek?.requestId : undefined;
+  const seekSeconds = source.from === 'youtube' ? source.seek?.seconds : undefined;
+  if (seekSeconds !== undefined && (!Number.isFinite(seekSeconds) || seekSeconds < 0)) throw new RangeError('MediaPlayer seek seconds must be finite and nonnegative');
+
+  useEffect(() => {
+    if (seekRequest !== undefined) setPlaying(true);
+  }, [seekRequest, seekSeconds]);
 
   useEffect(() => {
     if (playing) frame.current?.focus();
@@ -288,7 +338,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, 
 
   return (
     <figure {...data} data-dl="media-player" data-kind="video" data-tall={shape.height > shape.width ? '' : undefined} style={style}>
-      {playing && source.from === 'youtube' && source.tracks?.length ? <YouTubeCaptions key={source.id} source={source} title={title} /> : <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
+      {playing && source.from === 'youtube' && (source.tracks?.length || source.seek) ? <YouTubeEmbed key={source.id} source={source} title={title} /> : <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
         {source.from === 'file' ? (
           <video controls preload="metadata" playsInline poster={poster} aria-label={title}>
             {source.files.map((f) => (
