@@ -13,7 +13,7 @@ import { EditorLayout } from '../layouts/EditorLayout';
 import { signInScreen } from './Canvas.stories';
 import type { StoryFile } from './story';
 
-function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false, docked = false, panelTone }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean; docked?: boolean; panelTone?: 'raised' | 'sunken' }) {
+function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false, docked = false, panelTone, roundedPanels = false }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean; docked?: boolean; panelTone?: 'raised' | 'sunken'; roundedPanels?: boolean }) {
   const [startOpen, setStartOpen] = useState(start);
   const [endOpen, setEndOpen] = useState(end);
   const [tool, setTool] = useState('pointer');
@@ -23,6 +23,7 @@ function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wi
     <EditorLayout
       height="lg"
       panelTone={panelTone}
+      roundedPanels={roundedPanels}
       {...(wide ? { startSize: '16rem', endSize: '41rem', endMax: '60rem', workMin: '24rem', resizable: true } : {})}
       {...(docked ? { toggles: 'none' as const, resizable: true } : {})}
       startOpen={startOpen}
@@ -133,6 +134,11 @@ export default {
       render: () => <Editor bare panelTone="sunken" />,
     },
     {
+      title: 'Panels with rounded corners',
+      description: 'LR123 roundedPanels: each panel surface takes the large corner radius, for an app whose frame has nothing sharp. Off by default; AppLayout and ListDetail take the same switch.',
+      code: `<EditorLayout panelTone="sunken" roundedPanels … />`,
+      render: () => <Editor bare panelTone="sunken" roundedPanels />,
+    },    {
       title: 'An inspector filling its panel',
       description: 'endFill lets the end panel’s content take the panel’s full height; with Tabs fill below it, the chosen tab’s panel grows to the bottom.',
       code: `<EditorLayout endFill end={<Tabs fill size="s" label="Inspector" items={…} />} … >…</EditorLayout>`,
