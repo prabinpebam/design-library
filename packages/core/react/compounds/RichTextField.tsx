@@ -150,7 +150,7 @@ export function RichTextField({ label, toolsLabel, value, onChange, onCommit, as
   };
   return <div {...data} ref={root} data-dl="rich-text-field" data-commit={phase}>
     <Field label={label} hint={hint} necessity={optional ? 'optional' : undefined}
-      error={problem || undefined} count={maxLength === undefined ? undefined : { value: draft, max: maxLength }}
+      error={problem || undefined}
       after={<>
         <Text variant="caption" aria-live="polite">{phase === 'on' ? words.saving : phase === 'done' ? words.saved : ''}</Text>
         {problem && <Button label={words.retry} emphasis="quiet" size="s" onClick={commit} />}
