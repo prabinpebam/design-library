@@ -15,7 +15,7 @@
     },
     {
       "keys": "ArrowLeft / ArrowRight (on a resize handle)",
-      "action": "narrower or wider by 8 px, 32 px with Shift"
+      "action": "narrower or wider by a step (`resizeStep`, 8 px), four with Shift"
     },
     {
       "keys": "Home / End (on a resize handle)",
@@ -23,7 +23,7 @@
     },
     {
       "keys": "Enter (on a resize handle)",
-      "action": "back to the default width"
+      "action": "back to the opening width (a double click too)"
     }
   ],
   "sealed": true,
@@ -118,9 +118,29 @@
         },
         {
           "name": "resizable",
-          "type": "boolean",
+          "type": "boolean | Side",
           "default": "false",
-          "description": "Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). Not while the panels float in a narrow window."
+          "description": "Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). `start` or `end`: only that panel (an inspector beside a fixed outline). Not while the panels float in a narrow window."
+        },
+        {
+          "name": "resizeStep",
+          "type": "string",
+          "description": "One arrow-key step on a resize handle, a CSS length such as \"1rem\" (default 8px); four steps with Shift."
+        },
+        {
+          "name": "endWidth",
+          "type": "string",
+          "description": "The end panel's width, controlled: a CSS length such as \"30rem\", or unset for its opening width. Pass with `onEndResize`."
+        },
+        {
+          "name": "onEndResize",
+          "type": "(width: string | undefined, done: boolean) => void",
+          "description": "Reports the end panel's new width as it is resized, in rem to a sixteenth (`undefined`: back to its opening width). `done` is false while a drag is under way and true when it ends or a key sets it: keep the width then (for the next visit). With it, the layout holds no width of its own for the end panel: pass `endWidth`."
+        },
+        {
+          "name": "endMin",
+          "type": "string",
+          "description": "The narrowest the end panel can be dragged, such as \"24rem\" (default the least of `c.editor-layout.panel-min` and its opening width)."
         },
         {
           "name": "toggles",
@@ -146,7 +166,7 @@
         {
           "name": "workMin",
           "type": "string",
-          "description": "The narrowest the working area gets while both panels are docked, such as \"24rem\". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this. Default: no floor."
+          "description": "The narrowest the working area gets while both panels are docked, such as \"24rem\". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this; a resizable panel can't be dragged wider than that either. Default: no floor."
         }
       ]
     }
@@ -183,6 +203,18 @@
     "--easing-standard",
     "--size-focus-offset",
     "--size-focus-width"
+  ],
+  "settings": [
+    {
+      "var": "--c-editor-layout-resize",
+      "default": "0.5rem",
+      "description": "A resize handle's hit width, centred on the panel's inner edge (default 0.5rem). Set var(--space-4) for an editor whose inspector edge is a wide, quiet strip (LR77)."
+    },
+    {
+      "var": "--c-editor-layout-resize-line",
+      "default": "#4f5bd5",
+      "description": "The line a resize handle shows only while hovered, focused or dragged (default color.focus). Set var(--color-accent) to draw it in the accent (LR77)."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/editorlayout"
 }

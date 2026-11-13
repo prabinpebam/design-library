@@ -68,7 +68,7 @@
     flex: none;
     /* Q68 DT6: a resizable panel's dragged width (set by the layout), held between the tokens' least and most. */
     inline-size: var(--dl-panel-size, var(--dl-panel-default, var(--c-editor-layout-panel)));
-    min-inline-size: min(var(--c-editor-layout-panel-min), var(--dl-panel-default, var(--c-editor-layout-panel)));
+    min-inline-size: var(--dl-panel-min, min(var(--c-editor-layout-panel-min), var(--dl-panel-default, var(--c-editor-layout-panel))));
     max-inline-size: var(--dl-panel-max, var(--c-editor-layout-panel-max));
     min-block-size: 0;
     background-color: var(--color-bg);
@@ -76,7 +76,17 @@
 
   /* A theme may draw a hairline between a docked panel and the working area (none by default: tone sets them apart). */
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { --dl-panel-default: var(--dl-start-size, var(--c-editor-layout-panel-start)); border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
-  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { --dl-panel-default: var(--dl-end-size, var(--c-editor-layout-panel-end)); --dl-panel-max: var(--dl-end-max, var(--c-editor-layout-panel-max)); border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { --dl-panel-default: var(--dl-end-size, var(--c-editor-layout-panel-end)); --dl-panel-max: var(--dl-end-max, var(--c-editor-layout-panel-max)); --dl-panel-min: var(--dl-end-min); border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
+
+  /* While a panel is dragged the working area (often an iframe) takes no pointer and no words are selected. */
+  [data-dl='editor-layout'][data-resizing] {
+    cursor: col-resize;
+    user-select: none;
+  }
+
+  [data-dl='editor-layout'][data-resizing] > [data-dl-part='body'] > [data-dl-part='work'] {
+    pointer-events: none;
+  }
 
   /* The resize handle: a hit strip centred on the panel's inner edge. Nothing is drawn at rest; a line shows only while it
      is hovered, focused or dragged (a transient cue), so the panels stay set apart by tone alone. */

@@ -31,8 +31,16 @@ export interface EditorLayoutProps extends DataAttributes {
   children: ReactNode;
   /** `fill` takes the height its parent gives it; `screen` the whole window (an app on its own); `lg` holds 36 rem (a demonstration). */
   height?: 'fill' | 'screen' | 'lg';
-  /** Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). Not while the panels float in a narrow window. */
-  resizable?: boolean;
+  /** Each docked panel gets a handle on its inner edge to drag it wider or narrower, between `c.editor-layout.panel-min` and `panel-max` (a design tool's panels). `start` or `end`: only that panel (an inspector beside a fixed outline). Not while the panels float in a narrow window. */
+  resizable?: boolean | Side;
+  /** One arrow-key step on a resize handle, a CSS length such as "1rem" (default 8px); four steps with Shift. */
+  resizeStep?: string;
+  /** The end panel's width, controlled: a CSS length such as "30rem", or unset for its opening width. Pass with `onEndResize`. */
+  endWidth?: string;
+  /** Reports the end panel's new width as it is resized, in rem to a sixteenth (`undefined`: back to its opening width). `done` is false while a drag is under way and true when it ends or a key sets it: keep the width then (for the next visit). With it, the layout holds no width of its own for the end panel: pass `endWidth`. */
+  onEndResize?: (width: string | undefined, done: boolean) => void;
+  /** The narrowest the end panel can be dragged, such as "24rem" (default the least of `c.editor-layout.panel-min` and its opening width). */
+  endMin?: string;
   /** With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle); `none`: no panel toggles at all, for a studio whose panels are always docked (pass `startOpen` and `endOpen` true); a floating panel's Escape doesn't close it, since nothing would open it again. */
   toggles?: 'outer' | 'inner' | 'none';
   /** The start panel's opening width, a CSS length such as "16rem" (default the theme's `c.editor-layout.panel-start`). */
@@ -41,7 +49,7 @@ export interface EditorLayoutProps extends DataAttributes {
   endSize?: string;
   /** The widest the end panel can be, opened or dragged (default the theme's `c.editor-layout.panel-max`, 30 rem). Set it with an `endSize` above 30 rem. */
   endMax?: string;
-  /** The narrowest the working area gets while both panels are docked, such as "24rem". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this. Default: no floor. */
+  /** The narrowest the working area gets while both panels are docked, such as "24rem". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this; a resizable panel can't be dragged wider than that either. Default: no floor. */
   workMin?: string;
 }
 
@@ -59,11 +67,11 @@ const STEP = 8;
  * closes with Escape and returns focus to its toggle. With `resizable`, each docked panel's handle is a focusable
  * `separator` with the panel's width as its value, controlling the panel.
  * @key Escape: closes a floating panel
- * @key ArrowLeft / ArrowRight (on a resize handle): narrower or wider by 8 px, 32 px with Shift
+ * @key ArrowLeft / ArrowRight (on a resize handle): narrower or wider by a step (`resizeStep`, 8 px), four with Shift
  * @key Home / End (on a resize handle): the narrowest or the widest
- * @key Enter (on a resize handle): back to the default width
+ * @key Enter (on a resize handle): back to the opening width (a double click too)
  */
-export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
+export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
   const toggled = toggles !== 'none';
   const [dragging, setDragging] = useState<Side | null>(null);
@@ -106,27 +114,53 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
     return () => document.removeEventListener('keydown', close);
   }, [startOpen, endOpen, onStartToggle, onEndToggle, startId, floating, toggled]);
 
-  // Resizing: the panel's own computed min and max (the tokens) bound the width; the reading direction decides which way grows.
+  // Resizing: the panel's own computed min and max (the tokens) bound the width, and with workMin the room the working
+  // area keeps; the reading direction decides which way grows.
   const panelOf = (side: Side) => document.getElementById(side === 'start' ? startId : endId);
+  const controlled = (side: Side) => side === 'end' && onEndResize !== undefined;
   const bounds = (side: Side) => {
     const el = panelOf(side);
     const cs = el ? getComputedStyle(el) : null;
-    return { now: el?.getBoundingClientRect().width ?? 0, min: parseFloat(cs?.minWidth ?? '0') || 0, max: parseFloat(cs?.maxWidth ?? '') || Infinity, rtl: cs?.direction === 'rtl' };
+    const min = parseFloat(cs?.minWidth ?? '0') || 0;
+    let max = parseFloat(cs?.maxWidth ?? '') || Infinity;
+    const body = el?.parentElement;
+    const work = body?.querySelector<HTMLElement>(':scope > [data-dl-part="work"]');
+    const floor = work ? parseFloat(getComputedStyle(work).minWidth) || 0 : 0;
+    if (body && floor > 0) {
+      const other = panelOf(side === 'start' ? 'end' : 'start');
+      const beside = other && !other.hidden ? other.getBoundingClientRect().width : 0;
+      max = Math.min(max, body.clientWidth - beside - floor);
+    }
+    return { now: el?.getBoundingClientRect().width ?? 0, min, max: Math.max(min, max), rtl: cs?.direction === 'rtl' };
   };
-  const setWidth = (side: Side, w: number) => {
+  const remPx = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  // The step: resizeStep resolved by the browser (it may read a token), in px.
+  const stepPx = () => {
+    const raw = root.current ? getComputedStyle(root.current).getPropertyValue('--dl-resize-step').trim() : '';
+    const n = parseFloat(raw);
+    if (!Number.isFinite(n) || n <= 0) return STEP;
+    return raw.endsWith('rem') ? n * remPx() : n;
+  };
+  const setWidth = (side: Side, w: number, done = true) => {
     const { min, max } = bounds(side);
-    setWidths((o) => ({ ...o, [side]: Math.round(Math.min(max, Math.max(min, w))) }));
+    const px = Math.min(max, Math.max(min, w));
+    if (controlled(side)) onEndResize?.(`${Math.round((px / remPx()) * 16) / 16}rem`, done);
+    else setWidths((o) => ({ ...o, [side]: Math.round(px) }));
+  };
+  const reset = (side: Side) => {
+    if (controlled(side)) onEndResize?.(undefined, true);
+    else setWidths((o) => ({ ...o, [side]: undefined }));
   };
   const onResizeKey = (side: Side) => (event: ReactKeyboardEvent<HTMLDivElement>) => {
     const { now, min, max, rtl } = bounds(side);
     const grow = (side === 'start') !== rtl ? 'ArrowRight' : 'ArrowLeft';
-    const by = event.shiftKey ? STEP * 4 : STEP;
+    const by = stepPx() * (event.shiftKey ? 4 : 1);
     const keys: Record<string, () => void> = {
       ArrowLeft: () => setWidth(side, now + (event.key === grow ? by : -by)),
       ArrowRight: () => setWidth(side, now + (event.key === grow ? by : -by)),
       Home: () => setWidth(side, min),
       End: () => setWidth(side, max),
-      Enter: () => setWidths((o) => ({ ...o, [side]: undefined })),
+      Enter: () => reset(side),
     };
     const run = keys[event.key];
     if (!run) return;
@@ -135,25 +169,31 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   };
   const onResizeDown = (side: Side) => (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return;
+    event.preventDefault();
     const { now, rtl } = bounds(side);
     const from = event.clientX;
     const sign = (side === 'start') !== rtl ? 1 : -1;
     const handle = event.currentTarget;
     handle.setPointerCapture(event.pointerId);
     setDragging(side);
-    const move = (e: PointerEvent) => setWidth(side, now + sign * (e.clientX - from));
+    let last = now;
+    const move = (e: PointerEvent) => {
+      last = now + sign * (e.clientX - from);
+      setWidth(side, last, false);
+    };
     const up = () => {
       handle.removeEventListener('pointermove', move);
       handle.removeEventListener('pointerup', up);
       handle.removeEventListener('pointercancel', up);
       setDragging(null);
+      if (last !== now) setWidth(side, last, true);
     };
     handle.addEventListener('pointermove', move);
     handle.addEventListener('pointerup', up);
     handle.addEventListener('pointercancel', up);
   };
   const resizeHandle = (side: Side, label: string, id: string) => {
-    if (!resizable) return null;
+    if (resizable !== true && resizable !== side) return null;
     const { now, min, max } = typeof document === 'undefined' ? { now: 0, min: 0, max: 0 } : bounds(side);
     return (
       <div
@@ -164,17 +204,20 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
         aria-orientation="vertical"
         aria-label={`Resize ${label.toLowerCase()}`}
         aria-controls={id}
-        aria-valuenow={Math.round(widths[side] ?? now)}
+        aria-valuenow={Math.round(controlled(side) ? now : (widths[side] ?? now))}
         aria-valuemin={Math.round(min)}
         aria-valuemax={Number.isFinite(max) ? Math.round(max) : undefined}
         tabIndex={0}
         onKeyDown={onResizeKey(side)}
         onPointerDown={onResizeDown(side)}
-        onDoubleClick={() => setWidths((o) => ({ ...o, [side]: undefined }))}
+        onDoubleClick={() => reset(side)}
       />
     );
   };
-  const sized = (side: Side) => (widths[side] ? ({ '--dl-panel-size': `${widths[side]}px` } as CSSProperties) : undefined);
+  const sized = (side: Side) => {
+    const w = controlled(side) ? endWidth : widths[side] ? `${widths[side]}px` : undefined;
+    return w ? ({ '--dl-panel-size': w } as CSSProperties) : undefined;
+  };
 
   // With a bar the toggles sit at its ends, quiet. Without one (Figma UI3), an open panel's toggle sits in its own head and a
   // closed panel's floats at the working area's top corner, on a surface of its own.
@@ -192,10 +235,10 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   );
 
   // Opening widths and the working area's floor, per instance; unset keeps the theme's tokens.
-  const sizes = { '--dl-start-size': startSize, '--dl-end-size': endSize, '--dl-end-max': endMax, '--dl-work-min': workMin } as CSSProperties;
+  const sizes = { '--dl-start-size': startSize, '--dl-end-size': endSize, '--dl-end-max': endMax, '--dl-end-min': endMin, '--dl-work-min': workMin, '--dl-resize-step': resizeStep } as CSSProperties;
 
   return (
-    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} style={startSize || endSize || endMax || workMin ? sizes : undefined}>
+    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} data-resizing={dragging ? '' : undefined} style={startSize || endSize || endMax || endMin || workMin || resizeStep ? sizes : undefined}>
       {!floating && (
         <header data-dl-part="bar">
           {toggled && startTogglePart('toggle')}

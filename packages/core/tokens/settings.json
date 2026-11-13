@@ -78,5 +78,9 @@
     "--type-jumbo-weight": "The jumbo step's weight (default weight.bold).",
     "--type-jumbo-leading": "The jumbo step's line height (default leading.display).",
     "--type-jumbo-tracking": "The jumbo step's letter spacing (default tracking.display)."
+  },
+  "EditorLayout": {
+    "--c-editor-layout-resize": "A resize handle's hit width, centred on the panel's inner edge (default 0.5rem). Set var(--space-4) for an editor whose inspector edge is a wide, quiet strip (LR77).",
+    "--c-editor-layout-resize-line": "The line a resize handle shows only while hovered, focused or dragged (default color.focus). Set var(--color-accent) to draw it in the accent (LR77)."
   }
 }
