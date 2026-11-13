@@ -127,6 +127,26 @@
     gap: var(--c-app-layout-head-gap);
   }
 
+  /* LR52: headActions makes the head a row: the title's words at its start, the actions at its end, level with the
+     title's last line, wrapping under it in a narrow view. */
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='head'][data-actions] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-inline-group);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='head'] > [data-dl-part='head-actions'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-item);
+  }
+
+  [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='head'] > [data-dl-part='head-actions']:empty {
+    display: none;
+  }
+
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='content'] {
     display: flex;
     flex-direction: column;

@@ -62,6 +62,11 @@
           "description": "The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content."
         },
         {
+          "name": "headActions",
+          "type": "ReactNode",
+          "description": "The view's actions at the end of its head's row (New page, Add a talk), level with the title's last line and wrapping under it in a narrow view (LR52). Without it the head is the title alone."
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": true,
@@ -179,13 +184,20 @@
     "--color-bg",
     "--color-border",
     "--color-text",
-    "--size-wide"
+    "--size-wide",
+    "--space-inline-group",
+    "--space-inline-item"
   ],
   "settings": [
     {
       "var": "--c-app-layout-header-divider-width",
       "default": "0px",
       "description": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view."
+    },
+    {
+      "var": "--c-app-layout-head-gap",
+      "default": "4rem",
+      "description": "Between the view's head (its title, and headActions) and its content (default space.stack-page; size s a section's step). Set var(--space-8) for an editing app whose title sits a section's step over its first part (LR52)."
     },
     {
       "var": "--c-app-layout-margin",

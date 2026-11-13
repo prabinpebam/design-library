@@ -18,6 +18,8 @@ export interface AppLayoutProps extends DataAttributes {
   headerEnd?: ReactNode;
   /** The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content. */
   head?: ReactNode;
+  /** The view's actions at the end of its head's row (New page, Add a talk), level with the title's last line and wrapping under it in a narrow view (LR52). Without it the head is the title alone. */
+  headActions?: ReactNode;
   /** The view: it scrolls on its own, with the page margin around it. */
   children: ReactNode;
   /** Names the view's region: the view's title. */
@@ -63,7 +65,7 @@ export interface AppLayoutProps extends DataAttributes {
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
@@ -116,7 +118,14 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   const canDock = startMode === 'docked' || startMode === 'floating' || (startMode === 'auto' && !narrow);
   const view = head ? (
     <>
-      <div data-dl-part="head">{head}</div>
+      {headActions !== undefined ? (
+        <div data-dl-part="head" data-actions="">
+          <div data-dl-part="head-words">{head}</div>
+          <div data-dl-part="head-actions">{headActions}</div>
+        </div>
+      ) : (
+        <div data-dl-part="head">{head}</div>
+      )}
       <div data-dl-part="content">{children}</div>
     </>
   ) : (
