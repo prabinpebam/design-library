@@ -97,6 +97,13 @@
     color: var(--color-text-muted);
   }
 
+  /* LR68: the card's tags (Draft, Private, where it lives) close under its words, wrapping as a row of their own. */
+  [data-dl='card'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='tags'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-pair);
+  }
+
   [data-dl='card'] > [data-dl-part='body'] > [data-dl-part='content'] {
     display: grid;
     gap: var(--c-card-gap);

@@ -70,6 +70,11 @@
           "description": "More content under the description, such as chips or a progress bar."
         },
         {
+          "name": "tags",
+          "type": "ReactNode",
+          "description": "LR68 (opt-in): the card's tags (small Badges: Draft, Private, the section it lives in), a wrapping row close under its description, part of its words rather than content set apart."
+        },
+        {
           "name": "actions",
           "type": "ReactNode",
           "description": "Buttons for the card's own actions, at its end. They stay separate stops from the card's link."
@@ -138,6 +143,7 @@
     "--size-focus-offset",
     "--size-focus-width",
     "--space-inline-group",
+    "--space-inline-pair",
     "--space-inset-md",
     "--space-inset-sm",
     "--space-stack-pair",

@@ -21,6 +21,11 @@ export interface CardProps extends DataAttributes {
   meta?: ReactNode;
   /** More content under the description, such as chips or a progress bar. */
   children?: ReactNode;
+  /**
+   * LR68 (opt-in): the card's tags (small Badges: Draft, Private, the section it lives in), a wrapping row close under
+   * its description, part of its words rather than content set apart.
+   */
+  tags?: ReactNode;
   /** Buttons for the card's own actions, at its end. They stay separate stops from the card's link. */
   actions?: ReactNode;
   /** `stacked`: the picture above the words (default). `beside`: the picture beside the words, stacked when the card is narrow (a lead item). `row`: the words first and a small square picture at the end (a line of a list). */
@@ -59,6 +64,7 @@ export function Card({
   description,
   meta,
   children,
+  tags,
   actions,
   layout = 'stacked',
   variant = 'outlined',
@@ -120,6 +126,7 @@ export function Card({
           </Heading>
         </div>
         {description && <p data-dl-part="description">{description}</p>}
+        {tags && <div data-dl-part="tags">{tags}</div>}
         </div>
         {children && <div data-dl-part="content">{children}</div>}
         {(meta || (actions && !ownRow)) && (
