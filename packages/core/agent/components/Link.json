@@ -115,7 +115,6 @@
     "PageHeader",
     "Quote",
     "conference.SponsorWall",
-    "slack.Workspace",
     "youtube.Site"
   ],
   "principles": [

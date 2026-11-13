@@ -11,7 +11,6 @@ import {
   Icon,
   IconOverrides,
   Image,
-  Link,
   ListItem,
   MenuButton,
   Popover,
@@ -730,7 +729,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             <div data-dl-part="link-row">
               <span data-dl-part="link-chip">
                 <Icon name="link" size="sm" />
-                <Link href="#/app/slack/channel">{m.linkText}</Link>
+                <Button label={m.linkText} tone="link" onClick={() => notBuilt(m.linkText!)} />
               </span>
             </div>
           )}
@@ -2013,7 +2012,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     <span>{view.topicPrefix}</span>
                     <span data-dl-part="mini-ws">{view.workspaceBadge}</span>
                     <span>{view.topicMiddle}</span>
-                    <Link href="#/app/slack/channel">{view.topicLink}</Link>
+                    <Button label={view.topicLink} tone="link" onClick={() => notBuilt(view.topicLink)} />
                   </>
                 )}
               </div>
