@@ -33,7 +33,7 @@
           "name": "href",
           "type": "string",
           "required": true,
-          "description": "Where the name leads, usually the home page."
+          "description": "Where the name leads, usually the home page. When a current place has the same address, the name is marked current too."
         },
         {
           "name": "mark",

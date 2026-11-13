@@ -1287,6 +1287,10 @@
           "$ref": "#/$defs/text",
           "description": "Names the paging: \"Older articles\". Required with more than one page."
         },
+        "pagingHref": {
+          "type": "string",
+          "description": "Where the other pages lead (an archive), when the example has no page 2. Without it, they lead to the list's own page."
+        },
         "empty": {
           "type": "object",
           "description": "The list with nothing in it (Q65 TP3): why it is empty and what to do, drawn in the list's own box in the screen state `empty`.",

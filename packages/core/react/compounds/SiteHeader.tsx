@@ -16,7 +16,7 @@ export interface SiteHeaderLink {
 export interface SiteHeaderProps extends DataAttributes {
   /** The site's or the person's name; links home. */
   name: string;
-  /** Where the name leads, usually the home page. */
+  /** Where the name leads, usually the home page. When a current place has the same address, the name is marked current too. */
   href: string;
   /** A small mark before the name (an Icon or a logo Image); decoration, so its alt text is empty. */
   mark?: ReactNode;
@@ -60,6 +60,8 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
   const button = useRef<HTMLSpanElement>(null);
   const markOnly = wordmark === 'mark' && !!mark;
   const row = narrow === 'row' && links.length > 0;
+  // The name links home: when home is the current place, the name says so too.
+  const home = links.some((l) => l.current && l.href === href);
 
   useEffect(() => {
     if (!open) return;
@@ -87,7 +89,7 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
   return (
     <div {...data} data-dl="site-header" data-open={open ? '' : undefined} data-nav={nav && nav !== 'start' ? nav : undefined} data-wordmark={wordmark === 'large' ? 'large' : markOnly ? 'mark' : undefined} data-current={current && current !== 'fill' ? current : undefined} data-narrow={row ? 'row' : undefined}>
       <div data-dl-part="bar">
-        <a href={router ? router.href(href) : href} data-dl-part="name" aria-label={markOnly ? name : undefined}>
+        <a href={router ? router.href(href) : href} data-dl-part="name" aria-current={home ? 'page' : undefined} aria-label={markOnly ? name : undefined}>
           {mark && (
             <span data-dl-part="mark" aria-hidden="true">
               {mark}

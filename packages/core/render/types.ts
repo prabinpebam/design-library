@@ -131,7 +131,7 @@ export type CoreBlock =
   | { type: 'byline'; name: string; href: string; date: string; read: string; picture?: string }
   | { type: 'person'; name: string; role: string; bio: string[]; portrait?: boolean; picture?: string }
   | { type: 'prose'; items: ProseItem[] }
-  | { type: 'posts'; heading?: string; size?: SectionTitleSize; items: { title: string; eyebrow?: string; description: string; meta: string; picture?: string; href: string }[]; page?: number; pages?: number; pagingLabel?: string; empty?: SiteEmpty }
+  | { type: 'posts'; heading?: string; size?: SectionTitleSize; items: { title: string; eyebrow?: string; description: string; meta: string; picture?: string; href: string }[]; page?: number; pages?: number; pagingLabel?: string; /** Where the other pages lead (an archive), when the example has no page 2. */ pagingHref?: string; empty?: SiteEmpty }
   | { type: 'people'; heading: string; size?: SectionTitleSize; intro?: string; items: { name: string; role: string; href?: string; picture?: string }[] }
   | { type: 'schedule'; heading?: string; size?: SectionTitleSize; daysLabel: string; days: { id: string; label: string; title: string; slots: AgendaSlot[] }[] }
   | { type: 'agenda'; heading: string; size?: SectionTitleSize; label: string; slots: AgendaSlot[]; empty?: SiteEmpty }

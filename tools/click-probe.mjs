@@ -80,6 +80,7 @@ const arm = () => {
   window.__cp?.disconnect();
   window.__cpCount = 0;
   window.__cpNotify = 0;
+  window.__cpToast = 0;
   window.__cpHref = location.href;
   const ignore = /^data-(click-probe|hover|hovered|focus|focused|focus-visible|active|pressing)/;
   window.__cp = new MutationObserver((records) => {
@@ -88,7 +89,10 @@ const arm = () => {
       const node = r.target.nodeType === 1 ? r.target : r.target.parentElement;
       // A hover hint (role tooltip) opens on its own timer under the pointer: it's not the click's effect.
       if (node?.closest('[role="tooltip"]')) continue;
-      if (node?.closest('[data-dl="notifications"], [data-dl="announcer"]')) window.__cpNotify++;
+      if (node?.closest('[data-dl="notifications"], [data-dl="announcer"]')) {
+        window.__cpNotify++;
+        if (node.closest('[data-dl="notifications"]')) window.__cpToast++;
+      }
       else window.__cpCount++;
     }
   });
@@ -99,7 +103,7 @@ const effect = (n) => {
   const a = document.activeElement;
   const focusMoved = !!a && a !== document.body && a !== el && !el?.contains(a);
   const said = [...document.querySelectorAll('[data-dl="notifications"] [data-dl-part="message"]')].map((m) => m.textContent ?? '');
-  return { dom: window.__cpCount, notify: window.__cpNotify, said: said.at(-1) ?? '', url: location.href !== window.__cpHref, focus: focusMoved };
+  return { dom: window.__cpCount, notify: window.__cpNotify, toast: window.__cpToast, said: said.at(-1) ?? '', url: location.href !== window.__cpHref, focus: focusMoved };
 };
 // The honest stub note: "X isn't part of the replica yet", "… aren't part of this example".
 const NOTE = /\b(isn[’']t|aren[’']t|is not|are not) part of (this|the) (replica|example)/i;
@@ -220,7 +224,8 @@ async function probeLayout(browser, t, { width, height, verbose }) {
       fx = await page.evaluate(effect, c.n).catch(() => ({ dom: 1, notify: 0, said: '', url: true, focus: false }));
     }
     const works = fx.dom > 0 || fx.url || fx.focus || popups > before;
-    const note = !works && fx.notify > 0 && NOTE.test(fx.said);
+    // Note only: a new notification that says the honest note. A spoken announcement alone (a repeated search) works.
+    const note = !works && fx.toast > 0 && NOTE.test(fx.said);
     const alive = works || fx.notify > 0;
     row.clicked++;
     if (note) row.notes.push(c.name);

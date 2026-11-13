@@ -80,6 +80,14 @@
           "screens": [
             "feeds"
           ]
+        },
+        {
+          "id": "about",
+          "title": "Learn about the blog",
+          "summary": "Who writes, how to write for us, and what’s kept about readers.",
+          "screens": [
+            "about"
+          ]
         }
       ]
     },
@@ -154,7 +162,9 @@
       ]
     }
   ],
-  "works": { "notes": 22 },
+  "works": {
+    "notes": 23
+  },
   "layouts": [
     {
       "id": "index",
@@ -826,6 +836,55 @@
             "region": "Main",
             "holds": "Opening, feed addresses",
             "uses": "Hero, DescriptionList"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "component": "SiteLayout",
+      "content": "content/subscribe/about.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Who writes, how to write for us, and the privacy note.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, about, writing and privacy",
+            "uses": "Hero, Text"
           },
           {
             "region": "Footer",

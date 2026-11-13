@@ -42,12 +42,16 @@
                 "href": "/index"
               },
               {
-                "label": "Design systems",
-                "href": "/index"
+                "label": "Archive",
+                "href": "/archive"
               },
               {
-                "label": "Accessibility",
-                "href": "/index"
+                "label": "Topics",
+                "href": "/topic"
+              },
+              {
+                "label": "Series",
+                "href": "/series"
               }
             ]
           },
@@ -60,8 +64,8 @@
                 "href": "/author"
               },
               {
-                "label": "Write for us",
-                "href": "/index"
+                "label": "About and writing for us",
+                "href": "/about"
               }
             ]
           }
@@ -69,11 +73,11 @@
         "links": [
           {
             "label": "Privacy",
-            "href": "/index"
+            "href": "/about"
           },
           {
-            "label": "Feed",
-            "href": "/index"
+            "label": "Feeds",
+            "href": "/feeds"
           }
         ],
         "identity": "Field Notes is an example blog for this library.",

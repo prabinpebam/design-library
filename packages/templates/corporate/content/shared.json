@@ -47,15 +47,15 @@
             "links": [
               {
                 "label": "Ocean freight",
-                "href": "/home"
+                "href": "/service"
               },
               {
-                "label": "Air freight",
-                "href": "/home"
+                "label": "All services",
+                "href": "/services"
               },
               {
-                "label": "Road and last mile",
-                "href": "/home"
+                "label": "Customer stories",
+                "href": "/customers"
               }
             ]
           },
@@ -102,20 +102,8 @@
         ],
         "links": [
           {
-            "label": "Privacy",
-            "href": "/home"
-          },
-          {
-            "label": "Terms",
-            "href": "/home"
-          },
-          {
-            "label": "Cookies",
-            "href": "/home"
-          },
-          {
-            "label": "Accessibility",
-            "href": "/home"
+            "label": "Privacy and policies",
+            "href": "/privacy"
           }
         ],
         "identity": "Northwind Freight is an example company for this library.",

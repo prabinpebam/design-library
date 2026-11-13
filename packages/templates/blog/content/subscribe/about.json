@@ -1,0 +1,42 @@
+{
+  "$schema": "../../content.schema.json",
+  "template": "blog",
+  "layout": "about",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "About",
+        "title": "About Field Notes",
+        "lead": "Who writes here, how to write for us, and what we keep about readers.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "Write for us"
+          },
+          {
+            "kind": "text",
+            "text": "We publish short, practical articles from people who build interfaces. Send a paragraph about your idea to editors@example.com; we answer within a week."
+          },
+          {
+            "kind": "heading",
+            "text": "Privacy"
+          },
+          {
+            "kind": "text",
+            "text": "We keep your email address and the topics you follow, to send the newsletter. We never sell it, and one link in every email removes you."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -4,7 +4,7 @@
  * its own (namespaced) types in its registry; it never replaces these.
  */
 import { Fragment, useEffect, useState, type ReactNode } from 'react';
-import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
+import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, announce, notify, type FooterLink } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
 import type { Block, BlockRenderer, CoreBlock, RenderContext, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
@@ -198,10 +198,18 @@ function SearchBlock({ block }: { block: Of<'search'> }) {
   const [query, setQuery] = useState(block.query);
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   const shown = block.results.filter((r) => words.every((w) => `${r.title} ${r.description} ${r.eyebrow ?? ''}`.toLowerCase().includes(w)));
+  // Each search says its outcome, even when the words are the same as before (a repeated search still answers).
+  const search = (v: string) => {
+    setDraft(v);
+    setQuery(v);
+    const ws = v.toLowerCase().split(/\s+/).filter(Boolean);
+    const count = block.results.filter((r) => ws.every((w) => `${r.title} ${r.description} ${r.eyebrow ?? ''}`.toLowerCase().includes(w))).length;
+    announce(count ? fill(block.summary, { count, query: v }) : fill(block.none.title, { query: v }));
+  };
   return (
     <Section heading={block.heading} size={block.size}>
       <Stack gap="group">
-        <TextField label={block.label} type="search" icon="search" value={draft} onCommit={setDraft} action={{ label: block.button, onAction: (v) => (setDraft(v), setQuery(v)) }} />
+        <TextField label={block.label} type="search" icon="search" value={draft} onCommit={setDraft} action={{ label: block.button, onAction: search }} />
         <Morph state={shown.length ? 'results' : 'none'}>
         {shown.length ? (
           <Stack gap="item">
@@ -331,7 +339,12 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
       />
     );
   },
-  'site-footer': (b, _ctx, i) => <Footer key={i} sectionsLabel={b.sectionsLabel} sections={b.sections} links={b.links} identity={b.identity} legal={b.legal} />,
+  'site-footer': (b, ctx, i) => {
+    // Like the header's places, a footer link to the page shown (its place or the layout itself) says so (aria-current).
+    const current = String(ctx.settings.current ?? '');
+    const mark = (l: FooterLink) => ({ ...l, current: (!!current && l.href.endsWith(`/${current}`)) || l.href.endsWith(`/${ctx.layout}`) });
+    return <Footer key={i} sectionsLabel={b.sectionsLabel} sections={b.sections.map((s) => ({ ...s, links: s.links.map(mark) }))} links={b.links.map(mark)} identity={b.identity} legal={b.legal} />;
+  },
   // Q88–Q91: a hero declared standalone (a brand opening) is the page's stage, or a feature further down; any other
   // hero flows with its content. A stage alone in its region is distraction-free; with more to come it peeks. A framed
   // hero's picture sits beside its words (split; its container still stacks them when narrow), so words and picture
@@ -500,7 +513,7 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
             media={c.picture ? <Image src={ctx.picture(c.picture).src} dark={ctx.picture(c.picture).dark} contrast={ctx.picture(c.picture).contrast} alternate={ctx.picture(c.picture).alternate} alt="" ratio="photo" /> : undefined}
           />
         ))}
-        {b.pages && b.pages > 1 && <Pagination page={b.page ?? 1} pages={b.pages} hrefFor={() => b.items[0].href.replace(/\/[^/]+$/, '/index')} label={b.pagingLabel ?? ''} />}
+        {b.pages && b.pages > 1 && <Pagination page={b.page ?? 1} pages={b.pages} hrefFor={(n) => (n === (b.page ?? 1) ? b.items[0].href.replace(/\/[^/]+$/, '/index') : (b.pagingHref ?? b.items[0].href.replace(/\/[^/]+$/, '/index')))} label={b.pagingLabel ?? ''} />}
       </Stack>)}
     </Section>
   ),

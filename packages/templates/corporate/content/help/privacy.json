@@ -12,8 +12,8 @@
       {
         "type": "hero",
         "eyebrow": "Policies",
-        "title": "Privacy",
-        "lead": "What we keep about you, why, and how to have it deleted.",
+        "title": "Privacy and policies",
+        "lead": "What we keep about you, the terms we work on, cookies and accessibility.",
         "layout": "stacked"
       },
       {
@@ -46,6 +46,30 @@
           {
             "kind": "text",
             "text": "Ask for a copy, a correction or deletion at privacy@example.com; we answer within 30 days."
+          },
+          {
+            "kind": "heading",
+            "text": "Terms"
+          },
+          {
+            "kind": "text",
+            "text": "Every booking follows the conditions in your quote; your planner sends them with it."
+          },
+          {
+            "kind": "heading",
+            "text": "Cookies"
+          },
+          {
+            "kind": "text",
+            "text": "This site keeps one cookie, to remember you’re signed in. Nothing tracks you across sites."
+          },
+          {
+            "kind": "heading",
+            "text": "Accessibility"
+          },
+          {
+            "kind": "text",
+            "text": "Every page works with a keyboard and a screen reader. If something doesn’t, tell your planner and we’ll fix it."
           }
         ]
       }
