@@ -201,6 +201,16 @@
         "$description": "The thumb while hovered or dragged (echoed for contrast contexts)"
       }
     },
+    "section": {
+      "$extensions": {
+        "owner": "Section"
+      },
+      "outline-color": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "A toned section with outline: its edge's colour, the quiet rule between parts (LR84) (echoed for contrast contexts)"
+      }
+    },
     "site-header": {
       "$extensions": {
         "owner": "SiteHeader"

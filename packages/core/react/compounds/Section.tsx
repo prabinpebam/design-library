@@ -33,6 +33,11 @@ export interface SectionProps extends DataAttributes {
    * (`c.section.group-inset`) with its head a group above its content (`c.section.group-gap`). Default `section`.
    */
   inset?: 'section' | 'group';
+  /**
+   * With `tone` (not `bleed`): a hairline edge beside the fill (`c.section.outline-width`, `c.section.outline-color`),
+   * for a template whose panels carry both cues. Off by default: the fill alone is the boundary (IP10).
+   */
+  outline?: boolean;
   children?: ReactNode;
   /** `data-*` attributes for the heading, for tooling such as revision anchors. */
   headingData?: DataAttributes;
@@ -48,7 +53,7 @@ export interface SectionProps extends DataAttributes {
  * @a11y Renders `section`, named by its heading through `aria-labelledby` when it has one. The heading level follows
  * the outline, never the visual size. An index numeral is decorative.
  */
-export function Section({ heading, anchor, level = 2, size, intro, index, nested = false, tone, bleed = false, inset = 'section', children, headingData, introData, ...data }: SectionProps) {
+export function Section({ heading, anchor, level = 2, size, intro, index, nested = false, tone, bleed = false, inset = 'section', outline = false, children, headingData, introData, ...data }: SectionProps) {
   const generated = useId();
   const id = anchor ?? generated;
   const head = (heading || intro) && (
@@ -72,7 +77,7 @@ export function Section({ heading, anchor, level = 2, size, intro, index, nested
     </>
   );
   return (
-    <section {...data} data-dl="section" data-nested={nested ? '' : undefined} data-indexed={index != null ? '' : undefined} data-tone={tone} data-bleed={tone && bleed ? '' : undefined} data-inset={tone && !bleed && inset === 'group' ? 'group' : undefined} aria-labelledby={heading ? id : undefined}>
+    <section {...data} data-dl="section" data-nested={nested ? '' : undefined} data-indexed={index != null ? '' : undefined} data-tone={tone} data-bleed={tone && bleed ? '' : undefined} data-inset={tone && !bleed && inset === 'group' ? 'group' : undefined} data-outline={tone && !bleed && outline ? '' : undefined} aria-labelledby={heading ? id : undefined}>
       {index != null ? (
         <>
           <p data-dl-part="index" aria-hidden="true">

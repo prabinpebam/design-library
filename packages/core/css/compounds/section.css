@@ -85,6 +85,11 @@
     gap: var(--c-section-group-gap);
   }
 
+  /* LR84: an outline beside the fill, opt-in (a template's approved second cue). */
+  [data-dl='section'][data-tone][data-outline] {
+    border: var(--c-section-outline-width) solid var(--c-section-outline-color);
+  }
+
   [data-dl='section'][data-tone='sunken'] {
     --dl-section-tone: var(--c-section-tone-sunken);
   }

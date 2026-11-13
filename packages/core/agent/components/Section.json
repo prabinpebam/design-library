@@ -73,6 +73,12 @@
           "description": "With `tone` (not `bleed`): `group` is a panel among panels, such as a dashboard's: a step closer inside (`c.section.group-inset`) with its head a group above its content (`c.section.group-gap`). Default `section`."
         },
         {
+          "name": "outline",
+          "type": "boolean",
+          "default": "false",
+          "description": "With `tone` (not `bleed`): a hairline edge beside the fill (`c.section.outline-width`, `c.section.outline-color`), for a template whose panels carry both cues. Off by default: the fill alone is the boundary (IP10)."
+        },
+        {
           "name": "children",
           "type": "ReactNode"
         },
@@ -106,6 +112,8 @@
     "--c-section-nested-content-gap",
     "--c-section-nested-gap",
     "--c-section-nested-head-gap",
+    "--c-section-outline-color",
+    "--c-section-outline-width",
     "--c-section-tone-inset-block",
     "--c-section-tone-inset-inline",
     "--c-section-tone-radius",
