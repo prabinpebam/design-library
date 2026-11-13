@@ -22,7 +22,8 @@
  * Warnings count what usually means a missing seam: core tokens set outside the
  * theme-settings allow-list, !important, primitive reads, raw sizes, a scaled root font size, global selectors, raw
  * interactive markup in custom parts, words written in code, unexplained clips, icon data under a name no component
- * draws (`icon-name`, MP26), and, when the project has a site
+  * draws (`icon-name`, MP26), a core compound given by hand, as a direct child, a part one of its left-out props defines
+  * (a Heading for `title`, an Image for `media`, a Button for `actions`: `hand-composed`, Never 10), and, when the project has a site
  * document, page-specific code (a literal route compared in TSX, DP19). Each finding names a file, a line and the fix.
  *
  * Exceptions (DP19) are declared, never silent: design-library-check.json in the project folder.
@@ -240,6 +241,123 @@ for (const file of parts) {
     add('warning', 'raw-markup', file, lineAt(text, m.index ?? 0), `a raw <${m[1]}> in a custom part: compose core ${core}, so focus, names, targets and token updates come with it`);
   }
 }
+
+// A block is a preset fixed configuration (Never 10): a part it defines comes through its props, never hand-built from
+// fundamentals in its children. A core compound whose children hold a core Heading while it has a `title`, an Image
+// while it has `media`, a Button while it has `actions` (and so on) is configured from parts by hand. Children it
+// expects (a dialog's body, a card's chips) aren't flagged, nor what a nested core compound or layout holds itself.
+const SLOT_PROPS = /** @type {Record<string, string[]>} */ ({
+  Heading: ['title', 'heading'],
+  Image: ['media', 'picture', 'image', 'illustration'],
+  Illustration: ['media', 'picture', 'illustration'],
+  Button: ['actions', 'action'],
+  ButtonGroup: ['actions'],
+  Link: ['links'],
+});
+/** @type {Map<string, { tier: string; props: Set<string> }>} */
+const coreComponents = new Map();
+{
+  const dir = join(PKG, 'agent/components');
+  if (existsSync(dir))
+    for (const name of readdirSync(dir).filter((n) => n.endsWith('.json'))) {
+      try {
+        const d = JSON.parse(readFileSync(join(dir, name), 'utf8'));
+        /** @type {Set<string>} */
+        const props = new Set();
+        for (const group of d.props ?? []) for (const p of group.props ?? []) props.add(p.name);
+        if (typeof d.name === 'string' && !d.name.includes('.')) coreComponents.set(d.name, { tier: d.tier, props });
+      } catch {}
+    }
+}
+/** The index just past an element's opening tag, and whether it closes itself. */
+const openingEnd = (/** @type {string} */ text, /** @type {number} */ from) => {
+  let depth = 0;
+  let quote = '';
+  for (let i = from; i < text.length; i++) {
+    const c = text[i];
+    if (quote) { if (c === quote && text[i - 1] !== '\\') quote = ''; continue; }
+    if (c === '"' || c === "'" || c === '`') quote = c;
+    else if (c === '{') depth++;
+    else if (c === '}') depth--;
+    else if (c === '>' && depth === 0) return { end: i + 1, self: text[i - 1] === '/' };
+  }
+  return { end: text.length, self: true };
+};
+/** The index of an element's matching closing tag, counting nested elements of the same name. */
+const closingAt = (/** @type {string} */ text, /** @type {string} */ name, /** @type {number} */ from) => {
+  const tag = new RegExp(`<(/?)${name.replace('.', '\\.')}(?=[\\s>/])`, 'g');
+  tag.lastIndex = from;
+  let depth = 1;
+  for (let m = tag.exec(text); m; m = tag.exec(text)) {
+    if (m[1]) { if (--depth === 0) return m.index; continue; }
+    const o = openingEnd(text, m.index + m[0].length);
+    if (!o.self) depth++;
+    tag.lastIndex = o.end;
+  }
+  return text.length;
+};
+/** The element names among a body's direct children (fragments and `{…}` expressions are see-through). */
+const topLevel = (/** @type {string} */ body) => {
+  /** @type {Set<string>} */
+  const out = new Set();
+  const tag = /<(\/?)([A-Za-z][\w.]*)?/g;
+  let depth = 0;
+  for (let m = tag.exec(body); m; m = tag.exec(body)) {
+    if (!m[2]) continue;
+    if (m[1]) { depth--; continue; }
+    const o = openingEnd(body, m.index + m[0].length);
+    if (depth === 0) out.add(m[2]);
+    if (!o.self) depth++;
+    tag.lastIndex = o.end;
+  }
+  return out;
+};
+if (coreComponents.size)
+  for (const file of tsx) {
+    const text = noComments(readFileSync(file, 'utf8'));
+    // Local names of components imported from the library (aliases followed).
+    /** @type {Map<string, string>} local → core name */
+    const imported = new Map();
+    for (const m of text.matchAll(/import\s*\{([^}]+)\}\s*from\s*['"]@design-library\/core(?:\/[\w/-]+)?['"]/g))
+      for (const spec of m[1].split(',')) {
+        const [name, local] = spec.trim().replace(/^type\s+/, '').split(/\s+as\s+/);
+        if (name && coreComponents.has(name)) imported.set(local ?? name, name);
+      }
+    if (!imported.size) continue;
+    const owners = [...imported].filter(([, core]) => coreComponents.get(core)?.tier !== 'fundamental');
+    for (const [local, core] of owners) {
+      const own = /** @type {{ tier: string; props: Set<string> }} */ (coreComponents.get(core));
+      if (own.tier !== 'compound') continue;
+      for (const m of text.matchAll(new RegExp(`<${local}(?=[\\s>/])`, 'g'))) {
+        const open = openingEnd(text, (m.index ?? 0) + m[0].length);
+        if (open.self) continue;
+        let body = text.slice(open.end, closingAt(text, local, open.end));
+        // What a nested core compound or layout holds is its own.
+        for (const [inner, innerCore] of owners) {
+          if (coreComponents.get(innerCore)?.tier === 'fundamental') continue;
+          const re = new RegExp(`<${inner}(?=[\\s>/])`, 'g');
+          for (let n = re.exec(body); n; n = re.exec(body)) {
+            const o = openingEnd(body, n.index + n[0].length);
+            const stop = o.self ? o.end : closingAt(body, inner, o.end);
+            body = body.slice(0, o.end) + ' '.repeat(Math.max(0, stop - o.end)) + body.slice(stop);
+            re.lastIndex = o.end;
+          }
+        }
+        /** @type {Set<string>} */
+        const seen = new Set();
+        const given = text.slice((m.index ?? 0) + m[0].length, open.end);
+        const top = topLevel(body);
+        for (const [local2, part] of imported) {
+          const props = (SLOT_PROPS[part] ?? []).filter((p) => own.props.has(p));
+          if (!props.length || seen.has(part) || !top.has(local2)) continue;
+          // The instance already uses the prop: a child of the same kind is body content (a subheading, a copy button).
+          if (props.some((p) => new RegExp(`(^|\\s)${p}\\s*=`).test(given))) continue;
+          seen.add(part);
+          add('warning', 'hand-composed', file, lineAt(text, m.index ?? 0), `${core} is given ${/^[AEIOU]/.test(part) ? 'an' : 'a'} ${part} as a direct child while it leaves out ${props.map((p) => `\`${p}\``).join(' and ')}, the part it defines for that: pass it there. A block is a preset fixed configuration (Never 10): a part it lacks goes into its definition as an option or a variant, through the loop, never built by hand in one place`);
+        }
+      }
+    }
+  }
 
 // ---- CSS ----
 const DESCENDANT = /\[data-dl(?:-part)?='[^']+'\](?:\[[^\]]*\]|:[\w-]+(?:\((?:[^()]|\([^()]*\))*\))?)*\s+(?::is\()?\[data-dl-part=/;
