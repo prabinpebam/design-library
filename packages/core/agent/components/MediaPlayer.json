@@ -46,6 +46,11 @@
           "description": "A still shown before playing: the video's own frame, or a picture for an embed (required for an embed: it's all that loads first)."
         },
         {
+          "name": "posterFallbackSrc",
+          "type": "string",
+          "description": "An embed poster's one fallback address, as Image's single retry and failure label. Default none."
+        },
+        {
           "name": "posterAlt",
           "type": "string",
           "description": "What the poster shows, for an embed's poster; leave it out when the title already says it."

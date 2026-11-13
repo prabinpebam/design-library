@@ -53,6 +53,8 @@ export interface MediaPlayerProps extends DataAttributes {
   title: string;
   /** A still shown before playing: the video's own frame, or a picture for an embed (required for an embed: it's all that loads first). */
   poster?: string;
+  /** An embed poster's one fallback address, as Image's single retry and failure label. Default none. */
+  posterFallbackSrc?: string;
   /** What the poster shows, for an embed's poster; leave it out when the title already says it. */
   posterAlt?: string;
   /** A treatment for an embed's poster (IP31), as Image's `treatment`: `{ rest: 'greyscale', active: 'none' }` shows it in grey until the player is pointed at or focused. Without it the poster is drawn as before. */
@@ -299,7 +301,7 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
  * A YouTube source's optional seek request starts playback at that timestamp; a new requestId repeats the action.
  * @key Enter, Space: on an embed's poster, loads and plays the video
  */
-export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
+export function MediaPlayer({ kind = 'video', source, title, poster, posterFallbackSrc, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
   const [playing, setPlaying] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
   const seekRequest = source.from === 'youtube' ? source.seek?.requestId : undefined;
@@ -359,7 +361,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, 
           />
         ) : (
           <>
-            {poster && (posterTreatment ? <Image data-dl-part="poster" src={poster} alt={posterAlt ?? ''} rounded={false} treatment={posterTreatment} /> : <img data-dl-part="poster" src={poster} alt={posterAlt ?? ''} />)}
+            {poster && (posterTreatment || posterFallbackSrc ? <Image data-dl-part="poster" src={poster} fallbackSrc={posterFallbackSrc} alt={posterAlt ?? ''} rounded={false} treatment={posterTreatment} /> : <img data-dl-part="poster" src={poster} alt={posterAlt ?? ''} />)}
             <span data-dl-part="play">
               <Button
                 label={`Play ${title}${duration ? `, ${spokenDuration(duration)}` : ''}`}

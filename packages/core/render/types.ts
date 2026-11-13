@@ -127,6 +127,8 @@ export interface Album {
 export interface MediaPicture {
   id: string;
   src: string;
+  /** The resolved asset's one fallback address, as Image's single retry. */
+  fallbackSrc?: string;
   alt: string;
   dark?: string | PictureSource;
   contrast?: { light?: string | PictureSource; dark?: string | PictureSource };
@@ -389,6 +391,8 @@ export type PictureTone = 'none' | 'greyscale' | 'duotone';
 
 export interface TemplateAsset {
   src: string;
+  /** One fallback address if the picture fails, as Image's single retry. Default none. */
+  fallbackSrc?: string;
   /** The same picture for a dark scheme, resolved to its address (MP18; `assets.json` `dark`). */
   dark?: string;
   /** Files for more contrast, resolved to their addresses (MP18; `assets.json` `contrast`). */

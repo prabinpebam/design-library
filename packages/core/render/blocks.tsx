@@ -284,6 +284,7 @@ const pictureProps = (ctx: RenderContext, id: string, alt?: string, reveal?: Med
   const drawn = revealOf(ctx, reveal);
   return {
     src: a.src,
+    fallbackSrc: a.fallbackSrc,
     dark: a.dark,
     contrast: a.contrast,
     alternate: drawn ? (a.alternate ?? a.src) : a.alternate,
@@ -342,7 +343,7 @@ function MediaBlockView({ block: b, ctx, at: i }: { block: Of<'media'>; ctx: Ren
     const video = videos[n];
     if (!video) return undefined;
     const poster = pictureProps(ctx, items[n].picture, items[n].alt);
-    return <MediaPlayer key={`${n}-${JSON.stringify(video.source)}`} {...video} poster={poster.src} posterAlt={poster.alt} caption={caption} />;
+    return <MediaPlayer key={`${n}-${JSON.stringify(video.source)}`} {...video} poster={poster.src} posterFallbackSrc={poster.fallbackSrc} posterAlt={poster.alt} caption={caption} />;
   };
   const requested = b.presentation ?? (b.album ? 'grid' : 'single');
   const label = b.label ?? b.album?.title ?? b.heading ?? (items[0] ? pictureProps(ctx, items[0].picture).alt : '');

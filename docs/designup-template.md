@@ -15,6 +15,14 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR119: forward a canonical poster's fallback (13 November 2026)
+
+DesignUp D4 keeps linked videos as canonical Media records. Coordinator 8 allocated the missing LR113 forwarding seam: optional TemplateAsset.fallbackSrc, passed by pictureProps, and MediaPlayer.posterFallbackSrc for embed posters. Site template, R7 failure behaviour; no block, preset, visible parameter, ink or motion change. Steps 1-4 cannot express it; duplicating Image's retry in a template would be an override, so step 6. Reuse Image's one retry and existing failure label when fallback is supplied, retaining the native poster path without fallback/treatment and native file-video behaviour. Adopt in DesignUp's Media asset adapter and collage/album-page/band players. Verification changes no content.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR119 | 2026-11-13 | Canonical linked-video poster fallback survives Media rendering and player opening (D4) | TemplateAsset lacks fallbackSrc; render/blocks.tsx pictureProps drops it; MediaPlayer lacks an embed-poster fallback | 6 | opt-in TemplateAsset.fallbackSrc and MediaPlayer.posterFallbackSrc; no fallback by default; reuse Image's single retry | none | Editor41, core render and media | accepted | pending | Forward the existing canonical fallback in all album/player adapters; no retry override |
+
 ### LR118: a list that stays in view beside a long detail (13 November 2026)
 
 DesignUp's owner (23:33) wants the Sections area list to stay below the top bar while the page scrolls. ListDetail without `maxSize` had no sticky list; SectionedForm's LR107 `stickyList` is the model. Opt-in `ListDetail.stickyList` (default false): `position: sticky` under `--dl-chrome-block`, only side by side without a held height.
