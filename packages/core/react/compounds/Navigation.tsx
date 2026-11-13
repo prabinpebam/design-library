@@ -1,6 +1,9 @@
-import { useId, useState, type ReactNode } from 'react';
+import { useId, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
+import { Button } from '../fundamentals/Button';
 import { Heading } from '../fundamentals/Heading';
 import { Icon } from '../fundamentals/Icon';
+import { dropIndex, moveItem } from '../behaviour/reorder';
+import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 
 /** One destination in the navigation. */
@@ -11,6 +14,12 @@ export interface NavigationItem {
   label: string;
   /** Where it goes: a URL or an in-app route. */
   href: string;
+  /** A small square picture before the name (an album's cover), decorative: the label names it (LR43). */
+  picture?: string;
+  /** An icon before the name, or in the picture's place when it has none (LR43). */
+  icon?: IconName;
+  /** One muted line under the name: what it holds ("15 pictures, 1 video") (LR43). */
+  meta?: string;
 }
 
 /**
@@ -31,6 +40,14 @@ export interface NavigationGroup {
   /** The group's name, shown as a heading above its entries; also names its list for assistive technology. */
   title: string;
   items: (NavigationItem | NavigationFamily)[];
+  /** The title still names the group's list but isn't shown, where what's around it already says what the list is (LR43). */
+  hideTitle?: boolean;
+  /** Each page (families aren't moved) gets a trailing Move handle: drag it, or Alt+Up or Alt+Down on it (LR43). */
+  reorderable?: boolean;
+  /** The pages' ids in their new order, after each drag step or Alt+arrow move. */
+  onReorder?: (ids: string[]) => void;
+  /** The handle's name, `{label}` the page's: default "Move {label}". */
+  moveLabel?: string;
 }
 
 export interface NavigationProps extends DataAttributes {
@@ -115,13 +132,77 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
     onExpandedChange?.(next);
   };
   const currentItem = groups.flatMap((g) => pagesIn(g.items)).find((i) => i.id === current);
-  const link = (i: NavigationItem) => (
-    <li key={i.id}>
-      <a href={i.href} data-dl-part="item" aria-current={i.id === current ? 'page' : undefined} onClick={onNavigate && (() => onNavigate(i.id))}>
-        {i.label}
-      </a>
-    </li>
+  const rows = useRef(new Map<string, HTMLLIElement | null>());
+  const drag = useRef<{ group: string; id: string; y: number; moved: boolean } | null>(null);
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [said, setSaid] = useState('');
+  const anchor = (i: NavigationItem) => (
+    <a href={i.href} data-dl-part="item" aria-current={i.id === current ? 'page' : undefined} onClick={onNavigate && (() => onNavigate(i.id))}>
+      {i.picture || i.icon || i.meta ? (
+        <>
+          {(i.picture || i.icon) && (
+            <span data-dl-part="item-mark" aria-hidden="true">
+              {i.picture ? <img src={i.picture} alt="" loading="lazy" decoding="async" /> : <Icon name={i.icon!} />}
+            </span>
+          )}
+          <span data-dl-part="item-words">
+            <span data-dl-part="item-name">{i.label}</span>
+            {i.meta && <span data-dl-part="item-meta">{i.meta}</span>}
+          </span>
+        </>
+      ) : (
+        i.label
+      )}
+    </a>
   );
+  const link = (i: NavigationItem) => <li key={i.id}>{anchor(i)}</li>;
+  // A reorderable group: a drag reorders under the pointer at once, as a reorderable List does; Alt+arrows move one step.
+  const movable = (g: NavigationGroup) => {
+    const pages = g.items.filter((e): e is NavigationItem => !isFamily(e));
+    const ids = pages.map((p) => p.id);
+    const move = (from: number, to: number) => {
+      if (from === to || to < 0 || to >= ids.length) return;
+      g.onReorder?.(moveItem(ids, from, to));
+      setSaid(`Moved ${pages[from].label} to position ${to + 1} of ${ids.length}.`);
+    };
+    const onMove = (e: PointerEvent<HTMLSpanElement>) => {
+      const d = drag.current;
+      if (!d || d.group !== g.id) return;
+      if (!d.moved && Math.abs(e.clientY - d.y) < 4) return;
+      if (!d.moved) setDragId(d.id);
+      d.moved = true;
+      const from = ids.indexOf(d.id);
+      const at = dropIndex(ids.map((id) => rows.current.get(id)!.getBoundingClientRect()), e.clientY);
+      move(from, at > from ? at - 1 : at);
+    };
+    const onUp = () => {
+      setDragId(null);
+      drag.current = null;
+    };
+    return pages.map((p, i) => (
+      <li key={p.id} data-dl-part="row" data-dragging={dragId === p.id ? '' : undefined} ref={(el) => void rows.current.set(p.id, el)}>
+        {anchor(p)}
+        <span
+          data-dl-part="handle"
+          onPointerDown={(e) => {
+            if (e.button !== 0) return;
+            drag.current = { group: g.id, id: p.id, y: e.clientY, moved: false };
+            e.currentTarget.setPointerCapture(e.pointerId);
+          }}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+          onKeyDown={(e: KeyboardEvent<HTMLSpanElement>) => {
+            if (!e.altKey || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+            e.preventDefault();
+            move(i, i + (e.key === 'ArrowUp' ? -1 : 1));
+          }}
+        >
+          <Button label={(g.moveLabel ?? 'Move {label}').replace('{label}', p.label)} icon="drag" iconOnly size="s" emphasis="quiet" />
+        </span>
+      </li>
+    ));
+  };
   const entry = (e: NavigationItem | NavigationFamily, scope: string): ReactNode => {
     if (!isFamily(e)) return link(e);
     const isOpen = opened.includes(e.id);
@@ -142,11 +223,11 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
     <div data-dl-part="groups">
       {groups.map((g) => (
         <div key={g.id} data-dl-part="group">
-          <Heading level={headingLevel} size={4} id={`${base}-${g.id}`}>
+          <Heading level={headingLevel} size={4} id={`${base}-${g.id}`} data-hidden={g.hideTitle ? '' : undefined}>
             {g.title}
           </Heading>
-          <ul data-dl-part="items" aria-labelledby={`${base}-${g.id}`}>
-            {g.items.map((e) => entry(e, g.id))}
+          <ul data-dl-part="items" aria-labelledby={`${base}-${g.id}`} data-reorder={g.reorderable ? '' : undefined}>
+            {g.reorderable ? movable(g) : g.items.map((e) => entry(e, g.id))}
           </ul>
         </div>
       ))}
@@ -164,6 +245,11 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
         </details>
       ) : (
         list
+      )}
+      {groups.some((g) => g.reorderable) && (
+        <span data-dl-part="reorder-announce" role="status">
+          {said}
+        </span>
       )}
     </div>
   );

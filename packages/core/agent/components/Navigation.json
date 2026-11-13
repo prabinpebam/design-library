@@ -114,6 +114,21 @@
           "type": "string",
           "required": true,
           "description": "Where it goes: a URL or an in-app route."
+        },
+        {
+          "name": "picture",
+          "type": "string",
+          "description": "A small square picture before the name (an album's cover), decorative: the label names it (LR43)."
+        },
+        {
+          "name": "icon",
+          "type": "IconName",
+          "description": "An icon before the name, or in the picture's place when it has none (LR43)."
+        },
+        {
+          "name": "meta",
+          "type": "string",
+          "description": "One muted line under the name: what it holds (\"15 pictures, 1 video\") (LR43)."
         }
       ]
     },
@@ -157,11 +172,32 @@
           "name": "items",
           "type": "(NavigationItem | NavigationFamily)[]",
           "required": true
+        },
+        {
+          "name": "hideTitle",
+          "type": "boolean",
+          "description": "The title still names the group's list but isn't shown, where what's around it already says what the list is (LR43)."
+        },
+        {
+          "name": "reorderable",
+          "type": "boolean",
+          "description": "Each page (families aren't moved) gets a trailing Move handle: drag it, or Alt+Up or Alt+Down on it (LR43)."
+        },
+        {
+          "name": "onReorder",
+          "type": "(ids: string[]) => void",
+          "description": "The pages' ids in their new order, after each drag step or Alt+arrow move."
+        },
+        {
+          "name": "moveLabel",
+          "type": "string",
+          "description": "The handle's name, `{label}` the page's: default \"Move {label}\"."
         }
       ]
     }
   ],
   "uses": [
+    "Button",
     "Heading",
     "Icon"
   ],
@@ -181,10 +217,19 @@
     "--c-navigation-title-gap",
     "--c-navigation-title-gap-s",
     "--c-navigation-title-size-s",
+    "--color-bg-raised",
+    "--color-bg-sunken",
     "--color-text",
+    "--color-text-muted",
+    "--layer-raised",
+    "--radius-sm",
+    "--shadow-raised",
+    "--size-target-dense",
+    "--space-1",
     "--state-hover",
     "--state-pressed",
     "--state-selected",
+    "--type-caption-size",
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/navigation",

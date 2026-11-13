@@ -47,6 +47,8 @@ export const icons = {
   pause: { d: 'M8.5 5v14M15.5 5v14' },
   play: { d: 'M7 4.8v14.4a.5.5 0 0 0 .76.43l11.5-7.2a.5.5 0 0 0 0-.86L7.76 4.37A.5.5 0 0 0 7 4.8z', flipInRtl: false },
   more: { d: 'M6 12h0M12 12h0M18 12h0', fill: 'M4.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM10.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM16.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0z' },
+  /* LR43: a handle that moves its row: two columns of three dots. */
+  drag: { d: 'M9 6h0M15 6h0M9 12h0M15 12h0M9 18h0M15 18h0', fill: 'M7.5 6a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM13.5 6a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM7.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM13.5 12a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM7.5 18a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0zM13.5 18a1.5 1.5 0 1 0 3 0 1.5 1.5 0 0 0-3 0z' },
   'trend-up': { d: 'M3.5 17l6-6 4 4 7-7M15 8h5.5v5.5', flipInRtl: true },
   'trend-down': { d: 'M3.5 7l6 6 4-4 7 7M15 16h5.5v-5.5', flipInRtl: true },
   'trend-flat': { d: 'M3.5 12h16M16 8.5l3.5 3.5-3.5 3.5', flipInRtl: true },

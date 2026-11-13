@@ -118,6 +118,83 @@
     }
   }
 
+  /* LR43. A page with a picture or icon and a meta line: the square mark, then its name over the muted line. */
+  [data-dl='navigation'] [data-dl-part='item']:has(> :is([data-dl-part='item-mark'], [data-dl-part='item-words'])) {
+    gap: var(--c-navigation-summary-gap);
+    padding-block: var(--space-1);
+  }
+
+  [data-dl='navigation'] [data-dl-part='item-mark'] {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: var(--size-target-dense);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='navigation'] [data-dl-part='item-mark'] > img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  [data-dl='navigation'] [data-dl-part='item-words'] {
+    display: grid;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='navigation'] [data-dl-part='item-meta'] {
+    color: var(--color-text-muted);
+    font-size: var(--type-caption-size);
+  }
+
+  /* A title that names its list without showing (hideTitle). */
+  [data-dl='navigation'] [data-dl-part='group'] > [data-dl='heading'][data-hidden] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* A reorderable group: each page and its trailing Move handle on one row; the dragged row lifts, as in a List. */
+  [data-dl='navigation'] [data-dl-part='items'][data-reorder] > [data-dl-part='row'] {
+    display: flex;
+    align-items: center;
+    gap: var(--c-navigation-item-gap);
+  }
+
+  [data-dl='navigation'] [data-dl-part='items'][data-reorder] > [data-dl-part='row'] > [data-dl-part='item'] {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  [data-dl='navigation'] [data-dl-part='items'][data-reorder] [data-dl-part='handle'] {
+    display: inline-flex;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  [data-dl='navigation'] [data-dl-part='items'][data-reorder] > [data-dl-part='row'][data-dragging] {
+    position: relative;
+    z-index: var(--layer-raised);
+    border-radius: var(--c-navigation-item-radius);
+    background-color: var(--color-bg-raised);
+    box-shadow: var(--shadow-raised);
+    cursor: grabbing;
+  }
+
+  [data-dl='navigation'] > [data-dl-part='reorder-announce'] {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   /* Collapsed: one native disclosure whose summary names the current page. */
   [data-dl='navigation'] [data-dl-part='disclosure'] > summary {
     display: flex;
