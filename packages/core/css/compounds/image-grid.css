@@ -204,12 +204,47 @@
     }
   }
 
-  /* LR57: a picture still arriving shows its upload as a bar across the tile's foot. */
+  /* LR57: a picture still arriving shows its upload as a bar across the tile's foot. LR71: a status line sits above it. */
   :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='progress'] {
     display: grid;
+    gap: var(--c-image-grid-mark-gap);
     place-self: end stretch;
     margin: var(--c-image-grid-mark-inset);
     pointer-events: none;
+  }
+
+  /* LR71: the line reads on any picture: the page's raised surface behind it, as a badge's plate. */
+  [data-dl='image-grid'] [data-dl-part='progress'] > [data-dl-part='status'] {
+    justify-self: start;
+    max-inline-size: 100%;
+    padding-inline: var(--c-image-grid-mark-gap);
+    border-radius: var(--c-image-radius);
+    background-color: var(--color-bg-raised);
+    color: var(--color-text);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    overflow-wrap: anywhere;
+  }
+
+  [data-dl='image-grid'] > [data-tone='danger'] [data-dl-part='progress'] > [data-dl-part='status'] {
+    color: var(--color-status-danger-fg);
+  }
+
+  /* LR71: a file that isn't a picture yet: a blank surface at the picture's ratio, its icon in the middle. */
+  [data-dl='image-grid'] [data-dl-part='blank'] {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 2;
+    border-radius: var(--c-image-radius);
+    background-color: var(--color-bg-sunken);
+    color: var(--color-text-muted);
+  }
+  [data-dl='image-grid'] [data-dl-part='blank'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+  [data-dl='image-grid'] [data-dl-part='blank'][data-ratio='square'] { aspect-ratio: 1; }
+  [data-dl='image-grid'] [data-dl-part='blank'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
+
+  [data-dl='image-grid'] > [data-tone='danger'] [data-dl-part='blank'] {
+    color: var(--color-status-danger-fg);
   }
 
   /* The check boxes appear while a picture is pointed at or focused, and all of them once any is chosen. */

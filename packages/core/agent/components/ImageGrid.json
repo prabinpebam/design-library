@@ -233,6 +233,20 @@
           "name": "progress",
           "type": "number | 'indeterminate'",
           "description": "The picture is still arriving (an upload): a Progress bar across the foot of its tile, named \"Uploading: \" and its description. A number is the share done, 0-100, as Progress's `value`, from a real total; `indeterminate` while the total isn't known (the server is working). Left out, no bar."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "LR71 (opt-in): a short line inside the tile, at its foot (over the upload bar when there is one): a file's name while it arrives, or why it was refused. Read with the picture's name. `statusTone=\"danger\"` marks a refusal."
+        },
+        {
+          "name": "statusTone",
+          "type": "'neutral' | 'danger'"
+        },
+        {
+          "name": "blank",
+          "type": "IconName",
+          "description": "LR71 (opt-in): a file that isn't a picture yet (uploading, or refused): the tile is a blank surface at the grid's ratio with this icon in its middle (in the danger colour with `statusTone=\"danger\"`), in place of `src`."
         }
       ]
     },
@@ -255,6 +269,7 @@
   "uses": [
     "Badge",
     "Checkbox",
+    "Icon",
     "Image",
     "MediaPlayer",
     "Progress",
@@ -275,9 +290,16 @@
     "--c-image-grid-selection",
     "--c-image-grid-selection-width",
     "--c-image-radius",
+    "--color-bg-raised",
+    "--color-bg-sunken",
     "--color-focus",
+    "--color-status-danger-fg",
+    "--color-text",
+    "--color-text-muted",
     "--size-focus-offset",
-    "--size-focus-width"
+    "--size-focus-width",
+    "--type-body-sm-leading",
+    "--type-body-sm-size"
   ],
   "settings": [
     {

@@ -2,9 +2,11 @@ import { useEffect, useRef, useState, type CSSProperties, type DragEvent, type M
 import { Badge, type BadgeTone } from '../fundamentals/Badge';
 import { Checkbox } from '../fundamentals/Checkbox';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
+import { Icon } from '../fundamentals/Icon';
 import { Progress } from '../fundamentals/Progress';
 import { Skeleton } from '../fundamentals/Skeleton';
 import type { PictureReveal } from '../behaviour/reveal';
+import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 import { formatDuration, spokenDuration } from './MediaPlayer';
 
@@ -57,6 +59,17 @@ export interface ImageGridItem extends SchemeSources {
    * total isn't known (the server is working). Left out, no bar.
    */
   progress?: number | 'indeterminate';
+  /**
+   * LR71 (opt-in): a short line inside the tile, at its foot (over the upload bar when there is one): a file's name while
+   * it arrives, or why it was refused. Read with the picture's name. `statusTone="danger"` marks a refusal.
+   */
+  status?: string;
+  statusTone?: 'neutral' | 'danger';
+  /**
+   * LR71 (opt-in): a file that isn't a picture yet (uploading, or refused): the tile is a blank surface at the grid's
+   * ratio with this icon in its middle (in the danger colour with `statusTone="danger"`), in place of `src`.
+   */
+  blank?: IconName;
 }
 
 /** How a selection change was made: `range` (Shift: from the last item chosen to this one), `toggle` (the check box, Ctrl or Cmd: this one in or out). Neither: a plain press chose this one alone. */
@@ -328,11 +341,16 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         const video = item.kind === 'video';
         const badges = item.badges?.length ? item.badges : undefined;
         const arriving = item.progress !== undefined;
-        const marked = selectable || video || !!badges || arriving;
+        const foot = arriving || !!item.status;
+        const marked = selectable || video || !!badges || foot || !!item.blank;
         const interactive = !!onSelect || !!selectable;
-        const name = [item.alt, ...(badges ?? []).map((b) => b.label), ...(video ? [item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'] : [])].join(', ');
+        const name = [item.alt, ...(item.status ? [item.status] : []), ...(badges ?? []).map((b) => b.label), ...(video ? [item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'] : [])].join(', ');
         const isSelected = !!selectable && selected.includes(item.id);
-        const picture = (
+        const picture = item.blank ? (
+          <span data-dl-part="blank" data-ratio={layout === 'standard' ? ratio : 'square'} role={onSelect ? undefined : 'img'} aria-label={onSelect ? undefined : item.alt}>
+            <Icon name={item.blank} size="lg" />
+          </span>
+        ) : (
           <Image
             src={item.src}
             dark={item.dark}
@@ -372,9 +390,14 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
                 </Badge>
               </span>
             )}
-            {arriving && (
+            {foot && (
               <span data-dl-part="progress">
-                <Progress form="bar" label={`Uploading: ${item.alt}`} value={item.progress === 'indeterminate' ? undefined : item.progress} />
+                {item.status && (
+                  <span data-dl-part="status" aria-hidden={interactive || undefined}>
+                    {item.status}
+                  </span>
+                )}
+                {arriving && <Progress form="bar" label={`Uploading: ${item.alt}`} value={item.progress === 'indeterminate' ? undefined : item.progress} />}
               </span>
             )}
             {(selectable || badges) && (
@@ -413,6 +436,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             data-dl-part="item"
             data-span={layout === 'quilted' ? item.span : undefined}
             data-selected={isSelected ? '' : undefined}
+            data-tone={item.statusTone === 'danger' ? 'danger' : undefined}
             data-dragging={dragging.includes(item.id) ? '' : undefined}
             data-drop={drop === item.id ? 'before' : drop === null && i === items.length - 1 ? 'end' : undefined}
             style={shape}

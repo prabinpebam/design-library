@@ -80,6 +80,7 @@
     "Composer",
     "FileUpload",
     "ImageGeneration",
+    "ImageGrid",
     "IndexList",
     "InlineEdit",
     "Navigation",
