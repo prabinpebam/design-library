@@ -1138,6 +1138,47 @@
         }
       ]
     },
+    "appMenu": [
+      {"value": "new-message", "label": "New message", "shortcut": "Ctrl+N"},
+      {"value": "search", "label": "Search", "shortcut": "Ctrl+G"},
+      {"value": "sidebar", "label": "Toggle sidebar", "shortcut": "Ctrl+Shift+D"},
+      {"value": "theme", "label": "Switch theme", "startsGroup": true},
+      {"value": "preferences", "label": "Preferences", "shortcut": "Ctrl+, "},
+      {"value": "quit", "label": "Quit Slack", "shortcut": "Ctrl+Q", "startsGroup": true}
+    ],
+    "workspaceMenu": [
+      {"value": "sign-in", "label": "Sign in to another workspace"},
+      {"value": "create", "label": "Create a new workspace"}
+    ],
+    "notificationMenu": [
+      {"value": "all", "label": "All new posts"},
+      {"value": "mentions", "label": "Mentions", "checked": true},
+      {"value": "off", "label": "Nothing"},
+      {"value": "more", "label": "More notification settings…", "startsGroup": true}
+    ],
+    "huddleMenu": [
+      {"value": "start", "label": "Start huddle"},
+      {"value": "copy-link", "label": "Copy huddle link"},
+      {"value": "settings", "label": "Huddle settings", "startsGroup": true}
+    ],
+    "attachMenu": [
+      {"value": "upload", "label": "Upload from your computer", "shortcut": "Ctrl+U"},
+      {"value": "canvas", "label": "Canvas"},
+      {"value": "list", "label": "List"},
+      {"value": "snippet", "label": "Text snippet", "startsGroup": true}
+    ],
+    "scheduleMenu": [
+      {"value": "tomorrow-9", "label": "Tomorrow at 9:00 AM"},
+      {"value": "monday-9", "label": "Monday at 9:00 AM"},
+      {"value": "custom", "label": "Custom time", "startsGroup": true}
+    ],
+    "dms": [
+      {"name": "Milo K.", "avatar": "avatar05", "presence": "away", "preview": "Sharing the workshop notes after lunch."},
+      {"name": "tmk", "avatar": "avatar03", "preview": "Happy to recommend a few books on interaction design."},
+      {"name": "Bram V.", "avatar": "avatar10", "presence": "available", "preview": "You: Thanks, that helps a lot!"},
+      {"name": "ronaldkern", "avatar": "avatar14", "preview": "The survey closes on Friday."},
+      {"name": "martin_reed", "avatar": "avatar15", "presence": "available", "preview": "See you at the meetup."}
+    ],
     "copy": {
       "search": "Search Studio Hangout",
       "findConversation": "Find a conversation…",
@@ -1220,7 +1261,42 @@
       "channelNameHint": "e.g. plan-budget",
       "step": "Step 1 of 2",
       "next": "Next",
-      "noEmoji": "No emoji match. Try another word."
+      "noEmoji": "No emoji match. Try another word.",
+      "notInReplica": "isn't part of this replica yet.",
+      "dmsTitle": "Direct messages",
+      "dmStart": "This is the very beginning of your direct message history with",
+      "threadsTitle": "Threads",
+      "savedTitle": "Saved for later",
+      "savedEmpty": "Nothing saved yet",
+      "savedHint": "Save a message for later from its actions and it shows here.",
+      "savedNotice": "Saved for later.",
+      "unsave": "Remove from saved",
+      "unsavedNotice": "Removed from saved items.",
+      "todosTitle": "To-dos",
+      "agentsTitle": "Agents & tools",
+      "newMessage": "New message",
+      "to": "To",
+      "toHint": "#a-channel or somebody",
+      "startMessage": "Start a new message",
+      "needRecipient": "Add who it's to first.",
+      "unstarChannel": "Unstar channel",
+      "noHistory": "Nothing to go back to",
+      "noForward": "Nothing to go forward to",
+      "scheduled": "Message scheduled for",
+      "writeFirst": "Write a message first.",
+      "linkCopied": "Link copied.",
+      "nameCopied": "Channel name copied.",
+      "markedUnread": "Marked unread.",
+      "pinned": "Pinned to channel.",
+      "reminderSet": "Reminder set. We'll remind you about this message.",
+      "deleted": "Message deleted.",
+      "undo": "Undo",
+      "unfollowed": "You won't be notified about replies.",
+      "left": "You left the channel.",
+      "notifyLevel": "Notifications set to",
+      "windowOnly": "Window controls belong to the desktop app, so they aren't part of this replica.",
+      "you": "You",
+      "allRead": "All caught up"
     }
   }
 }

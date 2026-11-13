@@ -62,6 +62,7 @@
     "IconOverrides",
     "Image",
     "Link",
+    "ListItem",
     "MenuButton",
     "Popover",
     "ScrollArea",

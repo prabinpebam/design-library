@@ -1273,6 +1273,28 @@
     color: var(--color-text-muted);
   }
 
+  /* Views the rail and sidebar open (DMs, a DM, Threads, Saved, To-dos, Agents & tools, New message). */
+  [data-dl='slack-page'] {
+    display: grid;
+    grid-template-rows: 3.1875rem minmax(0, 1fr) auto;
+    min-block-size: 0;
+  }
+  [data-dl='slack-page'] > [data-dl-part='page-head'] {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-inline: var(--space-5);
+    border-block-end: var(--border-hairline) solid var(--color-border);
+  }
+  [data-dl='slack-dm-list'] {
+    display: grid;
+    padding: var(--space-2) var(--space-3);
+  }
+  [data-dl='slack-compose-to'] {
+    padding-inline: var(--space-inset-lg);
+    padding-block: var(--space-3);
+  }
+
   /* S09 Huddles landing (09-huddles.png). */
   [data-dl='slack-huddles'] {
     display: grid;

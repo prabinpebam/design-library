@@ -146,6 +146,11 @@
           "name": "toolbar",
           "type": "ReactNode",
           "description": "Inside the box, under the text: a row of quiet actions (a composer's tools and Send). Gives the box the composer's larger corners; pressing the row's empty space puts the caret in the text."
+        },
+        {
+          "name": "inputRef",
+          "type": "Ref<HTMLTextAreaElement>",
+          "description": "The native text area, for an owner that puts the caret in it from elsewhere (a Reply or Mention button, Edit message). Leave it out otherwise."
         }
       ]
     }
