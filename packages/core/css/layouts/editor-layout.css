@@ -114,8 +114,15 @@
     transition: opacity var(--duration-quick) var(--easing-standard);
   }
 
-  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize']:is(:hover, :focus-visible, [data-dragging])::after {
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize']:is(:focus-visible, [data-dragging])::after {
     opacity: 1;
+  }
+
+  /* Hover only where a pointer hovers, so a tap on a touch screen leaves no line behind. */
+  @media (hover: hover) {
+    [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'] > [data-dl-part='resize']:hover::after {
+      opacity: 1;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

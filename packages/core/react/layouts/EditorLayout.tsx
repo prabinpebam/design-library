@@ -41,6 +41,8 @@ export interface EditorLayoutProps extends DataAttributes {
   onEndResize?: (width: string | undefined, done: boolean) => void;
   /** The narrowest the end panel can be dragged, such as "24rem" (default the least of `c.editor-layout.panel-min` and its opening width). */
   endMin?: string;
+  /** Words a screen reader says for a resize handle's width, given the width in px, such as "24 rem wide" (default none: the number alone). */
+  resizeValueText?: (px: number) => string;
   /** With panel heads (no bar), where an open panel's toggle sits in its head: `outer` (default) at the window's edge; `inner` at the edge beside the working area, level with the head's first row (Figma UI3's layers toggle); `none`: no panel toggles at all, for a studio whose panels are always docked (pass `startOpen` and `endOpen` true); a floating panel's Escape doesn't close it, since nothing would open it again. */
   toggles?: 'outer' | 'inner' | 'none';
   /** The start panel's opening width, a CSS length such as "16rem" (default the theme's `c.editor-layout.panel-start`). */
@@ -71,7 +73,7 @@ const STEP = 8;
  * @key Home / End (on a resize handle): the narrowest or the widest
  * @key Enter (on a resize handle): back to the opening width (a double click too)
  */
-export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
+export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, resizeValueText, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
   const toggled = toggles !== 'none';
   const [dragging, setDragging] = useState<Side | null>(null);
@@ -195,6 +197,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   const resizeHandle = (side: Side, label: string, id: string) => {
     if (resizable !== true && resizable !== side) return null;
     const { now, min, max } = typeof document === 'undefined' ? { now: 0, min: 0, max: 0 } : bounds(side);
+    const value = Math.round(controlled(side) ? now : (widths[side] ?? now));
     return (
       <div
         data-dl-part="resize"
@@ -204,7 +207,8 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
         aria-orientation="vertical"
         aria-label={`Resize ${label.toLowerCase()}`}
         aria-controls={id}
-        aria-valuenow={Math.round(controlled(side) ? now : (widths[side] ?? now))}
+        aria-valuenow={value}
+        aria-valuetext={resizeValueText?.(value)}
         aria-valuemin={Math.round(min)}
         aria-valuemax={Number.isFinite(max) ? Math.round(max) : undefined}
         tabIndex={0}

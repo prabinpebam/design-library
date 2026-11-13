@@ -143,6 +143,11 @@
           "description": "The narrowest the end panel can be dragged, such as \"24rem\" (default the least of `c.editor-layout.panel-min` and its opening width)."
         },
         {
+          "name": "resizeValueText",
+          "type": "(px: number) => string",
+          "description": "Words a screen reader says for a resize handle's width, given the width in px, such as \"24 rem wide\" (default none: the number alone)."
+        },
+        {
           "name": "toggles",
           "type": "'outer' | 'inner' | 'none'",
           "default": "'outer'",
