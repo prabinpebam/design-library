@@ -402,6 +402,42 @@
       "selector": "::view-transition-group(*.dl-rounded)",
       "kind": "transient clip",
       "reason": "Motion: a rounded element's view-transition snapshot keeps its corners only while it moves; nothing is clipped at rest"
+    },
+    {
+      "file": "packages/core/css/compounds/breadcrumbs.css",
+      "selector": "[data-dl='breadcrumbs'][data-truncate] > ol > [data-dl-part='step']:last-child > [data-dl-part='current']",
+      "kind": "text truncation",
+      "reason": "LR122 Breadcrumbs truncate (opt-in): in a narrow header the current page gives way first and ends in an ellipsis; its full name stays in the DOM and the accessible name"
+    },
+    {
+      "file": "packages/core/css/compounds/navigation.css",
+      "selector": "[data-dl='navigation'] [data-dl-part='item-mark']",
+      "kind": "shape crop",
+      "reason": "LR43: a page's picture is cropped to the mark's small rounded square; the mark isn't focusable, the link's focus ring is on the item around it"
+    },
+    {
+      "file": "packages/core/css/compounds/navigation.css",
+      "selector": "> [data-dl-part='group'] > [data-dl='heading'][data-hidden]",
+      "kind": "visually hidden",
+      "reason": "hideTitle: the group's title names its list for screen readers without showing"
+    },
+    {
+      "file": "packages/core/css/compounds/navigation.css",
+      "selector": "[data-dl='navigation'] > [data-dl-part='reorder-announce']",
+      "kind": "visually hidden",
+      "reason": "Says where a moved page landed (reorderable group); the list shows it"
+    },
+    {
+      "file": "packages/core/css/compounds/screen-preview.css",
+      "selector": "[data-dl='screen-preview'] > [data-dl-part='loading']",
+      "kind": "shape crop",
+      "reason": "LR110 showLoading: the shimmer takes the window's shape while the screen loads; it holds no focusable content"
+    },
+    {
+      "file": "packages/core/css/fundamentals/chip.css",
+      "selector": "[data-dl='chip-group'] > [data-dl-part='label'][data-hidden]",
+      "kind": "visually hidden",
+      "reason": "A chip group's hidden label names the group for screen readers without showing"
     }
   ],
   "scrollRegions": [
