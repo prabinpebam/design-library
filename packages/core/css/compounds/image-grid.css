@@ -102,6 +102,12 @@
     outline-offset: var(--size-focus-offset);
   }
 
+  [data-dl='image-grid'] a[data-dl-part='open'] {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
   @media (hover: hover) {
     [data-dl='image-grid'] [data-dl-part='open']:hover [data-dl='image'] > img {
       opacity: var(--c-image-grid-hover-opacity);

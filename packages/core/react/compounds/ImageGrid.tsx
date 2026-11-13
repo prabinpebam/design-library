@@ -9,6 +9,7 @@ import type { PictureReveal } from '../behaviour/reveal';
 import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 import { formatDuration, spokenDuration } from './MediaPlayer';
+import { useRouter } from '../behaviour/router';
 
 /** A word or two over a picture: a state the set's owner should see at a glance ("Cover", "Needs a description"). */
 export interface ImageGridBadge {
@@ -20,6 +21,8 @@ export interface ImageGridBadge {
 export interface ImageGridItem extends SchemeSources {
   /** Stable key. Also what `selected` and `onSelectionChange` name the item by. */
   id: string;
+  /** Opens the whole tile as a native link, instead of the `onSelect` lightbox button. Selection controls stay separate. */
+  href?: string;
   /** The picture's address (for a video, its poster: a still from it). */
   src: string;
   /** What the picture shows. Also the name of its button when the grid opens pictures. */
@@ -163,11 +166,13 @@ const carriesFiles = (event: { dataTransfer: DataTransfer | null }) => !!event.d
  * "video" and its spoken length. With `onSelect` each is a button named "Open: " and that name, in reading order; the
  * focus ring sits inside the picture's corners. With `selectable` each has a check box named "Select: " and that name,
  * its own Tab stop after the picture's button; the check box carries the choice, the outline only shows it. Masonry
- * reads down each column, so use it only where order doesn't matter.
+ * reads down each column, so use it only where order doesn't matter. An item's href makes its tile a native link,
+ * followed with Enter; selection controls remain separate siblings.
  * @key Tab: the next picture or check box
  * @key Enter, Space: open the picture; Space on a check box chooses it or takes it out
  */
 export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, reorderable, onReorder, onDropFiles, dropFilesAnywhere, loading, ...data }: ImageGridProps) {
+  const router = useRouter();
   const [dragging, setDragging] = useState<string[]>([]);
   // LR55: where the dragged items would land: before this item's id, or `null` for the end; undefined while not over the grid.
   const [drop, setDrop] = useState<string | null | undefined>(undefined);
@@ -284,12 +289,12 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
   const press = (i: number, event: MouseEvent) => {
     const range = event.shiftKey;
     const toggle = event.ctrlKey || event.metaKey;
-    if (selectable && (range || toggle || !onSelect)) {
+    if (selectable && (range || toggle || (!onSelect && !items[i].href))) {
       event.preventDefault();
       choose(i, { range, toggle: toggle && !range });
       return;
     }
-    onSelect?.(i);
+    if (!items[i].href) onSelect?.(i);
   };
   if (loading !== undefined) {
     // LR66: the grid as it will be, its frames in shimmer, so nothing moves when the pictures arrive.
@@ -343,11 +348,12 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         const arriving = item.progress !== undefined;
         const foot = arriving || !!item.status;
         const marked = selectable || video || !!badges || foot || !!item.blank;
-        const interactive = !!onSelect || !!selectable;
+        const opens = !!onSelect || !!item.href;
+        const interactive = opens || !!selectable;
         const name = [item.alt, ...(item.status ? [item.status] : []), ...(badges ?? []).map((b) => b.label), ...(video ? [item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'] : [])].join(', ');
         const isSelected = !!selectable && selected.includes(item.id);
         const picture = item.blank ? (
-          <span data-dl-part="blank" data-ratio={layout === 'standard' ? ratio : 'square'} role={onSelect ? undefined : 'img'} aria-label={onSelect ? undefined : item.alt}>
+          <span data-dl-part="blank" data-ratio={layout === 'standard' ? ratio : 'square'} role={opens ? undefined : 'img'} aria-label={opens ? undefined : item.alt}>
             <Icon name={item.blank} size="lg" />
           </span>
         ) : (
@@ -355,7 +361,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             src={item.src}
             dark={item.dark}
             contrast={item.contrast}
-            alt={onSelect ? '' : item.alt}
+            alt={opens ? '' : item.alt}
             width={item.width}
             height={item.height}
             ratio={layout === 'standard' ? ratio : layout === 'quilted' ? 'square' : 'natural'}
@@ -366,17 +372,21 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             decoration={item.decoration}
             under={item.under}
             room={item.room}
-            {...(onSelect || marked ? {} : words)}
+            {...(opens || marked ? {} : words)}
           />
         );
-        const open = onSelect && (
+        const open = item.href ? (
+          <a href={router ? router.href(item.href) : item.href} data-dl-part="open" aria-label={`Open: ${marked ? name : item.alt}`} onClick={(event) => press(i, event)}>
+            {picture}
+          </a>
+        ) : onSelect && (
           <button type="button" data-dl-part="open" aria-label={`Open: ${marked ? name : item.alt}`} onClick={(event) => press(i, event)}>
             {picture}
           </button>
         );
         // Marks over the picture (a check box, badges, a video's play mark and length) share its one cell: the tile.
         const tile = marked && (
-          <div data-dl-part="tile" onClick={selectable && !onSelect ? (event) => press(i, event) : undefined}>
+          <div data-dl-part="tile" onClick={selectable && !opens ? (event) => press(i, event) : undefined}>
             {open || picture}
             {video && (
               <span data-dl-part="play" aria-hidden={interactive || undefined}>

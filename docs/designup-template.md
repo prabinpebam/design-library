@@ -15,6 +15,14 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR111: whole Media tiles navigate (13 November 2026)
+
+Decision: admin R7 navigation and R6 album-of-one previews, no new block/preset/choice or ink. ImageGrid's onSelect only opens a button; no item href (seam steps 1-4 cannot supply link semantics), and a template wrapper would duplicate sealed markup (step 5). Step 6 adds optional ImageGridItem.href, preserving existing button behavior and tile styling by default. A navigating tile is a native link; checkbox controls remain siblings. DesignUp adopts it for its tile-only Media library, replacing onSelect navigation. No public display or layout changes. Typecheck/build, linked consumer typecheck, checkpoint pin/build and focused pointer/keyboard captures; deferred stories/regression on merge night.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR111 | 2026-11-13 | Whole Media tiles navigate to records | ImageGridItem only has onSelect button behavior, no href | 6 | optional ImageGridItem.href; native link instead of button | none | DesignUp Editor41 | core shipped; consumer verified live | this commit | Media replaces onSelect with href; pointer and Tab/Enter verified in fresh light/dark |
+
 This row joins the table in [pressure-test loop, section 2](pressure-test-loop.md#2-one-ruling-who-changes-core-and-when); the other three rows are unchanged.
 
 | Situation | What happens | Why |
