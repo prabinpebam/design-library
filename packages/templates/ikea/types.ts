@@ -203,6 +203,10 @@ export interface StoreStrings {
   selectStore: string;
   account: string;
   favourites: string;
+  favouritesEmpty: string;
+  notInReplica: string;
+  languageChoice: string;
+  trackOrder: string;
   saveFavourite: string;
   menu: string;
   shopByCategory: string;

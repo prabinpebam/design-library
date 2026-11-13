@@ -446,6 +446,18 @@
         "favourites": {
           "type": "string"
         },
+        "favouritesEmpty": {
+          "type": "string"
+        },
+        "notInReplica": {
+          "type": "string"
+        },
+        "languageChoice": {
+          "type": "string"
+        },
+        "trackOrder": {
+          "type": "string"
+        },
         "finish": {
           "type": "string"
         },
@@ -906,6 +918,10 @@
         "selectStore",
         "account",
         "favourites",
+        "favouritesEmpty",
+        "notInReplica",
+        "languageChoice",
+        "trackOrder",
         "saveFavourite",
         "menu",
         "shopByCategory",

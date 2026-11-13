@@ -6,12 +6,18 @@ export interface StoreLink {
   /** Leave it out for a link that's words only (a phone number). */
   icon?: IconName;
   href: string;
+  /** The page shown now: the link says so (`aria-current="page"`) and choosing it again rightly changes nothing. */
+  current?: boolean;
+  /** Runs before the link is followed: a department that also sets a filter (Offers). */
+  onClick?: () => void;
 }
 
 export interface StoreHeaderProps extends DataAttributes {
   /** The shop's name, set as a bold wordmark in the brand colour; it links home. */
   name: string;
   href: string;
+  /** On the home page: the wordmark is the current page. */
+  current?: boolean;
   /** The utility bar's name for assistive technology: "Store services". */
   barLabel: string;
   /** The utility bar's links at its start: the language. */
@@ -40,9 +46,9 @@ export interface StoreHeaderProps extends DataAttributes {
  * @a11y The bar is a `nav` named by `barLabel`; its icons are decorative beside their words. The wordmark is the home
  * link. Every action keeps its own name (an icon-only Button has its label and tooltip).
  */
-export function StoreHeader({ name, href, barLabel, start = [], centre = [], end = [], search, actions, links = [], navLabel, ...data }: StoreHeaderProps) {
+export function StoreHeader({ name, href, current, barLabel, start = [], centre = [], end = [], search, actions, links = [], navLabel, ...data }: StoreHeaderProps) {
   const link = (l: StoreLink) => (
-    <a key={l.label} data-dl-part="bar-link" href={l.href}>
+    <a key={l.label} data-dl-part="bar-link" href={l.href} aria-current={l.current ? 'page' : undefined} onClick={l.onClick}>
       {l.icon ? <Icon name={l.icon} size="sm" /> : null}
       <span>{l.label}</span>
     </a>
@@ -55,13 +61,13 @@ export function StoreHeader({ name, href, barLabel, start = [], centre = [], end
         <span data-dl-part="bar-end">{end.map(link)}</span>
       </nav>
       <div data-dl-part="row">
-        <a data-dl-part="wordmark" href={href}>
+        <a data-dl-part="wordmark" href={href} aria-current={current ? 'page' : undefined}>
           {name}
         </a>
         {links.length ? (
           <nav data-dl-part="links" aria-label={navLabel}>
             {links.map((l) => (
-              <a key={l.label} data-dl-part="link" href={l.href}>
+              <a key={l.label} data-dl-part="link" href={l.href} aria-current={l.current ? 'page' : undefined} onClick={l.onClick}>
                 {l.label}
               </a>
             ))}

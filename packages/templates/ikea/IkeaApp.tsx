@@ -74,9 +74,20 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
 
   // The template's face (the IKEA look's Noto Sans), loaded once whatever the library's own type choice is.
   useEffect(() => void loadFace('noto-sans'), []);
+  // A page the replica doesn't have (Gift cards, Careers…) links to `soon(label)`: the click gives the honest note
+  // instead of reloading the page it's on (Q156). Without scripts the link still goes home.
+  const soon = (label: string) => `${at('home')}?soon=${encodeURIComponent(label)}`;
+  const notBuilt = (label: string) => notify({ subject: 'ikea-replica', message: fill(w.notInReplica, { label }) });
   // A product or room card names what it opens in data attributes; the click that follows the link records it first.
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
+      const stub = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[href*="?soon="]');
+      if (stub) {
+        e.preventDefault();
+        e.stopPropagation();
+        notBuilt(decodeURIComponent(stub.getAttribute('href')!.split('?soon=')[1]));
+        return;
+      }
       const el = (e.target as Element | null)?.closest<HTMLElement>('[data-product], [data-room], [data-category]');
       if (el?.dataset.product) store.look(el.dataset.product);
       else if (el?.dataset.room) store.visit(el.dataset.room);
@@ -144,11 +155,12 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
     <StoreHeader
       name={view.store}
       href={at('home')}
+      current={screen === 'home'}
       barLabel={w.storeServices}
-      start={[{ label: w.language, icon: 'globe', href: at('home') }]}
+      start={[{ label: w.language, icon: 'globe', href: soon(w.languageChoice) }]}
       end={[
         { label: w.enterPostcode, icon: 'delivery', href: at('checkout') },
-        { label: w.selectStore, icon: 'store', href: at('home') },
+        { label: w.selectStore, icon: 'store', href: soon(w.selectStore) },
       ]}
       search={
         <TextField
@@ -166,22 +178,42 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
       }
       actions={
         <>
-          <Button label={w.account} icon="person" iconOnly emphasis="quiet" />
-          <Button label={w.favourites} icon="heart" iconOnly emphasis="quiet" />
+          <Button label={w.account} icon="person" iconOnly emphasis="quiet" onClick={() => notBuilt(w.account)} />
+          <MenuButton
+            label={w.favourites}
+            icon="heart"
+            iconOnly
+            emphasis="quiet"
+            items={
+              faves.length
+                ? faves.map(productOf).filter((p): p is Product => !!p).map((p) => ({ value: p.id, label: p.name, description: p.kind }))
+                : [{ value: 'products', label: w.products, description: w.favouritesEmpty }]
+            }
+            onSelect={(id) => {
+              if (id === 'products') go('products');
+              else {
+                store.look(id);
+                go('product');
+              }
+            }}
+          />
           <Badge kind="count" count={count} label={fill(w.bagCount, { count })} anchor={<Button label={w.bag} icon="bag" iconOnly emphasis="quiet" href={at('bag')} />} />
         </>
       }
       navLabel={w.navLabel}
       links={[
-        { label: w.products, href: at('products') },
-        { label: w.rooms, href: at('room') },
-        { label: w.navOffers, href: at('products') },
-        { label: w.navIdeas, href: at('room') },
-        { label: w.navSupport, href: at('home') },
+        { label: w.products, href: at('products'), current: screen === 'products' && s.category === 'all' && !s.query, onClick: () => store.browse('all') },
+        { label: w.rooms, href: at('room'), current: screen === 'room' },
+        { label: w.navOffers, href: at('products'), current: screen === 'products' && s.category === 'offers', onClick: () => store.browse('offers') },
+        { label: w.navIdeas, href: soon(w.navIdeas) },
+        { label: w.navSupport, href: soon(w.navSupport) },
       ]}
     />
   );
 
+  // The footer's links that have a page in the replica go there; the rest give the note.
+  const footerHref = (label: string) =>
+    label === w.products ? at('products') : label === w.rooms ? at('room') : label === w.navOffers ? at('products') : label === w.navSupport ? soon(label) : label === w.trackOrder ? at('confirmation') : soon(label);
   const footer = (
     <Footer
       arrangement="identity"
@@ -194,19 +226,19 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
             <Stack key={title} gap="item">
               <Heading level={2} size={4}>{title}</Heading>
               <Text as="p">{text}</Text>
-              <Link href={at('home')}>{w.seeMore}</Link>
+              <Link href={soon(title)}>{w.seeMore}</Link>
               <Cluster gap="item">
-                <Button label={action} emphasis="strong" href={at('home')} />
+                <Button label={action} emphasis="strong" href={soon(action)} />
               </Cluster>
             </Stack>
           ))}
         </Stack>
       }
-      sections={view.footer.map((f, i) => ({ id: `f${i}`, heading: f.heading, links: f.links.map((label) => ({ label, href: at('home') })) }))}
+      sections={view.footer.map((f, i) => ({ id: `f${i}`, heading: f.heading, links: f.links.map((label) => ({ label, href: footerHref(label) })) }))}
       tools={
         <Cluster gap="item">
-          <Button label={w.cookieSettings} icon="settings" />
-          <Button label={w.language} icon="globe" />
+          <Button label={w.cookieSettings} icon="settings" onClick={() => notBuilt(w.cookieSettings)} />
+          <Button label={w.language} icon="globe" onClick={() => notBuilt(w.languageChoice)} />
         </Cluster>
       }
       legal={w.notReal}
@@ -244,7 +276,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
             })}
           </Rail>
         </Section>
-        <PictureBanner title={w.storeTitle} text={w.storeText} href={at('home')} picture={picture('storeBand')} caption="side" surface="feature" ratio="wide" />
+        <PictureBanner title={w.storeTitle} text={w.storeText} href={soon(w.selectStore)} picture={picture('storeBand')} caption="side" surface="feature" ratio="wide" />
         <Section heading={w.trendingHeading} tone="sunken" bleed>
           <Rail label={w.trendingHeading} bar="line">
             {[...view.rooms.map((r) => ({ id: r.id, title: r.title, picture: r.picture, href: at('room') })), { id: 'decor', title: w.offerDecor, picture: 'decorCandle', href: at('products') }, { id: 'dinner', title: w.offerDinnerware, picture: 'dinnerware', href: at('products') }].map((x, i, all) => (
@@ -287,7 +319,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
         </Section>
         <Section heading={w.rewardsHeading}>
           <Rail label={w.rewardsHeading} bar="line">
-            <PictureBanner title={w.rewardsLead} href={at('home')} surface="band" ratio="portrait" />
+            <PictureBanner title={w.rewardsLead} href={soon(w.joinTitle)} surface="band" ratio="portrait" />
             {(
               [
                 [w.rewardApp, 'rewardPhone'],
@@ -296,7 +328,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
                 [w.rewardPlanning, 'rewardPlanning'],
               ] as const
             ).map(([title, id]) => (
-              <PictureBanner key={id} title={title} href={at('home')} picture={picture(id)} caption="below" ratio="portrait" />
+              <PictureBanner key={id} title={title} href={soon(title)} picture={picture(id)} caption="below" ratio="portrait" />
             ))}
           </Rail>
         </Section>
@@ -314,7 +346,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
         <Section heading={w.servicesHeading}>
           <Grid max={4}>
             {view.services.map((sv) => (
-              <Card key={sv.title} title={sv.title} description={sv.text} href={at('home')} variant="outlined" headingLevel={3} />
+              <Card key={sv.title} title={sv.title} description={sv.text} href={sv.icon === 'delivery' ? at('checkout') : soon(sv.title)} variant="outlined" headingLevel={3} />
             ))}
           </Grid>
         </Section>
@@ -330,7 +362,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
       <Stack gap="section">
         <Stack gap="item">
           <Heading level={1} size="display">{room.title}</Heading>
-          <Breadcrumbs label={w.places} items={[{ label: w.home, href: at('home') }, { label: w.rooms, href: at('room') }, { label: room.title }]} />
+          <Breadcrumbs label={w.places} items={[{ label: w.home, href: at('home') }, { label: w.rooms, href: `${at('home')}#rooms` }, { label: room.title }]} />
         </Stack>
         <Stack gap="group">
           <Image {...picture(room.picture)} ratio="wide" priority />
@@ -456,9 +488,9 @@ function Products({ view, tile, chips, at }: { view: StoreRecord; tile: (p: Prod
   const s = useStore();
   const [sort, setSort] = useState('popular');
   const q = s.query.trim().toLowerCase();
-  const category = view.categories.find((c) => c.id === s.category);
+  const category = s.category === 'offers' ? { id: 'offers', label: w.navOffers } : view.categories.find((c) => c.id === s.category);
   const list = view.products
-    .filter((p) => (s.category === 'all' || p.category === s.category) && (!q || `${p.name} ${p.kind}`.toLowerCase().includes(q)))
+    .filter((p) => (s.category === 'all' || p.category === s.category || (s.category === 'offers' && !!(p.was || p.lowest))) && (!q || `${p.name} ${p.kind}`.toLowerCase().includes(q)))
     .sort((a, b) => (sort === 'low' ? a.price - b.price : sort === 'high' ? b.price - a.price : b.reviews - a.reviews));
   const sorts = [
     { value: 'popular', label: w.sortPopular },
@@ -473,7 +505,7 @@ function Products({ view, tile, chips, at }: { view: StoreRecord; tile: (p: Prod
           <Heading level={1} size={1}>{q ? `“${s.query}”` : category?.label ?? w.products}</Heading>
           <Breadcrumbs label={w.places} items={[{ label: w.home, href: at('home') }, { label: w.products, href: at('products') }, ...(category ? [{ label: category.label }] : [])]} />
         </Stack>
-        <Notice icon="tag" href={at('products')}>{w.notice}</Notice>
+        <Notice icon="tag" href={at('checkout')}>{w.notice}</Notice>
         <ChipRail label={w.shopByCategory} chips={rail} />
       </Stack>
       <Stack gap="group">

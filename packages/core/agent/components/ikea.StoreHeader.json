@@ -31,6 +31,11 @@
           "required": true
         },
         {
+          "name": "current",
+          "type": "boolean",
+          "description": "On the home page: the wordmark is the current page."
+        },
+        {
           "name": "barLabel",
           "type": "string",
           "required": true,
@@ -91,6 +96,16 @@
           "name": "href",
           "type": "string",
           "required": true
+        },
+        {
+          "name": "current",
+          "type": "boolean",
+          "description": "The page shown now: the link says so (`aria-current=\"page\"`) and choosing it again rightly changes nothing."
+        },
+        {
+          "name": "onClick",
+          "type": "() => void",
+          "description": "Runs before the link is followed: a department that also sets a filter (Offers)."
         }
       ]
     }
