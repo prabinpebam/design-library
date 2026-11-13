@@ -135,7 +135,7 @@ export default {
     },
     {
       title: 'Dense, a desktop editor’s frame',
-      description: '`size="s"` (LR41) lowers the header to 40 px and narrows the sidebar to 13 rem; pair it with Navigation `size="s"` (36 px rows, above the WCAG 2.2 AA 24 px minimum, small muted group titles). Every rule that reads the header’s height or the sidebar’s width follows, floating included.',
+      description: '`size="s"` (LR41, LR42) lowers the header to 40 px, narrows the sidebar to 13 rem and brings the view’s title a section’s step over its content; pair it with Navigation `size="s"` (36 px rows, above the WCAG 2.2 AA 24 px minimum, small muted group titles). Every rule that reads the header’s height or the sidebar’s width follows, floating included.',
       code: `<AppLayout size="s" headerSpan="across" sidebar={<Navigation size="s" … />} …>…</AppLayout>`,
       render: () => <Dense />,
     },

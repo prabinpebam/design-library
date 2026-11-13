@@ -139,7 +139,7 @@
           "name": "size",
           "type": "'m' | 's'",
           "default": "'m'",
-          "description": "`m` (default) a 56 px header and a 16 rem sidebar; `s` a dense app frame (LR41), a desktop editor's 40 px bar and a 13 rem sidebar. Pair it with Navigation `size=\"s\"`."
+          "description": "`m` (default) a 56 px header and a 16 rem sidebar; `s` a dense app frame (LR41, LR42), a desktop editor's 40 px bar, a 13 rem sidebar and the view's title a section's step over its content. Pair it with Navigation `size=\"s\"`."
         }
       ]
     }
@@ -155,6 +155,7 @@
     "--c-app-layout-gap",
     "--c-app-layout-gutter",
     "--c-app-layout-head-gap",
+    "--c-app-layout-head-gap-s",
     "--c-app-layout-header",
     "--c-app-layout-header-divider-width",
     "--c-app-layout-header-gap",

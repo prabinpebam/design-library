@@ -44,7 +44,7 @@ export interface AppLayoutProps extends DataAttributes {
   headerSpan?: 'main' | 'across';
   /** The sidebar controls' names, in the product's words. `open` and `close` name the header's toggle (default "Open sidebar", "Close sidebar"; give both the same words to keep one name, its state carried by `aria-expanded`). `pin` names the pin (default "Pin" and the sidebar's label), announced as pressed while docked; with `unpin` the pin's name changes instead ("Pin navigation", "Unpin navigation") and it isn't a toggle button. */
   labels?: { open?: string; close?: string; pin?: string; unpin?: string };
-  /** `m` (default) a 56 px header and a 16 rem sidebar; `s` a dense app frame (LR41), a desktop editor's 40 px bar and a 13 rem sidebar. Pair it with Navigation `size="s"`. */
+  /** `m` (default) a 56 px header and a 16 rem sidebar; `s` a dense app frame (LR41, LR42), a desktop editor's 40 px bar, a 13 rem sidebar and the view's title a section's step over its content. Pair it with Navigation `size="s"`. */
   size?: 'm' | 's';
 }
 

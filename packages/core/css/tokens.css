@@ -566,6 +566,7 @@
   --c-app-layout-sidebar-s: 13rem;
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-head-gap: var(--space-stack-page);
+  --c-app-layout-head-gap-s: var(--space-stack-section);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
   --c-app-layout-gutter: var(--space-stack-page);
@@ -1603,6 +1604,7 @@
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
   --c-app-layout-head-gap: var(--space-stack-page);
+  --c-app-layout-head-gap-s: var(--space-stack-section);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
@@ -1901,6 +1903,7 @@
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
   --c-app-layout-head-gap: var(--space-stack-page);
+  --c-app-layout-head-gap-s: var(--space-stack-section);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
@@ -2199,6 +2202,7 @@
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
   --c-app-layout-head-gap: var(--space-stack-page);
+  --c-app-layout-head-gap-s: var(--space-stack-section);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);
@@ -2497,6 +2501,7 @@
   --c-app-layout-gap: var(--space-stack-page);
   --c-app-layout-gutter: var(--space-stack-page);
   --c-app-layout-head-gap: var(--space-stack-page);
+  --c-app-layout-head-gap-s: var(--space-stack-section);
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-inset: var(--space-inset-sm);
   --c-app-layout-margin: var(--space-inset-md);

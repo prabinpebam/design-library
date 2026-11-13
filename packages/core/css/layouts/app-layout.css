@@ -27,6 +27,7 @@
   [data-dl='app-layout'][data-size='s'] {
     --c-app-layout-header: var(--c-app-layout-header-s);
     --c-app-layout-sidebar: var(--c-app-layout-sidebar-s);
+    --c-app-layout-head-gap: var(--c-app-layout-head-gap-s);
   }
 
   [data-dl='app-layout'] > [data-dl-part='sidebar'] {
