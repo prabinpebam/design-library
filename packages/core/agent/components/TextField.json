@@ -338,6 +338,7 @@
     "--c-field-padding-inline-sm",
     "--c-field-radius",
     "--c-field-readonly-border",
+    "--c-field-ring-width",
     "--c-field-size",
     "--c-field-size-l",
     "--c-field-size-m",

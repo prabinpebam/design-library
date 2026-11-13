@@ -870,6 +870,8 @@
 
   [data-dl='text-field'][data-appearance='underline'] [data-dl-part='box']:has(input:focus-visible) {
     border-block-end-color: var(--c-field-underline-line-focus);
+    /* The line is the focus cue (no ring around an underlined field): the focus colour at the ring's width, inward, so nothing moves. */
+    box-shadow: inset 0 calc(-1 * var(--c-field-ring-width)) 0 0 var(--c-field-underline-line-focus);
   }
 
   /* At xs the box's inside is 22 px, so its own Clear and Show buttons take that height (the 24 px target holds with the

@@ -299,7 +299,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
       {trailing}
     </span>
   ) : (
-    <span data-dl-part="box" data-dl-ring="">
+    <span data-dl-part="box" data-dl-ring={appearance === 'underline' ? undefined : ''}>
       {swatch && <ColourPicker data-dl-part="swatch" label={label} value={swatch.value} onChange={(hex) => swatch.onChange(hex)} trigger={{ disabled: !editable }} />}
       {icon && (
         <span data-dl-part="leading" aria-hidden="true">
