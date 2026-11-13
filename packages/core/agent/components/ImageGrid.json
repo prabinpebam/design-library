@@ -247,7 +247,7 @@
         {
           "name": "duration",
           "type": "number",
-          "description": "A video's length in seconds, shown on its poster and spoken in its name."
+          "description": "A video's length in seconds, shown at the poster's foot (with or without `kind: 'video'`'s play mark) and spoken in its name."
         },
         {
           "name": "progress",
