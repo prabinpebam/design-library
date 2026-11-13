@@ -1110,6 +1110,11 @@
         "$value": "{space.stack-section}",
         "$description": "Between groups (the tiers): the largest space in the navigation, so each group reads as its own section (echoed for space contexts)"
       },
+      "icon-gap": {
+        "$type": "dimension",
+        "$value": "{space.inline-item}",
+        "$description": "Between an item's icon and its words, when the item has an icon (echoed for space contexts)"
+      },
       "item-gap": {
         "$type": "dimension",
         "$value": "{space.stack-row}",

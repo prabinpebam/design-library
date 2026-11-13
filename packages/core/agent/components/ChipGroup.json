@@ -97,6 +97,12 @@
         {
           "name": "size",
           "type": "ChipProps['size']"
+        },
+        {
+          "name": "wrap",
+          "type": "boolean",
+          "default": "true",
+          "description": "`false`: the chips stay on one line (a filter bar); put the group in an inline `ScrollArea` so the line scrolls. Default `true`: they wrap."
         }
       ]
     },

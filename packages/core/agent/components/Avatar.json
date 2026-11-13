@@ -163,6 +163,7 @@
   "libraryPage": "https://prabinpebam.github.io/design-library/#/avatar",
   "usedBy": [
     "AvatarGroup",
+    "MenuButton",
     "Persona",
     "Board",
     "slack.Workspace",

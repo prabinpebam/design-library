@@ -158,6 +158,27 @@
           "name": "openSubmenu",
           "type": "string",
           "description": "Controlled value of the item whose submenu is open; omit for uncontrolled hover/keyboard behaviour."
+        },
+        {
+          "name": "chevron",
+          "type": "boolean",
+          "default": "true",
+          "description": "The chevron after the words that says a menu opens; `false` for a trigger whose own glyph already says so (a sort or filter glyph, a Create button). Shown by default."
+        },
+        {
+          "name": "iconEnd",
+          "type": "boolean",
+          "default": "false",
+          "description": "The icon after the words instead of before them, as Button's `iconEnd` (a Filters trigger with its tune glyph). Before them by default."
+        },
+        {
+          "name": "avatar",
+          "type": "{ name: string",
+          "description": "A person's avatar in place of the icon, for an account menu: their name and picture (Avatar `name`, `src`), sized with the trigger. Use with `iconOnly`; `label` stays the accessible name."
+        },
+        {
+          "name": "src",
+          "type": "string }"
         }
       ]
     },
@@ -254,6 +275,7 @@
     }
   ],
   "uses": [
+    "Avatar",
     "Badge",
     "Button",
     "Flag",

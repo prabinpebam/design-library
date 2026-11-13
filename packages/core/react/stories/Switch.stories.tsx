@@ -113,5 +113,16 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Glyph in the knob',
+      description: 'thumbIcon puts a small glyph inside the knob for what the switch runs, such as a play mark on a player’s autoplay; it is cut out in the track’s colour and decorative, so the label still names the switch.',
+      code: `<Switch label="Autoplay" checked={on} onChange={setOn} thumbIcon="play" />`,
+      render: () => <Glyph />,
+    },
   ],
 } satisfies StoryFile;
+
+function Glyph() {
+  const [on, setOn] = useState(true);
+  return <Switch label="Autoplay" checked={on} onChange={setOn} thumbIcon="play" />;
+}

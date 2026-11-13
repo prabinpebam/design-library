@@ -33,6 +33,8 @@ export interface ChipGroupProps extends DataAttributes {
   /** Said in the chips' place when there are none. */
   empty?: string;
   size?: ChipProps['size'];
+  /** `false`: the chips stay on one line (a filter bar); put the group in an inline `ScrollArea` so the line scrolls. Default `true`: they wrap. */
+  wrap?: boolean;
 }
 
 /**
@@ -47,7 +49,7 @@ export interface ChipGroupProps extends DataAttributes {
  * @key Home / End: the first or last chip
  * @key Delete / Backspace: remove the input chip in focus
  */
-export function ChipGroup({ label, hideLabel = false, description, chips, selection = 'none', value = [], onChange, onRemove, onPress, maxVisible, error, empty = 'None yet.', size, ...data }: ChipGroupProps) {
+export function ChipGroup({ label, hideLabel = false, description, chips, selection = 'none', value = [], onChange, onRemove, onPress, maxVisible, error, empty = 'None yet.', size, wrap = true, ...data }: ChipGroupProps) {
   const id = useId();
   const [current, setCurrent] = useState(0);
   const [all, setAll] = useState(false);
@@ -78,7 +80,7 @@ export function ChipGroup({ label, hideLabel = false, description, chips, select
 
   const role = selection === 'none' ? 'list' : selection === 'single' ? 'radiogroup' : 'group';
   return (
-    <div {...data} data-dl="chip-group" data-invalid={error ? '' : undefined}>
+    <div {...data} data-dl="chip-group" data-wrap={wrap ? undefined : 'none'} data-invalid={error ? '' : undefined}>
       {hideLabel ? null : (
         <span id={`${id}-label`} data-dl-part="label">
           {label}

@@ -18,6 +18,8 @@ interface ButtonBase extends DataAttributes {
   align?: 'start' | 'center';
   /** The icon above the label and larger, for a command that leads its group (an app ribbon's Paste); beside it by default. */
   stacked?: boolean;
+  /** The icon after the words instead of before them, for a command whose glyph follows its name (a Filters button with its tune glyph). Before them by default. */
+  iconEnd?: boolean;
   /** `inherit`: the enclosing surface's text colour, for a quiet action. `link`: a call to action that reads as a link (an outlined Sign in): link-coloured words and no fill; with `emphasis="default"` it keeps its edge. */
   tone?: 'inherit' | 'link';
   /** A verb first, 3 words or fewer. Shown, or the accessible name of an icon-only button. */
@@ -160,7 +162,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, stacked = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, stacked = false, iconEnd = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -217,6 +219,7 @@ export function Button(props: ButtonProps) {
         data-emphasis={emphasis}
         data-align={align === 'start' ? align : undefined}
         data-stacked={stacked && !iconOnly ? '' : undefined}
+        data-icon-end={iconEnd && !iconOnly && !stacked ? '' : undefined}
         data-tone={tone}
         data-icon-only={iconOnly ? '' : undefined}
         data-size={size}
@@ -257,6 +260,7 @@ export function Button(props: ButtonProps) {
       data-emphasis={emphasis}
       data-align={align === 'start' ? align : undefined}
         data-stacked={stacked && !iconOnly ? '' : undefined}
+        data-icon-end={iconEnd && !iconOnly && !stacked ? '' : undefined}
       data-tone={tone}
       data-icon-only={iconOnly ? '' : undefined}
       data-size={size}

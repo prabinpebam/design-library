@@ -9,13 +9,16 @@
     --color-text-muted: light-dark(#606060, #aaaaaa);
     --color-text-link: light-dark(#065fd4, #3ea6ff);
     --size-app-bar-height: 3.5rem;
+    --size-rail-width: 4.5rem;
     --size-nav-width: 15rem;
     --c-chip-size: 2rem;
     --c-chip-radius: 0.5rem;
     --c-chip-padding-inline: 0.75rem;
     --c-chip-weight: 500;
     --c-chip-check: none;
+    --c-heading-hyphens: manual;
     --c-chip-edge: transparent;
+    --c-chip-edge-width: 0rem;
     --c-chip-fill: light-dark(rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.1));
     --color-map-chip: light-dark(#0f0f0f, #f1f1f1);
     --color-map-chip-tint: var(--color-map-chip);
@@ -31,6 +34,11 @@
     --type-heading-4-weight: var(--weight-medium);
     --type-heading-4-leading: 1.375;
     --type-body-sm-leading: 1.4286;
+    --type-heading-3-size: var(--text-l);
+    --type-heading-3-leading: 1.4;
+    --type-heading-3-weight: var(--weight-bold);
+    --type-label-leading: 1.4286;
+    --size-pane-width: 22rem;
     --size-icon-md: 1.5rem;
     --c-button-radius: var(--radius-pill);
     --c-button-padding-inline: 0.9375rem;
@@ -43,15 +51,50 @@
     --c-field-action-fill: light-dark(#f8f8f8, rgba(255, 255, 255, 0.08));
     --c-field-action-edge: light-dark(#d3d3d3, #303030);
     --c-field-action-padding-inline: 1.25rem;
+    --c-field-underline-edge: light-dark(#cccccc, #3f3f3f);
     --radius-md: 0.625rem;
     --c-badge-size-s: 1.25rem;
     --color-bg-overlay: rgba(0, 0, 0, 0.5);
+    --c-navigation-item-size: var(--size-control-md);
+    --c-navigation-item-padding-inline: var(--space-3);
+    --c-navigation-item-gap: 0rem;
+    --c-navigation-icon-gap: var(--space-6);
+    --c-navigation-title-gap: var(--space-1);
+    --c-navigation-current-fill: var(--c-chip-fill);
+    --c-navigation-hover-fill: var(--c-chip-fill);
+    --c-navigation-current-weight: var(--weight-medium);
+    --c-navigation-mini-gap: 0.375rem;
+    --c-navigation-mini-padding-block-start: var(--space-4);
+    --c-navigation-mini-padding-block-end: 0.875rem;
+    --c-navigation-mini-padding-inline: 0rem;
+    --c-navigation-mini-label-size: var(--t-youtube-guide-mini-label-size);
+    --c-navigation-mini-label-leading: 1.6;
+    --c-navigation-mini-current-fill: transparent;
+    --c-navigation-mini-current-weight: var(--weight-regular);
     --c-menu-button-size: 2.5rem;
+    --size-search-width: 37.5rem;
+    --c-button-gap: 0.375rem;
+    --c-button-strong-text: light-dark(#f1f1f1, #0f0f0f);
+    --c-button-group-icon-padding-inline: var(--space-4);
+    --c-button-size-s: var(--size-control-sm);
+    --c-button-padding-inline-sm: var(--space-3);
+    --c-slider-fill: #ff0033;
+    --c-slider-thumb-fill: var(--c-slider-fill);
+    --c-slider-track-fill: rgba(255, 255, 255, 0.2);
+    --type-heading-2-size: 1.125rem;
+    --type-heading-2-leading: 1.4444;
+    --type-heading-2-weight: var(--weight-regular);
+    --color-bg-sunken: light-dark(var(--p-base-50), #000000);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--c-button-radius);
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
+    --c-popup-width: var(--size-pane-width);
+    --c-popup-submenu-width: var(--c-popup-width);
+    --c-popup-height: var(--size-pane-width);
     --c-popup-radius: var(--radius-md);
+    --c-tooltip-width: var(--size-pane-width);
+    --c-popover-width: var(--size-pane-width);
     --c-list-item-radius: var(--radius-md);
     --c-list-item-preview: var(--size-icon-md);
     --c-list-item-submenu-ink: var(--color-text-muted);
@@ -59,40 +102,57 @@
     --c-list-item-expanded-radius: var(--c-list-item-radius);
     --c-list-item-plate-ink: var(--color-text);
     --c-ribbon-radius: var(--radius-md);
+    --c-token-specimen-checker-dark: var(--color-bg-sunken);
     --c-token-specimen-colour-radius: var(--radius-md);
+    --c-token-specimen-track: var(--color-bg-sunken);
     --c-example-toggle-fg: var(--color-text-link);
     --c-context-matrix-label-bg: var(--color-bg);
     --c-context-matrix-label-fg: var(--color-text);
     --c-context-matrix-head-fg: var(--color-text-muted);
     --c-code-block-radius: var(--radius-md);
+    --c-code-block-bg: var(--color-bg-sunken);
+    --c-data-table-head-bg: var(--color-bg-sunken);
     --c-data-table-head-fg: var(--color-text-muted);
     --c-button-link-text: var(--color-text-link);
     --c-switch-track-block-s: var(--size-icon-md);
     --c-field-swatch: var(--size-icon-md);
     --c-field-trailing: var(--size-icon-md);
+    --c-composer-tile-fill: var(--color-bg-sunken);
     --c-composer-tile-radius: var(--radius-md);
+    --c-image-generation-field: var(--color-bg-sunken);
     --c-conversation-list-radius: var(--radius-md);
     --c-site-header-name-size: var(--type-heading-4-size);
     --c-site-header-link-radius: var(--radius-md);
+    --c-site-header-name-size-large: var(--type-heading-2-size);
     --c-tree-view-surface: var(--color-bg);
     --c-tree-view-twisty: var(--size-icon-md);
     --c-tree-view-radius: var(--radius-md);
+    --c-alignment-picker-fill: var(--color-bg-sunken);
     --c-alignment-picker-radius: var(--radius-md);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-canvas-fill: var(--color-bg-sunken);
     --c-canvas-frame-fill: var(--color-bg);
     --c-canvas-handle-fill: var(--color-bg);
     --c-canvas-name-selected: var(--color-text-muted);
+    --c-board-column-fill: var(--color-bg-sunken);
     --c-board-card-radius: var(--radius-md);
+    --c-app-layout-sidebar-fill: var(--color-bg-sunken);
+    --c-app-layout-aside: var(--size-pane-width);
     --c-agenda-session-radius: var(--radius-md);
+    --c-agenda-session-fill: var(--color-bg-sunken);
     --c-agenda-title-size: var(--type-heading-4-size);
+    --c-frame-ground: var(--color-bg-sunken);
     --c-screen-preview-radius: var(--radius-md);
+    --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
     --c-chat-thinking-indent: var(--size-icon-md);
     --c-checkbox-box: var(--size-icon-md);
+    --c-colour-picker-width: var(--size-pane-width);
     --c-colour-picker-swatch: var(--size-icon-md);
     --c-radio-group-ring: var(--size-icon-md);
     --c-radio-group-tile-radius: var(--radius-md);
     --c-segmented-control-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-section-tone-sunken: var(--color-bg-sunken);
     --c-chip-media: var(--size-icon-md);
     --c-slider-thumb: var(--size-icon-md);
     --c-allocation-slider-radius: var(--radius-md);
@@ -102,27 +162,35 @@
     --c-tabs-text: var(--color-text-muted);
     --c-tabs-selected-text: var(--color-text);
     --c-pagination-radius: var(--radius-md);
+    --c-dialog-aside-bg: var(--color-bg-sunken);
     --c-footer-link: var(--color-text-link);
     --c-alert-radius: var(--radius-md);
     --c-file-upload-zone-radius: var(--radius-md);
     --c-accordion-radius: var(--radius-md);
     --c-illustration-ink: var(--color-text);
     --c-illustration-muted: var(--color-text-muted);
+    --c-illustration-fill: var(--color-bg-sunken);
     --c-illustration-surface: var(--color-bg);
     --c-quote-text-size-m: var(--type-heading-4-size);
+    --c-quote-text-size-l: var(--type-heading-2-size);
     --c-scroll-area-colour-active: var(--color-text-muted);
+    --c-scroll-area-surface: var(--color-bg-sunken);
     --c-scroll-area-surface-radius: var(--radius-md);
     --c-scroll-area-line-thumb: var(--color-text);
     --c-price-was: var(--color-text-muted);
+    --color-map-nav: var(--color-bg-sunken);
     --color-map-nav-on: var(--color-text);
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-map-nav-selected-on: var(--color-text);
+    --color-map-nav-shell: var(--color-bg-sunken);
     --color-map-nav-shell-on: var(--color-text);
+    --color-border-group: var(--color-bg-sunken);
     --color-status-neutral-fg: var(--color-text-muted);
     --color-border-strong: var(--p-standard-border-strong);
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
+    --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-switch-off-border: var(--color-border-strong);
@@ -131,6 +199,7 @@
   @media (prefers-contrast: more) {
     [data-template='youtube'] {
       --color-border-strong: var(--color-text);
+      --color-border-group: var(--p-standard-border-strong);
       --color-map-nav-on-muted: var(--color-text-muted);
       --color-status-neutral-fg: var(--color-text-muted);
       --c-alignment-picker-dot-colour: var(--color-text-muted);
@@ -145,6 +214,7 @@
       --c-menu-button-border: var(--c-button-default-edge);
       --c-menu-button-fill: var(--c-button-default-fill);
       --c-price-was: var(--color-text-muted);
+      --c-progress-bar-track: var(--color-border-group);
       --c-scroll-area-colour: var(--color-border-strong);
       --c-scroll-area-colour-active: var(--color-text-muted);
       --c-site-header-current-rule: var(--color-border-strong);
@@ -155,6 +225,7 @@
   }
   [data-contrast='standard'] [data-template='youtube'], [data-template='youtube'][data-contrast='standard'] {
     --color-border-strong: var(--p-standard-border-strong);
+    --color-border-group: var(--color-bg-sunken);
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
@@ -169,6 +240,7 @@
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-price-was: var(--color-text-muted);
+    --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
@@ -178,6 +250,7 @@
   }
   [data-contrast='more'] [data-template='youtube'], [data-template='youtube'][data-contrast='more'] {
     --color-border-strong: var(--color-text);
+    --color-border-group: var(--p-standard-border-strong);
     --color-map-nav-on-muted: var(--color-text-muted);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
@@ -192,6 +265,7 @@
     --c-menu-button-border: var(--c-button-default-edge);
     --c-menu-button-fill: var(--c-button-default-fill);
     --c-price-was: var(--color-text-muted);
+    --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-site-header-current-rule: var(--color-border-strong);
@@ -379,5 +453,37 @@
     font-size: var(--type-body-size);
     line-height: var(--type-body-leading);
     font-weight: var(--type-body-weight);
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] {
+    --color-text: #ffffff;
+    --c-slider-track-s: 0.25rem;
+    --c-slider-thumb-s: 0.75rem;
+    --c-switch-on-fill: #ffffff;
+    --c-switch-on-fill-hover: #ffffff;
+    --c-switch-on-thumb: #000000;
+    --c-switch-track-inline-xs: 1.875rem;
+    --c-switch-track-block-xs: 1.125rem;
+    --c-switch-gap: 0rem;
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time'] {
+    --color-text: #eeeeee;
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='add'] {
+    --c-field-size-xs: 1.9375rem;
+    --size-measure: 100%;
+  }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='badges'] {
+    --c-badge-size-s: 1.125rem;
+    --c-badge-radius: 0.125rem;
+    --c-badge-outline-edge: light-dark(#cccccc, rgba(255, 255, 255, 0.2));
+  }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] {
+    --color-bg-control: light-dark(#f4f1f8, #2c2733);
+    --radius-md: 0.5rem;
+    --size-icon-sm: 1.5rem;
+  }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] {
+    --c-button-padding-inline: 0rem;
+    --c-button-gap: var(--space-2);
   }
 }

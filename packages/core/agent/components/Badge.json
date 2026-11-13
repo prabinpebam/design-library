@@ -41,8 +41,8 @@
         },
         {
           "name": "emphasis",
-          "type": "'subtle' | 'strong' | 'media'",
-          "description": "`subtle` (default): a tint with coloured text. `strong`: a solid fill, for the one thing on the screen that needs attention. `media`: a label over a picture or video (a length, a live mark): a see-through dark fill with white words in every scheme."
+          "type": "'subtle' | 'strong' | 'media' | 'outline'",
+          "description": "`subtle` (default): a tint with coloured text. `strong`: a solid fill, for the one thing on the screen that needs attention. `media`: a label over a picture or video (a length, a live mark): a see-through dark fill with white words in every scheme. `outline`: a format or quality mark on a media row (4K, HD, CC): no fill, a hairline edge (`c.badge.outline-edge`) and muted words, whatever the tone."
         },
         {
           "name": "icon",
@@ -117,6 +117,7 @@
     "--c-badge-dot-s",
     "--c-badge-gap",
     "--c-badge-mark-l",
+    "--c-badge-outline-edge",
     "--c-badge-padding-inline",
     "--c-badge-padding-inline-count",
     "--c-badge-presence",
@@ -174,6 +175,7 @@
     "--color-status-warning-fill",
     "--color-status-warning-on-fill",
     "--color-text",
+    "--color-text-muted",
     "--duration-change",
     "--duration-quick",
     "--easing-enter",

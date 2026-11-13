@@ -50,6 +50,8 @@
     border-radius: var(--c-navigation-item-radius);
     color: var(--color-text);
     text-decoration: none;
+    /* An item with an icon: between the icon and the words. A family's name sets its own gap below. */
+    gap: var(--c-navigation-icon-gap);
   }
 
   /* A family's name: a label's weight tells it from a page; the chevron says it opens. */
@@ -82,13 +84,30 @@
   }
 
   [data-dl='navigation'] [data-dl-part='item'][aria-current='page'] {
-    background-color: var(--state-selected);
+    background-color: var(--c-navigation-current-fill);
+    font-weight: var(--c-navigation-current-weight);
+  }
+
+  /* Mini: each item an icon over a short label, centred in a narrow column; space alone separates the groups. */
+  [data-dl='navigation'][data-presentation='mini'] > [data-dl-part='groups'] > [data-dl-part='group'] > [data-dl-part='items'] > li > [data-dl-part='item'] {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--c-navigation-mini-gap);
+    padding: var(--c-navigation-mini-padding-block-start) var(--c-navigation-mini-padding-inline) var(--c-navigation-mini-padding-block-end);
+    font-size: var(--c-navigation-mini-label-size);
+    line-height: var(--c-navigation-mini-label-leading);
+    text-align: center;
+  }
+
+  [data-dl='navigation'][data-presentation='mini'] > [data-dl-part='groups'] > [data-dl-part='group'] > [data-dl-part='items'] > li > [data-dl-part='item'][aria-current='page'] {
+    background-color: var(--c-navigation-mini-current-fill);
+    font-weight: var(--c-navigation-mini-current-weight);
   }
 
   @media (hover: hover) {
     [data-dl='navigation'] [data-dl-part='item']:hover,
     [data-dl='navigation'] [data-dl-part='family-toggle']:hover {
-      background-color: var(--state-hover);
+      background-color: var(--c-navigation-hover-fill);
     }
   }
 

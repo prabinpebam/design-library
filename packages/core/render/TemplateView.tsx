@@ -14,6 +14,16 @@ import { resolveUnconfirmed } from './unconfirmed';
 /** The address of a template's layout; the library and the standalone site share it. */
 export const defaultHref = (template: string, layout: string) => `#/app/${template}/${layout}`;
 
+/**
+ * A layout address may name which record it shows after a `?` (`watch?v=v2`): one layout, many records, as a
+ * product's own pages work. Splits a route (`youtube/watch?v=v2`) into its path and those values, for a host's router.
+ */
+export function splitRoute(route: string): { path: string; params: Record<string, string> } {
+  const at = route.indexOf('?');
+  if (at < 0) return { path: route, params: {} };
+  return { path: route.slice(0, at), params: Object.fromEntries(new URLSearchParams(route.slice(at + 1))) };
+}
+
 /** Core layout components a content file may name. */
 export const LAYOUTS: Record<string, LayoutBinding> = {
   SiteLayout: ({ content, region }) => (
@@ -49,16 +59,20 @@ export function contentFor(template: Template, layout: string, stateOf?: string)
   return { ...screen, layout, settings: { ...screen.settings, ...own.settings } };
 }
 
+const NO_PARAMS: Record<string, string> = {};
+
 export interface TemplateViewProps {
   template: Template;
   /** The layout's id in the template's manifest. */
   layout: string;
   /** Turns a layout id of this template into an address. Defaults to `#/app/{template}/{layout}`. */
   hrefFor?: (template: string, layout: string) => string;
+  /** Values the address names after its `?` (`splitRoute`), e.g. which record the layout shows; none by default. */
+  params?: Record<string, string>;
 }
 
 /** Renders one layout of a template from its content JSON. */
-export function TemplateView({ template, layout, hrefFor = defaultHref }: TemplateViewProps) {
+export function TemplateView({ template, layout, hrefFor = defaultHref, params = NO_PARAMS }: TemplateViewProps) {
   const { manifest } = template;
   const entry = manifest.layouts.find((l) => l.id === layout && !l.planned);
   const raw = entry ? contentFor(template, entry.id, entry.stateOf) : undefined;
@@ -77,6 +91,7 @@ export function TemplateView({ template, layout, hrefFor = defaultHref }: Templa
     settings: content.settings ?? {},
     state: typeof content.settings?.state === 'string' ? content.settings.state : undefined,
     href,
+    params,
     picture: (id) => template.assets[id] ?? { src: '', alt: '' },
     blocks: (blocks) => renderList(blocks, ctx),
   };

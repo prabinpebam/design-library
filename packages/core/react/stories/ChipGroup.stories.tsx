@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChipGroup } from '../fundamentals/ChipGroup';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import type { ChipEntry } from '../fundamentals/ChipGroup';
 import type { StoryFile } from './story';
 
@@ -68,6 +69,12 @@ export default {
       description: 'After maxVisible chips, a “+n” chip shows the rest. Without it, chips wrap onto new lines.',
       code: `<ChipGroup label="Tags" chips={tags} maxVisible={4} />`,
       render: () => <ChipGroup label="Tags" chips={tags} maxVisible={4} size="s" />,
+    },
+    {
+      title: 'One line that scrolls',
+      description: 'A filter bar: wrap={false} keeps the chips on one line inside an inline ScrollArea, whose inset keeps focus rings whole.',
+      code: `<ScrollArea axis="inline" inset="sm"><ChipGroup label="Tags" hideLabel wrap={false} selection="single" chips={tags} value={value} onChange={setValue} /></ScrollArea>`,
+      render: () => <ScrollArea axis="inline" inset="sm"><ChipGroup label="Tags" hideLabel wrap={false} chips={tags} size="s" /></ScrollArea>,
     },
   ],
 } satisfies StoryFile;

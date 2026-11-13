@@ -18,6 +18,7 @@ import { themeBrand } from './data/brand';
 import { AppearanceContext, type Contrast, type Scheme } from './data/contexts';
 import { layoutOf, statesOf } from './data/templates';
 import { layoutScreens } from './views/templates';
+import { splitRoute } from '@design-library/core/render';
 import { PresetSettings } from './inspectors/presets';
 import { RouterDemo } from './views/RouterDemo';
 import { SiteDemo } from './views/SiteDemo';
@@ -95,7 +96,7 @@ if (seed && /^#[0-9a-f]{6}$/i.test(seed))
   applyBrand({ colours: { 1: { seed, ...(query.get('pin') ? { pins: { '500': seed } } : {}) } }, contrast: query.get('guard') ? 'guard' : 'keep' });
 /** The screen a route shows: a state's route names its screen's. */
 const screenOf = (route: string) => {
-  const shown = layoutOf(route);
+  const shown = layoutOf(splitRoute(route).path);
   return shown ? `${shown.template.id}/${shown.layout.stateOf ?? shown.layout.id}` : route;
 };
 
@@ -137,8 +138,10 @@ function TemplateSite() {
     suspendMotion(() => (document.body.dataset.contrast = contrast));
   }, [contrast]);
 
-  const shown = layoutOf(route);
-  const screen = layoutScreens[route];
+  // `youtube/watch?v=v2`: the path picks the screen, the values after `?` say which record it shows.
+  const { path, params } = useMemo(() => splitRoute(route), [route]);
+  const shown = layoutOf(path);
+  const screen = layoutScreens[path];
   useEffect(() => {
     document.title = shown ? `${shown.layout.title} · ${shown.template.title}` : 'Template not found';
   }, [shown]);
@@ -149,7 +152,7 @@ function TemplateSite() {
 
   return (
     <AppearanceContext.Provider value={appearance}>
-      {screen ? screen() : <Text as="p">There’s no template layout called “{route}”. Open a template from the library’s Templates section.</Text>}
+      {screen ? screen(params) : <Text as="p">There’s no template layout called “{route}”. Open a template from the library’s Templates section.</Text>}
       {!bare && <FloatingBar label="Preview">
         {shown && states.length > 0 && (
           <SegmentedControl

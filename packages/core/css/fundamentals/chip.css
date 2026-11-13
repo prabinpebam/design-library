@@ -11,7 +11,7 @@
     max-inline-size: 100%;
     block-size: var(--c-chip-size);
     padding-inline: var(--c-chip-padding-inline);
-    border: var(--border-hairline) solid var(--c-chip-edge);
+    border: var(--c-chip-edge-width) solid var(--c-chip-edge);
     border-radius: var(--c-chip-radius);
     background-color: var(--c-chip-fill);
     color: var(--color-text);
@@ -120,7 +120,7 @@
     border-color: var(--color-map-chip);
     background-color: var(--color-map-chip-tint);
     color: var(--c-chip-selected-text);
-    box-shadow: inset 0 0 0 calc(var(--c-chip-selected-ring) - var(--border-hairline)) var(--color-map-chip);
+    box-shadow: inset 0 0 0 calc(var(--c-chip-selected-ring) - var(--c-chip-edge-width)) var(--color-map-chip);
   }
 
   [data-dl='chip'] > [data-dl-part='check'] {
@@ -207,6 +207,15 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--c-chip-group-gap);
+  }
+
+  /* One line, for a filter bar inside an inline ScrollArea. */
+  [data-dl='chip-group'][data-wrap='none'] > [data-dl-part='chips'] {
+    flex-wrap: nowrap;
+  }
+
+  [data-dl='chip-group'][data-wrap='none'] > [data-dl-part='chips'] > [data-dl-part='item'] {
+    max-inline-size: none;
   }
 
   [data-dl='chip-group'] > [data-dl-part='chips'] > [data-dl-part='item'] {

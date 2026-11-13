@@ -1,6 +1,7 @@
 import { useId, useState, type ReactNode } from 'react';
 import { Heading } from '../fundamentals/Heading';
 import { Icon } from '../fundamentals/Icon';
+import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 
 /** One destination in the navigation. */
@@ -11,6 +12,8 @@ export interface NavigationItem {
   label: string;
   /** Where it goes: a URL or an in-app route. */
   href: string;
+  /** An icon before the words (above them in the mini presentation). Leave it out for words alone. */
+  icon?: IconName;
 }
 
 /**
@@ -28,8 +31,8 @@ export interface NavigationFamily {
 /** Destinations that belong together, under one heading: pages directly, families of pages, or both. */
 export interface NavigationGroup {
   id: string;
-  /** The group's name, shown as a heading above its entries; also names its list for assistive technology. */
-  title: string;
+  /** The group's name, shown as a heading above its entries; also names its list for assistive technology. Leave it out for a group told apart by space alone (a short list of top destinations). */
+  title?: string;
   items: (NavigationItem | NavigationFamily)[];
 }
 
@@ -54,6 +57,8 @@ export interface NavigationProps extends DataAttributes {
   fallbackLabel?: string;
   /** Called with an item's `id` when the person follows it, for apps that route on the client. The link still follows its `href`. */
   onNavigate?: (id: string) => void;
+  /** `mini`: a narrow column of top destinations, each an icon over a short label, with no group headings (a title still names its list). Give every item an icon; families aren't for it. */
+  presentation?: 'list' | 'mini';
 }
 
 const isFamily = (entry: NavigationItem | NavigationFamily): entry is NavigationFamily => 'items' in entry;
@@ -103,7 +108,8 @@ const pagesIn = (entries: (NavigationItem | NavigationFamily)[]): NavigationItem
  * @key Enter: follows the focused item
  * @key Enter / Space: opens or closes the focused family, or the collapsed disclosure from its summary
  */
-export function Navigation({ groups, current, expanded, onExpandedChange, headingLevel = 2, collapsed = false, open = false, onOpenChange, fallbackLabel = 'Pages', onNavigate, ...data }: NavigationProps) {
+export function Navigation({ groups, current, expanded, onExpandedChange, headingLevel = 2, collapsed = false, open = false, onOpenChange, fallbackLabel = 'Pages', onNavigate, presentation = 'list', ...data }: NavigationProps) {
+  const mini = presentation === 'mini';
   const base = useId();
   const [own, setOwn] = useState<string[]>(() => familyPathOf(groups, current));
   const opened = expanded ?? own;
@@ -116,7 +122,14 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
   const link = (i: NavigationItem) => (
     <li key={i.id}>
       <a href={i.href} data-dl-part="item" aria-current={i.id === current ? 'page' : undefined} onClick={onNavigate && (() => onNavigate(i.id))}>
-        {i.label}
+        {i.icon || mini ? (
+          <>
+            {i.icon && <Icon name={i.icon} />}
+            <span data-dl-part="label">{i.label}</span>
+          </>
+        ) : (
+          i.label
+        )}
       </a>
     </li>
   );
@@ -140,10 +153,12 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
     <div data-dl-part="groups">
       {groups.map((g) => (
         <div key={g.id} data-dl-part="group">
-          <Heading level={headingLevel} size={4} id={`${base}-${g.id}`}>
-            {g.title}
-          </Heading>
-          <ul data-dl-part="items" aria-labelledby={`${base}-${g.id}`}>
+          {g.title && !mini && (
+            <Heading level={headingLevel} size={4} id={`${base}-${g.id}`}>
+              {g.title}
+            </Heading>
+          )}
+          <ul data-dl-part="items" aria-labelledby={g.title && !mini ? `${base}-${g.id}` : undefined} aria-label={mini ? g.title : undefined}>
             {g.items.map((e) => entry(e, g.id))}
           </ul>
         </div>
@@ -151,7 +166,7 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
     </div>
   );
   return (
-    <div {...data} data-dl="navigation">
+    <div {...data} data-dl="navigation" data-presentation={mini ? 'mini' : undefined}>
       {collapsed ? (
         <details data-dl-part="disclosure" open={open} onToggle={(e) => onOpenChange?.(e.currentTarget.open)}>
           <summary>

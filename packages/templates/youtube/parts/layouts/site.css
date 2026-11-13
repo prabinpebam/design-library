@@ -23,15 +23,13 @@
   /* Search: 536 + 64 wide, 40 high (H-1280-L); voice 16 after it. The group's centre sits 10 right of the window's centre
      (H-1280-L 650, H-1440-L 730), so the centre column starts 12 later than it ends. */
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] { display: flex; align-items: center; justify-content: center; gap: var(--space-4); min-inline-size: 0; padding-inline-start: var(--space-3); }
-  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { display: grid; inline-size: min(100%, 37.5rem); /* 536 + 64 (H-1280-L) */ }
+  [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { display: grid; inline-size: min(100%, var(--size-search-width)); }
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='voice'] { display: grid; }
   /* Signed-out end: settings, then Sign in 8 after it (H-1280-L). */
   [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='end'] { display: flex; align-items: center; gap: var(--space-2); }
 
   /* Mini guide: 72 wide, padding-inline 4; entries 64×76, radius 10, icon 24 at y+16 over a 10/16 label (H-1280-L). */
-  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; padding: var(--t-youtube-guide-mini-inset-block-start) var(--space-1) 0; }
-  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry'] { display: flex; flex-direction: column; align-items: center; gap: calc(var(--t-youtube-guide-mini-gap) - var(--space-0-5)); /* 6 */ inline-size: var(--t-youtube-guide-mini-entry-width); padding-block: var(--t-youtube-guide-mini-padding-block-start) calc(var(--t-youtube-guide-mini-padding-block-end) + var(--space-0-5)); /* 16 0 14 */ border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: var(--t-youtube-guide-mini-label-size); line-height: 1.6; }
-  [data-dl='youtube-site'] > [data-dl-part='mini'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
+  [data-dl='youtube-site'] > [data-dl-part='mini'] { display: flex; flex-direction: column; inline-size: var(--size-rail-width); padding: var(--t-youtube-guide-mini-inset-block-start) var(--space-1) 0; }
 
   /* Guide: 240 wide, each section padded 12 with entries 204 wide (24 free at the end), a rule between sections (G-1280-L).
      Below the wide breakpoint it's a drawer over the content with the masthead's start at its head (G-1280-L). */
@@ -50,13 +48,11 @@
   }
   [data-dl='youtube-site'] > [data-dl-part='mini'],
   [data-dl='youtube-site'] > [data-dl-part='guide'] { grid-column: 1; grid-row: 2; }
-  [data-dl='youtube-guide'] { display: grid; }
+  /* Entries are core Navigation (c.navigation.* in the theme): 40 high, radius 10, icon 24 at 12 in, label 24 after it, 14/20 (G-1280-L). */
+  [data-dl='youtube-guide'] { display: grid; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] { display: grid; padding: var(--space-3) var(--space-6) var(--space-3) var(--space-3); border-block-end: var(--border-hairline) solid var(--color-border); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='section-title'] { display: grid; align-content: end; block-size: var(--t-youtube-guide-title-height); padding: 0 var(--space-3) var(--space-1); }
-  /* Entry: 40 high, radius 10, icon 24 at 12 in, label 24 after it, 14/20 (G-1280-L). */
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'] { display: flex; align-items: center; gap: var(--space-6); block-size: var(--size-control-md); padding-inline: var(--space-3); border-radius: var(--t-youtube-guide-radius); color: var(--color-text); text-decoration: none; font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry']:hover { background: var(--c-chip-fill); }
-  [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='entry'][aria-current='page'] { background: var(--c-chip-fill); font-weight: var(--weight-medium); }
+  /* A titled section: its title box is 32 with padding 6 12 4 (G-1280-L), so 6 more above the heading. */
+  [data-dl='youtube-guide'] > [data-dl-part='section'][data-titled] { padding-block-start: calc(var(--space-4) + var(--space-0-5)); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] { display: grid; justify-items: start; gap: var(--space-3); padding: var(--space-1) var(--t-youtube-guide-prompt-inset) var(--space-2); font-size: var(--text-s); }
   [data-dl='youtube-guide'] > [data-dl-part='section'] > [data-dl-part='prompt'] > p { margin: 0; }
 
@@ -65,13 +61,26 @@
   [data-dl='youtube-feed'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--youtube-feed-inset); padding-block-end: var(--space-6); }
   /* Filters: a 56 row (S-1280-L), held under the masthead while the feed scrolls. */
   [data-dl='youtube-feed'] > [data-dl-part='chips'] { position: sticky; inset-block-start: 0; z-index: var(--layer-raised); display: flex; align-items: center; min-block-size: var(--size-app-bar-height); background: var(--color-bg); }
+  /* The chips stay on one line and scroll sideways (H-720-L, S-720-L): an inline scroll area whose inset keeps focus rings
+     whole, drawn back by the same amount so the chips sit where the row puts them (x24 / x96, y66.5 on search). */
+  :is([data-dl='youtube-feed'], [data-dl='youtube-results']) > [data-dl-part='chips'] > [data-dl-part='chip-scroll'] { display: grid; flex: 1 1 auto; min-inline-size: 0; margin-inline-start: calc(-1 * var(--c-scroll-area-inset-sm)); margin-block: calc(-1 * var(--c-scroll-area-inset-sm)) calc(-1 * max(var(--c-scroll-area-inset-sm), var(--c-scroll-area-track))); }
+  /* At rest the focus room before the first chip shows nothing, as the row's own edge (x96 / x24) bounds it: the chip's
+     corner anti-aliasing stops there. A focused chip gets the room back so its ring is whole. */
+  :is([data-dl='youtube-feed'], [data-dl='youtube-results']) > [data-dl-part='chips'] > [data-dl-part='chip-scroll']:not(:focus-within) { clip-path: inset(0 0 0 var(--c-scroll-area-inset-sm)); }
   /* Three columns 16 apart, rows 32 apart (H-1280-L items-per-row 3, item margin 16, row margin 32). */
   [data-dl='youtube-feed'] > [data-dl-part='grid'] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--t-youtube-site-gap); row-gap: var(--t-youtube-site-row-gap); margin: 0; padding: var(--space-6) 0 0; list-style: none; }
 
   /* Video: 16:9 frame radius 12; details 12 below; avatar 36; title 12 after it; the ⋮ menu 40×40 at the end (C-1280-L, T-1280-L). */
   [data-dl='youtube-video'] { display: grid; gap: var(--space-3); }
-  [data-dl='youtube-video'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: var(--radius-lg); background: var(--color-bg-sunken); }
+  [data-dl='youtube-video'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; --image-radius: var(--radius-lg); border-radius: var(--image-radius); background: var(--color-bg-sunken); }
   /* Length: 8 from the frame's bottom and end, 20 high, white on black at 60% (C-1280-L). */
+  /* Each frame is one plain core Link filling it (named by the video's title), with the length badge beside it on top; the
+     badge lets the pointer through, so the whole frame follows the link and its focus ring follows the frame's corners. */
+  /* Thumbnails fill their frame under its link and duration, with the frame's corners (the Image radius seam). */
+  :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='thumb'] { position: absolute; inset: 0; display: grid; }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='screen'] { display: grid; }
+  :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='link'] { position: absolute; inset: 0; border-radius: inherit; }
+  :is([data-dl='youtube-video'], :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'], [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result']) > [data-dl-part='frame'] > [data-dl-part='duration'] { pointer-events: none; }
   [data-dl='youtube-video'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
   [data-dl='youtube-video'] > [data-dl-part='details'] { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-inline-end: var(--space-6); }
   /* Title 16/22, two lines; meta 4 below it, 14/20 (C-1280-L, T-1280-L). */
@@ -79,4 +88,120 @@
   [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='text'] > [data-dl-part='meta'] { display: grid; }
   /* The menu: a 40 round button in the title's end padding, its glyph level with the title's first line and 12 past the item's end (T-1280-L). */
   [data-dl='youtube-video'] > [data-dl-part='details'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: calc(-1 * var(--space-3)); display: grid; }
+
+  /* Watch (W-1280-L): no mini guide; the guide opens only as a drawer at every width. */
+  [data-dl='youtube-site'][data-screen='watch'] { grid-template-columns: 0 minmax(0, 1fr); }
+  [data-dl='youtube-site'][data-screen='watch'] > [data-dl-part='mini'] { display: none; }
+  @media (min-width: 82.0625rem) {
+    [data-dl='youtube-site'][data-screen='watch']:not([data-guide='toggled']) { grid-template-columns: 0 minmax(0, 1fr); }
+    [data-dl='youtube-site'][data-screen='watch']:not([data-guide='toggled']) > [data-dl-part='guide'] { display: none; }
+  }
+  /* Columns: primary from x16, 880 of content and 16 after it; up next 352 wide and 16 from the end (W-1280-L). At the
+     narrow width up next moves under the primary column (W-720-L). */
+  [data-dl='youtube-watch'] { display: grid; grid-template-columns: minmax(0, 1fr) var(--size-pane-width); column-gap: var(--space-4); padding: var(--space-3) var(--space-4) var(--space-6); }
+  @media (max-width: 64rem) { [data-dl='youtube-watch'] { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-6); } }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] { display: grid; align-content: start; min-inline-size: 0; }
+  /* Player: 16:9 (the spec computes 880×495 for a 16:9 video), black in both schemes: the part takes the dark scheme, whose sunken fill the theme makes #000000 (W-1280-L/D). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { display: grid; grid-template-areas: 'stack'; aspect-ratio: 16 / 9; --image-radius: var(--radius-lg); border-radius: var(--image-radius); background: var(--color-bg-sunken); color: var(--color-text); }
+  /* The player is as tall as the video makes it (W-1280-L: 880×660 for a 4:3 video; watch169-1280-L: 880×495 for 16:9). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'][data-aspect='4:3'] { aspect-ratio: 4 / 3; }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > * { grid-area: stack; }
+  /* Control bar at rest (watch169-1280-L): 12 in from each side; the seek line 6 high, then a 56 row whose 40 controls sit 8 from
+     the player's foot. Left: play and volume circles 12 apart, the time pill 8 after them (14/40 w500); right: one pill, padding
+     0 4, of 48 × 40 slots (autoplay, subtitles, settings, theatre, full screen). Fills are the media-control material. */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto var(--size-control-xl); align-items: center; align-self: end; padding-inline: var(--space-3); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='seek'] { grid-column: 1 / -1; display: grid; align-content: center; block-size: var(--size-track-l); /* the 6 high line; the slider's target overflows it evenly */ }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] { display: flex; align-items: center; gap: var(--space-2); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='round'] { display: grid; border-radius: var(--radius-pill); background: var(--material-media-control); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='round']:first-child { margin-inline-end: var(--space-1); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='left'] > [data-dl-part='time'] { display: flex; align-items: center; block-size: var(--size-control-md); padding-inline: var(--space-4); border-radius: var(--radius-pill); background: var(--material-media-control); color: var(--color-text); font-size: var(--type-label-size); font-weight: var(--weight-medium); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='right'] { grid-column: 3; display: flex; align-items: center; padding-inline: var(--space-1); border-radius: var(--radius-pill); background: var(--material-media-control); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] > [data-dl-part='controls'] > [data-dl-part='right'] > [data-dl-part='slot'] { display: grid; place-items: center; inline-size: var(--size-control-lg); }
+  /* Title 12 below the player, 20/28 w700, two lines (W-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='title'] { padding-block-start: var(--space-3); }
+  /* Owner row 8 below the title's line: avatar 40 at its top, name and Subscribe 1.5 lower, the action pills 3.5 lower (2 and 4 here, the nearest steps); name 16/22 w500 over subscribers 12/18, Subscribe 24 after them; actions at the end, 8 apart (W-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] { display: flex; flex-wrap: wrap; align-items: start; justify-content: space-between; gap: var(--space-3); padding-block-start: var(--space-2); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] { display: flex; align-items: start; gap: var(--space-3); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > :is([data-dl-part='owner-text'], [data-dl-part='subscribe']) { margin-block-start: var(--space-0-5); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > [data-dl-part='owner-text'] { display: grid; }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > [data-dl-part='owner-text'] > [data-dl-part='channel'] { font-size: var(--type-heading-4-size); line-height: var(--type-heading-4-leading); font-weight: var(--weight-medium); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='owner'] > [data-dl-part='subscribe'] { display: grid; padding-inline-start: var(--space-3); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='owner-row'] > [data-dl-part='actions'] { display: flex; align-items: center; gap: var(--space-2); margin-block-start: var(--space-1); }
+  /* Description: full width, radius 12, tonal fill, padding 12; first line 14/20 w500, body 14/20 (W-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='description'] { display: grid; margin-block-start: var(--space-3); padding: var(--space-3); border-radius: var(--radius-lg); background: var(--c-chip-fill); font-size: var(--type-body-sm-size); line-height: var(--type-body-sm-leading); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='description'] > [data-dl-part='stats'] { font-weight: var(--weight-medium); }
+  /* Comments 24 below the description: the count's 28 line, the add row 24 below it (a 24 avatar, the underline field from
+     +36, 25 high), threads 32 below that (WC-1280-L: count y59, field y111–136, first thread y168); a 36 avatar (text at +52), author 12/18 w500, text 14/20, 32 actions from 8 before the text (WC-1280-L). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] { display: grid; padding-block-start: var(--space-6); }
+  /* One column (W-720-L): up next between the description and the comments. */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='secondary'] { padding-block-start: var(--space-6); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] { display: flex; align-items: center; gap: var(--space-8); block-size: calc(var(--type-heading-3-size) * var(--type-heading-3-leading)); }
+  /* Sort by sits 3 above the count's centre (WC-1280-L: its ink y63–76 against the count's y66–83). */
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='comments-head'] > [data-dl-part='sort'] { display: inline-flex; margin-block-end: calc(var(--space-1) + var(--space-0-5)); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='add'] { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: var(--space-3); margin-block-start: calc(var(--space-4) + var(--space-0-5)); padding-inline-end: var(--space-4); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] { display: grid; gap: var(--space-4); margin: var(--space-8) 0 0; padding: 0; list-style: none; }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-4); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] { display: grid; gap: var(--space-0-5); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] > [data-dl-part='author'] { display: flex; align-items: baseline; gap: var(--space-1); font-size: var(--type-caption-size); line-height: var(--type-caption-leading); font-weight: var(--weight-medium); }
+  [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='comments'] > [data-dl-part='thread'] > [data-dl-part='comment'] > [data-dl-part='comment-body'] > [data-dl-part='comment-actions'] { display: flex; align-items: center; gap: var(--space-1); margin-inline-start: calc(-1 * var(--space-2)); }
+  /* Up next: rows 8 apart; thumbnail 220 wide (176 + 48 − 4), 16:9, radius 8 (12 − 4); text 12 after it; title 14/20 w500, two lines; meta 12/18 (W-1280-L). */
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] { display: grid; grid-template-columns: calc(var(--size-column-min-s) + var(--space-12) - var(--space-1)) minmax(0, 1fr); align-items: start; gap: var(--space-3); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; --image-radius: calc(var(--radius-lg) - var(--space-1)); border-radius: var(--image-radius); background: var(--color-bg-sunken); }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-1); inset-inline-end: var(--space-1); display: flex; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='next-text'] { display: grid; gap: var(--space-1); }
+  /* Up next's more menu: over the words' end, shown while the row is hovered or holds focus (the reference's own rest state hides it). */
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] { position: relative; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-1)); inset-inline-end: calc(-1 * var(--space-2)); display: grid; opacity: 0; }
+  :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] > [data-dl-part='next'] > [data-dl-part='next-item']:is(:hover, :focus-within) > [data-dl-part='menu'] { opacity: 1; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='empty'] { padding-block: var(--space-6); }
+  /* Search (S-1280-L): x96 beside the mini guide, 1160 wide at 1280 (24 each side); filters a 56 row with Filters at the end;
+     rows 16 apart, frame 500 wide 16:9 radius 10 (read from the corner pixels), words 16 after it. */
+  [data-dl='youtube-results'] { display: grid; align-content: start; isolation: isolate; padding-inline: var(--t-youtube-site-feed-inset); padding-block-end: var(--space-6); }
+  /* The search chips sit 10.5 into the 56 row, 1.5 above its centre (S-1280-L chip y66.5): the row keeps 3 at its foot. */
+  [data-dl='youtube-results'] > [data-dl-part='chips'] { position: sticky; inset-block-start: 0; z-index: var(--layer-raised); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-block-size: var(--size-app-bar-height); padding-block-end: calc(var(--space-1) - var(--space-0-5) / 2); background: var(--color-bg); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] { display: grid; grid-template-columns: minmax(0, 125fr) minmax(0, 161fr); /* frame 500 : words 644 at 1280 (S-1280-L) */ align-items: start; gap: var(--space-4); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='frame'] { position: relative; display: block; aspect-ratio: 16 / 9; --image-radius: var(--radius-md); border-radius: var(--image-radius); background: var(--color-bg-sunken); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='frame'] > [data-dl-part='duration'] { position: absolute; inset-block-end: var(--space-2); inset-inline-end: var(--space-2); display: flex; }
+  /* Words: title 18/26 w400, two lines, the ⋮ menu at its end; views · age 12/18 under it; the channel line padded 12 0 with a 24 avatar and the name 8 after it; the snippet 12/18 (S-1280-L; content keeps it to two lines). */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] { display: grid; min-inline-size: 0; }
+  /* The title's box stops 48 short of the column (S-720-L: 280 of 328); the ⋮ sits in that room, outside it. */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] { position: relative; display: grid; margin-inline-end: var(--space-12); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='title'] > [data-dl-part='menu'] { position: absolute; inset-block-start: calc(-1 * var(--space-2)); inset-inline-end: calc(-1 * var(--space-12)); display: grid; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] { display: flex; align-items: start; gap: var(--space-2); padding-block: var(--space-3); }
+  /* The name sits 4.5 below the avatar's top in a 27 high line (S-1280-L: channel 51 high, avatar +12, name +16.5). */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] > [data-dl-part='name'] { display: grid; padding-block: calc(var(--space-1) + var(--space-0-5) / 4); }
+  /* The snippet stops at two lines, ending in an ellipsis (S-720-L, the reference's line clamp 2). Only the block axis is
+     clipped, so a first glyph's anti-aliasing before the text's edge still shows. */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='snippet'] { display: -webkit-box; overflow-x: visible; overflow-y: clip; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  /* Format marks 8 under the snippet: 4K is 22×18, a hairline #CCCCCC edge, radius 2, 12/18 #606060 words padded 4 (S-1280-L y527–544). */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='badges'] { display: flex; gap: var(--space-1); margin-block-start: var(--space-2); }
+  /* Chapters: a 36 high tonal strip, radius 8, 20 under the marks: a 50×28 frame 8 in, "N chapters" 12/18 w500 12 after it, the
+     titles muted on one line 8 after that, the expand button 8 from the end, its glyph's 14×8 ink at x1225 (S-1280-L x612–1255, y565–600). */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-2); block-size: calc(var(--space-8) + var(--space-1)); margin-block-start: var(--space-5); padding-inline: var(--space-2); border-radius: var(--radius-md); background: var(--color-bg-control); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] > [data-dl-part='chapter-frame'] { inline-size: calc(var(--space-12) + var(--space-0-5)); aspect-ratio: 16 / 9; margin-inline-end: calc(var(--space-1) + var(--space-0-5)); border-radius: var(--radius-sm); background: var(--color-border); }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] > [data-dl-part='chapter-count'] { font-size: var(--type-caption-size); line-height: var(--type-caption-leading); font-weight: var(--weight-medium); white-space: nowrap; }
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'] > [data-dl-part='chapter-titles'] { overflow: hidden; color: var(--color-text-muted); font-size: var(--type-caption-size); line-height: var(--type-caption-leading); white-space: nowrap; text-overflow: ellipsis; }
+  /* Show chapters: the titles wrap to show every chapter. */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='chapters'][data-expanded] > [data-dl-part='chapter-titles'] { white-space: normal; }
+
+  /* Narrow, below the reference's 792 change point (H-720-L, T-720-L, S-720-L, W-720-L): no mini guide (the guide button
+     opens the 240 drawer), content 24 from each edge; the home grid in 2 columns (328 at x24 and x368); search rows a 328
+     frame with the words 16 after it; watch's player full-bleed under the masthead with square corners, the rest 16 in. */
+  @media (max-width: 49.4375rem) {
+    [data-dl='youtube-site'] > [data-dl-part='mini'] { display: none; }
+    /* Masthead (H-720-L): logo box 113 and no column gap; the field 75 after it (x245; the logo box here is 114) and voice search 72 before the end's
+       settings (x439, ending at 479; settings x551.4), so the field shrinks to 114 beside the 64 button. */
+    [data-dl='youtube-site'] > [data-dl-part='masthead'] { column-gap: 0; }
+    [data-dl='youtube-site'] > :is([data-dl-part='masthead'], [data-dl-part='guide']) > :is([data-dl-part='start'], [data-dl-part='head']) > [data-dl-part='wordmark'] { padding-inline-end: 0; }
+    [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] { padding-inline: calc(var(--space-16) + var(--space-3) - var(--border-hairline)) calc(var(--space-16) + var(--space-2)); }
+    [data-dl='youtube-site'] > [data-dl-part='masthead'] > [data-dl-part='center'] > [data-dl-part='search'] { inline-size: 100%; }
+    [data-dl='youtube-feed'] > [data-dl-part='grid'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    [data-dl='youtube-watch'] { padding-block-start: 0; padding-inline: 0; }
+    [data-dl='youtube-watch'] > [data-dl-part='primary'] > :not([data-dl-part='player']),
+    :is([data-dl='youtube-watch'], [data-dl='youtube-watch'] > [data-dl-part='primary']) > [data-dl-part='secondary'] { margin-inline: var(--space-4); }
+    [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { --image-radius: 0px; border-radius: var(--image-radius); }
+  }
 }

@@ -50,6 +50,8 @@
     "--c-icon-fill",
     "--c-icon-stroke-width",
     "--c-list-item-submenu-size",
+    "--c-switch-on-fill",
+    "--color-bg",
     "--color-bg-control",
     "--color-text-muted",
     "--size-icon-lg",

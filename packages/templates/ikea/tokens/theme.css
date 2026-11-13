@@ -115,6 +115,7 @@
     --c-data-table-head-fg: var(--color-text-muted);
     --c-button-link-text: var(--color-text-link);
     --c-button-link-edge: var(--c-button-default-edge);
+    --c-button-strong-text: var(--color-bg);
     --c-skeleton-highlight: var(--color-bg-raised);
     --c-skeleton-radius: var(--radius-sm);
     --c-field-action-fill: var(--c-button-default-fill);
@@ -248,12 +249,16 @@
     --c-button-unavailable-edge: var(--color-border-strong);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
+    --c-field-underline-edge: var(--color-border-control);
     --c-progress-bar-track: var(--color-border-group);
     --c-scroll-area-colour: var(--color-border-strong);
     --c-site-header-current-rule: var(--color-border-strong);
     --c-switch-off-border: var(--color-border-strong);
     --c-switch-off-thumb: var(--color-border-strong);
     --c-button-fill-track: var(--color-map-brand-tint);
+    --c-switch-on-fill: var(--color-map-on-fill);
+    --c-switch-on-fill-hover: var(--color-map-on-fill-hover);
+    --c-switch-on-thumb: var(--color-map-switch-handle);
     --c-switch-spinner: var(--color-map-progress);
     --c-progress-bar-fill: var(--color-map-progress);
     --c-alignment-picker-mark-colour: var(--color-map-drop-target);
@@ -284,6 +289,7 @@
       --c-data-table-head-fg: var(--color-text-muted);
       --c-field-action-edge: var(--c-button-default-edge);
       --c-field-action-fill: var(--c-button-default-fill);
+      --c-field-underline-edge: var(--color-border-control);
       --c-illustration-muted: var(--color-text-muted);
       --c-list-item-submenu-ink: var(--color-text-muted);
       --c-price-was: var(--color-text-muted);
@@ -312,6 +318,7 @@
     --c-data-table-head-fg: var(--color-text-muted);
     --c-field-action-edge: var(--c-button-default-edge);
     --c-field-action-fill: var(--c-button-default-fill);
+    --c-field-underline-edge: var(--color-border-control);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-item-submenu-ink: var(--color-text-muted);
     --c-price-was: var(--color-text-muted);
@@ -339,6 +346,7 @@
     --c-data-table-head-fg: var(--color-text-muted);
     --c-field-action-edge: var(--c-button-default-edge);
     --c-field-action-fill: var(--c-button-default-fill);
+    --c-field-underline-edge: var(--color-border-control);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-item-submenu-ink: var(--color-text-muted);
     --c-price-was: var(--color-text-muted);

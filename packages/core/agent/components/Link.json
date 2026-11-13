@@ -54,6 +54,12 @@
           "description": "Opens in a new browser tab (`target=\"_blank\"`, `rel=\"noopener\"`): shows the new-tab icon with a spoken twin. For something the person keeps beside this page, like a standalone preview."
         },
         {
+          "name": "plain",
+          "type": "boolean",
+          "default": "false",
+          "description": "A whole picture, frame or mark that links (a video's thumbnail, a site's wordmark): a block with no link colour or line at any state; the focus ring stays. Never for words in running text. Its words name it: give a picture-only link a `data-dl-spoken` child."
+        },
+        {
           "name": "onPointerEnter",
           "type": "(event: PointerEvent<HTMLAnchorElement>) => void",
           "description": "The pointer arrives over it (IP9), e.g. to preview the place it goes."
@@ -109,7 +115,8 @@
     "PageHeader",
     "Quote",
     "conference.SponsorWall",
-    "slack.Workspace"
+    "slack.Workspace",
+    "youtube.Site"
   ],
   "principles": [
     "ui-copy"

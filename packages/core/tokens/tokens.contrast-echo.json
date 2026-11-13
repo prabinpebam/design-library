@@ -11,6 +11,16 @@
         "$description": "A point at rest (echoed for contrast contexts)"
       }
     },
+    "badge": {
+      "$extensions": {
+        "owner": "Badge"
+      },
+      "outline-edge": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "An outline badge's hairline edge (emphasis outline: a format mark such as 4K or HD on a media row) (echoed for contrast contexts)"
+      }
+    },
     "button": {
       "$extensions": {
         "owner": "Button"
@@ -154,6 +164,11 @@
         "$type": "color",
         "$value": "{color.border}",
         "$description": "A read-only box: a quieter outline than an editable one (3:1 not required: it takes no input), on the page surface with no fill (echoed for contrast contexts)"
+      },
+      "underline-edge": {
+        "$type": "color",
+        "$value": "{color.border-control}",
+        "$description": "TextField appearance=\"underline\": the one line under the text (no box, fill or radius); the box's edge by default (echoed for contrast contexts)"
       }
     },
     "illustration": {

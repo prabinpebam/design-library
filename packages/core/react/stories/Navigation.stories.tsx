@@ -85,6 +85,25 @@ const nested: NavigationGroup[] = [
   },
 ];
 
+const withIcons: NavigationGroup[] = [
+  {
+    id: 'main',
+    title: 'Main',
+    items: [
+      { id: 'home', label: 'Home', href: '#/navigation', icon: 'home' },
+      { id: 'people', label: 'People', href: '#/navigation', icon: 'people' },
+      { id: 'saved', label: 'Saved', href: '#/navigation', icon: 'bookmark' },
+    ],
+  },
+  {
+    id: 'more',
+    items: [
+      { id: 'settings', label: 'Settings', href: '#/navigation', icon: 'settings' },
+      { id: 'help', label: 'Help', href: '#/navigation', icon: 'help' },
+    ],
+  },
+];
+
 /** The current item follows a press; every item links to this page, so the example can be tried in place. */
 function Live({ initial, ...rest }: Omit<NavigationProps, 'current'> & { initial: string }) {
   const [current, setCurrent] = useState(initial);
@@ -137,6 +156,22 @@ export default {
       description: 'One disclosure that names the page you’re on. Open it to see every page; choosing one closes it.',
       code: `<Navigation groups={tiers} current={page} collapsed open={open} onOpenChange={setOpen} onNavigate={setPage} />`,
       render: () => <Live groups={tiers} initial="button" collapsed />,
+    },
+    {
+      title: 'With icons, groups told apart by space',
+      description: 'Each item leads with an icon. A group without a title has no heading; the space between groups separates them.',
+      code: `<Navigation groups={[{ id: 'main', items: [{ id: 'home', label: 'Home', href, icon: 'home' }, …] }, …]} current={page} onNavigate={setPage} />`,
+      render: () => <Live groups={withIcons} initial="home" />,
+    },
+    {
+      title: 'Mini',
+      description: 'A narrow column of top destinations: each icon over a short label. For a rail beside the content when the full list is folded away.',
+      code: `<Navigation presentation="mini" groups={[{ id: 'top', title: 'Main', items }]} current={page} onNavigate={setPage} />`,
+      render: () => (
+        <div style={{ inlineSize: 'var(--size-control-3xl)' }}>
+          <Live groups={[withIcons[0]]} initial="home" presentation="mini" />
+        </div>
+      ),
     },
   ],
 } satisfies StoryFile;

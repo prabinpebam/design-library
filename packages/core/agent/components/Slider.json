@@ -251,7 +251,8 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/slider",
   "usedBy": [
-    "word.Window"
+    "word.Window",
+    "youtube.Site"
   ],
   "principles": [
     "ui-states"

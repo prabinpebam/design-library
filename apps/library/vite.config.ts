@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { Features } from 'lightningcss';
 import { readdirSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -33,6 +34,9 @@ export default defineConfig({
   base: './',
   // libraryRevisions: the loopback revision API (dev server only); cors off, so no other origin may read it.
   plugins: [react(), libraryRevisions({ repoRoot: root }), librarySourceFiles()],
+  // Keep light-dark() native: the minifier's fallback resolves each token where it's declared (:root, [data-template]), so a
+  // nested [data-scheme] (a dark player, a ContextMatrix dark column) would inherit the outer scheme's colours in a build.
+  css: { lightningcss: { exclude: Features.LightDark } },
   server: { host: '127.0.0.1', port: 8766, strictPort: true, cors: false, fs: { allow: [root, ...(process.env.DL_FS_ALLOW ? [process.env.DL_FS_ALLOW] : [])] } },
   build: { outDir: 'dist', emptyOutDir: true, rollupOptions: { input: { main: join(root, 'apps/library/index.html'), site: join(root, 'apps/library/site.html') } } },
 });

@@ -85,6 +85,12 @@
           "name": "onNavigate",
           "type": "(id: string) => void",
           "description": "Called with an item's `id` when the person follows it, for apps that route on the client. The link still follows its `href`."
+        },
+        {
+          "name": "presentation",
+          "type": "'list' | 'mini'",
+          "default": "'list'",
+          "description": "`mini`: a narrow column of top destinations, each an icon over a short label, with no group headings (a title still names its list). Give every item an icon; families aren't for it."
         }
       ]
     },
@@ -108,6 +114,11 @@
           "type": "string",
           "required": true,
           "description": "Where it goes: a URL or an in-app route."
+        },
+        {
+          "name": "icon",
+          "type": "IconName",
+          "description": "An icon before the words (above them in the mini presentation). Leave it out for words alone."
         }
       ]
     },
@@ -144,8 +155,7 @@
         {
           "name": "title",
           "type": "string",
-          "required": true,
-          "description": "The group's name, shown as a heading above its entries; also names its list for assistive technology."
+          "description": "The group's name, shown as a heading above its entries; also names its list for assistive technology. Leave it out for a group told apart by space alone (a short list of top destinations)."
         },
         {
           "name": "items",
@@ -162,20 +172,33 @@
   "tokens": [
     "--border-hairline",
     "--c-navigation-chevron",
+    "--c-navigation-current-fill",
+    "--c-navigation-current-weight",
     "--c-navigation-group-gap",
+    "--c-navigation-hover-fill",
+    "--c-navigation-icon-gap",
     "--c-navigation-item-gap",
     "--c-navigation-item-padding-inline",
     "--c-navigation-item-radius",
     "--c-navigation-item-size",
+    "--c-navigation-mini-current-fill",
+    "--c-navigation-mini-current-weight",
+    "--c-navigation-mini-gap",
+    "--c-navigation-mini-label-leading",
+    "--c-navigation-mini-label-size",
+    "--c-navigation-mini-padding-block-end",
+    "--c-navigation-mini-padding-block-start",
+    "--c-navigation-mini-padding-inline",
     "--c-navigation-summary-gap",
     "--c-navigation-title-gap",
     "--color-text",
-    "--state-hover",
     "--state-pressed",
-    "--state-selected",
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/navigation",
+  "usedBy": [
+    "youtube.Site"
+  ],
   "principles": [
     "ui-copy"
   ]
