@@ -796,6 +796,22 @@
     outline: none;
   }
 
+  /* LR67: the value on its way. A shimmer line sits where the text will; the input stays over it, empty and read-only. */
+  [data-dl='text-field'][data-loading] [data-dl-part='box'] {
+    position: relative;
+  }
+
+  [data-dl='text-field'][data-loading] [data-dl-part='loading'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+  }
+
+  [data-dl='text-field'][data-loading] input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
   [data-dl='text-field'] input::placeholder {
     color: var(--color-text-muted);
   }

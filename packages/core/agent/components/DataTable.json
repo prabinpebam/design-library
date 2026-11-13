@@ -51,7 +51,6 @@
         {
           "name": "reorderable",
           "type": "boolean",
-          "default": "false",
           "description": "Each row gets a Move handle before its heading cell, as a reorderable List's items do: drag it, or open its menu (Move up, down, to top, to bottom). Rows need a `label`."
         },
         {
@@ -70,6 +69,11 @@
           "type": "'normal' | 'strong'",
           "default": "'normal'",
           "description": "`strong`: each row's heading (the first column) at `c.data-table.row-head-strong-weight`, for a list whose rows are named by it. Default `normal`."
+        },
+        {
+          "name": "loading",
+          "type": "number",
+          "description": "LR65 (opt-in): the table is loading. Its columns and header are drawn as they will be, with this many rows of shimmer lines (core Skeleton) in place of `rows`, so nothing moves when the rows arrive. The table is `aria-busy`; the region around it still says once what is loading."
         }
       ]
     },
@@ -130,7 +134,8 @@
   ],
   "uses": [
     "MenuButton",
-    "ScrollArea"
+    "ScrollArea",
+    "Skeleton"
   ],
   "tokens": [
     "--border-divider",
@@ -148,6 +153,7 @@
     "--color-text",
     "--layer-raised",
     "--shadow-raised",
+    "--size-control-lg",
     "--space-inline-pair",
     "--type-body-sm-size",
     "--type-body-weight",

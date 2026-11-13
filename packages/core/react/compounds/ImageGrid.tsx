@@ -3,6 +3,7 @@ import { Badge, type BadgeTone } from '../fundamentals/Badge';
 import { Checkbox } from '../fundamentals/Checkbox';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
 import { Progress } from '../fundamentals/Progress';
+import { Skeleton } from '../fundamentals/Skeleton';
 import type { PictureReveal } from '../behaviour/reveal';
 import type { DataAttributes } from '../types';
 import { formatDuration, spokenDuration } from './MediaPlayer';
@@ -125,6 +126,12 @@ export interface ImageGridProps extends DataAttributes {
    * land at the end, the end marked while they're over the page. For the one grid a screen fills. Off by default.
    */
   dropFilesAnywhere?: boolean;
+  /**
+   * LR66 (opt-in): the pictures are loading. This many frames of shimmer (core Skeleton, block) stand in the grid's own
+   * layout and ratio in place of `items`, so nothing moves when the pictures arrive. The list is `aria-busy`; the region
+   * around it still says once what is loading.
+   */
+  loading?: number;
 }
 
 type PageDragEvent = globalThis.DragEvent;
@@ -147,7 +154,7 @@ const carriesFiles = (event: { dataTransfer: DataTransfer | null }) => !!event.d
  * @key Tab: the next picture or check box
  * @key Enter, Space: open the picture; Space on a check box chooses it or takes it out
  */
-export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, reorderable, onReorder, onDropFiles, dropFilesAnywhere, ...data }: ImageGridProps) {
+export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, reorderable, onReorder, onDropFiles, dropFilesAnywhere, loading, ...data }: ImageGridProps) {
   const [dragging, setDragging] = useState<string[]>([]);
   // LR55: where the dragged items would land: before this item's id, or `null` for the end; undefined while not over the grid.
   const [drop, setDrop] = useState<string | null | undefined>(undefined);
@@ -271,6 +278,19 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
     }
     onSelect?.(i);
   };
+  if (loading !== undefined) {
+    // LR66: the grid as it will be, its frames in shimmer, so nothing moves when the pictures arrive.
+    const shape = layout === 'standard' ? ratio : layout === 'quilted' ? 'square' : 'photo';
+    return (
+      <ul {...data} data-dl="image-grid" data-layout={layout} data-framed={framed ? '' : undefined} aria-label={label} aria-busy="true">
+        {Array.from({ length: Math.max(1, loading) }, (_, i) => (
+          <li key={i} data-dl-part="item">
+            <Skeleton shape="block" ratio={shape} />
+          </li>
+        ))}
+      </ul>
+    );
+  }
   return (
     <ul
       {...data}

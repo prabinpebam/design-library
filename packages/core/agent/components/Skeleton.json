@@ -34,7 +34,12 @@
           "name": "size",
           "type": "'sm' | 'md' | 'lg'",
           "default": "'md'",
-          "description": "Circle only: an icon (`sm`), an avatar (`md`) or a large picture (`lg`)."
+          "description": "Circle: an icon (`sm`), an avatar (`md`) or a large picture (`lg`). Text (LR73, opt-in): `lg` draws heading-size lines (`c.skeleton.line-lg`), for a title on its way; `sm` and `md` are body lines."
+        },
+        {
+          "name": "ratio",
+          "type": "'wide' | 'photo' | 'classic' | 'square' | 'portrait'",
+          "description": "Block only (LR73, opt-in): the box keeps a picture's ratio, as `Image` and `ImageGrid` do (`wide` 16:9, `photo` 3:2, `classic` 4:3, `square`, `portrait` 4:5), so a picture on its way holds its own shape. Unset, the block fills its box."
         },
         {
           "name": "still",
@@ -50,6 +55,7 @@
     "--c-skeleton-fill",
     "--c-skeleton-highlight",
     "--c-skeleton-line",
+    "--c-skeleton-line-lg",
     "--c-skeleton-radius",
     "--count-shimmer-passes",
     "--duration-shimmer",
@@ -65,7 +71,10 @@
   "usedBy": [
     "Avatar",
     "Persona",
+    "TextField",
     "Card",
+    "DataTable",
+    "ImageGrid",
     "Quote",
     "Sheet",
     "Statistic"

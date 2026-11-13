@@ -105,6 +105,11 @@
           "name": "dropFilesAnywhere",
           "type": "boolean",
           "description": "With `onDropFiles`, files dropped anywhere else on the page (outside a dialog, and not taken by something else first) land at the end, the end marked while they're over the page. For the one grid a screen fills. Off by default."
+        },
+        {
+          "name": "loading",
+          "type": "number",
+          "description": "LR66 (opt-in): the pictures are loading. This many frames of shimmer (core Skeleton, block) stand in the grid's own layout and ratio in place of `items`, so nothing moves when the pictures arrive. The list is `aria-busy`; the region around it still says once what is loading."
         }
       ]
     },
@@ -252,7 +257,8 @@
     "Checkbox",
     "Image",
     "MediaPlayer",
-    "Progress"
+    "Progress",
+    "Skeleton"
   ],
   "tokens": [
     "--c-image-grid-cell",

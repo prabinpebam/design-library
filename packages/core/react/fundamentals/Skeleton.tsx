@@ -5,8 +5,16 @@ export interface SkeletonProps extends DataAttributes {
   shape?: 'text' | 'block' | 'circle';
   /** Text only: how many lines the content usually has. The last of several is shorter, as text is. */
   lines?: number;
-  /** Circle only: an icon (`sm`), an avatar (`md`) or a large picture (`lg`). */
+  /**
+   * Circle: an icon (`sm`), an avatar (`md`) or a large picture (`lg`). Text (LR73, opt-in): `lg` draws heading-size
+   * lines (`c.skeleton.line-lg`), for a title on its way; `sm` and `md` are body lines.
+   */
   size?: 'sm' | 'md' | 'lg';
+  /**
+   * Block only (LR73, opt-in): the box keeps a picture's ratio, as `Image` and `ImageGrid` do (`wide` 16:9, `photo` 3:2,
+   * `classic` 4:3, `square`, `portrait` 4:5), so a picture on its way holds its own shape. Unset, the block fills its box.
+   */
+  ratio?: 'wide' | 'photo' | 'classic' | 'square' | 'portrait';
   /** A silhouette that never shimmers: an empty state's faint picture of the content to come. */
   still?: boolean;
 }
@@ -21,16 +29,16 @@ export interface SkeletonProps extends DataAttributes {
  * @a11y Always `aria-hidden`: the region holding it is `aria-busy` and one status line names the wait. Reduced motion:
  * no shimmer, the shapes stay still.
  */
-export function Skeleton({ shape = 'text', lines = 1, size = 'md', still = false, ...data }: SkeletonProps) {
+export function Skeleton({ shape = 'text', lines = 1, size = 'md', ratio, still = false, ...data }: SkeletonProps) {
   const common = { ...data, 'data-dl': 'skeleton', 'data-shape': shape, 'data-still': still ? '' : undefined, 'aria-hidden': true } as const;
   if (shape === 'text') {
     return (
-      <span {...common}>
+      <span {...common} data-size={size === 'lg' ? 'lg' : undefined}>
         {Array.from({ length: Math.max(1, lines) }, (_, i) => (
           <span key={i} data-dl-part="line" data-last={lines > 1 && i === lines - 1 ? '' : undefined} />
         ))}
       </span>
     );
   }
-  return <span {...common} data-size={shape === 'circle' ? size : undefined} />;
+  return <span {...common} data-size={shape === 'circle' ? size : undefined} data-ratio={shape === 'block' ? ratio : undefined} />;
 }

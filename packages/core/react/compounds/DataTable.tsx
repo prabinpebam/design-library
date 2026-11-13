@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from 'react';
 import { MenuButton } from '../fundamentals/MenuButton';
 import { ScrollArea } from '../fundamentals/ScrollArea';
+import { Skeleton } from '../fundamentals/Skeleton';
 import { dropIndex, moveItem, movesFor } from '../behaviour/reorder';
 import { useFlipList } from '../behaviour/flip';
 import type { DataAttributes } from '../types';
@@ -53,6 +54,12 @@ export interface DataTableProps extends DataAttributes {
   variant?: 'enclosed' | 'plain';
   /** `strong`: each row's heading (the first column) at `c.data-table.row-head-strong-weight`, for a list whose rows are named by it. Default `normal`. */
   rowHeader?: 'normal' | 'strong';
+  /**
+   * LR65 (opt-in): the table is loading. Its columns and header are drawn as they will be, with this many rows of
+   * shimmer lines (core Skeleton) in place of `rows`, so nothing moves when the rows arrive. The table is `aria-busy`;
+   * the region around it still says once what is loading.
+   */
+  loading?: number;
 }
 
 /**
@@ -72,8 +79,13 @@ export interface DataTableProps extends DataAttributes {
  * @key Arrow Left / Arrow Right: scroll the table sideways while its region has focus
  * @key Enter, Space: open a row's Move menu (Move up, Move down, Move to top, Move to bottom)
  */
-export function DataTable({ label, columns, rows, reorderable = false, onReorder, variant = 'enclosed', rowHeader = 'normal', ...data }: DataTableProps) {
+export function DataTable({ label, columns, rows: given, reorderable: canReorder = false, onReorder, variant = 'enclosed', rowHeader = 'normal', loading, ...data }: DataTableProps) {
   const [head, ...rest] = columns;
+  const busy = loading !== undefined;
+  const reorderable = canReorder && !busy;
+  const rows: DataTableRow[] = busy
+    ? Array.from({ length: Math.max(1, loading) }, (_, i) => ({ id: `loading-${i}`, cells: Object.fromEntries(columns.map((c) => [c.key, <Skeleton key={c.key} />])) }))
+    : given;
   const ids = rows.map((r) => r.id);
   const trs = useRef<(HTMLTableRowElement | null)[]>([]);
   const drag = useRef<{ y: number; moved: boolean; id: string } | null>(null);
@@ -139,7 +151,7 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
   );
   if (!head) return null;
   return (
-    <div {...data} data-dl="data-table" data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined} data-row-header={rowHeader === 'strong' ? 'strong' : undefined}>
+    <div {...data} data-dl="data-table" aria-busy={busy || undefined} data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined} data-row-header={rowHeader === 'strong' ? 'strong' : undefined}>
       <ScrollArea axis="inline" label={label}>
       <table>
         <thead>

@@ -136,4 +136,9 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
+
+  /* LR65: a loading row's line keeps a width in a column sized by its content ('fit'), as a short value would. */
+  [data-dl='data-table'][aria-busy] tbody [data-dl='skeleton'] {
+    min-inline-size: var(--size-control-lg);
+  }
 }

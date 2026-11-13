@@ -198,6 +198,11 @@
           "name": "hideLabel",
           "type": "boolean",
           "description": "Hides the visible label where the row already says what it is (an inspector). It still names the field."
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "description": "LR67 (opt-in): the value is on its way. The label and box are drawn as they will be, with a shimmer line (core Skeleton) where the value will sit; the input stays (named, focusable, read-only, `aria-busy`) so nothing moves and nothing can be typed until it arrives. Its region still says once what is loading."
         }
       ]
     },
@@ -325,6 +330,7 @@
     "Icon",
     "MenuButton",
     "Progress",
+    "Skeleton",
     "Text"
   ],
   "tokens": [

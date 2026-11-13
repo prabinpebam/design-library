@@ -408,6 +408,7 @@
   --c-skeleton-fill: var(--color-border);
   --c-skeleton-highlight: var(--color-bg-raised);
   --c-skeleton-line: var(--space-3);
+  --c-skeleton-line-lg: var(--space-6);
   --c-skeleton-radius: var(--radius-sm);
   --c-icon-stroke-width: 2;
   --c-field-measure: var(--size-measure);

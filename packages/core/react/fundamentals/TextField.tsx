@@ -7,6 +7,7 @@ import { Icon } from './Icon';
 import type { FlagCode } from './Flag';
 import { MenuButton } from './MenuButton';
 import { Progress } from './Progress';
+import { Skeleton } from './Skeleton';
 import { Text } from './Text';
 import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
@@ -91,6 +92,12 @@ export interface TextFieldProps extends DataAttributes {
   swatch?: { value: string; onChange: (hex: string) => void };
   /** Hides the visible label where the row already says what it is (an inspector). It still names the field. */
   hideLabel?: boolean;
+  /**
+   * LR67 (opt-in): the value is on its way. The label and box are drawn as they will be, with a shimmer line (core
+   * Skeleton) where the value will sit; the input stays (named, focusable, read-only, `aria-busy`) so nothing moves and
+   * nothing can be typed until it arrives. Its region still says once what is loading.
+   */
+  loading?: boolean;
 }
 
 /** The words a TextField shows and says (IP14). Each defaults to the English shown. */
@@ -156,7 +163,7 @@ const actionSize: Record<ButtonSize, ButtonSize> = { xs: 'xs', s: 'xs', normal: 
  * @key Enter: saves the value now (in a form: submits the form)
  * @key Escape: puts back the stored value (not in a form)
  */
-export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, applied = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, appearance = 'box', ...data }: TextFieldProps) {
+export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, applied = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, appearance = 'box', loading = false, ...data }: TextFieldProps) {
   const form = mode === 'form';
   const { phase, run, reset } = useCommit('--duration-confirm-read');
   const [draft, setDraft] = useState(value);
@@ -240,16 +247,16 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
       id={control.id}
       name={name}
       type={type === 'password' && shown ? 'text' : code ? (masked ? 'password' : 'text') : type}
-      value={draft}
-      placeholder={code ? undefined : placeholder}
+      value={loading ? '' : draft}
+      placeholder={code || loading ? undefined : placeholder}
       disabled={disabled}
-      readOnly={readOnly || pending}
+      readOnly={readOnly || pending || loading}
       maxLength={code ? undefined : maxLength}
       inputMode={keyboard}
       autoComplete={code ? (masked ? 'off' : 'one-time-code') : undefined}
       aria-keyshortcuts={shortcut}
       aria-disabled={pending || undefined}
-      aria-busy={pending || undefined}
+      aria-busy={pending || loading || undefined}
       aria-invalid={invalid || undefined}
       aria-describedby={describe(control)}
       onChange={(event) => {
@@ -264,7 +271,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
         setFocused(false);
         // Moving to this field's own buttons isn't leaving it: those act on the value themselves.
         if (event.currentTarget.closest('[data-dl="text-field"]')?.contains(event.relatedTarget as Node | null)) return;
-        if (editable && (!code || draft.length === length || draft === '')) commit();
+        if (editable && !loading && (!code || draft.length === length || draft === '')) commit();
       }}
       onKeyDown={onKeyDown}
     />
@@ -317,6 +324,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
           {prefix}
         </span>
       )}
+      {loading && <Skeleton data-dl-part="loading" />}
       {field(control)}
       {suffix && (
         <span data-dl-part="affix" id={`${id}-suffix`}>
@@ -328,7 +336,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
           {shortcut}
         </kbd>
       )}
-      {editable && clearable && draft !== '' && !pending && <Button size={actionSize[size]} emphasis="quiet" icon="close" iconOnly label={words.clear ?? `Clear ${label}`} onClick={clear} />}
+      {editable && clearable && draft !== '' && !pending && !loading && <Button size={actionSize[size]} emphasis="quiet" icon="close" iconOnly label={words.clear ?? `Clear ${label}`} onClick={clear} />}
       {editable && type === 'password' && <Button size={actionSize[size]} emphasis="quiet" label={shown ? (words.hide ?? 'Hide') : (words.show ?? 'Show')} onClick={() => setShown(!shown)} />}
       {trailing}
     </span>
@@ -353,7 +361,7 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
   );
 
   return (
-    <span {...data} data-dl="text-field" data-size={size} data-appearance={appearance === 'box' ? undefined : appearance} data-clearable={clearable ? '' : undefined} data-applied={applied ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined}>
+    <span {...data} data-dl="text-field" data-size={size} data-appearance={appearance === 'box' ? undefined : appearance} data-clearable={clearable ? '' : undefined} data-applied={applied ? '' : undefined} data-type={code ? 'code' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined} data-loading={loading ? '' : undefined}>
       <Field
         label={label}
         hint={hint}

@@ -125,11 +125,28 @@
     inline-size: 60%;
   }
 
+  /* LR73: a title on its way, as tall as a heading line. */
+  [data-dl='skeleton'][data-shape='text'][data-size='lg'] [data-dl-part='line'] {
+    block-size: var(--c-skeleton-line-lg);
+  }
+
   [data-dl='skeleton'][data-shape='block'] {
     inline-size: 100%;
     block-size: 100%;
     min-block-size: var(--size-control-lg);
   }
+
+  /* LR73: a picture on its way keeps its ratio (Image's values), whatever its box. */
+  [data-dl='skeleton'][data-shape='block'][data-ratio] {
+    display: block;
+    block-size: auto;
+    min-block-size: 0;
+    aspect-ratio: 3 / 2;
+  }
+  [data-dl='skeleton'][data-shape='block'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
+  [data-dl='skeleton'][data-shape='block'][data-ratio='classic'] { aspect-ratio: 4 / 3; }
+  [data-dl='skeleton'][data-shape='block'][data-ratio='square'] { aspect-ratio: 1; }
+  [data-dl='skeleton'][data-shape='block'][data-ratio='portrait'] { aspect-ratio: 4 / 5; }
 
   [data-dl='skeleton'][data-shape='circle'] {
     flex: none;
