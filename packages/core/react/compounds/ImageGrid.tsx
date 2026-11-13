@@ -25,6 +25,10 @@ export interface ImageGridItem extends SchemeSources {
   href?: string;
   /** The picture's address (for a video, its poster: a still from it). */
   src: string;
+  /** As Image: a second address tried once if the picture fails to load. Default none. */
+  fallbackSrc?: string;
+  /** As Image: cover crops to fill the frame (default); contain keeps the whole picture. */
+  fit?: 'cover' | 'contain';
   /** What the picture shows. Also the name of its button when the grid opens pictures. */
   alt: string;
   /** The picture's own width and height in pixels: `justified` and `masonry` keep its shape from them. */
@@ -359,6 +363,8 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         ) : (
           <Image
             src={item.src}
+            fallbackSrc={item.fallbackSrc}
+            fit={item.fit}
             dark={item.dark}
             contrast={item.contrast}
             alt={opens ? '' : item.alt}

@@ -25,6 +25,11 @@
           "description": "The picture's address."
         },
         {
+          "name": "fallbackSrc",
+          "type": "string",
+          "description": "A second address tried once when a scheme's picture fails; if it also fails, show the existing failure label. Default none."
+        },
+        {
           "name": "alt",
           "type": "string",
           "required": true,

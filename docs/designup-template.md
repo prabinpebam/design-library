@@ -15,6 +15,17 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR112-LR113: whole linked-video posters (13 November 2026)
+
+Decision: DesignUp admin follows personal PhotoGrid.astro:146-147: square frames, whole-image fit. R5 parameter and R7 source-error handling, existing album-of-one/grid, no new block/preset/choice/ink or motion. Image has contain but ImageGridItem cannot forward it; neither has a failed-source URL fallback. Seam steps 1-4 cannot supply the sealed behaviour, and step 5 would duplicate it. Step 6 adds optional item fit and Image fallbackSrc, forwarded through ImageGridItem. Cover and no fallback URL remain defaults. On failure, swap that layer once to the fallback, then show existing failure words if that also fails. DesignUp maps only recognised provider-default posters to maxresdefault and barless mqdefault; explicit custom posters and stored canonical values remain unchanged. Core types/build, consumer linked types/checkpoint build, inspected light/dark captures; generated contracts at checkpoint, deferred stories/regression on merge night.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR112 | 2026-11-13 | Whole posters in square Media tiles | ImageGridItem lacks Image.fit forwarding | 6 | optional ImageGridItem.fit: cover (default) or contain | none | DesignUp Editor41 | core shipped; live consumer verified | this commit | Done: linked Media contain, pictures retain cover |
+| LR113 | 2026-11-13 | Alternate poster source on failure | Image only has a failure label, no fallback URL | 6 | optional Image.fallbackSrc and ImageGridItem.fallbackSrc; once per source | none | DesignUp Editor41 | core shipped; live consumer verified | this commit | Done: core fallback, no template override |
+
+Observed: eight first-page posters load at 1280 by 720 inside unchanged 274 by 274 square links, computed object-fit contain; the Europe and Confessions titles are whole in inspected 1440 light and dark captures. Blocking Day02's primary produces one fallback request and a 320 by 180 image. Blocking both sources produces the existing failure state and no retry loop. The reset uses a layout effect: a passive mount reset erased a fast blocked-source error/retry before it could render. Native Enter still opens the full-area record. Everything keeps contain for linked records and cover for pictures. Core types/build and linked consumer types pass; pinned consumer build follows at the checkpoint.
+
 ### LR111: whole Media tiles navigate (13 November 2026)
 
 Decision: admin R7 navigation and R6 album-of-one previews, no new block/preset/choice or ink. ImageGrid's onSelect only opens a button; no item href (seam steps 1-4 cannot supply link semantics), and a template wrapper would duplicate sealed markup (step 5). Step 6 adds optional ImageGridItem.href, preserving existing button behavior and tile styling by default. A navigating tile is a native link; checkbox controls remain siblings. DesignUp adopts it for its tile-only Media library, replacing onSelect navigation. No public display or layout changes. Typecheck/build, linked consumer typecheck, checkpoint pin/build and focused pointer/keyboard captures; deferred stories/regression on merge night.

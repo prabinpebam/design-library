@@ -150,6 +150,16 @@
           "description": "The picture's address (for a video, its poster: a still from it)."
         },
         {
+          "name": "fallbackSrc",
+          "type": "string",
+          "description": "As Image: a second address tried once if the picture fails to load. Default none."
+        },
+        {
+          "name": "fit",
+          "type": "'cover' | 'contain'",
+          "description": "As Image: cover crops to fill the frame (default); contain keeps the whole picture."
+        },
+        {
           "name": "alt",
           "type": "string",
           "required": true,

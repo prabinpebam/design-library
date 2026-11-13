@@ -7,6 +7,8 @@ import type { DataAttributes } from '../types';
 export interface ImageProps extends DataAttributes {
   /** The picture's address. */
   src: string;
+  /** A second address tried once when a scheme's picture fails; if it also fails, show the existing failure label. Default none. */
+  fallbackSrc?: string;
   /** What the picture shows, for people who can't see it. `""` when it only decorates (the words beside it say it all). */
   alt: string;
   /** Other widths of the same picture, for the browser to pick from (`srcset`). */
@@ -144,6 +146,7 @@ export type PictureTreatment = PictureTone | { rest?: PictureTone; active?: Pict
  */
 export function Image({
   src,
+  fallbackSrc,
   alt,
   srcSet,
   sizes,
@@ -177,17 +180,20 @@ export function Image({
   const wanted = many ? layerFor(layers, region, sources) : 'light';
   const [shown, setShown] = useState<LayerKey>(wanted);
   const [loads, setLoads] = useState<Partial<Record<LayerKey, 'loading' | 'loaded' | 'failed'>>>({});
+  const [retries, setRetries] = useState<Partial<Record<LayerKey, string>>>({});
   const imgs = useRef<Partial<Record<LayerKey, HTMLImageElement | null>>>({});
   const tone = typeof treatment === 'string' ? { rest: treatment } : treatment;
   const rest = tone ? tone.rest ?? 'none' : undefined;
   const active = tone?.active && tone.active !== rest ? tone.active : undefined;
   const files = layers.map((l) => `${l.src} ${l.srcSet ?? ''}`).join('|');
 
-  useEffect(() => {
+  // Reset before a cached or blocked request can settle, so its result or fallback attempt is not erased.
+  useLayoutEffect(() => {
     const now: Partial<Record<LayerKey, 'loading' | 'loaded'>> = {};
     for (const [key, el] of Object.entries(imgs.current)) if (el?.complete && el.naturalWidth > 0) now[key as LayerKey] = 'loaded';
     setLoads(now);
-  }, [files]);
+    setRetries({});
+  }, [files, fallbackSrc]);
 
   // A new scheme: before the first file has loaded, switch at once; after, keep the old file until the new one has.
   useLayoutEffect(() => {
@@ -195,7 +201,7 @@ export function Image({
     if (loads[shown] !== 'loaded' || loads[wanted] === 'loaded' || loads[wanted] === 'failed') setShown(wanted);
   }, [wanted, shown, loads]);
 
-  const settle = (key: LayerKey, result: 'loaded' | 'failed') => setLoads((was) => (was[key] === result ? was : { ...was, [key]: result }));
+  const settle = (key: LayerKey, result: 'loading' | 'loaded' | 'failed') => setLoads((was) => (was[key] === result ? was : { ...was, [key]: result }));
   const state = loads[shown] ?? 'loading';
 
   // MP10: the paired picture is fetched on the first hover or focus of the picture or the link, button or card around it.
@@ -237,6 +243,8 @@ export function Image({
       )}
       {layers.map((layer) => {
         const on = layer.key === shown;
+        const file = `${layer.src} ${layer.srcSet ?? ''}`;
+        const retry = !!fallbackSrc && retries[layer.key] === file;
         // The shown file, the file being readied under it (drawn beneath, so the swap is instant), or one not in use (not drawn, not fetched).
         const role = on ? 'on' : layer.key === wanted ? 'next' : 'off';
         if (on && state === 'failed') return null;
@@ -246,8 +254,8 @@ export function Image({
             ref={(el) => {
               imgs.current[layer.key] = el;
             }}
-            src={layer.src}
-            srcSet={layer.srcSet}
+            src={retry ? fallbackSrc : layer.src}
+            srcSet={retry ? undefined : layer.srcSet}
             sizes={sizes}
             alt={on ? alt : ''}
             aria-hidden={on ? undefined : true}
@@ -258,7 +266,12 @@ export function Image({
             decoding="async"
             data-layer={many ? role : undefined}
             onLoad={() => settle(layer.key, 'loaded')}
-            onError={() => settle(layer.key, 'failed')}
+            onError={() => {
+              if (fallbackSrc && fallbackSrc !== layer.src && !retry) {
+                setRetries(was => ({ ...was, [layer.key]: file }));
+                settle(layer.key, 'loading');
+              } else settle(layer.key, 'failed');
+            }}
           />
         );
       })}
