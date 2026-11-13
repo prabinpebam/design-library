@@ -63,7 +63,7 @@ export interface ImageGridItem extends SchemeSources {
   badges?: ImageGridBadge[];
   /** `video`: the picture is a video's poster, marked as MediaPlayer marks one (a play mark and its length). Default `picture`. */
   kind?: 'picture' | 'video';
-  /** A video's length in seconds, shown on its poster and spoken in its name. */
+  /** A video's length in seconds, shown at the poster's foot (with or without `kind: 'video'`'s play mark) and spoken in its name. */
   duration?: number;
   /**
    * The picture is still arriving (an upload): a Progress bar across the foot of its tile, named "Uploading: " and its
@@ -356,10 +356,11 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         const badges = item.badges?.length ? item.badges : undefined;
         const arriving = item.progress !== undefined;
         const foot = arriving || !!item.status;
-        const marked = selectable || video || !!badges || foot || !!item.blank;
+        const timed = item.duration !== undefined;
+        const marked = selectable || video || timed || !!badges || foot || !!item.blank;
         const opens = !!onSelect || !!item.href;
         const interactive = opens || !!selectable;
-        const name = [item.alt, ...(item.status ? [item.status] : []), ...(badges ?? []).map((b) => b.label), ...(video ? [item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'] : [])].join(', ');
+        const name = [item.alt, ...(item.status ? [item.status] : []), ...(badges ?? []).map((b) => b.label), ...(video ? [item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'] : item.duration ? [spokenDuration(item.duration)] : [])].join(', ');
         const isSelected = !!selectable && selected.includes(item.id);
         const picture = item.blank ? (
           <span data-dl-part="blank" data-ratio={layout === 'standard' ? ratio : 'square'} role={opens ? undefined : 'img'} aria-label={opens ? undefined : item.alt}>
@@ -404,7 +405,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
                 <Badge kind="icon" icon="play" tone="neutral" emphasis="strong" size="l" label={item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'} />
               </span>
             )}
-            {video && item.duration !== undefined && (
+            {timed && item.duration !== undefined && (
               <span data-dl-part="length" aria-hidden="true">
                 <Badge emphasis="strong" tone="neutral" size="s">
                   {formatDuration(item.duration)}
