@@ -213,6 +213,7 @@
     "--c-slider-hit-s",
     "--c-slider-icon-gap",
     "--c-slider-input",
+    "--c-slider-radius",
     "--c-slider-thumb",
     "--c-slider-thumb-l",
     "--c-slider-thumb-s",
@@ -233,7 +234,6 @@
     "--color-text-on-accent",
     "--duration-change",
     "--easing-standard",
-    "--radius-full",
     "--size-focus-offset",
     "--size-focus-width",
     "--space-inline-pair",
@@ -245,6 +245,13 @@
     "--type-label-leading",
     "--type-label-size",
     "--type-label-weight"
+  ],
+  "settings": [
+    {
+      "var": "--c-slider-radius",
+      "default": "999px",
+      "description": "The track's, fill's, thumb's and step dots' corners (default radius.full, round at any shape). Set var(--radius-pill) so a theme's pill-ends choice reaches the slider."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/slider",
   "principles": [

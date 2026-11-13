@@ -605,7 +605,7 @@
     block-size: var(--switch-block);
     padding-inline: calc(var(--switch-inset) - var(--c-switch-border-width));
     border: var(--c-switch-border-width) solid var(--color-border-strong);
-    border-radius: var(--radius-full);
+    border-radius: var(--c-switch-radius);
     background-color: transparent;
     /* Q65 C4: the track's fill and edge interpolate; with reduced motion they still fade while the knob snaps. */
     transition:
@@ -616,7 +616,7 @@
   [data-dl='switch'] [data-dl-part='thumb'] {
     inline-size: var(--switch-thumb);
     block-size: var(--switch-thumb);
-    border-radius: var(--radius-full);
+    border-radius: var(--c-switch-radius);
     background-color: var(--color-border-strong);
     transition:
       translate var(--duration-move) var(--easing-standard),

@@ -117,7 +117,7 @@
     position: absolute;
     inset-block-start: calc(50% - var(--slider-track) / 2);
     block-size: var(--slider-track);
-    border-radius: var(--radius-full);
+    border-radius: var(--c-slider-radius);
   }
 
   [data-dl='slider'] [data-dl-part='track'] {
@@ -138,7 +138,7 @@
     inset-inline-start: calc(var(--slider-thumb) / 2 + (100% - var(--slider-thumb)) * var(--p) - var(--c-slider-tick) / 2);
     inline-size: var(--c-slider-tick);
     block-size: var(--c-slider-tick);
-    border-radius: var(--radius-full);
+    border-radius: var(--c-slider-radius);
     background-color: var(--color-text-muted);
   }
 
@@ -170,7 +170,7 @@
     inset-inline-start: calc((100% - var(--slider-thumb)) * var(--p));
     inline-size: var(--slider-thumb);
     block-size: var(--slider-thumb);
-    border-radius: var(--radius-full);
+    border-radius: var(--c-slider-radius);
     background-color: var(--color-accent);
     /* Q65 Z3: only the thumb's tint eases; its position never does. */
     transition: background-color var(--duration-change) var(--easing-standard);
@@ -181,7 +181,7 @@
     content: '';
     position: absolute;
     inset: calc((var(--slider-thumb) - var(--slider-hit)) / 2);
-    border-radius: var(--radius-full);
+    border-radius: var(--c-slider-radius);
   }
 
   [data-dl='slider'] [data-dl-part='thumb']:focus-visible {

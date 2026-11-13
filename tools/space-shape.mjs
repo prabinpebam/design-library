@@ -26,8 +26,10 @@ const CONFIG = join(SRC, 'space-shape.config.json');
 const OPTIONS = join(SRC, 'space-shape-options.json');
 const BASE_OUT = 'tokens.space-shape.json';
 const VERSION = 'space-shape-config/1';
-/** Tokens allowed to read radius.full: shapes round by nature, which stay round when the theme is sharp. */
-const ROUND_BY_NATURE = new Set(['c.token-specimen.track-radius']);
+/** Tokens allowed to read radius.full: shapes round by nature, which stay round when the theme is sharp. Switch and
+ * slider (DesignUp LR8) default to round ends at every shape, as their CSS always drew them; a theme setting can point
+ * them at radius.pill. */
+const ROUND_BY_NATURE = new Set(['c.token-specimen.track-radius', 'c.switch.radius', 'c.slider.radius']);
 
 const serialise = (/** @type {any} */ tree) => JSON.stringify(tree, null, 2) + '\n';
 const read = (/** @type {string} */ file) => JSON.parse(readFileSync(file, 'utf8'));

@@ -95,6 +95,7 @@
     "--c-switch-border-width",
     "--c-switch-disabled-opacity",
     "--c-switch-gap",
+    "--c-switch-radius",
     "--c-switch-size",
     "--c-switch-size-l",
     "--c-switch-size-s",
@@ -124,7 +125,6 @@
     "--duration-confirm-min",
     "--duration-move",
     "--easing-standard",
-    "--radius-full",
     "--space-inline-pair",
     "--space-stack-pair",
     "--state-hover",
@@ -136,6 +136,13 @@
     "--type-label-compact-leading",
     "--type-label-compact-size",
     "--type-label-compact-weight"
+  ],
+  "settings": [
+    {
+      "var": "--c-switch-radius",
+      "default": "999px",
+      "description": "The track's and thumb's corners (default radius.full, round ends at any shape). Set var(--radius-pill) so a theme's pill-ends choice reaches the switch."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/switch",
   "usedBy": [

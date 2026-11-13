@@ -28,6 +28,12 @@
   "StickyBar": {
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."
   },
+  "Switch": {
+    "--c-switch-radius": "The track's and thumb's corners (default radius.full, round ends at any shape). Set var(--radius-pill) so a theme's pill-ends choice reaches the switch."
+  },
+  "Slider": {
+    "--c-slider-radius": "The track's, fill's, thumb's and step dots' corners (default radius.full, round at any shape). Set var(--radius-pill) so a theme's pill-ends choice reaches the slider."
+  },
   "Image": {
     "--c-image-reveal-duration": "How long a drawn reveal (Image reveal, a template's reveal preset) takes from the picture to its pair (default duration.xslow, 400 ms). A brand whose reveal is a slow effect sets a longer time; reduced motion never draws it.",
     "--c-image-reveal-reduced-duration": "With reduced motion a reveal isn't drawn: the pair crossfades in over the resting tone for this long (default duration.change, 200 ms). A brand whose approved reduced-motion fade is shorter or longer sets it."

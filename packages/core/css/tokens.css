@@ -368,6 +368,7 @@
   --c-button-fill-move: var(--duration-move);
   --c-button-radius: var(--radius-md);
   --c-button-border-width: var(--border-hairline);
+  --c-switch-radius: var(--radius-full);
   --c-switch-track-inline: var(--size-control-md);
   --c-switch-track-block: var(--size-icon-lg);
   --c-switch-thumb: var(--size-icon-sm);
@@ -750,6 +751,7 @@
   --c-chip-media: var(--size-icon-md);
   --c-chip-group-gap: var(--space-inline-pair);
   --c-chip-group-stack: var(--space-stack-pair);
+  --c-slider-radius: var(--radius-full);
   --c-slider-track: var(--size-track);
   --c-slider-track-s: var(--border-thick);
   --c-slider-track-l: var(--size-track-l);

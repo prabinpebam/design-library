@@ -3,6 +3,9 @@ import { Grid } from '../fundamentals/Grid';
 import { Stack } from '../fundamentals/Stack';
 import { Switch, type SwitchProps, type SwitchSize } from '../fundamentals/Switch';
 import type { StoryFile } from './story';
+import { WithSettings } from './WithSettings';
+
+const pillEnds = { '--c-switch-radius': 'var(--radius-pill)' };
 
 /** A setting backed by a save that takes `ms` and either stores the value or fails. */
 function Setting({ label, initial = false, ms = 400, fails = false, ...rest }: { label: string; initial?: boolean; ms?: number; fails?: boolean } & Pick<SwitchProps, 'size' | 'description' | 'labelPosition' | 'disabled' | 'hideLabel'>) {
@@ -111,6 +114,23 @@ export default {
           <Switch label="Location history" checked={false} disabled onChange={() => undefined} />
           <Switch label="Backups" checked disabled onChange={() => undefined} />
         </>
+      ),
+    },
+    {
+      title: 'Pill ends from the theme',
+      description: 'The track and thumb are round at every shape by default. A theme whose pill ends follow its corners sets --c-switch-radius to var(--radius-pill) (a theme setting): here, inside a sharp shape, the switch turns square with the rest of the controls.',
+      code: `applySettings({ '--c-switch-radius': 'var(--radius-pill)' });
+
+<div data-shape="sharp"><Switch label="Wi-Fi" checked onChange={save} /></div>`,
+      render: () => (
+        <div data-shape="sharp">
+          <WithSettings settings={pillEnds}>
+            <Stack gap="item">
+              <Switch label="Wi-Fi" checked onChange={() => undefined} />
+              <Switch label="Bluetooth" checked={false} onChange={() => undefined} />
+            </Stack>
+          </WithSettings>
+        </div>
       ),
     },
   ],

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Slider } from '../fundamentals/Slider';
 import type { StoryFile } from './story';
+import { WithSettings } from './WithSettings';
+
+const pillEnds = { '--c-slider-radius': 'var(--radius-pill)' };
 
 type LiveProps = Omit<Parameters<typeof Slider<number>>[0], 'value' | 'onChange'> & { initial: number };
 
@@ -228,6 +231,20 @@ export default {
       description: 'The value can’t change here; say why nearby.',
       code: `<Slider label="Optical size" min={14} max={32} value={14} disabled onChange={setSize} />`,
       render: () => <Live label="Optical size" min={14} max={32} initial={14} disabled />,
+    },
+    {
+      title: 'Pill ends from the theme',
+      description: 'The track, fill, thumb and step dots are round at every shape by default. A theme whose pill ends follow its corners sets --c-slider-radius to var(--radius-pill) (a theme setting): here, inside a sharp shape, the slider turns square with the rest of the controls.',
+      code: `applySettings({ '--c-slider-radius': 'var(--radius-pill)' });
+
+<div data-shape="sharp"><Slider label="Volume" min={0} max={10} marks value={v} onChange={setV} /></div>`,
+      render: () => (
+        <div data-shape="sharp">
+          <WithSettings settings={pillEnds}>
+            <Live label="Volume" min={0} max={10} marks initial={6} />
+          </WithSettings>
+        </div>
+      ),
     },
   ],
 } satisfies StoryFile;
