@@ -184,9 +184,14 @@
   }
 
   /* LR49. Neutral tone: a row title or meta link that shouldn't shout among many. Muted words over a rule-coloured line;
-     the text colour and a line in it on hover. Still underlined, so never colour alone. */
+     the text colour and a line in it on hover. Underlined at rest even when the theme turns the rest line off, so never
+     colour alone, and a whole target however short (LR53). */
   [data-dl='link'][data-tone='neutral'] {
+    align-items: center;
+    min-block-size: var(--c-link-neutral-target);
+    min-inline-size: var(--c-link-neutral-target);
     color: var(--color-text-muted);
+    text-decoration-line: underline;
     text-decoration-color: var(--color-border);
   }
 

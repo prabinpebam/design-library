@@ -14,7 +14,7 @@ export interface LinkProps extends DataAttributes {
   external?: boolean;
   /** Opens in a new browser tab (`target="_blank"`, `rel="noopener"`): shows the new-tab icon with a spoken twin. For something the person keeps beside this page, like a standalone preview. */
   newTab?: boolean;
-  /** `accent` (default): the link colour. `neutral`: muted words over a quiet line, the text colour on hover; for the titles in a table's rows or meta links, where many accent links would shout. Still underlined. */
+  /** `accent` (default): the link colour. `neutral`: muted words over a quiet line, the text colour on hover; for the titles in a table's rows or meta links, Still underlined, even with the theme's rest line off, and at least `c.link.neutral-target` high and wide. */
   tone?: 'accent' | 'neutral';
   /** The pointer arrives over it (IP9), e.g. to preview the place it goes. */
   onPointerEnter?: (event: PointerEvent<HTMLAnchorElement>) => void;

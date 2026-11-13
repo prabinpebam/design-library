@@ -729,6 +729,7 @@
   --c-page-header-eyebrow-size: var(--size-target);
   --c-page-header-lead-size: var(--text-l);
   --c-page-header-lead-leading: var(--leading-normal);
+  --c-link-neutral-target: var(--size-target);
   --c-section-gap: var(--space-stack-section);
   --c-section-head-gap: var(--space-stack-item);
   --c-section-content-gap: var(--space-stack-group);

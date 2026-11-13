@@ -57,7 +57,7 @@
           "name": "tone",
           "type": "'accent' | 'neutral'",
           "default": "'accent'",
-          "description": "`accent` (default): the link colour. `neutral`: muted words over a quiet line, the text colour on hover; for the titles in a table's rows or meta links, where many accent links would shout. Still underlined."
+          "description": "`accent` (default): the link colour. `neutral`: muted words over a quiet line, the text colour on hover; for the titles in a table's rows or meta links, Still underlined, even with the theme's rest line off, and at least `c.link.neutral-target` high and wide."
         },
         {
           "name": "onPointerEnter",
@@ -88,6 +88,7 @@
   "tokens": [
     "--border-hairline",
     "--border-thick",
+    "--c-link-neutral-target",
     "--color-border",
     "--color-text",
     "--color-text-link",
