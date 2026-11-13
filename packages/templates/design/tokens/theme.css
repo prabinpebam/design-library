@@ -129,6 +129,8 @@
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-alignment-picker-mark-colour: var(--color-accent);
     --c-alignment-picker-hover-fill: var(--state-hover);
+    --c-focal-point-edge: var(--color-text);
+    --c-focal-point-fill: var(--color-bg);
     --c-property-section-divider: var(--color-border);
     --c-canvas-fill: var(--color-bg-sunken);
     --c-canvas-frame-fill: var(--color-bg);
