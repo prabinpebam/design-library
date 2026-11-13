@@ -100,5 +100,7 @@ export declare function mergeCells(grid: PageGridRecord, aId: string, bId: strin
 export declare function pageGridBorders(grid: PageGridRecord, rowId: string, options?: PageGridOptions): PageGridBorder[];
 /** Moves a border by whole columns (positive: towards the end). */
 export declare function resizeBorder(grid: PageGridRecord, rowId: string, border: number, delta: number, options?: PageGridEditOptions): PageGridEdit;
+/** Removes a row with its cells and the sections they place (`sections`: their indexes, for the page to drop). */
+export declare function removeRow(grid: PageGridRecord, rowId: string, options?: PageGridEditOptions): PageGridEdit & { sections: number[] };
 /** Adds an empty one-cell row after or before a row, at the end of a cell's rows, or at the page's end. */
 export declare function addRow(grid: PageGridRecord, where?: { after?: string; before?: string; in?: string }, options?: PageGridEditOptions): PageGridEdit;

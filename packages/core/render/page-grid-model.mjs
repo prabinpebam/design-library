@@ -284,6 +284,22 @@ export function resizeBorder(grid, rowId, border, delta, options = {}) {
 }
 
 /**
+ * Removes a row and everything in it (LR88): its cells, their rows and the sections they place. A cell left with no
+ * rows becomes an empty slot again. `sections` lists the section indexes the row placed, so the page can drop them
+ * from its list (and renumber the rest); the grid still names the others by their old indexes.
+ */
+export function removeRow(grid, rowId, options = {}) {
+  const next = clone(grid);
+  const at = rowsOf(next).find(({ row }) => row.id === rowId);
+  if (!at) return { ...fail(grid, `there's no row "${rowId}"`), sections: [] };
+  const sections = [...pageGridPlacements({ rows: [at.row] }).keys()].sort((a, b) => a - b);
+  at.list.splice(at.index, 1);
+  if (at.parentCell && !at.list.length) delete at.parentCell.rows;
+  const done = finish(grid, next, options);
+  return { ...done, sections: done.problems.length ? [] : sections };
+}
+
+/**
  * Adds an empty row of one cell: after or before a row, at the end of a cell's rows (`in`), or at the page's end.
  * Its gap is the default (section).
  */

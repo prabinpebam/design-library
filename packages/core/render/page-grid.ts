@@ -24,6 +24,7 @@ export {
   pageGridBorders,
   resizeBorder,
   addRow,
+  removeRow,
 } from './page-grid-model.mjs';
 export type {
   PageGridRecord,
