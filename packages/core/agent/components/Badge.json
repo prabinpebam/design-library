@@ -186,6 +186,7 @@
     "Agenda",
     "Board",
     "ColourField",
+    "ImageGrid",
     "MediaPlayer",
     "Notifications",
     "PageHeader",

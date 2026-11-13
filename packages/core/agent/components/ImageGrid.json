@@ -4,19 +4,19 @@
   "tier": "compound",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/compounds/ImageGrid.tsx",
-  "summary": "A set of pictures arranged as one: equal frames, a quilt with features, masonry columns or justified rows. Each layout keeps every column at least `c.image-grid.min` wide and falls to fewer as the place narrows, so nothing scrolls sideways. With `onSelect`, a picture opens (into a Lightbox). For pictures one at a time use Carousel.",
+  "summary": "A set of pictures arranged as one: equal frames, a quilt with features, masonry columns or justified rows. Each layout keeps every column at least `c.image-grid.min` wide and falls to fewer as the place narrows, so nothing scrolls sideways. With `onSelect`, a picture opens (into a Lightbox). With `selectable`, pictures are chosen with a check box each (an album being edited). Items can carry badges, and a video's poster its play mark and length. For pictures one at a time use Carousel.",
   "family": "content",
   "a11y": [
-    "A list named by `label`; each picture keeps its own alternative text. With `onSelect` each is a button named \"Open: \" and the picture's description, in reading order; the focus ring sits inside the picture's corners. Masonry reads down each column, so use it only where order doesn't matter."
+    "A list named by `label`; each picture keeps its own alternative text, followed by its badges and, for a video, \"video\" and its spoken length. With `onSelect` each is a button named \"Open: \" and that name, in reading order; the focus ring sits inside the picture's corners. With `selectable` each has a check box named \"Select: \" and that name, its own Tab stop after the picture's button; the check box carries the choice, the outline only shows it. Masonry reads down each column, so use it only where order doesn't matter."
   ],
   "keys": [
     {
       "keys": "Tab",
-      "action": "the next picture (with `onSelect`)"
+      "action": "the next picture or check box"
     },
     {
       "keys": "Enter, Space",
-      "action": "open the picture"
+      "action": "open the picture; Space on a check box chooses it or takes it out"
     }
   ],
   "sealed": true,
@@ -60,6 +60,36 @@
           "name": "framed",
           "type": "boolean",
           "description": "The pictures carry framing art (items' `under`, `decoration` and `room`): the gap is `--c-image-grid-framed-gap` (default the usual gap; each picture keeps its art in its own box)."
+        },
+        {
+          "name": "selectable",
+          "type": "boolean",
+          "description": "Pictures can be chosen (an editor's album, a picker): each gets a check box at its top start corner, shown while the picture is pointed at or focused and whenever any is chosen (always on touch screens). A press on a picture chooses it alone, Ctrl or Cmd adds or takes it out, Shift chooses the run from the last one chosen; with `onSelect` a plain press opens it instead, and choosing is the check box's (or the modifier keys')."
+        },
+        {
+          "name": "selected",
+          "type": "string[]",
+          "description": "The chosen items' ids (with `selectable`): each gets the selection outline and a checked box."
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "(ids: string[], how: ImageGridSelectionChange) => void",
+          "description": "The chosen ids after a press, with how it was made."
+        }
+      ]
+    },
+    {
+      "interface": "ImageGridBadge",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tone",
+          "type": "BadgeTone",
+          "description": "As Badge's `tone`; the words always say it too. Default `neutral`."
         }
       ]
     },
@@ -71,13 +101,13 @@
           "name": "id",
           "type": "string",
           "required": true,
-          "description": "Stable key."
+          "description": "Stable key. Also what `selected` and `onSelectionChange` name the item by."
         },
         {
           "name": "src",
           "type": "string",
           "required": true,
-          "description": "The picture's address."
+          "description": "The picture's address (for a video, its poster: a still from it)."
         },
         {
           "name": "alt",
@@ -148,20 +178,57 @@
           "name": "room",
           "type": "string",
           "description": "As `Image`: room kept around the picture for its art, so the art stays in the item's own box."
+        },
+        {
+          "name": "badges",
+          "type": "ImageGridBadge[]",
+          "description": "Badges at the picture's top end corner, read after its description."
+        },
+        {
+          "name": "kind",
+          "type": "'picture' | 'video'",
+          "description": "`video`: the picture is a video's poster, marked as MediaPlayer marks one (a play mark and its length). Default `picture`."
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "description": "A video's length in seconds, shown on its poster and spoken in its name."
+        }
+      ]
+    },
+    {
+      "interface": "ImageGridSelectionChange",
+      "props": [
+        {
+          "name": "range",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "name": "toggle",
+          "type": "boolean",
+          "required": true
         }
       ]
     }
   ],
   "uses": [
-    "Image"
+    "Badge",
+    "Checkbox",
+    "Image",
+    "MediaPlayer"
   ],
   "tokens": [
     "--c-image-grid-cell",
     "--c-image-grid-framed-gap",
     "--c-image-grid-gap",
     "--c-image-grid-hover-opacity",
+    "--c-image-grid-mark-gap",
+    "--c-image-grid-mark-inset",
     "--c-image-grid-min",
     "--c-image-grid-row",
+    "--c-image-grid-selection",
+    "--c-image-grid-selection-width",
     "--c-image-radius",
     "--color-focus",
     "--size-focus-offset",

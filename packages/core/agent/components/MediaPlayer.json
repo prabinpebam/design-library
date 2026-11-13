@@ -155,6 +155,9 @@
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/mediaplayer",
+  "usedBy": [
+    "ImageGrid"
+  ],
   "principles": [
     "visual-noise"
   ]

@@ -10,6 +10,34 @@ const fourColumns = { '--c-image-grid-cell': 'max(8rem, calc((100% - 3 * var(--c
 const shapes: [number, number][] = [[640, 360], [480, 640], [640, 480], [600, 600], [640, 360], [400, 600], [640, 427]];
 const photos = scenes.map((s, i) => ({ id: `p${i}`, src: s.src, alt: s.alt, width: shapes[i][0], height: shapes[i][1] }));
 
+const marked = photos.slice(0, 4).map((p, i) => ({
+  ...p,
+  ...(i === 0 ? { badges: [{ label: 'Cover' }] } : {}),
+  ...(i === 2 ? { badges: [{ label: 'Needs a description', tone: 'warning' as const }] } : {}),
+  ...(i === 3 ? { kind: 'video' as const, duration: 95 } : {}),
+}));
+
+function Choosing({ initial, opens }: { initial: string[]; opens?: boolean }) {
+  const [ids, setIds] = useState(initial);
+  const [last, setLast] = useState('');
+  return (
+    <>
+      <ImageGrid
+        label="The album’s pictures"
+        items={marked}
+        selectable
+        selected={ids}
+        onSelectionChange={(next, how) => {
+          setIds(next);
+          setLast(how.range ? 'a run' : how.toggle ? 'one in or out' : 'one alone');
+        }}
+        onSelect={opens ? (i) => setLast(`opened picture ${i + 1}`) : undefined}
+      />
+      <Text variant="body-sm" tone="muted">{`${ids.length} chosen${last ? `, last: ${last}` : ''}.`}</Text>
+    </>
+  );
+}
+
 function Opening() {
   const [opened, setOpened] = useState<number | null>(null);
   return (
@@ -104,6 +132,32 @@ export default {
           <ImageGrid layout="quilted" label="Photos from the trip" items={photos.slice(0, 6).map((p, i) => ({ ...p, span: i === 0 ? ('large' as const) : undefined }))} />
         </WithSettings>
       ),
+    },
+    {
+      title: 'Badges and videos',
+      description:
+        'An item’s badges sit at its top end corner: a word or two the set’s owner should see at a glance, read after its description. A video’s poster (kind video) carries MediaPlayer’s marks: a play mark in the middle and its length at the bottom end, and its name ends “video” and the spoken length.',
+      code: `<ImageGrid label="…" items={[{ …, badges: [{ label: 'Cover' }] }, { …, badges: [{ label: 'Needs a description', tone: 'warning' }] }, { …, kind: 'video', duration: 95 }]} />`,
+      render: () => <ImageGrid label="The album’s pictures" items={marked} />,
+    },
+    {
+      title: 'Choosing pictures: none chosen',
+      description:
+        'With selectable each picture has a check box at its top start corner, named “Select:” and the picture’s name. It shows while the picture is pointed at or focused (always on touch screens). A press chooses the picture alone; Ctrl or Cmd adds it or takes it out; Shift chooses the run from the last one chosen.',
+      code: `<ImageGrid selectable selected={ids} onSelectionChange={(next, { range, toggle }) => setIds(next)} label="…" items={photos} />`,
+      render: () => <Choosing initial={[]} />,
+    },
+    {
+      title: 'Choosing pictures: one chosen',
+      description: 'The chosen picture has the selection outline inside its edge and a checked box; once any is chosen every check box shows.',
+      code: `<ImageGrid selectable selected={['p1']} onSelectionChange={…} label="…" items={photos} />`,
+      render: () => <Choosing initial={['p1']} />,
+    },
+    {
+      title: 'Choosing pictures: several chosen, pictures that open',
+      description: 'With onSelect too, a plain press opens the picture and choosing is the check box’s (or Ctrl, Cmd and Shift). The open action and the choice never get in each other’s way.',
+      code: `<ImageGrid selectable selected={ids} onSelectionChange={…} onSelect={(i) => open(i)} label="…" items={photos} />`,
+      render: () => <Choosing initial={['p0', 'p2', 'p3']} opens />,
     },
   ],
 } satisfies StoryFile;

@@ -1005,6 +1005,10 @@
   --c-image-grid-cell: 8rem;
   --c-image-grid-row: 12rem;
   --c-image-grid-hover-opacity: 0.85;
+  --c-image-grid-mark-inset: var(--space-2);
+  --c-image-grid-mark-gap: var(--space-1);
+  --c-image-grid-selection: var(--color-accent);
+  --c-image-grid-selection-width: var(--border-thick);
   --c-lightbox-padding: var(--space-4);
   --c-lightbox-gap: var(--space-stack-item);
   --c-lightbox-side-gap: var(--space-inline-item);

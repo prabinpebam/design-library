@@ -117,6 +117,9 @@
     "--type-label-weight"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/checkbox",
+  "usedBy": [
+    "ImageGrid"
+  ],
   "principles": [
     "ui-states"
   ]

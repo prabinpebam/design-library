@@ -59,8 +59,8 @@ export function formatDuration(seconds: number) {
   return h ? `${h}:${pad(m)}:${pad(s % 60)}` : `${m}:${pad(s % 60)}`;
 }
 
-/** 635 → "10 minutes 35 seconds", for the play button's name. */
-function spokenDuration(seconds: number) {
+/** 635 → "10 minutes 35 seconds", for the play button's name (and ImageGrid's video tiles). */
+export function spokenDuration(seconds: number) {
   const s = Math.max(0, Math.round(seconds));
   const parts: [number, string][] = [
     [Math.floor(s / 3600), 'hour'],

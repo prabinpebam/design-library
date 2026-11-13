@@ -46,7 +46,7 @@
     position: relative;
   }
 
-  [data-dl='image-grid'][data-layout='quilted'] > [data-span] > :is([data-dl='image'], [data-dl-part='open']) {
+  [data-dl='image-grid'][data-layout='quilted'] > [data-span] > :is([data-dl='image'], [data-dl-part='open'], [data-dl-part='tile']) {
     position: absolute;
     inset: 0;
   }
@@ -105,6 +105,77 @@
   @media (hover: hover) {
     [data-dl='image-grid'] [data-dl-part='open']:hover [data-dl='image'] > img {
       opacity: var(--c-image-grid-hover-opacity);
+    }
+  }
+
+  /*
+   * LR35 marks (an album being edited): a picture with a check box, badges or a video's marks becomes a tile, one cell
+   * holding the picture and its marks; items without marks are drawn exactly as before.
+   */
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) {
+    display: grid;
+    grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+    border-radius: var(--c-image-radius);
+  }
+
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > * {
+    grid-area: 1 / 1;
+  }
+
+  [data-dl='image-grid'][data-layout='justified'] > [data-dl-part='item'] > [data-dl-part='tile'] {
+    block-size: 100%;
+  }
+
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > :is([data-dl-part='top'], [data-dl-part='length'], [data-dl-part='play']) {
+    display: flex;
+    gap: var(--c-image-grid-mark-gap);
+    margin: var(--c-image-grid-mark-inset);
+    pointer-events: none;
+  }
+
+  /* The top row: the check box at the start, badges at the end; a long badge wraps rather than covering the box. */
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='top'] {
+    place-self: start stretch;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='top'] > [data-dl-part='check'] {
+    flex: none;
+    pointer-events: auto;
+  }
+
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='top'] > [data-dl-part='marks'] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--c-image-grid-mark-gap);
+    min-inline-size: 0;
+    margin-inline-start: auto;
+  }
+
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='length'] {
+    place-self: end end;
+  }
+
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='play'] {
+    place-self: center;
+  }
+
+  /* Shown on the chosen picture, inside its edge so the focus ring outside it stays clear. */
+  :is([data-dl='image-grid'] > [data-selected] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-selected] > [data-dl='figure'] > [data-dl-part='tile'])::after {
+    content: '';
+    grid-area: 1 / 1;
+    border: var(--c-image-grid-selection-width) solid var(--c-image-grid-selection);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* The check boxes appear while a picture is pointed at or focused, and all of them once any is chosen. */
+  @media (hover: hover) {
+    :is([data-dl='image-grid'][data-selectable]:not([data-selecting]) > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'][data-selectable]:not([data-selecting]) > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']):not(:hover, :focus-within) > [data-dl-part='top'] > [data-dl-part='check'] {
+      opacity: 0;
     }
   }
 }
