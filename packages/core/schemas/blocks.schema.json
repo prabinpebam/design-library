@@ -1003,7 +1003,7 @@
       "additionalProperties": false
     },
     "media": {
-      "description": "Pictures as one block (owner, DesignUp 2026-11-13 02:36): one picture (`picture`), or an album (`album`) shown by a presentation and its variant. `single`: the picture (or the album's first) with its caption. `grid`: ImageGrid, variant standard (default), quilted (with `spans`), masonry or justified. `carousel`: Carousel, variant one (default), peek, few or thumbnails. More presentations come as new values. Replaces `gallery`.",
+      "description": "Pictures as one block (owner, DesignUp 2026-11-13 02:36): one picture (`picture`), or an album (`album`) shown by a presentation and its variant. `single`: the picture (or the album's first) with its caption. `grid`: ImageGrid, variant standard (default), quilted (with `spans`), masonry or justified. `carousel`: Carousel, variant one (default), peek, few or thumbnails. More presentations come as new values. Replaces `gallery`, and a prose picture item (LR24): one picture between prose blocks is a media block.",
       "type": "object",
       "required": ["type"],
       "properties": {
@@ -1144,7 +1144,7 @@
       "additionalProperties": false
     },
     "prose": {
-      "description": "An article's body as structured items: no markup.",
+      "description": "An article's body as structured items, no markup: headings, paragraphs, quotes from a source, lists and code, the text kinds that read as one run (LR24). Pictures are placed on the page: a media block (one picture) or an illustration block between prose blocks; a picture item is deprecated and still drawn.",
       "type": "object",
       "required": [
         "type",
@@ -1220,6 +1220,8 @@
                 "additionalProperties": false
               },
               {
+                "deprecated": true,
+                "description": "Deprecated (LR24): place a picture on the page with a media block (one picture) or an illustration block between prose blocks. Still drawn.",
                 "properties": {
                   "kind": {
                     "const": "picture"

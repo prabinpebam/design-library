@@ -79,6 +79,10 @@ export type ProseItem =
   | { kind: 'heading'; text: RichText }
   | { kind: 'text'; text: RichText }
   | { kind: 'quote'; text: string; name?: string }
+  /**
+   * @deprecated (LR24, composition rule) Pictures are placed on the page: a `media` block (one `picture`, `caption`,
+   * `ratio`, `frame`) between prose blocks, or an `illustration` block for drawn art. Still drawn.
+   */
   | { kind: 'picture'; picture: string; caption: string; /** Decoration over the picture (MP9, LR20): a template decoration preset's name. A list of blocks is deprecated. */ decoration?: Decoration }
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; label: string; code: string };
