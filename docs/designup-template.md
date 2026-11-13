@@ -21,7 +21,9 @@ DesignUp's inspected talk editor overlaps at 1024 pixels. R7 generic layout beha
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR122 | 2026-11-14 | Readable one-line admin header at narrower desktop widths | AppLayout header slots both shrink; Breadcrumbs always wraps | 6 | opt-in compactHeader; headerEnd compact render seam; Breadcrumbs truncate | none | Editor41 | open | | Adopt in DesignUp AdminFrame and ShellTrail; no workaround |
+| LR122 | 2026-11-14 | Readable one-line admin header at narrower desktop widths | AppLayout header slots both shrink; Breadcrumbs always wraps | 6 | opt-in compactHeader; headerEnd compact render seam; Breadcrumbs truncate | none | Editor41 | shipped | b796ffd; DesignUp pin du.13d7a4d0 | Done: adopted in AdminFrame and ShellTrail; no workaround |
+
+Observed: DesignUp's talk editor keeps the trail eight CSS pixels before its save status at measured 1024/1440 widths in both schemes. The narrow trail ellipsizes while keeping its full accessible name/title; only pending-count words yield, and they return at 1440. The save label remains one line and keyboard navigation still works. Four captures inspected; core types/build, current generated contracts, consumer linked types/pinned build and static validation pass. Defaults remain opt-in. Agent-contract parity for the final LR120 source landed in the same checkpoint (`13d7a4d`).
 
 ### LR120: a tile's type as one small corner mark (14 November 2026)
 
