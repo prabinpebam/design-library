@@ -205,3 +205,4 @@
     [data-dl='youtube-watch'] > [data-dl-part='primary'] > [data-dl-part='player'] { --image-radius: 0px; border-radius: var(--image-radius); }
   }
 }
+[data-dl='youtube-feed'] > [data-dl-part='grid'] > [data-dl-part='empty'] { grid-column: 1 / -1; padding-block: var(--space-6); }

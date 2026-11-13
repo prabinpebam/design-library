@@ -7,6 +7,8 @@ export interface YoutubeGuideEntry {
   current?: boolean;
   /** Also shown in the mini guide (the 72 wide column of icons over short labels). */
   mini?: boolean;
+  /** The videos (by id) this destination's feed shows; leave it out on the first entry to show every video. A destination with neither is not built and says so. */
+  videos?: string[];
 }
 /** A guide section: an optional heading over its destinations, or a short signed-out prompt with a sign-in action. */
 export interface YoutubeGuideSection {

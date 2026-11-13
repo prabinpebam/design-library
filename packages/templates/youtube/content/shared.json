@@ -8,20 +8,20 @@
     "guide": [
       { "id": "main", "entries": [
         { "label": "Home", "icon": "home", "mini": true, "current": true },
-        { "label": "Clips", "icon": "video", "mini": true },
-        { "label": "Subscriptions", "icon": "people", "mini": true }
+        { "label": "Clips", "icon": "video", "mini": true, "videos": ["v3", "v8", "v9"] },
+        { "label": "Subscriptions", "icon": "people", "mini": true, "videos": ["v1", "v7", "v4", "v10"] }
       ] },
       { "id": "you", "entries": [
-        { "label": "You", "icon": "person", "mini": true },
-        { "label": "History", "icon": "clock" }
+        { "label": "You", "icon": "person", "mini": true, "videos": ["v2", "v6", "v11"] },
+        { "label": "History", "icon": "clock", "videos": ["v6", "v2", "v11", "v4"] }
       ] },
       { "id": "sign-in", "prompt": "Sign in to like videos, leave comments and follow channels." },
       { "id": "explore", "title": "Explore", "entries": [
-        { "label": "Trending", "icon": "trend-up" },
-        { "label": "Music", "icon": "headphones" },
-        { "label": "Live", "icon": "globe" },
-        { "label": "Sports", "icon": "ball" },
-        { "label": "Learning", "icon": "lightbulb" }
+        { "label": "Trending", "icon": "trend-up", "videos": ["v4", "v2", "v6", "v12"] },
+        { "label": "Music", "icon": "headphones", "videos": ["v6", "v11"] },
+        { "label": "Live", "icon": "globe", "videos": ["v5"] },
+        { "label": "Sports", "icon": "ball", "videos": ["v12", "v8"] },
+        { "label": "Learning", "icon": "lightbulb", "videos": ["v4", "v10", "v6"] }
       ] },
       { "id": "more", "entries": [
         { "label": "Settings", "icon": "settings" },
@@ -114,6 +114,7 @@
       "captions": "Subtitles",
       "theatre": "Theatre mode",
       "fullscreen": "Full screen",
+      "exitFullscreen": "Exit full screen",
       "upNext": "Up next",
       "comments": "Comments",
       "sortBy": "Sort by",

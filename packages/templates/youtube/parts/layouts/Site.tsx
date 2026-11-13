@@ -79,7 +79,7 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
   const start: ReactNode = (
     <>
       <Button label={c.guide} icon="menu" iconOnly emphasis="quiet" onClick={() => setToggled(!toggled)} />
-      <Link plain data-dl-part="wordmark" href={href('home')}>
+      <Link plain data-dl-part="wordmark" href={href('home')} current={screen === 'home' && !params?.feed}>
         <span data-dl-part="mark" aria-hidden="true"><Icon name="play" size="sm" /></span>
         <span data-dl-part="word">{view.wordmark}</span>
         <span data-dl-spoken> {c.home}</span>
@@ -87,9 +87,12 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
     </>
   );
   const mini = view.guide.flatMap((s) => s.entries?.filter((e) => e.mini) ?? []);
-  const item = (e: { label: string; icon: string }) => ({ id: slug(e.label), label: e.label, href: href('home'), icon: contentIcons.of(e.icon) });
-  const current = view.guide.flatMap((s) => s.entries ?? []).find((e) => e.current);
+  // Each guide destination is a feed of the home screen (`home?feed=<id>`); the first entry is the whole feed.
+  const item = (e: { label: string; icon: string; current?: boolean }) => ({ id: slug(e.label), label: e.label, href: href(e.current ? 'home' : `home?feed=${slug(e.label)}`), icon: contentIcons.of(e.icon) });
+  const entries = view.guide.flatMap((s) => s.entries ?? []);
+  const current = (screen === 'home' && params?.feed && entries.find((e) => slug(e.label) === params.feed)) || entries.find((e) => e.current);
   const currentId = current && slug(current.label);
+  const feed = current?.current ? view.videos : view.videos.filter((v) => current?.videos?.includes(v.id));
 
   return (
     <div {...data} data-dl="youtube-site" data-screen={screen} data-guide={toggled ? 'toggled' : undefined} data-scheme={scheme === 'device' ? undefined : scheme}>
@@ -146,7 +149,8 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
               <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
             </div>
             <ul data-dl-part="grid" aria-label={c.feed}>
-              {view.videos.filter((v) => !hidden.includes(v.id)).map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} picture={thumb(v)} face={face(v)} onAction={(a) => onVideo(v, a)} /></li>)}
+              {feed.length === 0 && <li data-dl-part="empty"><Text variant="body-sm" tone="muted">{c.notBuilt}</Text></li>}
+              {feed.filter((v) => !hidden.includes(v.id)).map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} picture={thumb(v)} face={face(v)} onAction={(a) => onVideo(v, a)} /></li>)}
             </ul>
           </div>
         </ScrollArea>
@@ -215,6 +219,12 @@ function Watch({ view, href, video: chosen, thumb, face, onVideo }: { view: Yout
   const [sort, setSort] = useState<'top' | 'newest'>('top');
   const comments = sort === 'top' ? w.comments : [...w.comments].sort((a, b) => ageDays(a.age) - ageDays(b.age));
   const player = useRef<HTMLDivElement>(null);
+  const [full, setFull] = useState(false);
+  useEffect(() => {
+    const follow = () => setFull(document.fullscreenElement === player.current);
+    document.addEventListener('fullscreenchange', follow);
+    return () => document.removeEventListener('fullscreenchange', follow);
+  }, []);
   // One column (W-720-L): up next moves between the description and the comments, in reading order too.
   const [oneColumn, setOneColumn] = useState(narrowWatch);
   useEffect(() => {
@@ -264,7 +274,7 @@ function Watch({ view, href, video: chosen, thumb, face, onVideo }: { view: Yout
                 <span data-dl-part="slot"><Button label={c.captions} icon={playerIcons.name('player-captions')} iconOnly emphasis="quiet" tone="inherit" pressed={captions} onClick={() => setCaptions(!captions)} /></span>
                 <span data-dl-part="slot"><MenuButton label={c.settings} icon={playerIcons.name('player-settings')} iconOnly emphasis="quiet" tone="inherit" side="block" onSelect={(v) => setSpeed(v.slice(6))} items={[{ value: 'speed', label: c.speed, meta: speed === '1' ? c.normal : speed, items: speeds.map((x) => ({ value: `speed-${x}`, label: x === '1' ? c.normal : x, checked: x === speed })) }]} /></span>
                 <span data-dl-part="slot"><Button label={c.theatre} icon={playerIcons.name('player-theatre')} iconOnly emphasis="quiet" tone="inherit" onClick={() => notify({ subject: 'player', message: c.notBuilt })} /></span>
-                <span data-dl-part="slot"><Button label={c.fullscreen} icon={playerIcons.name('player-fullscreen')} iconOnly emphasis="quiet" tone="inherit" onClick={() => void (document.fullscreenElement ? document.exitFullscreen() : player.current?.requestFullscreen?.())} /></span>
+                <span data-dl-part="slot"><Button label={full ? c.exitFullscreen : c.fullscreen} icon={playerIcons.name('player-fullscreen')} iconOnly emphasis="quiet" tone="inherit" onClick={() => void (document.fullscreenElement ? document.exitFullscreen() : player.current?.requestFullscreen?.())} /></span>
               </div>
             </div>
             </IconOverrides>

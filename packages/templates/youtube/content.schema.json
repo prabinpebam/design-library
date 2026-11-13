@@ -52,6 +52,13 @@
         "mini": {
           "description": "Also shown in the mini guide (the 72 wide column of icons over short labels).",
           "type": "boolean"
+        },
+        "videos": {
+          "description": "The videos (by id) this destination's feed shows; leave it out on the first entry to show every video. A destination with neither is not built and says so.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "required": [
