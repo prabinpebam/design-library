@@ -288,6 +288,8 @@ export interface RenderContext {
   state?: string;
   /** The address of another layout of this template, as the host serves it. */
   href: (layout: string) => string;
+  /** Values the address names after its `?` (`#/app/{template}/watch?v=v2`): which record the layout shows. Empty when it names none. */
+  params?: Record<string, string>;
   /** A picture by its asset id (an unknown id gives an empty source and alt, which the check prevents). */
   picture: (id: string) => TemplateAsset;
   /** Renders blocks through the registry: core blocks, then the template's own. */

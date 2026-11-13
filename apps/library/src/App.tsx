@@ -21,6 +21,7 @@ import { capture } from './revisions/capture';
 import { resolveTarget } from './revisions/resolve';
 import { PAGES, componentSources, rev } from './revisions/target';
 import { layoutScreens } from './views/templates';
+import { splitRoute } from '@design-library/core/render';
 import { layoutOf } from './data/templates';
 
 /** A page section's owning sources: the page data, plus the component and its stories on component pages. */
@@ -320,7 +321,7 @@ export function App() {
   const [expanded, setExpanded] = useExpanded('design-library.nav-expanded', familyPathOf(navGroups, page?.id));
 
   // A template's layout opens as its own standalone site (Q63): the old full-screen address goes there.
-  const screen = route.startsWith('app/') ? layoutScreens[route.slice(4)] : undefined;
+  const screen = route.startsWith('app/') ? layoutScreens[splitRoute(route.slice(4)).path] : undefined;
   useEffect(() => {
     if (screen) window.location.replace(`site.html#/${route}`);
   }, [screen, route]);

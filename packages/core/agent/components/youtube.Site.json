@@ -35,6 +35,11 @@
           "name": "href",
           "type": "(layout: string) => string",
           "description": "The address of one of this template's layouts (`home`, `watch`, `search`) in its host, the library or the standalone site."
+        },
+        {
+          "name": "params",
+          "type": "Record<string, string>",
+          "description": "The address's values: `v` is the video the watch page plays (the content's `watch.video` when it names none)."
         }
       ]
     }

@@ -12,6 +12,6 @@ import './parts/layouts/site.css';
 export const registry: Template['registry'] = {
   blocks: {},
   layouts: {
-    SiteLayout: ({ shared, ctx }) => <Site view={shared?.record as unknown as YoutubeRecord} screen={ctx.layout} href={ctx.href} />,
+    SiteLayout: ({ shared, ctx }) => <Site view={shared?.record as unknown as YoutubeRecord} screen={ctx.layout} href={ctx.href} params={ctx.params} />,
   },
 };

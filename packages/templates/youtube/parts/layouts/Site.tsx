@@ -16,6 +16,8 @@ export interface SiteProps extends DataAttributes {
   screen?: string;
   /** The address of one of this template's layouts (`home`, `watch`, `search`) in its host, the library or the standalone site. */
   href?: (layout: string) => string;
+  /** The address's values: `v` is the video the watch page plays (the content's `watch.video` when it names none). */
+  params?: Record<string, string>;
 }
 
 /**
@@ -27,7 +29,7 @@ export interface SiteProps extends DataAttributes {
  * @family youtube
  * @a11y A banner with search, a named guide navigation, and one main landmark holding the filters and the feed.
  */
-export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`, ...data }: SiteProps) {
+export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`, params, ...data }: SiteProps) {
   const c = view.copy;
   const [query, setQuery] = useState(screen === 'search' ? view.search.query : '');
   const [chip, setChip] = useState([view.chips[0] ?? '']);
@@ -94,14 +96,14 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
         </ScrollArea>
       </nav>
       <main data-dl-part="main">
-        {screen === 'watch' ? <Watch view={view} href={href} /> : screen === 'search' ? <Search view={view} href={href} /> : (
+        {screen === 'watch' ? <Watch key={params?.v} view={view} href={href} video={params?.v} /> : screen === 'search' ? <Search view={view} href={href} /> : (
         <ScrollArea label={c.feed}>
           <div data-dl="youtube-feed">
             <div data-dl-part="chips">
               <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
             </div>
             <ul data-dl-part="grid" aria-label={c.feed}>
-              {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href('watch')} /></li>)}
+              {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} /></li>)}
             </ul>
           </div>
         </ScrollArea>
@@ -149,10 +151,10 @@ function VideoCard({ video, copy: c, to }: { video: YoutubeVideo; copy: Record<s
 }
 
 /** The watch page (W-1280-L): the player, title, owner row with actions, description and comments; up next beside it. */
-function Watch({ view, href }: { view: YoutubeRecord; href: (layout: string) => string }) {
+function Watch({ view, href, video: chosen }: { view: YoutubeRecord; href: (layout: string) => string; video?: string }) {
   const c = view.copy;
   const w = view.watch;
-  const video = view.videos.find((v) => v.id === w.video) ?? view.videos[0];
+  const video = view.videos.find((v) => v.id === (chosen ?? w.video)) ?? view.videos[0];
   const next = view.videos.filter((v) => v.id !== video.id);
   const [seek, setSeek] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
@@ -171,7 +173,7 @@ function Watch({ view, href }: { view: YoutubeRecord; href: (layout: string) => 
         {next.map((v) => (
           <li key={v.id} data-dl-part="next-item">
             <div data-dl-part="frame">
-              <Link plain data-dl-part="link" href={href('watch')}><span data-dl-spoken>{v.title}</span></Link>
+              <Link plain data-dl-part="link" href={href(`watch?v=${v.id}`)}><span data-dl-spoken>{v.title}</span></Link>
               <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
             </div>
             <div data-dl-part="next-text">
@@ -296,7 +298,7 @@ function Search({ view, href }: { view: YoutubeRecord; href: (layout: string) =>
           {results.map(({ v, snippet, badges, chapters }) => (
             <li key={v.id} data-dl-part="result">
               <div data-dl-part="frame">
-                <Link plain data-dl-part="link" href={href('watch')}><span data-dl-spoken>{v.title}</span></Link>
+                <Link plain data-dl-part="link" href={href(`watch?v=${v.id}`)}><span data-dl-spoken>{v.title}</span></Link>
                 <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
               </div>
               <div data-dl-part="text">
