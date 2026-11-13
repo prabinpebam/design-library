@@ -195,11 +195,14 @@ for (const file of tsx) {
     if (!wordsAllowed(m[1], file)) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `"${m[1]}" is written in code: put it in content JSON or a prop (Never 8)`);
   for (const m of text.matchAll(/\b(label|title|alt|placeholder|hint|aria-label|description)\s*=\s*"([^"{}]*[A-Za-z]{2,}[^"{}]*)"/g))
     if ((/\s/.test(m[2]) || /^[A-Z]/.test(m[2])) && !wordsAllowed(m[2], file)) add('warning', 'words-in-code', file, lineAt(text, m.index ?? 0), `${m[1]}="${m[2]}" is written in code: read it from content (Never 8)`);
-  // A binary setting is a Switch by default (Q121, Q124). A toggle button (Button or IconButton with `pressed`) or a
-  // standalone Checkbox (not inside a CheckboxGroup) needs a reason in a comment within the three lines above it:
-  // `{/* binary-setting: <why a Switch doesn't fit> */}` (`toggle-button:` is accepted too). Established icon-toggle
-  // patterns need none (Q125): visibility (eye) and lock, recognised by their icon (eye, eye-off, lock, unlock) or a
-  // name starting Show, Hide, Lock or Unlock.
+  // A control must look like what it does (Q160, refining Q121, Q124, Q125): a Switch for plain on/off, a
+  // SegmentedControl for one of several, and a toggle button (Button or IconButton with `pressed`) only for an
+  // established pattern people already know. Those pass with no reason, recognised by their icon or a name that starts
+  // with the action: play/pause, mute/unmute, light/dark, show/hide (eye), lock/unlock, formatting such as Bold. Any
+  // other pressed button, and a standalone Checkbox (not inside a CheckboxGroup), needs a reason in a comment within
+  // the three lines above it: `{/* binary-setting: <why it reads as a toggle here> */}` (`toggle-button:` is accepted
+  // too). A button that states its action and changes its label ("List view" -> "Tiles view") has no `pressed`: it's a
+  // call to action, not a toggle, and isn't checked.
   const lines = text.split('\n');
   for (const m of text.matchAll(/<(Button|IconButton|Checkbox)\b(?!Group)/g)) {
     let i = (m.index ?? 0) + m[0].length;
@@ -220,11 +223,11 @@ for (const file of tsx) {
       const before = text.slice(0, m.index ?? 0);
       if (before.lastIndexOf('<CheckboxGroup') > before.lastIndexOf('</CheckboxGroup>')) continue;
     }
-    if (!checkbox && /['"`](eye|eye-off|eye-closed|lock|unlock|lock-open)['"`]|(label|aria-label)\s*=\s*\{?\s*[`'"](Show|Hide|Lock|Unlock)\b/.test(attrs)) continue;
+    if (!checkbox && /['"`](eye|eye-off|eye-closed|lock|unlock|lock-open|play|pause|volume|volume-off|volume-mute|mute|unmute|sun|moon|theme|bold|italic|underline|strikethrough)['"`]|(label|aria-label)\s*=\s*\{?\s*[`'"](Show|Hide|Lock|Unlock|Play|Pause|Mute|Unmute|Light|Dark|Bold|Italic|Underline|Strikethrough)\b/.test(attrs)) continue;
     const line = lineAt(text, m.index ?? 0);
     const above = lines.slice(Math.max(0, line - 4), line).join('\n');
     if (!/(binary-setting|toggle-button):\s*[^\s*/}][^\n]{9,}/.test(above))
-      add('error', 'toggle-justification', file, line, `${checkbox ? 'a standalone Checkbox' : `a toggle button (${m[1]} with pressed)`} without a reason: Switch is the default for a binary setting; if a ${checkbox ? 'checkbox' : 'toggle button'} fits better (a dense inspector, a toolbar, a list item's done state, consent), write why in a comment on the line above: {/* binary-setting: <why a Switch doesn't fit> */}. Visibility (eye) and lock toggles need none`);
+      add('error', 'toggle-justification', file, line, `${checkbox ? 'a standalone Checkbox' : `a toggle button (${m[1]} with pressed)`} without a reason: a control must look like what it does (Q160). Use a Switch for plain on/off, a SegmentedControl for one of several, or a button that states its action ("List view" -> "Tiles view"); a toggle button only for an established pattern (play/pause, mute, light/dark, show/hide, lock, Bold), which needs no reason. Otherwise write why it reads as a toggle here, on the line above: {/* binary-setting: <why> */}`);
   }
 }
 // Page-specific code (DP19, DR35): with a site document, a route compared in code is a page the data can't describe.
