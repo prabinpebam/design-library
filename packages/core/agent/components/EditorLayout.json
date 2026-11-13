@@ -178,6 +178,12 @@
           "type": "boolean",
           "default": "false",
           "description": "LR72 (opt-in): what's put in the working area takes its full width (and height), whatever it is: a screen of content, a loading state's wrapper. Off, a child sizes itself (a Canvas or ScrollArea already fills it)."
+        },
+        {
+          "name": "endFill",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR104 (opt-in): the end panel's content fills the panel from top to bottom (an inspector): its content area takes the panel's height and what's in it grows to fill it (with Tabs `fill` and SectionedForm `fill` down the chain)."
         }
       ]
     }

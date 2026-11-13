@@ -35,4 +35,17 @@
     gap: var(--c-sectioned-form-gap);
     min-inline-size: 0;
   }
+
+  /* LR104 fill: the form takes its panel's height; in two columns the list (and its divider) runs the full height. */
+  [data-dl='sectioned-form'][data-fill] {
+    flex: 1 1 auto;
+  }
+
+  [data-dl='sectioned-form'][data-fill][data-columns='two'] {
+    align-items: stretch;
+  }
+
+  [data-dl='sectioned-form'][data-fill] > [data-dl-part='sections'] {
+    align-content: start;
+  }
 }

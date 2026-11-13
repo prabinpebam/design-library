@@ -53,6 +53,8 @@ export interface TabsProps extends DataAttributes {
   size?: 'xs' | 's' | 'normal';
   /** The space between the tabs and the panel: `group` (default, `c.tabs.panel-gap`) or `section` (`c.tabs.panel-gap-section`), for panels that hold grouped sections (an inspector's PropertySections), so the space around the groups is never smaller than the space inside them. */
   gap?: 'group' | 'section';
+  /** LR104 (opt-in): the panel takes the rest of the tabs' height (an inspector filling its panel), its content growing with it. */
+  fill?: boolean;
 }
 
 /**
@@ -87,6 +89,7 @@ export function Tabs({
   extra,
   size = 'normal',
   gap = 'group',
+  fill = false,
   ...data
 }: TabsProps) {
   const id = useId();
@@ -194,7 +197,7 @@ export function Tabs({
 
   const panel = items.find((i) => i.id === current);
   return (
-    <div {...data} ref={slide.root as unknown as Ref<HTMLDivElement>} {...slide.input} data-dl="tabs" data-orientation={orientation} data-size={size} data-gap={gap === 'section' ? 'section' : undefined}>
+    <div {...data} ref={slide.root as unknown as Ref<HTMLDivElement>} {...slide.input} data-dl="tabs" data-orientation={orientation} data-size={size} data-gap={gap === 'section' ? 'section' : undefined} data-fill={fill ? '' : undefined}>
       <div data-dl-part="bar">
         {strip(
         <div data-dl-part="list" ref={list} role="tablist" aria-label={label} aria-orientation={orientation} onKeyDown={onKey}>

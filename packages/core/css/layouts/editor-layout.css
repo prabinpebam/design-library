@@ -204,6 +204,23 @@
   [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='work'] { min-inline-size: var(--dl-work-min); }
   [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { flex-shrink: 1; }
 
+  /* LR104 endFill: the end panel's content fills the panel top to bottom, and its last part grows (an inspector's Tabs). */
+  [data-dl='editor-layout'][data-end-fill] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] {
+    display: flex;
+    flex-direction: column;
+    min-block-size: 100%;
+  }
+
+  [data-dl='editor-layout'][data-end-fill] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='panel-content'] {
+    flex: 1 1 auto;
+  }
+
+  [data-dl='editor-layout'][data-end-fill] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='panel-content'] > :last-child {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
   /* LR72 workFill: the working area's own content (not its corner toggles or tools) takes its full width and height. */
   [data-dl='editor-layout'][data-work-fill] > [data-dl-part='body'] > [data-dl-part='work'] > :not([data-dl-part]) {
     flex: 1 1 0;

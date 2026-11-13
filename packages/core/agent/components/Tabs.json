@@ -96,6 +96,12 @@
           "type": "'group' | 'section'",
           "default": "'group'",
           "description": "The space between the tabs and the panel: `group` (default, `c.tabs.panel-gap`) or `section` (`c.tabs.panel-gap-section`), for panels that hold grouped sections (an inspector's PropertySections), so the space around the groups is never smaller than the space inside them."
+        },
+        {
+          "name": "fill",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR104 (opt-in): the panel takes the rest of the tabs' height (an inspector filling its panel), its content growing with it."
         }
       ]
     },

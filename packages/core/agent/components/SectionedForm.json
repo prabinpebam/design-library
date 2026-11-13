@@ -70,6 +70,12 @@
           "name": "mark",
           "type": "'check' | 'fill'",
           "description": "How the list shows the chosen section: `check` (default) a check over the fill; `fill` the fill alone (the section beside it already says which)."
+        },
+        {
+          "name": "fill",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR104 (opt-in): the form fills its panel from top to bottom (an inspector): it takes the height its container gives it, the list of sections runs the full height beside the chosen one, and the chosen section's fields start at the top."
         }
       ]
     },

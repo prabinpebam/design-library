@@ -166,6 +166,21 @@
     min-inline-size: 0;
   }
 
+  /* LR104 fill: the panel takes the rest of the height and its content grows with it (an inspector filling its panel). */
+  [data-dl='tabs'][data-fill] {
+    flex: 1 1 auto;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  [data-dl='tabs'][data-fill] > [data-dl-part='panel'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  [data-dl='tabs'][data-fill] > [data-dl-part='panel'] > * {
+    flex: 1 1 auto;
+  }
+
   /* Q68: the Button size scale's dense sizes, for a narrow panel (an inspector): smaller text, padding and height. */
   [data-dl='tabs']:is([data-size='xs'], [data-size='s']) [data-dl-part='tab'] {
     padding-inline: var(--c-tabs-item-padding-inline-sm);
