@@ -155,6 +155,11 @@
       "extends": "ButtonBase",
       "props": [
         {
+          "name": "current",
+          "type": "boolean",
+          "description": "It shows a view in place (a sidebar row, a pane's tab-like place) and that view is shown now (`aria-current=\"page\"`): pressing it again rightly changes nothing."
+        },
+        {
           "name": "onClick",
           "type": "() => void",
           "description": "An action with no saved result to confirm (open, close, cancel, retry, export)."

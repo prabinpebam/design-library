@@ -66,7 +66,8 @@ interface ButtonBase extends DataAttributes {
 
 interface ActionButton extends ButtonBase {
   href?: never;
-  current?: never;
+  /** It shows a view in place (a sidebar row, a pane's tab-like place) and that view is shown now (`aria-current="page"`): pressing it again rightly changes nothing. */
+  current?: boolean;
   /** An action with no saved result to confirm (open, close, cancel, retry, export). */
   onClick?: () => void;
   /** The action it started is still running elsewhere (an export, a sync): shows in progress and ignores presses until false. */
@@ -276,6 +277,7 @@ export function Button(props: ButtonProps) {
       disabled={disabled}
       aria-disabled={pending || !!unavailable || undefined}
       aria-busy={pending || undefined}
+      aria-current={current ? 'page' : undefined}
       aria-label={iconOnly ? name : undefined}
       aria-describedby={[unavailable && reasonId, filling && valueId].filter(Boolean).join(' ') || undefined}
       aria-expanded={expanded}

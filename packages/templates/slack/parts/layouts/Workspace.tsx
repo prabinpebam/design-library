@@ -1782,6 +1782,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                           emphasis="quiet"
                           align="start"
                           tone="inherit"
+                          current={slackbotNav === navIt.id}
                           onClick={() => setSlackbotNav(navIt.id)}
                         />
                       </div>
@@ -1837,6 +1838,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     align="start"
                     emphasis="quiet"
                     tone="inherit"
+                    current={activePage === 'welcome-back'}
                     onClick={() => setActivePage('welcome-back')}
                   />
                   <span data-dl-part="welcome-chevron" aria-hidden="true">

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type Ref } from 'react';
 import { Button } from '../fundamentals/Button';
 import { Chip } from '../fundamentals/Chip';
 import { Icon } from '../fundamentals/Icon';
@@ -70,6 +70,8 @@ export interface ComposerProps extends DataAttributes {
   onDictate?: () => void;
   /** One quiet line under the box, centred: "Answers can be wrong. Check important facts." */
   disclaimer?: string;
+  /** The message box itself, e.g. to put the cursor back in it when a new chat starts. */
+  inputRef?: Ref<HTMLTextAreaElement>;
 }
 
 /**
@@ -105,6 +107,7 @@ export function Composer({
   onToolChange,
   onDictate,
   disclaimer,
+  inputRef,
   ...data
 }: ComposerProps) {
   const picker = useRef<HTMLInputElement>(null);
@@ -245,6 +248,7 @@ export function Composer({
         onEnter={send}
         tray={tray}
         toolbar={toolbar}
+        inputRef={inputRef}
       />
       {onAttach && (
         <input

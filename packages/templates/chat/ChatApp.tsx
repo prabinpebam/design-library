@@ -260,9 +260,14 @@ export function ChatApp({ view, height, picture, open: opening }: ChatAppProps) 
     setTemporary(false);
     if (narrow()) setSidebarOpen(false);
   };
+  const box = useRef<HTMLTextAreaElement>(null);
   const newChat = () => {
     setCurrent('');
+    setText('');
+    setAttachments([]);
     if (narrow()) setSidebarOpen(false);
+    // Already on a new chat, it still answers: an empty box with the cursor in it.
+    requestAnimationFrame(() => box.current?.focus());
   };
 
   const reply = (threadId: string, blocks: ChatBlock[]): Turn => {
@@ -406,6 +411,7 @@ export function ChatApp({ view, height, picture, open: opening }: ChatAppProps) 
       onToolChange={setTool}
       onDictate={() => notify({ message: fill(s.notInExample, { label: s.dictation }) })}
       disclaimer={view.disclaimer}
+      inputRef={box}
     />
   );
 

@@ -120,6 +120,11 @@
           "name": "disclaimer",
           "type": "string",
           "description": "One quiet line under the box, centred: \"Answers can be wrong. Check important facts.\""
+        },
+        {
+          "name": "inputRef",
+          "type": "Ref<HTMLTextAreaElement>",
+          "description": "The message box itself, e.g. to put the cursor back in it when a new chat starts."
         }
       ]
     },

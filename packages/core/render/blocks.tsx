@@ -19,12 +19,13 @@ const illustrationOf = (ctx: RenderContext, id: string, ratio?: TemplateAsset['r
 
 type Of<T extends CoreBlock['type']> = Extract<CoreBlock, { type: T }>;
 
-export const actionButtons = (list: SiteAction[] | undefined, size?: 's') =>
+/** Site actions as Buttons. Given the layout shown, an action that leads to it says so (`current`), like a place. */
+export const actionButtons = (list: SiteAction[] | undefined, size?: 's', shown?: string) =>
   list?.length ? (
     <>
       {list.map((a) => (
         a.href !== undefined ? (
-          <Button key={a.label} label={a.label} emphasis={a.primary ? 'primary' : 'default'} size={size} href={a.href} />
+          <Button key={a.label} label={a.label} emphasis={a.primary ? 'primary' : 'default'} size={size} href={a.href} current={!!shown && a.href.endsWith(`/${shown}`) ? true : undefined} />
         ) : (
           <Button key={a.label} label={a.label} emphasis={a.primary ? 'primary' : 'default'} size={size} onClick={() => notify({ message: a.says })} />
         )
@@ -335,14 +336,14 @@ export const BLOCKS: { [T in CoreBlock['type']]: BlockRenderer<Of<T>> } = {
         href={b.places[0].href}
         mark={b.mark ? <Icon name={b.mark} /> : undefined}
         links={b.places.map((p) => ({ label: p.label, href: p.href, current: p.href.endsWith(`/${current}`) }))}
-        actions={b.actions ? <Cluster gap="item">{actionButtons(b.actions, 's')}</Cluster> : undefined}
+        actions={b.actions ? <Cluster gap="item">{actionButtons(b.actions, 's', ctx.layout)}</Cluster> : undefined}
       />
     );
   },
   'site-footer': (b, ctx, i) => {
-    // Like the header's places, a footer link to the page shown (its place or the layout itself) says so (aria-current).
-    const current = String(ctx.settings.current ?? '');
-    const mark = (l: FooterLink) => ({ ...l, current: (!!current && l.href.endsWith(`/${current}`)) || l.href.endsWith(`/${ctx.layout}`) });
+    // A footer link to the page shown says so (aria-current). Only the layout itself counts: settings.current names the
+    // header's place (a section), and a footer link to that section's front page still leads somewhere else.
+    const mark = (l: FooterLink) => ({ ...l, current: l.href.endsWith(`/${ctx.layout}`) });
     return <Footer key={i} sectionsLabel={b.sectionsLabel} sections={b.sections.map((s) => ({ ...s, links: s.links.map(mark) }))} links={b.links.map(mark)} identity={b.identity} legal={b.legal} />;
   },
   // Q88–Q91: a hero declared standalone (a brand opening) is the page's stage, or a feature further down; any other
