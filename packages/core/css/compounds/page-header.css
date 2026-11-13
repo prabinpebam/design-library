@@ -21,12 +21,12 @@
 
   @media (hover: hover) {
     [data-dl='page-header'] [data-dl-part='eyebrow']:hover [data-dl='badge'] {
-      text-decoration: underline;
+      text-decoration-line: var(--link-decoration-hover);
     }
   }
 
   [data-dl='page-header'] [data-dl-part='eyebrow']:active [data-dl='badge'] {
-    text-decoration: underline;
+    text-decoration-line: var(--link-decoration-hover);
   }
 
   [data-dl='page-header'] [data-dl-part='lead'] {

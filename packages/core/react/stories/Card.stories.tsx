@@ -9,6 +9,9 @@ import { Progress } from '../fundamentals/Progress';
 import { Stack } from '../fundamentals/Stack';
 import { scenes } from './scenes';
 import type { StoryFile } from './story';
+import { WithSettings } from './WithSettings';
+
+const noLines = { '--link-decoration': 'none', '--link-decoration-hover': 'none' };
 
 const picture = (i: number) => <img src={scenes[i].src} alt={scenes[i].alt} />;
 
@@ -176,6 +179,21 @@ export default {
       description: 'Press Load: the same card keeps its place while its content arrives under the shimmer, which then fades away; nothing shifts or dims. Press again to see it load once more.',
       code: `<Card loading={!ready} media={…} title="Morning over the hills" … />`,
       render: () => <LoadsIn />,
+    },
+    {
+      title: 'No line on hover',
+      description: 'A brand that draws no link lines sets link.decoration-hover to none: a linked card’s title then keeps its words plain when pointed at, and the hairline and focus ring still say it is one link. Underline stays the default.',
+      code: `applySettings({ '--link-decoration': 'none', '--link-decoration-hover': 'none' });
+
+<Card href="…" media={…} title="Morning over the hills" meta="12 Mar · 6 km" />`,
+      render: () => (
+        <WithSettings settings={noLines} contents>
+          <Grid max={3}>
+            <Card href="#/card" media={picture(0)} title="Morning over the hills" meta="12 Mar · 6 km" />
+            <Card href="#/card" media={picture(2)} title="The ridge at night" meta="2 Feb · 4 km" />
+          </Grid>
+        </WithSettings>
+      ),
     },
   ],
 } satisfies StoryFile;

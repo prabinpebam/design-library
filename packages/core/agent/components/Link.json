@@ -97,7 +97,7 @@
     {
       "var": "--link-decoration-hover",
       "default": "underline",
-      "description": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour."
+      "description": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour. Also the hover line of a linked card's title, a page header's eyebrow, an agenda's titles and a board's names (LR7)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/link",

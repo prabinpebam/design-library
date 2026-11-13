@@ -136,6 +136,7 @@
     "--color-focus",
     "--color-text",
     "--color-text-muted",
+    "--link-decoration-hover",
     "--radius-sm",
     "--size-focus-width",
     "--type-body-sm-leading",

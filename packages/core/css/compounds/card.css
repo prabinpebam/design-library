@@ -161,7 +161,7 @@
 
   @media (hover: hover) {
     [data-dl='card'][data-linked]:hover > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='heading'] > [data-dl='heading'] > [data-dl-part='link'] {
-      text-decoration: underline;
+      text-decoration-line: var(--link-decoration-hover);
     }
 
     [data-dl='card'][data-linked][data-variant='outlined']:hover {

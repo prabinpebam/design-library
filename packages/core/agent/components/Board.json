@@ -143,6 +143,7 @@
     "--color-focus",
     "--color-text",
     "--color-text-muted",
+    "--link-decoration-hover",
     "--radius-sm",
     "--size-focus-width",
     "--size-target-dense",

@@ -136,12 +136,12 @@
 
   @media (hover: hover) {
     [data-dl='board'] [data-dl-part='name'] a:hover {
-      text-decoration: underline;
+      text-decoration-line: var(--link-decoration-hover);
     }
   }
 
   [data-dl='board'] [data-dl-part='name'] a:active {
-    text-decoration: underline;
+    text-decoration-line: var(--link-decoration-hover);
   }
 
   [data-dl='board'] [data-dl-part='end'] {

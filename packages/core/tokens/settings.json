@@ -57,7 +57,7 @@
   },
   "Link": {
     "--link-decoration": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus.",
-    "--link-decoration-hover": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour."
+    "--link-decoration-hover": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour. Also the hover line of a linked card's title, a page header's eyebrow, an agenda's titles and a board's names (LR7)."
   },
   "Heading": {
     "--type-display-size": "The display step's size: Hero and page titles, Heading size=\"display\" and Statistic's large value (default text.xxxxl, 3.5rem). A token (var(--text-…)) or a length.",

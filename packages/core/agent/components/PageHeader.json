@@ -101,7 +101,8 @@
     "--c-page-header-lead-leading",
     "--c-page-header-lead-size",
     "--c-page-header-measure",
-    "--color-text"
+    "--color-text",
+    "--link-decoration-hover"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/pageheader",
   "principles": [

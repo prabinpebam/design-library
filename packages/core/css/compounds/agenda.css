@@ -83,12 +83,12 @@
 
   @media (hover: hover) {
     [data-dl='agenda'] [data-dl-part='title'] a:hover {
-      text-decoration: underline;
+      text-decoration-line: var(--link-decoration-hover);
     }
   }
 
   [data-dl='agenda'] [data-dl-part='title'] a:active {
-    text-decoration: underline;
+    text-decoration-line: var(--link-decoration-hover);
   }
 
   [data-dl='agenda'] [data-dl-part='description'],
