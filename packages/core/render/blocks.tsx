@@ -4,7 +4,7 @@
  * its own (namespaced) types in its registry; it never replaces these.
  */
 import { Fragment, useEffect, useState, type ReactNode } from 'react';
-import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Carousel, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Link, List, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
+import { Accordion, Agenda, Alert, Avatar, Breadcrumbs, Button, Card, Carousel, Frame, Cluster, CodeBlock, DescriptionList, EmptyState, Footer, Grid, Heading, Hero, Icon, Illustration, Image, ImageGrid, Lightbox, Link, List, MediaPlayer, Morph, NumberField, Pagination, Persona, Quote, RadioGroup, Reveal, Section, Select, SiteHeader, Stack, Statistic, Switch, Tabs, Text, TextArea, TextField, notify } from '../react/components';
 import { fill } from './fill';
 import { richText } from './rich-text';
 import type { Block, BlockRenderer, CoreBlock, Decoration, RenderContext, MediaFrame, MediaReveal, MediaSpan, SectionTitleSize, SiteAction, SiteEmpty, SiteField, SiteLink, TemplateAsset } from './types';
@@ -329,7 +329,21 @@ const framing = (frame: MediaFrame | undefined, index: number, count: number) =>
 
 /** The media block (owner, DesignUp 2026-11-13 02:36): one picture, or an album by its presentation and variant. */
 function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
+  return <MediaBlockView key={i} block={b} ctx={ctx} at={i} />;
+}
+
+function MediaBlockView({ block: b, ctx, at: i }: { block: Of<'media'>; ctx: RenderContext; at: number }) {
+  const [open, setOpen] = useState<number | null>(null);
+  const [slide, setSlide] = useState(0);
   const items = b.album ? b.album.items : [{ picture: b.picture, caption: b.caption, credit: b.credit, reveal: b.reveal }];
+  const videos = items.map(item => 'video' in item ? item.video : undefined);
+  const hasVideo = videos.some(Boolean);
+  const player = (n: number, caption?: string) => {
+    const video = videos[n];
+    if (!video) return undefined;
+    const poster = pictureProps(ctx, items[n].picture, items[n].alt);
+    return <MediaPlayer key={`${n}-${JSON.stringify(video.source)}`} {...video} poster={poster.src} posterAlt={poster.alt} caption={caption} />;
+  };
   const requested = b.presentation ?? (b.album ? 'grid' : 'single');
   const label = b.label ?? b.album?.title ?? b.heading ?? (items[0] ? pictureProps(ctx, items[0].picture).alt : '');
   let body: ReactNode;
@@ -349,7 +363,7 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
       depth: b.depth,
       pictures: items.map((item, n) => {
         const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-        return { id: String(n), ...p, caption: item.caption, credit: item.credit };
+        return { id: String(n), ...p, caption: item.caption, credit: item.credit, ...(videos[n] ? { video: videos[n] } : {}) };
       }),
     });
   } else if (presentation === 'grid') {
@@ -357,16 +371,23 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
     const ratio = GRID_RATIOS.find((r) => r === b.ratio);
     const frame = FRAMED_GRIDS.has(layout) ? frameOf(ctx, b.frame) : undefined;
     body = (
+      <Fragment>
       <ImageGrid
         label={label}
         layout={layout}
         ratio={ratio}
         framed={!!frame}
+        onSelect={hasVideo ? setOpen : undefined}
         items={items.map((item, n) => {
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-          return { id: String(n), ...p, ...framing(frame, n, count), caption: item.caption, credit: item.credit, span: layout === 'quilted' ? spanAt(b.spans, n) : undefined };
+          return { id: String(n), ...p, ...framing(frame, n, count), caption: item.caption, credit: item.credit, span: layout === 'quilted' ? spanAt(b.spans, n) : undefined,
+            ...(videos[n] ? { kind: 'video' as const, fit: 'contain' as const, duration: videos[n].duration } : {}) };
         })}
       />
+      {hasVideo && <Lightbox label={label} index={open} onIndexChange={setOpen} onClose={() => setOpen(null)}
+        items={items.map((item, n) => ({ id: String(n), ...pictureProps(ctx, item.picture, item.alt), caption: item.caption }))}
+        renderItem={(_item, n) => player(n)} />}
+      </Fragment>
     );
   } else if (presentation === 'carousel') {
     const view = CAROUSEL_VARIANTS[b.variant === 'peek' ? 'peek' : b.variant === 'few' ? 'few' : b.variant === 'thumbnails' ? 'thumbnails' : 'one'];
@@ -376,17 +397,20 @@ function mediaOf(b: Of<'media'>, ctx: RenderContext, i: number) {
         perView={view.perView}
         peek={view.peek}
         pager={view.pager}
-        slides={items.map((item) => {
+        {...(hasVideo ? { index: slide, onIndexChange: setSlide } : {})}
+        slides={items.map((item, n) => {
           // G5: a slide keeps the picture's scheme versions, tone, pair and reveal, as a single picture does.
           const { priority: _p, ratio: _r, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-          return { ...p, caption: item.caption, credit: item.credit };
+          return { ...p, caption: item.caption, credit: item.credit,
+            ...(videos[n] ? { label: videos[n].title, content: <Fragment key={slide}>{player(n)}</Fragment> } : {}) };
         })}
       />
     );
   } else {
     const item = items[0];
     const { ratio, ...p } = pictureProps(ctx, item.picture, item.alt, item.reveal);
-    body = <Image {...p} {...framing(frameOf(ctx, b.frame), 0, 1)} ratio={b.ratio ?? ratio ?? 'photo'} caption={item.caption} credit={item.credit} />;
+    body = player(0, [item.caption, item.credit].filter(Boolean).join('. ') || undefined)
+      ?? <Image {...p} {...framing(frameOf(ctx, b.frame), 0, 1)} ratio={b.ratio ?? ratio ?? 'photo'} caption={item.caption} credit={item.credit} />;
   }
   // G3: the template's depth motion around single and grid (a carousel's slides already move; a presentation moves its own).
   const motion = b.depth && !own && presentation !== 'carousel' ? ctx.motion?.('depth') : undefined;

@@ -4,7 +4,7 @@
  * and holds the block registry equal to them).
  */
 import type { ReactNode } from 'react';
-import type { AgendaSlot, FooterLink, FooterSection, IconName, IllustrationPlay, StoryFile } from '../react/components';
+import type { AgendaSlot, FooterLink, FooterSection, IconName, IllustrationPlay, MediaPlayerProps, StoryFile } from '../react/components';
 import type { PageGridRecord } from './page-grid';
 import type { PictureReveal } from '../react/behaviour/reveal';
 import type { PictureSource, PictureTreatment } from '../react/fundamentals/Image';
@@ -96,6 +96,8 @@ export type Decoration = string | Block[];
 /** One picture of an album: an asset id and what this album says about it (blocks.schema `albumItem`). */
 export interface AlbumItem {
   picture: string;
+  /** Opt-in playable item; `picture` remains its poster asset. Absent keeps the existing picture presentation. */
+  video?: Pick<MediaPlayerProps, 'source' | 'title' | 'duration' | 'shape'>;
   caption?: string;
   credit?: string;
   /** Replaces the asset's alternative text here. */
@@ -134,6 +136,8 @@ export interface MediaPicture {
   focal?: { x: number; y: number };
   caption?: string;
   credit?: string;
+  /** The resolved album item's optional player, for a template presentation. */
+  video?: AlbumItem['video'];
 }
 
 /** What a template's media presentation draws (G2): the pictures in order, the region's name and the block's choices. */

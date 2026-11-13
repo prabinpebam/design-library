@@ -60,6 +60,11 @@
           "type": "string",
           "required": true,
           "description": "What the set is, as the lightbox's name: \"Photos from the trip\"."
+        },
+        {
+          "name": "renderItem",
+          "type": "(item: LightboxItem, index: number) => ReactNode",
+          "description": "LR114 (opt-in): content for the shown item instead of its picture, such as a video's player. Called only for the current item; return null or undefined to keep the default picture. It sits in the stage's picture part, keyed by the item's id, so it unmounts when another item is shown and when the lightbox closes. Previous, Next, the keys, swipes, the counter and the caption are unchanged; rendered content fades in and out rather than travelling from its thumbnail."
         }
       ]
     },
