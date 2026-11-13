@@ -231,6 +231,10 @@
       "var": "--c-editor-layout-resize-line",
       "default": "#4f5bd5",
       "description": "The line a resize handle shows only while hovered, focused or dragged (default color.focus). Set var(--color-accent) to draw it in the accent (LR77)."
+    },
+    {
+      "var": "--c-editor-layout-end-inset",
+      "description": "The end panel's (an inspector's) padding round its content (default c.editor-layout.inset, as the start panel's). Set var(--space-4) for a docked inspector's room from the window's edge (LR105)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/editorlayout"

@@ -81,6 +81,7 @@
   },
   "EditorLayout": {
     "--c-editor-layout-resize": "A resize handle's hit width, centred on the panel's inner edge (default 0.5rem). Set var(--space-4) for an editor whose inspector edge is a wide, quiet strip (LR77).",
-    "--c-editor-layout-resize-line": "The line a resize handle shows only while hovered, focused or dragged (default color.focus). Set var(--color-accent) to draw it in the accent (LR77)."
+    "--c-editor-layout-resize-line": "The line a resize handle shows only while hovered, focused or dragged (default color.focus). Set var(--color-accent) to draw it in the accent (LR77).",
+    "--c-editor-layout-end-inset": "The end panel's (an inspector's) padding round its content (default c.editor-layout.inset, as the start panel's). Set var(--space-4) for a docked inspector's room from the window's edge (LR105)."
   }
 }

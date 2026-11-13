@@ -191,6 +191,11 @@
     padding: var(--c-editor-layout-inset);
   }
 
+  /* LR105: the end panel (an inspector) may keep more room from the window's edge than the start panel (a docked list). */
+  [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='panel-content'] {
+    padding: var(--c-editor-layout-end-inset, var(--c-editor-layout-inset));
+  }
+
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] {
     position: relative;
     display: flex;
