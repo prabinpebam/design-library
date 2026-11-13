@@ -24,6 +24,8 @@ export { NumberField, parseNumberInput } from './fundamentals/NumberField';
 export type { NumberFieldProps } from './fundamentals/NumberField';
 export { TextArea } from './fundamentals/TextArea';
 export type { TextAreaProps } from './fundamentals/TextArea';
+export { RichTextField } from './compounds/RichTextField';
+export type { RichTextFieldProps } from './compounds/RichTextField';
 export { Select } from './fundamentals/Select';
 export type { SelectProps, SelectOption } from './fundamentals/Select';
 export { Checkbox } from './fundamentals/Checkbox';

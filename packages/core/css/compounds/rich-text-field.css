@@ -1,0 +1,50 @@
+@layer compounds {
+  [data-dl='rich-text-field'] {
+    min-inline-size: 0;
+  }
+  [data-dl='rich-text-field'] [data-dl-part='content'] {
+    display: grid;
+    gap: var(--space-stack-item);
+    min-inline-size: 0;
+  }
+  [data-dl='rich-text-field'] [data-dl-part='tools'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-stack-pair) var(--space-inline-group);
+  }
+  [data-dl='rich-text-field'] [data-dl-part='tools'] > [data-dl-part='group'] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-inline-pair);
+  }
+  [data-dl='rich-text-field'] [data-dl-part='input'] {
+    min-inline-size: 0;
+    min-block-size: calc(var(--size-control-lg) * 2);
+    padding: var(--space-inset-sm);
+    border: var(--border-hairline) solid var(--color-border-control);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-control);
+    color: var(--color-text);
+    font-size: var(--type-body-sm-size);
+    line-height: var(--type-body-sm-leading);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+  [data-dl='rich-text-field'] [data-dl-part='input']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+  /* The editor owns this safe-subset markup, not another sealed component's parts. */
+  [data-dl='rich-text-field'] [data-dl-part='input'] :is(p, ul, ol) {
+    margin: 0;
+  }
+  [data-dl='rich-text-field'] [data-dl-part='input'] :is(ul, ol) {
+    padding-inline-start: var(--space-inset-lg);
+    list-style-position: outside;
+  }
+  [data-dl='rich-text-field'] [data-dl-part='input'] ul { list-style-type: disc; }
+  [data-dl='rich-text-field'] [data-dl-part='input'] ol { list-style-type: decimal; }
+  [data-dl='rich-text-field'] [data-dl-part='input'] p { padding-block-end: var(--space-stack-item); }
+  [data-dl='rich-text-field'] [data-dl-part='input'] a { color: var(--color-accent); text-decoration: underline; }
+  [data-dl='rich-text-field'] [data-dl-part='input'] code { font-family: var(--font-code); }
+}

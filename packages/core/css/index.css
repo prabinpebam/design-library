@@ -93,6 +93,7 @@
 @import url('./compounds/sectioned-form.css');
 @import url('./compounds/property-row.css');
 @import url('./compounds/colour-field.css');
+@import url('./compounds/rich-text-field.css');
 @import url('./layouts/library.css');
 @import url('./layouts/page.css');
 @import url('./layouts/list-detail.css');
