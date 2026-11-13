@@ -43,6 +43,38 @@
     background-color: var(--color-bg-sunken);
   }
 
+  [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='embed'],
+  [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='embed'] > iframe {
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+
+  [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='captions'] {
+    position: absolute;
+    inset-inline: var(--c-media-player-badge-inset);
+    inset-block-end: calc(var(--size-target) + var(--c-media-player-badge-inset));
+    justify-self: center;
+    padding: var(--space-inset-xs);
+    color-scheme: dark;
+    background: var(--color-bg-raised);
+    color: var(--color-text);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
+    text-align: center;
+    white-space: pre-line;
+    pointer-events: none;
+  }
+
+  [data-dl='media-player'] > [data-dl-part='caption-controls'],
+  [data-dl='media-player'] > [data-dl-part='caption-controls'] > [data-dl-part='caption-status'] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-inline-item);
+    justify-self: stretch;
+  }
+
   [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='play'] {
     grid-area: 1 / 1;
     place-self: center;

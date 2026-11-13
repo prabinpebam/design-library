@@ -3,9 +3,11 @@ import { Badge } from '../fundamentals/Badge';
 import { Button } from '../fundamentals/Button';
 import { Image, type PictureTreatment } from '../fundamentals/Image';
 import { Link } from '../fundamentals/Link';
+import { Select } from '../fundamentals/Select';
+import { Text } from '../fundamentals/Text';
 import type { DataAttributes } from '../types';
 
-/** A captions or subtitles file for a video file: WebVTT, in one language. */
+/** A captions or subtitles file: WebVTT, in one language, for native video or an opt-in YouTube overlay. */
 export interface MediaTrack {
   src: string;
   /** The language's own name, as the player's captions menu lists it: "English", "Français". */
@@ -25,8 +27,9 @@ export interface MediaFile {
   type: string;
 }
 
-/** Where the media comes from: files this product serves, or a video on YouTube or Vimeo, loaded only once played. */
-export type MediaSource = { from: 'file'; files: MediaFile[]; tracks?: MediaTrack[] } | { from: 'youtube' | 'vimeo'; id: string };
+/** Where the media comes from: files, or YouTube/Vimeo loaded only once played. YouTube tracks opt in to an external
+ * caption overlay and labelled language/Off choice, synced through its free iframe API; other embeds are unchanged. */
+export type MediaSource = { from: 'file'; files: MediaFile[]; tracks?: MediaTrack[] } | { from: 'youtube'; id: string; tracks?: MediaTrack[] } | { from: 'vimeo'; id: string };
 
 export interface MediaPlayerProps extends DataAttributes {
   /** `video` (default) or `audio`: a compact player with its title above and no picture. */
@@ -78,6 +81,149 @@ const embedSrc = (source: Extract<MediaSource, { from: 'youtube' | 'vimeo' }>) =
     ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(source.id)}?autoplay=1&rel=0`
     : `https://player.vimeo.com/video/${encodeURIComponent(source.id)}?autoplay=1&dnt=1`;
 
+interface YouTubePlayer {
+  getCurrentTime(): number;
+  destroy(): void;
+}
+interface YouTubeAPI {
+  Player: new (frame: HTMLIFrameElement, options: { events: { onReady: () => void; onError: () => void } }) => YouTubePlayer;
+}
+const youtubeWindow = () => window as Window & { YT?: YouTubeAPI; onYouTubeIframeAPIReady?: () => void };
+let youtubeAPI: Promise<YouTubeAPI> | undefined;
+
+function loadYouTubeAPI() {
+  const host = youtubeWindow();
+  if (host.YT?.Player) return Promise.resolve(host.YT);
+  if (youtubeAPI) return youtubeAPI;
+  youtubeAPI = new Promise<YouTubeAPI>((resolve, reject) => {
+    const previous = host.onYouTubeIframeAPIReady;
+    const script = document.createElement('script');
+    let timer: ReturnType<typeof setTimeout>;
+    const cleanup = () => {
+      clearTimeout(timer);
+      if (host.onYouTubeIframeAPIReady === ready) host.onYouTubeIframeAPIReady = previous;
+    };
+    const fail = () => {
+      cleanup();
+      script.remove();
+      youtubeAPI = undefined;
+      reject(new Error('YouTube player API could not be loaded'));
+    };
+    const ready = () => {
+      cleanup();
+      previous?.();
+      if (host.YT?.Player) resolve(host.YT);
+      else fail();
+    };
+    host.onYouTubeIframeAPIReady = ready;
+    script.src = 'https://www.youtube.com/iframe_api';
+    script.onerror = fail;
+    timer = setTimeout(fail, 15000);
+    document.head.append(script);
+  });
+  return youtubeAPI;
+}
+
+/** External WebVTT is parsed by the browser, never injected as HTML. No remote API loads before Play. */
+function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { from: 'youtube' }>; title: string }) {
+  const tracks = source.tracks ?? [];
+  const [selected, setSelected] = useState(tracks.find(track => track.default)?.src ?? '__off');
+  const chosen = tracks.find(track => track.src === selected);
+  const [cues, setCues] = useState<{ start: number; end: number; text: string }[]>([]);
+  const [time, setTime] = useState(0);
+  const [loaded, setLoaded] = useState('');
+  const [trackFailed, setTrackFailed] = useState(false);
+  const [apiState, setAPIState] = useState<'loading' | 'ready' | 'failed'>('loading');
+  const [retry, setRetry] = useState(0);
+  const [trackRetry, setTrackRetry] = useState(0);
+  const host = useRef<HTMLDivElement>(null);
+  const textTrack = useRef<HTMLTrackElement>(null);
+
+  useEffect(() => {
+    let disposed = false;
+    let player: YouTubePlayer | undefined;
+    let interval: ReturnType<typeof setInterval> | undefined;
+    setAPIState('loading');
+    setTime(0);
+    const frame = document.createElement('iframe');
+    frame.src = `${embedSrc(source)}&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
+    frame.title = title;
+    frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    host.current?.append(frame);
+    frame.focus();
+    const timeout = setTimeout(() => { if (!disposed) setAPIState('failed'); }, 20000);
+    void loadYouTubeAPI().then(api => {
+      if (disposed) return;
+      player = new api.Player(frame, { events: {
+        onReady: () => {
+          if (disposed) return;
+          clearTimeout(timeout);
+          setAPIState('ready');
+          interval = setInterval(() => { if (player) setTime(player.getCurrentTime()); }, 100);
+        },
+        onError: () => { if (!disposed) { clearTimeout(timeout); setAPIState('failed'); } },
+      } });
+    }).catch(() => { if (!disposed) { clearTimeout(timeout); setAPIState('failed'); } });
+    return () => {
+      disposed = true;
+      clearTimeout(timeout);
+      clearInterval(interval);
+      player?.destroy();
+      frame.remove();
+    };
+  }, [source.id, title, retry]);
+
+  useEffect(() => {
+    const node = textTrack.current;
+    if (!node) return;
+    const timeout = setTimeout(() => setTrackFailed(true), 15000);
+    const load = () => {
+      clearTimeout(timeout);
+      setCues(Array.from(node.track.cues ?? []).filter((cue): cue is VTTCue => cue instanceof VTTCue)
+        .map(cue => ({ start: cue.startTime, end: cue.endTime, text: cue.getCueAsHTML().textContent ?? '' })));
+      setLoaded(selected);
+      setTrackFailed(false);
+    };
+    const fail = () => { clearTimeout(timeout); setTrackFailed(true); };
+    node.addEventListener('load', load);
+    node.addEventListener('error', fail);
+    node.track.mode = 'hidden';
+    if (node.readyState === 2) load();
+    else if (node.readyState === 3) fail();
+    return () => {
+      clearTimeout(timeout);
+      node.removeEventListener('load', load);
+      node.removeEventListener('error', fail);
+    };
+  }, [selected, trackRetry, chosen?.src]);
+
+  const caption = apiState === 'ready' && loaded === selected && !trackFailed
+    ? cues.filter(cue => cue.start <= time && time < cue.end).map(cue => cue.text).join('\n') : '';
+  return <>
+    <div data-dl-part="stage">
+      <div ref={host} data-dl-part="embed" />
+      {caption && <span data-dl-part="captions" lang={chosen?.lang}>{caption}</span>}
+      {chosen && <video hidden crossOrigin="anonymous" key={`${selected}:${trackRetry}`}>
+        <track ref={textTrack} src={chosen.src} srcLang={chosen.lang} label={chosen.label} default />
+      </video>}
+    </div>
+    <div data-dl-part="caption-controls">
+      <Select label="Captions" width="content" mode="form" value={chosen ? selected : '__off'}
+        options={[{ value: '__off', label: 'Off' }, ...tracks.map(track => ({ value: track.src, label: track.label }))]}
+        onChange={value => { setSelected(value); setTrackFailed(false); setLoaded(''); setCues([]); }} />
+      {chosen && (apiState === 'failed' || trackFailed ? <div data-dl-part="caption-status" role="alert">
+        <Text variant="body-sm">Captions couldn’t be loaded. Try again or turn captions off.</Text>
+        <Button label="Try again" emphasis="quiet" onClick={() => {
+          if (apiState === 'failed') setRetry(value => value + 1);
+          setTrackFailed(false); setLoaded(''); setCues([]); setTrackRetry(value => value + 1);
+        }} />
+      </div> : (apiState === 'loading' || loaded !== selected) && <span role="status"><Text variant="body-sm">Loading captions…</Text></span>)}
+    </div>
+  </>;
+}
+
 /**
  * Plays a video or a piece of audio, with its caption: a file this product serves, with the browser's own controls and
  * its captions, or a video on YouTube or Vimeo behind a privacy-friendly poster that loads the remote player only when
@@ -90,6 +236,8 @@ const embedSrc = (source: Extract<MediaSource, { from: 'youtube' | 'vimeo' }>) =
  * Nothing plays by itself. An embed's poster is one button, "Play" and the title, with the length spoken; pressing it
  * swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is
  * `aria-hidden` (the button says it). A transcript link follows the player when given.
+ * YouTube sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay.
+ * Track loading failures offer Retry; cues are not a live region that interrupts screen-reader speech.
  * @key Enter, Space: on an embed's poster, loads and plays the video
  */
 export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
@@ -124,7 +272,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, 
 
   return (
     <figure {...data} data-dl="media-player" data-kind="video" data-tall={shape.height > shape.width ? '' : undefined} style={style}>
-      <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
+      {playing && source.from === 'youtube' && source.tracks?.length ? <YouTubeCaptions key={source.id} source={source} title={title} /> : <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
         {source.from === 'file' ? (
           <video controls preload="metadata" playsInline poster={poster} aria-label={title}>
             {source.files.map((f) => (
@@ -166,7 +314,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, 
             )}
           </>
         )}
-      </div>
+      </div>}
       {(caption || transcript) && (
         <figcaption data-dl-part="caption">
           {caption}

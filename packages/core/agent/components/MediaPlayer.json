@@ -7,7 +7,7 @@
   "summary": "Plays a video or a piece of audio, with its caption: a file this product serves, with the browser's own controls and its captions, or a video on YouTube or Vimeo behind a privacy-friendly poster that loads the remote player only when play is pressed. Not for a picture (use Image), a set of pictures (use Carousel or ImageGrid) or a video that plays by itself as decoration (don't: motion that can't be paused fails WCAG 2.2.2).",
   "family": "content",
   "a11y": [
-    "A `figure` named by its caption when there is one. A file plays in the native `video` or `audio` element with its controls (keyboard operable, announced by the platform) and its WebVTT `track`s, so captions can be turned on. Nothing plays by itself. An embed's poster is one button, \"Play\" and the title, with the length spoken; pressing it swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is `aria-hidden` (the button says it). A transcript link follows the player when given."
+    "A `figure` named by its caption when there is one. A file plays in the native `video` or `audio` element with its controls (keyboard operable, announced by the platform) and its WebVTT `track`s, so captions can be turned on. Nothing plays by itself. An embed's poster is one button, \"Play\" and the title, with the length spoken; pressing it swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is `aria-hidden` (the button says it). A transcript link follows the player when given. YouTube sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay. Track loading failures offer Retry; cues are not a live region that interrupts screen-reader speech."
   ],
   "keys": [
     {
@@ -130,6 +130,21 @@
           "description": "The MIME type, so a browser skips what it can't play without downloading it: `video/webm`, `video/mp4`, `audio/mpeg`."
         }
       ]
+    },
+    {
+      "interface": "YouTubeAPI",
+      "props": [
+        {
+          "name": "Player",
+          "type": "new (frame: HTMLIFrameElement, options: { events: { onReady: () => void",
+          "required": true
+        },
+        {
+          "name": "onError",
+          "type": "() => void } }) => YouTubePlayer",
+          "required": true
+        }
+      ]
     }
   ],
   "types": {
@@ -139,7 +154,9 @@
     "Badge",
     "Button",
     "Image",
-    "Link"
+    "Link",
+    "Select",
+    "Text"
   ],
   "tokens": [
     "--border-hairline",
@@ -148,8 +165,15 @@
     "--c-media-player-caption-gap",
     "--c-media-player-radius",
     "--c-media-player-screen-gap",
+    "--color-bg-raised",
     "--color-bg-sunken",
+    "--color-text",
     "--color-text-muted",
+    "--size-target",
+    "--space-inline-item",
+    "--space-inset-xs",
+    "--type-body-leading",
+    "--type-body-size",
     "--type-body-sm-leading",
     "--type-body-sm-size",
     "--type-label-weight"

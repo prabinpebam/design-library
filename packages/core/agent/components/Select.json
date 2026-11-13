@@ -338,6 +338,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/select",
   "usedBy": [
+    "MediaPlayer",
     "Pagination"
   ],
   "principles": [
