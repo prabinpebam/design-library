@@ -446,6 +446,20 @@
           ],
           "type": "object"
         },
+        "appMenu": {
+          "description": "The title bar's application menu.",
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
+        "attachMenu": {
+          "description": "The composer's attach menu.",
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
         "channel": {
           "type": "string"
         },
@@ -561,6 +575,37 @@
           ],
           "type": "object"
         },
+        "dms": {
+          "description": "People listed under Direct messages.",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "avatar": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "presence": {
+                "enum": [
+                  "available",
+                  "away"
+                ],
+                "type": "string"
+              },
+              "preview": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "avatar",
+              "preview"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "dualRailChannels": {
           "items": {
             "$ref": "#/$defs/WorkspaceChannelItem"
@@ -632,6 +677,13 @@
           "type": "object"
         },
         "filterMenu": {
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
+        "huddleMenu": {
+          "description": "The huddle button's options.",
           "items": {
             "$ref": "#/$defs/WorkspaceMenuItem"
           },
@@ -773,6 +825,13 @@
         "newMessagesBanner": {
           "type": "string"
         },
+        "notificationMenu": {
+          "description": "The channel header's notification levels; `all`, `mentions` and `off` are the levels.",
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
         "quickReactions": {
           "items": {
             "additionalProperties": false,
@@ -821,6 +880,13 @@
         "replies": {
           "items": {
             "$ref": "#/$defs/WorkspaceMessage"
+          },
+          "type": "array"
+        },
+        "scheduleMenu": {
+          "description": "Schedule a message: when to send it.",
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
           },
           "type": "array"
         },
@@ -1247,6 +1313,13 @@
         "workspaceBadge": {
           "type": "string"
         },
+        "workspaceMenu": {
+          "description": "Add a workspace (the rail's plus beside the workspace tiles).",
+          "items": {
+            "$ref": "#/$defs/WorkspaceMenuItem"
+          },
+          "type": "array"
+        },
         "workspaces": {
           "items": {
             "$ref": "#/$defs/WorkspaceTile"
@@ -1291,6 +1364,13 @@
         "messageMenu",
         "channelMenu",
         "createMenu",
+        "appMenu",
+        "workspaceMenu",
+        "notificationMenu",
+        "huddleMenu",
+        "attachMenu",
+        "scheduleMenu",
+        "dms",
         "emojiPicker",
         "copy"
       ],

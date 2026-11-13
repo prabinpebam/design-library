@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Avatar,
   AvatarGroup,
@@ -12,6 +12,7 @@ import {
   IconOverrides,
   Image,
   Link,
+  ListItem,
   MenuButton,
   Popover,
   ScrollArea,
@@ -19,10 +20,13 @@ import {
   Text,
   TextArea,
   TextField,
+  applyScheme,
+  notify,
+  regionSchemeOf,
   type DataAttributes,
 } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
-import type { WorkspaceMessage, WorkspaceRecord } from '../../types';
+import type { WorkspaceChannelItem, WorkspaceMenuItem, WorkspaceMessage, WorkspaceRecord } from '../../types';
 
 export interface WorkspaceProps extends DataAttributes {
   /** Validated shared content, including every label and conversation. */
@@ -46,7 +50,10 @@ export interface WorkspaceProps extends DataAttributes {
 export function Workspace({ view, screen = 'channel', settings, picture, ...data }: WorkspaceProps) {
   const c = view.copy;
   const pic = (id?: string) => (id && picture ? picture(id) : { src: '', alt: '' });
-  type BrowsePage = 'channel' | 'slackbot' | 'directories' | 'huddles' | 'unreads' | 'welcome-back';
+  type BrowsePage =
+    | 'channel' | 'slackbot' | 'directories' | 'huddles' | 'unreads' | 'welcome-back'
+    | 'dms' | 'dm' | 'threads' | 'saved' | 'todos' | 'agents' | 'compose';
+  type Place = { page: BrowsePage; channel: string; tab: string; dm: string };
   const pageFromScreen = (s: string): BrowsePage =>
     s === 'slackbot' || s === 'directories' || s === 'huddles' || s === 'unreads' || s === 'welcome-back' ? s : 'channel';
   const isDualScreen = (s: string) =>
@@ -98,9 +105,28 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   const [alsoSend, setAlsoSend] = useState(false);
   const [narrow, setNarrow] = useState(false);
   const [short, setShort] = useState(false);
+  const [dmWith, setDmWith] = useState('');
+  const [toField, setToField] = useState('');
+  const [saved, setSaved] = useState<Record<string, boolean>>({});
+  const [starred, setStarred] = useState<Record<string, boolean>>({});
+  const [marks, setMarks] = useState<Record<string, boolean>>({});
+  const [deleted, setDeleted] = useState<string[]>([]);
+  const firstChecked = (items: WorkspaceMenuItem[], prefix: string) =>
+    items.flatMap((i) => [i, ...(i.items ?? [])]).find((i) => i.checked && i.value.startsWith(prefix))?.value;
+  const [notifyLevel, setNotifyLevel] = useState(firstChecked(view.notificationMenu, '') ?? 'all');
+  const [sidebarShow, setSidebarShow] = useState(firstChecked(view.filterMenu, 'filter-') ?? 'filter-all');
+  const initialSort = firstChecked(view.filterMenu, 'sort-') ?? 'sort-recency';
+  const [sidebarSort, setSidebarSort] = useState(initialSort);
+  const [fresh, setFresh] = useState(0);
+  const [past, setPast] = useState<Place[]>([]);
+  const [future, setFuture] = useState<Place[]>([]);
+  const lastPlace = useRef<Place | null>(null);
+  const travelling = useRef(false);
 
   const timeline = useRef<HTMLDivElement>(null);
   const dirSearchWrap = useRef<HTMLDivElement>(null);
+  const dirSearchBox = useRef<HTMLInputElement>(null);
+  const searchBox = useRef<HTMLInputElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const threadPanel = useRef<HTMLElement>(null);
   const threadOpener = useRef<HTMLElement | null>(null);
@@ -142,7 +168,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
   useEffect(() => {
     if (activePage === 'directories') {
-      dirSearchWrap.current?.querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true });
+      dirSearchBox.current?.focus({ preventScroll: true });
     }
   }, [activePage]);
 
@@ -161,6 +187,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   }, [thread]);
 
   const openThread = (msg: WorkspaceMessage) => {
+    if (thread?.id === msg.id) {
+      composerBoxes.current[`thread-${msg.id}`]?.focus({ preventScroll: true });
+      return;
+    }
     threadOpener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setThread(msg);
   };
@@ -172,7 +202,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
   useEffect(() => {
     if (search && userTriggeredSearch.current) {
-      root.current?.querySelector<HTMLInputElement>("[data-dl-part='titlebar'] input")?.focus({ preventScroll: true });
+      searchBox.current?.focus({ preventScroll: true });
       userTriggeredSearch.current = false;
     }
   }, [search]);
@@ -182,7 +212,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   const activeTabs = isAma ? view.amaChannel.tabs : view.tabs;
   const activeMemberCount = isAma ? view.amaChannel.memberCountText : view.memberCountText;
   const localSent = sent[channel] ?? [];
-  const messages = [...activeMessages, ...localSent];
+  const messages = [...activeMessages, ...localSent].filter((m) => !deleted.includes(m.id));
 
   useEffect(() => {
     const viewport = timeline.current;
@@ -202,9 +232,206 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
       time: new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(new Date()),
       text,
     };
-    setSent((old) => ({ ...old, [target]: [...(old[target] ?? []), next] }));
+    let dest = target;
+    if (target === 'compose') {
+      const to = toField.trim();
+      if (!to) {
+        notify({ subject: 'slack-compose', tone: 'error', message: c.needRecipient });
+        return;
+      }
+      const name = to.replace(/^[@#]/, '');
+      dest = to.startsWith('#') ? name : `dm-${name}`;
+      setToField('');
+      if (to.startsWith('#')) visit({ page: 'channel', channel: name });
+      else openDm(name);
+    }
+    setSent((old) => ({ ...old, [dest]: [...(old[dest] ?? []), next] }));
     setDrafts((old) => ({ ...old, [target]: '' }));
   };
+
+  const notBuilt = (label: string) => notify({ subject: 'slack-replica', message: `${label} ${c.notInReplica}` });
+  const labelOf = (items: WorkspaceMenuItem[], value: string) =>
+    items.flatMap((i) => [i, ...(i.items ?? [])]).find((i) => i.value === value)?.label ?? value;
+  const copyText = (text: string, message: string) => {
+    void navigator.clipboard?.writeText(text).catch(() => undefined);
+    notify({ subject: 'slack-copy', tone: 'success', message });
+  };
+
+  const composerBoxes = useRef<Record<string, HTMLTextAreaElement | null>>({});
+  const focusComposer = (target: string) => requestAnimationFrame(() => composerBoxes.current[target]?.focus({ preventScroll: true }));
+  const insert = (target: string, text: string) => {
+    setDrafts((old) => ({ ...old, [target]: `${old[target] ?? ''}${old[target] && !old[target].endsWith(' ') ? ' ' : ''}${text}` }));
+    focusComposer(target);
+  };
+
+  const here: Place = { page: activePage, channel, tab, dm: dmWith };
+  const samePlace = (a: Place, b: Place) => a.page === b.page && a.channel === b.channel && a.tab === b.tab && a.dm === b.dm;
+  useEffect(() => {
+    const prev = lastPlace.current;
+    lastPlace.current = here;
+    if (!prev || samePlace(prev, here)) return;
+    if (travelling.current) {
+      travelling.current = false;
+      return;
+    }
+    setPast((p) => [...p, prev].slice(-20));
+    setFuture([]);
+  }, [activePage, channel, tab, dmWith]);
+  const visit = (to: Partial<Place>) => {
+    const target: Place = { page: to.page ?? 'channel', channel: to.channel ?? channel, tab: to.tab ?? 'messages', dm: to.dm ?? '' };
+    // Choosing the place you're on opens it fresh, as following a link to the current page does.
+    if (samePlace(target, here) && !search && !activityOpen) setFresh((f) => f + 1);
+    setActivePage(to.page ?? 'channel');
+    if (to.channel) setChannel(to.channel);
+    setTab(to.tab ?? 'messages');
+    setDmWith(to.dm ?? '');
+    setSearch(false);
+    setActivityOpen(false);
+  };
+  const travel = (to: Place) => {
+    travelling.current = true;
+    visit(to);
+  };
+  const goBack = () => {
+    const prev = past[past.length - 1];
+    if (!prev) {
+      setSearch(false);
+      setActivePage('channel');
+      return;
+    }
+    setPast((p) => p.slice(0, -1));
+    setFuture((f) => [here, ...f]);
+    travel(prev);
+  };
+  const goForward = () => {
+    const next = future[0];
+    if (!next) return;
+    setFuture((f) => f.slice(1));
+    setPast((p) => [...p, here]);
+    travel(next);
+  };
+  const pageTitle: Record<BrowsePage, string> = {
+    channel: '',
+    dm: '',
+    slackbot: view.slackbotView.railLabel,
+    directories: view.directoriesView.title,
+    huddles: view.huddlesView.title,
+    unreads: view.unreadsView.title,
+    'welcome-back': view.welcomeBackView.title,
+    dms: c.dmsTitle,
+    threads: c.threadsTitle,
+    saved: c.savedTitle,
+    todos: c.todosTitle,
+    agents: c.agentsTitle,
+    compose: c.newMessage,
+  };
+  const placeLabel = (p: Place) => (p.page === 'channel' ? `# ${p.channel}` : p.page === 'dm' ? p.dm : pageTitle[p.page]);
+  const recentPlaces = (() => {
+    const fallback = (view.sections.find((s) => s.collapsible)?.items ?? []).slice(0, 5).map((i): Place => ({ page: 'channel', channel: i.name, tab: 'messages', dm: '' }));
+    const seen = new Set<string>([placeLabel(here)]);
+    return [...past].reverse().concat(fallback).filter((p) => !seen.has(placeLabel(p)) && Boolean(seen.add(placeLabel(p)))).slice(0, 8);
+  })();
+
+  const goHome = () => {
+    if (activePage === 'channel' && tab === 'messages' && !search && !activityOpen) focusComposer(channel);
+    else visit({ page: 'channel', channel: activePage === 'channel' || activePage === 'dm' || activePage === 'compose' ? channel : view.channel });
+  };
+  const openDm = (name: string) => visit({ page: 'dm', dm: name });
+
+  const toggleTheme = () => {
+    const el = root.current;
+    if (!el) return;
+    applyScheme(regionSchemeOf(el).scheme === 'dark' ? 'light' : 'dark', el);
+  };
+
+  const toggleSaved = (m: WorkspaceMessage) => {
+    const on = !saved[m.id];
+    setSaved((old) => ({ ...old, [m.id]: on }));
+    notify({ subject: 'slack-saved', tone: on ? 'success' : 'info', message: on ? c.savedNotice : c.unsavedNotice });
+  };
+
+  const onMessageMenu = (m: WorkspaceMessage, value: string) => {
+    if (value === 'copy-link') copyText(`${location.href.split('#')[0]}#/app/slack/thread`, c.linkCopied);
+    else if (value === 'unread') notify({ subject: 'slack-message', message: c.markedUnread });
+    else if (value === 'unfollow') notify({ subject: 'slack-message', message: c.unfollowed });
+    else if (value === 'pin') notify({ subject: 'slack-message', tone: 'success', message: c.pinned });
+    else if (value.startsWith('remind-') && value !== 'remind-custom') notify({ subject: 'slack-message', tone: 'success', message: c.reminderSet });
+    else if (value === 'edit') {
+      setDrafts((old) => ({ ...old, [channel]: m.text }));
+      focusComposer(channel);
+    } else if (value === 'delete') {
+      setDeleted((d) => [...d, m.id]);
+      notify({ subject: 'slack-message', message: c.deleted, action: { label: c.undo, onAction: () => setDeleted((d) => d.filter((id) => id !== m.id)) } });
+    } else notBuilt(labelOf(view.messageMenu, value));
+  };
+
+  const onChannelMenu = (value: string) => {
+    setChannelMenuOpen(false);
+    if (value === 'star') setStarred((s) => ({ ...s, [channel]: !s[channel] }));
+    else if (value === 'copy-name') copyText(`#${channel}`, c.nameCopied);
+    else if (value === 'copy-link') copyText(`${location.href.split('#')[0]}#/app/slack/channel`, c.linkCopied);
+    else if (value === 'leave') notify({ subject: 'slack-channel', message: c.left });
+    else notBuilt(labelOf(view.channelMenu, value));
+  };
+
+  const onFilterMenu = (value: string) => {
+    setFilterMenuOpen(false);
+    if (value.startsWith('filter-') && value !== 'filter-custom') setSidebarShow(value);
+    else if (value.startsWith('sort-')) setSidebarSort(value);
+    else notBuilt(labelOf(view.filterMenu, value));
+  };
+  const filterItems = view.filterMenu.map((i) => ({
+    ...i,
+    items: i.items?.map((s) => (s.value.startsWith('filter-') || s.value.startsWith('sort-') ? { ...s, checked: s.value === sidebarShow || s.value === sidebarSort } : s)),
+  }));
+
+  const onCreate = (value: string) => {
+    setCreateMenuOpen(false);
+    if (value === 'channel') setCreating(true);
+    else if (value === 'message') visit({ page: 'compose' });
+    else notBuilt(labelOf(view.createMenu, value));
+  };
+
+  const onAppMenu = (value: string) => {
+    if (value === 'new-message') visit({ page: 'compose' });
+    else if (value === 'search') {
+      userTriggeredSearch.current = true;
+      setSearch(true);
+    } else if (value === 'sidebar') setDualRail((d) => !d);
+    else if (value === 'theme') toggleTheme();
+    else notBuilt(labelOf(view.appMenu, value));
+  };
+
+  const windowOnly = () => notify({ subject: 'slack-window', message: c.windowOnly });
+  const historyMenu = (
+    <MenuButton
+      label={c.history}
+      icon="clock"
+      iconOnly
+      chevron={false}
+      emphasis="quiet"
+      tone="inherit"
+      size="xs"
+      items={recentPlaces.map((p, i) => ({ value: String(i), label: placeLabel(p) }))}
+      onSelect={(value) => {
+        const p = recentPlaces[Number(value)];
+        if (p) visit(p);
+      }}
+    />
+  );
+  const attachMenu = (
+    <MenuButton
+      label={c.add}
+      icon="plus"
+      iconOnly
+      chevron={false}
+      emphasis="quiet"
+      tone="inherit"
+      size="xs"
+      items={view.attachMenu}
+      onSelect={(value) => notBuilt(labelOf(view.attachMenu, value))}
+    />
+  );
 
   const headAction = (label: string, icon: Parameters<typeof Button>[0]['icon'], onClick?: () => void) => (
     <Button label={label} icon={icon} iconOnly emphasis="quiet" tone="inherit" size="xs" onClick={onClick} />
@@ -298,15 +525,36 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           ? view.amaChannel.channels
           : section.items
       : section.items;
-    const extra = section.collapsible && made.length ? made.map((name) => ({ name, icon: 'hash' as const, unread: true })) : [];
+    const extra = section.collapsible && made.length ? made.map((name): WorkspaceChannelItem => ({ name, icon: 'hash', unread: true })) : [];
     const filtered = [...baseItems, ...extra].filter(
-      (item) => !sidebarFilter.trim() || item.name.toLowerCase().includes(sidebarFilter.trim().toLowerCase()),
+      (item) =>
+        (!sidebarFilter.trim() || item.name.toLowerCase().includes(sidebarFilter.trim().toLowerCase())) &&
+        (!section.collapsible ||
+          (sidebarShow === 'filter-unreads' ? item.unread || Boolean(item.mentions) : sidebarShow === 'filter-mentions' ? Boolean(item.mentions) : true)),
     );
+    // The content's order is already the reference's own sort; re-sort only once the person picks another.
+    if (section.collapsible && sidebarSort === 'sort-az' && sidebarSort !== initialSort) filtered.sort((a, b) => a.name.localeCompare(b.name));
     return { ...section, items: filtered };
   });
 
-  const composer = (target: string, reply = false) => {
+  const composer = (target: string, reply = false, placeholder?: string) => {
     const ready = Boolean(drafts[target]?.trim());
+    // binary-setting: each formatting mark is on or off for the text being written, as in the reference's format bar.
+    const mark = (label: string, icon: Parameters<typeof Button>[0]['icon']) => (
+      <Button
+        label={label}
+        icon={icon}
+        iconOnly
+        emphasis="quiet"
+        tone="inherit"
+        size="xs"
+        pressed={Boolean(marks[label])}
+        onClick={() => {
+          setMarks((old) => ({ ...old, [label]: !old[label] }));
+          focusComposer(target);
+        }}
+      />
+    );
     return (
       <div data-dl="slack-composer" data-ready={ready || undefined}>
         <TextArea
@@ -314,9 +562,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           hideLabel
           grow
           width="fill"
+          inputRef={(el) => {
+            composerBoxes.current[target] = el;
+          }}
           value={drafts[target] ?? ''}
           onChange={(value) => setDrafts((old) => ({ ...old, [target]: value }))}
-          placeholder={reply ? `${c.reply}…` : `${c.messagePrefix} #${channel}`}
+          placeholder={placeholder ?? (reply ? `${c.reply}…` : `${c.messagePrefix} #${channel}`)}
           rows={1}
           onEnter={() => {
             void send(target);
@@ -325,30 +576,30 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             formatting && (
               <div data-dl="slack-formatting" role="toolbar" aria-label={c.format}>
                 <div data-dl-part="set">
-                  {action(c.bold, 'bold')}
-                  {action(c.italic, 'italic')}
-                  {action(c.underline, 'underline')}
-                  {action(c.strike, 'strikethrough')}
+                  {mark(c.bold, 'bold')}
+                  {mark(c.italic, 'italic')}
+                  {mark(c.underline, 'underline')}
+                  {mark(c.strike, 'strikethrough')}
                 </div>
                 <span data-dl-part="divider" aria-hidden="true" />
                 <div data-dl-part="set">
-                  {action(c.paragraphStyle, 'pilcrow')}
+                  {mark(c.paragraphStyle, 'pilcrow')}
                   <span data-dl-part="mini-caret" aria-hidden="true">
                     <Icon name="chevron-down" size="sm" />
                   </span>
                 </div>
                 <span data-dl-part="divider" aria-hidden="true" />
                 <div data-dl-part="set">
-                  {action(c.link, 'link')}
-                  {action(c.numbered, 'list-numbered')}
-                  {action(c.list, 'list-bulleted')}
+                  {mark(c.link, 'link')}
+                  {mark(c.numbered, 'list-numbered')}
+                  {mark(c.list, 'list-bulleted')}
                 </div>
                 <span data-dl-part="divider" aria-hidden="true" />
                 <div data-dl-part="set">
-                  {action(c.quote, 'quote')}
-                  {action(c.code, 'code')}
-                  {action(c.codeBlock, 'code-block')}
-                  {action(c.checkList, 'list')}
+                  {mark(c.quote, 'quote')}
+                  {mark(c.code, 'code')}
+                  {mark(c.codeBlock, 'code-block')}
+                  {mark(c.checkList, 'list')}
                 </div>
               </div>
             )
@@ -356,7 +607,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           toolbar={
             <div data-dl="slack-tools">
               <div data-dl-part="group">
-                <span data-dl-part="add-circle">{action(c.add, 'plus')}</span>
+                <span data-dl-part="add-circle">{attachMenu}</span>
                 <span data-dl-part="format-toggle" data-active={formatting || undefined}>
                   <IconOverrides
                     icons={
@@ -382,13 +633,13 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     />
                   </IconOverrides>
                 </span>
-                {action(c.emoji, 'emoji')}
-                {action(c.mention, 'at')}
+                {action(c.emoji, 'emoji', () => insert(target, ':'))}
+                {action(c.mention, 'at', () => insert(target, '@'))}
                 <span data-dl-part="divider" aria-hidden="true" />
-                {action(c.video, 'video')}
-                {action(c.audio, 'mic')}
+                {action(c.video, 'video', () => notBuilt(c.video))}
+                {action(c.audio, 'mic', () => notBuilt(c.audio))}
                 <span data-dl-part="divider" aria-hidden="true" />
-                {action(c.shortcuts, 'compose')}
+                {action(c.shortcuts, 'compose', () => insert(target, '/'))}
               </div>
               <div data-dl-part="send" data-ready={ready || undefined}>
                 <Button
@@ -404,13 +655,23 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   doneLabel={c.sent}
                 />
                 <span data-dl-part="send-sep" aria-hidden="true" />
-                <Button
+                <MenuButton
                   label={c.schedule}
                   icon="chevron-down"
                   iconOnly
+                  chevron={false}
                   size="xs"
                   emphasis={ready ? 'primary' : 'quiet'}
                   tone={ready ? undefined : 'inherit'}
+                  items={view.scheduleMenu}
+                  onSelect={(value) => {
+                    if (value === 'custom') notBuilt(labelOf(view.scheduleMenu, value));
+                    else if (!ready) notify({ subject: 'slack-schedule', message: c.writeFirst });
+                    else {
+                      setDrafts((old) => ({ ...old, [target]: '' }));
+                      notify({ subject: 'slack-schedule', tone: 'success', message: `${c.scheduled} ${labelOf(view.scheduleMenu, value)}.` });
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -570,10 +831,20 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             ))}
             {emojiPicker(m)}
             {action(c.replyAction, 'comment', () => openThread(m))}
-            {action(c.share, 'forward')}
-            {action(c.save, 'bookmark')}
-            {action(c.summarize, 'compose')}
-            <MenuButton label={c.more} icon="more-vertical" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.messageMenu} onSelect={() => undefined} />
+            {action(c.share, 'forward', () => notBuilt(c.share))}
+            {/* binary-setting: saved for later is a reversible mark on one message in a dense action row, not a setting. */}
+            <Button
+              label={saved[m.id] ? c.unsave : c.save}
+              icon="bookmark"
+              iconOnly
+              emphasis="quiet"
+              tone="inherit"
+              size="xs"
+              pressed={Boolean(saved[m.id])}
+              onClick={() => toggleSaved(m)}
+            />
+            {action(c.summarize, 'compose', () => notBuilt(c.summarize))}
+            <MenuButton label={c.more} icon="more-vertical" iconOnly emphasis="quiet" tone="inherit" size="xs" items={view.messageMenu} onSelect={(value) => onMessageMenu(m, value)} />
           </div>
         )}
       </article>
@@ -585,11 +856,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   const huddlesHeroPic = pic('huddlesHero');
   const welcomeBubblePic = pic('welcomeBubble');
 
+  const rowPages: Record<string, BrowsePage> = { Unreads: 'unreads', Threads: 'threads', Huddles: 'huddles', Saved: 'saved', Directories: 'directories' };
   const isRowSelected = (itemName: string, collapsible?: boolean) => {
-    if (activePage === 'directories') return !collapsible && itemName === 'Directories';
-    if (activePage === 'huddles') return !collapsible && itemName === 'Huddles';
-    if (activePage === 'unreads') return !collapsible && itemName === 'Unreads';
-    if (activePage === 'welcome-back') return false;
+    if (!collapsible && rowPages[itemName] && rowPages[itemName] === activePage) return true;
+    if (activePage !== 'channel') return false;
     return collapsible ? itemName === channel : false;
   };
 
@@ -643,11 +913,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     icon="search"
                     size="s"
                     placeholder={dv.searchPlaceholder}
+                    inputRef={dirSearchBox}
                     value={dirQuery}
                     onChange={setDirQuery}
                   />
                 </div>
-                <Button label={dv.inviteLabel} size="s" />
+                <Button label={dv.inviteLabel} size="s" onClick={() => notBuilt(dv.inviteLabel)} />
               </div>
               <div data-dl-part="dir-filters" data-density="compact">
                 <div data-dl-part="filter-pills">
@@ -698,7 +969,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           <Heading level={1} size={4}>
             {hv.title}
           </Heading>
-          <Button label={hv.newHuddle} icon="plus" size="xs" />
+          <Button label={hv.newHuddle} icon="plus" size="xs" onClick={() => notBuilt(hv.newHuddle)} />
         </header>
         <ScrollArea label={hv.title}>
           <div data-dl="slack-huddles-body">
@@ -712,7 +983,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     <p data-dl-part="hero-copy">{hv.heroBody}</p>
                   </div>
                   <div data-dl-part="hero-cta">
-                    <Button label={hv.heroAction} icon="headphones" emphasis="primary" size="s" />
+                    <Button label={hv.heroAction} icon="headphones" emphasis="primary" size="s" onClick={() => notBuilt(hv.heroAction)} />
                   </div>
                 </div>
                 {huddlesHeroPic.src && (
@@ -826,7 +1097,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             <span data-dl-part="band-hint">
               {uv.pressLabel} <kbd data-dl-part="keycap">{uv.keycap}</kbd> {uv.toLabel}
             </span>
-            <Button label={uv.markRead} size="xs" onClick={() => setUnreadsCollapsed(true)} />
+            <Button label={uv.markRead} size="xs" unavailable={unreadsCollapsed ? c.allRead : undefined} onClick={() => setUnreadsCollapsed(true)} />
           </div>
         </div>
         <ScrollArea label={uv.title} mode="always">
@@ -934,7 +1205,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                       <span data-dl-part="presence-dot" data-state={tm.snooze ? 'snooze' : 'away'} aria-hidden="true" />
                     </div>
                     <div data-dl-part="tm-cta" data-density="compact">
-                      <Button label={wv.sayHi} size="xs" />
+                      <Button label={wv.sayHi} size="xs" onClick={() => openDm(tm.name)} />
                     </div>
                   </div>
                 </article>
@@ -958,7 +1229,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
     return (
       <div data-dl="slack-slackbot">
         <div data-dl-part="sb-top" data-density="compact">
-          {action(c.history, 'clock')}
+          {historyMenu}
         </div>
         <ScrollArea label={sb.sidebarTitle}>
           <div data-dl="slack-slackbot-stage">
@@ -983,17 +1254,23 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                     width="fill"
                     rows={1}
                     placeholder={sb.promptPlaceholder}
+                    inputRef={(el) => {
+                      composerBoxes.current.slackbot = el;
+                    }}
                     value={slackbotDraft}
                     onChange={setSlackbotDraft}
                     onEnter={() => setSlackbotDraft('')}
                     toolbar={
                       <div data-dl="slack-tools">
                         <div data-dl-part="group">
-                          <span data-dl-part="add-circle">{action(c.add, 'plus')}</span>
-                          {action(c.mention, 'at')}
+                          <span data-dl-part="add-circle">{attachMenu}</span>
+                          {action(c.mention, 'at', () => {
+                            setSlackbotDraft((d) => `${d}${d && !d.endsWith(' ') ? ' ' : ''}@`);
+                            focusComposer('slackbot');
+                          })}
                         </div>
                         <div data-dl-part="group">
-                          {action(c.audio, 'mic')}
+                          {action(c.audio, 'mic', () => notBuilt(c.audio))}
                           <Button
                             label={c.send}
                             icon="send"
@@ -1043,6 +1320,107 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
   };
 
   const isSlackbot = activePage === 'slackbot';
+  const everyMessage = (() => {
+    const seen = new Set<string>();
+    return [...view.messages, ...view.amaChannel.messages, ...view.unreadsView.messages, ...Object.values(sent).flat()].filter(
+      (m) => !deleted.includes(m.id) && !seen.has(m.id) && Boolean(seen.add(m.id)),
+    );
+  })();
+
+  const pageShell = (title: string, body: ReactNode, foot?: ReactNode, lead?: ReactNode) => (
+    <div data-dl="slack-page">
+      <header data-dl-part="page-head" data-density="compact">
+        {lead}
+        <Heading level={1} size={4}>
+          {title}
+        </Heading>
+      </header>
+      <ScrollArea label={title}>{body}</ScrollArea>
+      {foot}
+    </div>
+  );
+
+  const renderPage = (): ReactNode => {
+    if (activePage === 'dms') {
+      const known = new Set(view.dms.map((d) => d.name));
+      const started = Object.keys(sent)
+        .filter((k) => k.startsWith('dm-') && !known.has(k.slice(3)))
+        .map((k) => ({ name: k.slice(3), avatar: '', presence: undefined, preview: sent[k][sent[k].length - 1]?.text ?? '' }));
+      return pageShell(
+        c.dmsTitle,
+        <div data-dl="slack-dm-list">
+          {[...started, ...view.dms].map((d) => {
+            const last = sent[`dm-${d.name}`]?.at(-1);
+            return (
+              <ListItem
+                key={d.name}
+                role="button"
+                size="l"
+                label={d.name}
+                thumbnail={pic(d.avatar).src || undefined}
+                avatar={pic(d.avatar).src ? undefined : { name: d.name }}
+                description={last ? `${c.you}: ${last.text}` : d.preview}
+                onClick={() => openDm(d.name)}
+              />
+            );
+          })}
+        </div>,
+      );
+    }
+    if (activePage === 'dm') {
+      const person = view.dms.find((d) => d.name === dmWith);
+      return pageShell(
+        dmWith,
+        <div data-dl="slack-search-results">
+          <div data-dl-part="results-head">
+            <Text tone="muted">{`${c.dmStart} ${dmWith}${dmWith.endsWith('.') ? '' : '.'}`}</Text>
+          </div>
+          {(sent[`dm-${dmWith}`] ?? []).map((m) => renderMessage(m))}
+        </div>,
+        <div data-dl="slack-composer-wrap">{composer(`dm-${dmWith}`, false, `${c.messagePrefix} ${dmWith}`)}</div>,
+        <Avatar name={dmWith} src={pic(person?.avatar).src || undefined} shape="square" size={24} presence={person?.presence} decorative />,
+      );
+    }
+    if (activePage === 'compose') {
+      return pageShell(
+        c.newMessage,
+        <div data-dl="slack-compose-to">
+          <TextField label={c.to} hideLabel prefix={`${c.to}:`} placeholder={c.toHint} value={toField} onChange={setToField} />
+        </div>,
+        <div data-dl="slack-composer-wrap">{composer('compose', false, c.startMessage)}</div>,
+      );
+    }
+    if (activePage === 'threads') {
+      return pageShell(
+        c.threadsTitle,
+        <div data-dl="slack-search-results">{everyMessage.filter((m) => m.replies).map((m) => renderMessage(m))}</div>,
+      );
+    }
+    if (activePage === 'saved') {
+      const list = everyMessage.filter((m) => saved[m.id]);
+      return pageShell(
+        c.savedTitle,
+        list.length ? (
+          <div data-dl="slack-search-results">{list.map((m) => renderMessage(m))}</div>
+        ) : (
+          <div data-dl="slack-file-results">
+            <EmptyState title={c.savedEmpty} reason="first-use">
+              {c.savedHint}
+            </EmptyState>
+          </div>
+        ),
+      );
+    }
+    const title = activePage === 'todos' ? c.todosTitle : c.agentsTitle;
+    return pageShell(
+      title,
+      <div data-dl="slack-file-results">
+        <EmptyState title={title} reason="first-use">
+          {`${title} ${c.notInReplica}`}
+        </EmptyState>
+      </div>,
+    );
+  };
   const activityItems = view.activityView.items.filter((it) => !activityUnreadsOnly || it.unread || it.badge);
 
   const renderActivityPopover = () => (
@@ -1115,16 +1493,41 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
       <header data-dl-part="titlebar" data-density="compact">
         <div data-dl-part="left-chrome">
           <div data-dl-part="menu-group">
-            {action(c.appMenu, 'menu')}
+            <MenuButton
+              label={c.appMenu}
+              icon="menu"
+              iconOnly
+              chevron={false}
+              emphasis="quiet"
+              tone="inherit"
+              size="xs"
+              items={view.appMenu}
+              onSelect={onAppMenu}
+            />
             {!isSlackbot && action(c.toggleSidebar, 'sidebar', () => setDualRail(!dualRail))}
           </div>
           <div data-dl-part="history">
-            {action(c.back, 'arrow-start', () => {
-              setSearch(false);
-              setActivePage('channel');
-            })}
-            <Button label={c.forward} icon="arrow-end" iconOnly emphasis="quiet" tone="inherit" size="xs" unavailable={c.forward} />
-            {action(c.history, 'clock')}
+            <Button
+              label={c.back}
+              icon="arrow-start"
+              iconOnly
+              emphasis="quiet"
+              tone="inherit"
+              size="xs"
+              unavailable={!past.length && activePage === 'channel' && !search ? c.noHistory : undefined}
+              onClick={goBack}
+            />
+            <Button
+              label={c.forward}
+              icon="arrow-end"
+              iconOnly
+              emphasis="quiet"
+              tone="inherit"
+              size="xs"
+              unavailable={future.length ? undefined : c.noForward}
+              onClick={goForward}
+            />
+            {historyMenu}
           </div>
         </div>
         <div data-dl-part="center-chrome">
@@ -1137,6 +1540,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 icon="search"
                 size="xs"
                 placeholder={isSlackbot ? view.slackbotView.searchPlaceholder : c.search}
+                inputRef={searchBox}
                 value={query}
                 onChange={setQuery}
               />
@@ -1162,10 +1566,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           )}
         </div>
         <div data-dl-part="window-controls">
-          <span data-dl-part="help-slot">{action(c.help, 'help')}</span>
-          <span data-dl-part="win-btn">{action(c.minimize, 'minus')}</span>
-          <span data-dl-part="win-btn">{action(c.maximize, 'window-maximize')}</span>
-          <span data-dl-part="win-btn">{action(c.closeWindow, 'close')}</span>
+          <span data-dl-part="help-slot">{action(c.help, 'help', () => notBuilt(c.help))}</span>
+          <span data-dl-part="win-btn">{action(c.minimize, 'minus', windowOnly)}</span>
+          <span data-dl-part="win-btn">{action(c.maximize, 'window-maximize', windowOnly)}</span>
+          <span data-dl-part="win-btn">{action(c.closeWindow, 'close', windowOnly)}</span>
         </div>
       </header>
 
@@ -1181,7 +1585,20 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               )}
             </div>
           ))}
-          <span data-dl-part="ws-add">{action(c.addWorkspace, 'plus')}</span>
+          <span data-dl-part="ws-add">
+            <MenuButton
+              label={c.addWorkspace}
+              icon="plus"
+              iconOnly
+              chevron={false}
+              emphasis="quiet"
+              tone="inherit"
+              size="xs"
+              side="inline"
+              items={view.workspaceMenu}
+              onSelect={(value) => notBuilt(labelOf(view.workspaceMenu, value))}
+            />
+          </span>
         </nav>
       )}
 
@@ -1225,7 +1642,14 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               : r.id === 'activity' && (isAma || dualRail)
                 ? view.amaChannel.activityMentions
                 : r.mentions;
-            const currentSlot = !isSlackbot && (r.id === 'activity' && activityOpen ? true : i === 0 && !activityOpen);
+            const railHere = activityOpen
+              ? 'activity'
+              : activePage === 'dms' || activePage === 'dm'
+                ? 'dms'
+                : activePage === 'todos' || activePage === 'agents'
+                  ? activePage
+                  : view.rail[0]?.id;
+            const currentSlot = !isSlackbot && r.id === railHere;
             return (
               <div data-dl-part="rail-item" data-current={currentSlot || undefined} key={r.id}>
                 <span data-dl-part="rail-icon" data-activity-anchor={r.id === 'activity' || undefined}>
@@ -1252,14 +1676,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                       emphasis="quiet"
                       tone="inherit"
                       onClick={() => {
-                        if (r.id === 'files') {
-                          setActivePage('channel');
-                          setTab('files');
-                        } else {
-                          setActivePage('channel');
-                          setTab('messages');
-                          setSearch(false);
-                        }
+                        if (r.id === 'files') visit({ page: 'channel', channel, tab: 'files' });
+                        else if (r.id === 'dms') visit({ page: 'dms' });
+                        else if (r.id === 'todos' || r.id === 'agents') visit({ page: r.id });
+                        else goHome();
                       }}
                     />
                   )}
@@ -1283,6 +1703,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   iconOnly
                   emphasis="quiet"
                   tone="inherit"
+                  onClick={() => notBuilt(view.slackbotView.adminLabel)}
                 />
               </span>
               <span data-dl-part="rail-label">{view.slackbotView.adminLabel}</span>
@@ -1303,14 +1724,11 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               open={createMenuOpen}
               onOpenChange={setCreateMenuOpen}
               items={view.createMenu}
-              onSelect={(value) => {
-                setCreateMenuOpen(false);
-                if (value === 'channel') setCreating(true);
-              }}
+              onSelect={onCreate}
             />
           </span>
           <span data-dl-part="rail-circle">
-            <Button label={c.themeToggle} icon="scheme-dark" iconOnly emphasis="quiet" tone="inherit" size="s" />
+            <Button label={c.themeToggle} icon="scheme-dark" iconOnly emphasis="quiet" tone="inherit" size="s" onClick={toggleTheme} />
           </span>
           <span data-dl-part="rail-avatar">
             <Avatar name={view.currentUser} src={currentUserPic.src || undefined} shape="square" presence="available" size={36} />
@@ -1334,14 +1752,14 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   emphasis="quiet"
                   tone="inherit"
                   size="xs"
-                  items={view.filterMenu}
+                  items={filterItems}
                   open={filterMenuOpen}
                   onOpenChange={setFilterMenuOpen}
                   openSubmenu={filterMenuOpen ? 'filter-sort' : undefined}
-                  onSelect={() => setFilterMenuOpen(false)}
+                  onSelect={onFilterMenu}
                 />
               )}
-              {action(c.compose, 'compose')}
+              {action(c.compose, 'compose', () => visit({ page: 'compose' }))}
             </span>
           </div>
 
@@ -1395,6 +1813,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                         emphasis="quiet"
                         align="start"
                         tone="inherit"
+                        onClick={() => visit({ page: 'channel', channel: view.channel })}
                       />
                     </div>
                   </div>
@@ -1527,15 +1946,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                             align="start"
                             tone="inherit"
                             onClick={() => {
-                              if (!section.collapsible && item.name === 'Directories') setActivePage('directories');
-                              else if (!section.collapsible && item.name === 'Huddles') setActivePage('huddles');
-                              else if (!section.collapsible && item.name === 'Unreads') setActivePage('unreads');
-                              else if (section.collapsible) {
-                                setActivePage('channel');
-                                setChannel(item.name);
-                                setSearch(false);
-                                setTab('messages');
-                              }
+                              const page = section.collapsible ? undefined : rowPages[item.name];
+                              if (page) visit({ page, channel });
+                              else if (section.collapsible) visit({ page: 'channel', channel: item.name });
+                              else notBuilt(item.name);
                             }}
                           />
                           {badgeLabel && <span data-dl-part="count-pill">{badgeLabel}</span>}
@@ -1552,12 +1966,12 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
 
           {!isSlackbot && (
             <div data-dl-part="more-unreads" data-elevation="3">
-              <Button label={view.moreUnreadsLabel} size="xs" emphasis="quiet" tone="inherit" />
+              <Button label={view.moreUnreadsLabel} size="xs" emphasis="quiet" tone="inherit" onClick={() => visit({ page: 'unreads', channel })} />
             </div>
           )}
         </aside>
 
-        <main data-dl-part="conversation" data-page={activePage !== 'channel' ? activePage : undefined}>
+        <main key={fresh} data-dl-part="conversation" data-page={activePage !== 'channel' ? activePage : undefined}>
           {activePage === 'slackbot' ? (
             renderSlackbot()
           ) : activePage === 'directories' ? (
@@ -1568,11 +1982,23 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             renderUnreads()
           ) : activePage === 'welcome-back' ? (
             renderWelcomeBack()
+          ) : activePage !== 'channel' ? (
+            renderPage()
           ) : (
             <>
               <header data-dl-part="channel-head" data-density="compact">
             <div data-dl-part="channel-lead">
-              {headAction(c.starChannel, 'star')}
+              {/* binary-setting: starring is a reversible mark on this channel, shown in place as the reference does. */}
+              <Button
+                label={starred[channel] ? c.unstarChannel : c.starChannel}
+                icon="star"
+                iconOnly
+                emphasis="quiet"
+                tone="inherit"
+                size="xs"
+                pressed={Boolean(starred[channel])}
+                onClick={() => setStarred((s) => ({ ...s, [channel]: !s[channel] }))}
+              />
               <div data-dl-part="channel-title">
                 <Icon name="hash" size="sm" />
                 <Heading level={1} size={4}>
@@ -1604,11 +2030,42 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 <span data-dl-part="member-count">{activeMemberCount}</span>
               </span>
               <span data-dl-part="huddle">
-                {headAction(c.huddle, 'headphones')}
-                {action(c.huddleOptions, 'chevron-down')}
+                {headAction(c.huddle, 'headphones', () => notBuilt(c.huddle))}
+                <MenuButton
+                  label={c.huddleOptions}
+                  icon="chevron-down"
+                  iconOnly
+                  chevron={false}
+                  emphasis="quiet"
+                  tone="inherit"
+                  size="xs"
+                  items={view.huddleMenu}
+                  onSelect={(value) =>
+                    value === 'copy-link'
+                      ? copyText(`${location.href.split('#')[0]}#/app/slack/huddles`, c.linkCopied)
+                      : notBuilt(labelOf(view.huddleMenu, value))
+                  }
+                />
               </span>
-              {headAction(c.notifications, 'bell')}
+              <MenuButton
+                label={c.notifications}
+                icon="bell"
+                iconOnly
+                chevron={false}
+                emphasis="quiet"
+                tone="inherit"
+                size="xs"
+                items={view.notificationMenu.map((i) => (i.value === 'more' ? i : { ...i, checked: i.value === notifyLevel }))}
+                onSelect={(value) => {
+                  if (value === 'more') notBuilt(labelOf(view.notificationMenu, value));
+                  else {
+                    setNotifyLevel(value);
+                    notify({ subject: 'slack-notify', tone: 'success', message: `${c.notifyLevel} ${labelOf(view.notificationMenu, value)}.` });
+                  }
+                }}
+              />
               {headAction(c.searchChannel, 'search', () => {
+                if (search) searchBox.current?.focus({ preventScroll: true });
                 userTriggeredSearch.current = true;
                 setSearch(true);
               })}
@@ -1619,10 +2076,10 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                 emphasis="quiet"
                 tone="inherit"
                 size="xs"
-                items={view.channelMenu}
+                items={view.channelMenu.map((i) => (i.value === 'star' && starred[channel] ? { ...i, label: c.unstarChannel } : i))}
                 open={channelMenuOpen}
                 onOpenChange={setChannelMenuOpen}
-                onSelect={() => setChannelMenuOpen(false)}
+                onSelect={onChannelMenu}
               />
             </div>
           </header>
@@ -1637,6 +2094,8 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
                   size="xs"
                   tone="inherit"
                   onClick={() => {
+                    if (tab === t.id && !search && t.id === 'messages') focusComposer(channel);
+                    else if (tab === t.id && !search) setFresh((f) => f + 1);
                     setTab(t.id);
                     setSearch(false);
                   }}
@@ -1644,7 +2103,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
               </span>
             ))}
             <span data-dl-part="tab-plus">
-              {action(c.addTab, 'plus')}
+              {action(c.addTab, 'plus', () => notBuilt(c.addTab))}
               <span data-dl-part="tab-dot" aria-hidden="true" />
             </span>
           </div>
@@ -1735,7 +2194,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
             <div data-dl-part="thread-head">
               <strong>{c.thread}</strong>
               <span data-dl-part="thread-channel">#{channel}</span>
-              {headAction(c.popout, 'external')}
+              {headAction(c.popout, 'external', () => notBuilt(c.popout))}
               {headAction(c.closeThread, 'close', closeThread)}
             </div>
             <ScrollArea label={c.thread}>

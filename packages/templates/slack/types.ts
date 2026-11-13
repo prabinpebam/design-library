@@ -239,6 +239,20 @@ export interface WorkspaceRecord {
   messageMenu: WorkspaceMenuItem[];
   channelMenu: WorkspaceMenuItem[];
   createMenu: WorkspaceMenuItem[];
+  /** The title bar's application menu. */
+  appMenu: WorkspaceMenuItem[];
+  /** Add a workspace (the rail's plus beside the workspace tiles). */
+  workspaceMenu: WorkspaceMenuItem[];
+  /** The channel header's notification levels; `all`, `mentions` and `off` are the levels. */
+  notificationMenu: WorkspaceMenuItem[];
+  /** The huddle button's options. */
+  huddleMenu: WorkspaceMenuItem[];
+  /** The composer's attach menu. */
+  attachMenu: WorkspaceMenuItem[];
+  /** Schedule a message: when to send it. */
+  scheduleMenu: WorkspaceMenuItem[];
+  /** People listed under Direct messages. */
+  dms: { name: string; avatar: string; presence?: 'available' | 'away'; preview: string }[];
   emojiPicker: { categories: { label: string; icon: WorkspaceIcon }[]; groups: { title: string; items: WorkspaceEmoji[] }[]; handy: WorkspaceEmoji[] };
   copy: Record<string, string>;
 }

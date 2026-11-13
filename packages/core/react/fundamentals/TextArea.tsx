@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode, type Ref } from 'react';
 import { announce } from '../behaviour/announce';
 import { Field } from './Field';
 import { Progress } from './Progress';
@@ -46,6 +46,8 @@ export interface TextAreaProps extends DataAttributes {
   tray?: ReactNode;
   /** Inside the box, under the text: a row of quiet actions (a composer's tools and Send). Gives the box the composer's larger corners; pressing the row's empty space puts the caret in the text. */
   toolbar?: ReactNode;
+  /** The native text area, for an owner that puts the caret in it from elsewhere (a Reply or Mention button, Edit message). Leave it out otherwise. */
+  inputRef?: Ref<HTMLTextAreaElement>;
 }
 
 /**
@@ -61,7 +63,7 @@ export interface TextAreaProps extends DataAttributes {
  * @key Tab: leaves the field; Enter adds a new line
  * @key Enter: with `onEnter`, sends; Shift+Enter adds a new line
  */
-export function TextArea({ label, value, onChange, hint, placeholder, rows = 4, grow = false, size = 'normal', width = 'measure', maxLength, optional = false, readOnly = false, disabled = false, error, combobox, processing, hideLabel = false, onEnter, tray, toolbar, ...data }: TextAreaProps) {
+export function TextArea({ label, value, onChange, hint, placeholder, rows = 4, grow = false, size = 'normal', width = 'measure', maxLength, optional = false, readOnly = false, disabled = false, error, combobox, processing, hideLabel = false, onEnter, tray, toolbar, inputRef, ...data }: TextAreaProps) {
   const said = useRef<string | undefined>(undefined);
   const text = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
@@ -81,7 +83,11 @@ export function TextArea({ label, value, onChange, hint, placeholder, rows = 4, 
           <span data-dl-part="box" data-dl-ring="" data-ring={processing ? 'ai' : undefined}>
           {tray && <span data-dl-part="tray">{tray}</span>}
           <textarea
-            ref={text}
+            ref={(el) => {
+              text.current = el;
+              if (typeof inputRef === 'function') inputRef(el);
+              else if (inputRef) inputRef.current = el;
+            }}
             id={control.id}
             value={value}
             rows={rows}

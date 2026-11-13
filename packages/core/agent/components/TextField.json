@@ -145,6 +145,11 @@
           "description": "A choice attached before the box that sets part of the value, such as a country's dialling code. The button shows the chosen item's `short` text."
         },
         {
+          "name": "inputRef",
+          "type": "Ref<HTMLInputElement>",
+          "description": "The native input, for an owner that puts the caret in it from elsewhere (a search button that's pressed again, a page that opens on its field). Leave it out otherwise."
+        },
+        {
           "name": "action",
           "type": "TextFieldAction",
           "description": "A button attached after the box that acts on the value, such as Search or Send. Enter presses it too."

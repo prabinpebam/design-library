@@ -248,7 +248,8 @@
     "List",
     "MenuButton",
     "Select",
-    "Mentions"
+    "Mentions",
+    "slack.Workspace"
   ],
   "principles": [
     "ui-states"

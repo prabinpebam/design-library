@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type Ref } from 'react';
 import { useCommit } from '../behaviour/commit';
 import { Button, type ButtonSize } from './Button';
 import { ColourPicker } from './ColourPicker';
@@ -63,6 +63,8 @@ export interface TextFieldProps extends DataAttributes {
   inputMode?: 'text' | 'numeric' | 'decimal' | 'email' | 'url' | 'tel' | 'search';
   /** A choice attached before the box that sets part of the value, such as a country's dialling code. The button shows the chosen item's `short` text. */
   prefixMenu?: TextFieldPrefixMenu;
+  /** The native input, for an owner that puts the caret in it from elsewhere (a search button that's pressed again, a page that opens on its field). Leave it out otherwise. */
+  inputRef?: Ref<HTMLInputElement>;
   /** A button attached after the box that acts on the value, such as Search or Send. Enter presses it too. */
   action?: TextFieldAction;
   /** One key that moves focus here from anywhere on the page, shown in the box while it's empty and not focused, e.g. "/". */
@@ -146,7 +148,7 @@ const actionSize: Record<ButtonSize, ButtonSize> = { xs: 'xs', s: 'xs', normal: 
  * @key Enter: saves the value now (in a form: submits the form)
  * @key Escape: puts back the stored value (not in a form)
  */
-export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, appearance = 'box', ...data }: TextFieldProps) {
+export function TextField({ label, value, onCommit, onChange, name, words = {}, mode = 'commit', hint, placeholder, type = 'text', size = 'normal', icon, prefix, suffix, clearable = false, maxLength, optional = false, readOnly = false, disabled = false, error, failedText, inputMode, prefixMenu, action, shortcut, chip, length = 6, group, masked = false, swatch, hideLabel = false, appearance = 'box', inputRef, ...data }: TextFieldProps) {
   const form = mode === 'form';
   const { phase, run, reset } = useCommit('--duration-confirm-read');
   const [draft, setDraft] = useState(value);
@@ -226,7 +228,11 @@ export function TextField({ label, value, onCommit, onChange, name, words = {}, 
 
   const field = (control: FieldControlProps) => (
     <input
-      ref={input}
+      ref={(el) => {
+        input.current = el;
+        if (typeof inputRef === 'function') inputRef(el);
+        else if (inputRef) inputRef.current = el;
+      }}
       id={control.id}
       name={name}
       type={type === 'password' && shown ? 'text' : code ? (masked ? 'password' : 'text') : type}
