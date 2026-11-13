@@ -7,7 +7,7 @@
   "summary": "A scroll region whose scrollbar is drawn over the content, never beside it: the content has the same width and alignment whether it overflows or not. Native scrolling stays (wheel, touch, keys, find in page, anchors); only the bar is replaced, by a thin thumb at the region's end edge that can be dragged, with the track paging on a click. Use it for every scroll region. Not for the document itself on small screens, which keeps the browser's own bar.",
   "family": "arrangement",
   "a11y": [
-    "The drawn bar is hidden from assistive technology; the region scrolls with the keys whenever it or something inside it has focus. Give `label` when nothing inside can take focus, and the region becomes a named, focusable region.",
+    "The drawn bar is hidden from assistive technology; the region scrolls with the keys whenever it or something inside it has focus. Give `label` when nothing inside can take focus, and the region becomes a named, focusable region; without one, a region that overflows with nothing focusable inside takes focus by itself, so the keys still reach it.",
     "Forced colours and touch screens get the system's own scrollbar back."
   ],
   "keys": [

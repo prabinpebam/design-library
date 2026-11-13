@@ -321,6 +321,20 @@
    "dark": "#2dd4bf"
   },
   "$description": "Teal metadata and language globe accent on Review and View tabs (09-review.png, 10-view.png)."
+  },
+  "color.category.on-7": {
+  "$value": {
+   "light": "{p.base.0}",
+   "dark": "{p.base.950}"
+  },
+  "$description": "Ink on category 7 (a comment author's initials): the purple above is darker than core's, so its ink flips to stay readable (F26: 2.24:1 before)."
+  },
+  "color.category.on-8": {
+  "$value": {
+   "light": "{p.base.0}",
+   "dark": "{p.base.950}"
+  },
+  "$description": "Ink on category 8: the dark scheme's teal above is lighter than core's, so its ink flips to stay readable (F26: 1.86:1 before)."
  },
  "color.map.chip-tint": {
   "$value": {
@@ -566,8 +580,11 @@
   "$description": "Document body: 1.15 multiple line spacing on a 1.2 font line, about 22 px at 12 pt."
  },
  "color.text-accent-display": {
-  "$value": "#0f4761",
-  "$description": "Document heading colour (the default heading style's dark teal), unchanged on Dark Gray because the page stays white."
+  "$value": {
+   "light": "#0f4761",
+   "dark": "#83caeb"
+  },
+  "$description": "Document heading colour: the default heading style's dark teal on the white page; on a page drawn dark (the system's dark scheme), its lightness inverted as Word's dark mode does (F26: 1.5:1 before)."
  },
  "c.field.padding-inline-sm": {
   "$value": "0.25rem",

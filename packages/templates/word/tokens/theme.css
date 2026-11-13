@@ -59,6 +59,8 @@
     --color-category-6: light-dark(#849398, #9aa6ab);
     --color-category-7: light-dark(#7719aa, #a855f7);
     --color-category-8: light-dark(#038387, #2dd4bf);
+    --color-category-on-7: light-dark(var(--p-base-0), var(--p-base-950));
+    --color-category-on-8: light-dark(var(--p-base-0), var(--p-base-950));
     --color-map-chip-tint: light-dark(#efefef, #2e2e2e);
     --color-accent: light-dark(#185abd, #598fec);
     --color-bg: light-dark(#fafafa, #1f1f1f);
@@ -107,7 +109,7 @@
     --text-xxl: 1.6666667rem;
     --text-xxxl: 2.3333333rem;
     --leading-normal: 1.38;
-    --color-text-accent-display: #0f4761;
+    --color-text-accent-display: light-dark(#0f4761, #83caeb);
     --c-field-padding-inline-sm: 0.25rem;
     --c-slider-thumb-s: 0.6875rem;
     --c-slider-thumb-aspect: 0.4545;

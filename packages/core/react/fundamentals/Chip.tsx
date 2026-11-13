@@ -113,7 +113,7 @@ export function Chip({
     onKeyDown?.(event);
   };
   return (
-    <span {...attrs}>
+    <span {...attrs} aria-disabled={disabled || undefined}>
       {lead}
       {face}
       {onPress ? (

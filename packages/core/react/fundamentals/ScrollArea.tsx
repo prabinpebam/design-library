@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from 'react';
+import { useCallback, useEffect, useState, type ReactNode, type Ref } from 'react';
 import { useOverlayScroll } from '../behaviour/scroll';
 import type { DataAttributes } from '../types';
 
@@ -40,20 +40,29 @@ export interface ScrollAreaProps extends DataAttributes {
  * Use it for every scroll region. Not for the document itself on small screens, which keeps the browser's own bar.
  * @tier fundamental
  * @family arrangement
- * @a11y The drawn bar is hidden from assistive technology; the region scrolls with the keys whenever it or something inside it has focus. Give `label` when nothing inside can take focus, and the region becomes a named, focusable region.
+ * @a11y The drawn bar is hidden from assistive technology; the region scrolls with the keys whenever it or something inside it has focus. Give `label` when nothing inside can take focus, and the region becomes a named, focusable region; without one, a region that overflows with nothing focusable inside takes focus by itself, so the keys still reach it.
  * @a11y Forced colours and touch screens get the system's own scrollbar back.
  * @key Arrow keys, Page Up, Page Down, Home, End, Space: scroll the region (native)
  */
 export function ScrollArea({ children, mode = 'auto', bar = 'overlay', axis = 'block', maxSize = 'fill', inset = 'none', surface = 'none', label, id, tabIndex, viewportRef, contain = false, ...data }: ScrollAreaProps) {
   const { root, setViewport, tracks } = useOverlayScroll(viewportRef);
+  const [viewport, setEl] = useState<HTMLDivElement | null>(null);
+  const reachable = useKeyboardReach(viewport, tabIndex === undefined && !label);
+  const viewportCallback = useCallback(
+    (el: HTMLDivElement | null) => {
+      setViewport(el);
+      setEl(el);
+    },
+    [setViewport],
+  );
 
   return (
     <div {...data} ref={root} data-dl="scroll-area" data-mode={bar !== 'overlay' ? 'always' : mode} data-bar={bar !== 'overlay' ? bar : undefined} data-axis={axis} data-max={maxSize} data-surface={surface} data-contain={contain ? '' : undefined}>
       <div
-        ref={setViewport}
+        ref={viewportCallback}
         data-dl-part="viewport"
         id={id}
-        tabIndex={tabIndex ?? (label ? 0 : undefined)}
+        tabIndex={tabIndex ?? (label || reachable ? 0 : undefined)}
         role={label ? 'region' : undefined}
         aria-label={label}
       >
@@ -64,4 +73,29 @@ export function ScrollArea({ children, mode = 'auto', bar = 'overlay', axis = 'b
       {tracks(axis)}
     </div>
   );
+}
+
+const FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"]),[contenteditable="true"],summary,iframe';
+
+/**
+ * F26 (A2): a region that overflows with nothing inside that takes focus can't be scrolled from the keyboard, so it
+ * takes focus itself. Watches the region's size, its content's size and what's inside it.
+ */
+function useKeyboardReach(el: HTMLDivElement | null, enabled: boolean) {
+  const [reachable, setReachable] = useState(false);
+  useEffect(() => {
+    if (!el || !enabled) return setReachable(false);
+    const update = () => setReachable((el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1) && !el.querySelector(FOCUSABLE));
+    update();
+    const sizes = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(update);
+    sizes?.observe(el);
+    if (el.firstElementChild) sizes?.observe(el.firstElementChild);
+    const tree = typeof MutationObserver === 'undefined' ? undefined : new MutationObserver(update);
+    tree?.observe(el, { childList: true, subtree: true, attributes: true, attributeFilter: ['href', 'tabindex', 'disabled', 'contenteditable'] });
+    return () => {
+      sizes?.disconnect();
+      tree?.disconnect();
+    };
+  }, [el, enabled]);
+  return reachable;
 }

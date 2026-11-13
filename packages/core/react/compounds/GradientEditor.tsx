@@ -168,7 +168,7 @@ export function GradientEditor({ label, stops, onChange, onChangeEnd, descriptio
   };
 
   return (
-    <div {...data} data-dl="gradient-editor" data-disabled={disabled ? 'on' : undefined} role="group" aria-labelledby={`${id}-label`} aria-describedby={description ? `${id}-description` : undefined}>
+    <div {...data} data-dl="gradient-editor" data-disabled={disabled ? 'on' : undefined} role="group" aria-disabled={disabled || undefined} aria-labelledby={`${id}-label`} aria-describedby={description ? `${id}-description` : undefined}>
       <span data-dl-part="label" id={`${id}-label`}>
         {label}
       </span>

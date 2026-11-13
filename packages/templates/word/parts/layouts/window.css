@@ -786,6 +786,8 @@
   }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-dl-part='block'] { margin: 0; font-weight: 400; }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='title'] { font-family: var(--font-display); font-size: var(--text-xxxl); line-height: var(--leading-tight); }
+  /* F24: a heading sits nearer the paragraph it heads than the one above (Word's heading styles: space before, none after). */
+  [data-dl='word-page-stage'] > [data-dl-part='page'] > :is([data-style='heading-1'], [data-style='heading-2']) { margin-block: var(--space-2) calc(-1 * var(--space-2)); }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='heading-1'] { padding-block-start: var(--space-1); font-family: var(--font-display); font-size: var(--text-xxl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
   [data-dl='word-page-stage'] > [data-dl-part='page'] > [data-style='heading-2'] { font-family: var(--font-display); font-size: var(--text-xl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
 
@@ -1201,7 +1203,15 @@
       display: none;
     }
     [data-dl='word-page-stage'] > [data-dl-part='page'] {
-      padding: var(--space-4);
+      padding: var(--space-6);
+    }
+    /* F24: a narrow window stacks the side pane and the document in reading order, so neither squeezes the other off the window. */
+    [data-dl='word-window'] > [data-dl-part='workspace'] > [data-dl-part='editor-col'] > [data-dl-part='body'] {
+      flex-direction: column;
+    }
+    [data-dl='word-window'] > [data-dl-part='workspace'] > [data-dl-part='editor-col'] > [data-dl-part='body'] > :is([data-dl-part='nav-pane'], [data-dl-part='comments-pane']) {
+      flex: 0 1 30%;
+      min-inline-size: 0;
     }
     [data-dl='word-backstage'] {
       grid-template-columns: minmax(0, 1fr);

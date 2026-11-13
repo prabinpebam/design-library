@@ -150,7 +150,7 @@ export function AllocationSlider({ label, segments, onChange, onChangeEnd, total
   const describedBy = [description && `${id}-description`, (error || !valid) && `${id}-error`].filter(Boolean).join(' ') || undefined;
 
   return (
-    <div {...data} data-dl="allocation-slider" data-size={size} data-disabled={disabled ? 'on' : undefined} data-readonly={readOnly ? 'on' : undefined} role="group" aria-labelledby={`${id}-label`}>
+    <div {...data} data-dl="allocation-slider" data-size={size} data-disabled={disabled ? 'on' : undefined} data-readonly={readOnly ? 'on' : undefined} role="group" aria-disabled={disabled || undefined} aria-labelledby={`${id}-label`}>
       <span data-dl-part="label" id={`${id}-label`}>
         {label}
       </span>

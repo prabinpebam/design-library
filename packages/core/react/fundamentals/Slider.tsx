@@ -222,7 +222,7 @@ export function Slider<V extends number | number[]>(props: Typed<V>) {
     ) : null;
 
   return (
-    <div {...data} data-dl="slider" data-size={size} data-disabled={disabled ? 'on' : undefined} data-readonly={readOnly ? 'on' : undefined} data-invalid={error ? 'on' : undefined} data-bubble={valueLabel} role={multi ? 'group' : undefined} aria-labelledby={multi && !hideLabel ? `${id}-label` : undefined} aria-label={multi && hideLabel ? label : undefined}>
+    <div {...data} data-dl="slider" data-size={size} data-disabled={disabled ? 'on' : undefined} data-readonly={readOnly ? 'on' : undefined} data-invalid={error ? 'on' : undefined} data-bubble={valueLabel} role={multi ? 'group' : undefined} aria-disabled={disabled || undefined} aria-labelledby={multi && !hideLabel ? `${id}-label` : undefined} aria-label={multi && hideLabel ? label : undefined}>
       {(!hideLabel || showValue) && (
         <span data-dl-part="header">
           {!hideLabel && (
