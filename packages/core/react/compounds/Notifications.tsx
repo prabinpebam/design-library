@@ -165,7 +165,7 @@ export function Notifications({ label = 'Notifications', ...data }: Notification
   // In the top layer while there is something to show; shown again for a new pill so it sits above a dialog opened since.
   useLayoutEffect(() => {
     const el = ref.current;
-    if (!el || !el.showPopover) return;
+    if (!el?.isConnected || !el.showPopover) return;
     if (el.matches(':popover-open')) el.hidePopover();
     if (pills.length) el.showPopover();
   }, [pills.length > 0, newest]);

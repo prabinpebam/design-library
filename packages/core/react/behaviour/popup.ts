@@ -57,11 +57,12 @@ function fitPopup(el: HTMLElement) {
 export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, popup: RefObject<HTMLElement | null>, within: RefObject<HTMLElement | null>, onDismiss: () => void, side: 'block' | 'inline' = 'block') {
   useEffect(() => {
     const el = popup.current;
-    if (!open || !el || !anchor.current) return;
+    // G7: a page change or host can take the popup out of the document before this runs; showPopover would throw.
+    if (!open || !el?.isConnected || !anchor.current?.isConnected) return;
     el.showPopover?.();
     fitPopup(el);
     const place = () => {
-      if (!anchor.current) return;
+      if (!anchor.current?.isConnected || !el.isConnected) return;
       const r = anchor.current.getBoundingClientRect();
       const doc = document.documentElement;
       if (side === 'inline') {

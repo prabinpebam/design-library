@@ -70,10 +70,11 @@ export function cssMs(el: Element, name: string) {
 export function useAnchored(open: boolean, anchor: RefObject<HTMLElement | null>, surface: RefObject<HTMLElement | null>, side: AnchorSide, offsetVar: string, align: 'center' | 'start' = 'center', crossOffsetVar?: string) {
   useEffect(() => {
     const el = surface.current;
-    if (!open || !el || !anchor.current) return;
+    // G7: a page change or host can take the surface out of the document before this runs; showPopover would throw.
+    if (!open || !el?.isConnected || !anchor.current?.isConnected) return;
     el.showPopover?.();
     const place = () => {
-      if (!anchor.current) return;
+      if (!anchor.current?.isConnected || !el.isConnected) return;
       const doc = document.documentElement;
       const rtl = getComputedStyle(anchor.current).direction === 'rtl';
       const cross = crossOffsetVar ? cssPixels(el, crossOffsetVar) : 0;
