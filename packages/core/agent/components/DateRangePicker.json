@@ -88,6 +88,7 @@
   ],
   "tokens": [
     "--c-field-border-width",
+    "--c-field-measure",
     "--c-field-padding-inline",
     "--c-field-radius",
     "--c-field-size",
@@ -108,7 +109,6 @@
     "--color-text-muted",
     "--duration-change",
     "--easing-standard",
-    "--size-measure",
     "--space-inline-pair"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/daterangepicker",

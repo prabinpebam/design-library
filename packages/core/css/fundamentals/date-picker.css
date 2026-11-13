@@ -6,7 +6,7 @@
   :is([data-dl='date-picker'], [data-dl='date-range-picker']) {
     display: block;
     inline-size: 100%;
-    max-inline-size: var(--size-measure);
+    max-inline-size: var(--c-field-measure);
   }
 
   :is([data-dl='date-picker'], [data-dl='date-range-picker']) [data-dl-part='control'] > [data-dl-part='box'] {
