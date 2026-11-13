@@ -197,6 +197,46 @@
     outline-offset: var(--size-focus-offset);
   }
 
+  /* LR46. Beside: the swatches, the swatch button and the pick-from-screen button in one row, each a target in size. */
+  [data-dl='colour-picker'][data-trigger][data-beside] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-inline-pair);
+    inline-size: auto;
+    block-size: auto;
+  }
+
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='swatches'] {
+    flex-direction: row;
+    gap: var(--space-inline-pair);
+  }
+
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='swatches'] > [data-dl-part='swatch'],
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='trigger'] {
+    flex: none;
+    inline-size: var(--size-target);
+    block-size: var(--size-target);
+    border-radius: var(--radius-sm);
+  }
+
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='trigger'] {
+    box-shadow: inset 0 0 0 var(--border-hairline) var(--color-border-strong);
+  }
+
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='swatches'] > [data-dl-part='swatch'][aria-pressed='true'] {
+    outline: var(--border-thick) solid var(--color-text);
+    outline-offset: var(--border-hairline);
+  }
+
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='swatches'] > [data-dl-part='swatch']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  [data-dl='colour-picker'][data-beside] > [data-dl-part='swatches'] > [data-dl-part='swatch']:disabled {
+    cursor: not-allowed;
+  }
+
   /* The popover: the shared popup placement (usePopup) in the top layer; it draws the floating surface. */
   [data-dl='colour-picker'] > [data-dl-part='popup'] {
     position: fixed;

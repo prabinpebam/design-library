@@ -75,6 +75,18 @@
           "type": "boolean }"
         },
         {
+          "name": "beside",
+          "type": "boolean",
+          "default": "false",
+          "description": "With `trigger` (LR46): the swatches sit in a row before the swatch button and the pick-from-screen button (where the browser has one) after it, each a target in size, instead of inside the panel. A swatch or a pick is a finished choice (`onClose` follows `onChange`)."
+        },
+        {
+          "name": "pickLabel",
+          "type": "string",
+          "default": "'Pick a colour from the screen'",
+          "description": "The pick-from-screen button's name when it sits beside: default \"Pick a colour from the screen\"."
+        },
+        {
           "name": "onClose",
           "type": "() => void",
           "description": "With `trigger`: the popover closed, so the person has finished choosing (save here, not on every live change)."
@@ -116,6 +128,7 @@
     "--shadow-raised",
     "--size-focus-offset",
     "--size-focus-width",
+    "--size-target",
     "--space-inline-item",
     "--space-inline-pair",
     "--space-stack-item",

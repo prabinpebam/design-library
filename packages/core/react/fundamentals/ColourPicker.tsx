@@ -25,6 +25,12 @@ export interface ColourPickerProps extends DataAttributes {
    * outside closes it). The swatch fills the box its parent gives it, 20 px at least. `empty` draws no colour (a colour
    * not chosen yet); `disabled` stops it opening. */
   trigger?: { empty?: boolean; disabled?: boolean };
+  /** With `trigger` (LR46): the swatches sit in a row before the swatch button and the pick-from-screen button (where the
+   * browser has one) after it, each a target in size, instead of inside the panel. A swatch or a pick is a finished
+   * choice (`onClose` follows `onChange`). */
+  beside?: boolean;
+  /** The pick-from-screen button's name when it sits beside: default "Pick a colour from the screen". */
+  pickLabel?: string;
   /** With `trigger`: the popover closed, so the person has finished choosing (save here, not on every live change). */
   onClose?: () => void;
 }
@@ -94,7 +100,7 @@ function track(e: ReactPointerEvent<HTMLElement>, report: (x: number, y: number)
  * @key Area: Left and Right change saturation, Up and Down brightness (Shift: ten)
  * @key Hue and opacity: arrows by one (Shift: ten), Page Up and Page Down by a tenth, Home and End to the ends
  */
-export function ColourPicker({ label, value, alpha, onChange, model: firstModel = 'hsl', swatches, trigger, onClose, ...data }: ColourPickerProps) {
+export function ColourPicker({ label, value, alpha, onChange, model: firstModel = 'hsl', swatches, trigger, onClose, beside = false, pickLabel = 'Pick a colour from the screen', ...data }: ColourPickerProps) {
   const [colour, setColour] = useState<Hsva>(() => parseHex(value) ?? { h: 0, s: 0, v: 0, a: 1 });
   const [model, setModel] = useState<ColourModel>(firstModel);
   const shown = useRef(value);
@@ -130,6 +136,20 @@ export function ColourPicker({ label, value, alpha, onChange, model: firstModel 
     setColour(next);
     shown.current = toHex(next);
     onChange(shown.current, Math.round(next.a * 100) / 100);
+  };
+  const outside = !!trigger && beside;
+  const pick = async (done?: () => void) => {
+    if (!dropper) return;
+    try {
+      const picked = await new dropper().open();
+      const next = parseHex(picked.sRGBHex, colour.h);
+      if (next) {
+        change({ ...next, a: colour.a });
+        done?.();
+      }
+    } catch {
+      // The person pressed Escape: nothing changes.
+    }
   };
 
   const [r, g, b] = hsvToRgb(colour);
@@ -206,20 +226,12 @@ export function ColourPicker({ label, value, alpha, onChange, model: firstModel 
         <span data-dl-part="thumb" />
       </div>
       <div data-dl-part="sliders">
-        {dropper && (
+        {dropper && !outside && (
           <Button
             size="xs"
             emphasis="quiet"
             label="Pick"
-            onClick={async () => {
-              try {
-                const picked = await new dropper().open();
-                const next = parseHex(picked.sRGBHex, colour.h);
-                if (next) change({ ...next, a: colour.a });
-              } catch {
-                // The person pressed Escape: nothing changes.
-              }
-            }}
+            onClick={() => pick()}
           />
         )}
         <div data-dl-part="tracks">
@@ -262,7 +274,7 @@ export function ColourPicker({ label, value, alpha, onChange, model: firstModel 
           <NumberField size="xs" label={`${label}, opacity`} hideLabel unit="%" min={0} max={100} precision={0} value={Math.round(colour.a * 100)} onCommit={(n) => change({ ...colour, a: n / 100 })} />
         )}
       </div>
-      {swatches?.map((group) => (
+      {!outside && swatches?.map((group) => (
         <div key={group.title} data-dl-part="swatches" role="group" aria-label={group.title}>
           <Text as="span" variant="caption" tone="muted">
             {group.title}
@@ -297,8 +309,31 @@ export function ColourPicker({ label, value, alpha, onChange, model: firstModel 
     );
   }
   const said = trigger.empty ? 'not chosen' : `${hex.toUpperCase()}${hasAlpha && colour.a < 1 ? ` at ${Math.round(colour.a * 100)}%` : ''}`;
+  const near = outside ? swatches?.filter((group) => group.colours.length).map((group) => (
+    <span key={group.title} data-dl-part="swatches" role="group" aria-label={group.title}>
+      {group.colours.map((c) => (
+        <button
+          key={c}
+          type="button"
+          data-dl-part="swatch"
+          aria-label={c.toUpperCase()}
+          title={c.toUpperCase()}
+          aria-pressed={!trigger.empty && c.toLowerCase() === hex}
+          disabled={trigger.disabled}
+          style={{ '--colour-picker-swatch': c } as CSSProperties}
+          onClick={() => {
+            const next = parseHex(c, colour.h);
+            if (!next) return;
+            change({ ...next, a: colour.a });
+            onClose?.();
+          }}
+        />
+      ))}
+    </span>
+  )) : null;
   return (
-    <span {...data} ref={root} data-dl="colour-picker" data-trigger="" data-empty={trigger.empty ? '' : undefined} style={style}>
+    <span {...data} ref={root} data-dl="colour-picker" data-trigger="" data-beside={outside ? '' : undefined} data-empty={trigger.empty ? '' : undefined} style={style}>
+      {near}
       <button
         ref={button}
         type="button"
@@ -310,6 +345,7 @@ export function ColourPicker({ label, value, alpha, onChange, model: firstModel 
         disabled={trigger.disabled}
         onClick={() => (open ? close(false) : setOpen(true))}
       />
+      {outside && dropper && <Button label={pickLabel} icon="eyedropper" iconOnly tooltip emphasis="quiet" disabled={trigger.disabled} onClick={() => pick(onClose)} />}
       <div
         ref={popup}
         data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3"
