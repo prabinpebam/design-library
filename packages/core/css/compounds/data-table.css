@@ -83,6 +83,11 @@
     font-weight: var(--type-label-weight);
   }
 
+  /* LR85. Strong row headings: the rows are named by their first column. */
+  [data-dl='data-table'][data-row-header='strong'] tbody th {
+    font-weight: var(--c-data-table-row-head-strong-weight);
+  }
+
   /* LR48. Column width: grow takes what the fitted columns leave; fit is as narrow as its content, on one line. */
   [data-dl='data-table'] [data-width='grow'] {
     inline-size: 100%;

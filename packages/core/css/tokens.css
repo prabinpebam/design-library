@@ -335,6 +335,7 @@
   --c-code-block-action-room: var(--size-target);
   --c-code-block-radius: var(--radius-md);
   --c-code-block-bg: var(--color-bg-sunken);
+  --c-data-table-row-head-strong-weight: var(--weight-semibold);
   --c-data-table-cell-block: var(--space-3);
   --c-data-table-cell-inline: var(--space-inset-md);
   --c-data-table-outline-width: var(--border-hairline);

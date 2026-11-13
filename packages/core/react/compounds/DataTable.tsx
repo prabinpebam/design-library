@@ -51,6 +51,8 @@ export interface DataTableProps extends DataAttributes {
    * screen that is the table (an app's list of pages or records).
    */
   variant?: 'enclosed' | 'plain';
+  /** `strong`: each row's heading (the first column) at `c.data-table.row-head-strong-weight`, for a list whose rows are named by it. Default `normal`. */
+  rowHeader?: 'normal' | 'strong';
 }
 
 /**
@@ -70,7 +72,7 @@ export interface DataTableProps extends DataAttributes {
  * @key Arrow Left / Arrow Right: scroll the table sideways while its region has focus
  * @key Enter, Space: open a row's Move menu (Move up, Move down, Move to top, Move to bottom)
  */
-export function DataTable({ label, columns, rows, reorderable = false, onReorder, variant = 'enclosed', ...data }: DataTableProps) {
+export function DataTable({ label, columns, rows, reorderable = false, onReorder, variant = 'enclosed', rowHeader = 'normal', ...data }: DataTableProps) {
   const [head, ...rest] = columns;
   const ids = rows.map((r) => r.id);
   const trs = useRef<(HTMLTableRowElement | null)[]>([]);
@@ -137,7 +139,7 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
   );
   if (!head) return null;
   return (
-    <div {...data} data-dl="data-table" data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined}>
+    <div {...data} data-dl="data-table" data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined} data-row-header={rowHeader === 'strong' ? 'strong' : undefined}>
       <ScrollArea axis="inline" label={label}>
       <table>
         <thead>

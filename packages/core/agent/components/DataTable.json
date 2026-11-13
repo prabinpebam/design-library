@@ -64,6 +64,12 @@
           "type": "'enclosed' | 'plain'",
           "default": "'enclosed'",
           "description": "`enclosed` (default): one outline round the table and a header row set apart by fill, for facts set inside running content. `plain`: no outline, corner or header fill; a hairline under every row and a muted small header, for a screen that is the table (an app's list of pages or records)."
+        },
+        {
+          "name": "rowHeader",
+          "type": "'normal' | 'strong'",
+          "default": "'normal'",
+          "description": "`strong`: each row's heading (the first column) at `c.data-table.row-head-strong-weight`, for a list whose rows are named by it. Default `normal`."
         }
       ]
     },
@@ -136,6 +142,7 @@
     "--c-data-table-outline",
     "--c-data-table-outline-width",
     "--c-data-table-radius",
+    "--c-data-table-row-head-strong-weight",
     "--c-data-table-stack-gap",
     "--color-bg-raised",
     "--color-text",
