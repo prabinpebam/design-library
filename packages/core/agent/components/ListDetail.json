@@ -74,6 +74,12 @@
           "name": "listTone",
           "type": "'raised' | 'sunken'",
           "description": "LR116 (opt-in): the list's own surface, set apart from the detail by tone alone (no border or shadow): `raised` or `sunken` (the surface roles). Unset, the list shares the page's surface. The list's content keeps its own inset."
+        },
+        {
+          "name": "stickyList",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR118 (opt-in): side by side and without a `maxSize`, the list stays in view while the page scrolls the detail, under the window's sticky chrome (`--dl-chrome-block`), as SectionedForm's `stickyList`."
         }
       ]
     }

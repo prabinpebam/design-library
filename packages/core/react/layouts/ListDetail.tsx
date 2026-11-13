@@ -30,6 +30,11 @@ export interface ListDetailProps extends DataAttributes {
    * `sunken` (the surface roles). Unset, the list shares the page's surface. The list's content keeps its own inset.
    */
   listTone?: 'raised' | 'sunken';
+  /**
+   * LR118 (opt-in): side by side and without a `maxSize`, the list stays in view while the page scrolls the detail,
+   * under the window's sticky chrome (`--dl-chrome-block`), as SectionedForm's `stickyList`.
+   */
+  stickyList?: boolean;
 }
 
 const shown = (el: HTMLElement | null) => !!el && el.getClientRects().length > 0;
@@ -44,7 +49,7 @@ const shown = (el: HTMLElement | null) => !!el && el.getClientRects().length > 0
  * a time, choosing an item moves focus to the detail (its region, named after the item) and Back returns it to the
  * chosen item, so the keyboard never loses its place. Held heights scroll each side with its own ScrollArea.
  */
-export function ListDetail({ list, listLabel, children, detailLabel, listWidth = 'narrow', show = 'list', backLabel, onBack, maxSize, listTone, ...data }: ListDetailProps) {
+export function ListDetail({ list, listLabel, children, detailLabel, listWidth = 'narrow', show = 'list', backLabel, onBack, maxSize, listTone, stickyList = false, ...data }: ListDetailProps) {
   const listRef = useRef<HTMLElement>(null);
   const detailRef = useRef<HTMLElement>(null);
   const first = useRef(true);
@@ -68,7 +73,7 @@ export function ListDetail({ list, listLabel, children, detailLabel, listWidth =
   const scrolls = (content: ReactNode) => (maxSize ? <ScrollArea maxSize={fit}>{content}</ScrollArea> : content);
 
   return (
-    <div {...data} data-dl="list-detail" data-list-width={listWidth} data-show={show} data-max-size={maxSize} data-list-tone={listTone}>
+    <div {...data} data-dl="list-detail" data-list-width={listWidth} data-show={show} data-max-size={maxSize} data-list-tone={listTone} data-sticky-list={stickyList ? '' : undefined}>
       <div data-dl-part="panes">
         <section ref={listRef} data-dl-part="list" aria-label={listLabel} tabIndex={-1}>
           {scrolls(list)}
