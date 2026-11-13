@@ -15,6 +15,22 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR118: a list that stays in view beside a long detail (13 November 2026)
+
+DesignUp's owner (23:33) wants the Sections area list to stay below the top bar while the page scrolls. ListDetail without `maxSize` had no sticky list; SectionedForm's LR107 `stickyList` is the model. Opt-in `ListDetail.stickyList` (default false): `position: sticky` under `--dl-chrome-block`, only side by side without a held height.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR118 | 2026-11-13 | ListDetail's list stays in view while the page scrolls | No sticky list in ListDetail | 6 | opt-in `ListDetail.stickyList` | none | DesignUp Editor42 | logged | | DesignUp adopts on Sections |
+
+### LR117: section lists without the detail line (13 November 2026)
+
+DesignUp's owner (23:24) wants its admin section lists to show names only. SectionedForm already draws titles only unless `details` is set, so DesignUp stops passing `details`; no core change.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR117 | 2026-11-13 | Section lists show names only | None: `SectionedForm.details` is opt-in (default false) | 1 | none (existing default) | none | DesignUp Editor42 | logged | | DesignUp drops `details` |
+
 ### LR116: side panels with their own tone (13 November 2026)
 
 Before-code decision: DesignUp's owner (23:23) wants the admin's list and inspector panels set apart from the work area by background tone. EditorLayout panels and ListDetail's list paint the page surface (`--color-bg`), the divider is 0 px, and no prop, slot, context attribute or setting picks another surface: seam 6, generic. Opt-in `EditorLayout.panelTone` and `ListDetail.listTone` (`raised` | `sunken`) map to the existing surface roles, so light, dark and contrast follow the roles; unset keeps the page surface. Tone is the only cue: no border or shadow. Editor42 owns these two layouts; types/builds and focused captures now, stories/regression on merge night.
