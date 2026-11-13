@@ -270,6 +270,7 @@
         "onLayer": "On {layer}",
         "reply": "Reply",
         "replyLabel": "Your reply",
+        "replyFirst": "Write a reply first",
         "now": "Just now",
         "resolve": "Resolve",
         "reopen": "Reopen",

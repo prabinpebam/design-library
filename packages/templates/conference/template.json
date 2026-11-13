@@ -31,7 +31,8 @@
           "screens": [
             "venue",
             "travel",
-            "faq"
+            "faq",
+            "policies"
           ]
         },
         {
@@ -633,6 +634,55 @@
             "region": "Main",
             "holds": "Opening, questions",
             "uses": "Hero, Accordion"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "policies",
+      "title": "Policies",
+      "component": "SiteLayout",
+      "content": "content/event/visit/policies.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "Accessibility, the code of conduct, privacy and the terms of sale.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the policies",
+            "uses": "Hero, Heading, Text, List"
           },
           {
             "region": "Footer",

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../content.schema.json",
+  "$schema": "../../../content.schema.json",
   "template": "portfolio",
   "layout": "speaking",
   "contentVersion": 1,
@@ -23,7 +23,7 @@
             "title": "Designing for the week before payday",
             "description": "What forty shift workers taught a bank.",
             "meta": "32 min · recording",
-            "href": "/speaking",
+            "href": "/talk-payday",
             "picture": "purseAndCalendar"
           },
           {
@@ -31,7 +31,7 @@
             "title": "Twenty minutes to two",
             "description": "Rebuilding a city permit with its clerks.",
             "meta": "25 min · slides",
-            "href": "/speaking",
+            "href": "/talk-permit",
             "picture": "paperClock"
           }
         ]

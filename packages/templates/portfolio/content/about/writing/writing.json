@@ -1,5 +1,5 @@
 {
-  "$schema": "../../content.schema.json",
+  "$schema": "../../../content.schema.json",
   "template": "portfolio",
   "layout": "writing",
   "contentVersion": 1,
@@ -22,13 +22,13 @@
             "title": "Tokens are decisions, not values",
             "description": "Why a design system should name its choices.",
             "meta": "March 2026 · 6 min",
-            "href": "/writing"
+            "href": "/essay-tokens"
           },
           {
             "title": "Interviewing people who are tired",
             "description": "Research after a ten-hour shift, kindly.",
             "meta": "October 2025 · 8 min",
-            "href": "/writing"
+            "href": "/essay-tired"
           }
         ]
       }

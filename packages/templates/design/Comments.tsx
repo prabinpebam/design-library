@@ -52,7 +52,7 @@ export function DesignComments({ spec, layerOf, selected, onShow }: { spec: Desi
             ))}
             {!t.resolved && <TextArea label={s.replyLabel} rows={2} grow value={drafts[t.id] ?? ''} onChange={(v) => setDrafts((d) => ({ ...d, [t.id]: v }))} />}
             <Cluster gap="item">
-              {!t.resolved && <Button label={s.reply} emphasis="primary" size="s" onClick={() => reply(t)} />}
+              {!t.resolved && <Button label={s.reply} emphasis="primary" size="s" unavailable={drafts[t.id]?.trim() ? undefined : s.replyFirst} onClick={() => reply(t)} />}
               <Button label={t.resolved ? s.reopen : s.resolve} icon={t.resolved ? undefined : 'check'} size="s" onClick={() => resolve(t)} />
             </Cluster>
           </Stack>

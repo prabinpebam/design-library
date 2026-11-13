@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "portfolio",
+  "layout": "talk-payday",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Interface Days 2026 · 32 min",
+        "title": "Designing for the week before payday",
+        "lead": "What forty shift workers taught a bank about the days when money runs out.",
+        "layout": "stacked",
+        "picture": "purseAndCalendar"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "What it covers"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Why balances lie in the last week of the month",
+              "Three changes that cut overdraft fees by a third",
+              "Testing with people who can’t spare an hour"
+            ]
+          },
+          {
+            "kind": "heading",
+            "text": "Recording"
+          },
+          {
+            "kind": "text",
+            "text": "The recording is on the Interface Days site, with captions and a transcript."
+          }
+        ]
+      }
+    ]
+  }
+}

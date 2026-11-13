@@ -100,9 +100,9 @@ export function ProjectsApp({ view, screen, state, at, height = 'fill' }: { view
   );
 
   const crumbs: Record<ProjectsScreen, { label: string; href?: string }[]> = {
-    board: [{ label: view.project, href: at('board') }, { label: fill(w.sprintBoard, { sprint: view.sprint.name }) }],
-    backlog: [{ label: view.project, href: at('board') }, { label: w.backlog }],
-    issue: [{ label: view.project, href: at('board') }, { label: w.backlog, href: at('backlog') }, { label: issue.key }],
+    board: [{ label: view.project, href: at('dashboard') }, { label: fill(w.sprintBoard, { sprint: view.sprint.name }) }],
+    backlog: [{ label: view.project, href: at('dashboard') }, { label: w.backlog }],
+    issue: [{ label: view.project, href: at('dashboard') }, { label: w.backlog, href: at('backlog') }, { label: issue.key }],
   };
 
   let body: ReactNode;

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "portfolio",
+  "layout": "essay-tokens",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "March 2026 · 6 min",
+        "title": "Tokens are decisions, not values",
+        "lead": "Why a design system should name its choices.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "text",
+            "text": "A token called blue-500 tells you what it is. A token called action tells you why it’s there, and that’s the part a team argues about."
+          },
+          {
+            "kind": "heading",
+            "text": "Name the choice"
+          },
+          {
+            "kind": "text",
+            "text": "When the brand moves, values change and decisions don’t. Name the decision, and a new value is one edit instead of a hunt."
+          },
+          {
+            "kind": "heading",
+            "text": "Keep the list short"
+          },
+          {
+            "kind": "text",
+            "text": "Every token is a choice someone has to make again. Fewer, clearer choices make a system people actually use."
+          }
+        ]
+      }
+    ]
+  }
+}

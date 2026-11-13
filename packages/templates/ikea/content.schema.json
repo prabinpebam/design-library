@@ -449,15 +449,6 @@
         "favouritesEmpty": {
           "type": "string"
         },
-        "notInReplica": {
-          "type": "string"
-        },
-        "languageChoice": {
-          "type": "string"
-        },
-        "trackOrder": {
-          "type": "string"
-        },
         "finish": {
           "type": "string"
         },
@@ -506,6 +497,9 @@
         "language": {
           "type": "string"
         },
+        "languageChoice": {
+          "type": "string"
+        },
         "lastName": {
           "type": "string"
         },
@@ -552,6 +546,9 @@
           "type": "string"
         },
         "newTag": {
+          "type": "string"
+        },
+        "notInReplica": {
           "type": "string"
         },
         "notReal": {
@@ -762,6 +759,9 @@
           "type": "string"
         },
         "total": {
+          "type": "string"
+        },
+        "trackOrder": {
           "type": "string"
         },
         "trendingHeading": {

@@ -62,7 +62,9 @@
           "title": "Watch talks",
           "summary": "Talks given, with recordings.",
           "screens": [
-            "speaking"
+            "speaking",
+            "talk-payday",
+            "talk-permit"
           ]
         },
         {
@@ -70,7 +72,9 @@
           "title": "Read the writing",
           "summary": "Essays and notes.",
           "screens": [
-            "writing"
+            "writing",
+            "essay-tokens",
+            "essay-tired"
           ]
         },
         {
@@ -123,7 +127,9 @@
       ]
     }
   ],
-  "works": { "notes": 18 },
+  "works": {
+    "notes": 2
+  },
   "layouts": [
     {
       "id": "home",
@@ -458,7 +464,7 @@
       "id": "speaking",
       "title": "Talks",
       "component": "SiteLayout",
-      "content": "content/about/speaking.json",
+      "content": "content/about/talks/speaking.json",
       "regions": [
         {
           "id": "header",
@@ -504,10 +510,108 @@
       }
     },
     {
+      "id": "talk-payday",
+      "title": "Talk",
+      "component": "SiteLayout",
+      "content": "content/about/talks/talk-payday.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One talk: what it covers and where to watch it.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the talk",
+            "uses": "Hero, Heading, Text, List"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "talk-permit",
+      "title": "Talk",
+      "component": "SiteLayout",
+      "content": "content/about/talks/talk-permit.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One talk: what it covers and its slides.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the talk",
+            "uses": "Hero, Heading, Text, List"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
       "id": "writing",
       "title": "Writing",
       "component": "SiteLayout",
-      "content": "content/about/writing.json",
+      "content": "content/about/writing/writing.json",
       "regions": [
         {
           "id": "header",
@@ -542,6 +646,104 @@
             "region": "Main",
             "holds": "Opening, a list of essays",
             "uses": "Hero, Card (row)"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "essay-tokens",
+      "title": "Essay",
+      "component": "SiteLayout",
+      "content": "content/about/writing/essay-tokens.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One essay, to read.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the essay",
+            "uses": "Hero, Heading, Text"
+          },
+          {
+            "region": "Footer",
+            "holds": "Sections of links, the legal links and the identity",
+            "uses": "Footer"
+          }
+        ],
+        "narrow": "One column; grids drop to one or two; actions wrap."
+      }
+    },
+    {
+      "id": "essay-tired",
+      "title": "Essay",
+      "component": "SiteLayout",
+      "content": "content/about/writing/essay-tired.json",
+      "regions": [
+        {
+          "id": "header",
+          "shared": true,
+          "accepts": [
+            "site-header"
+          ]
+        },
+        {
+          "id": "main",
+          "accepts": [
+            "*"
+          ]
+        },
+        {
+          "id": "footer",
+          "shared": true,
+          "accepts": [
+            "site-footer"
+          ]
+        }
+      ],
+      "docs": {
+        "summary": "One essay, to read.",
+        "regions": [
+          {
+            "region": "Header",
+            "holds": "The name, the places and the main action",
+            "uses": "SiteHeader, Button"
+          },
+          {
+            "region": "Main",
+            "holds": "Opening, the essay",
+            "uses": "Hero, Heading, Text"
           },
           {
             "region": "Footer",

@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "conference",
+  "layout": "policies",
+  "contentVersion": 1,
+  "settings": {
+    "current": "home",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Policies",
+        "title": "How the event works for everyone",
+        "lead": "Access, the code of conduct, what we keep about you and the terms of sale.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "Accessibility"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Step-free access to every room, with a lift to the gallery",
+              "Live captions and sign language on every talk",
+              "A hearing loop in both halls and a quiet room on each floor"
+            ]
+          },
+          {
+            "kind": "heading",
+            "text": "Code of conduct"
+          },
+          {
+            "kind": "text",
+            "text": "Everyone at Interface Days is treated with respect. Harassment of any kind isn’t tolerated; tell any volunteer in a green shirt, or write to safety@example.com, and we act the same day."
+          },
+          {
+            "kind": "heading",
+            "text": "Privacy"
+          },
+          {
+            "kind": "text",
+            "text": "We keep your name, email and ticket to run the event, and delete them six months after it ends. We never sell them."
+          },
+          {
+            "kind": "heading",
+            "text": "Terms of sale"
+          },
+          {
+            "kind": "text",
+            "text": "Tickets are refunded in full until 1 February, and can be transferred to someone else at any time."
+          }
+        ]
+      }
+    ]
+  }
+}

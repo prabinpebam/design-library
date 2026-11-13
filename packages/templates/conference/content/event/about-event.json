@@ -43,6 +43,15 @@
             "unit": "%"
           }
         ]
+      },
+      {
+        "type": "points",
+        "heading": "Volunteer",
+        "items": [
+          "Help for one day and keep your ticket for both",
+          "Write to volunteer@example.com by 1 February with the day you can do",
+          "Every volunteer gets a briefing, lunch and a green shirt"
+        ]
       }
     ]
   }

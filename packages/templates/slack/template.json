@@ -17,7 +17,7 @@
       { "id": "find", "title": "Find a message", "summary": "Search the workspace.", "screens": ["search"] }
     ] }
   ],
-  "works": { "notes": 80 },
+  "works": { "notes": 45 },
   "layouts": [
     { "id": "channel", "title": "Channel", "component": "SiteLayout", "content": "content/channel.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "slackbot", "title": "Slackbot", "component": "SiteLayout", "content": "content/workspace/converse/slackbot.json", "regions": [{"id":"main","accepts":["*"]}] },

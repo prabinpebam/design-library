@@ -75,15 +75,15 @@
             "links": [
               {
                 "label": "Venue and travel",
-                "href": "/home"
+                "href": "/venue"
               },
               {
                 "label": "Accessibility",
-                "href": "/home"
+                "href": "/policies"
               },
               {
                 "label": "Code of conduct",
-                "href": "/home"
+                "href": "/policies"
               }
             ]
           },
@@ -93,7 +93,7 @@
             "links": [
               {
                 "label": "Speak at 2028",
-                "href": "/home"
+                "href": "/cfp"
               },
               {
                 "label": "Sponsor",
@@ -101,7 +101,7 @@
               },
               {
                 "label": "Volunteer",
-                "href": "/home"
+                "href": "/about-event"
               }
             ]
           }
@@ -109,11 +109,11 @@
         "links": [
           {
             "label": "Privacy",
-            "href": "/home"
+            "href": "/policies"
           },
           {
             "label": "Terms of sale",
-            "href": "/home"
+            "href": "/policies"
           }
         ],
         "identity": "Interface Days is an example event for this library.",

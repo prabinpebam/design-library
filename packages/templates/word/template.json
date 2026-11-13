@@ -17,7 +17,7 @@
       { "id": "proofing", "title": "Review, View and Help", "summary": "Proofing, markup tracking, page views, rulers and support.", "screens": ["review", "view", "help"] }
     ] }
   ],
-  "works": { "notes": 309 },
+  "works": { "notes": 348 },
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout", "content": "content/editor/write/home.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "document", "title": "Document", "component": "SiteLayout", "content": "content/document.json", "regions": [{"id":"main","accepts":["*"]}] },

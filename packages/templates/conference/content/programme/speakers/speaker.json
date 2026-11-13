@@ -83,25 +83,25 @@
           {
             "name": "Mina Haddad",
             "role": "Design systems, Field Notes",
-            "href": "/speaker",
+            "href": "/speakers",
             "picture": "minaHaddad"
           },
           {
             "name": "Luis Ortega",
             "role": "Accessibility engineer",
-            "href": "/speaker",
+            "href": "/speakers",
             "picture": "luisOrtega"
           },
           {
             "name": "Sana Iqbal",
             "role": "Colour and type, Studio Iqbal",
-            "href": "/speaker",
+            "href": "/speakers",
             "picture": "sanaIqbal"
           },
           {
             "name": "Tom Becker",
             "role": "Front-end lead, Northwind",
-            "href": "/speaker",
+            "href": "/speakers",
             "picture": "tomBecker"
           }
         ]

@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "portfolio",
+  "layout": "talk-permit",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "Porto Design Week 2025 · 25 min",
+        "title": "Twenty minutes to two",
+        "lead": "Rebuilding a city permit with the clerks who issue it, from two hours to twenty minutes.",
+        "layout": "stacked",
+        "picture": "paperClock"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "heading",
+            "text": "What it covers"
+          },
+          {
+            "kind": "list",
+            "items": [
+              "Sitting behind the counter for a week",
+              "Cutting a 14-page form to one screen",
+              "What the clerks wanted that nobody asked about"
+            ]
+          },
+          {
+            "kind": "heading",
+            "text": "Slides"
+          },
+          {
+            "kind": "text",
+            "text": "There’s no recording; the slides are available on request."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -16,7 +16,7 @@
       { "id": "theme", "title": "Dark theme", "summary": "The home feed in the dark theme.", "screens": ["dark"] }
     ] }
   ],
-  "works": { "notes": 1 },
+  "works": { "notes": 4 },
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout",     "content": "content/home.json", "regions": [{"id":"main","accepts":["*"]}] },
     { "id": "watch", "title": "Watch", "component": "SiteLayout",    "content": "content/browse/watch.json", "regions": [{"id":"main","accepts":["*"]}] },

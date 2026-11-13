@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../content.schema.json",
+  "template": "portfolio",
+  "layout": "essay-tired",
+  "contentVersion": 1,
+  "settings": {
+    "current": "about",
+    "width": "reading"
+  },
+  "regions": {
+    "main": [
+      {
+        "type": "hero",
+        "eyebrow": "October 2025 · 8 min",
+        "title": "Interviewing people who are tired",
+        "lead": "Research after a ten-hour shift, kindly.",
+        "layout": "stacked"
+      },
+      {
+        "type": "prose",
+        "items": [
+          {
+            "kind": "text",
+            "text": "The people with the most to tell you often have the least time left in the day. Plan for that, not around it."
+          },
+          {
+            "kind": "heading",
+            "text": "Go to them"
+          },
+          {
+            "kind": "text",
+            "text": "Meet at the end of a shift, near the bus stop, with food. Twenty minutes is plenty."
+          },
+          {
+            "kind": "heading",
+            "text": "Pay for the time"
+          },
+          {
+            "kind": "text",
+            "text": "A tired person’s hour is worth more than yours. Pay it in cash, on the day."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -22,7 +22,7 @@
           {
             "label": "Get in touch",
             "primary": true,
-            "says": "Get in touch isn’t part of this example."
+            "href": "/contact"
           }
         ]
       }
@@ -54,7 +54,7 @@
           },
           {
             "label": "Get in touch",
-            "href": "/about"
+            "href": "/contact"
           }
         ],
         "identity": "Asha Rao is an example designer for this library.",

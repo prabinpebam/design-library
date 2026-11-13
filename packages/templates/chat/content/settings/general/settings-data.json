@@ -67,7 +67,7 @@
         "links": [
           {
             "label": "Export all chats",
-            "href": "/settings-data"
+            "href": "/export-data"
           },
           {
             "label": "Back to General",

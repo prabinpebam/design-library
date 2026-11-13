@@ -229,6 +229,8 @@ export interface DesignCommentsSpec {
     onLayer: string;
     reply: string;
     replyLabel: string;
+    /** Why Reply waits while the reply box is empty: "Write a reply first". */
+    replyFirst: string;
     /** A new reply's time: "Just now". */
     now: string;
     resolve: string;
