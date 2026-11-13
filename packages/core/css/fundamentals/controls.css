@@ -804,6 +804,8 @@
   [data-dl='text-field'][data-loading] [data-dl-part='loading'] {
     flex: 1 1 auto;
     min-inline-size: 0;
+    /* The control's own fill is the skeleton's: the line takes the control's border colour to show on it. */
+    --c-skeleton-fill: var(--color-border-control);
   }
 
   [data-dl='text-field'][data-loading] input {
