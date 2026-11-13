@@ -125,6 +125,11 @@
       "$extensions": {
         "owner": "AppLayout"
       },
+      "end": {
+        "$type": "dimension",
+        "$value": "{c.app-layout.margin}",
+        "$description": "LR75: room under the view's last part, inside its scroller; the margin by default, more for an editing app whose last field shouldn't sit at the window's edge (theme setting) (echoed for space contexts)"
+      },
       "gap": {
         "$type": "dimension",
         "$value": "{space.stack-page}",

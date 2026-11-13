@@ -54,4 +54,14 @@
   [data-dl='cluster'][data-align='start'] {
     align-items: flex-start;
   }
+
+  /* LR76: level with the fields' controls. Fields keep their top; every other child drops by a field's label block
+     (its label line and the field's gap), so a button beside a labelled field meets the control, whatever hints follow. */
+  [data-dl='cluster'][data-align='control'] {
+    align-items: flex-start;
+  }
+
+  [data-dl='cluster'][data-align='control'] > :not([data-dl='field'], :has(> [data-dl='field'])) {
+    margin-block-start: calc(var(--type-label-size) * var(--type-label-leading) + var(--c-field-gap));
+  }
 }

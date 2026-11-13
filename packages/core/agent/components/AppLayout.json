@@ -152,6 +152,7 @@
     "--border-hairline",
     "--c-app-layout-aside",
     "--c-app-layout-column",
+    "--c-app-layout-end",
     "--c-app-layout-gap",
     "--c-app-layout-gutter",
     "--c-app-layout-head-gap",
@@ -178,6 +179,11 @@
       "var": "--c-app-layout-header-divider-width",
       "default": "0px",
       "description": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view."
+    },
+    {
+      "var": "--c-app-layout-end",
+      "default": "1rem",
+      "description": "Room under the view's last part, inside its scroller (default c.app-layout.margin, the same as its other sides). Set more for an editing app whose last field shouldn't sit at the window's edge (LR75)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/applayout"

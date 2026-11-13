@@ -102,6 +102,8 @@
     gap: calc(1.5 * var(--c-app-layout-gutter));
     box-sizing: border-box;
     padding: var(--c-app-layout-margin);
+    /* LR75: room under the view's last part, so the last control a person works with isn't at the window's edge. */
+    padding-block-end: var(--c-app-layout-end);
   }
 
   [data-dl='app-layout'][data-width='column'] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] {

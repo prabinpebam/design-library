@@ -23,7 +23,8 @@
     "--c-applied-border": "An applied filter's outline on the same controls; default color.accent."
   },
   "AppLayout": {
-    "--c-app-layout-header-divider-width": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view."
+    "--c-app-layout-header-divider-width": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view.",
+    "--c-app-layout-end": "Room under the view's last part, inside its scroller (default c.app-layout.margin, the same as its other sides). Set more for an editing app whose last field shouldn't sit at the window's edge (LR75)."
   },
   "StickyBar": {
     "--c-sticky-bar-padding-block": "Above and below the bar's controls, at rest and stuck alike (default space.stack-item)."

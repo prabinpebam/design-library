@@ -33,8 +33,25 @@ function Demo({ details = false }: { details?: boolean }) {
 
 const areas = <Navigation groups={[{ id: 'site', title: 'Site', items: [{ id: 'pages', label: 'Pages', href: '#pages' }, { id: 'talks', label: 'Talks', href: '#talks' }, { id: 'media', label: 'Media', href: '#media' }] }]} current="pages" />;
 
-function Modes() {
+const roomUnder = { '--c-app-layout-end': 'var(--space-16)' };
+
+function RoomUnder() {
   const [open, setOpen] = useState(true);
+  return (
+    <WithSettings settings={roomUnder} contents>
+      <AppLayout height="lg" label="Navigation" sidebar={areas} sidebarOpen={open} onSidebarToggle={() => setOpen((x) => !x)} header={<Text as="span">Navigation</Text>}>
+        <Heading level={2} size={2}>
+          Navigation
+        </Heading>
+        <Text as="p">Five entries, in the order they show.</Text>
+        <Text as="p">Scroll to the end: the last part stops well above the scroller’s edge, with room the margin alone wouldn’t give.</Text>
+        <Button label="Add link" />
+      </AppLayout>
+    </WithSettings>
+  );
+}
+
+function Modes() {  const [open, setOpen] = useState(true);
   const [mode, setMode] = useState<'docked' | 'floating'>('docked');
   return (
     <AppLayout height="lg" label="Pages" startMode={mode} onStartModeChange={setMode} sidebarOpen={open} onSidebarToggle={() => setOpen((x) => !x)} sidebar={areas} header={<Text as="span">Pages</Text>}>
@@ -138,6 +155,12 @@ export default {
       description: '`size="s"` (LR41, LR42) lowers the header to 40 px, narrows the sidebar to 13 rem and brings the view’s title a section’s step over its content; pair it with Navigation `size="s"` (36 px rows, above the WCAG 2.2 AA 24 px minimum, small muted group titles). Every rule that reads the header’s height or the sidebar’s width follows, floating included.',
       code: `<AppLayout size="s" headerSpan="across" sidebar={<Navigation size="s" … />} …>…</AppLayout>`,
       render: () => <Dense />,
+    },
+    {
+      title: 'Room under the last part',
+      description: 'LR75: `--c-app-layout-end` (a theme setting, the margin by default) sets the room under the view’s last part inside its scroller, so an editing app’s last field isn’t at the window’s edge.',
+      code: `applySettings({ '--c-app-layout-end': 'var(--space-16)' });`,
+      render: () => <RoomUnder />,
     },
   ],
 } satisfies StoryFile;

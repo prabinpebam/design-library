@@ -37,9 +37,9 @@
         },
         {
           "name": "align",
-          "type": "'center' | 'baseline' | 'start' | 'end'",
+          "type": "'center' | 'baseline' | 'start' | 'end' | 'control'",
           "default": "'center'",
-          "description": "How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), or at the bottom (`end`: a button level with the field beside it, under that field's label)."
+          "description": "How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), at the bottom (`end`: a button level with an unhinted field beside it, under that field's label), or `control`: every child that isn't a field level with the fields' controls, under their labels and above their hints (a field and its button in a form row)."
         },
         {
           "name": "wrap",
@@ -52,10 +52,13 @@
   ],
   "uses": [],
   "tokens": [
+    "--c-field-gap",
     "--space-inline-group",
     "--space-inline-item",
     "--space-inline-pair",
-    "--space-stack-pair"
+    "--space-stack-pair",
+    "--type-label-leading",
+    "--type-label-size"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/cluster",
   "principles": [

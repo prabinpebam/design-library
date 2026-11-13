@@ -7,8 +7,8 @@ export interface ClusterProps extends DataAttributes {
   gap?: 'none' | 'pair' | 'item' | 'group';
   /** How the row's free room is shared: `start` (default) keeps children together at the start; `end` keeps them together at the end (a row of actions closing a form); `between` spreads them across the row, the first and last at its edges (a design tool's alignment row filling its panel). */
   justify?: 'start' | 'end' | 'between';
-  /** How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), or at the bottom (`end`: a button level with the field beside it, under that field's label). */
-  align?: 'center' | 'baseline' | 'start' | 'end';
+  /** How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), at the bottom (`end`: a button level with an unhinted field beside it, under that field's label), or `control`: every child that isn't a field level with the fields' controls, under their labels and above their hints (a field and its button in a form row). */
+  align?: 'center' | 'baseline' | 'start' | 'end' | 'control';
   /** Wrap onto more lines when the row runs out of room (default), or keep one line and let text inside shrink and wrap instead. */
   wrap?: boolean;
 }

@@ -50,5 +50,17 @@ export default {
         </Cluster>
       ),
     },
+    {
+      title: 'Level with the fields’ controls',
+      description: 'align="control" puts every child that isn’t a field level with the fields’ controls: under their labels, above their hints, so hints of any length leave the button where it is.',
+      code: `<Cluster align="control" wrap={false}><TextField label="Link label" value="" hint="At most 24 characters." /><TextField label="Address" value="" hint="An https, http or mailto address, or a path on this site." /><Button label="Add link" /></Cluster>`,
+      render: () => (
+        <Cluster align="control" wrap={false}>
+          <TextField label="Link label" value="" hint="At most 24 characters." />
+          <TextField label="Address" value="" hint="An https, http or mailto address, or a path on this site." />
+          <Button label="Add link" />
+        </Cluster>
+      ),
+    },
   ],
 } satisfies StoryFile;
