@@ -325,6 +325,7 @@
     "Navigation",
     "Notifications",
     "Pane",
+    "RichTextField",
     "SchemeControl",
     "Sheet",
     "SiteHeader",

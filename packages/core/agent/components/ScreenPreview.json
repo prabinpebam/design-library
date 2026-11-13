@@ -46,11 +46,19 @@
           "type": "'default' | 'fill'",
           "default": "'default'",
           "description": "The window's height: `default` (the theme's `c.screen-preview.height`, 40 rem) or `fill`, the height its parent gives it (an editor's working area), less the caption."
+        },
+        {
+          "name": "showLoading",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR110 (opt-in): until the screen has loaded, a shimmer fills the window and the figure is busy, so a slow screen never shows a blank white window (an editor's canvas). The frame stays hidden until then."
         }
       ]
     }
   ],
-  "uses": [],
+  "uses": [
+    "Skeleton"
+  ],
   "tokens": [
     "--border-hairline",
     "--c-screen-preview-desktop",

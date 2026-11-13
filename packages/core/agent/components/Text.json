@@ -112,6 +112,7 @@
     "MessageActions",
     "Notifications",
     "PageHeader",
+    "RichTextField",
     "TitleBar",
     "Hero"
   ],

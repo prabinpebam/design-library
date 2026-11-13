@@ -196,6 +196,7 @@
     "TextField",
     "TimeField",
     "FileUpload",
+    "RichTextField",
     "TagInput"
   ],
   "principles": [

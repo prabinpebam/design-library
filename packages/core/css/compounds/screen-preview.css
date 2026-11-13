@@ -11,7 +11,7 @@
     max-inline-size: 100%;
   }
 
-  [data-dl='screen-preview'] > [data-dl-part='frame'] {
+  [data-dl='screen-preview'] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
     box-sizing: border-box;
     inline-size: 100%;
     block-size: var(--c-screen-preview-height);
@@ -20,12 +20,12 @@
     background-color: var(--color-bg);
   }
 
-  [data-dl='screen-preview'][data-width='phone'] > [data-dl-part='frame'] {
+  [data-dl='screen-preview'][data-width='phone'] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
     inline-size: var(--c-screen-preview-phone);
     max-inline-size: 100%;
   }
 
-  [data-dl='screen-preview'][data-width='tablet'] > [data-dl-part='frame'] {
+  [data-dl='screen-preview'][data-width='tablet'] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
     inline-size: var(--c-screen-preview-tablet);
     max-inline-size: 100%;
   }
@@ -38,7 +38,7 @@
     min-block-size: 0;
   }
 
-  [data-dl='screen-preview'][data-height='fill'] > [data-dl-part='frame'] {
+  [data-dl='screen-preview'][data-height='fill'] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
     flex: 1;
     block-size: auto;
     min-block-size: 0;
@@ -89,5 +89,33 @@
   [data-dl='screen-preview'] > [data-dl-part='caption'] {
     color: var(--color-text-muted);
     font-size: var(--type-body-sm-size);
+  }
+
+  /* LR110 showLoading: until the screen has loaded, a shimmer takes the window's place and the frame waits unseen. */
+  [data-dl='screen-preview'] [data-dl-part='frame'][data-waiting] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='frame'][data-waiting] {
+    position: absolute;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='loading'] {
+    display: flex;
+    overflow: hidden;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='viewport'] > [data-dl-part='loading'] {
+    position: absolute;
+    inset: 0;
+    display: flex;
+  }
+
+  [data-dl='screen-preview'] [data-dl-part='loading'] > [data-dl='skeleton'] {
+    flex: 1;
+    block-size: auto;
+    min-block-size: 100%;
+    border-radius: 0;
   }
 }

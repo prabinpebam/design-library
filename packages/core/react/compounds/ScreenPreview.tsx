@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type SyntheticEvent } from 'react';
+import { Skeleton } from '../fundamentals/Skeleton';
 import type { DataAttributes } from '../types';
 
 /**
@@ -29,6 +30,11 @@ export interface ScreenPreviewProps extends DataAttributes {
   caption?: string;
   /** The window's height: `default` (the theme's `c.screen-preview.height`, 40 rem) or `fill`, the height its parent gives it (an editor's working area), less the caption. */
   height?: 'default' | 'fill';
+  /**
+   * LR110 (opt-in): until the screen has loaded, a shimmer fills the window and the figure is busy, so a slow screen
+   * never shows a blank white window (an editor's canvas). The frame stays hidden until then.
+   */
+  showLoading?: boolean;
 }
 
 /**
@@ -40,9 +46,11 @@ export interface ScreenPreviewProps extends DataAttributes {
  * @a11y A `figure` holding a titled `iframe` (the screen's own landmarks and headings are inside it) and the caption
  * as its `figcaption`. The frame is focusable through its content; it loads only when scrolled near.
  */
-export function ScreenPreview({ src, title, width = 'fill', caption, height = 'default', ...data }: ScreenPreviewProps) {
+export function ScreenPreview({ src, title, width = 'fill', caption, height = 'default', showLoading = false, ...data }: ScreenPreviewProps) {
   const viewport = useRef<HTMLDivElement>(null);
   const [fit, setFit] = useState<{ scale: number; width: number; height: number }>();
+  const [loadedSrc, setLoadedSrc] = useState<string>();
+  const waiting = showLoading && loadedSrc !== src;
   const desktop = width === 'desktop';
   useEffect(() => {
     const el = viewport.current;
@@ -59,16 +67,25 @@ export function ScreenPreview({ src, title, width = 'fill', caption, height = 'd
     observer.observe(el);
     return () => observer.disconnect();
   }, [desktop]);
-  const frame = <iframe src={src} title={title} loading="lazy" data-dl-part="frame" onLoad={markFramed} />;
+  const loaded = (e: SyntheticEvent<HTMLIFrameElement>) => {
+    markFramed(e);
+    // The next frame, so the screen has drawn once before the shimmer gives way.
+    requestAnimationFrame(() => setLoadedSrc(src));
+  };
+  const frame = <iframe src={src} title={title} loading="lazy" data-dl-part="frame" data-waiting={waiting ? '' : undefined} onLoad={loaded} />;
   const scaled = fit ? ({ '--dl-screen-scale': fit.scale, '--dl-screen-width': `${fit.width}px`, '--dl-screen-height': `${fit.height}px` } as CSSProperties) : undefined;
   return (
-    <figure {...data} data-dl="screen-preview" data-width={width} data-height={height === 'fill' ? 'fill' : undefined}>
+    <figure {...data} data-dl="screen-preview" data-width={width} data-height={height === 'fill' ? 'fill' : undefined} aria-busy={waiting || undefined}>
       {desktop ? (
         <div ref={viewport} data-dl-part="viewport" data-scaled={fit && fit.scale < 1 ? '' : undefined} style={scaled}>
           {frame}
+          {waiting && <span data-dl-part="loading"><Skeleton shape="block" /></span>}
         </div>
       ) : (
-        frame
+        <>
+          {frame}
+          {waiting && <span data-dl-part="loading"><Skeleton shape="block" /></span>}
+        </>
       )}
       {caption && <figcaption data-dl-part="caption">{caption}</figcaption>}
     </figure>
