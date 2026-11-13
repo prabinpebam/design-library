@@ -49,6 +49,18 @@
     transition-behavior: allow-discrete;
   }
 
+  /* skipClosed: closed content far from the window skips style, layout and paint once the closing move ends, so the
+     collapse and fade still play; near the window it stays laid out and opens at once. Inert and hidden, nothing is lost. */
+  [data-dl='reveal'][data-skip-closed] > [data-dl-part='clip'] {
+    contain-intrinsic-size: auto none;
+  }
+
+  [data-dl='reveal'][data-skip-closed]:not([data-open]) > [data-dl-part='clip'] {
+    content-visibility: auto;
+    transition: overflow 0s, content-visibility 0s var(--easing-linear) var(--duration-move);
+    transition-behavior: allow-discrete;
+  }
+
   /* Open and settled: nothing clipped. The switch waits for the growth to finish. */
   [data-dl='reveal'][data-open] > [data-dl-part='clip'] {
     overflow: visible;

@@ -28,6 +28,8 @@ export interface AccordionProps extends DataAttributes {
   showAll?: boolean;
   /** The headings' level in the page's outline. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /** Closed sections far from the window skip rendering their content (Reveal `skipClosed`): for many sections of heavy content, such as past years' logo walls. Off by default. */
+  skipClosed?: boolean;
 }
 
 /**
@@ -44,7 +46,7 @@ export interface AccordionProps extends DataAttributes {
  * @key Down arrow, Up arrow: the next or previous heading
  * @key Home, End: the first or last heading
  */
-export function Accordion({ items, defaultOpen = [], single = false, showAll = false, headingLevel = 3, ...data }: AccordionProps) {
+export function Accordion({ items, defaultOpen = [], single = false, showAll = false, headingLevel = 3, skipClosed = false, ...data }: AccordionProps) {
   const id = useId();
   const [open, setOpen] = useState<string[]>(single ? defaultOpen.slice(0, 1) : defaultOpen);
   const list = useRef<HTMLDivElement>(null);
@@ -95,7 +97,7 @@ export function Accordion({ items, defaultOpen = [], single = false, showAll = f
                   <Icon name="chevron-down" size="md" />
                 </button>
               </H>
-              <Reveal open={isOpen}>
+              <Reveal open={isOpen} skipClosed={skipClosed}>
                 <div id={`${base}-panel`} role="region" aria-labelledby={`${base}-trigger`} data-dl-part="panel">
                   {item.content}
                 </div>

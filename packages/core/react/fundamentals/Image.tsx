@@ -21,6 +21,8 @@ export interface ImageProps extends DataAttributes {
   fit?: 'cover' | 'contain';
   /** `stack` (default) shows an icon and the alt text on failure. `label` uses the full alt text alone with a smaller inset, for short names in shallow frames; reserve enough space for the label. An empty alt still shows the decorative icon. */
   fallbackLayout?: 'stack' | 'label';
+  /** The frame's fill while the picture waits and behind transparent art: `sunken` (default), or `none` for a picture that sits on a surface of its own (a logo on a tile), so the waiting shimmer and the art show on that surface and no second box appears. */
+  surface?: 'sunken' | 'none';
   /** The picture's own width and height in pixels: they reserve its space before it loads, so nothing below it jumps. */
   width?: number;
   height?: number;
@@ -148,6 +150,7 @@ export function Image({
   ratio = 'photo',
   fit = 'cover',
   fallbackLayout = 'stack',
+  surface = 'sunken',
   focal,
   width,
   height,
@@ -225,7 +228,7 @@ export function Image({
         width && height || focal
           ? ({ ...(width && height ? { '--image-ratio': `${width} / ${height}` } : {}), ...(focal ? { '--image-focus': `${focal.x * 100}% ${focal.y * 100}%` } : {}) } as CSSProperties)
           : undefined
-      } data-ratio={ratio} data-fit={fit} data-fallback-layout={fallbackLayout === 'label' ? 'label' : undefined} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={owns ? undefined : active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined} data-reveal-reduced={reduced ? '' : undefined}>
+      } data-ratio={ratio} data-fit={fit} data-fallback-layout={fallbackLayout === 'label' ? 'label' : undefined} data-surface={surface === 'none' ? 'none' : undefined} data-state={state} data-rounded={rounded ? '' : undefined} data-tone={rest} data-tone-active={owns ? undefined : active} data-alternate={pair ? (drawing ? 'reveal' : '') : undefined} data-reveal-reduced={reduced ? '' : undefined}>
       {state === 'failed' && (
         <span data-dl-part="fallback" role={alt ? 'img' : undefined} aria-label={alt ? `${alt} (couldn’t load)` : undefined} aria-hidden={alt ? undefined : true}>
           {(fallbackLayout !== 'label' || !alt) && <Icon name="image" size="lg" />}

@@ -59,6 +59,12 @@
           "type": "2 | 3 | 4 | 5 | 6",
           "default": "3",
           "description": "The headings' level in the page's outline."
+        },
+        {
+          "name": "skipClosed",
+          "type": "boolean",
+          "default": "false",
+          "description": "Closed sections far from the window skip rendering their content (Reveal `skipClosed`): for many sections of heavy content, such as past years' logo walls. Off by default."
         }
       ]
     },

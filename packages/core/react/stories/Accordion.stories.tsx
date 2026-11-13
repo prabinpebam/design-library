@@ -46,6 +46,12 @@ export default {
       render: () => <Accordion showAll items={faq} />,
     },
     {
+      title: 'Skip closed sections',
+      description: 'For many sections of heavy content (past years’ logo walls): closed sections far from the window aren’t styled, laid out or painted. It looks and moves the same.',
+      code: `<Accordion skipClosed items={years} />`,
+      render: () => <Accordion skipClosed items={faq} />,
+    },
+    {
       title: 'With summaries and controls inside',
       description: 'A summary line under each heading says what’s inside before it’s opened. A section that can’t be opened yet is dimmed.',
       code: `<Accordion items={[{ id: 'alerts', title: 'Notifications', summary: 'Email and push, 2 of 3 on', content: <>…</> }, …]} />`,

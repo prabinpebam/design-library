@@ -315,5 +315,17 @@ const stipple: PictureReveal = ({ context, width, height, progress, time, paint 
         </Grid>
       ),
     },
+    {
+      title: 'On its own surface',
+      description: 'A transparent mark with fit contain: on the default sunken fill (start), and with surface none (end), where the frame has no fill of its own, so the mark and its waiting shimmer sit on whatever holds the picture, such as a logo tile.',
+      code: `<Image ratio="ultrawide" fit="contain" src={squareMark} alt="Square mark" />
+<Image ratio="ultrawide" fit="contain" surface="none" src={squareMark} alt="Square mark" />`,
+      render: () => (
+        <Grid max={2}>
+          <Image ratio="ultrawide" fit="contain" src={squareMark} alt="Square mark" />
+          <Image ratio="ultrawide" fit="contain" surface="none" src={squareMark} alt="Square mark" />
+        </Grid>
+      ),
+    },
   ],
 } satisfies StoryFile;

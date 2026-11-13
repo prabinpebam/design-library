@@ -31,6 +31,12 @@
           "description": "Reveal once when it mounts already open (a field message that just arrived). Off by default: first paint never animates (Z19)."
         },
         {
+          "name": "skipClosed",
+          "type": "boolean",
+          "default": "false",
+          "description": "Closed and far from the window, the content skips style, layout and paint (`content-visibility: auto`), for many closed sections of heavy content (walls of logos or pictures). Starts once the closing move ends; content near the window stays laid out, so it opens at once. Off by default."
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": true,

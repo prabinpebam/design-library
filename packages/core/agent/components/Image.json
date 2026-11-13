@@ -69,6 +69,12 @@
           "description": "`stack` (default) shows an icon and the alt text on failure. `label` uses the full alt text alone with a smaller inset, for short names in shallow frames; reserve enough space for the label. An empty alt still shows the decorative icon."
         },
         {
+          "name": "surface",
+          "type": "'sunken' | 'none'",
+          "default": "'sunken'",
+          "description": "The frame's fill while the picture waits and behind transparent art: `sunken` (default), or `none` for a picture that sits on a surface of its own (a logo on a tile), so the waiting shimmer and the art show on that surface and no second box appears."
+        },
+        {
           "name": "width",
           "type": "number",
           "description": "The picture's own width and height in pixels: they reserve its space before it loads, so nothing below it jumps."

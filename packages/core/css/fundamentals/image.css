@@ -14,6 +14,9 @@
     background-color: var(--color-bg-sunken);
   }
 
+  /* surface none: the picture sits on its holder's own surface (a logo on a tile); the shimmer still plays over it. */
+  [data-dl='image'][data-surface='none'] { background-color: transparent; }
+
   [data-dl='image'][data-ratio='ultrawide'] { aspect-ratio: 21 / 9; }
   [data-dl='image'][data-ratio='wide'] { aspect-ratio: 16 / 9; }
   [data-dl='image'][data-ratio='classic'] { aspect-ratio: 4 / 3; }

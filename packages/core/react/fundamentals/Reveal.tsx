@@ -6,6 +6,12 @@ export interface RevealProps extends DataAttributes {
   open: boolean;
   /** Reveal once when it mounts already open (a field message that just arrived). Off by default: first paint never animates (Z19). */
   appear?: boolean;
+  /**
+   * Closed and far from the window, the content skips style, layout and paint (`content-visibility: auto`), for many
+   * closed sections of heavy content (walls of logos or pictures). Starts once the closing move ends; content near the
+   * window stays laid out, so it opens at once. Off by default.
+   */
+  skipClosed?: boolean;
   /** The content that opens and closes: a disclosure's panel, a tree branch, a field's message. */
   children: ReactNode;
 }
@@ -22,9 +28,9 @@ export interface RevealProps extends DataAttributes {
  * own `aria-expanded` and labelling. Focus rings inside are clipped only while it moves; once open, nothing is clipped.
  * Reduced motion: no growing (it snaps), the content still fades.
  */
-export function Reveal({ open, appear = false, children, ...data }: RevealProps) {
+export function Reveal({ open, appear = false, skipClosed = false, children, ...data }: RevealProps) {
   return (
-    <div {...data} data-dl="reveal" data-open={open ? '' : undefined} data-appear={appear ? '' : undefined} inert={!open}>
+    <div {...data} data-dl="reveal" data-open={open ? '' : undefined} data-appear={appear ? '' : undefined} data-skip-closed={skipClosed ? '' : undefined} inert={!open}>
       <div data-dl-part="clip">{children}</div>
     </div>
   );

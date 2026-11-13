@@ -6,12 +6,12 @@ import { Text } from '../fundamentals/Text';
 import type { StoryFile } from './story';
 
 /** A disclosure: the button says what it shows; the content opens in place below it. */
-function Disclosure({ reduce = false }: { reduce?: boolean }) {
+function Disclosure({ reduce = false, skip = false }: { reduce?: boolean; skip?: boolean }) {
   const [open, setOpen] = useState(false);
   return (
     <Stack gap="item" data-motion={reduce ? 'reduce' : undefined}>
       <Button label={open ? 'Hide delivery details' : 'Show delivery details'} emphasis="quiet" expanded={open} onClick={() => setOpen(!open)} />
-      <Reveal open={open}>
+      <Reveal open={open} skipClosed={skip}>
         <Stack gap="pair">
           <Text>Orders placed before 2 pm leave the warehouse the same day.</Text>
           <Text>Deliveries arrive in two to four working days; you get a tracking link by email.</Text>
@@ -39,6 +39,12 @@ export default {
       description: 'The content still fades, but the box doesn’t grow: what follows moves at once.',
       code: `<Reveal open={open}>…</Reveal>  // inside a reduced-motion context`,
       render: () => <Disclosure reduce />,
+    },
+    {
+      title: 'Skip closed content',
+      description: 'With skipClosed, closed content far from the window isn’t styled, laid out or painted, once the closing move ends: for many closed sections of heavy content. It looks and moves the same; near the window it stays laid out, so it opens at once.',
+      code: `<Reveal open={open} skipClosed>…</Reveal>`,
+      render: () => <Disclosure skip />,
     },
   ],
 } satisfies StoryFile;
