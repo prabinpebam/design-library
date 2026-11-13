@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { usePopup } from '../behaviour/popup';
-import { compare, datePattern, formatDay, fromIso, parseTyped, toIso, type Day } from '../behaviour/calendar';
+import { compare, type DateFormat, datePattern, formatDay, fromIso, parseTyped, toIso, type Day } from '../behaviour/calendar';
 import { Button } from './Button';
 import { Calendar } from './Calendar';
 import { Field } from './Field';
@@ -20,6 +20,8 @@ export interface DateRangePickerProps extends DataAttributes {
   isUnavailable?: (iso: string) => boolean;
   weekNumbers?: boolean;
   locale?: string;
+  /** How the box shows and asks for the day: the locale's order (default) or `iso`, `yyyy-mm-dd` as stored. */
+  format?: DateFormat;
   disabled?: boolean;
 }
 
@@ -35,22 +37,22 @@ export interface DateRangePickerProps extends DataAttributes {
  * on Escape, and focus returns to the first box.
  * @key Alt+Arrow down in either box: opens the calendar
  */
-export function DateRangePicker({ label, value, onChange, hint, error, optional = false, min, max, isUnavailable, weekNumbers, locale, disabled = false, ...data }: DateRangePickerProps) {
-  const [texts, setTexts] = useState<[string, string]>([formatDay(fromIso(value[0]), locale), formatDay(fromIso(value[1]), locale)]);
+export function DateRangePicker({ label, value, onChange, hint, error, optional = false, min, max, isUnavailable, weekNumbers, locale, format = 'locale', disabled = false, ...data }: DateRangePickerProps) {
+  const [texts, setTexts] = useState<[string, string]>([formatDay(fromIso(value[0]), locale, format), formatDay(fromIso(value[1]), locale, format)]);
   const [said, setSaid] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLSpanElement>(null);
   const box = useRef<HTMLSpanElement>(null);
   const popup = useRef<HTMLDivElement>(null);
   const first = useRef<HTMLInputElement>(null);
-  const pattern = datePattern(locale);
+  const pattern = datePattern(locale, format);
   const lo = fromIso(min);
   const hi = fromIso(max);
 
   useEffect(() => {
-    setTexts([formatDay(fromIso(value[0]), locale), formatDay(fromIso(value[1]), locale)]);
+    setTexts([formatDay(fromIso(value[0]), locale, format), formatDay(fromIso(value[1]), locale, format)]);
     setSaid(undefined);
-  }, [value[0], value[1], locale]);
+  }, [value[0], value[1], locale, format]);
 
   const close = (focus: boolean) => {
     setOpen(false);
@@ -65,11 +67,11 @@ export function DateRangePicker({ label, value, onChange, hint, error, optional 
   const commit = () => {
     const read = texts.map((t) => (t.trim() === '' ? null : parseTyped(t, locale))) as [Day | null, Day | null];
     if (texts.some((t, i) => t.trim() !== '' && !read[i])) return setSaid(`Type each date as ${pattern}.`);
-    if (read.some((d) => d && ((lo && compare(d, lo) < 0) || (hi && compare(d, hi) > 0)))) return setSaid(`Choose dates from ${formatDay(lo, locale) || 'any day'} to ${formatDay(hi, locale) || 'any day'}.`);
+    if (read.some((d) => d && ((lo && compare(d, lo) < 0) || (hi && compare(d, hi) > 0)))) return setSaid(`Choose dates from ${formatDay(lo, locale, format) || 'any day'} to ${formatDay(hi, locale, format) || 'any day'}.`);
     if (read[0] && read[1] && compare(read[1], read[0]) < 0) return setSaid('The last day is before the first. Change one of them.');
     setSaid(undefined);
     const next = read.map((d) => (d ? toIso(d) : null)) as [string | null, string | null];
-    setTexts([formatDay(read[0], locale), formatDay(read[1], locale)]);
+    setTexts([formatDay(read[0], locale, format), formatDay(read[1], locale, format)]);
     if (next[0] !== value[0] || next[1] !== value[1]) onChange(next);
   };
 

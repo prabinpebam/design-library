@@ -98,12 +98,17 @@ export function parseTyped(text: string, locale?: string): Day | null {
 }
 
 /** How a day is written in the box for the locale: "18/11/2026", "11/18/2026", "18.11.2026". */
-export function formatDay(day: Day | null, locale?: string): string {
+export function formatDay(day: Day | null, locale?: string, format: DateFormat = 'locale'): string {
+  if (format === 'iso') return day ? toIso(day) : '';
   return day ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(day.y, day.m, day.d)) : '';
 }
 
-/** The pattern to type, for the placeholder and hint: "dd/mm/yyyy", "mm/dd/yyyy", "dd.mm.yyyy". */
-export function datePattern(locale?: string): string {
+/** How a date box shows and asks for a day: in the locale's order (default) or as `yyyy-mm-dd` (`iso`). */
+export type DateFormat = 'locale' | 'iso';
+
+/** The pattern to type, for the placeholder and hint: "dd/mm/yyyy", "mm/dd/yyyy", "dd.mm.yyyy", or "yyyy-mm-dd" (`iso`). */
+export function datePattern(locale?: string, format: DateFormat = 'locale'): string {
+  if (format === 'iso') return 'yyyy-mm-dd';
   return new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
     .formatToParts(new Date(2026, 10, 18))
     .map((p) => (p.type === 'day' ? 'dd' : p.type === 'month' ? 'mm' : p.type === 'year' ? 'yyyy' : p.value))

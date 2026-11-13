@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { usePopup } from '../behaviour/popup';
-import { compare, datePattern, formatDay, fromIso, parseTyped, toIso } from '../behaviour/calendar';
+import { compare, type DateFormat, datePattern, formatDay, fromIso, parseTyped, toIso } from '../behaviour/calendar';
 import { Button } from './Button';
 import { Calendar } from './Calendar';
 import { Field } from './Field';
@@ -24,6 +24,8 @@ export interface DatePickerProps extends DataAttributes {
   isUnavailable?: (iso: string) => boolean;
   weekNumbers?: boolean;
   locale?: string;
+  /** How the box shows and asks for the day: the locale's order (default) or `iso`, `yyyy-mm-dd` as stored. */
+  format?: DateFormat;
   disabled?: boolean;
 }
 
@@ -40,23 +42,23 @@ export interface DatePickerProps extends DataAttributes {
  * @key Alt+Arrow down in the box: opens the calendar
  * @key Escape in the calendar: closes it
  */
-export function DatePicker({ label, value, onChange, hint, error, optional = false, min, max, isUnavailable, weekNumbers, locale, disabled = false, ...data }: DatePickerProps) {
+export function DatePicker({ label, value, onChange, hint, error, optional = false, min, max, isUnavailable, weekNumbers, locale, format = 'locale', disabled = false, ...data }: DatePickerProps) {
   const day = fromIso(value);
-  const [text, setText] = useState(formatDay(day, locale));
+  const [text, setText] = useState(formatDay(day, locale, format));
   const [said, setSaid] = useState<string | undefined>();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLSpanElement>(null);
   const box = useRef<HTMLSpanElement>(null);
   const popup = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
-  const pattern = datePattern(locale);
+  const pattern = datePattern(locale, format);
   const lo = fromIso(min);
   const hi = fromIso(max);
 
   useEffect(() => {
-    setText(formatDay(fromIso(value), locale));
+    setText(formatDay(fromIso(value), locale, format));
     setSaid(undefined);
-  }, [value, locale]);
+  }, [value, locale, format]);
 
   const close = (focus: boolean) => {
     setOpen(false);
@@ -75,10 +77,10 @@ export function DatePicker({ label, value, onChange, hint, error, optional = fal
     }
     const typed = parseTyped(text, locale);
     if (!typed) return setSaid(`Type the date as ${pattern}.`);
-    if ((lo && compare(typed, lo) < 0) || (hi && compare(typed, hi) > 0)) return setSaid(`Choose a date from ${formatDay(lo, locale) || 'any day'} to ${formatDay(hi, locale) || 'any day'}.`);
-    if (isUnavailable?.(toIso(typed))) return setSaid(`${formatDay(typed, locale)} can’t be chosen. Choose another day.`);
+    if ((lo && compare(typed, lo) < 0) || (hi && compare(typed, hi) > 0)) return setSaid(`Choose a date from ${formatDay(lo, locale, format) || 'any day'} to ${formatDay(hi, locale, format) || 'any day'}.`);
+    if (isUnavailable?.(toIso(typed))) return setSaid(`${formatDay(typed, locale, format)} can’t be chosen. Choose another day.`);
     setSaid(undefined);
-    setText(formatDay(typed, locale));
+    setText(formatDay(typed, locale, format));
     if (toIso(typed) !== value) onChange(toIso(typed));
   };
 

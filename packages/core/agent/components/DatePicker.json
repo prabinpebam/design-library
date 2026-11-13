@@ -82,6 +82,12 @@
           "type": "string"
         },
         {
+          "name": "format",
+          "type": "DateFormat",
+          "default": "'locale'",
+          "description": "How the box shows and asks for the day: the locale's order (default) or `iso`, `yyyy-mm-dd` as stored."
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "default": "false"
