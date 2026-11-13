@@ -12,24 +12,24 @@
     inline-size: 100%;
   }
 
-  [data-dl='navigation'] [data-dl-part='groups'] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) {
     display: flex;
     flex-direction: column;
     gap: var(--c-navigation-group-gap);
   }
 
-  [data-dl='navigation'] [data-dl-part='group'] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] {
     display: flex;
     flex-direction: column;
     gap: var(--c-navigation-title-gap);
   }
 
   /* The group's heading lines up with the words of its entries, not with their fills. */
-  [data-dl='navigation'] [data-dl-part='group'] > [data-dl='heading'] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl='heading'] {
     padding-inline: var(--c-navigation-item-padding-inline);
   }
 
-  [data-dl='navigation'] [data-dl-part='items'],
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl-part='items'],
   [data-dl='navigation'] [data-dl-part='family'],
   [data-dl='navigation'] [data-dl-part='family-items'] {
     display: flex;
@@ -154,7 +154,7 @@
   }
 
   /* A title that names its list without showing (hideTitle). */
-  [data-dl='navigation'] [data-dl-part='group'] > [data-dl='heading'][data-hidden] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl='heading'][data-hidden] {
     position: absolute;
     overflow: hidden;
     clip-path: inset(50%);
@@ -162,24 +162,28 @@
   }
 
   /* A reorderable group: each page and its trailing Move handle on one row; the dragged row lifts, as in a List. */
-  [data-dl='navigation'] [data-dl-part='items'][data-reorder] > [data-dl-part='row'] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl-part='items'][data-reorder] {
+    isolation: isolate;
+  }
+
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl-part='items'][data-reorder] > [data-dl-part='row'] {
     display: flex;
     align-items: center;
     gap: var(--c-navigation-item-gap);
   }
 
-  [data-dl='navigation'] [data-dl-part='items'][data-reorder] > [data-dl-part='row'] > [data-dl-part='item'] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl-part='items'][data-reorder] > [data-dl-part='row'] > [data-dl-part='item'] {
     flex: 1;
     min-inline-size: 0;
   }
 
-  [data-dl='navigation'] [data-dl-part='items'][data-reorder] [data-dl-part='handle'] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl-part='items'][data-reorder] > [data-dl-part='row'] > [data-dl-part='handle'] {
     display: inline-flex;
     touch-action: none;
     cursor: grab;
   }
 
-  [data-dl='navigation'] [data-dl-part='items'][data-reorder] > [data-dl-part='row'][data-dragging] {
+  [data-dl='navigation'] > :is([data-dl-part='groups'], [data-dl-part='disclosure'] > [data-dl-part='groups']) > [data-dl-part='group'] > [data-dl-part='items'][data-reorder] > [data-dl-part='row'][data-dragging] {
     position: relative;
     z-index: var(--layer-raised);
     border-radius: var(--c-navigation-item-radius);
@@ -196,7 +200,7 @@
   }
 
   /* Collapsed: one native disclosure whose summary names the current page. */
-  [data-dl='navigation'] [data-dl-part='disclosure'] > summary {
+  [data-dl='navigation'] > [data-dl-part='disclosure'] > summary {
     display: flex;
     align-items: center;
     gap: var(--c-navigation-summary-gap);
