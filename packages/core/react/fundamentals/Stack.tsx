@@ -5,6 +5,8 @@ export interface StackProps extends DataAttributes {
   children: ReactNode;
   /** The space between children, by how strongly they belong together: `pair` (a label and its value) up to `section` (parts of a page). */
   gap?: 'pair' | 'item' | 'group' | 'section';
+  /** Holds the column to a reading line (size.measure) in a wider view: a short form or list of panels that shouldn't stretch across the screen (LR99). Off by default: the column fills its parent. */
+  measure?: boolean;
 }
 
 /**
@@ -15,9 +17,9 @@ export interface StackProps extends DataAttributes {
  * @family arrangement
  * @a11y A plain `div` with no role: it arranges, it doesn't group for assistive technology.
  */
-export function Stack({ children, gap = 'item', ...data }: StackProps) {
+export function Stack({ children, gap = 'item', measure = false, ...data }: StackProps) {
   return (
-    <div {...data} data-dl="stack" data-gap={gap}>
+    <div {...data} data-dl="stack" data-gap={gap} data-measure={measure ? '' : undefined}>
       {children}
     </div>
   );

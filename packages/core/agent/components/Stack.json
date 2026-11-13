@@ -28,12 +28,19 @@
           "type": "'pair' | 'item' | 'group' | 'section'",
           "default": "'item'",
           "description": "The space between children, by how strongly they belong together: `pair` (a label and its value) up to `section` (parts of a page)."
+        },
+        {
+          "name": "measure",
+          "type": "boolean",
+          "default": "false",
+          "description": "Holds the column to a reading line (size.measure) in a wider view: a short form or list of panels that shouldn't stretch across the screen (LR99). Off by default: the column fills its parent."
         }
       ]
     }
   ],
   "uses": [],
   "tokens": [
+    "--size-measure",
     "--space-stack-group",
     "--space-stack-item",
     "--space-stack-pair",

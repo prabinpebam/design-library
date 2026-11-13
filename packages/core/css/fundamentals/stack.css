@@ -22,4 +22,9 @@
   [data-dl='stack'][data-gap='section'] {
     gap: var(--space-stack-section);
   }
+
+  /* LR99: measure, the column held to a reading line in a wider view. */
+  [data-dl='stack'][data-measure] {
+    max-inline-size: var(--size-measure);
+  }
 }
