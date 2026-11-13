@@ -39,7 +39,8 @@
     "--c-image-reveal-reduced-duration": "With reduced motion a reveal isn't drawn: the pair crossfades in over the resting tone for this long (default duration.change, 200 ms). A brand whose approved reduced-motion fade is shorter or longer sets it."
   },
   "ImageGrid": {
-    "--c-image-grid-framed-gap": "Between pictures in a framed grid (framed; a media block with its frame switch on). Default space.2, the usual gap: each picture keeps its art in its own box (Image room). A template whose framed pictures read crowded sets more."
+    "--c-image-grid-framed-gap": "Between pictures in a framed grid (framed; a media block with its frame switch on). Default space.2, the usual gap: each picture keeps its art in its own box (Image room). A template whose framed pictures read crowded sets more.",
+    "--c-image-grid-cell": "A quilted grid's square cell (layout quilted): the narrowest a cell gets, so as many columns as fit (default 8rem). A template whose quilted pattern needs a fixed column count sets a share of the width with a floor, e.g. four: max(8rem, calc((100% - 3 * var(--c-image-grid-gap)) / 4 - 1px))."
   },
   "List": {
     "--c-list-tile-min": "An action list's tiles (layout tiles): the narrowest a tile gets before fewer fit across (default size.column-min). A catalogue in a narrow panel sets a smaller length.",

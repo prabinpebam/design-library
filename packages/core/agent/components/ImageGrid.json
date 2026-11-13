@@ -172,6 +172,11 @@
       "var": "--c-image-grid-framed-gap",
       "default": "0.5rem",
       "description": "Between pictures in a framed grid (framed; a media block with its frame switch on). Default space.2, the usual gap: each picture keeps its art in its own box (Image room). A template whose framed pictures read crowded sets more."
+    },
+    {
+      "var": "--c-image-grid-cell",
+      "default": "8rem",
+      "description": "A quilted grid's square cell (layout quilted): the narrowest a cell gets, so as many columns as fit (default 8rem). A template whose quilted pattern needs a fixed column count sets a share of the width with a floor, e.g. four: max(8rem, calc((100% - 3 * var(--c-image-grid-gap)) / 4 - 1px))."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/imagegrid",

@@ -3,6 +3,9 @@ import { ImageGrid } from '../compounds/ImageGrid';
 import { Text } from '../fundamentals/Text';
 import { scenes } from './scenes';
 import type { StoryFile } from './story';
+import { WithSettings } from './WithSettings';
+
+const fourColumns = { '--c-image-grid-cell': 'max(8rem, calc((100% - 3 * var(--c-image-grid-gap)) / 4 - 1px))' };
 
 const shapes: [number, number][] = [[640, 360], [480, 640], [640, 480], [600, 600], [640, 360], [400, 600], [640, 427]];
 const photos = scenes.map((s, i) => ({ id: `p${i}`, src: s.src, alt: s.alt, width: shapes[i][0], height: shapes[i][1] }));
@@ -88,6 +91,18 @@ export default {
             ),
           }))}
         />
+      ),
+    },
+    {
+      title: 'Quilted in four columns from the theme',
+      description: 'A quilted grid fits as many 8rem cells as it can by default. A template whose pattern needs a fixed count sets --c-image-grid-cell (a theme setting) to a share of the width with a floor: here four columns, one large feature, never under 8rem.',
+      code: `applySettings({ '--c-image-grid-cell': 'max(8rem, calc((100% - 3 * var(--c-image-grid-gap)) / 4 - 1px))' });
+
+<ImageGrid layout="quilted" label="…" items={[{ …, span: 'large' }, …]} />`,
+      render: () => (
+        <WithSettings settings={fourColumns}>
+          <ImageGrid layout="quilted" label="Photos from the trip" items={photos.slice(0, 6).map((p, i) => ({ ...p, span: i === 0 ? ('large' as const) : undefined }))} />
+        </WithSettings>
       ),
     },
   ],
