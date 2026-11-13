@@ -41,7 +41,9 @@ Before-code decision: source MediaInfo:103, kit/RichField:1-90, model/richText:5
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR109 | 2026-11-13 | Rich Media Description source parity | TextArea is plain text; no WYSIWYG Markdown field | 6 | RichTextField, pure rich-field formatter, supplied link-dialog callback | none | DesignUp Editor39 | in progress | pending | Adopt on picture/linked-media Description, delete explicit Save workaround |
+| LR109 | 2026-11-13 | Rich Media Description source parity | TextArea is plain text; no WYSIWYG Markdown field | 6 | RichTextField, pure rich-field formatter, supplied link-dialog callback | none | DesignUp Editor39/40 | shipped | 80b1df3, 569f108; formatter correction in this change | Done: adopted on picture/linked-media Description, explicit Save removed |
+
+Editor40 browser evidence: actual headless native pointer/keyboard formatting, all nine operations, link apply/cancel and invalid-address retention, safe HTML/plain Markdown paste, blur-save, injected failed save with retained draft and Retry, then reload with identical Markdown. The walk found and fixed nested emphasis closing runs, literal list-prefix escaping and Chromium's sibling nested-list DOM losing indented items. Both nested emphasis orders, nested lists, literal prefixes, escaped punctuation and parenthesised link addresses round-trip. Inspected 1440 light and a fresh dark browser show three bare tool groups, readable full-width hint and one field boundary. Core typecheck/build and consumer linked typecheck pass; checkpoint/pinned consumer build recorded in DesignUp adoption. No UX-stage tests, stories or regression sweep; the isolated Hayley Description trial was restored.
 
 ## LR103: one picture-centre dot (13 November 2026)
 

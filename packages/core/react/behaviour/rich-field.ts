@@ -17,25 +17,39 @@ export function richShortcut(e: { key: string; code: string; ctrlKey: boolean; m
 }
 
 const escapeHtml = (s: string) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-const escapeMarkdown = (s: string) => s.replace(/[\u00a0]/g, ' ').replace(/[\\`*_[\]~<>]/g, '\\$&');
+const escapeMarkdown = (s: string) => s.replace(/[\u00a0]/g, ' ').replace(/[\\`*_[\]~<>]/g, '\\$&')
+  .replace(/^([ \t]*)([-+]|\d+[.)])(?= )/gm, (_, space: string, marker: string) => space + marker.replace(/[-+.)]/g, '\\$&'));
 export const safeRichHref = (href: string): boolean => /^(?:https?:\/\/|mailto:|tel:|\/(?!\/)|#)/i.test(href) && !/[\u0000-\u0020\u007f]/.test(href);
 
 function inlineHtml(text: string): string {
-  let html = '';
+  const frames = [{ marker: '', html: '' }];
+  const append = (html: string) => { frames[frames.length - 1].html += html; };
   for (let i = 0; i < text.length;) {
-    if (text[i] === '\\' && i + 1 < text.length) { html += escapeHtml(text[i + 1]); i += 2; continue; }
+    if (text[i] === '\\' && i + 1 < text.length) { append(escapeHtml(text[i + 1])); i += 2; continue; }
     if (text[i] === '`') {
       const marker = /^`+/.exec(text.slice(i))![0], end = text.indexOf(marker, i + marker.length);
-      if (end >= 0) { html += `<code>${escapeHtml(text.slice(i + marker.length, end))}</code>`; i = end + marker.length; continue; }
+      if (end >= 0) { append(`<code>${escapeHtml(text.slice(i + marker.length, end))}</code>`); i = end + marker.length; continue; }
     }
-    const marker = ['**', '__', '~~', '*', '_'].find(m => text.startsWith(m, i));
-    if (marker) {
-      const end = text.indexOf(marker, i + marker.length);
-      if (end > i + marker.length) {
-        const tag = marker === '~~' ? 'del' : marker.length === 2 ? 'strong' : 'em';
-        html += `<${tag}>${inlineHtml(text.slice(i + marker.length, end))}</${tag}>`;
-        i = end + marker.length; continue;
+    const run = /^(\*+|_+|~{2,})/.exec(text.slice(i))?.[0];
+    if (run) {
+      let remaining = run.length;
+      const closes = i > 0 && !/\s/.test(text[i - 1]);
+      const opens = i + run.length < text.length && !/\s/.test(text[i + run.length]);
+      while (remaining) {
+        const top = frames[frames.length - 1];
+        // A triple closing run closes inside-out, for either **bold *italic*** or *italic **bold***.
+        if (closes && top.marker[0] === run[0] && remaining >= top.marker.length &&
+          (remaining !== 2 || top.marker.length === 2)) {
+          frames.pop();
+          const tag = top.marker === '~~' ? 'del' : top.marker.length === 2 ? 'strong' : 'em';
+          append(`<${tag}>${top.html}</${tag}>`);
+          remaining -= top.marker.length;
+        } else if (opens && (run[0] !== '~' || remaining >= 2)) {
+          const marker = run[0].repeat(Math.min(2, remaining));
+          frames.push({ marker, html: '' }); remaining -= marker.length;
+        } else { append(escapeHtml(run[0].repeat(remaining))); remaining = 0; }
       }
+      i += run.length; continue;
     }
     if (text[i] === '[') {
       const close = text.indexOf('](', i + 1);
@@ -49,16 +63,17 @@ function inlineHtml(text: string): string {
         if (!depth) {
           const href = text.slice(close + 2, end - 1).replace(/\\([()\\])/g, '$1');
           if (safeRichHref(href)) {
-            html += `<a href="${escapeHtml(href)}">${inlineHtml(text.slice(i + 1, close))}</a>`;
+            append(`<a href="${escapeHtml(href)}">${inlineHtml(text.slice(i + 1, close))}</a>`);
             i = end; continue;
           }
         }
       }
     }
-    html += text[i] === '\n' ? '<br>' : escapeHtml(text[i]);
+    append(text[i] === '\n' ? '<br>' : escapeHtml(text[i]));
     i++;
   }
-  return html;
+  while (frames.length > 1) { const frame = frames.pop()!; append(escapeHtml(frame.marker) + frame.html); }
+  return frames[0].html;
 }
 
 /** Markdown to safe editable HTML, with arbitrary nested unordered/ordered lists. */
@@ -130,12 +145,18 @@ function inlineMarkdown(n: RichFieldNode): string {
 
 /** Editable or pasted DOM to canonical Markdown; unsupported containers keep their words, never their attributes. */
 export function richFieldMarkdown(root: RichFieldNode): string {
-  const list = (node: RichFieldNode, depth: number): string => children(node).filter(n => n.nodeName === 'LI').map((li, index) => {
-    const nodes = children(li), value = nodes.filter(n => !isList(n)).map(inlineMarkdown).join('').trim();
-    const prefix = `${'  '.repeat(depth)}${node.nodeName === 'OL' ? `${index + 1}.` : '-'} `;
-    return prefix + value.replace(/\n/g, `\n${' '.repeat(prefix.length)}`) +
-      nodes.filter(isList).map(n => `\n${list(n, depth + 1)}`).join('');
-  }).join('\n');
+  const list = (node: RichFieldNode, depth: number): string => {
+    let index = 0;
+    return children(node).flatMap(li => {
+      // Chromium's native indent can put the nested list beside, rather than inside, its preceding LI.
+      if (isList(li)) return [list(li, depth + 1)];
+      if (li.nodeName !== 'LI') return [];
+      const nodes = children(li), value = nodes.filter(n => !isList(n)).map(inlineMarkdown).join('').trim();
+      const prefix = `${'  '.repeat(depth)}${node.nodeName === 'OL' ? `${++index}.` : '-'} `;
+      return [prefix + value.replace(/\n/g, `\n${' '.repeat(prefix.length)}`) +
+        nodes.filter(isList).map(n => `\n${list(n, depth + 1)}`).join('')];
+    }).join('\n');
+  };
   const blocks = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE']);
   const result: string[] = [];
   let inline = '';
