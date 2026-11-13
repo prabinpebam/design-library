@@ -45,5 +45,12 @@ applySettings({
       code: `applySettings({ '--c-site-layout-skip-radius': 'var(--radius-md)' });`,
       render: () => <ScreenPreview src="site.html?frame=skip#/app/harbour/home" title="Harbour home, rounded skip link" caption="Harbour’s home with the skip link on the controls’ corners; Tab shows it." />,
     },
+    {
+      title: 'Skip link without a line',
+      description:
+        'The skip link is a link: it draws link.decoration at rest and link.decoration-hover while it shows, underline by default. A brand that draws no link lines sets both to none, and the skip link shows its words plain on its raised surface, with the focus ring as its cue. Press Tab inside the window to show it.',
+      code: `applySettings({ '--link-decoration': 'none', '--link-decoration-hover': 'none' });`,
+      render: () => <ScreenPreview src="site.html?frame=plain#/app/harbour/home" title="Harbour home, links without lines" caption="Harbour’s home with no link lines; Tab shows the skip link with plain words." />,
+    },
   ],
 } satisfies StoryFile;

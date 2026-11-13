@@ -116,6 +116,8 @@
     "--easing-exit",
     "--layer-overlay",
     "--layer-sticky",
+    "--link-decoration",
+    "--link-decoration-hover",
     "--shadow-overlay",
     "--size-focus-width",
     "--size-nav-width",
