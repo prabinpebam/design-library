@@ -52,7 +52,8 @@ const size = (bytes: number) => {
     n /= 1000;
     i += 1;
   }
-  return new Intl.NumberFormat(undefined, { style: 'unit', unit: units[i], unitDisplay: 'short', maximumFractionDigits: i ? 1 : 0 }).format(n);
+  // Bytes in long form ("116 bytes"): the short form reads "116 byte" (LR94); larger units stay short ("1.2 kB").
+  return new Intl.NumberFormat(undefined, { style: 'unit', unit: units[i], unitDisplay: i ? 'short' : 'long', maximumFractionDigits: i ? 1 : 0 }).format(n);
 };
 
 /**
