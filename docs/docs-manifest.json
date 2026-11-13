@@ -114,6 +114,15 @@
       "updated": "2026-11-08"
     },
     {
+      "path": "word-figma.md",
+      "title": "Word in Figma's clothes (Q161)",
+      "order": 9.15,
+      "icon": "compare",
+      "type": "page",
+      "status": "draft",
+      "updated": "2026-11-13"
+    },
+    {
       "path": "figma-replica.md",
       "title": "Figma replica (Q118)",
       "order": 9.1,
