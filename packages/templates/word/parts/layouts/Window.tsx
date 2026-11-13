@@ -85,6 +85,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [painter, setPainter] = useState<DocState['on'] | undefined>(undefined);
   const [openMenu, setOpenMenu] = useState<string | undefined>(undefined);
   const [, setDocVersion] = useState(0);
+  const [page, setPage] = useState<{ margins?: string; orientation?: string; columns?: string }>({});
+  const wordCount = () => editorRef.current?.innerText.split(/\s+/).filter(Boolean).length ?? 0;
   const editorRef = useRef<HTMLDivElement | null>(null);
   const rangeRef = useRef<Range | null>(null);
   const docHtml = useRef<string | null>(null);
@@ -240,6 +242,28 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       return changed();
     }
     const a = kind as WordAction;
+    if (kind === 'symbol' && arg) return exec('insertText', arg);
+    if (kind === 'margins' || kind === 'orientation' || kind === 'columns') return setPage((pg) => ({ ...pg, [kind]: arg }));
+    if (a === 'page-break') return exec('insertHTML', '<hr data-break=""><p><br></p>');
+    if (a === 'table') return exec('insertHTML', `<table><tbody>${'<tr>'.concat('<td><br></td>'.repeat(3), '</tr>').repeat(3)}</tbody></table><p><br></p>`);
+    if (a === 'date') return exec('insertText', new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }));
+    if (a === 'symbol') return exec('insertText', 'Ω');
+    if (a === 'comment') return setPane('comments');
+    if (a === 'word-count') return notify({ subject: 'word-count', message: say(c.wordCountDone, { count: String(wordCount()) }) });
+    if (a === 'read-aloud') {
+      const voice = window.speechSynthesis;
+      if (!voice) return notBuilt(action);
+      if (voice.speaking) {
+        voice.cancel();
+        return notify({ subject: 'word-read-aloud', message: c.readingStopped });
+      }
+      const words = getSelection()?.toString() || editorRef.current?.innerText.trim() || '';
+      if (!words) return notify({ subject: 'word-read-aloud', message: c.nothingToRead });
+      voice.speak(new SpeechSynthesisUtterance(words));
+      return notify({ subject: 'word-read-aloud', message: c.readingAloud });
+    }
+    if (a === 'view-read' || a === 'view-print' || a === 'view-web') return setDocView(a === 'view-read' ? 'read' : a === 'view-web' ? 'web' : 'print');
+    if (a === 'focus') return setFocusMode((f) => !f);
     if (a === 'paste') return paste();
     if (a === 'find') return find();
     if (a === 'grow' || a === 'shrink') return stepSize(a === 'grow' ? 1 : -1);
@@ -427,6 +451,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     const pressed = fromDoc ? !!doc.on[cmd.run!]
       : cmd.run === 'marks' ? marks
       : cmd.run === 'format-painter' ? !!painter
+      : cmd.run === 'view-read' || cmd.run === 'view-print' || cmd.run === 'view-web' ? docView === cmd.run.slice(5)
       : cmd.toggle === true ? (toggled[cmd.label] ?? !!cmd.pressed) : set ? (set in setOn ? setOn[set] === cmd.label : !!cmd.pressed) : cmd.pressed;
     const disabled = cmd.run === 'cut' || cmd.run === 'copy' ? !doc.selected : cmd.disabled;
     const run = () => {
@@ -446,7 +471,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         align={cmd.kind === 'labelled' ? 'start' : undefined}
         size="xs"
         emphasis="quiet"
-        pressed={cmd.toggle ? pressed : cmd.pressed}
+        pressed={cmd.toggle || cmd.run?.startsWith('view-') ? pressed : cmd.pressed}
         disabled={disabled}
         onClick={run}
       />
@@ -1076,7 +1101,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                         </span>
                       </div>
                     )}
-                    <article data-dl-part="page" data-empty={!showSampleDoc ? '' : undefined} data-narrow={copilotOpen ? '' : undefined}>
+                    <article data-dl-part="page" data-empty={!showSampleDoc ? '' : undefined} data-narrow={copilotOpen ? '' : undefined} data-margins={page.margins} data-orientation={page.orientation} data-columns={page.columns}>
                       {docEmpty && !docFocused && (
                         <div data-dl-part="caret-row" aria-hidden="true">
                           <span data-dl-part="caret-block" />
@@ -1178,7 +1203,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         <footer data-dl-part="statusbar" data-density="compact" aria-label={c.statusBar}>
           <div data-dl-part="status-start">
             <span data-dl-part="item">{view.status.page}</span>
-            <span data-dl-part="item">{view.status.words}</span>
+            <span data-dl-part="item">{edited ? say(c.wordsCount, { count: String(wordCount()) }) : view.status.words}</span>
             <span data-dl-part="icon-btn"><Button label={c.proofing} icon={wordIcons.name('proofing-ok')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => (tab === 'review' ? notBuilt(c.proofing) : setTab('review'))} /></span>
             <span data-dl-part="item">{view.status.language}</span>
             <span data-dl-part="item">{view.status.predictions}</span>

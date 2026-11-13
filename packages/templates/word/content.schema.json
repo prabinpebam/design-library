@@ -38,7 +38,18 @@
         "justify",
         "marks",
         "find",
-        "select-all"
+        "select-all",
+        "page-break",
+        "table",
+        "comment",
+        "date",
+        "symbol",
+        "word-count",
+        "read-aloud",
+        "view-read",
+        "view-print",
+        "view-web",
+        "focus"
       ],
       "type": "string"
     },
@@ -319,7 +330,7 @@
           "type": "string"
         },
         "items": {
-          "description": "The split menu's choices; each `value` is a `WordAction` or `style:{block}`, `case:{sentence|lower|upper|title}`, `spacing:{line height}`. The main button opens the menu when it has no `run`.",
+          "description": "The split menu's choices; each `value` is a `WordAction` or `style:{block}`, `case:{sentence|lower|upper|title}`, `spacing:{line height}`, `symbol:{character}`, `margins:{normal|narrow|wide}`, `orientation:{portrait|landscape}`, `columns:{1|2|3}`. The main button opens the menu when it has no `run`.",
           "items": {
             "additionalProperties": false,
             "properties": {

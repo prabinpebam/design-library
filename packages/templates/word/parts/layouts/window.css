@@ -802,6 +802,17 @@
   [data-dl='word-doc'] > h3 { font-family: var(--font-display); font-size: var(--text-xl); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
   [data-dl='word-doc'] > blockquote { padding-inline: var(--space-8); font-style: italic; color: var(--t-word-window-muted); }
   [data-dl='word-doc'] > :is(ul, ol) { padding-inline-start: var(--space-6); }
+  /* Layout: margins, orientation and columns from the Layout tab. */
+  [data-dl='word-page-stage'] > [data-dl-part='page'][data-margins='narrow'] { padding: var(--space-6); }
+  [data-dl='word-page-stage'] > [data-dl-part='page'][data-margins='wide'] { padding-block: var(--space-16); padding-inline: calc(var(--space-16) * 1.5); }
+  [data-dl='word-page-stage'] > [data-dl-part='page'][data-orientation='landscape'] { inline-size: min(100%, 60rem); min-block-size: 42.375rem; }
+  [data-dl='word-page-stage'] > [data-dl-part='page']:is([data-columns='2'], [data-columns='3']) > [data-dl='word-doc'] { display: block; column-gap: var(--space-8); }
+  [data-dl='word-page-stage'] > [data-dl-part='page'][data-columns='2'] > [data-dl='word-doc'] { column-count: 2; }
+  [data-dl='word-page-stage'] > [data-dl-part='page'][data-columns='3'] > [data-dl='word-doc'] { column-count: 3; }
+  [data-dl='word-page-stage'] > [data-dl-part='page']:is([data-columns='2'], [data-columns='3']) > [data-dl='word-doc'] > * + * { margin-block-start: var(--space-3); }
+  [data-dl='word-doc'] > hr[data-break] { block-size: var(--border-hairline); margin-block: var(--space-6); border: 0; background: var(--t-word-window-border-strong); }
+  [data-dl='word-doc'] > table { border-collapse: collapse; inline-size: 100%; }
+  [data-dl='word-doc'] > table > tbody > tr > td { padding: var(--space-1); border: var(--border-hairline) solid var(--t-word-window-border-strong); }
   [data-dl='word-doc'][data-marks] > :is(p, h1, h2, h3, blockquote)::after { content: '\00B6'; color: var(--t-word-window-muted); }
   [data-dl='word-doc']::highlight(word-find), [data-dl='word-doc'] :is(p, h1, h2, h3, blockquote, li, b, i, u, s, sub, sup, font, span)::highlight(word-find) { background-color: var(--state-selected); }
 

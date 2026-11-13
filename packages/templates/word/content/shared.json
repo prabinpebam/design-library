@@ -25,15 +25,15 @@
             "label": "Pages",
             "rows": [
               [{ "label": "Cover Page", "icon": "cover-page", "kind": "labelled", "menu": true }],
-              [{ "label": "Blank Page", "icon": "blank-page", "kind": "labelled" }],
-              [{ "label": "Page Break", "icon": "page-break", "kind": "labelled" }]
+              [{ "label": "Blank Page", "run": "page-break", "icon": "blank-page", "kind": "labelled" }],
+              [{ "label": "Page Break", "run": "page-break", "icon": "page-break", "kind": "labelled" }]
             ]
           },
           {
             "id": "tables",
             "label": "Tables",
             "lead": [
-              { "label": "Table", "icon": "table-grid", "kind": "stacked", "menu": true }
+              { "label": "Table", "run": "table", "icon": "table-grid", "kind": "stacked", "menu": true }
             ]
           },
           {
@@ -75,7 +75,7 @@
             "id": "comments",
             "label": "Comments",
             "lead": [
-              { "label": "Comment", "icon": "comment-new", "kind": "stacked" }
+              { "label": "Comment", "run": "comment", "icon": "comment-new", "kind": "stacked" }
             ]
           },
           {
@@ -101,7 +101,7 @@
               ],
               [
                 [{ "label": "Signature Line", "icon": "signature-line", "menu": true }],
-                [{ "label": "Date & Time", "icon": "date-time" }],
+                [{ "label": "Date & Time", "run": "date", "icon": "date-time" }],
                 [{ "label": "Object", "icon": "insert-object", "menu": true }]
               ]
             ]
@@ -111,7 +111,7 @@
             "label": "Symbols",
             "rows": [
               [{ "label": "Equation", "icon": "pi-symbol", "kind": "labelled", "menu": true }],
-              [{ "label": "Symbol", "icon": "omega-symbol", "kind": "labelled", "menu": true }]
+              [{ "label": "Symbol", "run": "symbol", "items": [{ "value": "symbol:Ω", "label": "Ω" }, { "value": "symbol:π", "label": "π" }, { "value": "symbol:€", "label": "€" }, { "value": "symbol:©", "label": "©" }, { "value": "symbol:°", "label": "°" }], "icon": "omega-symbol", "kind": "labelled", "menu": true }]
             ]
           },
           {
@@ -245,10 +245,10 @@
             "label": "Page Setup",
             "launcher": "Page setup",
             "lead": [
-              { "label": "Margins", "icon": "layout-margins", "kind": "stacked", "menu": true },
-              { "label": "Orientation", "icon": "layout-orientation", "kind": "stacked", "menu": true },
+              { "label": "Margins", "items": [{ "value": "margins:normal", "label": "Normal" }, { "value": "margins:narrow", "label": "Narrow" }, { "value": "margins:wide", "label": "Wide" }], "icon": "layout-margins", "kind": "stacked", "menu": true },
+              { "label": "Orientation", "items": [{ "value": "orientation:portrait", "label": "Portrait" }, { "value": "orientation:landscape", "label": "Landscape" }], "icon": "layout-orientation", "kind": "stacked", "menu": true },
               { "label": "Size", "icon": "layout-size", "kind": "stacked", "menu": true },
-              { "label": "Columns", "icon": "layout-columns", "kind": "stacked", "menu": true }
+              { "label": "Columns", "items": [{ "value": "columns:1", "label": "One" }, { "value": "columns:2", "label": "Two" }, { "value": "columns:3", "label": "Three" }], "icon": "layout-columns", "kind": "stacked", "menu": true }
             ],
             "rows": [
               [{ "label": "Breaks", "icon": "layout-breaks", "kind": "labelled", "menu": true }],
@@ -451,14 +451,14 @@
             "rows": [
               [{ "label": "Spelling and Grammar", "icon": "spelling-grammar", "kind": "labelled", "menu": true }],
               [{ "label": "Thesaurus", "icon": "thesaurus-book", "kind": "labelled" }],
-              [{ "label": "Word Count", "icon": "word-count", "kind": "labelled" }]
+              [{ "label": "Word Count", "run": "word-count", "icon": "word-count", "kind": "labelled" }]
             ]
           },
           {
             "id": "speech",
             "label": "Speech",
             "lead": [
-              { "label": "Read Aloud", "lines": ["Read", "Aloud"], "icon": "read-aloud", "kind": "stacked" }
+              { "label": "Read Aloud", "run": "read-aloud", "lines": ["Read", "Aloud"], "icon": "read-aloud", "kind": "stacked" }
             ]
           },
           {
@@ -481,7 +481,7 @@
             "label": "Comments",
             "hideLabel": true,
             "lead": [
-              { "label": "Comments", "icon": "review-comments", "kind": "stacked", "menu": true }
+              { "label": "Comments", "run": "comment", "icon": "review-comments", "kind": "stacked", "menu": true }
             ]
           },
           {
@@ -551,9 +551,9 @@
             "id": "views",
             "label": "Views",
             "lead": [
-              { "label": "Read Mode", "lines": ["Read", "Mode"], "icon": "view-read-mode", "kind": "stacked" },
-              { "label": "Print Layout", "lines": ["Print", "Layout"], "icon": "view-print-layout", "kind": "stacked", "pressed": true },
-              { "label": "Web Layout", "lines": ["Web", "Layout"], "icon": "view-web-layout", "kind": "stacked" }
+              { "label": "Read Mode", "run": "view-read", "lines": ["Read", "Mode"], "icon": "view-read-mode", "kind": "stacked" },
+              { "label": "Print Layout", "run": "view-print", "lines": ["Print", "Layout"], "icon": "view-print-layout", "kind": "stacked", "pressed": true },
+              { "label": "Web Layout", "run": "view-web", "lines": ["Web", "Layout"], "icon": "view-web-layout", "kind": "stacked" }
             ],
             "rows": [
               [{ "label": "Outline", "icon": "view-outline", "kind": "labelled" }],
@@ -564,7 +564,7 @@
             "id": "immersive",
             "label": "Immersive",
             "lead": [
-              { "label": "Focus", "icon": "view-focus", "kind": "stacked" },
+              { "label": "Focus", "run": "focus", "icon": "view-focus", "kind": "stacked" },
               { "label": "Immersive Reader", "lines": ["Immersive", "Reader"], "icon": "immersive-reader", "kind": "stacked" }
             ]
           },
@@ -1248,6 +1248,11 @@
     },
     "copy": {
       "pinRibbon": "Pin the ribbon",
+      "wordsCount": "{count} words",
+      "readingAloud": "Reading aloud. Select Read Aloud again to stop.",
+      "readingStopped": "Stopped reading.",
+      "nothingToRead": "There’s nothing to read yet. Type in the page first.",
+      "wordCountDone": "This document has {count} words.",
       "cutDone": "Cut to the clipboard.",
       "copyDone": "Copied to the clipboard.",
       "findHint": "Type in Search document to find words in the page.",

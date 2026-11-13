@@ -27,14 +27,15 @@ export interface WordCommand {
   run?: WordAction;
   /** A field's choices (font names, sizes). */
   options?: string[];
-  /** The split menu's choices; each `value` is a `WordAction` or `style:{block}`, `case:{sentence|lower|upper|title}`, `spacing:{line height}`. The main button opens the menu when it has no `run`. */
+  /** The split menu's choices; each `value` is a `WordAction` or `style:{block}`, `case:{sentence|lower|upper|title}`, `spacing:{line height}`, `symbol:{character}`, `margins:{normal|narrow|wide}`, `orientation:{portrait|landscape}`, `columns:{1|2|3}`. The main button opens the menu when it has no `run`. */
   items?: { value: string; label: string }[];
 }
 export type WordAction =
   | 'paste' | 'cut' | 'copy' | 'format-painter'
   | 'font' | 'font-size' | 'bold' | 'italic' | 'underline' | 'strikethrough' | 'subscript' | 'superscript' | 'clear' | 'grow' | 'shrink' | 'highlight' | 'font-colour'
   | 'bullets' | 'numbering' | 'multilevel' | 'outdent' | 'indent' | 'align-left' | 'center' | 'align-right' | 'justify' | 'marks'
-  | 'find' | 'select-all';
+  | 'find' | 'select-all'
+  | 'page-break' | 'table' | 'comment' | 'date' | 'symbol' | 'word-count' | 'read-aloud' | 'view-read' | 'view-print' | 'view-web' | 'focus';
 export interface WordSpinField {
   label: string;
   icon: string;
