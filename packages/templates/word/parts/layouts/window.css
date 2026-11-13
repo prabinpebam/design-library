@@ -1239,4 +1239,22 @@
       gap: var(--space-1);
     }
   }
-}
+  [data-dl='word-window-away'] {
+    box-sizing: border-box;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-4);
+    block-size: 100dvh;
+    background-color: var(--color-map-nav);
+    color: var(--color-text);
+  }
+  [data-dl='word-window'][data-window-state='maximised'] {
+    border-color: transparent;
+  }
+  [data-dl='word-backstage-section'] {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+    padding: var(--space-8);
+  }}

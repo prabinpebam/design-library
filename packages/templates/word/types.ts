@@ -21,6 +21,8 @@ export interface WordCommand {
   checked?: boolean;
   /** Unavailable in the current selection state (Cut, Copy, Sensitivity on an empty selection). */
   disabled?: boolean;
+  /** A formatting toggle: `true` turns on and off by itself (Bold); a set name makes it one of a set where exactly one is on (`align`) or at most one is on (`list`). */
+  toggle?: true | 'align' | 'list';
 }
 export interface WordSpinField {
   label: string;
@@ -119,11 +121,26 @@ export interface WordRecentFile {
   shared?: boolean;
 }
 
+export interface WordBackstageSection {
+  /** What the section says about this document. */
+  body: string;
+  /** The section's one action ("Print", "Copy link"). */
+  action?: string;
+  /** The confirmation shown when the action is done. */
+  done?: string;
+  /** The action returns to the document (New, Blank document). */
+  back?: boolean;
+  /** The action returns to File home (Open, Show recent). */
+  home?: boolean;
+}
+
 export interface WordBackstage {
   backLabel: string;
   primaryNav: WordBackstageNavItem[];
   docNav: WordBackstageNavItem[];
   footerNav: WordBackstageNavItem[];
+  /** Each navigation item's own page, by item id; Home is the default page and Close returns to the document. */
+  sections?: Record<string, WordBackstageSection>;
   heroHeading: string;
   promptPlaceholder: string;
   createLabel: string;

@@ -718,6 +718,7 @@
           [
             {
               "label": "Format Painter",
+              "toggle": true,
               "icon": "format-painter"
             }
           ]
@@ -745,27 +746,33 @@
           [
             {
               "label": "Bold",
+              "toggle": true,
               "icon": "bold"
             },
             {
               "label": "Italic",
+              "toggle": true,
               "icon": "italic"
             },
             {
               "label": "Underline",
+              "toggle": true,
               "icon": "underline",
               "menu": true
             },
             {
               "label": "Strikethrough",
+              "toggle": true,
               "icon": "strikethrough"
             },
             {
               "label": "Subscript",
+              "toggle": true,
               "icon": "subscript"
             },
             {
               "label": "Superscript",
+              "toggle": true,
               "icon": "superscript"
             },
             {
@@ -813,16 +820,19 @@
           [
             {
               "label": "Bullets",
+              "toggle": "list",
               "icon": "list-bulleted",
               "menu": true
             },
             {
               "label": "Numbering",
+              "toggle": "list",
               "icon": "list-numbered",
               "menu": true
             },
             {
               "label": "Multilevel list",
+              "toggle": "list",
               "icon": "list-multilevel",
               "menu": true
             },
@@ -842,19 +852,23 @@
           [
             {
               "label": "Align left",
+              "toggle": "align",
               "icon": "text-start",
               "pressed": true
             },
             {
               "label": "Center",
+              "toggle": "align",
               "icon": "text-center"
             },
             {
               "label": "Align right",
+              "toggle": "align",
               "icon": "text-end"
             },
             {
               "label": "Justify",
+              "toggle": "align",
               "icon": "text-justify"
             },
             {
@@ -888,6 +902,7 @@
             },
             {
               "label": "Show paragraph marks",
+              "toggle": true,
               "icon": "pilcrow"
             }
           ]
@@ -1105,6 +1120,21 @@
         { "id": "feedback", "label": "Feedback", "icon": "feedback-person" },
         { "id": "options", "label": "Options", "icon": "bs-options" }
       ],
+      "sections": {
+        "new": { "body": "Start a blank document, or pick a template on Home.", "action": "Blank document", "back": true },
+        "open": { "body": "Your recent documents are on Home, under Recent.", "action": "Show recent", "home": true },
+        "info": { "body": "Document1 is saved in OneDrive, in Harbour Survey. Only people in the team can open it." },
+        "save": { "body": "With AutoSave on, OneDrive saves every change as you type.", "action": "Save now", "done": "Saved to OneDrive." },
+        "save-as": { "body": "Save a copy with a new name or in another folder.", "action": "Save a copy", "done": "Saved a copy as Document1 (2)." },
+        "save-pdf": { "body": "Save a PDF that keeps the layout exactly as it is.", "action": "Save as PDF", "done": "Saved Document1.pdf to OneDrive." },
+        "print": { "body": "Office printer, A4, portrait, 1 copy of 1 page.", "action": "Print", "done": "Sent 1 page to Office printer." },
+        "share": { "body": "People in Harbour Survey with the link can edit.", "action": "Copy link", "done": "Link copied." },
+        "share-pdf": { "body": "Make a PDF of this document and copy a link to it.", "action": "Copy PDF link", "done": "PDF link copied." },
+        "export": { "body": "Export as a PDF, a web page or another file type.", "action": "Export as PDF", "done": "Exported Document1.pdf to OneDrive." },
+        "account": { "body": "Signed in as Jamie Park, with OneDrive and Harbour Survey connected." },
+        "feedback": { "body": "Tell us what you like, or what to improve.", "action": "Send a smile", "done": "Thanks for the feedback." },
+        "options": { "body": "Word’s options aren’t part of the replica yet." }
+      },
       "heroHeading": "What would you like to create today?",
       "promptPlaceholder": "Describe the document you’d like to write",
       "createLabel": "Create",
@@ -1183,6 +1213,16 @@
       ]
     },
     "copy": {
+      "notBuilt": "{label} isn’t part of the replica yet.",
+      "restoreDown": "Restore Down",
+      "minimised": "{name} is minimised.",
+      "closed": "{name} is closed.",
+      "restore": "Restore",
+      "reopen": "Open again",
+      "saved": "Saved to OneDrive.",
+      "linkCopied": "Link copied. People in Harbour Survey with the link can edit.",
+      "editingMode": "You’re editing. Changes save as you type.",
+      "draftWith": "Draft with Copilot",
       "backstageHome": "File home",
       "backstageNav": "File menu",
       "feedbackTitle": "Share thoughts",

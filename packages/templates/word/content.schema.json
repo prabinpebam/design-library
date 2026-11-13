@@ -94,6 +94,13 @@
         "searchPlaceholder": {
           "type": "string"
         },
+        "sections": {
+          "additionalProperties": {
+            "$ref": "#/$defs/WordBackstageSection"
+          },
+          "description": "Each navigation item's own page, by item id; Home is the default page and Close returns to the document.",
+          "type": "object"
+        },
         "suggestions": {
           "items": {
             "type": "string"
@@ -174,6 +181,35 @@
       "required": [
         "id",
         "label"
+      ],
+      "type": "object"
+    },
+    "WordBackstageSection": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "description": "The section's one action (\"Print\", \"Copy link\").",
+          "type": "string"
+        },
+        "back": {
+          "description": "The action returns to the document (New, Blank document).",
+          "type": "boolean"
+        },
+        "body": {
+          "description": "What the section says about this document.",
+          "type": "string"
+        },
+        "done": {
+          "description": "The confirmation shown when the action is done.",
+          "type": "string"
+        },
+        "home": {
+          "description": "The action returns to File home (Open, Show recent).",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "body"
       ],
       "type": "object"
     },
@@ -281,6 +317,18 @@
         "pressed": {
           "description": "A toggle that's on (left alignment), or initial checked state for a `checkbox` command.",
           "type": "boolean"
+        },
+        "toggle": {
+          "description": "A formatting toggle: `true` turns on and off by itself (Bold); a set name makes it one of a set where exactly one is on (`align`) or at most one is on (`list`).",
+          "enum": [
+            true,
+            "align",
+            "list"
+          ],
+          "type": [
+            "boolean",
+            "string"
+          ]
         },
         "value": {
           "description": "A field's current value (\"Aptos (Body)\", \"11\", \"APA\", \"All Markup\").",

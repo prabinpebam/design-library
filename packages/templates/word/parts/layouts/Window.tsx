@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type RibbonGroup } from '@design-library/core/components';
+import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, notify, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, type DataAttributes, type RibbonGroup } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
 import type { WordBackstageTemplate, WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
@@ -49,11 +49,28 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [zoom, setZoom] = useState(90);
   const [query, setQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
+  // Toggles keyed by command label; sets (alignment, lists) keyed by set name, holding the label that's on.
+  const [toggled, setToggled] = useState<Record<string, boolean>>({});
+  const [setOn, setSetOn] = useState<Record<string, string | undefined>>({});
+  const [windowState, setWindowState] = useState<'normal' | 'maximised' | 'minimised' | 'closed'>('normal');
+  const [saveState, setSaveState] = useState(view.saveState);
+  const [bsSection, setBsSection] = useState('home');
+  const [draftOpen, setDraftOpen] = useState(false);
+  const [draft, setDraft] = useState('');
+  const [docView, setDocView] = useState<'read' | 'print' | 'web'>('print');
+  const [focusMode, setFocusMode] = useState(false);
+  const [currentHeading, setCurrentHeading] = useState(0);
+  const notBuilt = (label: string) => notify({ subject: 'word-command', message: say(c.notBuilt, { label: label.replace(/\n/g, ' ') }) });
+  const save = () => {
+    setSaveState(`- ${c.saved}`);
+    notify({ subject: 'word-save', tone: 'success', message: c.saved });
+  };
   useEffect(() => { void loadFace('noto-sans'); }, []);
   useEffect(() => {
     setPane(paneFor(screen));
     setTab(tabFor(screen));
     setBackstageOpen(screen === 'backstage');
+    setBsSection('home');
     setCopilotOpen(screen === 'dark');
     setGalleryOpen(screen === 'design-gallery');
   }, [screen]);
@@ -73,6 +90,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   }, [screen]);
 
   const showSampleDoc = screen === 'navigation' || screen === 'comments';
+  // Read Mode, Web Layout and Focus show the page without rulers; Focus also hides the ribbon.
+  const rulerShown = showRuler && docView === 'print' && !focusMode;
 
   const styleTile = (s: WordStyleSet, active: boolean, onChoose: () => void, large = false) => (
     <div key={s.id} data-dl="word-style-tile" data-large={large ? '' : undefined} data-active={active ? '' : undefined}>
@@ -154,6 +173,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     const isTool = cmd.kind === 'tool';
     const isStacked = cmd.kind === 'stacked';
     const shownLabel = isStacked && cmd.lines ? cmd.lines.join('\n') : cmd.label;
+    const set = typeof cmd.toggle === 'string' ? cmd.toggle : undefined;
+    const pressed = cmd.toggle === true ? (toggled[cmd.label] ?? !!cmd.pressed) : set ? (set in setOn ? setOn[set] === cmd.label : !!cmd.pressed) : cmd.pressed;
+    const run = () => {
+      if (cmd.toggle === true) setToggled((t) => ({ ...t, [cmd.label]: !pressed }));
+      else if (set) setSetOn((s) => ({ ...s, [set]: set === 'list' && pressed ? undefined : cmd.label }));
+      else notBuilt(cmd.label);
+    };
     /* binary-setting: ribbon formatting and drawing commands are toolbar toggles in a dense command set, as in the reference, not settings. */
     const main = (
       <Button
@@ -164,13 +190,14 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         align={cmd.kind === 'labelled' ? 'start' : undefined}
         size="xs"
         emphasis="quiet"
-        pressed={cmd.pressed}
+        pressed={cmd.toggle ? pressed : cmd.pressed}
         disabled={cmd.disabled}
+        onClick={run}
       />
     );
     if (!cmd.menu) {
       return (
-        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-pressed={cmd.pressed ? '' : undefined}>
+        <div key={key} data-dl="word-command" data-icon={cmd.icon} data-stacked={isStacked ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-pressed={pressed ? '' : undefined}>
           {main}
         </div>
       );
@@ -179,7 +206,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       <div key={key} data-dl="word-split" data-icon={cmd.icon} data-stacked={isStacked || isPen ? '' : undefined} data-pen={isPen ? '' : undefined} data-tool={isTool ? '' : undefined} data-labelled={cmd.kind === 'labelled' ? '' : undefined}>
         {main}
         <span data-dl-part="split-menu">
-          <Button label={`${cmd.label} options`} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} />
+          <Button label={`${cmd.label} options`} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" disabled={cmd.disabled} onClick={() => notBuilt(`${cmd.label} options`)} />
         </span>
       </div>
     );
@@ -190,6 +217,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     label: g.label,
     hideLabel: g.hideLabel,
     launcher: g.launcher,
+    onLaunch: g.launcher ? () => notBuilt(g.launcher!) : undefined,
     commands: (
       <>
         {g.lead?.map((cmd, i) => command(cmd, `lead-${i}`))}
@@ -242,9 +270,18 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     </span>
   );
 
+  if (windowState === 'minimised' || windowState === 'closed') {
+    return (
+      <div {...data} ref={rootRef} data-dl="word-window-away" data-scheme={screen === 'dark' ? 'dark' : undefined}>
+        <Text>{say(windowState === 'closed' ? c.closed : c.minimised, { name: view.documentName })}</Text>
+        <Button label={windowState === 'closed' ? c.reopen : c.restore} emphasis="primary" size="s" onClick={() => setWindowState('normal')} />
+      </div>
+    );
+  }
+
   return (
     <IconOverrides icons={wordPack.glyphs}>
-      <div {...data} ref={rootRef} data-dl="word-window" data-material="solid" data-backstage={backstageOpen ? '' : undefined} data-scheme={screen === 'dark' ? 'dark' : undefined}>
+      <div {...data} ref={rootRef} data-dl="word-window" data-window-state={windowState === 'maximised' ? 'maximised' : undefined} data-material="solid" data-backstage={backstageOpen ? '' : undefined} data-scheme={screen === 'dark' ? 'dark' : undefined}>
         <header data-dl-part="titlebar" data-density="compact">
           {backstageOpen && (
             <span data-dl-part="flourish" aria-hidden="true">
@@ -262,7 +299,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                   <Switch label={c.autoSave} labelPosition="start" size="xs" stateText={{ on: c.on, off: c.off }} checked={autoSave} onChange={setAutoSave} />
                 </div>
                 <span data-dl-part="qat-save">
-                  <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  <Button label={c.save} icon="save" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={save} />
                 </span>
                 <span data-dl-part="qat-item">
                   <Button label={c.undo} icon="undo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
@@ -274,14 +311,14 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                   <Button label={c.redo} icon="redo" iconOnly size="xs" emphasis="quiet" tone="inherit" disabled />
                 </span>
                 <span data-dl-part="qat-chevron">
-                  <Button label={c.customize} icon={wordIcons.name('qat-customize')} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  <Button label={c.customize} icon={wordIcons.name('qat-customize')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(c.customize)} />
                 </span>
               </>
             )}
           </div>
           <div data-dl-part="doc-title">
             <span data-dl-part="doc-name">{view.documentName}</span>
-            <span data-dl-part="save-state">{view.saveState}</span>
+            <span data-dl-part="save-state">{saveState}</span>
           </div>
           {!backstageOpen && (
             <div data-dl-part="search">
@@ -293,7 +330,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     <Button label={c.search} icon="search" size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => setSearchOpen(true)} />
                   </span>
                   <span data-dl-part="mic">
-                    <Button label={c.voiceSearch} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                    <Button label={c.voiceSearch} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(c.voiceSearch)} />
                   </span>
                 </div>
               )}
@@ -302,11 +339,11 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           <div data-dl-part="window-actions">
             {backstageOpen ? (
               <span data-dl-part="bs-head-icon">
-                <Button label={c.feedbackTitle} icon={wordIcons.name('feedback-person')} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                <Button label={c.feedbackTitle} icon={wordIcons.name('feedback-person')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setBsSection('feedback')} />
               </span>
             ) : (
               <div data-dl-part="upgrade">
-                <Button label={c.upgradePlan} icon={wordIcons.name('diamond')} size="xs" />
+                <Button label={c.upgradePlan} icon={wordIcons.name('diamond')} size="xs" onClick={() => notBuilt(c.upgradePlan)} />
                 <span data-dl-part="upgrade-dot" aria-hidden="true" />
               </div>
             )}
@@ -315,13 +352,13 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             </span>
             {backstageOpen && (
               <span data-dl-part="bs-head-icon">
-                <Button label={c.helpTitle} icon={wordIcons.name('bs-help-q')} iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                <Button label={c.helpTitle} icon={wordIcons.name('bs-help-q')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => { setBackstageOpen(false); setTab('help'); }} />
               </span>
             )}
             <div data-dl-part="caption-buttons">
-              <span data-dl-part="win-btn"><Button label={c.minimise} icon={wordIcons.name('win-minimize')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
-              <span data-dl-part="win-btn"><Button label={c.maximise} icon={wordIcons.name('win-maximize')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
-              <span data-dl-part="win-btn"><Button label={c.close} icon={wordIcons.name('win-close')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+              <span data-dl-part="win-btn"><Button label={c.minimise} icon={wordIcons.name('win-minimize')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setWindowState('minimised')} /></span>
+              <span data-dl-part="win-btn"><Button label={windowState === 'maximised' ? c.restoreDown : c.maximise} icon={wordIcons.name('win-maximize')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setWindowState((w) => (w === 'maximised' ? 'normal' : 'maximised'))} /></span>
+              <span data-dl-part="win-btn"><Button label={c.close} icon={wordIcons.name('win-close')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setWindowState('closed')} /></span>
             </div>
           </div>
         </header>
@@ -352,10 +389,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                       size="s"
                       emphasis="quiet"
                       align="start"
-                      pressed={item.active}
-                      onClick={() => {
-                        if (item.id !== 'home') setBackstageOpen(false);
-                      }}
+                      pressed={bsSection === item.id}
+                      onClick={() => setBsSection(item.id)}
                     />
                   </div>
                 ))}
@@ -364,7 +399,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               <div data-dl-part="nav-group">
                 {bs.docNav.map((item) => (
                   <div key={item.id} data-dl-part="nav-item" data-indented={!item.icon ? '' : undefined}>
-                    <Button label={item.label} icon={wordIcons.of(item.icon)} size="s" emphasis="quiet" align="start" onClick={() => { if (item.id === 'close') setBackstageOpen(false); }} />
+                    {/* binary-setting: the current File section in the navigation rail, as in the reference. */}
+                    <Button label={item.label} icon={wordIcons.of(item.icon)} size="s" emphasis="quiet" align="start" pressed={bsSection === item.id} onClick={() => (item.id === 'close' ? setBackstageOpen(false) : setBsSection(item.id))} />
                   </div>
                 ))}
               </div>
@@ -373,7 +409,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 <div data-dl-part="nav-group">
                   {bs.footerNav.map((item) => (
                     <div key={item.id} data-dl-part="nav-item">
-                      <Button label={item.label} icon={wordIcons.of(item.icon)} size="s" emphasis="quiet" align="start" />
+                      {/* binary-setting: the current File section in the navigation rail, as in the reference. */}
+                      <Button label={item.label} icon={wordIcons.of(item.icon)} size="s" emphasis="quiet" align="start" pressed={bsSection === item.id} onClick={() => setBsSection(item.id)} />
                     </div>
                   ))}
                 </div>
@@ -382,6 +419,30 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
 
             <main data-dl-part="main" aria-label={c.backstageHome}>
               <ScrollArea label={c.backstageHome} mode="always" bar="gutter">
+                {bsSection !== 'home' && bs.sections?.[bsSection] ? (() => {
+                  const sec = bs.sections[bsSection];
+                  const item = [...bs.primaryNav, ...bs.docNav, ...bs.footerNav].find((i) => i.id === bsSection);
+                  return (
+                    <section data-dl="word-backstage-section">
+                      <Heading level={1} size={2}>{item?.label.replace(/\n/g, ' ')}</Heading>
+                      <Text>{sec.body}</Text>
+                      {sec.action && (
+                        <span data-dl-part="action">
+                          <Button
+                            label={sec.action}
+                            emphasis="primary"
+                            size="s"
+                            onClick={() => {
+                              if (sec.done) notify({ subject: 'word-backstage', tone: 'success', message: sec.done });
+                              if (sec.back) setBackstageOpen(false);
+                              else if (sec.home) setBsSection('home');
+                            }}
+                          />
+                        </span>
+                      )}
+                    </section>
+                  );
+                })() : (
                 <div data-dl="word-backstage-stage">
                   <section data-dl-part="hero">
                     <Heading level={1} size={2}>{bs.heroHeading}</Heading>
@@ -397,7 +458,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                               <Button label={bs.promptPlaceholder} icon="plus" size="s" emphasis="quiet" tone="inherit" align="start" onClick={() => setBsPromptOpen(true)} />
                             </span>
                             <span data-dl-part="actions">
-                              <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" />
+                              <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" onClick={() => notBuilt(c.draftVoice)} />
                               <span data-dl-part="create-pill">
                                 <Button label={bs.createLabel} size="xs" disabled />
                               </span>
@@ -423,7 +484,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                           <Heading level={2} size={4}>{bs.newHeading}</Heading>
                         </span>
                         <span data-dl-part="more-link">
-                          <Button label={bs.moreTemplates} size="xs" emphasis="quiet" tone="inherit" />
+                          <Button label={bs.moreTemplates} size="xs" emphasis="quiet" tone="inherit" onClick={() => setBsSection('new')} />
                           <Icon name={wordIcons.name('bs-arrow-right')} size="sm" />
                         </span>
                       </div>
@@ -502,7 +563,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                           <TextField label={bs.searchPlaceholder} hideLabel type="search" icon="search" size="s" placeholder={bs.searchPlaceholder} value={fileQuery} onChange={setFileQuery} />
                         </div>
                         <span data-dl-part="filter-btn">
-                          <Button label={bs.filterLabel} icon="filter-lines" iconOnly size="s" emphasis="quiet" />
+                          <Button label={bs.filterLabel} icon="filter-lines" iconOnly size="s" emphasis="quiet" onClick={() => notBuilt(bs.filterLabel)} />
                         </span>
                       </div>
                     </div>
@@ -539,29 +600,31 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     </div>
                   </section>
                 </div>
+                )}
               </ScrollArea>
             </main>
           </div>
         ) : (
           <>
+        {!focusMode && (
         <div data-dl-part="ribbon" data-density="compact">
           <Ribbon
             label={c.ribbon}
             selected={tab}
             endPlacement="corner"
-            onChange={(next) => { if (next === 'file') setBackstageOpen(true); else setTab(next); }}
+            onChange={(next) => { if (next === 'file') { setBsSection('home'); setBackstageOpen(true); } else setTab(next); }}
             extra={
               <div data-dl="word-doc-actions">
                 {/* binary-setting: Comments shows or hides its pane, a toolbar toggle beside Editing and Share, as in the reference. */}
                 <Button label={c.comments} icon="comment" size="xs" pressed={pane === 'comments'} onClick={() => setPane(pane === 'comments' ? undefined : 'comments')} />
-                <MenuButton label={c.editing} icon="edit" size="xs" items={[{ value: 'editing', label: c.editing }]} onSelect={() => undefined} />
-                <MenuButton label={c.share} icon="share" size="xs" emphasis="primary" items={[{ value: 'share', label: c.share }]} onSelect={() => undefined} />
+                <MenuButton label={c.editing} icon="edit" size="xs" items={[{ value: 'editing', label: c.editing }]} onSelect={() => notify({ subject: 'word-mode', message: c.editingMode })} />
+                <MenuButton label={c.share} icon="share" size="xs" emphasis="primary" items={[{ value: 'share', label: c.share }]} onSelect={() => notify({ subject: 'word-share', tone: 'success', message: c.linkCopied })} />
                 <span data-dl-part="people">
-                  <Button label={c.catchUp} icon="people" iconOnly size="xs" emphasis="quiet" />
+                  <Button label={c.catchUp} icon="people" iconOnly size="xs" emphasis="quiet" onClick={() => setPane(pane === 'comments' ? undefined : 'comments')} />
                 </span>
               </div>
             }
-            end={<span data-dl="word-collapse-btn"><Button label={c.collapse} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" /></span>}
+            end={<span data-dl="word-collapse-btn"><Button label={c.collapse} icon={wordIcons.name('qat-chevron')} iconOnly size="xs" emphasis="quiet" onClick={() => notBuilt(c.collapse)} /></span>}
             aside={
               <div data-dl="word-copilot-card" data-open={copilotOpen ? '' : undefined}>
                 <Button label={c.copilot} icon={wordIcons.name('assistant-ribbon')} stacked size="xs" emphasis="quiet" onClick={() => setCopilotOpen((o) => !o)} />
@@ -605,10 +668,11 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             );
           })()}
         </div>
+        )}
 
         <div data-dl-part="workspace">
           <div data-dl-part="editor-col">
-            {showRuler && (
+            {rulerShown && (
               <div data-dl="word-ruler-h">
                 <span data-dl-part="tab-stop" aria-hidden="true">
                   <Icon name={wordIcons.name('ruler-tab-stop')} />
@@ -658,7 +722,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
             )}
 
             <div data-dl-part="body">
-              {showRuler && (
+              {rulerShown && (
                 <div data-dl="word-ruler-v">
                   {/* inline-svg: vertical metric ruler computes live cm ticks and rotated labels from page top margin (F5). */}
                   <svg viewBox="0 0 23 700" width="23" height="700" role="img" aria-label={c.verticalRuler}>
@@ -690,8 +754,8 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                           { id: 'headings', label: c.headings, panel: (
                             <div data-dl="word-outline">
                               {headings.map((h, i) => (
-                                <div key={i} data-dl-part="outline-item" data-level={h.style === 'heading-2' ? 2 : 1} data-current={i === 0 ? '' : undefined}>
-                                  <Button label={h.text} size="xs" emphasis="quiet" align="start" />
+                                <div key={i} data-dl-part="outline-item" data-level={h.style === 'heading-2' ? 2 : 1} data-current={i === currentHeading ? '' : undefined}>
+                                  <Button label={h.text} size="xs" emphasis="quiet" align="start" onClick={() => { setCurrentHeading(i); document.querySelectorAll('[data-dl="word-window"] [data-dl-part="block"]')[view.document.indexOf(h)]?.scrollIntoView({ block: 'start' }); }} />
                                 </div>
                               ))}
                             </div>
@@ -711,11 +775,15 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                     {!showSampleDoc && !copilotOpen && (
                       <div data-dl="word-draft-bar">
                         <span data-dl-part="lead">
-                          <Button label={c.draftPrompt} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" />
+                          {draftOpen ? (
+                            <TextField label={c.draftPrompt} hideLabel size="xs" placeholder={c.draftPrompt} value={draft} onChange={setDraft} />
+                          ) : (
+                            <Button label={c.draftPrompt} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => setDraftOpen(true)} />
+                          )}
                         </span>
                         <span data-dl-part="actions">
-                          <Button label={c.draftMore} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" />
-                          <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                          <Button label={c.draftMore} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setCopilotOpen(true)} />
+                          <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(c.draftVoice)} />
                         </span>
                       </div>
                     )}
@@ -762,9 +830,9 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           {copilotOpen && view.copilotPane && (
             <aside data-dl="word-copilot-pane" data-density="compact" aria-label={c.copilot}>
               <div data-dl-part="head">
-                <Button label={view.copilotPane.menuLabel} icon="menu" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                <Button label={view.copilotPane.menuLabel} icon="menu" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(view.copilotPane!.menuLabel)} />
                 <div data-dl-part="head-end">
-                  <Button label={view.copilotPane.moreLabel} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                  <Button label={view.copilotPane.moreLabel} icon="more" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(view.copilotPane!.moreLabel)} />
                   <Button label={c.closePane} icon={wordIcons.name('win-close')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setCopilotOpen(false)} />
                 </div>
               </div>
@@ -774,7 +842,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                 <div data-dl-part="prompts">
                   {view.copilotPane.prompts.map((p, i) => (
                     <div key={i} data-dl-part="prompt-chip">
-                      <Button label={`${p.prefix}${p.emphasis}`} size="xs" emphasis="quiet" tone="inherit" align="start" />
+                      <Button label={`${p.prefix}${p.emphasis}`} size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => { setDraft(`${p.prefix}${p.emphasis}`); setDraftOpen(true); }} />
                       <span data-dl-part="chip-words" aria-hidden="true">
                         <span data-dl-part="prefix">{p.prefix}</span>
                         <strong data-dl-part="tail">{p.emphasis}</strong>
@@ -785,15 +853,19 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
               </div>
               <div data-dl-part="foot">
                 <div data-dl-part="mode">
-                  <Button label={view.copilotPane.allowEditing} size="xs" emphasis="quiet" tone="inherit" />
+                  <Button label={view.copilotPane.allowEditing} size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(view.copilotPane!.allowEditing)} />
                   <Icon name={wordIcons.name('qat-chevron')} size="sm" />
                 </div>
                 <div data-dl="word-copilot-input">
                   <span data-dl-part="lead">
-                    <Button label={view.copilotPane.placeholder} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" />
+                    {draftOpen ? (
+                      <TextField label={view.copilotPane.placeholder} hideLabel size="xs" placeholder={view.copilotPane.placeholder} value={draft} onChange={setDraft} />
+                    ) : (
+                      <Button label={view.copilotPane.placeholder} icon="plus" size="xs" emphasis="quiet" tone="inherit" align="start" onClick={() => setDraftOpen(true)} />
+                    )}
                   </span>
                   <span data-dl-part="mic">
-                    <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" />
+                    <Button label={c.draftVoice} icon="mic" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(c.draftVoice)} />
                   </span>
                 </div>
               </div>
@@ -805,26 +877,28 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
           <div data-dl-part="status-start">
             <span data-dl-part="item">{view.status.page}</span>
             <span data-dl-part="item">{view.status.words}</span>
-            <span data-dl-part="icon-btn"><Button label={c.proofing} icon={wordIcons.name('proofing-ok')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="icon-btn"><Button label={c.proofing} icon={wordIcons.name('proofing-ok')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => (tab === 'review' ? notBuilt(c.proofing) : setTab('review'))} /></span>
             <span data-dl-part="item">{view.status.language}</span>
             <span data-dl-part="item">{view.status.predictions}</span>
-            <span data-dl-part="icon-btn"><Button label={c.macros} icon={wordIcons.name('macro-record')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
-            <span data-dl-part="text-btn"><Button label={view.status.accessibility} icon={wordIcons.name('accessibility-check')} size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="icon-btn"><Button label={c.macros} icon={wordIcons.name('macro-record')} iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => notBuilt(c.macros)} /></span>
+            <span data-dl-part="text-btn"><Button label={view.status.accessibility} icon={wordIcons.name('accessibility-check')} size="xs" emphasis="quiet" tone="inherit" onClick={() => (tab === 'review' ? notBuilt(view.status.accessibility) : setTab('review'))} /></span>
           </div>
           <div data-dl-part="status-end">
-            <span data-dl-part="text-btn"><Button label={c.focus} icon={wordIcons.name('focus-mode')} size="xs" emphasis="quiet" tone="inherit" /></span>
-            <span data-dl-part="view-btn"><Button label={c.readMode} icon={wordIcons.name('read-mode')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            {/* binary-setting: Focus is a status-bar view toggle beside the view buttons, as in the reference. */}
+            <span data-dl-part="text-btn"><Button label={c.focus} icon={wordIcons.name('focus-mode')} size="xs" emphasis="quiet" tone="inherit" pressed={focusMode} onClick={() => setFocusMode((f) => !f)} /></span>
+            {/* binary-setting: the page view, one of three view buttons in the status bar (Read Mode, Print Layout, Web Layout), as in the reference. */}
+            <span data-dl-part="view-btn"><Button label={c.readMode} icon={wordIcons.name('read-mode')} iconOnly size="xs" emphasis="quiet" tone="inherit" pressed={docView === 'read'} onClick={() => setDocView('read')} /></span>
             <span data-dl-part="view-btn">
               {/* binary-setting: the current page view, one of three view buttons in the status bar, as in the reference. */}
-              <Button label={c.printLayout} icon={wordIcons.name('print-layout')} iconOnly size="xs" emphasis="quiet" tone="inherit" pressed />
+              <Button label={c.printLayout} icon={wordIcons.name('print-layout')} iconOnly size="xs" emphasis="quiet" tone="inherit" pressed={docView === 'print'} onClick={() => setDocView('print')} />
             </span>
-            <span data-dl-part="view-btn"><Button label={c.webLayout} icon={wordIcons.name('web-layout')} iconOnly size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="view-btn"><Button label={c.webLayout} icon={wordIcons.name('web-layout')} iconOnly size="xs" emphasis="quiet" tone="inherit" pressed={docView === 'web'} onClick={() => setDocView('web')} /></span>
             <div data-dl-part="zoom">
               <Button label={c.zoomOut} icon="minus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.max(10, z - 10))} />
               <Slider label={c.zoom} hideLabel showValue={false} size="s" valueLabel="none" min={0} max={100} value={zoomPosition(zoom)} format={(p) => `${zoomAt(p)}%`} onChange={(v) => setZoom(zoomAt(v as number))} />
               <Button label={c.zoomIn} icon="plus" iconOnly size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom((z) => Math.min(500, z + 10))} />
             </div>
-            <span data-dl-part="zoom-pct"><Button label={`${zoom}%`} size="xs" emphasis="quiet" tone="inherit" /></span>
+            <span data-dl-part="zoom-pct"><Button label={`${zoom}%`} size="xs" emphasis="quiet" tone="inherit" onClick={() => setZoom(100)} /></span>
           </div>
         </footer>
           </>
@@ -832,6 +906,11 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       </div>
     </IconOverrides>
   );
+}
+
+/** Fills `{name}` placeholders in a content string. */
+function say(text: string, values: Record<string, string>) {
+  return text.replace(/\{(\w+)\}/g, (m, k: string) => values[k] ?? m);
 }
 
 /** Word's zoom slider is two scales joined at its centre: 10–100% on the first half, 100–500% on the second. */

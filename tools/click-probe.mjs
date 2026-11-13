@@ -3,7 +3,8 @@
 // headless browser, clicks every enabled control (buttons, links, tabs, switches, checkboxes, menu items, summaries)
 // one by one, and reports each one that has no visible effect: no DOM change, no address change, no focus moved
 // elsewhere and no new window. Disabled controls (disabled or aria-disabled) are listed apart, never clicked; a control
-// that is already the current tab, page or choice and changes nothing is listed as current, not dead.
+// that is already the current tab, page, choice or pressed state and changes nothing is listed as current, not dead,
+// so a pressed toggle that never releases shows there by name.
 //
 //   node tools/click-probe.mjs --template word [--layouts home,document] [--origin http://127.0.0.1:8770]
 //   node tools/click-probe.mjs --url "http://127.0.0.1:8770/site.html?chrome=none#/app/word/home"
@@ -76,7 +77,8 @@ async function tag(page) {
       const name = (el.getAttribute('aria-label') || el.getAttribute('title') || el.innerText || el.getAttribute('value') || '').replace(/\s+/g, ' ').trim().slice(0, 60);
       const disabled = el.matches(':disabled') || el.getAttribute('aria-disabled') === 'true';
       // Already the current tab, page or choice: clicking it again rightly changes nothing.
-      const current = el.getAttribute('aria-selected') === 'true' || (el.hasAttribute('aria-current') && el.getAttribute('aria-current') !== 'false') || ((el.getAttribute('role') === 'radio' || el.getAttribute('role') === 'menuitemradio' || el.type === 'radio') && (el.getAttribute('aria-checked') === 'true' || el.checked));
+      // An already-pressed member of a set (the active alignment) also changes nothing when chosen again.
+      const current = el.getAttribute('aria-pressed') === 'true' || el.getAttribute('aria-selected') === 'true' || (el.hasAttribute('aria-current') && el.getAttribute('aria-current') !== 'false') || ((el.getAttribute('role') === 'radio' || el.getAttribute('role') === 'menuitemradio' || el.type === 'radio') && (el.getAttribute('aria-checked') === 'true' || el.checked));
       seen.push({ n, name: name || `(${el.tagName.toLowerCase()} without a name)`, role: el.getAttribute('role') || el.tagName.toLowerCase(), disabled, current });
       n++;
     }
@@ -122,6 +124,7 @@ for (const t of targets) {
     return tag(page);
   };
   const controls = await load();
+  let tagged = controls.length;
   const row = { id: t.id, url: t.url, controls: controls.length, clicked: 0, dead: [], current: [], disabled: [], skipped: [], pageErrors: errors };
   for (const c of controls) {
     if (c.disabled) {
@@ -152,10 +155,13 @@ for (const t of targets) {
     row.clicked++;
     if (!alive) (c.current ? row.current : row.dead).push(c.name);
     if (verbose) console.log(`  ${alive ? 'ok  ' : 'DEAD'} ${t.id} ${c.role} "${c.name}" dom ${fx.dom} url ${fx.url} focus ${fx.focus}`);
-    // Back to the layout's resting state before the next control.
-    if (fx.url || fx.dom > 0 || popups > before) {
+    // Back to the layout's resting state before the next control: Escape closes menus and popovers; reload only when
+    // the address moved, a window opened or tagged controls disappeared (a view changed under them).
+    await page.keyboard.press('Escape').catch(() => undefined);
+    const remaining = await page.locator('[data-click-probe]').count().catch(() => 0);
+    if (fx.url || popups > before || remaining < tagged) {
       for (const p of context.pages()) if (p !== page) await p.close();
-      await load();
+      tagged = (await load()).length;
     }
   }
   clickedTotal += row.clicked;
