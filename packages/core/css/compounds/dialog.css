@@ -39,6 +39,45 @@
   [data-dl='dialog'][data-size='s'] { inline-size: var(--c-dialog-width-s); }
   [data-dl='dialog'][data-size='l'] { inline-size: var(--c-dialog-width-l); }
 
+  /* A palette (LR54): high in the window at a fixed size, no scrim, a hairline ring to set it off the page; the header
+     is kept for its accessible name but not shown, and the body is the content's to lay out and scroll. */
+  [data-dl='dialog'][data-variant='palette'] {
+    --dl-palette-top: max(var(--c-dialog-palette-top), 20dvh);
+    inline-size: var(--c-dialog-palette-width);
+    block-size: min(var(--c-dialog-palette-height), calc(100dvh - var(--dl-palette-top) - 2 * var(--c-dialog-margin)));
+    margin-block: var(--dl-palette-top) auto;
+    box-shadow: var(--shadow-overlay), 0 0 0 var(--border-hairline) var(--color-border);
+  }
+
+  [data-dl='dialog'][data-variant='palette']::backdrop,
+  [data-dl='dialog'][data-variant='palette']:not([open])::backdrop {
+    background-color: transparent;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']):where([data-dl='dialog'][data-variant='palette'] *) {
+    block-size: 100%;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']):where([data-dl='dialog'][data-variant='palette'] *) > [data-dl-part='header'] {
+    position: absolute;
+    overflow: hidden;
+    inline-size: var(--border-hairline);
+    block-size: var(--border-hairline);
+    padding: 0;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']):where([data-dl='dialog'][data-variant='palette'] *) > [data-dl-part='body'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :is([data-dl='dialog'] > [data-dl-part='surface'], [data-dl='dialog'] > [data-dl='morph'] > [data-dl-part='layer'] > [data-dl-part='surface']):where([data-dl='dialog'][data-variant='palette'] *) > [data-dl-part='body'] > * {
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
+
   @starting-style {
     [data-dl='dialog'][open] {
       opacity: 0;
@@ -124,6 +163,7 @@
       block-size: 100dvh;
       max-inline-size: none;
       max-block-size: none;
+      margin-block: 0;
       border-radius: 0;
     }
 

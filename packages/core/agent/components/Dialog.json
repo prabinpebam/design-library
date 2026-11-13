@@ -82,6 +82,12 @@
           "type": "boolean",
           "default": "false",
           "description": "While open, the page behind keeps still: it doesn't scroll (wheel, touch or keys), and its scrollbar's room stays reserved so nothing reflows. For a dialog that covers the page with its own scrolling content (a site search). Off by default: the page behind a native modal can still scroll."
+        },
+        {
+          "name": "variant",
+          "type": "'standard' | 'palette'",
+          "default": "'standard'",
+          "description": "`standard` (default): centred over a scrim, with its title, description and close button shown. `palette`: a command palette or search panel, high in the window (20% down) at a fixed size so it holds still while results change (56 rem by 34 rem, smaller in a small window), with no scrim and a hairline ring instead. Its title and description stay its accessible name and description but aren't shown, and it has no close button (Escape and a press outside close it). The body has no inset and doesn't scroll: the content fills it and lays out and scrolls its own parts (a field across the top, results beside a preview)."
         }
       ]
     }
@@ -99,12 +105,16 @@
     "--c-dialog-heading-gap",
     "--c-dialog-margin",
     "--c-dialog-padding",
+    "--c-dialog-palette-height",
+    "--c-dialog-palette-top",
+    "--c-dialog-palette-width",
     "--c-dialog-radius",
     "--c-dialog-width-l",
     "--c-dialog-width-m",
     "--c-dialog-width-s",
     "--color-bg-overlay",
     "--color-bg-raised",
+    "--color-border",
     "--color-text",
     "--color-text-muted",
     "--duration-change",

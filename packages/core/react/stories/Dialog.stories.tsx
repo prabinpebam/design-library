@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Dialog } from '../compounds/Dialog';
 import { Button } from '../fundamentals/Button';
 import { Heading } from '../fundamentals/Heading';
+import { List } from '../fundamentals/List';
+import { ScrollArea } from '../fundamentals/ScrollArea';
 import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
 import { TextField } from '../fundamentals/TextField';
@@ -150,6 +152,30 @@ function Long({ lock = false }: { lock?: boolean }) {
   );
 }
 
+const commands = ['Rename the project', 'Invite someone', 'Open the sharing rules', 'Show what’s new', 'Delete the project', 'Switch to the dark theme', 'Export as PDF', 'Open settings'];
+
+/** LR54: a command palette, high in the window at a fixed size, its title the accessible name only. */
+function Palette() {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const found = commands.filter((c) => c.toLowerCase().includes(query.trim().toLowerCase()));
+  const close = () => setOpen(false);
+  return (
+    <>
+      <Button label="Find a command" icon="search" onClick={() => setOpen(true)} />
+      <Dialog variant="palette" open={open} onClose={close} lockScroll title="Find a command">
+        <ScrollArea inset="md" contain label="Commands">
+          <Stack gap="group">
+            <TextField label="Find" hideLabel mode="form" icon="search" size="l" placeholder="Type a command" value={query} onChange={setQuery} />
+            <List mode="action" label="Commands" actions={found.map((c) => ({ id: c, label: c, onSelect: close }))} />
+            {!found.length && <Text tone="muted">Nothing matches “{query}”.</Text>}
+          </Stack>
+        </ScrollArea>
+      </Dialog>
+    </>
+  );
+}
+
 function Info() {
   const [open, setOpen] = useState(false);
   return (
@@ -206,6 +232,12 @@ export default {
       description: 'With lockScroll, scrolling past the end of the dialog’s content never moves the page behind it, and the page’s scrollbar room stays, so nothing shifts when it opens or closes. For a dialog that covers the page with its own scrolling content, such as a site search.',
       code: `<Dialog size="l" open={open} onClose={close} lockScroll title="Sharing rules" …>…</Dialog>`,
       render: () => <Long lock />,
+    },
+    {
+      title: 'A palette',
+      description: 'variant="palette": high in the window, 56 by 34 rem (smaller in a small window), so it holds still while the results change; no scrim, a hairline ring. The title names it for assistive technology but isn’t shown, and there’s no close button: Escape or a press outside closes it. The content fills the body and lays out its own parts; focus starts in the field.',
+      code: `<Dialog variant="palette" open={open} onClose={close} lockScroll title="Find a command"><Stack gap="group">…<TextField label="Find" hideLabel … /><List mode="action" … /></Stack></Dialog>`,
+      render: () => <Palette />,
     },
   ],
 } satisfies StoryFile;

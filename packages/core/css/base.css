@@ -153,6 +153,12 @@
     outline-offset: var(--size-focus-offset);
   }
 
+  /* LR60: a heading, main or region that a script focuses (tabindex -1: on a route change, after a skip link) is where
+     reading starts, not a control, so it shows no ring. Anything in the Tab order keeps it. */
+  :is(h1, h2, h3, h4, h5, h6, main, section, [role='region'])[tabindex='-1']:focus {
+    outline: none;
+  }
+
   @media (forced-colors: active) {
     :focus-visible {
       outline-color: Highlight;

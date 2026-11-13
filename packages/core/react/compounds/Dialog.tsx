@@ -37,6 +37,15 @@ export interface DialogProps extends DataAttributes {
    * Off by default: the page behind a native modal can still scroll.
    */
   lockScroll?: boolean;
+  /**
+   * `standard` (default): centred over a scrim, with its title, description and close button shown. `palette`: a
+   * command palette or search panel, high in the window (20% down) at a fixed size so it holds still while results
+   * change (56 rem by 34 rem, smaller in a small window), with no scrim and a hairline ring instead. Its title and
+   * description stay its accessible name and description but aren't shown, and it has no close button (Escape and
+   * a press outside close it). The body has no inset and doesn't scroll: the content fills it and lays out and
+   * scrolls its own parts (a field across the top, results beside a preview).
+   */
+  variant?: 'standard' | 'palette';
 }
 
 /** Open dialogs that lock the page; the page unlocks when the last one closes. */
@@ -65,7 +74,8 @@ const lockPage = (on: boolean) => {
  * @key Escape: closes (not an alert dialog)
  * @key Tab, Shift+Tab: move through the dialog's controls only
  */
-export function Dialog({ open, onClose, title, description, children, actions, size = 'm', alert = false, state, lockScroll = false, ...data }: DialogProps) {
+export function Dialog({ open, onClose, title, description, children, actions, size = 'm', alert = false, state, lockScroll = false, variant = 'standard', ...data }: DialogProps) {
+  const palette = variant === 'palette';
   const id = useId();
   const ref = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -118,13 +128,16 @@ export function Dialog({ open, onClose, title, description, children, actions, s
             </p>
           )}
         </div>
-        {!alert && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" minimumTarget onClick={() => close.current()} />}
+        {!alert && !palette && <Button label="Close" icon="close" iconOnly emphasis="quiet" size="s" minimumTarget onClick={() => close.current()} />}
       </div>
-      {children && (
-        <ScrollArea data-dl-part="body" labelledBy={`${id}-title`} contain>
-          {children}
-        </ScrollArea>
-      )}
+      {children &&
+        (palette ? (
+          <div data-dl-part="body">{children}</div>
+        ) : (
+          <ScrollArea data-dl-part="body" labelledBy={`${id}-title`} contain>
+            {children}
+          </ScrollArea>
+        ))}
       {actions && <div data-dl-part="actions">{actions}</div>}
     </div>
   );
@@ -135,6 +148,7 @@ export function Dialog({ open, onClose, title, description, children, actions, s
       ref={ref}
       data-dl="dialog" data-material="modal" data-elevation="4"
       data-size={size}
+      data-variant={palette ? 'palette' : undefined}
       role={alert ? 'alertdialog' : undefined}
       aria-modal="true"
       aria-labelledby={`${id}-title`}

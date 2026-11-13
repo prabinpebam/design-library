@@ -50,6 +50,11 @@
     gap: var(--c-example-row-gap);
   }
 
+  /* LR63: stacked, each part as wide as the canvas. */
+  [data-dl='example'] > [data-dl-part='canvas'] > [data-dl='scroll-area'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='preview'] > [data-dl-part='content'][data-arrangement='fill'] {
+    align-items: stretch;
+  }
+
   [data-dl='example'] > [data-dl-part='source'] > summary {
     display: flex;
     align-items: center;

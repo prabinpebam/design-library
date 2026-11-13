@@ -43,9 +43,15 @@
         },
         {
           "name": "arrangement",
-          "type": "'stack' | 'row'",
+          "type": "'stack' | 'row' | 'fill'",
           "default": "'stack'",
-          "description": "How the preview's parts sit: stacked (default) or in a wrapping row."
+          "description": "How the preview's parts sit: stacked (default), in a wrapping row, or `fill`: stacked and stretched to the canvas's width (a preview of a full-width part, such as a menu bar)."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4 | 5 | 6",
+          "default": "3",
+          "description": "The title's heading level, so the example fits the page's outline: 3 by default (under a page's h2 sections). Its look doesn't change."
         },
         {
           "name": "scheme",

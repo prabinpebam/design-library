@@ -11,8 +11,10 @@ export interface ExampleProps extends DataAttributes {
   description: string;
   /** The live preview. */
   children: ReactNode;
-  /** How the preview's parts sit: stacked (default) or in a wrapping row. */
-  arrangement?: 'stack' | 'row';
+  /** How the preview's parts sit: stacked (default), in a wrapping row, or `fill`: stacked and stretched to the canvas's width (a preview of a full-width part, such as a menu bar). */
+  arrangement?: 'stack' | 'row' | 'fill';
+  /** The title's heading level, so the example fits the page's outline: 3 by default (under a page's h2 sections). Its look doesn't change. */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** Colour scheme the preview renders in; set so a picked element records its context. */
   scheme?: 'light' | 'dark';
   /** Contrast the preview renders in. */
@@ -32,11 +34,11 @@ export interface ExampleProps extends DataAttributes {
  * "Show the code" is a native `details` disclosure: Enter or Space opens it, and its state is announced.
  * @key Enter / Space: on "Show the code", shows or hides the source
  */
-export function Example({ title, description, children, arrangement = 'stack', scheme, contrast, source, previewData, ...data }: ExampleProps) {
+export function Example({ title, description, children, arrangement = 'stack', headingLevel = 3, scheme, contrast, source, previewData, ...data }: ExampleProps) {
   return (
     <section {...data} data-dl="example" aria-label={title}>
       <div data-dl-part="head">
-        <Heading level={3} size={4}>
+        <Heading level={headingLevel} size={4}>
           {title}
         </Heading>
         <Text tone="muted">{description}</Text>
