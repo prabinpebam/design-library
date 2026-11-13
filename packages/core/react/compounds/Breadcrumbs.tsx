@@ -20,6 +20,8 @@ export interface BreadcrumbsProps extends DataAttributes {
    * into one "Show n more pages in the path" button that reveals them in place. Leave out to always show the whole path.
    */
   maxItems?: number;
+  /** Keep one line and ellipsize the current page when space is short. Its full name remains accessible and is available on hover. Default false: steps and names wrap. */
+  truncate?: boolean;
   /** The navigation landmark's name; "Breadcrumb" unless a page has two. */
   label?: string;
 }
@@ -38,7 +40,7 @@ export interface BreadcrumbsProps extends DataAttributes {
  * @key Tab: moves through the links, then past the current page
  * @key Enter on the collapsed path: shows the hidden pages and focuses the first
  */
-export function Breadcrumbs({ items, maxItems, label = 'Breadcrumb', ...data }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, maxItems, truncate = false, label = 'Breadcrumb', ...data }: BreadcrumbsProps) {
   const [expanded, setExpanded] = useState(false);
   const firstRevealed = useRef<HTMLLIElement>(null);
   const [moveFocus, setMoveFocus] = useState(false);
@@ -58,7 +60,7 @@ export function Breadcrumbs({ items, maxItems, label = 'Breadcrumb', ...data }: 
       <li key={i} data-dl-part="step" ref={i === 1 && expanded && maxItems !== undefined ? firstRevealed : undefined}>
         {i > 0 && <Icon name="chevron-end" size="sm" data-dl-part="separator" />}
         {current || !item.href ? (
-          <span data-dl-part="current" aria-current={current ? 'page' : undefined}>
+          <span data-dl-part="current" aria-current={current ? 'page' : undefined} title={truncate ? item.label : undefined}>
             {item.label}
           </span>
         ) : (
@@ -69,7 +71,7 @@ export function Breadcrumbs({ items, maxItems, label = 'Breadcrumb', ...data }: 
   };
 
   return (
-    <nav {...data} data-dl="breadcrumbs" aria-label={label}>
+    <nav {...data} data-dl="breadcrumbs" data-truncate={truncate ? '' : undefined} aria-label={label}>
       <ol>
         {collapse ? (
           <>

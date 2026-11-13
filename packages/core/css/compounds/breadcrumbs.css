@@ -31,4 +31,32 @@
   [data-dl='breadcrumbs'] [data-dl-part='current'] {
     color: var(--color-text);
   }
+
+  [data-dl='breadcrumbs'][data-truncate] {
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  [data-dl='breadcrumbs'][data-truncate] > ol {
+    flex-wrap: nowrap;
+  }
+
+  [data-dl='breadcrumbs'][data-truncate] > ol > [data-dl-part='step'] {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  [data-dl='breadcrumbs'][data-truncate] > ol > [data-dl-part='step']:last-child {
+    flex: 0 1 auto;
+  }
+
+  [data-dl='breadcrumbs'][data-truncate] > ol > [data-dl-part='step']:last-child > [data-dl-part='current'] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-dl='breadcrumbs'][data-truncate] > ol > [data-dl-part='step'] > [data-dl-part='separator'] {
+    flex: none;
+  }
 }

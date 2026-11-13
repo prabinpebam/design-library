@@ -107,6 +107,23 @@
     justify-content: flex-end;
   }
 
+  /* LR122: a long context yields before the header's actions; neither region paints over the other. */
+  [data-dl='app-layout'][data-compact-header] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] {
+    flex: 1;
+  }
+
+  [data-dl='app-layout'][data-compact-header] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] > [data-dl-part='header-content'] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    flex: 1;
+    min-inline-size: 0;
+  }
+
+  [data-dl='app-layout'][data-compact-header] > [data-dl-part='main'] > [data-dl-part='header'] > :is([data-dl-part='toggle'], [data-dl-part='header-end']) {
+    flex: none;
+    white-space: nowrap;
+  }
+
   /* The view's scroller is a ScrollArea (Q96): edge to edge, the library's bar at the main area's edge, its focus ring ScrollArea's. */
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] {
     flex: 1;

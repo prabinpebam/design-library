@@ -39,6 +39,12 @@
           "description": "Longest path shown in full. Past it, the first page and the last `maxItems - 2` stay and the ones between collapse into one \"Show n more pages in the path\" button that reveals them in place. Leave out to always show the whole path."
         },
         {
+          "name": "truncate",
+          "type": "boolean",
+          "default": "false",
+          "description": "Keep one line and ellipsize the current page when space is short. Its full name remains accessible and is available on hover. Default false: steps and names wrap."
+        },
+        {
           "name": "label",
           "type": "string",
           "default": "'Breadcrumb'",

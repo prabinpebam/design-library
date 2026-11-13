@@ -58,8 +58,14 @@
         },
         {
           "name": "headerEnd",
-          "type": "ReactNode",
-          "description": "The header's end: search, the main action, the account."
+          "type": "ReactNode | ((compact: boolean) => ReactNode)",
+          "description": "The header's end: search, the main action, the account. A render function receives whether compactHeader is below floatBelow, so supplementary words can yield without removing controls."
+        },
+        {
+          "name": "compactHeader",
+          "type": "boolean",
+          "default": "false",
+          "description": "Keep the header end at its natural, single-line width and let the start shrink (pair long trails with Breadcrumbs truncate). Default false. The render function's compact state follows floatBelow of the layout's own width, independently of sidebar placement."
         },
         {
           "name": "head",
@@ -183,7 +189,7 @@
         },
         {
           "name": "Escape",
-          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) { const sidebarId = useId()",
+          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) { const sidebarId = useId()",
           "required": true
         },
         {
@@ -198,7 +204,7 @@
         },
         {
           "name": "button",
-          "type": "the sidebar's pin in its own head, docking or floating it, where a Switch would break the head's row of icon buttons */} <Button label={labels?.unpin && docked ? labels.unpin : labels?.pin ?? `Pin ${sidebarLabel.toLowerCase()}`} icon={labels?.unpin && docked ? 'pin-filled' : 'pin'} pressedIcon=\"pin-filled\" iconOnly size=\"xs\" emphasis=\"quiet\" pressed={labels?.unpin ? undefined : docked} onClick={() => onStartModeChange(docked ? 'floating' : 'docked')} /> </div> )} <ScrollArea data-dl-part=\"sidebar-list\"> <div data-dl-part=\"sidebar-content\">{sidebar}</div> </ScrollArea> </aside> <div data-dl-part=\"main\"> <header data-dl-part=\"header\"> <span ref={toggle} data-dl-part=\"toggle\"> <Button label={sidebarOpen ? labels?.close ?? 'Close sidebar' : labels?.open ?? 'Open sidebar'} icon=\"menu\" iconOnly size=\"s\" emphasis=\"quiet\" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} /> </span> <span data-dl-part=\"header-start\" data-brand={brand ? '' : undefined}> {brand && ( <a data-dl-part=\"brand\" href={router ? router.href(brand.href) : brand.href}> {brand.mark && <span data-dl-part=\"brand-mark\" aria-hidden=\"true\">{brand.mark}</span>} <span data-dl-part=\"brand-name\">{brand.name}</span> </a> )} {header} </span> <span data-dl-part=\"header-end\">{headerEnd}</span> </header> {width === 'edge' ? ( <main data-dl-part=\"edge\" aria-label={label}> {children} </main> ) : ( <ScrollArea data-dl-part=\"scroll\" axis=\"both\" tabIndex={0}> <div data-dl-part=\"body\"> <main data-dl-part=\"view\" aria-label={label}> {view} </main> {aside && ( <aside data-dl-part=\"aside\" data-density=\"compact\" aria-label={asideLabel}> {aside} </aside> )} </div> </ScrollArea> )} </div> </div> )",
+          "type": "the sidebar's pin in its own head, docking or floating it, where a Switch would break the head's row of icon buttons */} <Button label={labels?.unpin && docked ? labels.unpin : labels?.pin ?? `Pin ${sidebarLabel.toLowerCase()}`} icon={labels?.unpin && docked ? 'pin-filled' : 'pin'} pressedIcon=\"pin-filled\" iconOnly size=\"xs\" emphasis=\"quiet\" pressed={labels?.unpin ? undefined : docked} onClick={() => onStartModeChange(docked ? 'floating' : 'docked')} /> </div> )} <ScrollArea data-dl-part=\"sidebar-list\"> <div data-dl-part=\"sidebar-content\">{sidebar}</div> </ScrollArea> </aside> <div data-dl-part=\"main\"> <header data-dl-part=\"header\"> <span ref={toggle} data-dl-part=\"toggle\"> <Button label={sidebarOpen ? labels?.close ?? 'Close sidebar' : labels?.open ?? 'Open sidebar'} icon=\"menu\" iconOnly size=\"s\" emphasis=\"quiet\" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} /> </span> <span data-dl-part=\"header-start\" data-brand={brand ? '' : undefined}> {brand && ( <a data-dl-part=\"brand\" href={router ? router.href(brand.href) : brand.href}> {brand.mark && <span data-dl-part=\"brand-mark\" aria-hidden=\"true\">{brand.mark}</span>} <span data-dl-part=\"brand-name\">{brand.name}</span> </a> )} {compactHeader ? <span data-dl-part=\"header-content\">{header}</span> : header} </span> <span data-dl-part=\"header-end\">{typeof headerEnd === 'function' ? headerEnd(compactHeader && narrow) : headerEnd}</span> </header> {width === 'edge' ? ( <main data-dl-part=\"edge\" aria-label={label}> {children} </main> ) : ( <ScrollArea data-dl-part=\"scroll\" axis=\"both\" tabIndex={0}> <div data-dl-part=\"body\"> <main data-dl-part=\"view\" aria-label={label}> {view} </main> {aside && ( <aside data-dl-part=\"aside\" data-density=\"compact\" aria-label={asideLabel}> {aside} </aside> )} </div> </ScrollArea> )} </div> </div> )",
           "required": true
         }
       ]

@@ -125,6 +125,11 @@
           "name": "tone",
           "type": "BadgeTone",
           "description": "As Badge's `tone`; the words always say it too. Default `neutral`."
+        },
+        {
+          "name": "icon",
+          "type": "IconName",
+          "description": "LR120 (opt-in): the badge is this icon alone, a small round mark (as the play mark), with `label` as its spoken name, read in the tile's name. For what an item is at a glance (a video, its source). Default none: the words."
         }
       ]
     },
