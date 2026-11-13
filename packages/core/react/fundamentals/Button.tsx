@@ -34,6 +34,8 @@ interface ButtonBase extends DataAttributes {
   tooltip?: boolean;
   /** `primary` for the one main action in a view, `default` otherwise, `quiet` inside toolbars and other enclosed groups, `danger` for an action that destroys or can't be undone. */
   emphasis?: 'primary' | 'default' | 'quiet' | 'danger';
+  /** Aligns a quiet text-only action's label with its parent's start edge by bleeding its padded box at that edge. Keeps padding and target size; ignored with an icon or other emphasis. Default false. */
+  textEdge?: boolean;
   /** The action can't happen and there's nothing to say about why. Prefer `unavailable` with a reason: a disabled button can't be focused, so its reason can't be heard. */
   disabled?: boolean;
   /** The action can't happen now, and why, e.g. "Add a title first". The button stays focusable, keeps its contrast, does nothing when pressed and says why as its description and tooltip. */
@@ -164,7 +166,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, nameSuffix, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, pressedIcon, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, nameSuffix, tooltip = true, emphasis = 'default', textEdge = false, disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, pressedIcon, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -220,6 +222,7 @@ export function Button(props: ButtonProps) {
         href={router ? router.href(href) : href}
         data-dl="button"
         data-emphasis={emphasis}
+        data-text-edge={textEdge && emphasis === 'quiet' && !iconOnly && !icon && !pressedIcon ? '' : undefined}
         data-icon-only={iconOnly ? '' : undefined}
         data-size={size}
         data-minimum-target={minimumTarget ? '' : undefined}
@@ -258,6 +261,7 @@ export function Button(props: ButtonProps) {
       type={type}
       data-dl="button"
       data-emphasis={emphasis}
+      data-text-edge={textEdge && emphasis === 'quiet' && !iconOnly && !icon && !pressedIcon ? '' : undefined}
       data-icon-only={iconOnly ? '' : undefined}
       data-size={size}
       data-minimum-target={minimumTarget ? '' : undefined}

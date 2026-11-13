@@ -35,6 +35,16 @@ This row joins the table in [pressure-test loop, section 2](pressure-test-loop.m
 
 **Integration.** On merge night (above), serially, per [Keeping other templates unbroken](pressure-test-loop.md#keeping-other-templates-unbroken): merge `main` and `designup` when `main` is clean and idle, run `npm run check` and the full sweep on the combined result, write the deferred stories, fix what broke, then refreeze and re-pin DesignUp. During the day the branch only has to work for DesignUp.
 
+## LR101: quiet action text edge (13 November 2026)
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR101 | 2026-11-13 | Inline quiet actions align their text with surrounding content | Button centres state layers within padding and a minimum width, with no text-edge seam | Step 6 | Optional Button `textEdge`, quiet text-only; padded box bleeds at inline start, state layers align start | none | DesignUp; Editor 34 | implemented | LR101 core checkpoint | Adopted chapter actions without consumer CSS |
+
+Decision before code: R5 parameter of the existing fundamental, generic across products. No picture, album, block or preset change. Steps 1-4 have no seam for the sealed label's edge and a template replacement is not appropriate (5), so core owns it at step 6. Default false; ignored for non-quiet or icon buttons. Keep existing size-dependent padding, target and focus ring; derive the logical start bleed from that padding and border, never a pixel nudge. Start-align every held state layer to prevent minimum-width centring. No new ink, words, choices or motion; existing defaults unchanged. Core typecheck/build and generated contract, consumer linked typecheck/build and a few shots; stories/regression deferred.
+
+Evidence: core typecheck, build:library and agent:index pass. On DesignUp's public chapter actions, measured text-edge delta fell from 29.14px to 0px at 1440px and remained 0px at 375px. Both retained 44px height and their original 28.14px/24px inline padding; width was unchanged with the seam removed/reapplied. The 375px page had no horizontal overflow. Settled light/wide and dark/narrow captures inspected; no canonical content written by the browser-only fixture.
+
 ## LR100: chapter timestamp navigation (13 November 2026)
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |

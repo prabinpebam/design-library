@@ -36,12 +36,13 @@
   /* Button: every layer (rest, pending, done) sits in one grid area, so the widest label fixes the width. */
   [data-dl='button'] {
     --_dl-button-target: 0px;
+    --_dl-button-padding-inline: var(--c-button-padding-inline);
     display: inline-grid;
     grid-template-areas: 'label';
     place-items: center;
     min-block-size: max(var(--c-button-size), var(--_dl-button-target, 0px));
     min-inline-size: max(var(--c-button-size), var(--_dl-button-target, 0px));
-    padding-inline: var(--c-button-padding-inline);
+    padding-inline: var(--_dl-button-padding-inline);
     border: var(--c-button-border-width) solid transparent;
     border-radius: var(--c-button-radius);
     background-color: transparent;
@@ -71,7 +72,7 @@
   [data-dl='button'][data-size='xs'] {
     min-block-size: max(var(--c-button-size-xs), var(--_dl-button-target, 0px));
     min-inline-size: max(var(--c-button-size-xs), var(--_dl-button-target, 0px));
-    padding-inline: var(--c-button-padding-inline-sm);
+    --_dl-button-padding-inline: var(--c-button-padding-inline-sm);
     border-radius: var(--c-button-radius-sm);
     font-size: var(--type-body-sm-size);
   }
@@ -79,7 +80,7 @@
   [data-dl='button'][data-size='s'] {
     min-block-size: max(var(--c-button-size-s), var(--_dl-button-target, 0px));
     min-inline-size: max(var(--c-button-size-s), var(--_dl-button-target, 0px));
-    padding-inline: var(--c-button-padding-inline-sm);
+    --_dl-button-padding-inline: var(--c-button-padding-inline-sm);
     font-size: var(--type-body-sm-size);
   }
 
@@ -91,7 +92,7 @@
   [data-dl='button'][data-size='l'] {
     min-block-size: max(var(--c-button-size-l), var(--_dl-button-target, 0px));
     min-inline-size: max(var(--c-button-size-l), var(--_dl-button-target, 0px));
-    padding-inline: var(--c-button-padding-inline-lg);
+    --_dl-button-padding-inline: var(--c-button-padding-inline-lg);
     border-radius: var(--c-button-radius-lg);
     font-size: var(--type-heading-4-size);
   }
@@ -99,7 +100,7 @@
   [data-dl='button'][data-size='xl'] {
     min-block-size: max(var(--c-button-size-xl), var(--_dl-button-target, 0px));
     min-inline-size: max(var(--c-button-size-xl), var(--_dl-button-target, 0px));
-    padding-inline: var(--c-button-padding-inline-lg);
+    --_dl-button-padding-inline: var(--c-button-padding-inline-lg);
     border-radius: var(--c-button-radius-lg);
     font-size: var(--type-heading-4-size);
   }
@@ -107,7 +108,7 @@
   [data-dl='button'][data-size='xxl'] {
     min-block-size: max(var(--c-button-size-xxl), var(--_dl-button-target, 0px));
     min-inline-size: max(var(--c-button-size-xxl), var(--_dl-button-target, 0px));
-    padding-inline: var(--c-button-padding-inline-lg);
+    --_dl-button-padding-inline: var(--c-button-padding-inline-lg);
     border-radius: var(--c-button-radius-lg);
     font-size: var(--type-heading-3-size);
   }
@@ -130,6 +131,12 @@
 
   [data-dl='button'][data-icon-only] {
     padding-inline: 0;
+  }
+
+  /* LR101: the padded target bleeds, not the label; short labels never recenter in the minimum target. */
+  [data-dl='button'][data-text-edge] {
+    margin-inline-start: calc(-1 * (var(--_dl-button-padding-inline) + var(--c-button-border-width)));
+    justify-items: start;
   }
 
   /* A disclosure that's open: the selected tint, the one cue for "open". */

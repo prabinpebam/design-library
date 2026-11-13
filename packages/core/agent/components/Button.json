@@ -62,6 +62,12 @@
           "description": "`primary` for the one main action in a view, `default` otherwise, `quiet` inside toolbars and other enclosed groups, `danger` for an action that destroys or can't be undone."
         },
         {
+          "name": "textEdge",
+          "type": "boolean",
+          "default": "false",
+          "description": "Aligns a quiet text-only action's label with its parent's start edge by bleeding its padded box at that edge. Keeps padding and target size; ignored with an icon or other emphasis. Default false."
+        },
+        {
           "name": "disabled",
           "type": "boolean",
           "default": "false",
