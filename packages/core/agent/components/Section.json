@@ -67,6 +67,12 @@
           "description": "With `tone`: the fill runs to the window's edges as a band across the page, the parts keeping the column's edges. For a section directly in a SiteLayout column."
         },
         {
+          "name": "inset",
+          "type": "'section' | 'group'",
+          "default": "'section'",
+          "description": "With `tone` (not `bleed`): `group` is a panel among panels, such as a dashboard's: a step closer inside (`c.section.group-inset`) with its head a group above its content (`c.section.group-gap`). Default `section`."
+        },
+        {
           "name": "children",
           "type": "ReactNode"
         },
@@ -90,6 +96,8 @@
     "--border-hairline",
     "--c-section-content-gap",
     "--c-section-gap",
+    "--c-section-group-gap",
+    "--c-section-group-inset",
     "--c-section-head-gap",
     "--c-section-index-column",
     "--c-section-index-gap",

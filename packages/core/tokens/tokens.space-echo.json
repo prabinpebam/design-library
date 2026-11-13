@@ -1490,6 +1490,16 @@
         "$value": "{space.stack-section}",
         "$description": "Inside a section: between its head (heading and intro) and its content, and between its content's parts (Q85: the section level) (echoed for space contexts)"
       },
+      "group-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "A toned section at inset group: between its head and its content, the same group space as between its content's parts, so the panel reads as one group (LR83) (echoed for space contexts)"
+      },
+      "group-inset": {
+        "$type": "dimension",
+        "$value": "{space.inset-lg}",
+        "$description": "A toned section at inset group (a panel among panels, such as a dashboard's): its space inside the fill, all round, a step closer than a band's (LR83) (echoed for space contexts)"
+      },
       "head-gap": {
         "$type": "dimension",
         "$value": "{space.stack-item}",

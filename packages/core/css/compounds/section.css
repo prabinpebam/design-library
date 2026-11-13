@@ -75,6 +75,16 @@
     background-color: var(--dl-section-tone);
   }
 
+  /* LR83: inset group, a panel among panels: closer inside, its head a group above its content. */
+  [data-dl='section'][data-tone][data-inset='group'] {
+    padding: var(--c-section-group-inset);
+  }
+
+  [data-dl='section'][data-tone][data-inset='group'],
+  [data-dl='section'][data-tone][data-inset='group'] > [data-dl-part='body'] {
+    gap: var(--c-section-group-gap);
+  }
+
   [data-dl='section'][data-tone='sunken'] {
     --dl-section-tone: var(--c-section-tone-sunken);
   }

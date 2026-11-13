@@ -745,6 +745,8 @@
   --c-section-tone-inset-block: var(--space-stack-section);
   --c-section-tone-inset-inline: var(--space-stack-section);
   --c-section-tone-radius: var(--radius-lg);
+  --c-section-group-inset: var(--space-inset-lg);
+  --c-section-group-gap: var(--space-stack-group);
   --c-badge-size: var(--size-target-min);
   --c-badge-size-s: var(--size-icon-md);
   --c-badge-padding-inline: var(--space-inset-sm);
@@ -1820,6 +1822,8 @@
   --c-scroll-area-track-inset: var(--space-stack-pair);
   --c-section-content-gap: var(--space-stack-group);
   --c-section-gap: var(--space-stack-section);
+  --c-section-group-gap: var(--space-stack-group);
+  --c-section-group-inset: var(--space-inset-lg);
   --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-content-gap: var(--space-stack-item);
@@ -2121,6 +2125,8 @@
   --c-scroll-area-track-inset: var(--space-stack-pair);
   --c-section-content-gap: var(--space-stack-group);
   --c-section-gap: var(--space-stack-section);
+  --c-section-group-gap: var(--space-stack-group);
+  --c-section-group-inset: var(--space-inset-lg);
   --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-content-gap: var(--space-stack-item);
@@ -2422,6 +2428,8 @@
   --c-scroll-area-track-inset: var(--space-stack-pair);
   --c-section-content-gap: var(--space-stack-group);
   --c-section-gap: var(--space-stack-section);
+  --c-section-group-gap: var(--space-stack-group);
+  --c-section-group-inset: var(--space-inset-lg);
   --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-content-gap: var(--space-stack-item);
@@ -2723,6 +2731,8 @@
   --c-scroll-area-track-inset: var(--space-stack-pair);
   --c-section-content-gap: var(--space-stack-group);
   --c-section-gap: var(--space-stack-section);
+  --c-section-group-gap: var(--space-stack-group);
+  --c-section-group-inset: var(--space-inset-lg);
   --c-section-head-gap: var(--space-stack-item);
   --c-section-index-gap: var(--space-gutter);
   --c-section-nested-content-gap: var(--space-stack-item);

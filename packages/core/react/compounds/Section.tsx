@@ -28,6 +28,11 @@ export interface SectionProps extends DataAttributes {
   tone?: 'sunken' | 'raised' | 'tint';
   /** With `tone`: the fill runs to the window's edges as a band across the page, the parts keeping the column's edges. For a section directly in a SiteLayout column. */
   bleed?: boolean;
+  /**
+   * With `tone` (not `bleed`): `group` is a panel among panels, such as a dashboard's: a step closer inside
+   * (`c.section.group-inset`) with its head a group above its content (`c.section.group-gap`). Default `section`.
+   */
+  inset?: 'section' | 'group';
   children?: ReactNode;
   /** `data-*` attributes for the heading, for tooling such as revision anchors. */
   headingData?: DataAttributes;
@@ -43,7 +48,7 @@ export interface SectionProps extends DataAttributes {
  * @a11y Renders `section`, named by its heading through `aria-labelledby` when it has one. The heading level follows
  * the outline, never the visual size. An index numeral is decorative.
  */
-export function Section({ heading, anchor, level = 2, size, intro, index, nested = false, tone, bleed = false, children, headingData, introData, ...data }: SectionProps) {
+export function Section({ heading, anchor, level = 2, size, intro, index, nested = false, tone, bleed = false, inset = 'section', children, headingData, introData, ...data }: SectionProps) {
   const generated = useId();
   const id = anchor ?? generated;
   const head = (heading || intro) && (
@@ -67,7 +72,7 @@ export function Section({ heading, anchor, level = 2, size, intro, index, nested
     </>
   );
   return (
-    <section {...data} data-dl="section" data-nested={nested ? '' : undefined} data-indexed={index != null ? '' : undefined} data-tone={tone} data-bleed={tone && bleed ? '' : undefined} aria-labelledby={heading ? id : undefined}>
+    <section {...data} data-dl="section" data-nested={nested ? '' : undefined} data-indexed={index != null ? '' : undefined} data-tone={tone} data-bleed={tone && bleed ? '' : undefined} data-inset={tone && !bleed && inset === 'group' ? 'group' : undefined} aria-labelledby={heading ? id : undefined}>
       {index != null ? (
         <>
           <p data-dl-part="index" aria-hidden="true">
