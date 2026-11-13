@@ -137,11 +137,21 @@ function loadYouTubeAPI() {
     host.onYouTubeIframeAPIReady = ready;
     script.src = 'https://www.youtube.com/iframe_api';
     script.onerror = fail;
-    timer = setTimeout(fail, 15000);
+    timer = setTimeout(fail, API_TIMEOUT_MS);
     document.head.append(script);
   });
   return youtubeAPI;
 }
+
+// Network give-ups and caption sync, not motion: past these the player says it failed and offers a retry (ui-states).
+/** The YouTube player API script. */
+const API_TIMEOUT_MS = 15_000;
+/** The embedded player, from mount to ready. */
+const PLAYER_TIMEOUT_MS = 20_000;
+/** A captions file. */
+const TRACK_TIMEOUT_MS = 15_000;
+/** How often the caption overlay reads the player's time. */
+const CAPTION_SYNC_MS = 100;
 
 /** External WebVTT is parsed by the browser, never injected as HTML. No remote API loads before Play. */
 function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 'youtube' }>; title: string }) {
@@ -187,7 +197,7 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
     frame.referrerPolicy = 'strict-origin-when-cross-origin';
     host.current?.append(frame);
     frame.focus();
-    const timeout = setTimeout(() => { if (!disposed) setAPIState('failed'); }, 20000);
+    const timeout = setTimeout(() => { if (!disposed) setAPIState('failed'); }, PLAYER_TIMEOUT_MS);
     void loadYouTubeAPI().then(api => {
       if (disposed) return;
       player = new api.Player(frame, { events: {
@@ -197,7 +207,7 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
           setAPIState('ready');
           activePlayer.current = player;
           if (seek.current) player?.playVideo();
-          interval = setInterval(() => { if (player) setTime(player.getCurrentTime()); }, 100);
+          interval = setInterval(() => { if (player) setTime(player.getCurrentTime()); }, CAPTION_SYNC_MS);
         },
         onStateChange: event => {
           if (disposed || event.data !== 1 || !seek.current || !player) return;
@@ -226,7 +236,7 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
   useEffect(() => {
     const node = textTrack.current;
     if (!node) return;
-    const timeout = setTimeout(() => setTrackFailed(true), 15000);
+    const timeout = setTimeout(() => setTrackFailed(true), TRACK_TIMEOUT_MS);
     const load = () => {
       clearTimeout(timeout);
       setCues(Array.from(node.track.cues ?? []).filter((cue): cue is VTTCue => cue instanceof VTTCue)
