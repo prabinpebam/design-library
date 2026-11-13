@@ -15,6 +15,16 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR125: Vimeo local captions and chapter seeking (14 November 2026)
+
+Decision before code: generic playback/accessibility behaviour, R7, existing video album presentation. MediaSource exposes tracks/seek only for YouTube; sealed iframe markup cannot be controlled by props/slots/context/theme today. Step 6: opt-in Vimeo tracks/seek through its official free CDN iframe API (https://github.com/vimeo/player.js/, observed 14 November: ready/timeupdate/setCurrentTime/play/destroy). Reuse the exact existing caption selection/Off, text-only WebVTT overlay, full-screen figure, loading/error/Retry UI, not a second pattern. No new block/preset/visible parameter, enclosure, style or motion. Plain Vimeo embeds and YouTube defaults unchanged. Editor45 owns core and DesignUp TalkPage adoption, no override. Types/build, linked types, checkpoint pin/build and targeted browser only; stories/regressions deferred.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR125 | 2026-11-14 | Vimeo captions and playable chapter timestamps | MediaPlayer Vimeo lacks tracks/seek | 6 | opt-in Vimeo tracks/seek in shared enhanced embed | none | Editor45 | shipped live; remote playback not proven | this LR125 commit | Done: TalkPage passes tracks/seek and uses chapter Buttons |
+
+Observed browser evidence: real Vimeo 76979871 API reports time 5 seconds and duration 61.853 after chapter action, but playback pauses with Vimeo's own "Player error"; 59777392 asks for sign-in. No sign-in attempted and no claim that an iframe means successful playback. Real outer full screen is a FIGURE containing the language choice; inspected its error-state capture. Browser-memory walkthrough separately proves English/French native WebVTT parsing, Off, repeated seeks (5,15,15), seek failure with request preserved on Retry, API error/Retry, captions 404/Retry and disposal of all three fixture player instances. Existing YouTube path separately retains repeated seek and local caption behaviour. Inspected dark 1440, light 375 and light full-screen caption captures; no horizontal overflow. All routes/fixtures removed and real talk reloaded; no content/history writes. Stories and regression remain deferred to merge night.
+
 ### LR124: a clean empty photo frame (14 November 2026)
 
 DesignUp admin main photo, owner 01:43 + 02:25: ImageGrid's icon-valued blank always renders a glyph which reads as a broken picture. Existing props/slots/context/theme cannot omit it; template replacement would cross sealed markup, so step 6, generic core. Opt-in `ImageGridItem.blank?: IconName | true`: true keeps the existing token-rounded frame and accessible name without img or Icon; icon-valued blanks/defaults unchanged. R1/R6 existing Square album, no new data, block, preset, visible parameter, enclosure or motion. Editor44 owns core and adoption without override. Types/build, generated contract, linked consumer types, checkpoint pin/build and inspected shots only; stories/regressions deferred.

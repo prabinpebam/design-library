@@ -7,7 +7,7 @@ import { Select } from '../fundamentals/Select';
 import { Text } from '../fundamentals/Text';
 import type { DataAttributes } from '../types';
 
-/** A captions or subtitles file: WebVTT, in one language, for native video or an opt-in YouTube overlay. */
+/** A captions or subtitles file: WebVTT, in one language, for native video or an opt-in remote overlay. */
 export interface MediaTrack {
   src: string;
   /** The language's own name, as the player's captions menu lists it: "English", "Français". */
@@ -34,16 +34,18 @@ interface MediaSeekRequest {
   requestId: number;
 }
 
-/** Where the media comes from: files, or YouTube/Vimeo loaded only once played. YouTube tracks opt in to an external
- * caption overlay and labelled language/Off choice, synced through its free iframe API; other embeds are unchanged. */
-export type MediaSource = { from: 'file'; files: MediaFile[]; tracks?: MediaTrack[] } | {
-  from: 'youtube';
+interface RemoteMedia {
   id: string;
   tracks?: MediaTrack[];
   /** Opt-in seek-and-play request, in seconds. Change requestId for every action, including the same timestamp again.
    * Loads the iframe API only after Play or this request. Leave absent for an unchanged poster-only embed. */
   seek?: MediaSeekRequest;
-} | { from: 'vimeo'; id: string };
+}
+
+/** Where the media comes from: files, or YouTube/Vimeo loaded only once played. Remote tracks opt in to an external
+ * caption overlay and labelled language/Off choice, synced through the provider's free iframe API. */
+export type MediaSource = { from: 'file'; files: MediaFile[]; tracks?: MediaTrack[] }
+  | ({ from: 'youtube' } & RemoteMedia) | ({ from: 'vimeo' } & RemoteMedia);
 
 export interface MediaPlayerProps extends DataAttributes {
   /** `video` (default) or `audio`: a compact player with its title above and no picture. */
@@ -143,8 +145,45 @@ function loadYouTubeAPI() {
   return youtubeAPI;
 }
 
+type VimeoPlayer = {
+  ready(): Promise<void>;
+  on(event: 'timeupdate', callback: (event: { seconds: number }) => void): void;
+  on(event: 'error', callback: () => void): void;
+  setCurrentTime(seconds: number): Promise<number>;
+  play(): Promise<void>;
+  destroy(): Promise<void>;
+};
+type VimeoAPI = { Player: new (frame: HTMLIFrameElement) => VimeoPlayer };
+const vimeoWindow = () => window as Window & { Vimeo?: VimeoAPI };
+let vimeoAPI: Promise<VimeoAPI> | undefined;
+
+function loadVimeoAPI() {
+  const host = vimeoWindow();
+  if (host.Vimeo?.Player) return Promise.resolve(host.Vimeo);
+  if (vimeoAPI) return vimeoAPI;
+  vimeoAPI = new Promise<VimeoAPI>((resolve, reject) => {
+    const script = document.createElement('script');
+    const fail = () => {
+      clearTimeout(timer);
+      script.remove();
+      vimeoAPI = undefined;
+      reject(new Error('Vimeo player API could not be loaded'));
+    };
+    const timer = setTimeout(fail, API_TIMEOUT_MS);
+    script.src = 'https://player.vimeo.com/api/player.js';
+    script.onload = () => {
+      clearTimeout(timer);
+      if (host.Vimeo?.Player) resolve(host.Vimeo);
+      else fail();
+    };
+    script.onerror = fail;
+    document.head.append(script);
+  });
+  return vimeoAPI;
+}
+
 // Network give-ups and caption sync, not motion: past these the player says it failed and offers a retry (ui-states).
-/** The YouTube player API script. */
+/** The provider's player API script. */
 const API_TIMEOUT_MS = 15_000;
 /** The embedded player, from mount to ready. */
 const PLAYER_TIMEOUT_MS = 20_000;
@@ -154,7 +193,7 @@ const TRACK_TIMEOUT_MS = 15_000;
 const CAPTION_SYNC_MS = 100;
 
 /** External WebVTT is parsed by the browser, never injected as HTML. No remote API loads before Play. */
-function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 'youtube' }>; title: string }) {
+function RemoteEmbed({ source, title }: { source: Extract<MediaSource, { from: 'youtube' | 'vimeo' }>; title: string }) {
   const tracks = source.tracks ?? [];
   const [selected, setSelected] = useState(tracks.find(track => track.default)?.src ?? '__off');
   const chosen = tracks.find(track => track.src === selected);
@@ -169,43 +208,71 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
   const [fullscreenFailed, setFullscreenFailed] = useState(false);
   const host = useRef<HTMLDivElement>(null);
   const textTrack = useRef<HTMLTrackElement>(null);
-  const activePlayer = useRef<YouTubePlayer | undefined>(undefined);
+  const activeSeek = useRef<((request: MediaSeekRequest) => void) | undefined>(undefined);
   const seek = useRef(source.seek);
 
   useEffect(() => {
     seek.current = source.seek;
-    if (source.seek && activePlayer.current) {
-      if (activePlayer.current.getPlayerState() === 1) {
-        activePlayer.current.seekTo(source.seek.seconds, true);
-        seek.current = undefined;
-      }
-      activePlayer.current.playVideo();
-    }
+    if (source.seek) activeSeek.current?.(source.seek);
   }, [source.seek?.seconds, source.seek?.requestId]);
 
   useEffect(() => {
     let disposed = false;
     let player: YouTubePlayer | undefined;
+    let vimeo: VimeoPlayer | undefined;
     let interval: ReturnType<typeof setInterval> | undefined;
     setAPIState('loading');
     setTime(0);
     const frame = document.createElement('iframe');
     const start = seek.current ? `&start=${Math.floor(seek.current.seconds)}` : '';
-    frame.src = `${embedSrc(source)}&enablejsapi=1&fs=0&origin=${encodeURIComponent(location.origin)}${start}`;
+    frame.src = source.from === 'youtube'
+      ? `${embedSrc(source)}&enablejsapi=1&fs=0&origin=${encodeURIComponent(location.origin)}${start}`
+      : `${embedSrc(source)}&fullscreen=0&pip=0`;
     frame.title = title;
     frame.allow = 'autoplay; encrypted-media';
     frame.referrerPolicy = 'strict-origin-when-cross-origin';
     host.current?.append(frame);
     frame.focus();
     const timeout = setTimeout(() => { if (!disposed) setAPIState('failed'); }, PLAYER_TIMEOUT_MS);
-    void loadYouTubeAPI().then(api => {
+    const fail = () => { if (!disposed) { clearTimeout(timeout); setAPIState('failed'); } };
+    if (source.from === 'vimeo') {
+      void loadVimeoAPI().then(async api => {
+        if (disposed) return;
+        const remote = new api.Player(frame);
+        vimeo = remote;
+        remote.on('timeupdate', event => { if (!disposed) setTime(event.seconds); });
+        remote.on('error', fail);
+        await remote.ready();
+        if (disposed) return;
+        clearTimeout(timeout);
+        setAPIState('ready');
+        let queue = Promise.resolve();
+        activeSeek.current = request => {
+          queue = queue.then(async () => {
+            if (disposed) return;
+            const seconds = await remote.setCurrentTime(request.seconds);
+            if (disposed) return;
+            setTime(seconds);
+            await remote.play();
+            if (seek.current?.requestId === request.requestId) seek.current = undefined;
+          }).catch(fail);
+        };
+        if (seek.current) activeSeek.current(seek.current);
+      }).catch(fail);
+    } else void loadYouTubeAPI().then(api => {
       if (disposed) return;
       player = new api.Player(frame, { events: {
         onReady: () => {
           if (disposed) return;
           clearTimeout(timeout);
           setAPIState('ready');
-          activePlayer.current = player;
+          activeSeek.current = request => {
+            if (player?.getPlayerState() === 1) {
+              player.seekTo(request.seconds, true);
+              seek.current = undefined;
+            }
+            player?.playVideo();
+          };
           if (seek.current) player?.playVideo();
           interval = setInterval(() => { if (player) setTime(player.getCurrentTime()); }, CAPTION_SYNC_MS);
         },
@@ -221,11 +288,12 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
       disposed = true;
       clearTimeout(timeout);
       clearInterval(interval);
-      activePlayer.current = undefined;
+      activeSeek.current = undefined;
       player?.destroy();
+      void vimeo?.destroy().catch(error => console.error('Vimeo player cleanup failed', error));
       frame.remove();
     };
-  }, [source.id, title, retry]);
+  }, [source.from, source.id, title, retry]);
 
   useEffect(() => {
     const changed = () => setFullscreen(document.fullscreenElement === host.current?.closest('figure'));
@@ -305,17 +373,17 @@ function YouTubeEmbed({ source, title }: { source: Extract<MediaSource, { from: 
  * Nothing plays by itself. An embed's poster is one button, "Play" and the title, with the length spoken; pressing it
  * swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is
  * `aria-hidden` (the button says it). A transcript link follows the player when given.
- * YouTube sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay.
+ * YouTube/Vimeo sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay.
  * The enhanced player's full-screen action includes captions and their choice. Failures offer Retry;
  * cues are not a live region that interrupts screen-reader speech.
- * A YouTube source's optional seek request starts playback at that timestamp; a new requestId repeats the action.
+ * A remote source's optional seek request starts playback at that timestamp; a new requestId repeats the action.
  * @key Enter, Space: on an embed's poster, loads and plays the video
  */
 export function MediaPlayer({ kind = 'video', source, title, poster, posterFallbackSrc, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
   const [playing, setPlaying] = useState(false);
   const frame = useRef<HTMLIFrameElement>(null);
-  const seekRequest = source.from === 'youtube' ? source.seek?.requestId : undefined;
-  const seekSeconds = source.from === 'youtube' ? source.seek?.seconds : undefined;
+  const seekRequest = source.from !== 'file' ? source.seek?.requestId : undefined;
+  const seekSeconds = source.from !== 'file' ? source.seek?.seconds : undefined;
   if (seekSeconds !== undefined && (!Number.isFinite(seekSeconds) || seekSeconds < 0)) throw new RangeError('MediaPlayer seek seconds must be finite and nonnegative');
 
   useEffect(() => {
@@ -350,7 +418,7 @@ export function MediaPlayer({ kind = 'video', source, title, poster, posterFallb
 
   return (
     <figure {...data} data-dl="media-player" data-kind="video" data-tall={shape.height > shape.width ? '' : undefined} style={style}>
-      {playing && source.from === 'youtube' && (source.tracks?.length || source.seek) ? <YouTubeEmbed key={source.id} source={source} title={title} /> : <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
+      {playing && source.from !== 'file' && (source.tracks?.length || source.seek) ? <RemoteEmbed key={`${source.from}:${source.id}`} source={source} title={title} /> : <div data-dl-part="stage" data-tone-area={posterTreatment ? '' : undefined}>
         {source.from === 'file' ? (
           <video controls preload="metadata" playsInline poster={poster} aria-label={title}>
             {source.files.map((f) => (

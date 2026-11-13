@@ -7,7 +7,7 @@
   "summary": "Plays a video or a piece of audio, with its caption: a file this product serves, with the browser's own controls and its captions, or a video on YouTube or Vimeo behind a privacy-friendly poster that loads the remote player only when play is pressed. Not for a picture (use Image), a set of pictures (use Carousel or ImageGrid) or a video that plays by itself as decoration (don't: motion that can't be paused fails WCAG 2.2.2).",
   "family": "content",
   "a11y": [
-    "A `figure` named by its caption when there is one. A file plays in the native `video` or `audio` element with its controls (keyboard operable, announced by the platform) and its WebVTT `track`s, so captions can be turned on. Nothing plays by itself. An embed's poster is one button, \"Play\" and the title, with the length spoken; pressing it swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is `aria-hidden` (the button says it). A transcript link follows the player when given. YouTube sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay. The enhanced player's full-screen action includes captions and their choice. Failures offer Retry; cues are not a live region that interrupts screen-reader speech. A YouTube source's optional seek request starts playback at that timestamp; a new requestId repeats the action."
+    "A `figure` named by its caption when there is one. A file plays in the native `video` or `audio` element with its controls (keyboard operable, announced by the platform) and its WebVTT `track`s, so captions can be turned on. Nothing plays by itself. An embed's poster is one button, \"Play\" and the title, with the length spoken; pressing it swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is `aria-hidden` (the button says it). A transcript link follows the player when given. YouTube/Vimeo sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay. The enhanced player's full-screen action includes captions and their choice. Failures offer Retry; cues are not a live region that interrupts screen-reader speech. A remote source's optional seek request starts playback at that timestamp; a new requestId repeats the action."
   ],
   "keys": [
     {
@@ -150,6 +150,25 @@
           "type": "number",
           "required": true,
           "description": "A different value for each explicit seek action, including a repeat of the same timestamp."
+        }
+      ]
+    },
+    {
+      "interface": "RemoteMedia",
+      "props": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tracks",
+          "type": "MediaTrack[]"
+        },
+        {
+          "name": "seek",
+          "type": "MediaSeekRequest",
+          "description": "Opt-in seek-and-play request, in seconds. Change requestId for every action, including the same timestamp again. Loads the iframe API only after Play or this request. Leave absent for an unchanged poster-only embed."
         }
       ]
     }
