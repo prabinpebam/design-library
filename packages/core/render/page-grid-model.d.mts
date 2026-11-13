@@ -28,6 +28,10 @@ export interface PageGridRecordRow {
 
 export interface PageGridRecord {
   rows: PageGridRecordRow[];
+  /** The space above the first row (LR91); none when left out. */
+  start?: PageGridGap;
+  /** The space below the last row (LR91); none when left out. */
+  end?: PageGridGap;
 }
 
 /** One problem: where in the page document (a JSON pointer) and what's wrong. */

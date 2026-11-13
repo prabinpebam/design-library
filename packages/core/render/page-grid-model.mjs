@@ -107,6 +107,7 @@ export function pageGridRecordProblems(grid, sections, options = {}) {
     });
   };
   rows(grid.rows, PAGE_GRID_COLUMNS, 1, '/grid/rows');
+  for (const edge of ['start', 'end']) if (grid[edge] !== undefined && !PAGE_GRID_GAPS.includes(grid[edge])) issues.push({ at: `/grid/${edge}`, what: `needs one of: ${PAGE_GRID_GAPS.join(', ')}` });
   return issues;
 }
 

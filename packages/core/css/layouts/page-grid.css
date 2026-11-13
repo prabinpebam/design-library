@@ -11,6 +11,16 @@
     inline-size: 100%;
   }
 
+  /* The space above the first row and below the last (LR91): none unless chosen, the same steps as a row's gap. */
+  [data-dl='page-grid'][data-start='item'] { padding-block-start: var(--c-page-grid-gap-item); }
+  [data-dl='page-grid'][data-start='group'] { padding-block-start: var(--c-page-grid-gap-group); }
+  [data-dl='page-grid'][data-start='section'] { padding-block-start: var(--c-page-grid-gap-section); }
+  [data-dl='page-grid'][data-start='page'] { padding-block-start: var(--c-page-grid-gap-page); }
+  [data-dl='page-grid'][data-end='item'] { padding-block-end: var(--c-page-grid-gap-item); }
+  [data-dl='page-grid'][data-end='group'] { padding-block-end: var(--c-page-grid-gap-group); }
+  [data-dl='page-grid'][data-end='section'] { padding-block-end: var(--c-page-grid-gap-section); }
+  [data-dl='page-grid'][data-end='page'] { padding-block-end: var(--c-page-grid-gap-page); }
+
   :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'] {
     container-type: inline-size;
     margin-block-start: var(--c-page-grid-gap-section);

@@ -64,6 +64,10 @@ export interface PageGridProps extends DataAttributes {
    * where no cell is (between cells). Keyboard selection belongs to the editor's outline (a TreeView of the same ids).
    */
   onSelect?: (target: PageGridTarget) => void;
+  /** The space above the first row (LR91): a stack step, as a row's `gap`; none by default. */
+  start?: PageGridGap;
+  /** The space below the last row (LR91); none by default. */
+  end?: PageGridGap;
 }
 
 /** A selectable place in the grid. */
@@ -127,14 +131,14 @@ function Rows({ rows, span, renderSlot, selected }: { rows: PageGridRow[]; span:
  * and cell by cell, at every width. Pointer selection (`onSelect`) is an editor's shortcut; its keyboard path is the
  * editor's outline of the same rows and cells (a TreeView), which sets `selected`.
  */
-export function PageGrid({ rows, renderSlot, selected, onSelect, ...data }: PageGridProps) {
+export function PageGrid({ rows, renderSlot, selected, onSelect, start, end, ...data }: PageGridProps) {
   const pick = (event: MouseEvent<HTMLDivElement>) => {
     const place = (event.target as Element).closest<HTMLElement>('[data-cell], [data-row]');
     if (!place || !event.currentTarget.contains(place)) return;
     onSelect?.(place.dataset.cell !== undefined ? { kind: 'cell', id: place.dataset.cell } : { kind: 'row', id: place.dataset.row ?? '' });
   };
   return (
-    <div {...data} data-dl="page-grid" data-selectable={onSelect ? '' : undefined} onClick={onSelect ? pick : undefined}>
+    <div {...data} data-dl="page-grid" data-start={start} data-end={end} data-selectable={onSelect ? '' : undefined} onClick={onSelect ? pick : undefined}>
       <Rows rows={rows} span={PAGE_GRID_COLUMNS} renderSlot={renderSlot} selected={selected} />
     </div>
   );
