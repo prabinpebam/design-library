@@ -21,7 +21,7 @@ DesignUp's owner (23:33) wants the Sections area list to stay below the top bar 
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR118 | 2026-11-13 | ListDetail's list stays in view while the page scrolls | No sticky list in ListDetail | 6 | opt-in `ListDetail.stickyList` | none | DesignUp Editor42 | logged | | DesignUp adopts on Sections |
+| LR118 | 2026-11-13 | ListDetail's list stays in view while the page scrolls | No sticky list in ListDetail | 6 | opt-in `ListDetail.stickyList` | none | DesignUp Editor42 | shipped | 0eb3f05, 4d084d8; DesignUp c11921a | Done: Sections, Settings forms |
 
 ### LR117: section lists without the detail line (13 November 2026)
 
@@ -29,7 +29,7 @@ DesignUp's owner (23:24) wants its admin section lists to show names only. Secti
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR117 | 2026-11-13 | Section lists show names only | None: `SectionedForm.details` is opt-in (default false) | 1 | none (existing default) | none | DesignUp Editor42 | logged | | DesignUp drops `details` |
+| LR117 | 2026-11-13 | Section lists show names only | None: `SectionedForm.details` is opt-in (default false) | 1 | none (existing default) | none | DesignUp Editor42 | shipped (four of five forms) | DesignUp c11921a | Album inspector with Editor41's next commit |
 
 ### LR116: side panels with their own tone (13 November 2026)
 
@@ -37,7 +37,7 @@ Before-code decision: DesignUp's owner (23:23) wants the admin's list and inspec
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR116 | 2026-11-13 | Side panels set apart from the work area by tone | EditorLayout panels and ListDetail's list paint `--color-bg`; no prop or setting picks a panel surface | 6 | opt-in `EditorLayout.panelTone`, `ListDetail.listTone`: `raised` or `sunken`; unset unchanged | none | DesignUp Editor42 | logged | | Adopt in PageEditor, Sections, Codes; no override |
+| LR116 | 2026-11-13 | Side panels set apart from the work area by tone | EditorLayout panels and ListDetail's list paint `--color-bg`; no prop or setting picks a panel surface | 6 | opt-in `EditorLayout.panelTone`, `ListDetail.listTone`: `raised` or `sunken`; unset unchanged | none | DesignUp Editor42 | shipped | 97f4cf7, a53f808, 4d084d8; DesignUp c11921a | Done: PageEditor, Sections, Codes; no override |
 
 ### LR115: playable canonical album items (13 November 2026)
 
@@ -45,7 +45,9 @@ Before-code decision: DesignUp D4 resolves canonical Media references into exist
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR115 | 2026-11-13 | Play video items in existing album presentations | Core album/render mapping only accepts pictures | 6 | optional AlbumItem.video source/title/duration/shape, forwarded to MediaPicture; existing player and LR114 | none | DesignUp Editor41, sole core writer | logged | | Adopt resolved descriptor; no override |
+| LR115 | 2026-11-13 | Play video items in existing album presentations | Core album/render mapping only accepts pictures | 6 | optional AlbumItem.video source/title/duration/shape, forwarded to MediaPicture; existing player and LR114 | none | DesignUp Editor41 (album/render split) | shipped | core 822ee0c; DesignUp 4f97d3b; checkpoint du.cd5434bd | Done: resolved descriptor adopted in single, grid, carousel and collage; no override |
+
+Observed adoption: normal page Media and album-page walks opened the canonical video, with explicit provider activation and unmount/reset on navigation and close. Isolated browser-memory checks also reached single, carousel, collage and album-cover players, without adding content to the owner's preview. Core typecheck/library build and DesignUp linked typecheck/pinned build pass; light, dark and phone player captures were inspected. Full-page visual parity is not inferred from isolated captures. Stories and regression remain on merge night.
 
 ### LR112-LR113: whole linked-video posters (13 November 2026)
 
@@ -55,7 +57,7 @@ Decision: DesignUp admin follows personal PhotoGrid.astro:146-147: square frames
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | LR112 | 2026-11-13 | Whole posters in square Media tiles | ImageGridItem lacks Image.fit forwarding | 6 | optional ImageGridItem.fit: cover (default) or contain | none | DesignUp Editor41 | core shipped; live consumer verified | this commit | Done: linked Media contain, pictures retain cover |
 | LR113 | 2026-11-13 | Alternate poster source on failure | Image only has a failure label, no fallback URL | 6 | optional Image.fallbackSrc and ImageGridItem.fallbackSrc; once per source | none | DesignUp Editor41 | core shipped; live consumer verified | this commit | Done: core fallback, no template override |
-| LR114 | 2026-11-13 | The lightbox shows a linked video in its player, not its poster (album and page viewers) | Lightbox renders only core Image for each item: no way to put other content (a MediaPlayer) in its stage without an override | 6 | optional `Lightbox.renderItem(item, index)`: content for the shown item in the stage's picture part, or null/undefined for the default Image; called only for the current item, keyed by item id so it unmounts on index change and on close; keyboard, swipe, labels and caption unchanged; no travel for rendered content (fades) | none | Editor41 (adopts in AlbumEditorView, Media); core Library adoption worker 33 | logged | | |
+| LR114 | 2026-11-13 | The lightbox shows a linked video in its player, not its poster (album and page viewers) | Lightbox renders only core Image for each item: no way to put other content (a MediaPlayer) in its stage without an override | 6 | optional `Lightbox.renderItem(item, index)`: content for the shown item in the stage's picture part, or null/undefined for the default Image; called only for the current item, keyed by item id so it unmounts on index change and on close; keyboard, swipe, labels and caption unchanged; no travel for rendered content (fades) | none | Editor41 (album/page adoption); core Library adoption worker 33 | shipped | core 094e0e3; DesignUp 4f97d3b; checkpoint du.cd5434bd | Done: album/page viewers use the existing player; no override |
 
 Observed: eight first-page posters load at 1280 by 720 inside unchanged 274 by 274 square links, computed object-fit contain; the Europe and Confessions titles are whole in inspected 1440 light and dark captures. Blocking Day02's primary produces one fallback request and a 320 by 180 image. Blocking both sources produces the existing failure state and no retry loop. The reset uses a layout effect: a passive mount reset erased a fast blocked-source error/retry before it could render. Native Enter still opens the full-area record. Everything keeps contain for linked records and cover for pictures. Core types/build and linked consumer types pass; pinned consumer build follows at the checkpoint.
 
