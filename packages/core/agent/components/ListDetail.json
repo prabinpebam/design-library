@@ -69,6 +69,11 @@
           "name": "maxSize",
           "type": "'fill' | 'md' | 'lg'",
           "description": "The most the layout grows before each side scrolls on its own; `fill` takes the height its parent gives it. Without it, both sides grow and the page scrolls."
+        },
+        {
+          "name": "listTone",
+          "type": "'raised' | 'sunken'",
+          "description": "LR116 (opt-in): the list's own surface, set apart from the detail by tone alone (no border or shadow): `raised` or `sunken` (the surface roles). Unset, the list shares the page's surface. The list's content keeps its own inset."
         }
       ]
     }
@@ -83,7 +88,9 @@
     "--c-list-detail-list-narrow",
     "--c-list-detail-list-wide",
     "--c-list-detail-max-lg",
-    "--c-list-detail-max-md"
+    "--c-list-detail-max-md",
+    "--color-bg-raised",
+    "--color-bg-sunken"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/listdetail"
 }

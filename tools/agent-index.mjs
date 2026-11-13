@@ -80,7 +80,7 @@ function docOf(source, name) {
 }
 function defaultsOf(source, name) {
   const fn = source.slice(source.indexOf(`export function ${name}`));
-  const d = /\(\{([^}]*)\}/.exec(fn.slice(0, 400))?.[1] ?? /const \{([^}]*)\} = props/.exec(fn)?.[1] ?? '';
+  const d = /\(\{([^}]*)\}/.exec(fn.slice(0, 800))?.[1] ?? /const \{([^}]*)\} = props/.exec(fn)?.[1] ?? '';
   return new Map([...d.matchAll(/(\w+)\s*=\s*('[^']*'|\d+|true|false)/g)].map((m) => [m[1], m[2]]));
 }
 function propsOf(source, name) {

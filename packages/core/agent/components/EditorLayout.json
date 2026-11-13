@@ -184,6 +184,11 @@
           "type": "boolean",
           "default": "false",
           "description": "LR104 (opt-in): the end panel's content fills the panel from top to bottom (an inspector): its content area takes the panel's height and what's in it grows to fill it (with Tabs `fill` and SectionedForm `fill` down the chain)."
+        },
+        {
+          "name": "panelTone",
+          "type": "'raised' | 'sunken'",
+          "description": "LR116 (opt-in): the panels' own surface, set apart from the working area by tone alone (no border or shadow): `raised` or `sunken` (the surface roles). Unset, the panels share the page's surface."
         }
       ]
     }
@@ -214,6 +219,8 @@
     "--c-editor-layout-tools-layer",
     "--c-editor-layout-tools-offset",
     "--color-bg",
+    "--color-bg-raised",
+    "--color-bg-sunken",
     "--color-border",
     "--color-text",
     "--duration-quick",
