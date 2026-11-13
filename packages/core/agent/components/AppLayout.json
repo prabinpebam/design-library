@@ -140,6 +140,12 @@
           "type": "'m' | 's'",
           "default": "'m'",
           "description": "`m` (default) a 56 px header and a 16 rem sidebar; `s` a dense app frame (LR41, LR42), a desktop editor's 40 px bar, a 13 rem sidebar and the view's title a section's step over its content. Pair it with Navigation `size=\"s\"`."
+        },
+        {
+          "name": "measure",
+          "type": "'measure' | 'wide'",
+          "default": "'measure'",
+          "description": "How wide the view's fields, lists and form rows may grow: measure (default) a reading line (size.measure); wide up to size.wide (LR80), an editing app whose rows fill its panels."
         }
       ]
     }
@@ -172,13 +178,19 @@
     "--c-app-layout-sidebar-s",
     "--color-bg",
     "--color-border",
-    "--color-text"
+    "--color-text",
+    "--size-wide"
   ],
   "settings": [
     {
       "var": "--c-app-layout-header-divider-width",
       "default": "0px",
       "description": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view."
+    },
+    {
+      "var": "--c-app-layout-margin",
+      "default": "1rem",
+      "description": "Around the view inside its scroller (default space.inset-md). Set var(--space-8) for an editing app whose screens sit further from the frame's edges (LR79)."
     },
     {
       "var": "--c-app-layout-end",

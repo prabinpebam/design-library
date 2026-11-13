@@ -259,4 +259,10 @@
     flex: 1;
     min-block-size: 0;
   }
+
+  /* LR80: measure="wide": the view's fields, lists and form rows grow up to size.wide (an editing app's rows fill its panels). */
+  [data-dl='app-layout'][data-measure='wide'] {
+    --c-field-measure: var(--size-wide);
+    --c-list-measure: var(--size-wide);
+  }
 }

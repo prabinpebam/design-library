@@ -314,6 +314,7 @@
   --c-code-key-outline: var(--color-border-strong);
   --c-code-key-radius: var(--radius-sm);
   --c-list-gap: var(--space-stack-item);
+  --c-list-gap-group: var(--space-stack-section);
   --c-list-option-gap: var(--space-stack-row);
   --c-list-group-gap: var(--space-stack-group);
   --c-list-tile-min: var(--size-column-min);
@@ -403,6 +404,7 @@
   --c-skeleton-line: var(--space-3);
   --c-skeleton-radius: var(--radius-sm);
   --c-icon-stroke-width: 2;
+  --c-field-measure: var(--size-measure);
   --c-field-size: var(--size-target);
   --c-field-size-xs: var(--size-target-min);
   --c-field-size-s: var(--size-target-dense);
@@ -1749,6 +1751,7 @@
   --c-list-item-padding-block: var(--space-inset-xs);
   --c-list-item-padding-inline: var(--space-inset-sm);
   --c-list-gap: var(--space-stack-item);
+  --c-list-gap-group: var(--space-stack-section);
   --c-list-group-gap: var(--space-stack-group);
   --c-list-indent: var(--space-inset-md);
   --c-list-inline-gap: var(--space-inline-group);
@@ -2049,6 +2052,7 @@
   --c-list-item-padding-block: var(--space-inset-xs);
   --c-list-item-padding-inline: var(--space-inset-sm);
   --c-list-gap: var(--space-stack-item);
+  --c-list-gap-group: var(--space-stack-section);
   --c-list-group-gap: var(--space-stack-group);
   --c-list-indent: var(--space-inset-md);
   --c-list-inline-gap: var(--space-inline-group);
@@ -2349,6 +2353,7 @@
   --c-list-item-padding-block: var(--space-inset-xs);
   --c-list-item-padding-inline: var(--space-inset-sm);
   --c-list-gap: var(--space-stack-item);
+  --c-list-gap-group: var(--space-stack-section);
   --c-list-group-gap: var(--space-stack-group);
   --c-list-indent: var(--space-inset-md);
   --c-list-inline-gap: var(--space-inline-group);
@@ -2649,6 +2654,7 @@
   --c-list-item-padding-block: var(--space-inset-xs);
   --c-list-item-padding-inline: var(--space-inset-sm);
   --c-list-gap: var(--space-stack-item);
+  --c-list-gap-group: var(--space-stack-section);
   --c-list-group-gap: var(--space-stack-group);
   --c-list-indent: var(--space-inset-md);
   --c-list-inline-gap: var(--space-inline-group);

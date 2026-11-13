@@ -1035,6 +1035,11 @@
         "$value": "{space.stack-item}",
         "$description": "Between the items of a bulleted, numbered or plain list (echoed for space contexts)"
       },
+      "gap-group": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "LR78: between a static list's items when each is a group of its own (gap=\"group\": entries that each hold a field and its actions); a rule from dividers sits in the middle (echoed for space contexts)"
+      },
       "group-gap": {
         "$type": "dimension",
         "$value": "{space.stack-group}",

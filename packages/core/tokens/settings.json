@@ -24,6 +24,7 @@
   },
   "AppLayout": {
     "--c-app-layout-header-divider-width": "A rule under the header (default 0px, none). Set var(--border-hairline) for an app whose bar is ruled off from the sidebar and the view.",
+    "--c-app-layout-margin": "Around the view inside its scroller (default space.inset-md). Set var(--space-8) for an editing app whose screens sit further from the frame's edges (LR79).",
     "--c-app-layout-end": "Room under the view's last part, inside its scroller (default c.app-layout.margin, the same as its other sides). Set more for an editing app whose last field shouldn't sit at the window's edge (LR75)."
   },
   "StickyBar": {

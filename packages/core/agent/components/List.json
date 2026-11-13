@@ -67,6 +67,11 @@
           "description": "Lines between `plain` items: `between` full width; `all` a line above every item, the first too (entries that each open with a rule)."
         },
         {
+          "name": "gap",
+          "type": "'item' | 'group'",
+          "description": "Space between items: `item` (default) for short items; `group` when each item is a group of its own (an entry holding a field and its actions), a rule from `dividers` sitting in the middle of it."
+        },
+        {
           "name": "reorderable",
           "type": "boolean",
           "description": "Each item gets a Move handle: drag it, or open its menu (Move up, down, to top, to bottom). Items need a `label`."
@@ -352,6 +357,7 @@
     "--border-divider",
     "--border-hairline",
     "--c-list-gap",
+    "--c-list-gap-group",
     "--c-list-group-gap",
     "--c-list-indent",
     "--c-list-inline-gap",

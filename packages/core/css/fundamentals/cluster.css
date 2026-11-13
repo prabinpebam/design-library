@@ -61,12 +61,21 @@
      is as wide as one field at most (size.measure), so its end lines up with the fields and lists around it. */
   [data-dl='cluster'][data-align='control'] {
     align-items: flex-start;
-    max-inline-size: var(--size-measure);
+    max-inline-size: var(--c-field-measure);
   }
 
   [data-dl='cluster'][data-align='control'] > :is([data-dl='field'], :has(> [data-dl='field'])) {
     flex: 1 1 0;
     min-inline-size: 0;
+  }
+
+  /* LR81: a field's share of the row's room (shares), as the reference studio's minmax(0, 1fr) minmax(0, 2fr) auto. */
+  [data-dl='cluster'][data-align='control'] > [data-share='2'] {
+    flex-grow: 2;
+  }
+
+  [data-dl='cluster'][data-align='control'] > [data-share='3'] {
+    flex-grow: 3;
   }
 
   [data-dl='cluster'][data-align='control'] > :not([data-dl='field'], :has(> [data-dl='field'])) {

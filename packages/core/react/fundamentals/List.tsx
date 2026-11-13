@@ -18,6 +18,8 @@ export interface StaticListProps extends DataAttributes {
   variant?: 'bulleted' | 'numbered' | 'plain' | 'inline';
   /** Lines between `plain` items: `between` full width; `all` a line above every item, the first too (entries that each open with a rule). */
   dividers?: 'none' | 'between' | 'all';
+  /** Space between items: `item` (default) for short items; `group` when each item is a group of its own (an entry holding a field and its actions), a rule from `dividers` sitting in the middle of it. */
+  gap?: 'item' | 'group';
   /** Each item gets a Move handle: drag it, or open its menu (Move up, down, to top, to bottom). Items need a `label`. */
   reorderable?: boolean;
   /** The ids in their new order, after a drag step or a Move. */
@@ -160,13 +162,13 @@ function StaticList(props: StaticListProps) {
   return props.reorderable ? <ReorderList {...props} /> : <PlainList {...props} />;
 }
 
-function PlainList({ items, variant = 'bulleted', dividers = 'none', reorderable: _r, onReorder: _o, mode: _mode, ...data }: StaticListProps) {
+function PlainList({ items, variant = 'bulleted', dividers = 'none', gap = 'item', reorderable: _r, onReorder: _o, mode: _mode, ...data }: StaticListProps) {
   const Tag = variant === 'numbered' ? 'ol' : 'ul';
   // Q65 C11: an item added fades in, one removed fades out where it is, and the others travel into place (MU8).
   const shown = useExiting(items, (i) => i.id);
   const root = useFlipList<HTMLUListElement & HTMLOListElement>(shown.map(({ item, leaving }) => (leaving ? `${item.id}:leaving` : item.id)).join('|'), { size: true });
   return (
-    <Tag {...data} ref={root} data-dl="list" data-variant={variant} data-dividers={dividers === 'none' ? undefined : dividers}>
+    <Tag {...data} ref={root} data-dl="list" data-variant={variant} data-gap={gap === 'item' ? undefined : gap} data-dividers={dividers === 'none' ? undefined : dividers}>
       {shown.map(({ item, leaving }) => (
         <li key={item.id} {...item.data} data-flip-key={item.id} data-presence="item" data-leaving={leaving ? '' : undefined} inert={leaving} aria-hidden={leaving || undefined}>
           {item.content}
@@ -176,7 +178,7 @@ function PlainList({ items, variant = 'bulleted', dividers = 'none', reorderable
   );
 }
 
-function ReorderList({ items, variant = 'plain', dividers = 'none', onReorder, reorderable: _r, mode: _mode, ...data }: StaticListProps) {
+function ReorderList({ items, variant = 'plain', dividers = 'none', gap = 'item', onReorder, reorderable: _r, mode: _mode, ...data }: StaticListProps) {
   const Tag = variant === 'numbered' ? 'ol' : 'ul';
   const rows = useRef<(HTMLLIElement | null)[]>([]);
   const drag = useRef<{ from: number; y: number; moved: boolean; id: string } | null>(null);
@@ -214,7 +216,7 @@ function ReorderList({ items, variant = 'plain', dividers = 'none', onReorder, r
   };
   return (
     <>
-      <Tag {...data} ref={root} data-dl="list" data-variant={variant} data-reorder="" data-dividers={dividers === 'none' ? undefined : dividers}>
+      <Tag {...data} ref={root} data-dl="list" data-variant={variant} data-gap={gap === 'item' ? undefined : gap} data-reorder="" data-dividers={dividers === 'none' ? undefined : dividers}>
         {items.map((item, i) => (
           <li key={item.id} {...item.data} data-flip-key={item.id} ref={(el) => void (rows.current[i] = el)} data-dragging={dragId === item.id ? '' : undefined}>
             <span data-dl-part="row">

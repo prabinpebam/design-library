@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 
 export interface ClusterProps extends DataAttributes {
@@ -9,6 +9,8 @@ export interface ClusterProps extends DataAttributes {
   justify?: 'start' | 'end' | 'between';
   /** How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), at the bottom (`end`: a button level with an unhinted field beside it, under that field's label), or `control`: a form row, every child that isn't a field level with the fields' controls (under their labels, above their hints) and keeping its own width while the fields share the room, the row no wider than one field (size.measure). */
   align?: 'center' | 'baseline' | 'start' | 'end' | 'control';
+  /** With lign="control", each child's share of the row's room by order (1-3, default all 1): [1, 2] gives the second field twice the first's width (LR81). Children that aren't fields keep their own width whatever their share. */
+  shares?: number[];
   /** Wrap onto more lines when the row runs out of room (default), or keep one line and let text inside shrink and wrap instead. */
   wrap?: boolean;
 }
@@ -22,10 +24,11 @@ export interface ClusterProps extends DataAttributes {
  * @a11y A plain `div` with no role: it arranges, it doesn't group for assistive technology. Reading order is the
  * source order, whatever the wrapping.
  */
-export function Cluster({ children, gap = 'item', align = 'center', wrap = true, justify = 'start', ...data }: ClusterProps) {
+export function Cluster({ children, gap = 'item', align = 'center', wrap = true, justify = 'start', shares, ...data }: ClusterProps) {
+  const shared = align === 'control' && shares ? Children.map(children, (child, n) => (isValidElement(child) && shares[n] && shares[n] > 1 ? cloneElement(child as ReactElement<Record<string, unknown>>, { 'data-share': String(Math.min(3, Math.round(shares[n]))) }) : child)) : children;
   return (
     <div {...data} data-dl="cluster" data-gap={gap} data-align={align} data-justify={justify === 'start' ? undefined : justify} data-nowrap={wrap ? undefined : ''}>
-      {children}
+      {shared}
     </div>
   );
 }

@@ -162,6 +162,12 @@
     padding-block-start: calc(var(--list-gap) / 2);
   }
 
+  /* LR78: items that are each a group of their own (an entry holding a field and its actions), a dividers rule in the middle. */
+  [data-dl='list'][data-gap='group'] {
+    --list-gap: var(--c-list-gap-group);
+    gap: var(--list-gap);
+  }
+
   /* F15.8e. Reorderable: each row is a Move handle (drag it, or open its menu) and the item's content. */
   [data-dl='list'][data-reorder] > li > [data-dl-part='row'] {
     display: inline-flex;
