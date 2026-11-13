@@ -35,6 +35,7 @@ export interface DataTableRow {
 export interface DataTableProps extends DataAttributes {
   /** Names the table and its scroll region, e.g. "Button props". */
   label: string;
+  /** The columns, the first heading each row. None (a screen still finding out what it shows): nothing is drawn. */
   columns: DataTableColumn[];
   rows: DataTableRow[];
   /**
@@ -134,6 +135,7 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
       />
     </span>
   );
+  if (!head) return null;
   return (
     <div {...data} data-dl="data-table" data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined}>
       <ScrollArea axis="inline" label={label}>

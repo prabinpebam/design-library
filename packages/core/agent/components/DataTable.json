@@ -40,7 +40,8 @@
         {
           "name": "columns",
           "type": "DataTableColumn[]",
-          "required": true
+          "required": true,
+          "description": "The columns, the first heading each row. None (a screen still finding out what it shows): nothing is drawn."
         },
         {
           "name": "rows",
