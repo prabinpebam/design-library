@@ -184,6 +184,7 @@
   --c-colour-field-mark-gap: var(--space-inline-pair);
   --c-button-group-gap: var(--space-inline-pair);
   --c-button-group-focus-layer: var(--layer-raised);
+  --c-menu-button-justify: center;
   --c-menu-button-size: var(--size-target);
   --c-menu-button-size-xs: var(--size-target-min);
   --c-menu-button-size-s: var(--size-target-dense);
@@ -460,6 +461,7 @@
   --c-site-header-name-size: var(--type-heading-4-size);
   --c-site-header-link-gap: var(--space-inline-pair);
   --c-site-header-row-gap: var(--space-stack-row);
+  --c-site-header-menu-actions-gap: var(--space-stack-item);
   --c-site-header-link-size: var(--size-target);
   --c-site-header-link-padding: var(--space-inset-sm);
   --c-site-header-link-radius: var(--radius-md);
@@ -1806,6 +1808,7 @@
   --c-site-header-link-gap: var(--space-inline-pair);
   --c-site-header-link-padding: var(--space-inset-sm);
   --c-site-header-mark-gap: var(--space-inline-pair);
+  --c-site-header-menu-actions-gap: var(--space-stack-item);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
   --c-site-layout-gap: var(--space-stack-page);
@@ -2101,6 +2104,7 @@
   --c-site-header-link-gap: var(--space-inline-pair);
   --c-site-header-link-padding: var(--space-inset-sm);
   --c-site-header-mark-gap: var(--space-inline-pair);
+  --c-site-header-menu-actions-gap: var(--space-stack-item);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
   --c-site-layout-gap: var(--space-stack-page);
@@ -2396,6 +2400,7 @@
   --c-site-header-link-gap: var(--space-inline-pair);
   --c-site-header-link-padding: var(--space-inset-sm);
   --c-site-header-mark-gap: var(--space-inline-pair);
+  --c-site-header-menu-actions-gap: var(--space-stack-item);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
   --c-site-layout-gap: var(--space-stack-page);
@@ -2691,6 +2696,7 @@
   --c-site-header-link-gap: var(--space-inline-pair);
   --c-site-header-link-padding: var(--space-inset-sm);
   --c-site-header-mark-gap: var(--space-inline-pair);
+  --c-site-header-menu-actions-gap: var(--space-stack-item);
   --c-site-header-panel-padding: var(--space-stack-item);
   --c-site-header-row-gap: var(--space-stack-row);
   --c-site-layout-gap: var(--space-stack-page);

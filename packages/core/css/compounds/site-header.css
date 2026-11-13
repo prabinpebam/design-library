@@ -196,6 +196,17 @@
       gap: var(--c-site-header-gap);
       padding-block-start: var(--c-site-header-panel-padding);
     }
+
+    /* menuActions="list": one column under the places; each Button's and MenuButton's content starts on the places'
+       text line (the link padding, less the control's border), and a menu trigger's layers start there too. */
+    [data-dl='site-header'][data-narrow='row'] > [data-dl='reveal'] > [data-dl-part='clip'] > [data-dl-part='panel'] > [data-dl-part='panel-actions'][data-layout='list'] {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--c-site-header-menu-actions-gap);
+      --c-button-padding-inline: calc(var(--c-site-header-link-padding) - var(--c-button-border-width));
+      --c-menu-button-padding-inline: calc(var(--c-site-header-link-padding) - var(--c-menu-button-border-width));
+      --c-menu-button-justify: start;
+    }
   }
 
   @media (forced-colors: active) {

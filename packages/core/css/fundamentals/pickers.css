@@ -15,7 +15,7 @@
   [data-dl='menu-button'] > [data-dl-part='trigger'] {
     display: inline-grid;
     grid-template-areas: 'label';
-    place-items: center;
+    place-items: center var(--c-menu-button-justify);
     min-block-size: var(--c-menu-button-size);
     min-inline-size: var(--c-menu-button-size);
     padding-inline: var(--c-menu-button-padding-inline);

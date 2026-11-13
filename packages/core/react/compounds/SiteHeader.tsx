@@ -38,6 +38,12 @@ export interface SiteHeaderProps extends DataAttributes {
    * `tools` and Menu beside the name.
    */
   narrow?: 'wrap' | 'row';
+  /**
+   * How ctions sit in the narrow menu when 
+arrow is ow: ow (default) side by side, wrapping; list one
+   * column under the places, each action starting on the places' text line, for named actions such as Dark mode.
+   */
+  menuActions?: 'row' | 'list';
   /** Small icon controls that stay on the bar at every width, before Menu (a scheme or search button). */
   tools?: ReactNode;
 }
@@ -53,7 +59,7 @@ export interface SiteHeaderProps extends DataAttributes {
  * closes it, and Escape returns focus to the button.
  * @key Escape: closes the menu
  */
-export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, nav, wordmark, current, narrow, tools, ...data }: SiteHeaderProps) {
+export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, nav, wordmark, current, narrow, menuActions, tools, ...data }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const panelId = useId();
@@ -114,7 +120,7 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
       <Reveal open={open}>
         <nav id={panelId} aria-label={label} data-dl-part="panel">
           {list}
-          {row && actions && <span data-dl-part="panel-actions">{actions}</span>}
+          {row && actions && <span data-dl-part="panel-actions" data-layout={menuActions === 'list' ? 'list' : undefined}>{actions}</span>}
         </nav>
       </Reveal>
     </div>

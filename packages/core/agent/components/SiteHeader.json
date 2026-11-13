@@ -77,6 +77,11 @@
           "description": "The narrow form (IP32, below 48 rem): `wrap` (default) keeps `actions` on the bar and wraps them under the name when they don't fit; `row` keeps the bar to one row, moving `actions` into the menu under the places, with only `tools` and Menu beside the name."
         },
         {
+          "name": "menuActions",
+          "type": "'row' | 'list'",
+          "description": "How \u0007ctions sit in the narrow menu when arrow is \row: \row (default) side by side, wrapping; list one column under the places, each action starting on the places' text line, for named actions such as Dark mode."
+        },
+        {
           "name": "tools",
           "type": "ReactNode",
           "description": "Small icon controls that stay on the bar at every width, before Menu (a scheme or search button)."
@@ -112,6 +117,8 @@
   ],
   "tokens": [
     "--border-hairline",
+    "--c-button-border-width",
+    "--c-menu-button-border-width",
     "--c-site-header-current-colour",
     "--c-site-header-current-fill",
     "--c-site-header-current-rule",
@@ -123,6 +130,7 @@
     "--c-site-header-link-radius",
     "--c-site-header-link-size",
     "--c-site-header-mark-gap",
+    "--c-site-header-menu-actions-gap",
     "--c-site-header-name-size",
     "--c-site-header-name-size-large",
     "--c-site-header-panel-padding",

@@ -68,5 +68,15 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Named actions listed in the menu',
+      description: 'With narrow="row", menuActions="list" lists the actions one per row under the places instead of side by side: each Button’s and MenuButton’s icon and words start on the places’ text edge, so the menu reads as one column. For named actions (Leave feedback, Settings); the default, row, suits one or two short buttons. Open Menu to see it.',
+      code: `<SiteHeader name="Talks on design" href="/" links={links} narrow="row" menuActions="list"
+  actions={<>
+    <Button label="Leave feedback" icon="comment" emphasis="quiet" />
+    <MenuButton label="Settings" icon="settings" emphasis="quiet" items={…} onSelect={…} />
+  </>} />`,
+      render: () => <ScreenPreview src="site.html?demo=router&header=list#/" title="Narrow header, actions listed" width="phone" caption={'menuActions="list": open Menu for the listed actions.'} />,
+    },
   ],
 } satisfies StoryFile;

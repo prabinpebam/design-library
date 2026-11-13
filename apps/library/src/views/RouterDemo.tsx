@@ -5,7 +5,7 @@
  * styles. Shown on the library's Routing page in a ScreenPreview.
  */
 import { useState } from 'react';
-import { Cluster, Image, Link, PageHeader, SchemeControl, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/components';
+import { Button, Cluster, Image, Link, MenuButton, PageHeader, SchemeControl, Section, SiteHeader, SiteLayout, Stack, Switch, TableOfContents, Text } from '@design-library/core/components';
 import { loadPicture, matchPath, Router, useRoute, type Route } from '@design-library/core/site';
 import hall from '../../../../packages/templates/conference/assets/main-hall.webp?url';
 
@@ -112,7 +112,10 @@ function View() {
 function Shell({ fade, onFade }: { fade: boolean; onFade: (next: boolean) => void }) {
   const { path } = useRoute();
   // IP32: `?header=row` keeps the bar one row in a narrow window (the Switch moves into the menu); the scheme button stays.
-  const row = new URLSearchParams(window.location.search).get('header') === 'row';
+  // `?header=list`: one row too, with named actions listed one per row in the menu, on the places' text edge.
+  const header = new URLSearchParams(window.location.search).get('header');
+  const list = header === 'list';
+  const row = header === 'row' || list;
   return (
     <SiteLayout
       header={
@@ -122,7 +125,13 @@ function Shell({ fade, onFade }: { fade: boolean; onFade: (next: boolean) => voi
           links={pages.map((p) => ({ ...p, current: p.href === path || (p.label === 'Archive' && path.startsWith('/archive/')) }))}
           narrow={row ? 'row' : undefined}
           tools={<SchemeControl form="button" storageKey="design-library.router-demo.scheme" />}
-          actions={<Switch label="Fade between pages" checked={fade} onChange={onFade} />}
+          menuActions={list ? 'list' : undefined}
+          actions={list ? (
+            <>
+              <Button label="Leave feedback" icon="comment" emphasis="quiet" />
+              <MenuButton label="Settings" icon="settings" emphasis="quiet" items={[{ value: 'fade', label: fade ? 'Stop fading' : 'Fade between pages' }]} onSelect={() => onFade(!fade)} />
+            </>
+          ) : <Switch label="Fade between pages" checked={fade} onChange={onFade} />}
         />
       }
     >

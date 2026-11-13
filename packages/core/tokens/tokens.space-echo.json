@@ -1585,6 +1585,11 @@
         "$value": "{space.inline-pair}",
         "$description": "Between the mark and the name (echoed for space contexts)"
       },
+      "menu-actions-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Between actions listed one per row in the narrow menu (menuActions list) (echoed for space contexts)"
+      },
       "panel-padding": {
         "$type": "dimension",
         "$value": "{space.stack-item}",

@@ -170,6 +170,7 @@
     "--c-menu-button-border",
     "--c-menu-button-border-width",
     "--c-menu-button-gap",
+    "--c-menu-button-justify",
     "--c-menu-button-padding-inline",
     "--c-menu-button-radius",
     "--c-menu-button-size",

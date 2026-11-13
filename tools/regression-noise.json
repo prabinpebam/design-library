@@ -1,6 +1,12 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--siteheader": {
+      "reason": "catalogue inventory: (DesignUp LR9) SiteHeader menuActions (default row, unchanged) adds a prop row and a story 'Named actions listed in the menu' below the viewport; only the right scrollbar track changes.",
+      "regions": [
+        { "x": 1270, "y": 54, "width": 10, "height": 846 }
+      ]
+    },
     "lib--slider": {
       "reason": "catalogue inventory: (DesignUp LR8) switch and slider corners read --c-switch-radius / --c-slider-radius (default radius.full, unchanged): a new story 'Pill ends from the theme' below the viewport; only the right scrollbar track changes.",
       "regions": [
