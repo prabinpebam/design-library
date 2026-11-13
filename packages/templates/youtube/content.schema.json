@@ -234,6 +234,10 @@
         "id": {
           "type": "string"
         },
+        "thumbnail": {
+          "description": "The asset id of its thumbnail in `assets.json`: drawn on every card, result and up-next item, and in the player.",
+          "type": "string"
+        },
         "title": {
           "type": "string"
         },

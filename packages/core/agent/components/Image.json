@@ -199,7 +199,8 @@
     "Hero",
     "ikea.PictureBanner",
     "ikea.ProductTile",
-    "slack.Workspace"
+    "slack.Workspace",
+    "youtube.Site"
   ],
   "principles": [
     "visual-representation"

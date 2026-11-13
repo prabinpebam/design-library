@@ -40,6 +40,11 @@
           "name": "params",
           "type": "Record<string, string>",
           "description": "The address's values: `v` is the video the watch page plays (the content's `watch.video` when it names none)."
+        },
+        {
+          "name": "picture",
+          "type": "(id: string) => Pic",
+          "description": "A picture by its asset id (the host's `ctx.picture`); without it, frames stay plain."
         }
       ]
     }
@@ -53,6 +58,7 @@
     "Heading",
     "Icon",
     "IconOverrides",
+    "Image",
     "Link",
     "MenuButton",
     "Navigation",

@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, IconOverrides, Link, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
+import { Avatar, Badge, Button, ButtonGroup, ChipGroup, Heading, Icon, IconOverrides, Image, Link, MenuButton, Navigation, ScrollArea, Slider, Switch, Text, TextField, defineIconPack, type DataAttributes } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import type { YoutubeRecord, YoutubeVideo } from '../../types';
 import playerPack from '../../icons/pack.json';
@@ -18,7 +18,12 @@ export interface SiteProps extends DataAttributes {
   href?: (layout: string) => string;
   /** The address's values: `v` is the video the watch page plays (the content's `watch.video` when it names none). */
   params?: Record<string, string>;
+  /** A picture by its asset id (the host's `ctx.picture`); without it, frames stay plain. */
+  picture?: (id: string) => Pic;
 }
+
+/** A picture from the template's `assets.json`. */
+type Pic = { src: string; alt: string };
 
 /**
  * A video site's home: a masthead with the guide button, a wordmark, search and the signed-out end, the guide at full
@@ -29,7 +34,8 @@ export interface SiteProps extends DataAttributes {
  * @family youtube
  * @a11y A banner with search, a named guide navigation, and one main landmark holding the filters and the feed.
  */
-export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`, params, ...data }: SiteProps) {
+export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`, params, picture, ...data }: SiteProps) {
+  const thumb = (v: YoutubeVideo) => (v.thumbnail && picture ? picture(v.thumbnail) : undefined);
   const c = view.copy;
   const [query, setQuery] = useState(screen === 'search' ? view.search.query : '');
   const [chip, setChip] = useState([view.chips[0] ?? '']);
@@ -96,14 +102,14 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
         </ScrollArea>
       </nav>
       <main data-dl-part="main">
-        {screen === 'watch' ? <Watch key={params?.v} view={view} href={href} video={params?.v} /> : screen === 'search' ? <Search view={view} href={href} /> : (
+        {screen === 'watch' ? <Watch key={params?.v} view={view} href={href} video={params?.v} thumb={thumb} /> : screen === 'search' ? <Search view={view} href={href} thumb={thumb} /> : (
         <ScrollArea label={c.feed}>
           <div data-dl="youtube-feed">
             <div data-dl-part="chips">
               <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
             </div>
             <ul data-dl-part="grid" aria-label={c.feed}>
-              {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} /></li>)}
+              {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href(`watch?v=${v.id}`)} picture={thumb(v)} /></li>)}
             </ul>
           </div>
         </ScrollArea>
@@ -113,10 +119,11 @@ export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`
   );
 }
 
-function VideoCard({ video, copy: c, to }: { video: YoutubeVideo; copy: Record<string, string>; to: string }) {
+function VideoCard({ video, copy: c, to, picture }: { video: YoutubeVideo; copy: Record<string, string>; to: string; picture?: Pic }) {
   return (
     <article data-dl="youtube-video">
       <div data-dl-part="frame">
+        <Thumb picture={picture} />
         <Link plain data-dl-part="link" href={to}><span data-dl-spoken>{video.title}</span></Link>
         <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{video.duration}</Badge></span>
       </div>
@@ -151,11 +158,12 @@ function VideoCard({ video, copy: c, to }: { video: YoutubeVideo; copy: Record<s
 }
 
 /** The watch page (W-1280-L): the player, title, owner row with actions, description and comments; up next beside it. */
-function Watch({ view, href, video: chosen }: { view: YoutubeRecord; href: (layout: string) => string; video?: string }) {
+function Watch({ view, href, video: chosen, thumb }: { view: YoutubeRecord; href: (layout: string) => string; video?: string; thumb: (v: YoutubeVideo) => Pic | undefined }) {
   const c = view.copy;
   const w = view.watch;
   const video = view.videos.find((v) => v.id === (chosen ?? w.video)) ?? view.videos[0];
   const next = view.videos.filter((v) => v.id !== video.id);
+  const shown = thumb(video);
   const [seek, setSeek] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
   const [playing, setPlaying] = useState(true);
@@ -173,6 +181,7 @@ function Watch({ view, href, video: chosen }: { view: YoutubeRecord; href: (layo
         {next.map((v) => (
           <li key={v.id} data-dl-part="next-item">
             <div data-dl-part="frame">
+              <Thumb picture={thumb(v)} />
               <Link plain data-dl-part="link" href={href(`watch?v=${v.id}`)}><span data-dl-spoken>{v.title}</span></Link>
               <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
             </div>
@@ -191,7 +200,7 @@ function Watch({ view, href, video: chosen }: { view: YoutubeRecord; href: (layo
       <div data-dl="youtube-watch">
         <div data-dl-part="primary">
           <div data-dl-part="player" data-scheme="dark" data-aspect={video.aspect}>
-            <div data-dl-part="screen" role="img" aria-label={c.player} />
+            {shown ? <span data-dl-part="screen"><Image src={shown.src} alt={shown.alt} ratio="fill" priority /></span> : <div data-dl-part="screen" role="img" aria-label={c.player} />}
             <IconOverrides icons={playerPack.glyphs}>
             <div data-dl-part="controls">
               <div data-dl-part="seek"><Slider label={c.seek} hideLabel showValue={false} size="s" min={0} max={100} value={seek} onChange={(v) => setSeek(v as number)} /></div>
@@ -277,7 +286,7 @@ function Watch({ view, href, video: chosen }: { view: YoutubeRecord; href: (layo
 }
 
 /** Search results (S-1280-L): filters with Filters at the end, then one row per video, its frame beside its words. */
-function Search({ view, href }: { view: YoutubeRecord; href: (layout: string) => string }) {
+function Search({ view, href, thumb }: { view: YoutubeRecord; href: (layout: string) => string; thumb: (v: YoutubeVideo) => Pic | undefined }) {
   const c = view.copy;
   const s = view.search;
   const [chip, setChip] = useState([s.chips[0] ?? '']);
@@ -298,6 +307,7 @@ function Search({ view, href }: { view: YoutubeRecord; href: (layout: string) =>
           {results.map(({ v, snippet, badges, chapters }) => (
             <li key={v.id} data-dl-part="result">
               <div data-dl-part="frame">
+                <Thumb picture={thumb(v)} />
                 <Link plain data-dl-part="link" href={href(`watch?v=${v.id}`)}><span data-dl-spoken>{v.title}</span></Link>
                 <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
               </div>
@@ -338,3 +348,8 @@ const slug = (label: string) => label.toLowerCase().replace(/\s+/g, '-');
 /** The watch page's one-column width, as site.css has it. */
 const oneColumnQuery = '(max-width: 64rem)';
 const narrowWatch = () => typeof window !== 'undefined' && window.matchMedia(oneColumnQuery).matches;
+
+/** A video's thumbnail filling its frame, under the frame's link and duration; decorative, as the link names the video. */
+function Thumb({ picture }: { picture?: Pic }) {
+  return picture ? <span data-dl-part="thumb"><Image src={picture.src} alt="" ratio="fill" loading="lazy" /></span> : null;
+}

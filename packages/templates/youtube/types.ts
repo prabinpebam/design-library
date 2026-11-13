@@ -27,6 +27,8 @@ export interface YoutubeVideo {
   duration: string;
   /** The video's own shape; the watch page's player is as tall as it makes it. Default `16:9`. */
   aspect?: '16:9' | '4:3';
+  /** The asset id of its thumbnail in `assets.json`: drawn on every card, result and up-next item, and in the player. */
+  thumbnail?: string;
 }
 /** One comment under the video being watched. */
 export interface YoutubeComment {

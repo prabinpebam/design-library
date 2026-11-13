@@ -1,0 +1,12 @@
+{
+  "id": "video-v1",
+  "set": "youtube",
+  "model": "gpt-image-2.5",
+  "size": "1536x864",
+  "quality": "high",
+  "reference": null,
+  "date": "2026-11-13",
+  "prompt": "text prompt (see style.txt); the set reference",
+  "alt": "A newly built cedar planter box on a sawdust-covered workbench, a drill, screws and a pencil beside it, a garden behind.",
+  "file": "packages/templates/youtube/assets/video-v1.webp"
+}

@@ -1,4 +1,53 @@
 {
   "$schema": "../../core/schemas/assets.schema.json",
-  "assets": {}
+  "assets": {
+    "video-v1": {
+      "src": "assets/video-v1.webp",
+      "alt": "A newly built cedar planter box on a sawdust-covered workbench, a drill, screws and a pencil beside it, a garden behind."
+    },
+    "video-v2": {
+      "src": "assets/video-v2.webp",
+      "alt": "A harbour quay at sunrise: wet cobblestones, coloured houses along the water and small fishing boats moored in calm water."
+    },
+    "video-v3": {
+      "src": "assets/video-v3.webp",
+      "alt": "Three bowls of noodle soup on a wooden table: one with greens, one in a red chilli broth, one with a halved egg."
+    },
+    "video-v4": {
+      "src": "assets/video-v4.webp",
+      "alt": "Water carving S-shaped bends through damp sand in a small model river on a table."
+    },
+    "video-v5": {
+      "src": "assets/video-v5.webp",
+      "alt": "Meteors streaking across a starry sky over a dark valley, a telescope in silhouette on a ridge."
+    },
+    "video-v6": {
+      "src": "assets/video-v6.webp",
+      "alt": "A hand forming a chord on the neck of an acoustic guitar, a living room out of focus behind."
+    },
+    "video-v7": {
+      "src": "assets/video-v7.webp",
+      "alt": "An old hand plane on a workbench, rusty on one half and polished to bright steel on the other, among wood shavings."
+    },
+    "video-v8": {
+      "src": "assets/video-v8.webp",
+      "alt": "An open carry-on backpack on a bed, packed with rolled clothes, with packing cubes, a toiletry bag and sneakers beside it."
+    },
+    "video-v9": {
+      "src": "assets/video-v9.webp",
+      "alt": "Tomato plants with ripe red tomatoes in terracotta pots on a sunny balcony, a watering can pouring at the soil."
+    },
+    "video-v10": {
+      "src": "assets/video-v10.webp",
+      "alt": "Old paper maps spread on a desk with a magnifying glass and a brass compass."
+    },
+    "video-v11": {
+      "src": "assets/video-v11.webp",
+      "alt": "A piano keyboard beside a rain-streaked window, with a cup of tea and an open notebook on the piano."
+    },
+    "video-v12": {
+      "src": "assets/video-v12.webp",
+      "alt": "Five small tents in orange, green, blue, yellow and red pitched on a grassy hillside under a dark stormy sky."
+    }
+  }
 }
