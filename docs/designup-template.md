@@ -37,11 +37,13 @@ This row joins the table in [pressure-test loop, section 2](pressure-test-loop.m
 
 ## LR97: external YouTube captions (13 November 2026)
 
-Decision: generic R7 playback/accessibility code in MediaPlayer, no new block or album. Optional YouTube source tracks use MediaTrack, preserving native file tracks and unconfigured embeds. The free no-key iframe API supplies current time; the browser parses local WebVTT and the player overlays plain caption text. One labelled language choice plus Off, local loading/error/retry, no new resting enclosure or ambient motion. Seam steps 1-5 cannot provide sealed playback timing/markup; step 6 owns it. DesignUp adopts through its Opening film with no override. Typecheck and build:library, then linked consumer typecheck/build and focused shots; stories/regression deferred to merge night.
+Decision: generic R7 playback/accessibility code in MediaPlayer, no new block or album. Optional YouTube source tracks use MediaTrack, preserving native file tracks and unconfigured embeds. The free no-key iframe API supplies current time; the browser parses local WebVTT and the player overlays plain caption text. One labelled language choice plus Off, local loading/error/retry, no new resting enclosure or ambient motion. The enhanced player owns full screen so its overlay and language choice stay with the video; YouTube's iframe-only full screen cannot include a parent's captions. Seam steps 1-5 cannot provide sealed playback timing/markup; step 6 owns it. DesignUp adopts through its Opening film with no override. Typecheck and build:library, then linked consumer typecheck/build and focused shots; stories/regression deferred to merge night.
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR97 | 2026-11-13 | Uploaded multilingual transcripts play as YouTube captions | MediaSource tracks are file-only; iframe has no local caption timing | Step 6 | Optional tracks on YouTube source; accessible language choice and Off; overlay synchronized by iframe API current time | none | DesignUp; Editor 30 | in progress | pending | Adopt through Opening film; no workaround |
+| LR97 | 2026-11-13 | Uploaded multilingual transcripts play as YouTube captions | MediaSource tracks are file-only; iframe has no local caption timing | Step 6 | Optional tracks on YouTube source; accessible language choice and Off; overlay synchronized by iframe API current time | none | DesignUp; Editor 30 | shipped | 60a0644 and this full-screen follow-up | Done: Opening film adopts timed manifest tracks; no workaround |
+
+Evidence: real iframe API time at 0.5 / 2.5 / 3.5 seconds produced first cue / gap / second cue; Off removed the overlay. DesignUp's actual page switched saved English and French tracks. Full-screen success remains unverified: headless Chrome refused with "not granted" despite a trusted gesture and focused document. Its explicit local retry message was verified; browser permissions were not bypassed.
 
 ## Request log (DesignUp)
 

@@ -75,6 +75,20 @@
     justify-self: stretch;
   }
 
+  [data-dl='media-player']:fullscreen {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    padding: var(--space-inset-xs);
+  }
+
+  [data-dl='media-player']:fullscreen > [data-dl-part='stage'] {
+    flex: 1;
+    min-block-size: 0;
+    inline-size: 100%;
+    aspect-ratio: auto;
+  }
+
   [data-dl='media-player'] > [data-dl-part='stage'] > [data-dl-part='play'] {
     grid-area: 1 / 1;
     place-self: center;

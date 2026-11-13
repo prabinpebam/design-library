@@ -136,6 +136,8 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
   const [apiState, setAPIState] = useState<'loading' | 'ready' | 'failed'>('loading');
   const [retry, setRetry] = useState(0);
   const [trackRetry, setTrackRetry] = useState(0);
+  const [fullscreen, setFullscreen] = useState(false);
+  const [fullscreenFailed, setFullscreenFailed] = useState(false);
   const host = useRef<HTMLDivElement>(null);
   const textTrack = useRef<HTMLTrackElement>(null);
 
@@ -146,10 +148,9 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
     setAPIState('loading');
     setTime(0);
     const frame = document.createElement('iframe');
-    frame.src = `${embedSrc(source)}&enablejsapi=1&origin=${encodeURIComponent(location.origin)}`;
+    frame.src = `${embedSrc(source)}&enablejsapi=1&fs=0&origin=${encodeURIComponent(location.origin)}`;
     frame.title = title;
-    frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-    frame.allowFullscreen = true;
+    frame.allow = 'autoplay; encrypted-media';
     frame.referrerPolicy = 'strict-origin-when-cross-origin';
     host.current?.append(frame);
     frame.focus();
@@ -174,6 +175,12 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
       frame.remove();
     };
   }, [source.id, title, retry]);
+
+  useEffect(() => {
+    const changed = () => setFullscreen(document.fullscreenElement === host.current?.closest('figure'));
+    document.addEventListener('fullscreenchange', changed);
+    return () => document.removeEventListener('fullscreenchange', changed);
+  }, []);
 
   useEffect(() => {
     const node = textTrack.current;
@@ -213,6 +220,14 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
       <Select label="Captions" width="content" mode="form" value={chosen ? selected : '__off'}
         options={[{ value: '__off', label: 'Off' }, ...tracks.map(track => ({ value: track.src, label: track.label }))]}
         onChange={value => { setSelected(value); setTrackFailed(false); setLoaded(''); setCues([]); }} />
+      {document.fullscreenEnabled && <Button label={fullscreen ? 'Exit full screen' : 'Enter full screen'} emphasis="quiet"
+        onClick={() => {
+          setFullscreenFailed(false);
+          const region = host.current?.closest('figure');
+          if (!region) { setFullscreenFailed(true); return; }
+          void (fullscreen ? document.exitFullscreen() : region.requestFullscreen()).catch(() => setFullscreenFailed(true));
+        }} />}
+      {fullscreenFailed && <span role="alert"><Text variant="body-sm">Full screen couldn’t be changed. Try the full screen button again.</Text></span>}
       {chosen && (apiState === 'failed' || trackFailed ? <div data-dl-part="caption-status" role="alert">
         <Text variant="body-sm">Captions couldn’t be loaded. Try again or turn captions off.</Text>
         <Button label="Try again" emphasis="quiet" onClick={() => {
@@ -237,7 +252,8 @@ function YouTubeCaptions({ source, title }: { source: Extract<MediaSource, { fro
  * swaps in the remote frame, named by the title, and moves focus into it. The length badge on the poster is
  * `aria-hidden` (the button says it). A transcript link follows the player when given.
  * YouTube sources with tracks add a labelled Captions choice including Off, and a plain-text caption overlay.
- * Track loading failures offer Retry; cues are not a live region that interrupts screen-reader speech.
+ * The enhanced player's full-screen action includes captions and their choice. Failures offer Retry;
+ * cues are not a live region that interrupts screen-reader speech.
  * @key Enter, Space: on an embed's poster, loads and plays the video
  */
 export function MediaPlayer({ kind = 'video', source, title, poster, posterAlt, posterTreatment, shape = { width: 16, height: 9 }, duration, caption, transcript, ...data }: MediaPlayerProps) {
