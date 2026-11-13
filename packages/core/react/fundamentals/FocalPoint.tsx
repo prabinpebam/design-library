@@ -15,6 +15,8 @@ export interface FocalPointProps extends DataAttributes {
   label: string;
   /** Instructions for pointer and keyboard users. */
   hint: string;
+  /** Compact bounds the preview height; fill uses the available width at the picture's natural aspect. */
+  preview?: 'compact' | 'fill';
   /** The point as fractions from the picture's physical left and top edges. */
   value: FocalPointValue;
   /** Preview updates; save in onChangeEnd. */
@@ -38,7 +40,7 @@ const clamp = (n: number) => Math.min(1, Math.max(0, n));
  * The whole picture is the pointer target. Physical left/top coordinates do not mirror in RTL.
  * @key Arrows: move five percent; Shift + arrows: one percent. Home: centre. Pause or blur: commit.
  */
-export function FocalPoint({ src, alt, label, hint, value, onChange, onChangeEnd, format, messages, disabled = false, ...data }: FocalPointProps) {
+export function FocalPoint({ src, alt, label, hint, preview = 'compact', value, onChange, onChangeEnd, format, messages, disabled = false, ...data }: FocalPointProps) {
   const id = useId();
   const [point, setPoint] = useState(value);
   const [loaded, setLoaded] = useState('');
@@ -86,7 +88,7 @@ export function FocalPoint({ src, alt, label, hint, value, onChange, onChangeEnd
     update(next); clearTimeout(timer.current);
     timer.current = setTimeout(commit, durationToken('--duration-commit-pause', event.currentTarget));
   };
-  return <div {...data} data-dl="focal-point" data-commit={phase}>
+  return <div {...data} data-dl="focal-point" data-preview={preview} data-commit={phase}>
     <Text id={`${id}-label`} weight="strong">{label}</Text>
     <div data-dl-part="picture" role="slider" tabIndex={0} aria-labelledby={`${id}-label`}
       aria-describedby={`${id}-hint`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(point.x * 100)}

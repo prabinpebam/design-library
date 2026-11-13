@@ -19,6 +19,16 @@
     max-inline-size: 100%;
     max-block-size: var(--c-focal-point-preview);
   }
+  [data-dl='focal-point'][data-preview='fill'] {
+    inline-size: 100%;
+  }
+  [data-dl='focal-point'][data-preview='fill'] > [data-dl-part='picture'] {
+    inline-size: 100%;
+  }
+  [data-dl='focal-point'][data-preview='fill'] > [data-dl-part='picture'] > img {
+    inline-size: 100%;
+    max-block-size: none;
+  }
   [data-dl='focal-point'] > [data-dl-part='picture']:focus-visible {
     outline: var(--size-focus-width) solid var(--color-focus);
     outline-offset: var(--size-focus-offset);
