@@ -76,6 +76,16 @@
         "$description": "Colour of the enclosure (echoed for contrast contexts)"
       }
     },
+    "divider": {
+      "$extensions": {
+        "owner": "Divider"
+      },
+      "color": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "The rule's colour: the quiet border (echoed for contrast contexts)"
+      }
+    },
     "editor-layout": {
       "$extensions": {
         "owner": "EditorLayout"
