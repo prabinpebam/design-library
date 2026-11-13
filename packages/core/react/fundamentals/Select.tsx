@@ -64,6 +64,9 @@ interface SelectBase extends DataAttributes {
   hideLabel?: boolean;
   /** A leading icon that says what kind of choice it is. Decorative: the label names the field. */
   icon?: IconName;
+  /** One choice: the chosen option's icon leads the box, in place of `icon`, so the closed box shows what the list shows
+   * (a platform's mark beside its name). `icon` shows while nothing is chosen or the choice has no icon. Off by default. */
+  chosenIcon?: boolean;
   /** Shown while nothing is chosen: an instruction in the label's words, "Choose a country". */
   placeholder?: string;
   /** One short sentence about the choice. */
@@ -141,7 +144,7 @@ const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: '
  * an `input[role=combobox]` with `aria-autocomplete="list"`, and the number of matches announced politely.
  */
 export function Select(props: SelectProps) {
-  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, applied = false, width = 'fill', ...data } = props;
+  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, chosenIcon = false, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, applied = false, width = 'fill', ...data } = props;
   const id = useId();
   const { phase, run, reset } = useCommit('--duration-confirm-min');
   const [open, setOpen] = useState(false);
@@ -352,9 +355,10 @@ export function Select(props: SelectProps) {
           disabled,
           onKeyDown: onKey,
         };
-        const leading = icon && (
+        const leadIcon = (chosenIcon && !multiple && chosen >= 0 && options[chosen].icon) || icon;
+        const leading = leadIcon && (
           <span data-dl-part="leading" aria-hidden="true">
-            <Icon name={icon} size={iconSize[size]} />
+            <Icon name={leadIcon} size={iconSize[size]} />
           </span>
         );
         const ends = (

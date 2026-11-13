@@ -108,6 +108,11 @@
           "description": "A leading icon that says what kind of choice it is. Decorative: the label names the field."
         },
         {
+          "name": "chosenIcon",
+          "type": "boolean",
+          "description": "One choice: the chosen option's icon leads the box, in place of `icon`, so the closed box shows what the list shows (a platform's mark beside its name). `icon` shows while nothing is chosen or the choice has no icon. Off by default."
+        },
+        {
           "name": "placeholder",
           "type": "string",
           "description": "Shown while nothing is chosen: an instruction in the label's words, \"Choose a country\"."
