@@ -11,44 +11,26 @@
 //       --width 1280 --height 900   --json .shots/click-probe/word.json   --verbose (every control and its effect)
 // Note-only clicks (the control's only effect is the honest not-in-replica note) are listed apart from working ones.
 // Exit 1 when any control is dead. The server is not started: point --origin at a running library app.
+// Layouts run in parallel pages of one browser (--jobs, default 8); a page reloads only when a click navigated away
+// (address change, new window) or when the next control is gone. tools/check-works.mjs imports probeLayouts.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 
-const root = process.cwd();
-const require = createRequire(join(root, 'package.json'));
-const argv = process.argv.slice(2);
-const opt = (name, fallback) => {
-  const i = argv.indexOf(`--${name}`);
-  return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : fallback;
-};
 const list = (v) => (v ? v.split(',').map((s) => s.trim()).filter(Boolean) : []);
-const origin = opt('origin', 'http://127.0.0.1:8770');
-const width = +opt('width', 1280);
-const height = +opt('height', 900);
-const verbose = argv.includes('--verbose');
 
-const targets = [];
-for (const u of list(opt('url'))) targets.push({ id: u.replace(/^.*#\/app\//, ''), url: u });
-const template = opt('template');
-if (template) {
+// The probe targets for one template: every built layout, or the ones named.
+export function layoutTargets(root, template, origin, layouts = []) {
   const manifest = join(root, 'packages/templates', template, 'template.json');
-  if (!existsSync(manifest)) {
-    console.error(`click-probe: no template "${template}" (${manifest}).`);
-    process.exit(2);
-  }
-  const only = new Set(list(opt('layouts')));
-  for (const l of JSON.parse(readFileSync(manifest, 'utf8')).layouts ?? []) {
-    if (l.planned || (only.size && !only.has(l.id))) continue;
-    targets.push({ id: `${template}/${l.id}`, url: `${origin}/site.html?chrome=none#/app/${template}/${l.id}` });
-  }
-}
-if (!targets.length) {
-  console.error('click-probe: name a --template or one or more --url.');
-  process.exit(2);
+  if (!existsSync(manifest)) throw new Error(`no template "${template}" (${manifest})`);
+  const only = new Set(layouts);
+  return (JSON.parse(readFileSync(manifest, 'utf8')).layouts ?? [])
+    .filter((l) => !l.planned && (!only.size || only.has(l.id)))
+    .map((l) => ({ template, id: `${template}/${l.id}`, url: `${origin}/site.html?chrome=none#/app/${template}/${l.id}` }));
 }
 
-function chromePath() {
+export function chromePath() {
   if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
   const dir = join(process.env.LOCALAPPDATA ?? join(process.env.HOME ?? '', '.cache'), 'ms-playwright');
   const found = existsSync(dir) ? readdirSync(dir).filter((d) => /^chromium-\d+$/.test(d)).sort((a, b) => +b.split('-')[1] - +a.split('-')[1]) : [];
@@ -57,8 +39,12 @@ function chromePath() {
       if (existsSync(join(dir, d, exe))) return join(dir, d, exe);
     }
   }
-  console.error('click-probe: no Chromium found; set CHROME_PATH.');
-  process.exit(2);
+  throw new Error('no Chromium found; set CHROME_PATH');
+}
+
+export async function launch(root = process.cwd()) {
+  const { chromium } = createRequire(join(root, 'package.json'))('playwright-core');
+  return chromium.launch({ executablePath: chromePath(), headless: true });
 }
 
 const CONTROLS = 'button, a[href], summary, [role=button], [role=tab], [role=switch], [role=checkbox], [role=radio], [role=menuitem], [role=menuitemcheckbox], [role=menuitemradio], [role=option], input[type=checkbox], input[type=radio]';
@@ -87,7 +73,7 @@ async function tag(page) {
   }, CONTROLS);
 }
 
-// Watches for an effect; hover, focus and press styling attributes don't count.
+// Watches for an effect; hover, focus and press styling attributes and hover hints don't count.
 // Changes inside the notification host (core `notify`) and the live announcer it speaks through are counted apart, so a click whose only effect is the
 // "isn't part of the replica yet" note is reported as a note, not as working (F37).
 const arm = () => {
@@ -100,6 +86,8 @@ const arm = () => {
     for (const r of records) {
       if (r.type === 'attributes' && ignore.test(r.attributeName ?? '')) continue;
       const node = r.target.nodeType === 1 ? r.target : r.target.parentElement;
+      // A hover hint (role tooltip) opens on its own timer under the pointer: it's not the click's effect.
+      if (node?.closest('[role="tooltip"]')) continue;
       if (node?.closest('[data-dl="notifications"], [data-dl="announcer"]')) window.__cpNotify++;
       else window.__cpCount++;
     }
@@ -116,27 +104,63 @@ const effect = (n) => {
 // The honest stub note: "X isn't part of the replica yet", "… aren't part of this example".
 const NOTE = /\b(isn[’']t|aren[’']t|is not|are not) part of (this|the) (replica|example)/i;
 
-const { chromium } = require('playwright-core');
-const browser = await chromium.launch({ executablePath: chromePath(), headless: true });
-const report = { origin, width, height, layouts: [] };
-let deadTotal = 0;
-let noteTotal = 0;
-let clickedTotal = 0;
-let disabledTotal = 0;
-for (const t of targets) {
+
+// Whether the control plainly can't take a click: '' when it may, else the reason. Only two sure cases: a control placed
+// off the page (a skip link before it's focused) and one under an open modal layer. Anything else is left to the click.
+const hidden = (loc) =>
+  loc
+    .evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.right + scrollX <= 0 || r.bottom + scrollY <= 0) return 'off the page';
+      const x = r.left + r.width / 2;
+      const y = r.top + r.height / 2;
+      if (x < 0 || y < 0 || x >= innerWidth || y >= innerHeight) return '';
+      const top = document.elementFromPoint(x, y);
+      const modal = top?.closest('dialog[open], [role="dialog"], [role="alertdialog"], [aria-modal="true"]');
+      return top && modal && !modal.contains(el) && !el.contains(top) ? 'under a modal layer' : '';
+    })
+    .catch(() => '');
+
+// Waits until the view has rendered: the control count holds for 200 ms (at least 300 ms, at most 1.5 s after load).
+async function settle(page) {
+  let last = -1;
+  let steady = 0;
+  for (let waited = 0; waited < 1500; waited += 100) {
+    await page.waitForTimeout(100);
+    const n = await page.evaluate((sel) => document.querySelectorAll(sel).length, CONTROLS).catch(() => -1);
+    steady = n > 0 && n === last ? steady + 1 : 0;
+    last = n;
+    if (steady >= 2 && waited >= 200) return;
+  }
+}
+
+// Clicks every control of one layout in its own browser context.
+async function probeLayout(browser, t, { width, height, verbose }) {
+  const began = Date.now();
   const context = await browser.newContext({ viewport: { width, height } });
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
   let popups = 0;
   context.on('page', () => popups++);
+  let loads = 0;
+  let loadMs = 0;
   const load = async () => {
+    loads++;
+    const t0 = Date.now();
+    try {
+      return await reload();
+    } finally {
+      loadMs += Date.now() - t0;
+    }
+  };
+  const reload = async () => {
     // Back to the layout's resting state: a template that keeps its state for the tab (a filter, a bag) would otherwise
     // reload with different controls than the ones tagged, and a click would be blamed on the wrong control.
     await page.evaluate(() => sessionStorage.clear()).catch(() => undefined);
     await page.goto('about:blank');
     await page.goto(t.url, { waitUntil: 'load' });
-    await page.waitForTimeout(700);
+    await settle(page);
     // A navigation the page starts itself (a redirect, a dev server's reload) can destroy the context mid-read: retry.
     for (let i = 0; ; i++) {
       try {
@@ -151,6 +175,7 @@ for (const t of targets) {
   const controls = await load();
   let tagged = controls.length;
   const row = { id: t.id, url: t.url, controls: controls.length, clicked: 0, dead: [], notes: [], current: [], disabled: [], skipped: [], pageErrors: errors };
+  const lines = [];
   for (const c of controls) {
     if (c.disabled) {
       row.disabled.push(c.name);
@@ -158,12 +183,24 @@ for (const t of targets) {
     }
     let loc = page.locator(`[data-click-probe="${c.n}"]`);
     if (!(await loc.count()) || !(await loc.isVisible())) {
+      // The view changed under the tagged controls: back to the resting state.
       await load();
       loc = page.locator(`[data-click-probe="${c.n}"]`);
       if (!(await loc.count()) || !(await loc.isVisible())) {
         row.skipped.push(c.name);
         continue;
       }
+    }
+    // A control under a modal layer or off the screen (a skip link) can't take the click: list it as skipped at once,
+    // rather than letting the click time out and reloading. A layer that's on its way out gets one more look.
+    let covered = await hidden(loc);
+    if (covered) {
+      await page.waitForTimeout(400);
+      covered = await hidden(loc);
+    }
+    if (covered) {
+      row.skipped.push(`${c.name} (${covered})`);
+      continue;
     }
     const before = popups;
     await page.evaluate(arm);
@@ -176,8 +213,9 @@ for (const t of targets) {
     }
     await page.waitForTimeout(250);
     let fx = await page.evaluate(effect, c.n).catch(() => ({ dom: 1, notify: 0, said: '', url: true, focus: false }));
-    // A router may start a page change after a glide or a busy frame: give a quiet click one more look before calling it dead.
-    if (!(fx.dom || fx.notify || fx.url || fx.focus || popups > before)) {
+    // A router may start a page change after a glide or a busy frame, and a busy machine may paint the note before the
+    // change: give a quiet or note-only click one more look before calling it dead or note only.
+    if (!(fx.dom || fx.url || fx.focus || popups > before)) {
       await page.waitForTimeout(750);
       fx = await page.evaluate(effect, c.n).catch(() => ({ dom: 1, notify: 0, said: '', url: true, focus: false }));
     }
@@ -187,9 +225,9 @@ for (const t of targets) {
     row.clicked++;
     if (note) row.notes.push(c.name);
     else if (!alive) (c.current ? row.current : row.dead).push(c.name);
-    if (verbose) console.log(`  ${note ? 'NOTE' : alive ? 'ok  ' : 'DEAD'} ${t.id} ${c.role} "${c.name}" dom ${fx.dom} notify ${fx.notify} url ${fx.url} focus ${fx.focus}`);
+    if (verbose) lines.push(`  ${note ? 'NOTE' : alive ? 'ok  ' : 'DEAD'} ${t.id} ${c.role} "${c.name}" dom ${fx.dom} notify ${fx.notify} url ${fx.url} focus ${fx.focus}`);
     // Back to the layout's resting state before the next control: Escape closes menus and popovers; reload only when
-    // the address moved, a window opened or tagged controls disappeared (a view changed under them).
+    // the click navigated away (the address moved or a window opened) or the view changed under the tagged controls.
     await page.keyboard.press('Escape').catch(() => undefined);
     const remaining = await page.locator('[data-click-probe]').count().catch(() => 0);
     if (fx.url || popups > before || remaining < tagged) {
@@ -197,18 +235,76 @@ for (const t of targets) {
       tagged = (await load()).length;
     }
   }
-  clickedTotal += row.clicked;
-  deadTotal += row.dead.length;
-  noteTotal += row.notes.length;
-  disabledTotal += row.disabled.length;
-  report.layouts.push(row);
-  console.log(`${t.id}: ${row.clicked} clicked, ${row.dead.length} dead, ${row.notes.length} note only, ${row.current.length} already current, ${row.disabled.length} disabled, ${row.skipped.length} skipped, ${errors.length} page errors${row.dead.length ? `\n  dead: ${row.dead.join(' | ')}` : ''}${row.skipped.length ? `\n  skipped: ${row.skipped.join(' | ')}` : ''}`);
+  row.loads = loads;
+  row.loadMs = loadMs;
+  row.ms = Date.now() - began;
   await context.close();
+  return { row, lines };
 }
-await browser.close();
-report.summary = { layouts: targets.length, clicked: clickedTotal, dead: deadTotal, notes: noteTotal, disabled: disabledTotal };
-console.log(`click-probe: ${targets.length} layouts, ${clickedTotal} controls clicked, ${deadTotal} dead, ${noteTotal} note only, ${disabledTotal} disabled (not clicked).`);
-const out = opt('json', join('.shots', 'click-probe', `${template ?? 'urls'}.json`));
-mkdirSync(dirname(out), { recursive: true });
-writeFileSync(out, JSON.stringify(report, null, 1));
-process.exit(deadTotal ? 1 : 0);
+
+const line = (row) =>
+  `${row.id}: ${row.clicked} clicked, ${row.dead.length} dead, ${row.notes.length} note only, ${row.current.length} already current, ${row.disabled.length} disabled, ${row.skipped.length} skipped, ${row.pageErrors.length} page errors${row.dead.length ? `\n  dead: ${row.dead.join(' | ')}` : ''}${row.skipped.length ? `\n  skipped: ${row.skipped.join(' | ')}` : ''}`;
+
+// Probes the targets in parallel pages of one browser; rows come back in target order. onRow(row, target) sees each as it ends.
+export async function probeLayouts(browser, targets, { width = 1280, height = 900, jobs = 8, verbose = false, onRow } = {}) {
+  const rows = new Array(targets.length);
+  let next = 0;
+  await Promise.all(
+    Array.from({ length: Math.max(1, Math.min(jobs, targets.length)) }, async () => {
+      for (let i = next++; i < targets.length; i = next++) {
+        const t = targets[i];
+        let r;
+        try {
+          r = await probeLayout(browser, t, { width, height, verbose });
+        } catch (e) {
+          r = { row: { id: t.id, url: t.url, controls: 0, clicked: 0, dead: [], notes: [], current: [], disabled: [], skipped: [], pageErrors: [], failed: e.message.split('\n')[0] }, lines: [] };
+        }
+        rows[i] = r.row;
+        onRow?.(r.row, t, [...r.lines, r.row.failed ? `${t.id}: the probe failed: ${r.row.failed}` : line(r.row)].join('\n'));
+      }
+    }),
+  );
+  return rows;
+}
+
+export const summarize = (rows) => ({
+  layouts: rows.length,
+  clicked: rows.reduce((n, r) => n + r.clicked, 0),
+  dead: rows.reduce((n, r) => n + r.dead.length, 0),
+  notes: rows.reduce((n, r) => n + r.notes.length, 0),
+  disabled: rows.reduce((n, r) => n + r.disabled.length, 0),
+  failed: rows.filter((r) => r.failed).length,
+});
+
+if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+  const root = process.cwd();
+  const argv = process.argv.slice(2);
+  const opt = (name, fallback) => {
+    const i = argv.indexOf(`--${name}`);
+    return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : fallback;
+  };
+  const origin = opt('origin', 'http://127.0.0.1:8770');
+  const width = +opt('width', 1280);
+  const height = +opt('height', 900);
+  const targets = list(opt('url')).map((u) => ({ id: u.replace(/^.*#\/app\//, ''), url: u }));
+  const template = opt('template');
+  try {
+    if (template) targets.push(...layoutTargets(root, template, origin, list(opt('layouts'))));
+  } catch (e) {
+    console.error(`click-probe: ${e.message}.`);
+    process.exit(2);
+  }
+  if (!targets.length) {
+    console.error('click-probe: name a --template or one or more --url.');
+    process.exit(2);
+  }
+  const browser = await launch(root);
+  const rows = await probeLayouts(browser, targets, { width, height, jobs: +opt('jobs', 8), verbose: argv.includes('--verbose'), onRow: (_r, _t, text) => console.log(text) });
+  await browser.close();
+  const summary = summarize(rows);
+  console.log(`click-probe: ${summary.layouts} layouts, ${summary.clicked} controls clicked, ${summary.dead} dead, ${summary.notes} note only, ${summary.disabled} disabled (not clicked).`);
+  const out = opt('json', join('.shots', 'click-probe', `${template ?? 'urls'}.json`));
+  mkdirSync(dirname(out), { recursive: true });
+  writeFileSync(out, JSON.stringify({ origin, width, height, layouts: rows, summary }, null, 1));
+  process.exit(summary.dead || summary.failed ? 1 : 0);
+}
