@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties, type DragEvent, type MouseEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type DragEvent, type MouseEvent, type ReactNode } from 'react';
 import { Badge, type BadgeTone } from '../fundamentals/Badge';
 import { Checkbox } from '../fundamentals/Checkbox';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
@@ -113,7 +113,22 @@ export interface ImageGridProps extends DataAttributes {
   reorderable?: boolean;
   /** The dragged ids (in grid order) dropped just before `before`, or at the end when it's `null`. */
   onReorder?: (ids: string[], before: string | null) => void;
+  /**
+   * Files dragged in from outside (the desktop) land where they're dropped (an album being filled): the grid marks the
+   * same line and takes the same place as a reorder (before the item under the pointer, the next one past its middle,
+   * else the end), and offers a copy. Called with the files and the id they go before, or `null` for the end. Off by
+   * default.
+   */
+  onDropFiles?: (files: File[], before: string | null) => void;
+  /**
+   * With `onDropFiles`, files dropped anywhere else on the page (outside a dialog, and not taken by something else first)
+   * land at the end, the end marked while they're over the page. For the one grid a screen fills. Off by default.
+   */
+  dropFilesAnywhere?: boolean;
 }
+
+type PageDragEvent = globalThis.DragEvent;
+const carriesFiles = (event: { dataTransfer: DataTransfer | null }) => !!event.dataTransfer?.types.includes('Files');
 
 /**
  * A set of pictures arranged as one: equal frames, a quilt with features, masonry columns or justified rows. Each layout
@@ -132,11 +147,61 @@ export interface ImageGridProps extends DataAttributes {
  * @key Tab: the next picture or check box
  * @key Enter, Space: open the picture; Space on a check box chooses it or takes it out
  */
-export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, reorderable, onReorder, ...data }: ImageGridProps) {
+export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, reorderable, onReorder, onDropFiles, dropFilesAnywhere, ...data }: ImageGridProps) {
   const [dragging, setDragging] = useState<string[]>([]);
   // LR55: where the dragged items would land: before this item's id, or `null` for the end; undefined while not over the grid.
   const [drop, setDrop] = useState<string | null | undefined>(undefined);
   const draggable = !!onItemsDragStart || !!reorderable;
+  const takesDrops = !!reorderable || !!onDropFiles;
+  // LR74: the latest handler, for the page-wide listener set up once.
+  const filesIn = useRef(onDropFiles);
+  filesIn.current = onDropFiles;
+  const anywhere = !!onDropFiles && !!dropFilesAnywhere;
+  const list = useRef<HTMLUListElement>(null);
+  useEffect(() => {
+    if (!anywhere) return;
+    let over = 0;
+    const taken = (event: PageDragEvent) =>
+      carriesFiles(event) && !event.defaultPrevented && event.target instanceof Element && !event.target.closest('dialog');
+    const enter = (event: PageDragEvent) => {
+      if (carriesFiles(event)) over++;
+    };
+    const leave = (event: PageDragEvent) => {
+      if (carriesFiles(event) && --over <= 0) {
+        over = 0;
+        setDrop(undefined);
+      }
+    };
+    const overPage = (event: PageDragEvent) => {
+      if (!taken(event)) {
+        // Taken by something else (another grid, a field): the end isn't where they'd go.
+        if (carriesFiles(event) && !(event.target instanceof Node && list.current?.contains(event.target))) setDrop(undefined);
+        return;
+      }
+      event.preventDefault();
+      if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+      setDrop(null);
+    };
+    const dropOnPage = (event: PageDragEvent) => {
+      if (!carriesFiles(event)) return;
+      over = 0;
+      setDrop(undefined);
+      if (!taken(event)) return;
+      event.preventDefault();
+      const files = [...(event.dataTransfer?.files ?? [])];
+      if (files.length) filesIn.current?.(files, null);
+    };
+    document.addEventListener('dragenter', enter);
+    document.addEventListener('dragleave', leave);
+    document.addEventListener('dragover', overPage);
+    document.addEventListener('drop', dropOnPage);
+    return () => {
+      document.removeEventListener('dragenter', enter);
+      document.removeEventListener('dragleave', leave);
+      document.removeEventListener('dragover', overPage);
+      document.removeEventListener('drop', dropOnPage);
+    };
+  }, [anywhere]);
   const dragStart = (id: string, event: DragEvent<HTMLLIElement>) => {
     const ids = selectable && selected.includes(id) ? items.filter((item) => selected.includes(item.id)).map((item) => item.id) : [id];
     event.dataTransfer.effectAllowed = 'move';
@@ -150,9 +215,10 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
     onItemsDragEnd?.(event);
   };
   const overItem = (i: number, event: DragEvent<HTMLLIElement>) => {
-    if (!reorderable || !dragging.length) return;
+    const files = !dragging.length && !!onDropFiles && carriesFiles(event);
+    if (!files && (!reorderable || !dragging.length)) return;
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = files ? 'copy' : 'move';
     const r = event.currentTarget.getBoundingClientRect();
     const rtl = getComputedStyle(event.currentTarget).direction === 'rtl';
     const past = rtl ? event.clientX < r.left + r.width / 2 : event.clientX > r.left + r.width / 2;
@@ -160,6 +226,14 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
     if (next !== drop) setDrop(next);
   };
   const dropOnGrid = (event: DragEvent<HTMLUListElement>) => {
+    if (!dragging.length && onDropFiles && carriesFiles(event)) {
+      event.preventDefault();
+      const before = drop ?? null;
+      setDrop(undefined);
+      const files = [...event.dataTransfer.files];
+      if (files.length) onDropFiles(files, before);
+      return;
+    }
     if (!reorderable || !dragging.length || drop === undefined) return;
     event.preventDefault();
     const ids = dragging;
@@ -200,6 +274,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
   return (
     <ul
       {...data}
+      ref={list}
       data-dl="image-grid"
       data-layout={layout}
       data-framed={framed ? '' : undefined}
@@ -207,9 +282,16 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
       data-selecting={selectable && selected.length ? '' : undefined}
       data-reorderable={reorderable ? '' : undefined}
       aria-label={label}
-      {...(reorderable
+      {...(takesDrops
         ? {
             onDragOver: (event: DragEvent<HTMLUListElement>) => {
+              // Files over the gap between items: keep the line where it is (the end until an item is crossed).
+              if (!dragging.length && onDropFiles && carriesFiles(event)) {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'copy';
+                if (drop === undefined && event.target === event.currentTarget) setDrop(null);
+                return;
+              }
               // Over the gap between items: keep the line where it is, and keep the drop allowed.
               if (dragging.length && drop !== undefined) event.preventDefault();
             },
@@ -319,7 +401,7 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
                   draggable: true,
                   onDragStart: (event: DragEvent<HTMLLIElement>) => dragStart(item.id, event),
                   onDragEnd: dragEnd,
-                  ...(reorderable ? { onDragOver: (event: DragEvent<HTMLLIElement>) => overItem(i, event) } : {}),
+                  ...(takesDrops ? { onDragOver: (event: DragEvent<HTMLLIElement>) => overItem(i, event) } : {}),
                 }
               : {})}
           >
