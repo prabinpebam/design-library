@@ -791,6 +791,16 @@
         "$description": "Inside its surface (echoed for space contexts)"
       }
     },
+    "focal-point": {
+      "$extensions": {
+        "owner": "FocalPoint"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Between the label, picture, hint and status (echoed for space contexts)"
+      }
+    },
     "footer": {
       "$extensions": {
         "owner": "Footer"

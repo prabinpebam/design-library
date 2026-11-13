@@ -90,6 +90,7 @@
     "CheckboxGroup",
     "ColourPicker",
     "Field",
+    "FocalPoint",
     "Select",
     "Slider",
     "Switch",

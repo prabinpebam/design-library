@@ -298,6 +298,7 @@
     "ColourPicker",
     "DatePicker",
     "DateRangePicker",
+    "FocalPoint",
     "Illustration",
     "MenuButton",
     "NumberField",
