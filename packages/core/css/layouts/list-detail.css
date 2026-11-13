@@ -46,6 +46,10 @@
     gap: var(--c-list-detail-back-gap);
   }
 
+  /* LR116 listTone: the list's own surface, the one cue between it and the detail. */
+  [data-dl='list-detail'][data-list-tone='raised'] > [data-dl-part='panes'] > [data-dl-part='list'] { background-color: var(--color-bg-raised); }
+  [data-dl='list-detail'][data-list-tone='sunken'] > [data-dl-part='panes'] > [data-dl-part='list'] { background-color: var(--color-bg-sunken); }
+
   [data-dl='list-detail'] > [data-dl-part='panes'] > [data-dl-part='list']:focus,
   [data-dl='list-detail'] > [data-dl-part='panes'] > [data-dl-part='detail']:focus {
     outline: none;

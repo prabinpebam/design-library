@@ -63,6 +63,11 @@ export interface EditorLayoutProps extends DataAttributes {
    * the panel's height and what's in it grows to fill it (with Tabs `fill` and SectionedForm `fill` down the chain).
    */
   endFill?: boolean;
+  /**
+   * LR116 (opt-in): the panels' own surface, set apart from the working area by tone alone (no border or shadow):
+   * `raised` or `sunken` (the surface roles). Unset, the panels share the page's surface.
+   */
+  panelTone?: 'raised' | 'sunken';
 }
 
 type Side = 'start' | 'end';
@@ -83,7 +88,7 @@ const STEP = 8;
  * @key Home / End (on a resize handle): the narrowest or the widest
  * @key Enter (on a resize handle): back to the opening width (a double click too)
  */
-export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, resizeValueText, toggles = 'outer', startSize, endSize, endMax, workMin, workFill = false, endFill = false, ...data }: EditorLayoutProps) {
+export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, resizeValueText, toggles = 'outer', startSize, endSize, endMax, workMin, workFill = false, endFill = false, panelTone, ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
   const toggled = toggles !== 'none';
   const [dragging, setDragging] = useState<Side | null>(null);
@@ -252,7 +257,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   const sizes = { '--dl-start-size': startSize, '--dl-end-size': endSize, '--dl-end-max': endMax, '--dl-end-min': endMin, '--dl-work-min': workMin, '--dl-resize-step': resizeStep } as CSSProperties;
 
   return (
-    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} data-work-fill={workFill ? '' : undefined} data-end-fill={endFill ? '' : undefined} data-resizing={dragging ? '' : undefined} style={startSize || endSize || endMax || endMin || workMin || resizeStep ? sizes : undefined}>
+    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} data-work-fill={workFill ? '' : undefined} data-end-fill={endFill ? '' : undefined} data-panel-tone={panelTone} data-resizing={dragging ? '' : undefined} style={startSize || endSize || endMax || endMin || workMin || resizeStep ? sizes : undefined}>
       {!floating && (
         <header data-dl-part="bar">
           {toggled && startTogglePart('toggle')}

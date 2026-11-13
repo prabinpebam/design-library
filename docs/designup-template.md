@@ -15,6 +15,14 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR116: side panels with their own tone (13 November 2026)
+
+Before-code decision: DesignUp's owner (23:23) wants the admin's list and inspector panels set apart from the work area by background tone. EditorLayout panels and ListDetail's list paint the page surface (`--color-bg`), the divider is 0 px, and no prop, slot, context attribute or setting picks another surface: seam 6, generic. Opt-in `EditorLayout.panelTone` and `ListDetail.listTone` (`raised` | `sunken`) map to the existing surface roles, so light, dark and contrast follow the roles; unset keeps the page surface. Tone is the only cue: no border or shadow. Editor42 owns these two layouts; types/builds and focused captures now, stories/regression on merge night.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR116 | 2026-11-13 | Side panels set apart from the work area by tone | EditorLayout panels and ListDetail's list paint `--color-bg`; no prop or setting picks a panel surface | 6 | opt-in `EditorLayout.panelTone`, `ListDetail.listTone`: `raised` or `sunken`; unset unchanged | none | DesignUp Editor42 | logged | | Adopt in PageEditor, Sections, Codes; no override |
+
 ### LR112-LR113: whole linked-video posters (13 November 2026)
 
 Decision: DesignUp admin follows personal PhotoGrid.astro:146-147: square frames, whole-image fit. R5 parameter and R7 source-error handling, existing album-of-one/grid, no new block/preset/choice/ink or motion. Image has contain but ImageGridItem cannot forward it; neither has a failed-source URL fallback. Seam steps 1-4 cannot supply the sealed behaviour, and step 5 would duplicate it. Step 6 adds optional item fit and Image fallbackSrc, forwarded through ImageGridItem. Cover and no fallback URL remain defaults. On failure, swap that layer once to the fallback, then show existing failure words if that also fails. DesignUp maps only recognised provider-default posters to maxresdefault and barless mqdefault; explicit custom posters and stored canonical values remain unchanged. Core types/build, consumer linked types/checkpoint build, inspected light/dark captures; generated contracts at checkpoint, deferred stories/regression on merge night.

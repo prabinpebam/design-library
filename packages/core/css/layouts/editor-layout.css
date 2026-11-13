@@ -74,6 +74,10 @@
     background-color: var(--color-bg);
   }
 
+  /* LR116 panelTone: the panels' own surface, the one cue between them and the working area. */
+  [data-dl='editor-layout'][data-panel-tone='raised'] > [data-dl-part='body'] > [data-dl-part='panel'] { background-color: var(--color-bg-raised); }
+  [data-dl='editor-layout'][data-panel-tone='sunken'] > [data-dl-part='body'] > [data-dl-part='panel'] { background-color: var(--color-bg-sunken); }
+
   /* A theme may draw a hairline between a docked panel and the working area (none by default: tone sets them apart). */
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='start'] { --dl-panel-default: var(--dl-start-size, var(--c-editor-layout-panel-start)); border-inline-end: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { --dl-panel-default: var(--dl-end-size, var(--c-editor-layout-panel-end)); --dl-panel-max: var(--dl-end-max, var(--c-editor-layout-panel-max)); --dl-panel-min: var(--dl-end-min); border-inline-start: var(--c-editor-layout-divider-width) solid var(--c-editor-layout-divider); }
