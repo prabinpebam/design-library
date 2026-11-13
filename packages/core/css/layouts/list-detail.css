@@ -46,13 +46,19 @@
     gap: var(--c-list-detail-back-gap);
   }
 
-  /* LR116 listTone: the list's own surface, the one cue between it and the detail. */
+  /* LR116 listTone: the list's own surface, the one cue between it and the detail; a toned list is a panel that runs the
+     detail's full height, not a box around its rows. */
   [data-dl='list-detail'][data-list-tone='raised'] > [data-dl-part='panes'] > [data-dl-part='list'] { background-color: var(--color-bg-raised); }
   [data-dl='list-detail'][data-list-tone='sunken'] > [data-dl-part='panes'] > [data-dl-part='list'] { background-color: var(--color-bg-sunken); }
+  [data-dl='list-detail'][data-list-tone] > [data-dl-part='panes'] > [data-dl-part='list'] { align-self: stretch; }
 
-  /* LR118 stickyList: side by side without a held height, the list stays in view while the page scrolls the detail,
-     under the window's sticky chrome (as SectionedForm's, LR107). */
+  /* LR118 stickyList: side by side without a held height, the list's content stays in view while the page scrolls the
+     detail, under the window's sticky chrome (as SectionedForm's, LR107); the column runs the detail's full height. */
   [data-dl='list-detail'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] {
+    align-self: stretch;
+  }
+
+  [data-dl='list-detail'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] > * {
     position: sticky;
     inset-block-start: var(--dl-chrome-block, 0px);
   }
@@ -82,7 +88,7 @@
       display: flex;
     }
 
-    [data-dl='list-detail'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] {
+    [data-dl='list-detail'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] > * {
       position: static;
     }
   }
@@ -101,7 +107,7 @@
       display: flex;
     }
 
-    [data-dl='list-detail'][data-list-width='wide'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] {
+    [data-dl='list-detail'][data-list-width='wide'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] > * {
       position: static;
     }
   }

@@ -27,7 +27,7 @@ export interface ListDetailProps extends DataAttributes {
   maxSize?: 'fill' | 'md' | 'lg';
   /**
    * LR116 (opt-in): the list's own surface, set apart from the detail by tone alone (no border or shadow): `raised` or
-   * `sunken` (the surface roles). Unset, the list shares the page's surface. The list's content keeps its own inset.
+   * `sunken` (the surface roles), a panel that runs the detail's full height. Unset, the list shares the page's surface. The list's content keeps its own inset.
    */
   listTone?: 'raised' | 'sunken';
   /**
