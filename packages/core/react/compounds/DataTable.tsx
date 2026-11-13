@@ -31,6 +31,12 @@ export interface DataTableRow {
   label?: string;
   /** `data-*` attributes for the row, for tooling such as revision anchors. */
   data?: DataAttributes;
+  /**
+   * LR102 (opt-in): the row opens this address. Its heading cell becomes the link (named by the heading's words), the
+   * whole row shows hover and focus and a press anywhere on it opens the item; controls inside the row (a check box, a
+   * button, a menu, the Move handle) stay their own targets and don't open it. Tab reaches the link; Enter opens it.
+   */
+  href?: string;
 }
 
 export interface DataTableProps extends DataAttributes {
@@ -149,6 +155,14 @@ export function DataTable({ label, columns, rows: given, reorderable: canReorder
       />
     </span>
   );
+  const linked = (r: DataTableRow, content: ReactNode) =>
+    r.href ? (
+      <a href={r.href} data-dl-part="row-link">
+        {content}
+      </a>
+    ) : (
+      content
+    );
   if (!head) return null;
   return (
     <div {...data} data-dl="data-table" aria-busy={busy || undefined} data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined} data-row-header={rowHeader === 'strong' ? 'strong' : undefined}>
@@ -170,16 +184,17 @@ export function DataTable({ label, columns, rows: given, reorderable: canReorder
               {...r.data}
               data-flip-key={reorderable ? r.id : undefined}
               data-dragging={reorderable && dragId === r.id ? '' : undefined}
+              data-linked={r.href ? '' : undefined}
               ref={reorderable ? (el) => void (trs.current[i] = el) : undefined}
             >
               <th scope="row" data-stacked={head.stacked ? '' : undefined} data-width={head.width}>
                 {reorderable ? (
                   <span data-dl-part="row">
                     {handle(r, i)}
-                    <span data-dl-part="content">{r.cells[head.key]}</span>
+                    <span data-dl-part="content">{linked(r, r.cells[head.key])}</span>
                   </span>
                 ) : (
-                  r.cells[head.key]
+                  linked(r, r.cells[head.key])
                 )}
               </th>
               {rest.map((c) => (

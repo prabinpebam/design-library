@@ -128,6 +128,11 @@
           "name": "data",
           "type": "DataAttributes",
           "description": "`data-*` attributes for the row, for tooling such as revision anchors."
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "description": "LR102 (opt-in): the row opens this address. Its heading cell becomes the link (named by the heading's words), the whole row shows hover and focus and a press anywhere on it opens the item; controls inside the row (a check box, a button, a menu, the Move handle) stay their own targets and don't open it. Tab reaches the link; Enter opens it."
         }
       ]
     }
@@ -150,11 +155,14 @@
     "--c-data-table-row-head-strong-weight",
     "--c-data-table-stack-gap",
     "--color-bg-raised",
+    "--color-focus",
     "--color-text",
     "--layer-raised",
     "--shadow-raised",
     "--size-control-lg",
+    "--size-focus-width",
     "--space-inline-pair",
+    "--state-hover",
     "--type-body-sm-size",
     "--type-body-weight",
     "--type-label-weight"
