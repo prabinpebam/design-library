@@ -10,8 +10,10 @@ export interface ChipEntry extends Pick<ChipProps, 'label' | 'icon' | 'avatar' |
 }
 
 export interface ChipGroupProps extends DataAttributes {
-  /** The group's visible label: what the chips are ("Recipients", "Status"). */
+  /** What the chips are ("Recipients", "Status"). Always the group's accessible name. */
   label: string;
+  /** Visually hide the label when an enclosing heading already names the group. Default false. */
+  hideLabel?: boolean;
   /** One line under the label, when the chips need explaining. */
   description?: string;
   chips: ChipEntry[];
@@ -38,14 +40,14 @@ export interface ChipGroupProps extends DataAttributes {
  * several). Owns the label, description, message, empty state, the "+n" overflow and the keys.
  * @tier fundamental
  * @family selection
- * @a11y Labelled by its visible label. Input chips are a `list`; filter chips a `group` of checkboxes or a `radiogroup`.
+ * @a11y Labelled by its label, retained for assistive technology when hideLabel is on. Input chips are a `list`; filter chips a `group` of checkboxes or a `radiogroup`.
  * One Tab stop: arrows move between chips. After a removal, focus moves to the next chip, else the previous, and the
  * removal is announced politely. The "+n" chip is a real button naming how many more.
  * @key ArrowRight / ArrowDown, ArrowLeft / ArrowUp: the next or previous chip
  * @key Home / End: the first or last chip
  * @key Delete / Backspace: remove the input chip in focus
  */
-export function ChipGroup({ label, description, chips, selection = 'none', value = [], onChange, onRemove, onPress, maxVisible, error, empty = 'None yet.', size, ...data }: ChipGroupProps) {
+export function ChipGroup({ label, hideLabel = false, description, chips, selection = 'none', value = [], onChange, onRemove, onPress, maxVisible, error, empty = 'None yet.', size, ...data }: ChipGroupProps) {
   const id = useId();
   const [current, setCurrent] = useState(0);
   const [all, setAll] = useState(false);
@@ -77,7 +79,7 @@ export function ChipGroup({ label, description, chips, selection = 'none', value
   const role = selection === 'none' ? 'list' : selection === 'single' ? 'radiogroup' : 'group';
   return (
     <div {...data} data-dl="chip-group" data-invalid={error ? '' : undefined}>
-      <span id={`${id}-label`} data-dl-part="label">
+      <span id={`${id}-label`} data-dl-part="label" data-hidden={hideLabel ? '' : undefined}>
         {label}
       </span>
       {description && (

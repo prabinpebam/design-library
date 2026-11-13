@@ -7,7 +7,7 @@
   "summary": "A set of chips under one label: values someone picked (input chips) or filters they turn on (filter chips, one or several). Owns the label, description, message, empty state, the \"+n\" overflow and the keys.",
   "family": "selection",
   "a11y": [
-    "Labelled by its visible label. Input chips are a `list`; filter chips a `group` of checkboxes or a `radiogroup`. One Tab stop: arrows move between chips. After a removal, focus moves to the next chip, else the previous, and the removal is announced politely. The \"+n\" chip is a real button naming how many more."
+    "Labelled by its label, retained for assistive technology when hideLabel is on. Input chips are a `list`; filter chips a `group` of checkboxes or a `radiogroup`. One Tab stop: arrows move between chips. After a removal, focus moves to the next chip, else the previous, and the removal is announced politely. The \"+n\" chip is a real button naming how many more."
   ],
   "keys": [
     {
@@ -35,7 +35,13 @@
           "name": "label",
           "type": "string",
           "required": true,
-          "description": "The group's visible label: what the chips are (\"Recipients\", \"Status\")."
+          "description": "What the chips are (\"Recipients\", \"Status\"). Always the group's accessible name."
+        },
+        {
+          "name": "hideLabel",
+          "type": "boolean",
+          "default": "false",
+          "description": "Visually hide the label when an enclosing heading already names the group. Default false."
         },
         {
           "name": "description",

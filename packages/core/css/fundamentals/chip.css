@@ -188,6 +188,15 @@
     font-weight: var(--type-label-weight);
   }
 
+  [data-dl='chip-group'] > [data-dl-part='label'][data-hidden] {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   [data-dl='chip-group'] > :is([data-dl-part='description'], [data-dl-part='empty']) {
     color: var(--color-text-muted);
     font-size: var(--type-caption-size);
