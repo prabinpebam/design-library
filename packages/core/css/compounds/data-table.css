@@ -143,8 +143,8 @@
   }
 
   /*
-   * LR102: a row that opens its item. The heading's words are the link; a layer of it covers the row, so a press
-   * anywhere opens it, while the row's own controls sit above that layer. The row shows hover and the link's focus.
+   * LR102, LR106: a row that opens its item. An empty link named by the heading's words covers the row, so a press
+   * anywhere opens it, while the row's own controls sit above it. The row shows hover; the link draws its focus ring.
    */
   [data-dl='data-table'] tbody > tr[data-linked] {
     position: relative;
@@ -152,15 +152,16 @@
   }
 
   [data-dl='data-table'] tbody > tr[data-linked] [data-dl-part='row-link'] {
+    position: absolute;
+    inset: 0;
     color: inherit;
     text-decoration: none;
     outline: none;
   }
 
-  [data-dl='data-table'] tbody > tr[data-linked] [data-dl-part='row-link']::after {
-    content: '';
-    position: absolute;
-    inset: 0;
+  [data-dl='data-table'] tbody > tr[data-linked] [data-dl-part='row-link']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
   }
 
   [data-dl='data-table'] tbody > tr[data-linked] :is(a, button, input, select, textarea, label, [tabindex]):not([data-dl-part='row-link']) {
@@ -176,7 +177,5 @@
 
   [data-dl='data-table'] tbody > tr[data-linked]:has([data-dl-part='row-link']:focus-visible) {
     background-color: var(--state-hover);
-    outline: var(--size-focus-width) solid var(--color-focus);
-    outline-offset: calc(-1 * var(--size-focus-width));
   }
 }

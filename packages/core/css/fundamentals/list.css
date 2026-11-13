@@ -204,4 +204,47 @@
     display: flex;
     flex-direction: column;
     gap: var(--c-list-option-gap);
-  }}
+  }
+
+  /*
+   * LR106: an item that opens its item. An empty link named by the item's label covers it, so a press anywhere opens
+   * it; the item's own controls sit above that link. The item takes a list item's inset so its hover fill and the
+   * link's focus ring clear the words.
+   */
+  [data-dl='list'] > li[data-linked] {
+    position: relative;
+    padding-inline: var(--c-list-item-padding-inline);
+    padding-block: var(--c-list-item-padding-block);
+    border-radius: var(--c-list-item-radius);
+    cursor: pointer;
+  }
+
+  [data-dl='list'] > li[data-linked] > [data-dl-part='row-link'] {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+  }
+
+  [data-dl='list'] > li[data-linked] > [data-dl-part='row-link']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: calc(-1 * var(--size-focus-width));
+  }
+
+  [data-dl='list'] > li[data-linked] :is(a, button, input, select, textarea, label, [tabindex]):not([data-dl-part='row-link']) {
+    position: relative;
+    z-index: var(--layer-raised);
+  }
+
+  @media (hover: hover) {
+    [data-dl='list'] > li[data-linked]:hover {
+      background-color: var(--state-hover);
+    }
+  }
+
+  [data-dl='list'] > li[data-linked]:has(> [data-dl-part='row-link']:focus-visible) {
+    background-color: var(--state-hover);
+  }
+}

@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react';
+import { useId, useRef, useState, type ReactNode } from 'react';
 import { MenuButton } from '../fundamentals/MenuButton';
 import { ScrollArea } from '../fundamentals/ScrollArea';
 import { Skeleton } from '../fundamentals/Skeleton';
@@ -155,11 +155,13 @@ export function DataTable({ label, columns, rows: given, reorderable: canReorder
       />
     </span>
   );
+  const uid = useId();
   const linked = (r: DataTableRow, content: ReactNode) =>
     r.href ? (
-      <a href={r.href} data-dl-part="row-link">
-        {content}
-      </a>
+      <>
+        <a href={r.href} data-dl-part="row-link" aria-labelledby={`${uid}-${r.id}`} />
+        <span id={`${uid}-${r.id}`}>{content}</span>
+      </>
     ) : (
       content
     );

@@ -116,6 +116,12 @@
     color: var(--color-text-link);
   }
 
+  /* LR106: a plain link's colour on hover and keyboard focus, a setting so a theme without link lines keeps a cue.
+     Component links set their own colour in their layer and aren't touched. */
+  a:is(:hover, :focus-visible) {
+    color: var(--link-color-hover, var(--color-text-link));
+  }
+
   code,
   kbd,
   samp,

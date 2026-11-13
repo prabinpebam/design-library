@@ -163,6 +163,7 @@
 
   @media (hover: hover) {
     [data-dl='link']:hover {
+      color: var(--link-color-hover, var(--color-text-link));
       text-decoration-line: var(--link-decoration-hover);
       text-decoration-thickness: var(--border-thick);
     }
@@ -170,6 +171,7 @@
 
   /* IP5: with the rest line off, keyboard focus brings the line back beside the focus ring (not colour alone). */
   [data-dl='link']:focus-visible {
+    color: var(--link-color-hover, var(--color-text-link));
     text-decoration-line: var(--link-decoration-hover);
   }
 

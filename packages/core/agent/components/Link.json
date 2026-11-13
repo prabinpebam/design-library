@@ -107,6 +107,10 @@
       "var": "--link-decoration-hover",
       "default": "underline",
       "description": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour. Also the hover line of a linked card's title, a page header's eyebrow, an agenda's titles and a board's names, and the skip link's line while it shows (LR7)."
+    },
+    {
+      "var": "--link-color-hover",
+      "description": "A plain link's and a Link's colour on hover and keyboard focus (default the link colour, unchanged). A theme that turns the link lines off sets a colour 3:1 from the rest colour, so hover keeps a cue (LR106). Component links (list items, row links, buttons) keep their own states."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/link",

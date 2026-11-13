@@ -6,6 +6,7 @@ import { MenuButton } from './MenuButton';
 import { ScrollArea } from './ScrollArea';
 import { dropIndex, moveItem, movesFor } from '../behaviour/reorder';
 import { useFlipList } from '../behaviour/flip';
+import { useRouter } from '../behaviour/router';
 import { useExiting } from '../behaviour/presence';
 import { listboxKey, range, typeAhead } from '../behaviour/listbox';
 import type { ListboxItem, ListboxState } from '../behaviour/listbox';
@@ -92,6 +93,12 @@ export interface ListEntry {
   label?: string;
   /** `data-*` attributes for the item, for tooling such as revision anchors. */
   data?: DataAttributes;
+  /**
+   * LR106 (opt-in): the item opens this address. A link named by `label` covers the item, so a press anywhere on it
+   * opens the item; controls inside it (a check box, a button, a menu, the Move handle) stay their own targets. The
+   * item shows hover and the link's focus ring; Tab reaches the link and Enter opens it. Needs `label`.
+   */
+  href?: string;
 }
 
 /** One option of a selectable list: an id plus what ListItem draws. */
@@ -162,6 +169,12 @@ function StaticList(props: StaticListProps) {
   return props.reorderable ? <ReorderList {...props} /> : <PlainList {...props} />;
 }
 
+function RowLink({ item }: { item: ListEntry }) {
+  const router = useRouter();
+  if (item.href === undefined) return null;
+  return <a href={router ? router.href(item.href) : item.href} data-dl-part="row-link" aria-label={item.label ?? item.id} />;
+}
+
 function PlainList({ items, variant = 'bulleted', dividers = 'none', gap = 'item', reorderable: _r, onReorder: _o, mode: _mode, ...data }: StaticListProps) {
   const Tag = variant === 'numbered' ? 'ol' : 'ul';
   // Q65 C11: an item added fades in, one removed fades out where it is, and the others travel into place (MU8).
@@ -170,7 +183,8 @@ function PlainList({ items, variant = 'bulleted', dividers = 'none', gap = 'item
   return (
     <Tag {...data} ref={root} data-dl="list" data-variant={variant} data-gap={gap === 'item' ? undefined : gap} data-dividers={dividers === 'none' ? undefined : dividers}>
       {shown.map(({ item, leaving }) => (
-        <li key={item.id} {...item.data} data-flip-key={item.id} data-presence="item" data-leaving={leaving ? '' : undefined} inert={leaving} aria-hidden={leaving || undefined}>
+        <li key={item.id} {...item.data} data-flip-key={item.id} data-presence="item" data-leaving={leaving ? '' : undefined} data-linked={item.href === undefined ? undefined : ''} inert={leaving} aria-hidden={leaving || undefined}>
+          <RowLink item={item} />
           {item.content}
         </li>
       ))}
@@ -218,7 +232,8 @@ function ReorderList({ items, variant = 'plain', dividers = 'none', gap = 'item'
     <>
       <Tag {...data} ref={root} data-dl="list" data-variant={variant} data-gap={gap === 'item' ? undefined : gap} data-reorder="" data-dividers={dividers === 'none' ? undefined : dividers}>
         {items.map((item, i) => (
-          <li key={item.id} {...item.data} data-flip-key={item.id} ref={(el) => void (rows.current[i] = el)} data-dragging={dragId === item.id ? '' : undefined}>
+          <li key={item.id} {...item.data} data-flip-key={item.id} ref={(el) => void (rows.current[i] = el)} data-dragging={dragId === item.id ? '' : undefined} data-linked={item.href === undefined ? undefined : ''}>
+            <RowLink item={item} />
             <span data-dl-part="row">
               <span
                 data-dl-part="handle"

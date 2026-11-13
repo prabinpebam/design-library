@@ -289,6 +289,11 @@
           "name": "data",
           "type": "DataAttributes",
           "description": "`data-*` attributes for the item, for tooling such as revision anchors."
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "description": "LR106 (opt-in): the item opens this address. A link named by `label` covers the item, so a press anywhere on it opens the item; controls inside it (a check box, a button, a menu, the Move handle) stay their own targets. The item shows hover and the link's focus ring; Tab reaches the link and Enter opens it. Needs `label`."
         }
       ]
     },
@@ -364,6 +369,7 @@
     "--c-list-inline-row-gap",
     "--c-list-item-padding-block",
     "--c-list-item-padding-inline",
+    "--c-list-item-radius",
     "--c-list-measure",
     "--c-list-option-gap",
     "--c-list-tile-gap",
@@ -371,13 +377,16 @@
     "--color-bg",
     "--color-bg-raised",
     "--color-border",
+    "--color-focus",
     "--color-text-muted",
     "--layer-raised",
     "--radius-md",
     "--shadow-raised",
+    "--size-focus-width",
     "--size-icon-md",
     "--space-inline-pair",
     "--space-inset-sm",
+    "--state-hover",
     "--type-caption-leading",
     "--type-caption-size",
     "--type-label-weight"
