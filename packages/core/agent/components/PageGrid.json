@@ -39,6 +39,16 @@
           "name": "onSelect",
           "type": "(target: PageGridTarget) => void",
           "description": "Makes rows and cells selectable by pointer, for an editor: a click picks the innermost cell under it, or its row where no cell is (between cells). Keyboard selection belongs to the editor's outline (a TreeView of the same ids)."
+        },
+        {
+          "name": "start",
+          "type": "PageGridGap",
+          "description": "The space above the first row (LR91): a stack step, as a row's `gap`; none by default."
+        },
+        {
+          "name": "end",
+          "type": "PageGridGap",
+          "description": "The space below the last row (LR91); none by default."
         }
       ]
     },
