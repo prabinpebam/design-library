@@ -31,7 +31,7 @@ DesignUp's owner (00:18) wants Media's tiles to say at a glance which are upload
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR120 | 2026-11-14 | Media tiles show what they are: uploaded video, YouTube or Vimeo (owner 00:18) | ImageGrid `badges` are words only; `kind: 'video'` is a centred play mark + length; no `vimeo` icon | 6 | opt-in `ImageGridBadge.icon` (icon-only corner mark, `label` its name); `vimeo` icon (Tabler, MIT) | none | Editor43, core ImageGrid + icons | open | | Adopt in DesignUp's Media grid and picker |
+| LR120 | 2026-11-14 | Media tiles show what they are: uploaded video, YouTube or Vimeo (owner 00:18) | ImageGrid `badges` are words only; `kind: 'video'` is a centred play mark + length; no `vimeo` icon | 6 | opt-in `ImageGridBadge.icon` (icon-only corner mark, `label` its name); `vimeo` icon (Tabler, MIT) | none | Editor43, core ImageGrid + icons | shipped (DesignUp pin du.13d7a4d0) | dl baa7a4a, 0577db8 | Adopted in DesignUp's Media grid and picker (filled marks; a length shows without the play mark) |
 
 ### LR119: forward a canonical poster's fallback (13 November 2026)
 
