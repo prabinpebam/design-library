@@ -85,6 +85,11 @@
           "description": "The Button size scale: the box is xs 24, s 36, normal 44 (default), m 48, l 56, xl 64 or xxl 80 px high. The label and hint keep their size."
         },
         {
+          "name": "appearance",
+          "type": "'box' | 'underline' | 'bare'",
+          "description": "`box` (default): the outlined, filled box. `underline`: no outline or fill, a hairline under it that turns the focus colour while it has keyboard focus, for a field across a panel's top (a finder). `bare`: no outline, fill or line, for a field whose container already draws its edge."
+        },
+        {
           "name": "icon",
           "type": "IconName",
           "description": "A leading icon that says what kind of value it is (search, email). Decorative: the label names the field."
@@ -342,6 +347,11 @@
     "--c-field-size-xxl",
     "--c-field-swatch",
     "--c-field-trailing",
+    "--c-field-underline-line",
+    "--c-field-underline-line-focus",
+    "--c-field-underline-padding-end",
+    "--c-field-underline-padding-start",
+    "--c-field-underline-step",
     "--color-accent",
     "--color-bg-control",
     "--color-bg-sunken",
@@ -360,6 +370,7 @@
     "--easing-standard",
     "--radius-sm",
     "--size-icon-md",
+    "--size-target",
     "--space-inline-group",
     "--space-inline-item",
     "--space-inline-pair",

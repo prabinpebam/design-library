@@ -855,6 +855,23 @@
     font-size: var(--type-heading-3-size);
   }
 
+  /* LR69. Underline: a field across a panel's top, a hairline under it (the focus colour while focused); bare: no edge. */
+  [data-dl='text-field']:is([data-appearance='underline'], [data-appearance='bare']) [data-dl-part='box'] {
+    border-width: 0;
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  [data-dl='text-field'][data-appearance='underline'] [data-dl-part='box'] {
+    min-block-size: calc(var(--size-target) + var(--c-field-underline-step));
+    padding-inline: var(--c-field-underline-padding-start) var(--c-field-underline-padding-end);
+    border-block-end: var(--border-hairline) solid var(--c-field-underline-line);
+  }
+
+  [data-dl='text-field'][data-appearance='underline'] [data-dl-part='box']:has(input:focus-visible) {
+    border-block-end-color: var(--c-field-underline-line-focus);
+  }
+
   /* At xs the box's inside is 22 px, so its own Clear and Show buttons take that height (the 24 px target holds with the
      box's border: WCAG 2.5.8's spacing allowance), and the field stays exactly 24 px. */
   [data-dl='text-field'][data-size='xs'] [data-dl-part='box'] > [data-dl='button'] {

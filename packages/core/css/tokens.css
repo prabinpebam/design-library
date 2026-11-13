@@ -611,6 +611,11 @@
   --c-site-layout-skip-radius: var(--radius-none);
   --c-applied-fill: var(--color-accent-subtle);
   --c-applied-border: var(--color-accent);
+  --c-field-underline-step: var(--space-3);
+  --c-field-underline-padding-start: var(--space-4);
+  --c-field-underline-padding-end: var(--space-3);
+  --c-field-underline-line: var(--color-border);
+  --c-field-underline-line-focus: var(--color-focus);
   --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-sticky-bar-layer: var(--layer-raised);
   --c-page-grid-gutter: var(--space-gutter);
@@ -1412,6 +1417,7 @@
     --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-underline-line: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-tile-fill: var(--color-bg-control);
@@ -1448,6 +1454,7 @@
   --c-data-table-outline: var(--color-border);
   --c-editor-layout-divider: var(--color-border);
   --c-example-outline: var(--color-border);
+  --c-field-underline-line: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
   --c-list-tile-fill: var(--color-bg-control);
@@ -1484,6 +1491,7 @@
     --c-data-table-outline: var(--color-border);
     --c-editor-layout-divider: var(--color-border);
     --c-example-outline: var(--color-border);
+    --c-field-underline-line: var(--color-border);
     --c-field-readonly-border: var(--color-border);
     --c-illustration-muted: var(--color-text-muted);
     --c-list-tile-fill: var(--color-bg-control);
@@ -1520,6 +1528,7 @@
   --c-data-table-outline: var(--color-border);
   --c-editor-layout-divider: var(--color-border);
   --c-example-outline: var(--color-border);
+  --c-field-underline-line: var(--color-border);
   --c-field-readonly-border: var(--color-border);
   --c-illustration-muted: var(--color-text-muted);
   --c-list-tile-fill: var(--color-bg-control);

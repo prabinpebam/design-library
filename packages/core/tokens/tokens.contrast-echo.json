@@ -96,6 +96,16 @@
         "$description": "Colour of the preview’s enclosure (echoed for contrast contexts)"
       }
     },
+    "field-underline": {
+      "$extensions": {
+        "owner": "TextField"
+      },
+      "line": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "The line under the field at rest, the quiet rule (echoed for contrast contexts)"
+      }
+    },
     "field": {
       "$extensions": {
         "owner": "shared"
