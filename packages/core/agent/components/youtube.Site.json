@@ -30,6 +30,11 @@
           "type": "string",
           "default": "'home'",
           "description": "A directly openable review state: `home`."
+        },
+        {
+          "name": "href",
+          "type": "(layout: string) => string",
+          "description": "The address of one of this template's layouts (`home`, `watch`, `search`) in its host, the library or the standalone site."
         }
       ]
     }

@@ -14,6 +14,8 @@ export interface SiteProps extends DataAttributes {
   view: YoutubeRecord;
   /** A directly openable review state: `home`. */
   screen?: string;
+  /** The address of one of this template's layouts (`home`, `watch`, `search`) in its host, the library or the standalone site. */
+  href?: (layout: string) => string;
 }
 
 /**
@@ -25,7 +27,7 @@ export interface SiteProps extends DataAttributes {
  * @family youtube
  * @a11y A banner with search, a named guide navigation, and one main landmark holding the filters and the feed.
  */
-export function Site({ view, screen = 'home', ...data }: SiteProps) {
+export function Site({ view, screen = 'home', href = (l) => `#/app/youtube/${l}`, ...data }: SiteProps) {
   const c = view.copy;
   const [query, setQuery] = useState(screen === 'search' ? view.search.query : '');
   const [chip, setChip] = useState([view.chips[0] ?? '']);
@@ -42,7 +44,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
   const start: ReactNode = (
     <>
       <Button label={c.guide} icon="menu" iconOnly emphasis="quiet" onClick={() => setToggled(!toggled)} />
-      <Link plain data-dl-part="wordmark" href="#home">
+      <Link plain data-dl-part="wordmark" href={href('home')}>
         <span data-dl-part="mark" aria-hidden="true"><Icon name="play" size="sm" /></span>
         <span data-dl-part="word">{view.wordmark}</span>
         <span data-dl-spoken> {c.home}</span>
@@ -50,7 +52,7 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
     </>
   );
   const mini = view.guide.flatMap((s) => s.entries?.filter((e) => e.mini) ?? []);
-  const item = (e: { label: string; icon: string }) => ({ id: slug(e.label), label: e.label, href: `#${slug(e.label)}`, icon: contentIcons.of(e.icon) });
+  const item = (e: { label: string; icon: string }) => ({ id: slug(e.label), label: e.label, href: href('home'), icon: contentIcons.of(e.icon) });
   const current = view.guide.flatMap((s) => s.entries ?? []).find((e) => e.current);
   const currentId = current && slug(current.label);
 
@@ -58,9 +60,9 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
     <div {...data} data-dl="youtube-site" data-screen={screen} data-guide={toggled ? 'toggled' : undefined}>
       <header data-dl-part="masthead">
         <div data-dl-part="start">{start}</div>
-        <form data-dl-part="center" role="search" onSubmit={(e) => e.preventDefault()}>
+        <form data-dl-part="center" role="search" onSubmit={(e) => { e.preventDefault(); window.location.assign(href('search')); }}>
           <div data-dl-part="search">
-            <TextField label={c.search} hideLabel type="search" clearable placeholder={c.search} value={query} onChange={setQuery} action={{ label: c.search, icon: 'search', iconOnly: true, onAction: () => undefined }} />
+            <TextField label={c.search} hideLabel type="search" clearable placeholder={c.search} value={query} onChange={setQuery} action={{ label: c.search, icon: 'search', iconOnly: true, onAction: () => window.location.assign(href('search')) }} />
           </div>
           <span data-dl-part="voice"><Button label={c.voiceSearch} icon="mic" iconOnly /></span>
         </form>
@@ -92,14 +94,14 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
         </ScrollArea>
       </nav>
       <main data-dl-part="main">
-        {screen === 'watch' ? <Watch view={view} /> : screen === 'search' ? <Search view={view} /> : (
+        {screen === 'watch' ? <Watch view={view} href={href} /> : screen === 'search' ? <Search view={view} href={href} /> : (
         <ScrollArea label={c.feed}>
           <div data-dl="youtube-feed">
             <div data-dl-part="chips">
               <span data-dl-part="chip-scroll"><ScrollArea axis="inline" inset="sm"><ChipGroup label={c.filters} hideLabel wrap={false} selection="single" value={chip} onChange={(v) => setChip(v.length ? v : chip)} chips={view.chips.map((label) => ({ id: label, label }))} /></ScrollArea></span>
             </div>
             <ul data-dl-part="grid" aria-label={c.feed}>
-              {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} /></li>)}
+              {view.videos.map((v) => <li key={v.id}><VideoCard video={v} copy={c} to={href('watch')} /></li>)}
             </ul>
           </div>
         </ScrollArea>
@@ -109,11 +111,11 @@ export function Site({ view, screen = 'home', ...data }: SiteProps) {
   );
 }
 
-function VideoCard({ video, copy: c }: { video: YoutubeVideo; copy: Record<string, string> }) {
+function VideoCard({ video, copy: c, to }: { video: YoutubeVideo; copy: Record<string, string>; to: string }) {
   return (
     <article data-dl="youtube-video">
       <div data-dl-part="frame">
-        <Link plain data-dl-part="link" href={`#${video.id}`}><span data-dl-spoken>{video.title}</span></Link>
+        <Link plain data-dl-part="link" href={to}><span data-dl-spoken>{video.title}</span></Link>
         <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{video.duration}</Badge></span>
       </div>
       <div data-dl-part="details">
@@ -147,7 +149,7 @@ function VideoCard({ video, copy: c }: { video: YoutubeVideo; copy: Record<strin
 }
 
 /** The watch page (W-1280-L): the player, title, owner row with actions, description and comments; up next beside it. */
-function Watch({ view }: { view: YoutubeRecord }) {
+function Watch({ view, href }: { view: YoutubeRecord; href: (layout: string) => string }) {
   const c = view.copy;
   const w = view.watch;
   const video = view.videos.find((v) => v.id === w.video) ?? view.videos[0];
@@ -169,7 +171,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
         {next.map((v) => (
           <li key={v.id} data-dl-part="next-item">
             <div data-dl-part="frame">
-              <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
+              <Link plain data-dl-part="link" href={href('watch')}><span data-dl-spoken>{v.title}</span></Link>
               <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
             </div>
             <div data-dl-part="next-text">
@@ -273,7 +275,7 @@ function Watch({ view }: { view: YoutubeRecord }) {
 }
 
 /** Search results (S-1280-L): filters with Filters at the end, then one row per video, its frame beside its words. */
-function Search({ view }: { view: YoutubeRecord }) {
+function Search({ view, href }: { view: YoutubeRecord; href: (layout: string) => string }) {
   const c = view.copy;
   const s = view.search;
   const [chip, setChip] = useState([s.chips[0] ?? '']);
@@ -294,7 +296,7 @@ function Search({ view }: { view: YoutubeRecord }) {
           {results.map(({ v, snippet, badges, chapters }) => (
             <li key={v.id} data-dl-part="result">
               <div data-dl-part="frame">
-                <Link plain data-dl-part="link" href={`#${v.id}`}><span data-dl-spoken>{v.title}</span></Link>
+                <Link plain data-dl-part="link" href={href('watch')}><span data-dl-spoken>{v.title}</span></Link>
                 <span data-dl-part="duration"><Badge size="s" tone="neutral" emphasis="media">{v.duration}</Badge></span>
               </div>
               <div data-dl-part="text">
