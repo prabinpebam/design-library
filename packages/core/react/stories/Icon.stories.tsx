@@ -84,5 +84,25 @@ registerIconSet({ id: 'acme', name: 'Acme', licence: 'Acme brand licence', glyph
         </Stack>
       ),
     },
+    {
+      title: 'Devices and arrangement',
+      description:
+        'A preview’s width (desktop, phone), gathering tiles to close the gaps between them (compress), going back to the automatic arrangement (restore), and back (arrow-start, the mirror of arrow-end; both flip in right-to-left).',
+      arrangement: 'row',
+      code: `<Icon name="desktop" label="Wide" size="lg" />
+<Icon name="phone" label="Phone" size="lg" />
+<Icon name="compress" label="Close gaps" size="lg" />
+<Icon name="restore" label="Use automatic" size="lg" />
+<Icon name="arrow-start" label="Back" size="lg" />`,
+      render: () => (
+        <>
+          <Icon name="desktop" label="Wide" size="lg" />
+          <Icon name="phone" label="Phone" size="lg" />
+          <Icon name="compress" label="Close gaps" size="lg" />
+          <Icon name="restore" label="Use automatic" size="lg" />
+          <Icon name="arrow-start" label="Back" size="lg" />
+        </>
+      ),
+    },
   ],
 } satisfies StoryFile;

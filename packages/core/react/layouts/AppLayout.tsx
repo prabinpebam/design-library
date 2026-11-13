@@ -44,6 +44,8 @@ export interface AppLayoutProps extends DataAttributes {
   headerSpan?: 'main' | 'across';
   /** The sidebar controls' names, in the product's words. `open` and `close` name the header's toggle (default "Open sidebar", "Close sidebar"; give both the same words to keep one name, its state carried by `aria-expanded`). `pin` names the pin (default "Pin" and the sidebar's label), announced as pressed while docked; with `unpin` the pin's name changes instead ("Pin navigation", "Unpin navigation") and it isn't a toggle button. */
   labels?: { open?: string; close?: string; pin?: string; unpin?: string };
+  /** `m` (default) a 56 px header and a 16 rem sidebar; `s` a dense app frame (LR41), a desktop editor's 40 px bar and a 13 rem sidebar. Pair it with Navigation `size="s"`. */
+  size?: 'm' | 's';
 }
 
 /**
@@ -59,7 +61,7 @@ export interface AppLayoutProps extends DataAttributes {
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, header, headerEnd, head, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
@@ -120,7 +122,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-size={size === 's' ? 's' : undefined}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
       <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         {onStartModeChange && canDock && (

@@ -74,7 +74,8 @@ interface SelectBase extends DataAttributes {
    * the clear button too, put `data-applied` (the same mark, as a context attribute) on a wrapper around both.
    */
   applied?: boolean;
-  /** What's wrong with the choice and how to fix it. Marks the field invalid. */
+  /** `fill` (default) takes its row's width, up to a measure; `content` is as wide as its label and chosen value, for a choice at the end of a heading row or in a toolbar (LR38). */
+  width?: 'fill' | 'content';
   error?: string;
   /** Marks the label "(optional)". Choices are required by default, so only optional ones are marked. */
   optional?: boolean;
@@ -140,7 +141,7 @@ const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: '
  * an `input[role=combobox]` with `aria-autocomplete="list"`, and the number of matches announced politely.
  */
 export function Select(props: SelectProps) {
-  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, applied = false, ...data } = props;
+  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, applied = false, width = 'fill', ...data } = props;
   const id = useId();
   const { phase, run, reset } = useCommit('--duration-confirm-min');
   const [open, setOpen] = useState(false);
@@ -331,7 +332,7 @@ export function Select(props: SelectProps) {
   );
 
   return (
-    <span {...data} data-dl="select" data-size={size} data-applied={applied ? '' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined} ref={root}>
+    <span {...data} data-dl="select" data-size={size} data-width={width === 'content' ? 'content' : undefined} data-applied={applied ? '' : undefined} data-busy={phase === 'rest' ? undefined : phase} data-invalid={invalid ? '' : undefined} data-readonly={readOnly ? '' : undefined} ref={root}>
       <Field label={label} hint={hint} error={failed ? undefined : error} necessity={optional ? 'optional' : undefined} orientation={orientation} hideLabel={hideLabel} after={failure}>
         {(control) => (
           <>

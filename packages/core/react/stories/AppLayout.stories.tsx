@@ -77,6 +77,20 @@ function Across() {
   );
 }
 
+function Dense() {
+  const [open, setOpen] = useState(true);
+  return (
+    <AppLayout size="s" height="lg" label="Dashboard" headerSpan="across" sidebarOpen={open} onSidebarToggle={() => setOpen((x) => !x)}
+      sidebar={<Navigation size="s" groups={[{ id: 'content', title: 'Content', items: [{ id: 'dashboard', label: 'Dashboard', href: '#dashboard' }, { id: 'pages', label: 'Pages', href: '#pages' }, { id: 'media', label: 'Media', href: '#media' }, { id: 'albums', label: 'Albums', href: '#albums' }] }, { id: 'site', title: 'Site', items: [{ id: 'settings', label: 'Settings', href: '#settings' }, { id: 'theme', label: 'Theme', href: '#theme' }] }]} current="dashboard" />}
+      header={<Text as="span">Studio</Text>}>
+      <Heading level={2} size={2}>
+        Dashboard
+      </Heading>
+      <Text as="p">A desktop editor’s frame: a low bar and a narrow column of small rows under small muted group titles.</Text>
+    </AppLayout>
+  );
+}
+
 export default {
   component: 'AppLayout',
   tier: 'layout',
@@ -118,6 +132,12 @@ export default {
       description: '`headerSpan="across"` runs the header over the whole app, so a docked sidebar sits under it. `labels` names the toggle and the pin in the product’s words; with `unpin` the pin’s name changes with the state instead of being a toggle button. A theme draws a rule under the header with `--c-app-layout-header-divider-width`.',
       code: `<AppLayout headerSpan="across" labels={{ open: 'Site areas', close: 'Site areas', pin: 'Pin areas', unpin: 'Unpin areas' }} startMode={mode} onStartModeChange={setMode} …>…</AppLayout>`,
       render: () => <Across />,
+    },
+    {
+      title: 'Dense, a desktop editor’s frame',
+      description: '`size="s"` (LR41) lowers the header to 40 px and narrows the sidebar to 13 rem; pair it with Navigation `size="s"` (36 px rows, above the WCAG 2.2 AA 24 px minimum, small muted group titles). Every rule that reads the header’s height or the sidebar’s width follows, floating included.',
+      code: `<AppLayout size="s" headerSpan="across" sidebar={<Navigation size="s" … />} …>…</AppLayout>`,
+      render: () => <Dense />,
     },
   ],
 } satisfies StoryFile;

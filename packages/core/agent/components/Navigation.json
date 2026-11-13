@@ -85,6 +85,12 @@
           "name": "onNavigate",
           "type": "(id: string) => void",
           "description": "Called with an item's `id` when the person follows it, for apps that route on the client. The link still follows its `href`."
+        },
+        {
+          "name": "size",
+          "type": "'m' | 's'",
+          "default": "'m'",
+          "description": "`m` (default) the 44 px targets under heading titles; `s` a dense app frame's navigation (LR41): 36 px rows (above the WCAG 2.2 AA 24 px minimum), a step smaller words and small muted group titles. Pair it with AppLayout `size=\"s\"`."
         }
       ]
     },
@@ -163,12 +169,18 @@
     "--border-hairline",
     "--c-navigation-chevron",
     "--c-navigation-group-gap",
+    "--c-navigation-group-gap-s",
     "--c-navigation-item-gap",
     "--c-navigation-item-padding-inline",
     "--c-navigation-item-radius",
     "--c-navigation-item-size",
+    "--c-navigation-item-size-s",
+    "--c-navigation-item-text-size-s",
     "--c-navigation-summary-gap",
+    "--c-navigation-title-color-s",
     "--c-navigation-title-gap",
+    "--c-navigation-title-gap-s",
+    "--c-navigation-title-size-s",
     "--color-text",
     "--state-hover",
     "--state-pressed",

@@ -562,6 +562,8 @@
   --c-app-layout-sidebar-fill: var(--color-bg-sunken);
   --c-app-layout-sidebar-gap: var(--space-stack-group);
   --c-app-layout-header: var(--size-control-xl);
+  --c-app-layout-header-s: var(--size-control-md);
+  --c-app-layout-sidebar-s: 13rem;
   --c-app-layout-header-gap: var(--space-inline-pair);
   --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-inset: var(--space-inset-sm);
@@ -708,6 +710,12 @@
   --c-navigation-item-radius: var(--radius-md);
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-chevron: var(--size-icon-sm);
+  --c-navigation-item-size-s: var(--size-target-dense);
+  --c-navigation-item-text-size-s: var(--type-body-sm-size);
+  --c-navigation-group-gap-s: var(--space-stack-group);
+  --c-navigation-title-gap-s: var(--space-stack-pair);
+  --c-navigation-title-size-s: var(--type-label-compact-size);
+  --c-navigation-title-color-s: var(--color-text-muted);
   --c-title-bar-gap: var(--space-inline-group);
   --c-title-bar-row-gap: var(--space-stack-item);
   --c-title-bar-brand-size: var(--size-target-dense);
@@ -1391,6 +1399,7 @@
     --c-illustration-muted: var(--color-text-muted);
     --c-list-tile-fill: var(--color-bg-control);
     --c-menu-button-border: var(--color-border-control);
+    --c-navigation-title-color-s: var(--color-text-muted);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
     --c-property-section-divider: var(--color-border);
@@ -1425,6 +1434,7 @@
   --c-illustration-muted: var(--color-text-muted);
   --c-list-tile-fill: var(--color-bg-control);
   --c-menu-button-border: var(--color-border-control);
+  --c-navigation-title-color-s: var(--color-text-muted);
   --c-popup-border: var(--color-border);
   --c-progress-bar-track: var(--color-border-group);
   --c-property-section-divider: var(--color-border);
@@ -1459,6 +1469,7 @@
     --c-illustration-muted: var(--color-text-muted);
     --c-list-tile-fill: var(--color-bg-control);
     --c-menu-button-border: var(--color-border-control);
+    --c-navigation-title-color-s: var(--color-text-muted);
     --c-popup-border: var(--color-border);
     --c-progress-bar-track: var(--color-border-group);
     --c-property-section-divider: var(--color-border);
@@ -1493,6 +1504,7 @@
   --c-illustration-muted: var(--color-text-muted);
   --c-list-tile-fill: var(--color-bg-control);
   --c-menu-button-border: var(--color-border-control);
+  --c-navigation-title-color-s: var(--color-text-muted);
   --c-popup-border: var(--color-border);
   --c-progress-bar-track: var(--color-border-group);
   --c-property-section-divider: var(--color-border);
@@ -1739,10 +1751,12 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-group-gap-s: var(--space-stack-group);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-title-gap: var(--space-stack-item);
+  --c-navigation-title-gap-s: var(--space-stack-pair);
   --c-notifications-content-gap: var(--space-inline-item);
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
@@ -2035,10 +2049,12 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-group-gap-s: var(--space-stack-group);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-title-gap: var(--space-stack-item);
+  --c-navigation-title-gap-s: var(--space-stack-pair);
   --c-notifications-content-gap: var(--space-inline-item);
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
@@ -2331,10 +2347,12 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-group-gap-s: var(--space-stack-group);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-title-gap: var(--space-stack-item);
+  --c-navigation-title-gap-s: var(--space-stack-pair);
   --c-notifications-content-gap: var(--space-inline-item);
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);
@@ -2627,10 +2645,12 @@
   --c-menu-button-padding-inline: var(--space-inset-sm);
   --c-message-actions-gap: var(--space-inline-pair);
   --c-navigation-group-gap: var(--space-stack-section);
+  --c-navigation-group-gap-s: var(--space-stack-group);
   --c-navigation-item-gap: var(--space-stack-row);
   --c-navigation-item-padding-inline: var(--space-inset-sm);
   --c-navigation-summary-gap: var(--space-inline-pair);
   --c-navigation-title-gap: var(--space-stack-item);
+  --c-navigation-title-gap-s: var(--space-stack-pair);
   --c-notifications-content-gap: var(--space-inline-item);
   --c-notifications-gap: var(--space-stack-item);
   --c-notifications-padding-inline: var(--space-inset-md);

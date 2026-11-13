@@ -91,6 +91,12 @@ export const icons = {
   pen: { d: 'M12 21l-6-9.5L9 4h6l3 7.5zM12 21v-7.5M12 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3' },
   'arrow-down': { d: 'M12 4.5v15M5.5 13l6.5 6.5 6.5-6.5' },
   'arrow-end': { d: 'M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5', flipInRtl: true },
+  'arrow-start': { d: 'M19.5 12h-15M11 5.5L4.5 12l6.5 6.5', flipInRtl: true },
+  // Devices and arrangement (LR37): a preview's width, and gathering tiles or returning to the automatic arrangement.
+  desktop: { d: 'M4.5 4.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zM9 20h6M12 15.5V20' },
+  phone: { d: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3zM11 18h2' },
+  compress: { d: 'M12 3.5v6M9 6.5l3 3 3-3M12 20.5v-6M9 17.5l3-3 3 3M4.5 12h15' },
+  restore: { d: 'M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4' },
   wrap: { d: 'M4.5 7h11a3.5 3.5 0 0 1 0 7H8M10.5 11.5L8 14l2.5 2.5', flipInRtl: true },
   corners: { d: 'M4.5 9.5V6A1.5 1.5 0 0 1 6 4.5h3.5M14.5 4.5H18A1.5 1.5 0 0 1 19.5 6v3.5M19.5 14.5V18a1.5 1.5 0 0 1-1.5 1.5h-3.5M9.5 19.5H6A1.5 1.5 0 0 1 4.5 18v-3.5' },
   sides: { d: 'M7 4.5h10M7 19.5h10M4.5 7v10M19.5 7v10' },

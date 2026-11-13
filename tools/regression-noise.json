@@ -1,6 +1,12 @@
 {
   "$comment": "Declarations for tools/template-regression.mjs (Q143.2, docs/replica-rules.md). pages holds proven SAME-build animation noise with maxPct. catalogueInventory holds only explicitly authorized source-derived library inventory/count or scrollbar-track rectangles; all remaining pixels must be exactly identical and the unmasked evidence is retained. Never mask a component example or a template, or declare an unexplained change.",
   "catalogueInventory": {
+    "lib--navigation": {
+      "reason": "catalogue inventory: (DesignUp LR41) Navigation gains the opt-in size prop (default m, unchanged): a props row and the story 'Dense, in a desktop app frame' below the viewport; only the right scrollbar track changes.",
+      "regions": [
+        { "x": 1270, "y": 54, "width": 10, "height": 846 }
+      ]
+    },
     "lib--reveal": {
       "reason": "catalogue inventory: (DesignUp LR10) Reveal gains the opt-in skipClosed prop (default off, unchanged): a props row and the story 'Skip closed content' below the viewport; only the right scrollbar track changes.",
       "regions": [

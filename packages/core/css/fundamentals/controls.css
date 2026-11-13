@@ -1377,6 +1377,12 @@
     max-inline-size: var(--size-measure);
   }
 
+  /* LR38: as wide as its label and chosen value, never wider than its row. */
+  [data-dl='select'][data-width='content'] {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+  }
+
 
   [data-dl='text-area'] [data-dl-part='box'],
   [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box'] {

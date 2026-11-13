@@ -136,6 +136,16 @@
         "$description": "The button's outline: the soft control outline its fill already marks, text strength in more contrast (Q71) (echoed for contrast contexts)"
       }
     },
+    "navigation": {
+      "$extensions": {
+        "owner": "Navigation"
+      },
+      "title-color-s": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "size s: a group's title in the muted text colour; the space above it and its place tell the groups apart (echoed for contrast contexts)"
+      }
+    },
     "popup": {
       "$extensions": {
         "owner": "shared"

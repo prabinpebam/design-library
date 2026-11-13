@@ -81,6 +81,21 @@
     padding-inline-start: calc(var(--c-navigation-item-padding-inline) + 3 * (var(--c-navigation-chevron) + var(--c-navigation-summary-gap)));
   }
 
+  /* size s (LR41): a dense app frame's navigation. Smaller rows at the dense target, a step smaller words, and each
+     group's title a small muted label; the same parts and gaps, only their sizes change. */
+  [data-dl='navigation'][data-size='s'] {
+    --c-navigation-item-size: var(--c-navigation-item-size-s);
+    --c-navigation-group-gap: var(--c-navigation-group-gap-s);
+    --c-navigation-title-gap: var(--c-navigation-title-gap-s);
+    font-size: var(--c-navigation-item-text-size-s);
+  }
+
+  [data-dl='navigation'][data-size='s'] > [data-dl-part='groups'] > [data-dl-part='group'] > [data-dl='heading'],
+  [data-dl='navigation'][data-size='s'] > [data-dl-part='disclosure'] > [data-dl-part='groups'] > [data-dl-part='group'] > [data-dl='heading'] {
+    font-size: var(--c-navigation-title-size-s);
+    color: var(--c-navigation-title-color-s);
+  }
+
   [data-dl='navigation'] [data-dl-part='item'][aria-current='page'] {
     background-color: var(--state-selected);
   }

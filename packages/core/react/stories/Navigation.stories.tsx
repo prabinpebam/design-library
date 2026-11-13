@@ -138,5 +138,11 @@ export default {
       code: `<Navigation groups={tiers} current={page} collapsed open={open} onOpenChange={setOpen} onNavigate={setPage} />`,
       render: () => <Live groups={tiers} initial="button" collapsed />,
     },
+    {
+      title: 'Dense, in a desktop app frame',
+      description: 'size s (LR41), beside AppLayout size s: 36 px rows (above the WCAG 2.2 AA 24 px minimum), a step smaller words and each group’s title a small muted label, so an editor’s many places fit a narrow column. The same parts, gaps and states; only sizes change.',
+      code: `<Navigation size="s" groups={areas} current={area} onNavigate={setArea} />`,
+      render: () => <Live groups={tiers} initial="colour" size="s" />,
+    },
   ],
 } satisfies StoryFile;

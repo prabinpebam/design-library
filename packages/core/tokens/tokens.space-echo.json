@@ -1110,6 +1110,11 @@
         "$value": "{space.stack-section}",
         "$description": "Between groups (the tiers): the largest space in the navigation, so each group reads as its own section (echoed for space contexts)"
       },
+      "group-gap-s": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "size s: between groups, still the largest space in the navigation (echoed for space contexts)"
+      },
       "item-gap": {
         "$type": "dimension",
         "$value": "{space.stack-row}",
@@ -1129,6 +1134,11 @@
         "$type": "dimension",
         "$value": "{space.stack-item}",
         "$description": "Between a group's title and its first entry (echoed for space contexts)"
+      },
+      "title-gap-s": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "size s: between a group's title and its first entry (echoed for space contexts)"
       }
     },
     "notifications": {

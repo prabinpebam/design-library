@@ -54,6 +54,8 @@ export interface NavigationProps extends DataAttributes {
   fallbackLabel?: string;
   /** Called with an item's `id` when the person follows it, for apps that route on the client. The link still follows its `href`. */
   onNavigate?: (id: string) => void;
+  /** `m` (default) the 44 px targets under heading titles; `s` a dense app frame's navigation (LR41): 36 px rows (above the WCAG 2.2 AA 24 px minimum), a step smaller words and small muted group titles. Pair it with AppLayout `size="s"`. */
+  size?: 'm' | 's';
 }
 
 const isFamily = (entry: NavigationItem | NavigationFamily): entry is NavigationFamily => 'items' in entry;
@@ -103,7 +105,7 @@ const pagesIn = (entries: (NavigationItem | NavigationFamily)[]): NavigationItem
  * @key Enter: follows the focused item
  * @key Enter / Space: opens or closes the focused family, or the collapsed disclosure from its summary
  */
-export function Navigation({ groups, current, expanded, onExpandedChange, headingLevel = 2, collapsed = false, open = false, onOpenChange, fallbackLabel = 'Pages', onNavigate, ...data }: NavigationProps) {
+export function Navigation({ groups, current, expanded, onExpandedChange, headingLevel = 2, collapsed = false, open = false, onOpenChange, fallbackLabel = 'Pages', onNavigate, size = 'm', ...data }: NavigationProps) {
   const base = useId();
   const [own, setOwn] = useState<string[]>(() => familyPathOf(groups, current));
   const opened = expanded ?? own;
@@ -151,7 +153,7 @@ export function Navigation({ groups, current, expanded, onExpandedChange, headin
     </div>
   );
   return (
-    <div {...data} data-dl="navigation">
+    <div {...data} data-dl="navigation" data-size={size === 's' ? 's' : undefined}>
       {collapsed ? (
         <details data-dl-part="disclosure" open={open} onToggle={(e) => onOpenChange?.(e.currentTarget.open)}>
           <summary>

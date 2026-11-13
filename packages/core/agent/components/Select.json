@@ -123,9 +123,13 @@
           "description": "A filter is applied: the chosen value differs from its default, so the control is marked in the accent (`c.applied.fill` and `c.applied.border`, theme settings) while the value it shows says what. Pair it with a way to clear it; to mark the clear button too, put `data-applied` (the same mark, as a context attribute) on a wrapper around both."
         },
         {
+          "name": "width",
+          "type": "'fill' | 'content'",
+          "description": "`fill` (default) takes its row's width, up to a measure; `content` is as wide as its label and chosen value, for a choice at the end of a heading row or in a toolbar (LR38)."
+        },
+        {
           "name": "error",
-          "type": "string",
-          "description": "What's wrong with the choice and how to fix it. Marks the field invalid."
+          "type": "string"
         },
         {
           "name": "optional",

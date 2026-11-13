@@ -232,5 +232,14 @@ export default {
       code: `<Select mode="form" label="Year" options={years} value={year} onChange={setYear} applied={year !== 'all'} />`,
       render: () => <AppliedYear />,
     },
+    {
+      title: 'As wide as its content',
+      description: 'At the end of a heading row or in a toolbar, `width="content"` makes the field as wide as its label and chosen value instead of taking the row, so it sits beside the heading rather than under it. Never wider than its row.',
+      code: `<Cluster justify="between" align="center">
+  <Heading level={2} size={4}>Pictures and videos</Heading>
+  <Select mode="form" width="content" size="s" hideLabel label="Order" options={orders} value={order} onChange={setOrder} />
+</Cluster>`,
+      render: () => <Picker label="Order" hideLabel size="s" width="content" options={[{ value: 'oldest', label: 'Oldest first' }, { value: 'newest', label: 'Newest first' }, { value: 'own', label: 'Your order' }]} initial="oldest" />,
+    },
   ],
 } satisfies StoryFile;

@@ -23,6 +23,12 @@
   [data-dl='app-layout'][data-height='screen'] { block-size: 100dvh; }
   [data-dl='app-layout'][data-height='lg'] { block-size: var(--c-app-layout-height-lg); }
 
+  /* size s (LR41): a dense app frame; every rule that reads the header's height or the sidebar's width follows. */
+  [data-dl='app-layout'][data-size='s'] {
+    --c-app-layout-header: var(--c-app-layout-header-s);
+    --c-app-layout-sidebar: var(--c-app-layout-sidebar-s);
+  }
+
   [data-dl='app-layout'] > [data-dl-part='sidebar'] {
     display: flex;
     flex-direction: column;
