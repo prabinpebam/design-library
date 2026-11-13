@@ -36,9 +36,14 @@
         },
         {
           "name": "gap",
-          "type": "'group' | 'section'",
+          "type": "'group' | 'section' | 'even'",
           "default": "'group'",
-          "description": "The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap)."
+          "description": "The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap); `even` rows a gutter apart like the columns, for panels in one grid (a dashboard, LR82)."
+        },
+        {
+          "name": "wide",
+          "type": "number[]",
+          "description": "Children (by index) that span every column, such as a dashboard's wide panels between paired ones (LR82). Default: none."
         }
       ]
     }

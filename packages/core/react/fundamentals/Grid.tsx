@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 
 export interface GridProps extends DataAttributes {
@@ -13,8 +13,10 @@ export interface GridProps extends DataAttributes {
    * `size.column-min` and a gutter) they stack in source order. Default: equal columns.
    */
   ratio?: '2:1' | '3:2' | '1:2' | '2:3' | 'aside';
-  /** The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap). */
-  gap?: 'group' | 'section';
+  /** The space between rows (and between stacked columns): `group` (default) for things compared side by side; `section` when each cell is a section with its own heading, so stacked sections stand `c.grid.section-gap` apart (wider than inside a section, narrower than the page gap); `even` rows a gutter apart like the columns, for panels in one grid (a dashboard, LR82). */
+  gap?: 'group' | 'section' | 'even';
+  /** Children (by index) that span every column, such as a dashboard's wide panels between paired ones (LR82). Default: none. */
+  wide?: number[];
 }
 
 /**
@@ -29,10 +31,11 @@ export interface GridProps extends DataAttributes {
  * @a11y A plain `div` with no role: it arranges, it doesn't group for assistive technology. Reading order is the
  * source order, row by row.
  */
-export function Grid({ children, max, ratio, gap = 'group', ...data }: GridProps) {
+export function Grid({ children, max, ratio, gap = 'group', wide, ...data }: GridProps) {
+  const cells = wide?.length && !ratio ? Children.map(children, (child, n) => (isValidElement(child) && wide.includes(n) ? cloneElement(child as ReactElement<Record<string, unknown>>, { 'data-grid-wide': '' }) : child)) : children;
   return (
-    <div {...data} data-dl="grid" data-max={ratio ? undefined : max} data-ratio={ratio} data-gap={gap === 'section' ? 'section' : undefined}>
-      {children}
+    <div {...data} data-dl="grid" data-max={ratio ? undefined : max} data-ratio={ratio} data-gap={gap === 'group' ? undefined : gap}>
+      {cells}
     </div>
   );
 }

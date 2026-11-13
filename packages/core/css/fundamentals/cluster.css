@@ -30,6 +30,11 @@
     column-gap: var(--space-inline-group);
   }
 
+  /* LR82: figures that each stand alone, a section's step apart. */
+  [data-dl='cluster'][data-gap='section'] {
+    column-gap: var(--space-stack-section);
+  }
+
   [data-dl='cluster'][data-justify='between'] {
     justify-content: space-between;
   }

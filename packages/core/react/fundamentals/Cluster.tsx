@@ -3,8 +3,8 @@ import type { DataAttributes } from '../types';
 
 export interface ClusterProps extends DataAttributes {
   children: ReactNode;
-  /** The space between children in the row, by how strongly they belong together: `pair` (an icon and its number) up to `group`; `none` for compact icon buttons that touch, their own hover fill showing each one's bounds (a design tool's alignment row). Wrapped lines keep a pair's space between them. */
-  gap?: 'none' | 'pair' | 'item' | 'group';
+  /** The space between children in the row, by how strongly they belong together: `pair` (an icon and its number) up to `group`, and `section` for figures that each stand alone (a dashboard's counts, LR82); `none` for compact icon buttons that touch, their own hover fill showing each one's bounds (a design tool's alignment row). Wrapped lines keep a pair's space between them. */
+  gap?: 'none' | 'pair' | 'item' | 'group' | 'section';
   /** How the row's free room is shared: `start` (default) keeps children together at the start; `end` keeps them together at the end (a row of actions closing a form); `between` spreads them across the row, the first and last at its edges (a design tool's alignment row filling its panel). */
   justify?: 'start' | 'end' | 'between';
   /** How children line up across the row: centred (marks beside text), on the first line of text, at the top (items of different heights, such as fields), at the bottom (`end`: a button level with an unhinted field beside it, under that field's label), or `control`: a form row, every child that isn't a field level with the fields' controls (under their labels, above their hints) and keeping its own width while the fields share the room, the row no wider than one field (size.measure). */

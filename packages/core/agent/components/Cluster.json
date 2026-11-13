@@ -25,9 +25,9 @@
         },
         {
           "name": "gap",
-          "type": "'none' | 'pair' | 'item' | 'group'",
+          "type": "'none' | 'pair' | 'item' | 'group' | 'section'",
           "default": "'item'",
-          "description": "The space between children in the row, by how strongly they belong together: `pair` (an icon and its number) up to `group`; `none` for compact icon buttons that touch, their own hover fill showing each one's bounds (a design tool's alignment row). Wrapped lines keep a pair's space between them."
+          "description": "The space between children in the row, by how strongly they belong together: `pair` (an icon and its number) up to `group`, and `section` for figures that each stand alone (a dashboard's counts, LR82); `none` for compact icon buttons that touch, their own hover fill showing each one's bounds (a design tool's alignment row). Wrapped lines keep a pair's space between them."
         },
         {
           "name": "justify",
@@ -63,6 +63,7 @@
     "--space-inline-item",
     "--space-inline-pair",
     "--space-stack-pair",
+    "--space-stack-section",
     "--type-label-leading",
     "--type-label-size"
   ],
