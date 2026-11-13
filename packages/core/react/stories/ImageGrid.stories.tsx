@@ -48,6 +48,29 @@ function Opening() {
   );
 }
 
+function Dragging() {
+  const [ids, setIds] = useState(['p1', 'p2']);
+  const [dropped, setDropped] = useState('');
+  return (
+    <>
+      <ImageGrid
+        label="The album’s pictures"
+        items={marked}
+        selectable
+        selected={ids}
+        onSelectionChange={setIds}
+        onItemsDragStart={(dragged, event) => event.dataTransfer.setData('application/x-album-items', dragged.join(' '))}
+      />
+      <div
+        onDragOver={(event) => event.dataTransfer.types.includes('application/x-album-items') && event.preventDefault()}
+        onDrop={(event) => setDropped(event.dataTransfer.getData('application/x-album-items'))}
+      >
+        <Text variant="body-sm" tone="muted">{dropped ? `Dropped here: ${dropped}.` : 'Drag a picture onto this line: a chosen one brings every chosen one with it.'}</Text>
+      </div>
+    </>
+  );
+}
+
 export default {
   component: 'ImageGrid',
   tier: 'compound',
@@ -158,6 +181,13 @@ export default {
       description: 'With onSelect too, a plain press opens the picture and choosing is the check box’s (or Ctrl, Cmd and Shift). The open action and the choice never get in each other’s way.',
       code: `<ImageGrid selectable selected={ids} onSelectionChange={…} onSelect={(i) => open(i)} label="…" items={photos} />`,
       render: () => <Choosing initial={['p0', 'p2', 'p3']} opens />,
+    },
+    {
+      title: 'Dragging pictures out',
+      description:
+        'With onItemsDragStart the pictures drag out of the grid (an album’s pictures into its cover). A drag that starts on a chosen picture carries every chosen one, in the grid’s order; otherwise the one under the pointer. The dragged pictures dim in place until the drag ends; the consumer puts the ids on the drag under its own type.',
+      code: `<ImageGrid selectable selected={ids} onSelectionChange={setIds} onItemsDragStart={(ids, event) => event.dataTransfer.setData('application/x-album-items', ids.join(' '))} label="…" items={photos} />`,
+      render: () => <Dragging />,
     },
   ],
 } satisfies StoryFile;

@@ -77,6 +77,8 @@ export interface SelectListProps extends DataAttributes {
   stickyHeadings?: boolean;
   /** The most the list grows before it scrolls. */
   maxSize?: 'sm' | 'md' | 'lg';
+  /** With `single`: how the chosen item shows. `check` (default) a trailing check over the fill; `fill` the fill alone, for a list of where you are (a form's sections) whose chosen item's content shows beside it. */
+  mark?: 'check' | 'fill';
 }
 
 /** One item of a static list. */
@@ -369,7 +371,7 @@ function ActionList({ label, actions, groups, size, dividers = 'none', layout = 
   );
 }
 
-function SelectList({ label, selection, options, groups, value, onChange, size, stickyHeadings, maxSize, mode: _mode, ...data }: SelectListProps) {
+function SelectList({ label, selection, options, groups, value, onChange, size, stickyHeadings, maxSize, mark, mode: _mode, ...data }: SelectListProps) {
   const base = useId();
   const sections = groups ?? [{ id: '', heading: '', options: options ?? [] }];
   const flat: ListOption[] = sections.flatMap((g) => g.options);
@@ -422,6 +424,7 @@ function SelectList({ label, selection, options, groups, value, onChange, size, 
         role="option"
         size={size}
         multiple={multiple}
+        mark={mark}
         selected={value.includes(id)}
         active={cursor.active === i}
         onClick={(event) => choose(i, event.shiftKey)}

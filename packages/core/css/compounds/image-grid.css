@@ -172,6 +172,11 @@
     pointer-events: none;
   }
 
+  /* LR50: pictures being dragged out of the grid stay in place, dimmed, until the drag ends. */
+  [data-dl='image-grid'] > [data-dragging] {
+    opacity: var(--c-image-grid-dragging-opacity);
+  }
+
   /* The check boxes appear while a picture is pointed at or focused, and all of them once any is chosen. */
   @media (hover: hover) {
     :is([data-dl='image-grid'][data-selectable]:not([data-selecting]) > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'][data-selectable]:not([data-selecting]) > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']):not(:hover, :focus-within) > [data-dl-part='top'] > [data-dl-part='check'] {

@@ -115,6 +115,11 @@
           "description": "For an option in a listbox that allows several: shows a check box at the start instead of the trailing check."
         },
         {
+          "name": "mark",
+          "type": "'check' | 'fill'",
+          "description": "For a single-choice option: how its chosen state shows. `check` (default) the trailing check over the fill; `fill` the fill alone, for a list whose chosen row is where you are (a form's sections), where what shows beside it already says so."
+        },
+        {
           "name": "active",
           "type": "boolean",
           "description": "The keyboard is on it while focus stays on the control (`aria-activedescendant`); shows the focus ring."

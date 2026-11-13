@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties, type MouseEvent, type ReactNode } from 'react';
+import { useRef, useState, type CSSProperties, type DragEvent, type MouseEvent, type ReactNode } from 'react';
 import { Badge, type BadgeTone } from '../fundamentals/Badge';
 import { Checkbox } from '../fundamentals/Checkbox';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
@@ -87,13 +87,23 @@ export interface ImageGridProps extends DataAttributes {
   selected?: string[];
   /** The chosen ids after a press, with how it was made. */
   onSelectionChange?: (ids: string[], how: ImageGridSelectionChange) => void;
+  /**
+   * Makes the pictures draggable (an editor dragging them somewhere else, such as into a cover): a drag carries the
+   * chosen items, in the grid's order, when it starts on a chosen one, else the one under the pointer. Called with those
+   * ids and the drag event (put the ids on `event.dataTransfer` under your own type); the dragged items dim until the
+   * drag ends. The drag allows a move. Off by default.
+   */
+  onItemsDragStart?: (ids: string[], event: DragEvent<HTMLLIElement>) => void;
+  /** The drag that `onItemsDragStart` began ended (dropped or cancelled). */
+  onItemsDragEnd?: (event: DragEvent<HTMLLIElement>) => void;
 }
 
 /**
  * A set of pictures arranged as one: equal frames, a quilt with features, masonry columns or justified rows. Each layout
  * keeps every column at least `c.image-grid.min` wide and falls to fewer as the place narrows, so nothing scrolls
  * sideways. With `onSelect`, a picture opens (into a Lightbox). With `selectable`, pictures are chosen with a check box
- * each (an album being edited). Items can carry badges, and a video's poster its play mark and length. For pictures one
+ * each (an album being edited). With `onItemsDragStart`, pictures (the chosen ones together) drag out of the grid.
+ * Items can carry badges, and a video's poster its play mark and length. For pictures one
  * at a time use Carousel.
  * @tier compound
  * @family content
@@ -105,7 +115,18 @@ export interface ImageGridProps extends DataAttributes {
  * @key Tab: the next picture or check box
  * @key Enter, Space: open the picture; Space on a check box chooses it or takes it out
  */
-export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, ...data }: ImageGridProps) {
+export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, ...data }: ImageGridProps) {
+  const [dragging, setDragging] = useState<string[]>([]);
+  const dragStart = (id: string, event: DragEvent<HTMLLIElement>) => {
+    const ids = selectable && selected.includes(id) ? items.filter((item) => selected.includes(item.id)).map((item) => item.id) : [id];
+    event.dataTransfer.effectAllowed = 'move';
+    setDragging(ids);
+    onItemsDragStart?.(ids, event);
+  };
+  const dragEnd = (event: DragEvent<HTMLLIElement>) => {
+    setDragging([]);
+    onItemsDragEnd?.(event);
+  };
   // Captions sit under their pictures where each picture has its own row of space; quilted and justified tiles fill
   // their cells by shape, so they leave captions out.
   const captioned = layout === 'standard' || layout === 'masonry';
@@ -225,7 +246,15 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
         );
         const shown = tile || open || picture;
         return (
-          <li key={item.id} data-dl-part="item" data-span={layout === 'quilted' ? item.span : undefined} data-selected={isSelected ? '' : undefined} style={shape}>
+          <li
+            key={item.id}
+            data-dl-part="item"
+            data-span={layout === 'quilted' ? item.span : undefined}
+            data-selected={isSelected ? '' : undefined}
+            data-dragging={dragging.includes(item.id) ? '' : undefined}
+            style={shape}
+            {...(onItemsDragStart ? { draggable: true, onDragStart: (event: DragEvent<HTMLLIElement>) => dragStart(item.id, event), onDragEnd: dragEnd } : {})}
+          >
             {(open || marked) && words ? (
               <figure data-dl="figure">
                 {shown}

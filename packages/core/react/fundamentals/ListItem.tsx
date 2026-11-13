@@ -53,6 +53,8 @@ export interface ListItemProps extends DataAttributes {
   selected?: boolean;
   /** For an option in a listbox that allows several: shows a check box at the start instead of the trailing check. */
   multiple?: boolean;
+  /** For a single-choice option: how its chosen state shows. `check` (default) the trailing check over the fill; `fill` the fill alone, for a list whose chosen row is where you are (a form's sections), where what shows beside it already says so. */
+  mark?: 'check' | 'fill';
   /** The keyboard is on it while focus stays on the control (`aria-activedescendant`); shows the focus ring. */
   active?: boolean;
   /** Proxy focus from aria-activedescendant: the existing ring, or the same mild fill as hover. Native focus keeps its ring. */
@@ -148,6 +150,7 @@ export function ListItem({
   tone,
   selected,
   multiple,
+  mark = 'check',
   active,
   activeAppearance = 'ring',
   activeIndicator = false,
@@ -271,7 +274,7 @@ export function ListItem({
           <Icon name="chevron-end" />
         </span>
       )}
-      {role === 'option' && !multiple && <span data-dl-part="item-check">{selected && <Icon name="check" />}</span>}
+      {role === 'option' && !multiple && mark === 'check' && <span data-dl-part="item-check">{selected && <Icon name="check" />}</span>}
     </Tag>
   );
 }

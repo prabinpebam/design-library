@@ -1019,6 +1019,7 @@
   --c-image-grid-mark-gap: var(--space-1);
   --c-image-grid-selection: var(--color-accent);
   --c-image-grid-selection-width: var(--border-thick);
+  --c-image-grid-dragging-opacity: 0.5;
   --c-lightbox-padding: var(--space-4);
   --c-lightbox-gap: var(--space-stack-item);
   --c-lightbox-side-gap: var(--space-inline-item);

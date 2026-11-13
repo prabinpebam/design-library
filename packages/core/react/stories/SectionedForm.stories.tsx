@@ -13,9 +13,9 @@ const sections: SectionedFormSection[] = [
   { id: 'share', title: 'Sharing', group: 'Blocks', detail: 'Preview card', content: <Switch label="Show a share card" checked onChange={() => {}} /> },
 ];
 
-function Inspector({ details = false }: { details?: boolean }) {
+function Inspector({ details = false, mark }: { details?: boolean; mark?: 'check' | 'fill' }) {
   const [selected, setSelected] = useState('title');
-  return <SectionedForm label="Page settings" sections={sections} selected={selected} onSelect={setSelected} details={details} />;
+  return <SectionedForm label="Page settings" sections={sections} selected={selected} onSelect={setSelected} details={details} mark={mark} />;
 }
 
 function InEditor() {
@@ -43,6 +43,12 @@ export default {
       description: '`details` shows each section’s `detail` as a second line in the list; by default the list shows titles only.',
       code: `<SectionedForm details label="Page settings" sections={…} … />`,
       render: () => <Inspector details />,
+    },
+    {
+      title: 'Current section by its fill',
+      description: '`mark="fill"` shows the chosen section in the list by its fill alone, with no check: the list says where you are, and the section beside it says which. The row is still the selected option for assistive technology.',
+      code: `<SectionedForm mark="fill" label="Page settings" sections={…} … />`,
+      render: () => <Inspector mark="fill" />,
     },
     {
       title: 'In an editor’s inspector',

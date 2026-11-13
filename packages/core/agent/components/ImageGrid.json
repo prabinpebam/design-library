@@ -4,7 +4,7 @@
   "tier": "compound",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/compounds/ImageGrid.tsx",
-  "summary": "A set of pictures arranged as one: equal frames, a quilt with features, masonry columns or justified rows. Each layout keeps every column at least `c.image-grid.min` wide and falls to fewer as the place narrows, so nothing scrolls sideways. With `onSelect`, a picture opens (into a Lightbox). With `selectable`, pictures are chosen with a check box each (an album being edited). Items can carry badges, and a video's poster its play mark and length. For pictures one at a time use Carousel.",
+  "summary": "A set of pictures arranged as one: equal frames, a quilt with features, masonry columns or justified rows. Each layout keeps every column at least `c.image-grid.min` wide and falls to fewer as the place narrows, so nothing scrolls sideways. With `onSelect`, a picture opens (into a Lightbox). With `selectable`, pictures are chosen with a check box each (an album being edited). With `onItemsDragStart`, pictures (the chosen ones together) drag out of the grid. Items can carry badges, and a video's poster its play mark and length. For pictures one at a time use Carousel.",
   "family": "content",
   "a11y": [
     "A list named by `label`; each picture keeps its own alternative text, followed by its badges and, for a video, \"video\" and its spoken length. With `onSelect` each is a button named \"Open: \" and that name, in reading order; the focus ring sits inside the picture's corners. With `selectable` each has a check box named \"Select: \" and that name, its own Tab stop after the picture's button; the check box carries the choice, the outline only shows it. Masonry reads down each column, so use it only where order doesn't matter."
@@ -75,6 +75,16 @@
           "name": "onSelectionChange",
           "type": "(ids: string[], how: ImageGridSelectionChange) => void",
           "description": "The chosen ids after a press, with how it was made."
+        },
+        {
+          "name": "onItemsDragStart",
+          "type": "(ids: string[], event: DragEvent<HTMLLIElement>) => void",
+          "description": "Makes the pictures draggable (an editor dragging them somewhere else, such as into a cover): a drag carries the chosen items, in the grid's order, when it starts on a chosen one, else the one under the pointer. Called with those ids and the drag event (put the ids on `event.dataTransfer` under your own type); the dragged items dim until the drag ends. The drag allows a move. Off by default."
+        },
+        {
+          "name": "onItemsDragEnd",
+          "type": "(event: DragEvent<HTMLLIElement>) => void",
+          "description": "The drag that `onItemsDragStart` began ended (dropped or cancelled)."
         }
       ]
     },
@@ -220,6 +230,7 @@
   ],
   "tokens": [
     "--c-image-grid-cell",
+    "--c-image-grid-dragging-opacity",
     "--c-image-grid-framed-gap",
     "--c-image-grid-gap",
     "--c-image-grid-hover-opacity",

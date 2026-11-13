@@ -175,6 +175,11 @@
           "name": "maxSize",
           "type": "'sm' | 'md' | 'lg'",
           "description": "The most the list grows before it scrolls."
+        },
+        {
+          "name": "mark",
+          "type": "'check' | 'fill'",
+          "description": "With `single`: how the chosen item shows. `check` (default) a trailing check over the fill; `fill` the fill alone, for a list of where you are (a form's sections) whose chosen item's content shows beside it."
         }
       ]
     },

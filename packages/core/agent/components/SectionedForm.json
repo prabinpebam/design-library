@@ -65,6 +65,11 @@
           "type": "'normal' | 'compact'",
           "default": "'normal'",
           "description": "Passed to each PropertySection: `compact` for a design tool's inspector."
+        },
+        {
+          "name": "mark",
+          "type": "'check' | 'fill'",
+          "description": "How the list shows the chosen section: `check` (default) a check over the fill; `fill` the fill alone (the section beside it already says which)."
         }
       ]
     },
