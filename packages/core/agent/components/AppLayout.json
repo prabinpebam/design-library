@@ -68,6 +68,12 @@
           "description": "Keep the header end at its natural, single-line width and let the start shrink (pair long trails with Breadcrumbs truncate). Default false. The render function's compact state follows floatBelow of the layout's own width, independently of sidebar placement."
         },
         {
+          "name": "roundedPanels",
+          "type": "boolean",
+          "default": "false",
+          "description": "Round the sidebar and details surfaces with the layout's panel radius. Default false."
+        },
+        {
           "name": "head",
           "type": "ReactNode",
           "description": "The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content."
@@ -189,7 +195,7 @@
         },
         {
           "name": "Escape",
-          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) { const sidebarId = useId()",
+          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) { const sidebarId = useId()",
           "required": true
         },
         {
@@ -236,6 +242,7 @@
     "--c-app-layout-layer",
     "--c-app-layout-margin",
     "--c-app-layout-overlay-shadow",
+    "--c-app-layout-panel-radius",
     "--c-app-layout-sidebar",
     "--c-app-layout-sidebar-fill",
     "--c-app-layout-sidebar-gap",

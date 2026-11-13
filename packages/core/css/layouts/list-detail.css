@@ -52,6 +52,10 @@
   [data-dl='list-detail'][data-list-tone='sunken'] > [data-dl-part='panes'] > [data-dl-part='list'] { background-color: var(--color-bg-sunken); }
   [data-dl='list-detail'][data-list-tone] > [data-dl-part='panes'] > [data-dl-part='list'] { align-self: stretch; }
 
+  [data-dl='list-detail'][data-rounded-panels] > [data-dl-part='panes'] > :is([data-dl-part='list'], [data-dl-part='detail']) {
+    border-radius: var(--c-list-detail-panel-radius);
+  }
+
   /* LR118 stickyList: side by side without a held height, the list's content stays in view while the page scrolls the
      detail, under the window's sticky chrome (as SectionedForm's, LR107); the column runs the detail's full height. */
   [data-dl='list-detail'][data-sticky-list]:not([data-max-size]) > [data-dl-part='panes'] > [data-dl-part='list'] {

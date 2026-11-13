@@ -126,6 +126,7 @@
     "--size-focus-offset",
     "--size-focus-width"
   ],
+  "libraryPage": "https://prabinpebam.github.io/design-library/#/focalpoint",
   "principles": [
     "ui-states"
   ]

@@ -21,6 +21,8 @@ export interface AppLayoutProps extends DataAttributes {
   headerEnd?: ReactNode | ((compact: boolean) => ReactNode);
   /** Keep the header end at its natural, single-line width and let the start shrink (pair long trails with Breadcrumbs truncate). Default false. The render function's compact state follows floatBelow of the layout's own width, independently of sidebar placement. */
   compactHeader?: boolean;
+  /** Round the sidebar and details surfaces with the layout's panel radius. Default false. */
+  roundedPanels?: boolean;
   /** The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content. */
   head?: ReactNode;
   /** The view's actions at the end of its head's row (New page, Add a talk), level with the title's last line and wrapping under it in a narrow view (LR52). Without it the head is the title alone. */
@@ -73,7 +75,7 @@ export interface AppLayoutBrand { name: string; href: string; mark?: ReactNode }
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const router = useRouter();
   const root = useRef<HTMLDivElement>(null);
@@ -142,7 +144,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
       <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         {onStartModeChange && canDock && (

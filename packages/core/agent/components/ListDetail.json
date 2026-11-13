@@ -80,6 +80,12 @@
           "type": "boolean",
           "default": "false",
           "description": "LR118 (opt-in): side by side and without a `maxSize`, the list stays in view while the page scrolls the detail, under the window's sticky chrome (`--dl-chrome-block`), as SectionedForm's `stickyList`."
+        },
+        {
+          "name": "roundedPanels",
+          "type": "boolean",
+          "default": "false",
+          "description": "Round both pane surfaces with the layout's panel radius. Default false; sticky content and focus are not clipped."
         }
       ]
     }
@@ -95,6 +101,7 @@
     "--c-list-detail-list-wide",
     "--c-list-detail-max-lg",
     "--c-list-detail-max-md",
+    "--c-list-detail-panel-radius",
     "--color-bg-raised",
     "--color-bg-sunken"
   ],

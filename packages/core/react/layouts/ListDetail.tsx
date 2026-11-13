@@ -35,6 +35,8 @@ export interface ListDetailProps extends DataAttributes {
    * under the window's sticky chrome (`--dl-chrome-block`), as SectionedForm's `stickyList`.
    */
   stickyList?: boolean;
+  /** Round both pane surfaces with the layout's panel radius. Default false; sticky content and focus are not clipped. */
+  roundedPanels?: boolean;
 }
 
 const shown = (el: HTMLElement | null) => !!el && el.getClientRects().length > 0;
@@ -49,7 +51,7 @@ const shown = (el: HTMLElement | null) => !!el && el.getClientRects().length > 0
  * a time, choosing an item moves focus to the detail (its region, named after the item) and Back returns it to the
  * chosen item, so the keyboard never loses its place. Held heights scroll each side with its own ScrollArea.
  */
-export function ListDetail({ list, listLabel, children, detailLabel, listWidth = 'narrow', show = 'list', backLabel, onBack, maxSize, listTone, stickyList = false, ...data }: ListDetailProps) {
+export function ListDetail({ list, listLabel, children, detailLabel, listWidth = 'narrow', show = 'list', backLabel, onBack, maxSize, listTone, stickyList = false, roundedPanels = false, ...data }: ListDetailProps) {
   const listRef = useRef<HTMLElement>(null);
   const detailRef = useRef<HTMLElement>(null);
   const first = useRef(true);
@@ -73,7 +75,7 @@ export function ListDetail({ list, listLabel, children, detailLabel, listWidth =
   const scrolls = (content: ReactNode) => (maxSize ? <ScrollArea maxSize={fit}>{content}</ScrollArea> : content);
 
   return (
-    <div {...data} data-dl="list-detail" data-list-width={listWidth} data-show={show} data-max-size={maxSize} data-list-tone={listTone} data-sticky-list={stickyList ? '' : undefined}>
+    <div {...data} data-dl="list-detail" data-list-width={listWidth} data-show={show} data-max-size={maxSize} data-list-tone={listTone} data-sticky-list={stickyList ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined}>
       <div data-dl-part="panes">
         <section ref={listRef} data-dl-part="list" aria-label={listLabel} tabIndex={-1}>
           {scrolls(list)}

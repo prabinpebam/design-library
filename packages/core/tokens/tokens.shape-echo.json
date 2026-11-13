@@ -51,6 +51,16 @@
         "$description": "Rounding of the whole bar's outer ends only; inner segment ends stay square (echoed for shape contexts)"
       }
     },
+    "app-layout": {
+      "$extensions": {
+        "owner": "AppLayout"
+      },
+      "panel-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "Opt-in roundedPanels: the sidebar and details surfaces' corners (echoed for shape contexts)"
+      }
+    },
     "badge": {
       "$extensions": {
         "owner": "Badge"
@@ -246,6 +256,16 @@
         "$description": "The dialog's corners; square when it fills a narrow window (echoed for shape contexts)"
       }
     },
+    "editor-layout": {
+      "$extensions": {
+        "owner": "EditorLayout"
+      },
+      "panel-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "Opt-in roundedPanels: the panel surfaces' corners (echoed for shape contexts)"
+      }
+    },
     "empty-state": {
       "$extensions": {
         "owner": "EmptyState"
@@ -324,6 +344,16 @@
         "$type": "dimension",
         "$value": "{radius.lg}",
         "$description": "A picture's corners, on the picture itself (echoed for shape contexts)"
+      }
+    },
+    "list-detail": {
+      "$extensions": {
+        "owner": "ListDetail"
+      },
+      "panel-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "Opt-in roundedPanels: the list and detail surfaces' corners (echoed for shape contexts)"
       }
     },
     "list-item": {

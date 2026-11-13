@@ -51,6 +51,16 @@
         "$description": "Rounding of the whole bar's outer ends only; inner segment ends stay square (echoed for density contexts)"
       }
     },
+    "app-layout": {
+      "$extensions": {
+        "owner": "AppLayout"
+      },
+      "panel-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "Opt-in roundedPanels: the sidebar and details surfaces' corners (echoed for density contexts)"
+      }
+    },
     "board": {
       "$extensions": {
         "owner": "Board"
@@ -186,6 +196,16 @@
         "$description": "The dialog's corners; square when it fills a narrow window (echoed for density contexts)"
       }
     },
+    "editor-layout": {
+      "$extensions": {
+        "owner": "EditorLayout"
+      },
+      "panel-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "Opt-in roundedPanels: the panel surfaces' corners (echoed for density contexts)"
+      }
+    },
     "example": {
       "$extensions": {
         "owner": "Example"
@@ -254,6 +274,16 @@
         "$type": "dimension",
         "$value": "{radius.lg}",
         "$description": "A picture's corners, on the picture itself (echoed for density contexts)"
+      }
+    },
+    "list-detail": {
+      "$extensions": {
+        "owner": "ListDetail"
+      },
+      "panel-radius": {
+        "$type": "dimension",
+        "$value": "{radius.lg}",
+        "$description": "Opt-in roundedPanels: the list and detail surfaces' corners (echoed for density contexts)"
       }
     },
     "list-item": {

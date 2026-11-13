@@ -165,6 +165,7 @@
     "--type-body-sm-leading",
     "--type-body-sm-size"
   ],
+  "libraryPage": "https://prabinpebam.github.io/design-library/#/richtextfield",
   "principles": [
     "ui-states"
   ]

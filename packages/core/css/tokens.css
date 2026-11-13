@@ -542,6 +542,7 @@
   --c-canvas-name-gap: var(--space-stack-pair);
   --c-canvas-size-padding: var(--space-inset-xs);
   --c-canvas-text-size: var(--text-m);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-editor-layout-bar: var(--size-control-md);
   --c-editor-layout-bar-gap: var(--space-inline-pair);
   --c-editor-layout-inset: var(--space-inset-sm);
@@ -573,6 +574,7 @@
   --c-board-drop: var(--color-accent);
   --c-board-dragging-opacity: 0.5;
   --c-board-scroll-room: var(--space-stack-item);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-app-layout-header-divider-width: 0px;
   --c-app-layout-sidebar: var(--size-column-min);
   --c-app-layout-sidebar-fill: var(--color-bg-sunken);
@@ -1066,6 +1068,7 @@
   --c-quote-text-size-l: var(--type-heading-2-size);
   --c-quote-measure: 40rem;
   --c-list-detail-list-narrow: 18rem;
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-detail-list-wide: 22rem;
   --c-list-detail-gutter: var(--space-gutter);
   --c-list-detail-back-gap: var(--space-stack-item);
@@ -2849,6 +2852,7 @@
   --c-alert-radius: var(--radius-md);
   --c-alignment-picker-radius: var(--radius-md);
   --c-allocation-slider-radius: var(--radius-md);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-badge-radius: var(--radius-pill);
   --c-board-card-radius: var(--radius-md);
   --c-board-column-radius: var(--radius-lg);
@@ -2871,6 +2875,7 @@
   --c-conversation-list-radius: var(--radius-md);
   --c-data-table-radius: var(--radius-lg);
   --c-dialog-radius: var(--radius-lg);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-empty-state-silhouette-radius: var(--radius-sm);
   --c-example-radius: var(--radius-lg);
   --c-field-radius: var(--radius-md);
@@ -2879,6 +2884,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
   --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
@@ -2916,6 +2922,7 @@
   --c-alert-radius: var(--radius-md);
   --c-alignment-picker-radius: var(--radius-md);
   --c-allocation-slider-radius: var(--radius-md);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-badge-radius: var(--radius-pill);
   --c-board-card-radius: var(--radius-md);
   --c-board-column-radius: var(--radius-lg);
@@ -2938,6 +2945,7 @@
   --c-conversation-list-radius: var(--radius-md);
   --c-data-table-radius: var(--radius-lg);
   --c-dialog-radius: var(--radius-lg);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-empty-state-silhouette-radius: var(--radius-sm);
   --c-example-radius: var(--radius-lg);
   --c-field-radius: var(--radius-md);
@@ -2946,6 +2954,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
   --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
@@ -2983,6 +2992,7 @@
   --c-alert-radius: var(--radius-md);
   --c-alignment-picker-radius: var(--radius-md);
   --c-allocation-slider-radius: var(--radius-md);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-badge-radius: var(--radius-pill);
   --c-board-card-radius: var(--radius-md);
   --c-board-column-radius: var(--radius-lg);
@@ -3005,6 +3015,7 @@
   --c-conversation-list-radius: var(--radius-md);
   --c-data-table-radius: var(--radius-lg);
   --c-dialog-radius: var(--radius-lg);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-empty-state-silhouette-radius: var(--radius-sm);
   --c-example-radius: var(--radius-lg);
   --c-field-radius: var(--radius-md);
@@ -3013,6 +3024,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
   --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
@@ -3050,6 +3062,7 @@
   --c-alert-radius: var(--radius-md);
   --c-alignment-picker-radius: var(--radius-md);
   --c-allocation-slider-radius: var(--radius-md);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-badge-radius: var(--radius-pill);
   --c-board-card-radius: var(--radius-md);
   --c-board-column-radius: var(--radius-lg);
@@ -3072,6 +3085,7 @@
   --c-conversation-list-radius: var(--radius-md);
   --c-data-table-radius: var(--radius-lg);
   --c-dialog-radius: var(--radius-lg);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-empty-state-silhouette-radius: var(--radius-sm);
   --c-example-radius: var(--radius-lg);
   --c-field-radius: var(--radius-md);
@@ -3080,6 +3094,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
   --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
@@ -3117,6 +3132,7 @@
   --c-alert-radius: var(--radius-md);
   --c-alignment-picker-radius: var(--radius-md);
   --c-allocation-slider-radius: var(--radius-md);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-badge-radius: var(--radius-pill);
   --c-board-card-radius: var(--radius-md);
   --c-board-column-radius: var(--radius-lg);
@@ -3139,6 +3155,7 @@
   --c-conversation-list-radius: var(--radius-md);
   --c-data-table-radius: var(--radius-lg);
   --c-dialog-radius: var(--radius-lg);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-empty-state-silhouette-radius: var(--radius-sm);
   --c-example-radius: var(--radius-lg);
   --c-field-radius: var(--radius-md);
@@ -3147,6 +3164,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
   --c-list-tile-radius: var(--radius-md);
   --c-media-player-radius: var(--radius-lg);
@@ -3184,6 +3202,7 @@
   --c-alert-radius: var(--radius-md);
   --c-alignment-picker-radius: var(--radius-md);
   --c-allocation-slider-radius: var(--radius-md);
+  --c-app-layout-panel-radius: var(--radius-lg);
   --c-board-card-radius: var(--radius-md);
   --c-board-column-radius: var(--radius-lg);
   --c-button-radius: var(--radius-md);
@@ -3199,6 +3218,7 @@
   --c-conversation-list-radius: var(--radius-md);
   --c-data-table-radius: var(--radius-lg);
   --c-dialog-radius: var(--radius-lg);
+  --c-editor-layout-panel-radius: var(--radius-lg);
   --c-example-radius: var(--radius-lg);
   --c-field-radius: var(--radius-md);
   --c-file-upload-zone-radius: var(--radius-md);
@@ -3206,6 +3226,7 @@
   --c-gradient-editor-radius: var(--radius-md);
   --c-image-generation-radius: var(--radius-lg);
   --c-image-radius: var(--radius-lg);
+  --c-list-detail-panel-radius: var(--radius-lg);
   --c-list-item-radius: var(--radius-md);
   --c-list-tile-name-size: var(--type-label-size);
   --c-list-tile-radius: var(--radius-md);

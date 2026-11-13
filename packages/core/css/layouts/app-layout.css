@@ -40,6 +40,11 @@
     background-color: var(--c-app-layout-sidebar-fill);
   }
 
+  [data-dl='app-layout'][data-rounded-panels] > [data-dl-part='sidebar'],
+  [data-dl='app-layout'][data-rounded-panels] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='aside'] {
+    border-radius: var(--c-app-layout-panel-radius);
+  }
+
   /* The sidebar scrolls in a ScrollArea (Q96): the library's bar at the sidebar's edge, padding on its content. */
   [data-dl='app-layout'] > [data-dl-part='sidebar'] > [data-dl-part='sidebar-list'] {
     flex: 1;

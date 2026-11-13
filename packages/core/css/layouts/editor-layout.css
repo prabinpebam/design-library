@@ -75,6 +75,10 @@
   }
 
   /* LR116 panelTone: the panels' own surface, the one cue between them and the working area. */
+  [data-dl='editor-layout'][data-rounded-panels] > [data-dl-part='body'] > [data-dl-part='panel'] {
+    border-radius: var(--c-editor-layout-panel-radius);
+  }
+
   [data-dl='editor-layout'][data-panel-tone='raised'] > [data-dl-part='body'] > [data-dl-part='panel'] { background-color: var(--color-bg-raised); }
   [data-dl='editor-layout'][data-panel-tone='sunken'] > [data-dl-part='body'] > [data-dl-part='panel'] { background-color: var(--color-bg-sunken); }
 

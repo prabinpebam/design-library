@@ -189,6 +189,12 @@
           "name": "panelTone",
           "type": "'raised' | 'sunken'",
           "description": "LR116 (opt-in): the panels' own surface, set apart from the working area by tone alone (no border or shadow): `raised` or `sunken` (the surface roles). Unset, the panels share the page's surface."
+        },
+        {
+          "name": "roundedPanels",
+          "type": "boolean",
+          "default": "false",
+          "description": "Round both panel surfaces with the layout's panel radius, without clipping resize handles or focus. Default false."
         }
       ]
     }
@@ -213,6 +219,7 @@
     "--c-editor-layout-panel-gap",
     "--c-editor-layout-panel-max",
     "--c-editor-layout-panel-min",
+    "--c-editor-layout-panel-radius",
     "--c-editor-layout-panel-start",
     "--c-editor-layout-resize",
     "--c-editor-layout-resize-line",
