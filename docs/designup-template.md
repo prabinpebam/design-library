@@ -15,6 +15,22 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR122: compact app header and a single-line trail (14 November 2026)
+
+DesignUp's inspected talk editor overlaps at 1024 pixels. R7 generic layout behaviour, no new block, preset, picture, visible parameter, ink or motion. Personal source `src/site/editor/EditorLayout.astro:236-286` keeps controls while title/status words yield; `components/SaveStatus.astro:72-78` uses one-line ellipsis. Existing props/slots/context/settings cannot change AppLayout allocation or Breadcrumbs wrapping; template overrides would cross sealed boundaries, so step 6. Opt-in `AppLayout.compactHeader` (default false): start flexible, end nonshrinking. Its existing `headerEnd` accepts a render function receiving the compact state below `floatBelow`; consumers choose which supplementary words yield. Opt-in `Breadcrumbs.truncate` (default false): one line, current-page ellipsis with the full name in its title and accessible text. Default layouts unchanged. DesignUp adopts through AdminFrame/ShellTrail and omits only the pending-count words while compact. Library types/build, linked types/pinned build and inspected 1024/1440 light/dark captures; deferred stories/regressions on merge night. No saving or content change.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR122 | 2026-11-14 | Readable one-line admin header at narrower desktop widths | AppLayout header slots both shrink; Breadcrumbs always wraps | 6 | opt-in compactHeader; headerEnd compact render seam; Breadcrumbs truncate | none | Editor41 | open | | Adopt in DesignUp AdminFrame and ShellTrail; no workaround |
+
+### LR120: a tile's type as one small corner mark (14 November 2026)
+
+DesignUp's owner (00:18) wants Media's tiles to say at a glance which are uploaded videos, YouTube videos and Vimeo videos. ImageGrid badges were words only, and `kind: 'video'` draws MediaPlayer's large centred play mark with a length; no slot, context or setting draws a small icon mark, and a template overlay would need a core selector, so step 6. Opt-in `ImageGridBadge.icon`: the badge is that icon alone (Badge `kind="icon"`, `size="l"`, as the play mark), `label` its spoken name, read in the tile's name as before. Plus a `vimeo` glyph beside LR92's `youtube` (Tabler Icons, MIT). Word badges are unchanged.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR120 | 2026-11-14 | Media tiles show what they are: uploaded video, YouTube or Vimeo (owner 00:18) | ImageGrid `badges` are words only; `kind: 'video'` is a centred play mark + length; no `vimeo` icon | 6 | opt-in `ImageGridBadge.icon` (icon-only corner mark, `label` its name); `vimeo` icon (Tabler, MIT) | none | Editor43, core ImageGrid + icons | open | | Adopt in DesignUp's Media grid and picker |
+
 ### LR119: forward a canonical poster's fallback (13 November 2026)
 
 DesignUp D4 keeps linked videos as canonical Media records. Coordinator 8 allocated the missing LR113 forwarding seam: optional TemplateAsset.fallbackSrc, passed by pictureProps, and MediaPlayer.posterFallbackSrc for embed posters. Site template, R7 failure behaviour; no block, preset, visible parameter, ink or motion change. Steps 1-4 cannot express it; duplicating Image's retry in a template would be an override, so step 6. Reuse Image's one retry and existing failure label when fallback is supplied, retaining the native poster path without fallback/treatment and native file-video behaviour. Adopt in DesignUp's Media asset adapter and collage/album-page/band players. Verification changes no content.

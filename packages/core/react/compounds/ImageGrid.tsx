@@ -16,6 +16,11 @@ export interface ImageGridBadge {
   label: string;
   /** As Badge's `tone`; the words always say it too. Default `neutral`. */
   tone?: BadgeTone;
+  /**
+   * LR120 (opt-in): the badge is this icon alone, a small round mark (as the play mark), with `label` as its spoken
+   * name, read in the tile's name. For what an item is at a glance (a video, its source). Default none: the words.
+   */
+  icon?: IconName;
 }
 
 export interface ImageGridItem extends SchemeSources {
@@ -434,7 +439,9 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
                 )}
                 {badges && (
                   <span data-dl-part="marks" aria-hidden={interactive || undefined}>
-                    {badges?.map((b) => (
+                    {badges?.map((b) => b.icon ? (
+                      <Badge key={b.label} kind="icon" icon={b.icon} tone={b.tone ?? 'neutral'} emphasis="strong" size="l" label={b.label} />
+                    ) : (
                       <Badge key={b.label} tone={b.tone ?? 'neutral'} emphasis="strong" size="s">
                         {b.label}
                       </Badge>
