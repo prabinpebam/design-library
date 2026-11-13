@@ -45,6 +45,11 @@
           "description": "Shows only the icon; `label` becomes its accessible name and its tooltip. Square at every size."
         },
         {
+          "name": "nameSuffix",
+          "type": "string",
+          "description": "Words after the visible label that only assistive technology hears (LR98), for a row action repeated down a list: `label=\"Open\" nameSuffix=\"Footer\"` is announced \"Open Footer\". The visible label stays at the start of the name. Ignored with `iconOnly` (its `label` is already the whole name)."
+        },
+        {
           "name": "tooltip",
           "type": "boolean",
           "default": "true",

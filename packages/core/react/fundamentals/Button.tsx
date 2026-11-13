@@ -21,6 +21,12 @@ interface ButtonBase extends DataAttributes {
   /** Shows only the icon; `label` becomes its accessible name and its tooltip. Square at every size. */
   iconOnly?: boolean;
   /**
+   * Words after the visible label that only assistive technology hears (LR98), for a row action repeated down a list:
+   * `label="Open" nameSuffix="Footer"` is announced "Open Footer". The visible label stays at the start of the name.
+   * Ignored with `iconOnly` (its `label` is already the whole name).
+   */
+  nameSuffix?: string;
+  /**
    * Shows the label of an icon-only button, or the reason of an unavailable one, as a Tooltip on hover and keyboard
    * focus: one hint, never the browser's own `title`. On by default; `false` only where something next to it already
    * shows the same words. An explicit Tooltip around the button replaces it (for a side or a shortcut).
@@ -158,7 +164,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, pressedIcon, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, nameSuffix, tooltip = true, emphasis = 'default', disabled = false, unavailable, type = 'button', size = 'normal', minimumTarget = false, progress = 'inside', value, expanded, controls, pressed, pressedIcon, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -219,7 +225,7 @@ export function Button(props: ButtonProps) {
         data-minimum-target={minimumTarget ? '' : undefined}
         data-unavailable={unavailable ? '' : undefined}
         aria-disabled={unavailable ? true : undefined}
-        aria-label={iconOnly ? label : undefined}
+        aria-label={iconOnly ? label : nameSuffix ? `${label} ${nameSuffix}` : undefined}
         aria-describedby={unavailable ? reasonId : undefined}
         onClick={follow}
         {...events}
@@ -262,7 +268,7 @@ export function Button(props: ButtonProps) {
       disabled={disabled}
       aria-disabled={pending || !!unavailable || undefined}
       aria-busy={pending || undefined}
-      aria-label={iconOnly ? name : undefined}
+      aria-label={iconOnly ? name : nameSuffix ? `${name} ${nameSuffix}` : undefined}
       aria-describedby={[unavailable && reasonId, filling && valueId].filter(Boolean).join(' ') || undefined}
       aria-expanded={expanded}
       aria-pressed={pressed}
