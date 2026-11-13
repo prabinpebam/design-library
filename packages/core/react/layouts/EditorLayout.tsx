@@ -53,6 +53,11 @@ export interface EditorLayoutProps extends DataAttributes {
   endMax?: string;
   /** The narrowest the working area gets while both panels are docked, such as "24rem". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this; a resizable panel can't be dragged wider than that either. Default: no floor. */
   workMin?: string;
+  /**
+   * LR72 (opt-in): what's put in the working area takes its full width (and height), whatever it is: a screen of
+   * content, a loading state's wrapper. Off, a child sizes itself (a Canvas or ScrollArea already fills it).
+   */
+  workFill?: boolean;
 }
 
 type Side = 'start' | 'end';
@@ -73,7 +78,7 @@ const STEP = 8;
  * @key Home / End (on a resize handle): the narrowest or the widest
  * @key Enter (on a resize handle): back to the opening width (a double click too)
  */
-export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, resizeValueText, toggles = 'outer', startSize, endSize, endMax, workMin, ...data }: EditorLayoutProps) {
+export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Layers', startOpen, onStartToggle, end, endLabel = 'Properties', endOpen, onEndToggle, tools, toolsLabel = 'Tools', children, height = 'fill', resizable = false, resizeStep, endWidth, onEndResize, endMin, resizeValueText, toggles = 'outer', startSize, endSize, endMax, workMin, workFill = false, ...data }: EditorLayoutProps) {
   const [widths, setWidths] = useState<Partial<Record<Side, number>>>({});
   const toggled = toggles !== 'none';
   const [dragging, setDragging] = useState<Side | null>(null);
@@ -242,7 +247,7 @@ export function EditorLayout({ bar, startHead, endHead, start, startLabel = 'Lay
   const sizes = { '--dl-start-size': startSize, '--dl-end-size': endSize, '--dl-end-max': endMax, '--dl-end-min': endMin, '--dl-work-min': workMin, '--dl-resize-step': resizeStep } as CSSProperties;
 
   return (
-    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} data-resizing={dragging ? '' : undefined} style={startSize || endSize || endMax || endMin || workMin || resizeStep ? sizes : undefined}>
+    <div ref={root} {...data} data-dl="editor-layout" data-toggles={toggles === 'outer' ? undefined : toggles} data-height={height} data-bar={floating ? 'none' : undefined} data-work-min={workMin ? '' : undefined} data-work-fill={workFill ? '' : undefined} data-resizing={dragging ? '' : undefined} style={startSize || endSize || endMax || endMin || workMin || resizeStep ? sizes : undefined}>
       {!floating && (
         <header data-dl-part="bar">
           {toggled && startTogglePart('toggle')}

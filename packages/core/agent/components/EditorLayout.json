@@ -172,6 +172,12 @@
           "name": "workMin",
           "type": "string",
           "description": "The narrowest the working area gets while both panels are docked, such as \"24rem\". The end panel gives way first, down to `c.editor-layout.panel-min`, so it is never wider than the room minus the start panel and this; a resizable panel can't be dragged wider than that either. Default: no floor."
+        },
+        {
+          "name": "workFill",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR72 (opt-in): what's put in the working area takes its full width (and height), whatever it is: a screen of content, a loading state's wrapper. Off, a child sizes itself (a Canvas or ScrollArea already fills it)."
         }
       ]
     }

@@ -204,6 +204,13 @@
   [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='work'] { min-inline-size: var(--dl-work-min); }
   [data-dl='editor-layout'][data-work-min] > [data-dl-part='body'] > [data-dl-part='panel'][data-side='end'] { flex-shrink: 1; }
 
+  /* LR72 workFill: the working area's own content (not its corner toggles or tools) takes its full width and height. */
+  [data-dl='editor-layout'][data-work-fill] > [data-dl-part='body'] > [data-dl-part='work'] > :not([data-dl-part]) {
+    flex: 1 1 0;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
   /* Q68: the tools float over the working area, centred at its bottom (Figma UI3's toolbar). The wrapper only places
      the FloatingBar; it lets the pointer through to the canvas around the bar. */
   [data-dl='editor-layout'] > [data-dl-part='body'] > [data-dl-part='work'] > [data-dl-part='tools'] {
