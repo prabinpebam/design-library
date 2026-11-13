@@ -1,0 +1,33 @@
+/*
+ * Tier 1 fundamental: Divider. A hairline across, or the dinkus: three dots at the centre, one either side a spread
+ * apart. The space around it is its parent's gap.
+ */
+@layer fundamentals {
+  [data-dl='divider'] {
+    inline-size: 100%;
+    block-size: 0;
+    margin: 0;
+    border: 0;
+    border-block-start: var(--c-divider-width) solid var(--c-divider-color);
+  }
+
+  [data-dl='divider'][data-variant='dinkus'] {
+    block-size: var(--c-divider-dinkus-size);
+    border: 0;
+    background:
+      radial-gradient(circle, var(--c-divider-dinkus-color) 45%, transparent 50%) center / var(--c-divider-dinkus-size) var(--c-divider-dinkus-size) no-repeat,
+      radial-gradient(circle, var(--c-divider-dinkus-color) 45%, transparent 50%) calc(50% - var(--c-divider-dinkus-spread)) 50% / var(--c-divider-dinkus-size) var(--c-divider-dinkus-size) no-repeat,
+      radial-gradient(circle, var(--c-divider-dinkus-color) 45%, transparent 50%) calc(50% + var(--c-divider-dinkus-spread)) 50% / var(--c-divider-dinkus-size) var(--c-divider-dinkus-size) no-repeat;
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='divider'] {
+      border-color: CanvasText;
+    }
+
+    [data-dl='divider'][data-variant='dinkus'] {
+      --c-divider-dinkus-color: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+}

@@ -134,6 +134,8 @@ export { Badge } from './fundamentals/Badge';
 export { Chip } from './fundamentals/Chip';
 export { ChipGroup } from './fundamentals/ChipGroup';
 export { Code } from './fundamentals/Code';
+export { Divider } from './fundamentals/Divider';
+export type { DividerProps } from './fundamentals/Divider';
 export type { CodeProps } from './fundamentals/Code';
 export { List } from './fundamentals/List';
 export type { ListProps, ListEntry } from './fundamentals/List';

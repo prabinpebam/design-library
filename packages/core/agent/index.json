@@ -112,6 +112,7 @@
       "DateRangePicker",
       "DescriptionList",
       "Dialog",
+      "Divider",
       "EditorLayout",
       "EmptyState",
       "ErrorSummary",
@@ -442,6 +443,7 @@
       "DescriptionListItem",
       "DescriptionListProps",
       "DialogProps",
+      "DividerProps",
       "EditorLayoutProps",
       "EmptyStateProps",
       "ErrorSummaryItem",
@@ -871,6 +873,18 @@
       "libraryPage": "https://prabinpebam.github.io/design-library/#/daterangepicker",
       "principles": [
         "ui-states"
+      ]
+    },
+    {
+      "name": "Divider",
+      "tier": "fundamental",
+      "family": "layout",
+      "summary": "A break between two parts of one flow. The space either side is its parent's gap (a Stack's), never its own. Not between page sections (they part by space, alignment and type) and not inside a list (its items part themselves).",
+      "import": "@design-library/core/components",
+      "detail": "@design-library/core/agent/components/Divider.json",
+      "requiredProps": [],
+      "principles": [
+        "spacing"
       ]
     },
     {
@@ -11339,6 +11353,13 @@
         "--c-dialog-width-l",
         "--c-dialog-width-m",
         "--c-dialog-width-s"
+      ],
+      "divider": [
+        "--c-divider-color",
+        "--c-divider-dinkus-color",
+        "--c-divider-dinkus-size",
+        "--c-divider-dinkus-spread",
+        "--c-divider-width"
       ],
       "editor-layout": [
         "--c-editor-layout-bar",
