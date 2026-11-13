@@ -41,7 +41,7 @@ Before-code decision: owner 20:10 replaces the crop tool with one point on the p
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR103 | 2026-11-13 | One image-centre dot drives crops | No two-dimensional picture-point input in core | 6 | FocalPoint fractional value, pointer/keyboard, gesture-end commit | none | DesignUp; Editor 37 | in progress | pending | Replace old controls; no consumer overlay |
+| LR103 | 2026-11-13 | One image-centre dot drives crops | No two-dimensional picture-point input in core | 6 | FocalPoint fractional value, pointer/keyboard, gesture-end commit | none | DesignUp; Editors 37-38 | shipped | dbbc8f8; DesignUp pin du.9d35e144 | Old sliders/previews removed; album/frame/grid/collage/reveal adapters adopt shared point, legacy crops retained. Actual pointer/keyboard save, Undo/Redo, light/dark inspected; linked typecheck and pinned consumer build pass |
 
 ## LR101: quiet action text edge (13 November 2026)
 
