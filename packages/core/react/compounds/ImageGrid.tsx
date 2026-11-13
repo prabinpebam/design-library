@@ -2,6 +2,7 @@ import { useRef, useState, type CSSProperties, type DragEvent, type MouseEvent, 
 import { Badge, type BadgeTone } from '../fundamentals/Badge';
 import { Checkbox } from '../fundamentals/Checkbox';
 import { Image, type PictureSource, type PictureTreatment, type SchemeSources } from '../fundamentals/Image';
+import { Progress } from '../fundamentals/Progress';
 import type { PictureReveal } from '../behaviour/reveal';
 import type { DataAttributes } from '../types';
 import { formatDuration, spokenDuration } from './MediaPlayer';
@@ -49,6 +50,12 @@ export interface ImageGridItem extends SchemeSources {
   kind?: 'picture' | 'video';
   /** A video's length in seconds, shown on its poster and spoken in its name. */
   duration?: number;
+  /**
+   * The picture is still arriving (an upload): a Progress bar across the foot of its tile, named "Uploading: " and its
+   * description. A number is the share done, 0-100, as Progress's `value`, from a real total; `indeterminate` while the
+   * total isn't known (the server is working). Left out, no bar.
+   */
+  progress?: number | 'indeterminate';
 }
 
 /** How a selection change was made: `range` (Shift: from the last item chosen to this one), `toggle` (the check box, Ctrl or Cmd: this one in or out). Neither: a plain press chose this one alone. */
@@ -96,6 +103,16 @@ export interface ImageGridProps extends DataAttributes {
   onItemsDragStart?: (ids: string[], event: DragEvent<HTMLLIElement>) => void;
   /** The drag that `onItemsDragStart` began ended (dropped or cancelled). */
   onItemsDragEnd?: (event: DragEvent<HTMLLIElement>) => void;
+  /**
+   * The pictures can be put in order by dragging them within the grid (an album being arranged): the dragged items (the
+   * chosen ones together, as `onItemsDragStart`) go just before the item under the pointer, or the one after it when the
+   * pointer is past its middle, else at the end. While dragging, the grid draws a line in the gap on the start edge of
+   * the item they'd go before (past the last item for the end). Only drags that began in this grid are taken; a drop on
+   * one of the dragged items does nothing. Give a keyboard way too (Move earlier, Move later). Off by default.
+   */
+  reorderable?: boolean;
+  /** The dragged ids (in grid order) dropped just before `before`, or at the end when it's `null`. */
+  onReorder?: (ids: string[], before: string | null) => void;
 }
 
 /**
@@ -115,17 +132,41 @@ export interface ImageGridProps extends DataAttributes {
  * @key Tab: the next picture or check box
  * @key Enter, Space: open the picture; Space on a check box chooses it or takes it out
  */
-export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, ...data }: ImageGridProps) {
+export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelect, label, framed, selectable, selected = [], onSelectionChange, onItemsDragStart, onItemsDragEnd, reorderable, onReorder, ...data }: ImageGridProps) {
   const [dragging, setDragging] = useState<string[]>([]);
+  // LR55: where the dragged items would land: before this item's id, or `null` for the end; undefined while not over the grid.
+  const [drop, setDrop] = useState<string | null | undefined>(undefined);
+  const draggable = !!onItemsDragStart || !!reorderable;
   const dragStart = (id: string, event: DragEvent<HTMLLIElement>) => {
     const ids = selectable && selected.includes(id) ? items.filter((item) => selected.includes(item.id)).map((item) => item.id) : [id];
     event.dataTransfer.effectAllowed = 'move';
+    if (!onItemsDragStart) event.dataTransfer.setData('application/x-dl-image-grid', ids.join('\n'));
     setDragging(ids);
     onItemsDragStart?.(ids, event);
   };
   const dragEnd = (event: DragEvent<HTMLLIElement>) => {
     setDragging([]);
+    setDrop(undefined);
     onItemsDragEnd?.(event);
+  };
+  const overItem = (i: number, event: DragEvent<HTMLLIElement>) => {
+    if (!reorderable || !dragging.length) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    const r = event.currentTarget.getBoundingClientRect();
+    const rtl = getComputedStyle(event.currentTarget).direction === 'rtl';
+    const past = rtl ? event.clientX < r.left + r.width / 2 : event.clientX > r.left + r.width / 2;
+    const next = past ? (items[i + 1]?.id ?? null) : items[i]!.id;
+    if (next !== drop) setDrop(next);
+  };
+  const dropOnGrid = (event: DragEvent<HTMLUListElement>) => {
+    if (!reorderable || !dragging.length || drop === undefined) return;
+    event.preventDefault();
+    const ids = dragging;
+    const before = drop;
+    setDrop(undefined);
+    if (before !== null && ids.includes(before)) return;
+    onReorder?.(ids, before);
   };
   // Captions sit under their pictures where each picture has its own row of space; quilted and justified tiles fill
   // their cells by shape, so they leave captions out.
@@ -164,14 +205,28 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
       data-framed={framed ? '' : undefined}
       data-selectable={selectable ? '' : undefined}
       data-selecting={selectable && selected.length ? '' : undefined}
+      data-reorderable={reorderable ? '' : undefined}
       aria-label={label}
+      {...(reorderable
+        ? {
+            onDragOver: (event: DragEvent<HTMLUListElement>) => {
+              // Over the gap between items: keep the line where it is, and keep the drop allowed.
+              if (dragging.length && drop !== undefined) event.preventDefault();
+            },
+            onDragLeave: (event: DragEvent<HTMLUListElement>) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDrop(undefined);
+            },
+            onDrop: dropOnGrid,
+          }
+        : {})}
     >
       {items.map((item, i) => {
         const shape = item.width && item.height ? ({ '--w': item.width, '--h': item.height } as CSSProperties) : undefined;
         const words = captioned && (item.caption || item.credit) ? { caption: item.caption, credit: item.credit } : undefined;
         const video = item.kind === 'video';
         const badges = item.badges?.length ? item.badges : undefined;
-        const marked = selectable || video || !!badges;
+        const arriving = item.progress !== undefined;
+        const marked = selectable || video || !!badges || arriving;
         const interactive = !!onSelect || !!selectable;
         const name = [item.alt, ...(badges ?? []).map((b) => b.label), ...(video ? [item.duration ? `video, ${spokenDuration(item.duration)}` : 'video'] : [])].join(', ');
         const isSelected = !!selectable && selected.includes(item.id);
@@ -215,6 +270,11 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
                 </Badge>
               </span>
             )}
+            {arriving && (
+              <span data-dl-part="progress">
+                <Progress form="bar" label={`Uploading: ${item.alt}`} value={item.progress === 'indeterminate' ? undefined : item.progress} />
+              </span>
+            )}
             {(selectable || badges) && (
               <span data-dl-part="top">
                 {selectable && (
@@ -252,8 +312,16 @@ export function ImageGrid({ items, layout = 'standard', ratio = 'photo', onSelec
             data-span={layout === 'quilted' ? item.span : undefined}
             data-selected={isSelected ? '' : undefined}
             data-dragging={dragging.includes(item.id) ? '' : undefined}
+            data-drop={drop === item.id ? 'before' : drop === null && i === items.length - 1 ? 'end' : undefined}
             style={shape}
-            {...(onItemsDragStart ? { draggable: true, onDragStart: (event: DragEvent<HTMLLIElement>) => dragStart(item.id, event), onDragEnd: dragEnd } : {})}
+            {...(draggable
+              ? {
+                  draggable: true,
+                  onDragStart: (event: DragEvent<HTMLLIElement>) => dragStart(item.id, event),
+                  onDragEnd: dragEnd,
+                  ...(reorderable ? { onDragOver: (event: DragEvent<HTMLLIElement>) => overItem(i, event) } : {}),
+                }
+              : {})}
           >
             {(open || marked) && words ? (
               <figure data-dl="figure">

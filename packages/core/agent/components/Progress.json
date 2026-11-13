@@ -89,6 +89,7 @@
     "Composer",
     "FileUpload",
     "ImageGeneration",
+    "ImageGrid",
     "Notifications"
   ],
   "principles": [

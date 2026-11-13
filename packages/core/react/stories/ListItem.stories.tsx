@@ -278,6 +278,18 @@ export default {
         </Stack>
       ),
     },
+    {
+      title: 'One line, cut to fit',
+      description: 'truncate keeps every row one line high in a dense results list: the name and the meta end in an ellipsis when there isn’t room, the meta giving way first and sitting at the end. The full words stay in the item for assistive technology.',
+      code: `<ListItem role="option" icon="person" label="Ben Sauer" meta="Independent speaker, coach and author of Interaction Design" truncate />`,
+      render: () => (
+        <Items role="listbox" aria-label="Results">
+          <ListItem role="option" icon="person" truncate label="Ben Sauer" meta="Independent speaker, coach and the author of a book on interaction design for small teams and their first products" selected mark="fill" />
+          <ListItem role="option" icon="file" truncate label="A very long page title that keeps going well past the width a results column can give it, so it ends in an ellipsis too" meta="Page · Draft, last changed yesterday by the editor on duty" />
+          <ListItem role="option" icon="file" truncate label="Talks" meta="18" />
+        </Items>
+      ),
+    },
   ],
 } satisfies StoryFile;
 

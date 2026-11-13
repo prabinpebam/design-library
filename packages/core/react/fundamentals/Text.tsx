@@ -12,6 +12,12 @@ export interface TextProps extends DataAttributes {
   as?: 'p' | 'span';
   /** Lets another element take its name from this text (`aria-labelledby`). */
   id?: string;
+  /**
+   * `strong`: semibold, for a short label that leads a group (a group heading in a results list) without being a
+   * heading. `regular`: the regular weight, for a quieter part inside strong text (a count after it). Left out, the
+   * variant's own weight.
+   */
+  weight?: 'regular' | 'strong';
 }
 
 /**
@@ -21,9 +27,9 @@ export interface TextProps extends DataAttributes {
  * @family text
  * @a11y Plain text element; inherits language and direction. Tone is never the only carrier of meaning.
  */
-export function Text({ children, variant = 'body', tone = 'default', as: Element = 'p', id, ...data }: TextProps) {
+export function Text({ children, variant = 'body', tone = 'default', as: Element = 'p', id, weight, ...data }: TextProps) {
   return (
-    <Element {...data} id={id} data-dl="text" data-variant={variant} data-tone={tone}>
+    <Element {...data} id={id} data-dl="text" data-variant={variant} data-tone={tone} data-weight={weight}>
       {children}
     </Element>
   );

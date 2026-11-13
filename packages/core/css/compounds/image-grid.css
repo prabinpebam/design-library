@@ -177,6 +177,41 @@
     opacity: var(--c-image-grid-dragging-opacity);
   }
 
+  /* LR55: where dragged pictures would land, a line centred in the gap on the start edge of the item they'd go before,
+     or on the end edge of the last item for the end. Decoration: the reorder's result says it. */
+  [data-dl='image-grid'][data-reorderable] > [data-dl-part='item'] {
+    position: relative;
+  }
+
+  [data-dl='image-grid'] > [data-drop]::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(-0.5 * (var(--c-image-grid-gap) + var(--c-image-grid-drop-width)));
+    inline-size: var(--c-image-grid-drop-width);
+    background-color: var(--c-image-grid-drop);
+    pointer-events: none;
+  }
+
+  [data-dl='image-grid'] > [data-drop='end']::before {
+    inset-inline-start: auto;
+    inset-inline-end: calc(-0.5 * (var(--c-image-grid-gap) + var(--c-image-grid-drop-width)));
+  }
+
+  @media (forced-colors: active) {
+    [data-dl='image-grid'] > [data-drop]::before {
+      background-color: Highlight;
+    }
+  }
+
+  /* LR57: a picture still arriving shows its upload as a bar across the tile's foot. */
+  :is([data-dl='image-grid'] > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'] > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']) > [data-dl-part='progress'] {
+    display: grid;
+    place-self: end stretch;
+    margin: var(--c-image-grid-mark-inset);
+    pointer-events: none;
+  }
+
   /* The check boxes appear while a picture is pointed at or focused, and all of them once any is chosen. */
   @media (hover: hover) {
     :is([data-dl='image-grid'][data-selectable]:not([data-selecting]) > [data-dl-part='item'] > [data-dl-part='tile'], [data-dl='image-grid'][data-selectable]:not([data-selecting]) > [data-dl-part='item'] > [data-dl='figure'] > [data-dl-part='tile']):not(:hover, :focus-within) > [data-dl-part='top'] > [data-dl-part='check'] {

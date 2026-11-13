@@ -111,5 +111,18 @@ export default {
         />
       ),
     },
+    {
+      title: 'Strong words',
+      description: 'weight="strong" sets a short label that leads a group (a results group in a search panel) in semibold without making it a heading; a quieter part inside it, such as a count, says weight="regular".',
+      code: `<Text as="p" variant="body-sm" tone="muted" weight="strong">Speakers <Text as="span" variant="inherit" weight="regular">· 6 more</Text></Text>`,
+      render: () => (
+        <Text as="p" variant="body-sm" tone="muted" weight="strong">
+          Speakers{' '}
+          <Text as="span" variant="inherit" weight="regular">
+            · 6 more
+          </Text>
+        </Text>
+      ),
+    },
   ],
 } satisfies StoryFile;

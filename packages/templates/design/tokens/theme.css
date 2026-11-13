@@ -192,6 +192,7 @@
     --c-illustration-accent: var(--color-accent);
     --c-media-player-radius: var(--radius-lg);
     --c-image-grid-selection: var(--color-accent);
+    --c-image-grid-drop: var(--color-accent);
     --c-quote-text-size-s: var(--type-body-size);
     --c-scroll-area-colour-active: var(--color-text-muted);
     --c-scroll-area-surface: var(--color-bg-sunken);

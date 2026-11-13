@@ -177,6 +177,12 @@
     },
     {
       "file": "packages/core/css/fundamentals/pickers.css",
+      "selector": "[data-dl='list-item'][data-truncate]",
+      "kind": "text truncation",
+      "reason": "LR59 truncate: a dense results row stays one line, its name and meta ending in an ellipsis; the full words stay in the DOM and the accessible name"
+    },
+    {
+      "file": "packages/core/css/fundamentals/pickers.css",
       "selector": "[data-dl='list-item'] > :is([data-dl-part='item-avatar'], [data-dl-part='item-thumbnail'])",
       "kind": "media crop",
       "reason": "A picture is cropped to the round avatar or the square thumbnail; nothing focusable or bordered inside"

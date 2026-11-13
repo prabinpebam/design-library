@@ -508,6 +508,28 @@
     color: var(--color-text-disabled);
   }
 
+  /* LR59: one line. The words fill the row and the meta sits at its end; with too little room both end in an
+     ellipsis, the meta giving way ten times faster. */
+  [data-dl='list-item'][data-truncate] > [data-dl-part='item-words'] {
+    flex: 1 1 auto;
+  }
+
+  [data-dl='list-item'][data-truncate] > [data-dl-part='item-words'] > :is([data-dl-part='item-name'], [data-dl-part='item-description']),
+  [data-dl='list-item'][data-truncate] > [data-dl-part='item-meta'] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [data-dl='list-item'][data-truncate] > [data-dl-part='item-words'] > [data-dl-part='item-description'] {
+    display: block;
+  }
+
+  [data-dl='list-item'][data-truncate] > [data-dl-part='item-meta'] {
+    flex: 0 10 auto;
+    min-inline-size: 0;
+  }
+
   /* F15.8b. A static list's item: not a target itself, so no pointer and no hover or press fill. */
   [data-dl='list-item'][role='listitem'] {
     cursor: auto;

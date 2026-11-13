@@ -45,6 +45,11 @@
           "name": "id",
           "type": "string",
           "description": "Lets another element take its name from this text (`aria-labelledby`)."
+        },
+        {
+          "name": "weight",
+          "type": "'regular' | 'strong'",
+          "description": "`strong`: semibold, for a short label that leads a group (a group heading in a results list) without being a heading. `regular`: the regular weight, for a quieter part inside strong text (a count after it). Left out, the variant's own weight."
         }
       ]
     }
@@ -76,7 +81,9 @@
     "--type-statement-leading",
     "--type-statement-size",
     "--type-statement-tracking",
-    "--type-statement-weight"
+    "--type-statement-weight",
+    "--weight-regular",
+    "--weight-semibold"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/text",
   "usedBy": [

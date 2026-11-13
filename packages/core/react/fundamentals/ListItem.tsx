@@ -41,6 +41,12 @@ export interface ListItemProps extends DataAttributes {
   preview?: string[];
   /** Short trailing words or a number: a count, a state, a time. Never a second name. */
   meta?: string;
+  /**
+   * One line, whatever the width: the name and the meta each end in an ellipsis when there isn't room, the meta
+   * giving way first (it shrinks ten times faster) and sitting at the end. For dense result lists where every row
+   * must keep one height. The full words stay in the item for assistive technology. Off by default: words wrap.
+   */
+  truncate?: boolean;
   /** The keys that do the same thing, as the platform writes them (e.g. "Ctrl+C"). Sets `aria-keyshortcuts`. */
   shortcut?: string;
   /** Opens a submenu: shows the chevron and sets `aria-haspopup`. A `menuitem` only. */
@@ -144,6 +150,7 @@ export function ListItem({
   thumbnail,
   preview,
   meta,
+  truncate,
   shortcut,
   submenu,
   drillIn,
@@ -207,6 +214,7 @@ export function ListItem({
       data-active-appearance={activeAppearance === 'tint' ? 'tint' : undefined}
       data-inactive={inactive ? '' : undefined}
       data-unread={unread ? '' : undefined}
+      data-truncate={truncate ? '' : undefined}
       data-description={description && descriptionPosition === 'inline' ? 'inline' : undefined}
       aria-selected={role === 'option' ? !!selected : role === 'row' && selected !== undefined ? selected : undefined}
       aria-checked={checkable ? !!selected : undefined}

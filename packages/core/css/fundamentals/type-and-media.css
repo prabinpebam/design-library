@@ -72,6 +72,15 @@
     max-inline-size: none;
   }
 
+  /* LR58: a weight apart from the variant's; after inherit, so a quieter span inside strong text can say regular. */
+  [data-dl='text'][data-weight='strong'] {
+    font-weight: var(--weight-semibold);
+  }
+
+  [data-dl='text'][data-weight='regular'] {
+    font-weight: var(--weight-regular);
+  }
+
   /* IP22: large text (heading 2 and larger, a statement) may take the accent display role at 3:1; everything inside
      it, such as an accent span, reads the same ink. Elsewhere accent words take the accent text role at 4.5:1. */
   [data-dl='heading']:is([data-size='jumbo'], [data-size='display'], [data-size='1'], [data-size='2']),

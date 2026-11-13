@@ -85,6 +85,16 @@
           "name": "onItemsDragEnd",
           "type": "(event: DragEvent<HTMLLIElement>) => void",
           "description": "The drag that `onItemsDragStart` began ended (dropped or cancelled)."
+        },
+        {
+          "name": "reorderable",
+          "type": "boolean",
+          "description": "The pictures can be put in order by dragging them within the grid (an album being arranged): the dragged items (the chosen ones together, as `onItemsDragStart`) go just before the item under the pointer, or the one after it when the pointer is past its middle, else at the end. While dragging, the grid draws a line in the gap on the start edge of the item they'd go before (past the last item for the end). Only drags that began in this grid are taken; a drop on one of the dragged items does nothing. Give a keyboard way too (Move earlier, Move later). Off by default."
+        },
+        {
+          "name": "onReorder",
+          "type": "(ids: string[], before: string | null) => void",
+          "description": "The dragged ids (in grid order) dropped just before `before`, or at the end when it's `null`."
         }
       ]
     },
@@ -203,6 +213,11 @@
           "name": "duration",
           "type": "number",
           "description": "A video's length in seconds, shown on its poster and spoken in its name."
+        },
+        {
+          "name": "progress",
+          "type": "number | 'indeterminate'",
+          "description": "The picture is still arriving (an upload): a Progress bar across the foot of its tile, named \"Uploading: \" and its description. A number is the share done, 0-100, as Progress's `value`, from a real total; `indeterminate` while the total isn't known (the server is working). Left out, no bar."
         }
       ]
     },
@@ -226,11 +241,14 @@
     "Badge",
     "Checkbox",
     "Image",
-    "MediaPlayer"
+    "MediaPlayer",
+    "Progress"
   ],
   "tokens": [
     "--c-image-grid-cell",
     "--c-image-grid-dragging-opacity",
+    "--c-image-grid-drop",
+    "--c-image-grid-drop-width",
     "--c-image-grid-framed-gap",
     "--c-image-grid-gap",
     "--c-image-grid-hover-opacity",

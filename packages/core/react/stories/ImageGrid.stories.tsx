@@ -71,6 +71,20 @@ function Dragging() {
   );
 }
 
+/** LR55: the chosen pictures (or the one under the pointer) go before another, or at the end. */
+function Ordering() {
+  const [items, setItems] = useState(photos.slice(0, 6));
+  const [ids, setIds] = useState<string[]>([]);
+  const moveBefore = (moving: string[], before: string | null) =>
+    setItems((now) => {
+      const picked = now.filter((p) => moving.includes(p.id));
+      const rest = now.filter((p) => !moving.includes(p.id));
+      const at = before === null ? rest.length : rest.findIndex((p) => p.id === before);
+      return [...rest.slice(0, at), ...picked, ...rest.slice(at)];
+    });
+  return <ImageGrid label="The album’s pictures, in order" items={items} selectable selected={ids} onSelectionChange={setIds} reorderable onReorder={moveBefore} />;
+}
+
 export default {
   component: 'ImageGrid',
   tier: 'compound',
@@ -188,6 +202,20 @@ export default {
         'With onItemsDragStart the pictures drag out of the grid (an album’s pictures into its cover). A drag that starts on a chosen picture carries every chosen one, in the grid’s order; otherwise the one under the pointer. The dragged pictures dim in place until the drag ends; the consumer puts the ids on the drag under its own type.',
       code: `<ImageGrid selectable selected={ids} onSelectionChange={setIds} onItemsDragStart={(ids, event) => event.dataTransfer.setData('application/x-album-items', ids.join(' '))} label="…" items={photos} />`,
       render: () => <Dragging />,
+    },
+    {
+      title: 'Putting pictures in order',
+      description:
+        'With reorderable, pictures are put in order by dragging them within the grid: they go before the picture under the pointer (the next one past its middle), or at the end, and a line in the gap shows where. A chosen picture brings every chosen one. onReorder gets the ids and the id they go before (null: the end); the consumer moves them. Pair it with a keyboard way, such as Move earlier and Move later.',
+      code: `<ImageGrid reorderable onReorder={(ids, before) => setItems(moveBefore(items, ids, before))} selectable selected={ids} onSelectionChange={setIds} label="…" items={items} />`,
+      render: () => <Ordering />,
+    },
+    {
+      title: 'Pictures still arriving',
+      description:
+        'An item with progress shows its upload as a bar across its foot, named “Uploading: ” and its description: a share done from a real total, or indeterminate while the server works.',
+      code: `<ImageGrid label="…" items={[{ …photo, progress: 40 }, { …photo, progress: 'indeterminate' }]} />`,
+      render: () => <ImageGrid label="Pictures being added" items={[{ ...photos[0], progress: 40 }, { ...photos[1], progress: 'indeterminate' }, photos[2]]} />,
     },
   ],
 } satisfies StoryFile;
