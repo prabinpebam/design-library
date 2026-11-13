@@ -51,6 +51,48 @@
     overflow-wrap: anywhere;
   }
 
+  /* LR48. Plain: the screen is the table. No outline, corner or header fill; a hairline under the header and every row;
+     the header a muted small label; cells centred on the row, data cells small, the row heading at body size. */
+  [data-dl='data-table'][data-variant='plain'] {
+    border: none;
+    border-radius: 0;
+  }
+
+  [data-dl='data-table'][data-variant='plain'] :is(th, td) {
+    vertical-align: middle;
+  }
+
+  [data-dl='data-table'][data-variant='plain'] thead th {
+    background-color: transparent;
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='data-table'][data-variant='plain'] tr {
+    border-block-end: var(--border-divider) solid var(--c-data-table-divider);
+  }
+
+  [data-dl='data-table'][data-variant='plain'] tbody tr {
+    border-block-start: none;
+  }
+
+  [data-dl='data-table'][data-variant='plain'] tbody td {
+    font-size: var(--type-body-sm-size);
+  }
+
+  [data-dl='data-table'][data-variant='plain'] tbody th {
+    font-weight: var(--type-label-weight);
+  }
+
+  /* LR48. Column width: grow takes what the fitted columns leave; fit is as narrow as its content, on one line. */
+  [data-dl='data-table'] [data-width='grow'] {
+    inline-size: 100%;
+  }
+
+  [data-dl='data-table'] [data-width='fit'] {
+    inline-size: 0;
+    white-space: nowrap;
+  }
+
   /* LR29. Reorderable: the row heading holds a Move handle (drag it, or open its menu) and the row's heading content, as a reorderable List's item. The table keeps a dragged row's raised layer to itself. */
   [data-dl='data-table'][data-reorder] {
     isolation: isolate;

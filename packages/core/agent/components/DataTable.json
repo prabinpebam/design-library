@@ -57,6 +57,12 @@
           "name": "onReorder",
           "type": "(ids: string[]) => void",
           "description": "The row ids in their new order, after a drag step or a Move."
+        },
+        {
+          "name": "variant",
+          "type": "'enclosed' | 'plain'",
+          "default": "'enclosed'",
+          "description": "`enclosed` (default): one outline round the table and a header row set apart by fill, for facts set inside running content. `plain`: no outline, corner or header fill; a hairline under every row and a muted small header, for a screen that is the table (an app's list of pages or records)."
         }
       ]
     },
@@ -79,6 +85,11 @@
           "name": "stacked",
           "type": "boolean",
           "description": "The parts of each cell stack, one under another, with a small gap (a name and its \"Required\" note)."
+        },
+        {
+          "name": "width",
+          "type": "'grow' | 'fit'",
+          "description": "How much of the row's width the column takes. `grow`: whatever the other columns leave (a title). `fit`: as narrow as its content, kept on one line (a date, a status, a row's actions). Unset, the table shares the width by content."
         }
       ]
     },
@@ -130,6 +141,7 @@
     "--layer-raised",
     "--shadow-raised",
     "--space-inline-pair",
+    "--type-body-sm-size",
     "--type-body-weight",
     "--type-label-weight"
   ],

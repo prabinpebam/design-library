@@ -13,6 +13,11 @@ export interface DataTableColumn {
   header: string;
   /** The parts of each cell stack, one under another, with a small gap (a name and its "Required" note). */
   stacked?: boolean;
+  /**
+   * How much of the row's width the column takes. `grow`: whatever the other columns leave (a title). `fit`: as narrow
+   * as its content, kept on one line (a date, a status, a row's actions). Unset, the table shares the width by content.
+   */
+  width?: 'grow' | 'fit';
 }
 
 /** One row of a data table. */
@@ -39,6 +44,12 @@ export interface DataTableProps extends DataAttributes {
   reorderable?: boolean;
   /** The row ids in their new order, after a drag step or a Move. */
   onReorder?: (ids: string[]) => void;
+  /**
+   * `enclosed` (default): one outline round the table and a header row set apart by fill, for facts set inside running
+   * content. `plain`: no outline, corner or header fill; a hairline under every row and a muted small header, for a
+   * screen that is the table (an app's list of pages or records).
+   */
+  variant?: 'enclosed' | 'plain';
 }
 
 /**
@@ -58,7 +69,7 @@ export interface DataTableProps extends DataAttributes {
  * @key Arrow Left / Arrow Right: scroll the table sideways while its region has focus
  * @key Enter, Space: open a row's Move menu (Move up, Move down, Move to top, Move to bottom)
  */
-export function DataTable({ label, columns, rows, reorderable = false, onReorder, ...data }: DataTableProps) {
+export function DataTable({ label, columns, rows, reorderable = false, onReorder, variant = 'enclosed', ...data }: DataTableProps) {
   const [head, ...rest] = columns;
   const ids = rows.map((r) => r.id);
   const trs = useRef<(HTMLTableRowElement | null)[]>([]);
@@ -124,13 +135,13 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
     </span>
   );
   return (
-    <div {...data} data-dl="data-table" data-reorder={reorderable ? '' : undefined}>
+    <div {...data} data-dl="data-table" data-variant={variant === 'plain' ? 'plain' : undefined} data-reorder={reorderable ? '' : undefined}>
       <ScrollArea axis="inline" label={label}>
       <table>
         <thead>
           <tr>
             {columns.map((c) => (
-              <th key={c.key} scope="col">
+              <th key={c.key} scope="col" data-width={c.width}>
                 {c.header}
               </th>
             ))}
@@ -145,7 +156,7 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
               data-dragging={reorderable && dragId === r.id ? '' : undefined}
               ref={reorderable ? (el) => void (trs.current[i] = el) : undefined}
             >
-              <th scope="row" data-stacked={head.stacked ? '' : undefined}>
+              <th scope="row" data-stacked={head.stacked ? '' : undefined} data-width={head.width}>
                 {reorderable ? (
                   <span data-dl-part="row">
                     {handle(r, i)}
@@ -156,7 +167,7 @@ export function DataTable({ label, columns, rows, reorderable = false, onReorder
                 )}
               </th>
               {rest.map((c) => (
-                <td key={c.key} data-stacked={c.stacked ? '' : undefined}>
+                <td key={c.key} data-stacked={c.stacked ? '' : undefined} data-width={c.width}>
                   {r.cells[c.key]}
                 </td>
               ))}

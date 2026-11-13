@@ -54,6 +54,12 @@
           "description": "Opens in a new browser tab (`target=\"_blank\"`, `rel=\"noopener\"`): shows the new-tab icon with a spoken twin. For something the person keeps beside this page, like a standalone preview."
         },
         {
+          "name": "tone",
+          "type": "'accent' | 'neutral'",
+          "default": "'accent'",
+          "description": "`accent` (default): the link colour. `neutral`: muted words over a quiet line, the text colour on hover; for the titles in a table's rows or meta links, where many accent links would shout. Still underlined."
+        },
+        {
           "name": "onPointerEnter",
           "type": "(event: PointerEvent<HTMLAnchorElement>) => void",
           "description": "The pointer arrives over it (IP9), e.g. to preview the place it goes."
@@ -82,8 +88,10 @@
   "tokens": [
     "--border-hairline",
     "--border-thick",
+    "--color-border",
     "--color-text",
     "--color-text-link",
+    "--color-text-muted",
     "--link-decoration",
     "--link-decoration-hover",
     "--space-inline-pair"

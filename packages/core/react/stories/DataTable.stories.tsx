@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Code } from '../fundamentals/Code';
+import { Link } from '../fundamentals/Link';
 import { Text } from '../fundamentals/Text';
 import { DataTable } from '../compounds/DataTable';
 import type { StoryFile } from './story';
@@ -65,6 +66,28 @@ export default {
       description: 'With reorderable, each row has a Move handle before its heading cell, the same as a reorderable List: drag it, or press Enter on it for Move up, down, to top or to bottom (only the moves that make sense). Where the row landed is announced and focus stays on its handle. onReorder gets the ids in their new order.',
       code: `<DataTable label="Navigation" reorderable columns={[{ key: 'title', header: 'Title' }, { key: 'link', header: 'Link' }]} rows={links.map((l) => ({ id: l.id, label: l.title, cells: { title: l.title, link: <code>{l.href}</code> } }))} onReorder={setOrder} />`,
       render: () => <Navigation />,
+    },
+    {
+      title: 'Plain, with column widths',
+      description:
+        'variant="plain" is for a screen that is the table, such as an app’s list of pages: no outline, corner or header fill, a hairline under every row, a muted small header. width="grow" gives the title the room; width="fit" keeps a status, a date or the row’s actions as narrow as their content. Row titles take Link tone="neutral".',
+      code: `<DataTable label="Pages" variant="plain" columns={[{ key: 'title', header: 'Title', width: 'grow' }, { key: 'status', header: 'Status', width: 'fit' }, { key: 'updated', header: 'Updated', width: 'fit' }]} rows={…} />`,
+      render: () => (
+        <DataTable
+          label="Pages"
+          variant="plain"
+          columns={[
+            { key: 'title', header: 'Title', width: 'grow' },
+            { key: 'status', header: 'Status', width: 'fit' },
+            { key: 'updated', header: 'Updated', width: 'fit' },
+          ]}
+          rows={[
+            { id: 'home', cells: { title: <Link href="#home" tone="neutral">Home</Link>, status: 'Published', updated: '12 Nov 2026' } },
+            { id: 'about', cells: { title: <Link href="#about" tone="neutral">About the festival</Link>, status: 'Draft', updated: '9 Nov 2026' } },
+            { id: 'cfp', cells: { title: <Link href="#cfp" tone="neutral">Call for speakers</Link>, status: 'Published', updated: '2 Oct 2026' } },
+          ]}
+        />
+      ),
     },
   ],
 } satisfies StoryFile;

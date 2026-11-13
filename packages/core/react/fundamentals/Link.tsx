@@ -14,6 +14,8 @@ export interface LinkProps extends DataAttributes {
   external?: boolean;
   /** Opens in a new browser tab (`target="_blank"`, `rel="noopener"`): shows the new-tab icon with a spoken twin. For something the person keeps beside this page, like a standalone preview. */
   newTab?: boolean;
+  /** `accent` (default): the link colour. `neutral`: muted words over a quiet line, the text colour on hover; for the titles in a table's rows or meta links, where many accent links would shout. Still underlined. */
+  tone?: 'accent' | 'neutral';
   /** The pointer arrives over it (IP9), e.g. to preview the place it goes. */
   onPointerEnter?: (event: PointerEvent<HTMLAnchorElement>) => void;
   /** The pointer leaves it (IP9). */
@@ -33,10 +35,10 @@ export interface LinkProps extends DataAttributes {
  * keeps it on hover and keyboard focus, and owes 3:1 between link and text colour); `aria-current="page"` when current.
  * @key Enter: follows the link
  */
-export function Link({ href, children, current = false, external = false, newTab = false, ...data }: LinkProps) {
+export function Link({ href, children, current = false, external = false, newTab = false, tone = 'accent', ...data }: LinkProps) {
   const router = useRouter();
   return (
-    <a {...data} href={router && !newTab ? router.href(href) : href} target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener' : undefined} data-dl="link" aria-current={current ? 'page' : undefined}>
+    <a {...data} href={router && !newTab ? router.href(href) : href} target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener' : undefined} data-dl="link" data-tone={tone === 'neutral' ? 'neutral' : undefined} aria-current={current ? 'page' : undefined}>
       {children}
       {(external || newTab) && <Icon name="external" size="sm" label={newTab ? '(opens in a new tab)' : '(another site)'} />}
     </a>

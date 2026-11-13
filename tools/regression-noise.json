@@ -43,6 +43,10 @@
         { "x": 1270, "y": 54, "width": 10, "height": 846 }
       ]
     },
+    "lib--link": {
+      "reason": "catalogue inventory: (DesignUp LR49) Link gains the opt-in tone prop (default accent, unchanged): a props row and the story 'Neutral tone' below the viewport; only the right scrollbar track changes.",
+      "regions": [{ "x": 1270, "y": 54, "width": 10, "height": 846 }]
+    },
     "lib--datatable": {
       "reason": "catalogue inventory: (DesignUp LR29) DataTable gains opt-in reorderable rows (default off, unchanged): a new story and source-derived props rows below the viewport; only the right scrollbar track changes.",
       "regions": [

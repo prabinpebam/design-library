@@ -90,5 +90,21 @@ export default {
 </Link>`,
       render: () => <PreviewOnPoint />,
     },
+    {
+      title: 'Neutral tone',
+      description:
+        'tone="neutral" is for links that sit many to a screen, such as the titles in a table’s rows: muted words over a quiet line, the text colour on hover and focus. The line stays, so the link never rests on colour alone.',
+      code: `<Link href="#/pages/about" tone="neutral">About the festival</Link>`,
+      render: () => (
+        <Stack gap="pair">
+          <Link href="#/pages/home" tone="neutral">
+            Home
+          </Link>
+          <Link href="#/pages/about" tone="neutral">
+            About the festival
+          </Link>
+        </Stack>
+      ),
+    },
   ],
 } satisfies StoryFile;
