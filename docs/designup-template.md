@@ -21,7 +21,9 @@ DesignUp D4 keeps linked videos as canonical Media records. Coordinator 8 alloca
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR119 | 2026-11-13 | Canonical linked-video poster fallback survives Media rendering and player opening (D4) | TemplateAsset lacks fallbackSrc; render/blocks.tsx pictureProps drops it; MediaPlayer lacks an embed-poster fallback | 6 | opt-in TemplateAsset.fallbackSrc and MediaPlayer.posterFallbackSrc; no fallback by default; reuse Image's single retry | none | Editor41, core render and media | accepted | pending | Forward the existing canonical fallback in all album/player adapters; no retry override |
+| LR119 | 2026-11-13 | Canonical linked-video poster fallback survives Media rendering and player opening (D4) | TemplateAsset lacks fallbackSrc; render/blocks.tsx pictureProps drops it; MediaPlayer lacks an embed-poster fallback | 6 | opt-in TemplateAsset/MediaPicture.fallbackSrc and MediaPlayer.posterFallbackSrc; no fallback by default; reuse Image's single retry | none | Editor41, core render and media | shipped | dl 9177a50; pin du.9177a505; web adoption in this increment | Done: canonical fallback forwarded in Media assets, collage tiles and album/player adapters; no retry override |
+
+Observed checkpoint: core typecheck/library build and DesignUp linked typecheck/pinned build/static checks pass. Browser-memory rendering recovers missing posters in single/grid/Lightbox, reaches Image's failure state when both addresses fail, and preserves the no-fallback native poster. Recovered-poster captures inspected at 1440 light/dark and 375 light; isolated failure-path evidence, not full-page visual parity. No content or history writes.
 
 ### LR118: a list that stays in view beside a long detail (13 November 2026)
 
