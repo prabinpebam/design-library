@@ -26,3 +26,6 @@ apps/library/public/zz-sync-probe.html
 
 # Installable tarballs for separate projects (tools/pack.mjs)
 /.packages/
+
+# Regression sweep output and the local frozen base (tools/template-regression.mjs)
+/.shots/
