@@ -100,6 +100,10 @@ export const icons = {
   // Devices and arrangement (LR37): a preview's width, and gathering tiles or returning to the automatic arrangement.
   desktop: { d: 'M4.5 4.5h15a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zM9 20h6M12 15.5V20' },
   phone: { d: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3zM11 18h2' },
+  // LR108: an editor's tools as icons (a tablet width beside desktop and phone; undo and redo a step).
+  tablet: { d: 'M6.5 3h11A1.5 1.5 0 0 1 19 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3zM11 18h2' },
+  undo: { d: 'M9 14.5L4.5 10 9 5.5M4.5 10h10a5 5 0 0 1 0 10H11', flipInRtl: true },
+  redo: { d: 'M15 14.5l4.5-4.5L15 5.5M19.5 10h-10a5 5 0 0 0 0 10H13', flipInRtl: true },
   compress: { d: 'M12 3.5v6M9 6.5l3 3 3-3M12 20.5v-6M9 17.5l3-3 3 3M4.5 12h15' },
   restore: { d: 'M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4' },
   wrap: { d: 'M4.5 7h11a3.5 3.5 0 0 1 0 7H8M10.5 11.5L8 14l2.5 2.5', flipInRtl: true },
