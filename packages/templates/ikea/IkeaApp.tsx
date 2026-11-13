@@ -77,6 +77,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
   // A page the replica doesn't have (Gift cards, Careers…) links to `soon(label)`: the click gives the honest note
   // instead of reloading the page it's on (Q156). Without scripts the link still goes home.
   const soon = (label: string) => `${at('home')}?soon=${encodeURIComponent(label)}`;
+  const browse = (id: string) => `${at('products')}?browse=${encodeURIComponent(id)}`;
   const notBuilt = (label: string) => notify({ subject: 'ikea-replica', message: fill(w.notInReplica, { label }) });
   // A product or room card names what it opens in data attributes; the click that follows the link records it first.
   useEffect(() => {
@@ -86,6 +87,14 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
         e.preventDefault();
         e.stopPropagation();
         notBuilt(decodeURIComponent(stub.getAttribute('href')!.split('?soon=')[1]));
+        return;
+      }
+      // A link to the product list with a filter (`browse(id)`: the Products crumb under a category, the footer's Offers).
+      const list = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[href*="?browse="]');
+      if (list) {
+        e.preventDefault();
+        store.browse(decodeURIComponent(list.getAttribute('href')!.split('?browse=')[1]));
+        go('products');
         return;
       }
       const el = (e.target as Element | null)?.closest<HTMLElement>('[data-product], [data-room], [data-category]');
@@ -159,7 +168,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
       barLabel={w.storeServices}
       start={[{ label: w.language, icon: 'globe', href: soon(w.languageChoice) }]}
       end={[
-        { label: w.enterPostcode, icon: 'delivery', href: at('checkout') },
+        { label: w.enterPostcode, icon: 'delivery', href: at('checkout'), current: screen === 'checkout' },
         { label: w.selectStore, icon: 'store', href: soon(w.selectStore) },
       ]}
       search={
@@ -197,7 +206,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
               }
             }}
           />
-          <Badge kind="count" count={count} label={fill(w.bagCount, { count })} anchor={<Button label={w.bag} icon="bag" iconOnly emphasis="quiet" href={at('bag')} />} />
+          <Badge kind="count" count={count} label={fill(w.bagCount, { count })} anchor={<Button label={w.bag} icon="bag" iconOnly emphasis="quiet" href={at('bag')} current={screen === 'bag'} />} />
         </>
       }
       navLabel={w.navLabel}
@@ -213,7 +222,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
 
   // The footer's links that have a page in the replica go there; the rest give the note.
   const footerHref = (label: string) =>
-    label === w.products ? at('products') : label === w.rooms ? at('room') : label === w.navOffers ? at('products') : label === w.navSupport ? soon(label) : label === w.trackOrder ? at('confirmation') : soon(label);
+    label === w.products ? browse('all') : label === w.rooms ? at('room') : label === w.navOffers ? browse('offers') : label === w.navSupport ? soon(label) : label === w.trackOrder ? at('confirmation') : soon(label);
   const footer = (
     <Footer
       arrangement="identity"
@@ -234,7 +243,7 @@ export function IkeaApp({ view, screen, at, picture, ...data }: IkeaAppProps) {
           ))}
         </Stack>
       }
-      sections={view.footer.map((f, i) => ({ id: `f${i}`, heading: f.heading, links: f.links.map((label) => ({ label, href: footerHref(label) })) }))}
+      sections={view.footer.map((f, i) => ({ id: `f${i}`, heading: f.heading, links: f.links.map((label) => ({ label, href: footerHref(label), current: (label === w.trackOrder && screen === 'confirmation') || (label === w.rooms && screen === 'room') || (screen === 'products' && !s.query && ((label === w.products && s.category === 'all') || (label === w.navOffers && s.category === 'offers'))) })) }))}
       tools={
         <Cluster gap="item">
           <Button label={w.cookieSettings} icon="settings" onClick={() => notBuilt(w.cookieSettings)} />
@@ -503,7 +512,7 @@ function Products({ view, tile, chips, at }: { view: StoreRecord; tile: (p: Prod
       <Stack gap="group">
         <Stack gap="item">
           <Heading level={1} size={1}>{q ? `“${s.query}”` : category?.label ?? w.products}</Heading>
-          <Breadcrumbs label={w.places} items={[{ label: w.home, href: at('home') }, { label: w.products, href: at('products') }, ...(category ? [{ label: category.label }] : [])]} />
+          <Breadcrumbs label={w.places} items={[{ label: w.home, href: at('home') }, category ? { label: w.products, href: `${at('products')}?browse=all` } : { label: w.products }, ...(category ? [{ label: category.label }] : [])]} />
         </Stack>
         <Notice icon="tag" href={at('checkout')}>{w.notice}</Notice>
         <ChipRail label={w.shopByCategory} chips={rail} />

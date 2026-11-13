@@ -66,6 +66,7 @@ interface ButtonBase extends DataAttributes {
 
 interface ActionButton extends ButtonBase {
   href?: never;
+  current?: never;
   /** An action with no saved result to confirm (open, close, cancel, retry, export). */
   onClick?: () => void;
   /** The action it started is still running elsewhere (an export, a sync): shows in progress and ignores presses until false. */
@@ -79,6 +80,7 @@ interface ActionButton extends ButtonBase {
 
 interface CommitButton extends ButtonBase {
   href?: never;
+  current?: never;
   onClick?: never;
   busy?: never;
   /** Saves something: the button shows pending, then confirmed, on itself. Reject the promise when it fails. */
@@ -98,6 +100,8 @@ interface LinkButton extends ButtonBase {
    * No progress, commit or disclosure: `type`, `progress`, `value`, `expanded` and `controls` don't apply.
    */
   href: string;
+  /** The destination is the page shown now (`aria-current="page"`, like Link's `current`): following it again rightly changes nothing. */
+  current?: boolean;
   /** Runs as it's followed, e.g. a router taking over: call `event.preventDefault()` to stop the browser's own navigation. */
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   busy?: never;
@@ -162,7 +166,7 @@ function useNarrow(ref: RefObject<HTMLElement | null>, watch: boolean) {
  * @key Space: activates
  */
 export function Button(props: ButtonProps) {
-  const { label, icon, iconOnly = false, stacked = false, iconEnd = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
+  const { label, icon, iconOnly = false, stacked = false, iconEnd = false, tooltip = true, emphasis = 'default', align = 'center', tone, disabled = false, unavailable, type = 'button', size = 'normal', progress = 'inside', value, expanded, controls, pressed, href, current, onClick, onCommit, busy = false, pendingLabel, doneLabel, onError, onPointerEnter, onPointerLeave, onFocus, onBlur, ...data } = props;
   const router = useRouter();
   const { phase, run } = useCommit('--duration-confirm-read');
   const reasonId = useId();
@@ -215,6 +219,7 @@ export function Button(props: ButtonProps) {
         {...data}
         ref={self as RefObject<HTMLAnchorElement>}
         href={router ? router.href(href) : href}
+        aria-current={current ? 'page' : undefined}
         data-dl="button"
         data-emphasis={emphasis}
         data-align={align === 'start' ? align : undefined}

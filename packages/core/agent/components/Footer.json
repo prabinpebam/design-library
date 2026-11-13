@@ -85,6 +85,11 @@
           "name": "external",
           "type": "boolean",
           "description": "Goes to another site: Link's external icon and its spoken twin."
+        },
+        {
+          "name": "current",
+          "type": "boolean",
+          "description": "The page shown now: Link's `current` (`aria-current=\"page\"`)."
         }
       ]
     },

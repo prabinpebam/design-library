@@ -9,6 +9,8 @@ export interface FooterLink {
   href: string;
   /** Goes to another site: Link's external icon and its spoken twin. */
   external?: boolean;
+  /** The page shown now: Link's `current` (`aria-current="page"`). */
+  current?: boolean;
 }
 
 export interface FooterSection {
@@ -60,7 +62,7 @@ export interface FooterProps extends DataAttributes {
 export function Footer({ sections, sectionsLabel = 'Footer', links, linksLabel = 'Support links', identity, legal, tools, headingLevel = 2, arrangement, ...data }: FooterProps) {
   const item = (l: FooterLink) => (
     <li key={l.href + l.label}>
-      <Link href={l.href} external={l.external}>
+      <Link href={l.href} external={l.external} current={l.current}>
         {l.label}
       </Link>
     </li>
