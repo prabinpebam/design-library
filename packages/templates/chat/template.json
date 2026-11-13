@@ -143,6 +143,7 @@
       ]
     }
   ],
+  "works": { "notes": 4 },
   "layouts": [
     {
       "id": "chat",

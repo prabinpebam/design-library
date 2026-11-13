@@ -9,6 +9,7 @@
 //   node tools/click-probe.mjs --template word [--layouts home,document] [--origin http://127.0.0.1:8770]
 //   node tools/click-probe.mjs --url "http://127.0.0.1:8770/site.html?chrome=none#/app/word/home"
 //       --width 1280 --height 900   --json .shots/click-probe/word.json   --verbose (every control and its effect)
+// Note-only clicks (the control's only effect is the honest not-in-replica note) are listed apart from working ones.
 // Exit 1 when any control is dead. The server is not started: point --origin at a running library app.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -87,13 +88,21 @@ async function tag(page) {
 }
 
 // Watches for an effect; hover, focus and press styling attributes don't count.
+// Changes inside the notification host (core `notify`) and the live announcer it speaks through are counted apart, so a click whose only effect is the
+// "isn't part of the replica yet" note is reported as a note, not as working (F37).
 const arm = () => {
   window.__cp?.disconnect();
   window.__cpCount = 0;
+  window.__cpNotify = 0;
   window.__cpHref = location.href;
   const ignore = /^data-(click-probe|hover|hovered|focus|focused|focus-visible|active|pressing)/;
   window.__cp = new MutationObserver((records) => {
-    for (const r of records) if (!(r.type === 'attributes' && ignore.test(r.attributeName ?? ''))) window.__cpCount++;
+    for (const r of records) {
+      if (r.type === 'attributes' && ignore.test(r.attributeName ?? '')) continue;
+      const node = r.target.nodeType === 1 ? r.target : r.target.parentElement;
+      if (node?.closest('[data-dl="notifications"], [data-dl="announcer"]')) window.__cpNotify++;
+      else window.__cpCount++;
+    }
   });
   window.__cp.observe(document, { subtree: true, childList: true, attributes: true, characterData: true });
 };
@@ -101,13 +110,17 @@ const effect = (n) => {
   const el = document.querySelector(`[data-click-probe="${n}"]`);
   const a = document.activeElement;
   const focusMoved = !!a && a !== document.body && a !== el && !el?.contains(a);
-  return { dom: window.__cpCount, url: location.href !== window.__cpHref, focus: focusMoved };
+  const said = [...document.querySelectorAll('[data-dl="notifications"] [data-dl-part="message"]')].map((m) => m.textContent ?? '');
+  return { dom: window.__cpCount, notify: window.__cpNotify, said: said.at(-1) ?? '', url: location.href !== window.__cpHref, focus: focusMoved };
 };
+// The honest stub note: "X isn't part of the replica yet", "… aren't part of this example".
+const NOTE = /\b(isn[’']t|aren[’']t|is not|are not) part of (this|the) (replica|example)/i;
 
 const { chromium } = require('playwright-core');
 const browser = await chromium.launch({ executablePath: chromePath(), headless: true });
 const report = { origin, width, height, layouts: [] };
 let deadTotal = 0;
+let noteTotal = 0;
 let clickedTotal = 0;
 let disabledTotal = 0;
 for (const t of targets) {
@@ -118,14 +131,26 @@ for (const t of targets) {
   let popups = 0;
   context.on('page', () => popups++);
   const load = async () => {
+    // Back to the layout's resting state: a template that keeps its state for the tab (a filter, a bag) would otherwise
+    // reload with different controls than the ones tagged, and a click would be blamed on the wrong control.
+    await page.evaluate(() => sessionStorage.clear()).catch(() => undefined);
     await page.goto('about:blank');
     await page.goto(t.url, { waitUntil: 'load' });
     await page.waitForTimeout(700);
-    return tag(page);
+    // A navigation the page starts itself (a redirect, a dev server's reload) can destroy the context mid-read: retry.
+    for (let i = 0; ; i++) {
+      try {
+        return await tag(page);
+      } catch (e) {
+        if (i >= 3) throw e;
+        await page.waitForLoadState('load').catch(() => undefined);
+        await page.waitForTimeout(700);
+      }
+    }
   };
   const controls = await load();
   let tagged = controls.length;
-  const row = { id: t.id, url: t.url, controls: controls.length, clicked: 0, dead: [], current: [], disabled: [], skipped: [], pageErrors: errors };
+  const row = { id: t.id, url: t.url, controls: controls.length, clicked: 0, dead: [], notes: [], current: [], disabled: [], skipped: [], pageErrors: errors };
   for (const c of controls) {
     if (c.disabled) {
       row.disabled.push(c.name);
@@ -150,11 +175,19 @@ for (const t of targets) {
       continue;
     }
     await page.waitForTimeout(250);
-    const fx = await page.evaluate(effect, c.n).catch(() => ({ dom: 1, url: true, focus: false }));
-    const alive = fx.dom > 0 || fx.url || fx.focus || popups > before;
+    let fx = await page.evaluate(effect, c.n).catch(() => ({ dom: 1, notify: 0, said: '', url: true, focus: false }));
+    // A router may start a page change after a glide or a busy frame: give a quiet click one more look before calling it dead.
+    if (!(fx.dom || fx.notify || fx.url || fx.focus || popups > before)) {
+      await page.waitForTimeout(750);
+      fx = await page.evaluate(effect, c.n).catch(() => ({ dom: 1, notify: 0, said: '', url: true, focus: false }));
+    }
+    const works = fx.dom > 0 || fx.url || fx.focus || popups > before;
+    const note = !works && fx.notify > 0 && NOTE.test(fx.said);
+    const alive = works || fx.notify > 0;
     row.clicked++;
-    if (!alive) (c.current ? row.current : row.dead).push(c.name);
-    if (verbose) console.log(`  ${alive ? 'ok  ' : 'DEAD'} ${t.id} ${c.role} "${c.name}" dom ${fx.dom} url ${fx.url} focus ${fx.focus}`);
+    if (note) row.notes.push(c.name);
+    else if (!alive) (c.current ? row.current : row.dead).push(c.name);
+    if (verbose) console.log(`  ${note ? 'NOTE' : alive ? 'ok  ' : 'DEAD'} ${t.id} ${c.role} "${c.name}" dom ${fx.dom} notify ${fx.notify} url ${fx.url} focus ${fx.focus}`);
     // Back to the layout's resting state before the next control: Escape closes menus and popovers; reload only when
     // the address moved, a window opened or tagged controls disappeared (a view changed under them).
     await page.keyboard.press('Escape').catch(() => undefined);
@@ -166,14 +199,15 @@ for (const t of targets) {
   }
   clickedTotal += row.clicked;
   deadTotal += row.dead.length;
+  noteTotal += row.notes.length;
   disabledTotal += row.disabled.length;
   report.layouts.push(row);
-  console.log(`${t.id}: ${row.clicked} clicked, ${row.dead.length} dead, ${row.current.length} already current, ${row.disabled.length} disabled, ${row.skipped.length} skipped, ${errors.length} page errors${row.dead.length ? `\n  dead: ${row.dead.join(' | ')}` : ''}${row.skipped.length ? `\n  skipped: ${row.skipped.join(' | ')}` : ''}`);
+  console.log(`${t.id}: ${row.clicked} clicked, ${row.dead.length} dead, ${row.notes.length} note only, ${row.current.length} already current, ${row.disabled.length} disabled, ${row.skipped.length} skipped, ${errors.length} page errors${row.dead.length ? `\n  dead: ${row.dead.join(' | ')}` : ''}${row.skipped.length ? `\n  skipped: ${row.skipped.join(' | ')}` : ''}`);
   await context.close();
 }
 await browser.close();
-report.summary = { layouts: targets.length, clicked: clickedTotal, dead: deadTotal, disabled: disabledTotal };
-console.log(`click-probe: ${targets.length} layouts, ${clickedTotal} controls clicked, ${deadTotal} dead, ${disabledTotal} disabled (not clicked).`);
+report.summary = { layouts: targets.length, clicked: clickedTotal, dead: deadTotal, notes: noteTotal, disabled: disabledTotal };
+console.log(`click-probe: ${targets.length} layouts, ${clickedTotal} controls clicked, ${deadTotal} dead, ${noteTotal} note only, ${disabledTotal} disabled (not clicked).`);
 const out = opt('json', join('.shots', 'click-probe', `${template ?? 'urls'}.json`));
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify(report, null, 1));

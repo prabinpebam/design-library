@@ -29,6 +29,7 @@
       ]
     }
   ],
+  "works": { "notes": 0 },
   "layouts": [
     { "id": "home", "title": "Home", "component": "SiteLayout", "content": "content/home.json",
       "regions": [

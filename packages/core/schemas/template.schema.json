@@ -79,6 +79,18 @@
       },
       "additionalProperties": false
     },
+    "works": {
+      "type": "object",
+      "description": "The works gate (Q156, F32/F37; npm run check:works): every clicked control must do something. notes is the budget of note-only clicks, whose only effect is the honest \"isn't part of the replica yet\" note, summed over the template's layouts at 1280 x 900. It may only go down: lower it when a stub becomes a working control.",
+      "properties": {
+        "notes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["notes"],
+      "additionalProperties": false
+    },
     "layouts": {
       "type": "array",
       "minItems": 1,

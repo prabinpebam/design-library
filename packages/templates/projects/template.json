@@ -156,6 +156,7 @@
       ]
     }
   ],
+  "works": { "notes": 5 },
   "layouts": [
     {
       "id": "board",
