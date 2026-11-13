@@ -64,6 +64,9 @@
   /* The chips stay on one line and scroll sideways (H-720-L, S-720-L): an inline scroll area whose inset keeps focus rings
      whole, drawn back by the same amount so the chips sit where the row puts them (x24 / x96, y66.5 on search). */
   :is([data-dl='youtube-feed'], [data-dl='youtube-results']) > [data-dl-part='chips'] > [data-dl-part='chip-scroll'] { display: grid; flex: 1 1 auto; min-inline-size: 0; margin-inline-start: calc(-1 * var(--c-scroll-area-inset-sm)); margin-block: calc(-1 * var(--c-scroll-area-inset-sm)) calc(-1 * max(var(--c-scroll-area-inset-sm), var(--c-scroll-area-track))); }
+  /* At rest the focus room before the first chip shows nothing, as the row's own edge (x96 / x24) bounds it: the chip's
+     corner anti-aliasing stops there. A focused chip gets the room back so its ring is whole. */
+  :is([data-dl='youtube-feed'], [data-dl='youtube-results']) > [data-dl-part='chips'] > [data-dl-part='chip-scroll']:not(:focus-within) { clip-path: inset(0 0 0 var(--c-scroll-area-inset-sm)); }
   /* Three columns 16 apart, rows 32 apart (H-1280-L items-per-row 3, item margin 16, row margin 32). */
   [data-dl='youtube-feed'] > [data-dl-part='grid'] { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--t-youtube-site-gap); row-gap: var(--t-youtube-site-row-gap); margin: 0; padding: var(--space-6) 0 0; list-style: none; }
 
@@ -161,8 +164,9 @@
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] { display: flex; align-items: start; gap: var(--space-2); padding-block: var(--space-3); }
   /* The name sits 4.5 below the avatar's top in a 27 high line (S-1280-L: channel 51 high, avatar +12, name +16.5). */
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='channel'] > [data-dl-part='name'] { display: grid; padding-block: calc(var(--space-1) + var(--space-0-5) / 4); }
-  /* The snippet stops at two lines, ending in an ellipsis (S-720-L, the reference's line clamp 2). */
-  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='snippet'] { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  /* The snippet stops at two lines, ending in an ellipsis (S-720-L, the reference's line clamp 2). Only the block axis is
+     clipped, so a first glyph's anti-aliasing before the text's edge still shows. */
+  [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='snippet'] { display: -webkit-box; overflow-x: visible; overflow-y: clip; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
   /* Format marks 8 under the snippet: 4K is 22×18, a hairline #CCCCCC edge, radius 2, 12/18 #606060 words padded 4 (S-1280-L y527–544). */
   [data-dl='youtube-results'] > [data-dl-part='list'] > [data-dl-part='result'] > [data-dl-part='text'] > [data-dl-part='badges'] { display: flex; gap: var(--space-1); margin-block-start: var(--space-2); }
   /* Chapters: a 36 high tonal strip, radius 8, 20 under the marks: a 50×28 frame 8 in, "N chapters" 12/18 w500 12 after it, the
