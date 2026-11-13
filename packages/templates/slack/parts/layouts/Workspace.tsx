@@ -2213,7 +2213,7 @@ export function Workspace({ view, screen = 'channel', settings, picture, ...data
           <div data-dl-part="org-banner" data-density="compact">
             <p data-dl-part="banner-copy">
               <span>{view.slackbotView.bannerText} </span>
-              <Link href="#/app/slack/slackbot">{view.slackbotView.bannerLink}</Link>
+              <Button label={view.slackbotView.bannerLink} tone="link" onClick={() => notBuilt(view.slackbotView.bannerLink)} />
             </p>
             <span data-dl-part="banner-close">
               {action(c.dismissBanner, 'close', () => setSlackbotBannerDismissed(true))}
