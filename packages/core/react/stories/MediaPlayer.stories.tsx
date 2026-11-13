@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { Button } from '../fundamentals/Button';
+import { ButtonGroup } from '../fundamentals/ButtonGroup';
 import { MediaPlayer } from '../compounds/MediaPlayer';
 import { scenes } from './scenes';
 import driftWebm from './media/drift.webm?url';
@@ -11,6 +14,20 @@ import type { StoryFile } from './story';
 // The sample video and audio were generated for these examples (a colour gradient and a synthesised chord): no
 // third-party media. The embeds below load a public sample from its provider only when Play is pressed.
 const lagoon = scenes[3];
+
+function Chapters() {
+  const [seek, setSeek] = useState<{ seconds: number; requestId: number } | undefined>(undefined);
+  const go = (seconds: number) => setSeek((s) => ({ seconds, requestId: (s?.requestId ?? 0) + 1 }));
+  return (
+    <>
+      <MediaPlayer source={{ from: 'youtube', id: 'aqz-KE-bpKQ', seek }} title="Big Buck Bunny" poster={lagoon.src} posterAlt={lagoon.alt} duration={635} />
+      <ButtonGroup label="Chapters">
+        <Button label="The meadow, 0:30" onClick={() => go(30)} />
+        <Button label="The chase, 5:00" onClick={() => go(300)} />
+      </ButtonGroup>
+    </>
+  );
+}
 
 export default {
   component: 'MediaPlayer',
@@ -63,6 +80,18 @@ export default {
       description: 'Compact: the title, the browser’s own controls and the caption, no wider than a readable line. Speech needs its words written out somewhere, so a transcript link follows when there is one.',
       code: `<MediaPlayer kind="audio" source={{ from: 'file', files: [{ src: humWebm, type: 'audio/webm' }, { src: humMp3, type: 'audio/mpeg' }] }} title="Evening hum" caption="Twenty seconds of a slow chord." transcript="/transcripts/evening-hum" />`,
       render: () => <MediaPlayer kind="audio" source={{ from: 'file', files: [{ src: humWebm, type: 'audio/webm' }, { src: humMp3, type: 'audio/mpeg' }] }} title="Evening hum" caption="Twenty seconds of a slow chord, no words." transcript="#/mediaplayer" />,
+    },
+    {
+      title: 'A poster with a fallback',
+      description: 'LR119 posterFallbackSrc: when an embed’s poster can’t load, the player tries one other address, as Image does, before saying the picture is missing. Here the first address is broken.',
+      code: `<MediaPlayer source={{ from: 'youtube', id: 'aqz-KE-bpKQ' }} title="Big Buck Bunny" poster="/missing.jpg" posterFallbackSrc={poster} duration={635} />`,
+      render: () => <MediaPlayer source={{ from: 'youtube', id: 'aqz-KE-bpKQ' }} title="Big Buck Bunny" poster="/no-such-poster.jpg" posterFallbackSrc={lagoon.src} posterAlt={lagoon.alt} duration={635} />,
+    },
+    {
+      title: 'Jump to a moment',
+      description: 'LR100 seek: a chapter list or a transcript asks a YouTube video to play from a time; a new requestId each time, so the same time can be asked again. Nothing loads from YouTube until a moment or Play is chosen.',
+      code: `<MediaPlayer source={{ from: 'youtube', id, seek: { seconds: 90, requestId: n } }} … />`,
+      render: () => <Chapters />,
     },
   ],
 } satisfies StoryFile;

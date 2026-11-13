@@ -19,5 +19,16 @@ export default {
         </Stack>
       ),
     },
+    {
+      title: 'Held to a reading line',
+      description: 'measure keeps the column to a comfortable line length in a wide view, for a short form or a few panels that shouldn’t stretch across the screen.',
+      code: `<Stack gap="item" measure><Text>…</Text><Text>…</Text></Stack>`,
+      render: () => (
+        <Stack gap="item" measure>
+          <Text>Tokens hold every value, so a theme changes them in one place and every component follows.</Text>
+          <Text>Fundamentals are built from tokens alone, and compounds combine fundamentals.</Text>
+        </Stack>
+      ),
+    },
   ],
 } satisfies StoryFile;

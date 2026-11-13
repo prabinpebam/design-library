@@ -241,5 +241,21 @@ export default {
 </Cluster>`,
       render: () => <Picker label="Order" hideLabel size="s" width="content" options={[{ value: 'oldest', label: 'Oldest first' }, { value: 'newest', label: 'Newest first' }, { value: 'own', label: 'Your order' }]} initial="oldest" />,
     },
+    {
+      title: 'The chosen option’s icon',
+      description: 'With chosenIcon the chosen option’s icon leads the box, so the closed box shows what the list shows, such as a platform’s mark beside its name.',
+      code: `<Select chosenIcon label="Video source" options={[{ value: 'youtube', label: 'YouTube', icon: 'youtube' }, { value: 'vimeo', label: 'Vimeo', icon: 'vimeo' }]} value={source} onChange={setSource} />`,
+      render: () => (
+        <Picker
+          chosenIcon
+          label="Video source"
+          options={[
+            { value: 'youtube', label: 'YouTube', icon: 'youtube' },
+            { value: 'vimeo', label: 'Vimeo', icon: 'vimeo' },
+          ]}
+          initial="youtube"
+        />
+      ),
+    },
   ],
 } satisfies StoryFile;

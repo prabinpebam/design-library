@@ -69,5 +69,11 @@ export default {
       code: `<ChipGroup label="Tags" chips={tags} maxVisible={4} />`,
       render: () => <ChipGroup label="Tags" chips={tags} maxVisible={4} size="s" />,
     },
+    {
+      title: 'Named by the heading above',
+      description: 'Where a heading already names the group, hideLabel hides the label from sight; it still names the group for assistive technology.',
+      code: `<ChipGroup label="Status" hideLabel selection="multiple" chips={statuses} value={value} onChange={setValue} />`,
+      render: () => <ChipGroup label="Status" hideLabel selection="multiple" chips={statuses} value={['Open']} />,
+    },
   ],
 } satisfies StoryFile;

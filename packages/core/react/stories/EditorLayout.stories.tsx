@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Canvas } from '../compounds/Canvas';
+import { Tabs } from '../compounds/Tabs';
 import { Toolbar } from '../compounds/Toolbar';
 import { TreeView } from '../compounds/TreeView';
 import { Button } from '../fundamentals/Button';
@@ -12,7 +13,7 @@ import { EditorLayout } from '../layouts/EditorLayout';
 import { signInScreen } from './Canvas.stories';
 import type { StoryFile } from './story';
 
-function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false, docked = false }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean; docked?: boolean }) {
+function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wide = false, docked = false, panelTone }: { startOpen?: boolean; endOpen?: boolean; bare?: boolean; wide?: boolean; docked?: boolean; panelTone?: 'raised' | 'sunken' }) {
   const [startOpen, setStartOpen] = useState(start);
   const [endOpen, setEndOpen] = useState(end);
   const [tool, setTool] = useState('pointer');
@@ -21,6 +22,7 @@ function Editor({ startOpen: start = true, endOpen: end = true, bare = false, wi
   return (
     <EditorLayout
       height="lg"
+      panelTone={panelTone}
       {...(wide ? { startSize: '16rem', endSize: '41rem', endMax: '60rem', workMin: '24rem', resizable: true } : {})}
       {...(docked ? { toggles: 'none' as const, resizable: true } : {})}
       startOpen={startOpen}
@@ -123,6 +125,41 @@ export default {
       description: 'toggles="none": no panel toggles, for a studio whose outline and inspector are always there (both open); the resize handles stay. The bar holds only its own content.',
       code: `<EditorLayout toggles="none" startOpen endOpen resizable onStartToggle={() => {}} onEndToggle={() => {}} … />`,
       render: () => <Editor docked />,
+    },
+    {
+      title: 'Panels set apart by tone',
+      description: 'panelTone gives both panels their own surface, raised or sunken, so they part from the working area by tone alone, with no border or shadow.',
+      code: `<EditorLayout panelTone="sunken" … />`,
+      render: () => <Editor bare panelTone="sunken" />,
+    },
+    {
+      title: 'An inspector filling its panel',
+      description: 'endFill lets the end panel’s content take the panel’s full height; with Tabs fill below it, the chosen tab’s panel grows to the bottom.',
+      code: `<EditorLayout endFill end={<Tabs fill size="s" label="Inspector" items={…} />} … >…</EditorLayout>`,
+      render: () => (
+        <EditorLayout
+          height="lg"
+          endFill
+          start={null}
+          startOpen={false}
+          onStartToggle={() => {}}
+          endOpen
+          onEndToggle={() => {}}
+          end={
+            <Tabs
+              fill
+              size="s"
+              label="Inspector"
+              items={[
+                { id: 'design', label: 'Design', panel: <Text>Width, height and fill</Text> },
+                { id: 'content', label: 'Content', panel: <Text>Words and pictures</Text> },
+              ]}
+            />
+          }
+        >
+          <Text>The page</Text>
+        </EditorLayout>
+      ),
     },
   ],
 } satisfies StoryFile;

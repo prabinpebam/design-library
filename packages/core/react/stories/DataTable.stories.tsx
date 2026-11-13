@@ -89,6 +89,25 @@ export default {
         />
       ),
     },
+    {
+      title: 'Rows that open',
+      description: 'A row’s href makes its heading cell the link: the whole row shows hover and focus and a press anywhere on it opens the item.',
+      code: `<DataTable label="Pages" variant="plain" columns={[{ key: 'title', header: 'Title', width: 'grow' }, { key: 'status', header: 'Status', width: 'fit' }]} rows={[{ id: 'home', href: '/pages/home', cells: { title: 'Home', status: 'Published' } }, …]} />`,
+      render: () => (
+        <DataTable
+          label="Pages that open"
+          variant="plain"
+          columns={[
+            { key: 'title', header: 'Title', width: 'grow' },
+            { key: 'status', header: 'Status', width: 'fit' },
+          ]}
+          rows={[
+            { id: 'home', href: '#/datatable', cells: { title: 'Home', status: 'Published' } },
+            { id: 'about', href: '#/datatable', cells: { title: 'About the festival', status: 'Draft' } },
+          ]}
+        />
+      ),
+    },
   ],
 } satisfies StoryFile;
 

@@ -13,15 +13,15 @@ const sections: SectionedFormSection[] = [
   { id: 'share', title: 'Sharing', group: 'Blocks', detail: 'Preview card', content: <Switch label="Show a share card" checked onChange={() => {}} /> },
 ];
 
-function Inspector({ details = false, mark }: { details?: boolean; mark?: 'check' | 'fill' }) {
+function Inspector({ details = false, mark, stickyList = false }: { details?: boolean; mark?: 'check' | 'fill'; stickyList?: boolean }) {
   const [selected, setSelected] = useState('title');
-  return <SectionedForm label="Page settings" sections={sections} selected={selected} onSelect={setSelected} details={details} mark={mark} />;
+  return <SectionedForm label="Page settings" sections={sections} selected={selected} onSelect={setSelected} details={details} mark={mark} stickyList={stickyList} />;
 }
 
-function InEditor() {
+function InEditor({ fill = false }: { fill?: boolean }) {
   const [selected, setSelected] = useState('intro');
   return (
-    <EditorLayout height="lg" endSize="41rem" endMax="60rem" workMin="24rem" start={null} startOpen={false} onStartToggle={() => {}} endOpen onEndToggle={() => {}} end={<SectionedForm label="Page settings" sections={sections} selected={selected} onSelect={setSelected} density="compact" />}>
+    <EditorLayout height="lg" endSize="41rem" endMax="60rem" workMin="24rem" endFill={fill} start={null} startOpen={false} onStartToggle={() => {}} endOpen onEndToggle={() => {}} end={<SectionedForm label="Page settings" sections={sections} selected={selected} onSelect={setSelected} density="compact" fill={fill} />}>
       <Text>The page</Text>
     </EditorLayout>
   );
@@ -55,6 +55,18 @@ export default {
       description: 'A 41 rem inspector holds the form in two columns, compact. When the window narrows, the inspector gives way to the page’s 24 rem floor and the form falls back to one column.',
       code: `<EditorLayout endSize="41rem" endMax="60rem" workMin="24rem" end={<SectionedForm density="compact" … />} …>…</EditorLayout>`,
       render: () => <InEditor />,
+    },
+    {
+      title: 'A list that stays in view',
+      description: 'With stickyList, in two columns the list of sections stays in view under the window’s sticky header while a long section scrolls, as in a record’s edit view.',
+      code: `<SectionedForm stickyList label="Page settings" sections={…} … />`,
+      render: () => <Inspector stickyList />,
+    },
+    {
+      title: 'Filling the inspector',
+      description: 'With fill, and endFill on the EditorLayout, the form takes the panel’s full height: the list runs to the bottom beside the chosen section, whose fields start at the top.',
+      code: `<EditorLayout endFill end={<SectionedForm fill density="compact" … />} …>…</EditorLayout>`,
+      render: () => <InEditor fill />,
     },
   ],
 } satisfies StoryFile;

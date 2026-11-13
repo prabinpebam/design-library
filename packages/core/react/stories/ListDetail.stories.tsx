@@ -80,13 +80,15 @@ const switches: Record<string, string[]> = {
   display: ['Use more contrast', 'Reduce motion'],
 };
 
-function Settings() {
-  const [chosen, setChosen] = useState<string[]>([]);
+function Settings({ listTone, stickyList = false, initial = [] }: { listTone?: 'raised' | 'sunken'; stickyList?: boolean; initial?: string[] }) {
+  const [chosen, setChosen] = useState<string[]>(initial);
   const [show, setShow] = useState<'list' | 'detail'>('list');
   const [on, setOn] = useState<Record<string, boolean>>({ 'Tell me when someone mentions me': true });
   const group = groups.find((g) => g.id === chosen[0]);
   return (
     <ListDetail
+      listTone={listTone}
+      stickyList={stickyList}
       listLabel="Settings"
       list={
         <List
@@ -116,6 +118,7 @@ function Settings() {
               <Switch key={label} label={label} checked={!!on[label]} onChange={(v) => setOn({ ...on, [label]: v })} />
             ))}
           </Stack>
+          {stickyList && <Text>{paragraph}</Text>}
         </Stack>
       ) : (
         <Text tone="muted">Choose a group of settings to see them here.</Text>
@@ -142,6 +145,18 @@ export default {
         'A narrow list and no held height: both sides grow and the page scrolls. Until a group is chosen, the detail says what to do.',
       code: `<ListDetail listLabel="Settings" list={<List mode="select" selection="single" label="Setting groups" options={groups} value={chosen} onChange={choose} />} detailLabel={group?.label ?? 'No setting group chosen'} show={show} backLabel="Back to settings" onBack={() => setShow('list')}>{group ? … : <Text tone="muted">Choose a group of settings to see them here.</Text>}</ListDetail>`,
       render: () => <Settings />,
+    },
+    {
+      title: 'A list set apart by tone',
+      description: 'listTone gives the list its own surface, raised or sunken, running the detail’s full height, so the two sides part by tone alone, with no border or shadow.',
+      code: `<ListDetail listTone="sunken" listLabel="Settings" list={…} …>…</ListDetail>`,
+      render: () => <Settings listTone="sunken" initial={['privacy']} />,
+    },
+    {
+      title: 'A list that stays in view',
+      description: 'With stickyList and no held height, the list stays in view under the window’s sticky header while the page scrolls a long detail.',
+      code: `<ListDetail stickyList listLabel="Settings" list={…} …>…</ListDetail>`,
+      render: () => <Settings stickyList initial={['notifications']} />,
     },
   ],
 } satisfies StoryFile;

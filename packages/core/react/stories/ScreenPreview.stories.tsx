@@ -30,5 +30,11 @@ export default {
       code: `<ScreenPreview src="#/app/chat" title="Chat app at desktop width, scaled to fit" width="desktop" />`,
       render: () => <ScreenPreview src="#/app/chat" title="Chat app at desktop width, scaled to fit" width="desktop" caption="Laid out at 1280 px with its sidebar beside the conversation, drawn at the column's width." />,
     },
+          {
+            title: 'A shimmer while it loads',
+            description: 'With showLoading a shimmer fills the window until the screen has loaded, so a slow screen never shows a blank white window. Here it loads at once.',
+            code: `<ScreenPreview src="#/app/chat" title="Chat app, loading" width="phone" showLoading />`,
+            render: () => <ScreenPreview src="#/app/chat" title="Chat app, with a shimmer while it loads" width="phone" showLoading />,
+          },
   ],
 } satisfies StoryFile;

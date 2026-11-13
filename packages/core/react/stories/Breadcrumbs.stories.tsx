@@ -64,5 +64,15 @@ export default {
         </div>
       ),
     },
+    {
+      title: 'On one line, the current page giving way',
+      description: 'LR122 truncate: in a narrow header the path stays on one line; the pages above keep their names and the current page ends in an ellipsis, its full name in a tooltip and the accessible name.',
+      code: `<Breadcrumbs truncate items={[{ label: 'Site', href: '/' }, { label: 'Talks', href: '/talks' }, { label: 'Designing for the long tail of accessibility needs' }]} />`,
+      render: () => (
+        <div style={{ maxInlineSize: '20rem' }}>
+          <Breadcrumbs truncate items={[{ label: 'Site', href: '#/breadcrumbs' }, { label: 'Talks', href: '#/breadcrumbs' }, { label: 'Designing for the long tail of accessibility needs' }]} />
+        </div>
+      ),
+    },
   ],
 } satisfies StoryFile;

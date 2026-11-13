@@ -217,5 +217,37 @@ export default {
       code: `<ImageGrid label="…" items={[{ …photo, progress: 40 }, { …photo, progress: 'indeterminate' }]} />`,
       render: () => <ImageGrid label="Pictures being added" items={[{ ...photos[0], progress: 40 }, { ...photos[1], progress: 'indeterminate' }, photos[2]]} />,
     },
+    {
+      title: 'The whole picture',
+      description: 'An item with fit="contain" keeps its whole picture inside the frame instead of cropping it, for a logo or a poster that mustn’t lose its edges.',
+      code: `<ImageGrid label="…" items={[{ …photo, fit: 'contain' }, photo, photo]} />`,
+      render: () => <ImageGrid label="Pictures, one kept whole" items={[{ ...photos[1], fit: 'contain' }, photos[0], photos[2]]} />,
+    },
+    {
+      title: 'Pictures that go somewhere',
+      description: 'An item’s href makes its whole tile a native link, to an album or a talk, instead of opening the picture.',
+      code: `<ImageGrid label="…" items={[{ …photo, href: '/albums/hills' }, …]} />`,
+      render: () => <ImageGrid label="Albums" items={photos.slice(0, 3).map((p) => ({ ...p, href: '#/imagegrid' }))} />,
+    },
+    {
+      title: 'A fallback picture',
+      description: 'When a picture fails to load, its fallbackSrc is tried once instead. The first address here is broken.',
+      code: `<ImageGrid label="…" items={[{ …photo, src: '/missing.webp', fallbackSrc: photo.src }, …]} />`,
+      render: () => <ImageGrid label="Pictures with a fallback" items={[{ ...photos[0], src: '/missing-picture.webp', fallbackSrc: photos[0].src }, photos[2], photos[3]]} />,
+    },
+    {
+      title: 'A mark for where a video lives',
+      description: 'A badge with an icon is a small round mark with no words on the picture; its label is its spoken name, read with the tile.',
+      code: `<ImageGrid label="…" items={[{ …video, badges: [{ label: 'YouTube', icon: 'youtube' }] }, { …video, badges: [{ label: 'Vimeo', icon: 'vimeo' }] }]} />`,
+      render: () => (
+        <ImageGrid
+          label="Talk recordings"
+          items={[
+            { ...photos[0], kind: 'video' as const, duration: 1820, badges: [{ label: 'YouTube', icon: 'youtube' as const }] },
+            { ...photos[2], kind: 'video' as const, duration: 2410, badges: [{ label: 'Vimeo', icon: 'vimeo' as const }] },
+          ]}
+        />
+      ),
+    },
   ],
 } satisfies StoryFile;

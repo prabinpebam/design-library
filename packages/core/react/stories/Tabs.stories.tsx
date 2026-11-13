@@ -3,6 +3,7 @@ import { Tabs } from '../compounds/Tabs';
 import { Button } from '../fundamentals/Button';
 import { Stack } from '../fundamentals/Stack';
 import { Text } from '../fundamentals/Text';
+import { EditorLayout } from '../layouts/EditorLayout';
 import type { StoryFile } from './story';
 
 const panel = (words: string) => <Text>{words}</Text>;
@@ -140,6 +141,16 @@ export default {
         <div dir="rtl">
           <Tabs label="Project, right to left" items={project} />
         </div>
+      ),
+    },
+    {
+      title: 'Filling an inspector',
+      description: 'With fill, the panel takes the rest of the tabs’ height, as in an inspector that fills its editor panel (EditorLayout endFill).',
+      code: `<EditorLayout endFill end={<Tabs fill size="s" label="Inspector" items={…} />} …>…</EditorLayout>`,
+      render: () => (
+        <EditorLayout height="lg" endFill start={null} startOpen={false} onStartToggle={() => {}} endOpen onEndToggle={() => {}} end={<Tabs fill size="s" label="Inspector, filling its panel" items={project.slice(0, 2)} />}>
+          <Text>The page</Text>
+        </EditorLayout>
       ),
     },
   ],

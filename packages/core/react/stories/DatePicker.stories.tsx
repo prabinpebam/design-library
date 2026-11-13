@@ -43,5 +43,11 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Stored order',
+      description: 'format="iso" shows and asks for the day as it’s stored, yyyy-mm-dd, whatever the locale, beside other data kept in that form.',
+      code: `<DatePicker label="Published on" format="iso" value={day} onChange={setDay} />`,
+      render: () => <Pick label="Published on" format="iso" initial="2026-11-18" />,
+    },
   ],
 } satisfies StoryFile;

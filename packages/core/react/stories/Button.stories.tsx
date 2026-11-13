@@ -428,5 +428,32 @@ export default {
         </>
       ),
     },
+    {
+      title: 'Lined up with the text above',
+      description: 'textEdge lets a quiet text-only button bleed its padded box at the start edge, so its words line up with the text above it. Its padding and target size stay.',
+      code: `<Stack gap="pair">
+  <Text>No speakers added yet.</Text>
+  <Button emphasis="quiet" textEdge label="Add a speaker" />
+</Stack>`,
+      render: () => (
+        <Stack gap="pair">
+          <Text>No speakers added yet.</Text>
+          <Button emphasis="quiet" textEdge label="Add a speaker" />
+        </Stack>
+      ),
+    },
+    {
+      title: 'A short label with a fuller name',
+      description: 'For an action repeated down a list: nameSuffix adds words only assistive technology hears, so each “Edit” is announced with what it edits.',
+      arrangement: 'row',
+      code: `<Button label="Edit" nameSuffix=" Speakers page" />
+<Button label="Edit" nameSuffix=" Talks page" />`,
+      render: () => (
+        <>
+          <Button label="Edit" nameSuffix=" Speakers page" />
+          <Button label="Edit" nameSuffix=" Talks page" />
+        </>
+      ),
+    },
   ],
 } satisfies StoryFile;

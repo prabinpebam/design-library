@@ -108,6 +108,26 @@ function Dense() {
   );
 }
 
+function CompactHeader() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ maxInlineSize: '40rem' }}>
+      <AppLayout
+        height="lg"
+        label="Speakers"
+        compactHeader
+        sidebarOpen={open}
+        onSidebarToggle={() => setOpen((x) => !x)}
+        sidebar={<Navigation groups={[{ id: 'site', title: 'Site', items: [{ id: 'pages', label: 'Pages', href: '#pages' }, { id: 'speakers', label: 'Speakers', href: '#speakers' }] }]} current="speakers" />}
+        header={<Breadcrumbs truncate items={[{ label: 'Site', href: '#pages' }, { label: 'Pages', href: '#pages' }, { label: 'Speakers and their talks, 2026 edition' }]} />}
+        headerEnd={(compact) => <Button label={compact ? 'Publish' : 'Publish changes'} emphasis="primary" size="s" />}
+      >
+        <Text>The header stays one line: the path gives way first.</Text>
+      </AppLayout>
+    </div>
+  );
+}
+
 export default {
   component: 'AppLayout',
   tier: 'layout',
@@ -161,6 +181,12 @@ export default {
       description: 'LR75: `--c-app-layout-end` (a theme setting, the margin by default) sets the room under the view’s last part inside its scroller, so an editing app’s last field isn’t at the window’s edge.',
       code: `applySettings({ '--c-app-layout-end': 'var(--space-16)' });`,
       render: () => <RoomUnder />,
+    },
+    {
+      title: 'A compact header in a narrow window',
+      description: 'LR122 compactHeader: the header’s end keeps its one-line width and the start gives way (pair it with Breadcrumbs truncate). A headerEnd function hears when the layout is narrower than floatBelow, so supplementary words yield while the controls stay.',
+      code: `<AppLayout compactHeader header={<Breadcrumbs truncate items={path} />} headerEnd={(compact) => <Button label={compact ? 'Publish' : 'Publish changes'} emphasis="primary" size="s" />} …>`,
+      render: () => <CompactHeader />,
     },
   ],
 } satisfies StoryFile;

@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { ImageGrid } from '../compounds/ImageGrid';
 import { Lightbox } from '../compounds/Lightbox';
 import { Button } from '../fundamentals/Button';
+import { MediaPlayer } from '../compounds/MediaPlayer';
+import driftWebm from './media/drift.webm?url';
+import driftMp4 from './media/drift.mp4?url';
+import driftPoster from './media/drift-poster.jpg?url';
 import { scenes } from './scenes';
 import type { StoryFile } from './story';
 
@@ -37,6 +41,25 @@ function RightToLeft() {
   );
 }
 
+const withFilm = [{ id: 'film', src: driftPoster, alt: 'Colour drift', caption: 'Twelve seconds of colour, as a video.', width: 640, height: 360 }, ...photos.slice(0, 2)];
+
+function WithVideo() {
+  const [at, setAt] = useState<number | null>(null);
+  return (
+    <>
+      <Button label="View the video and photos" icon="image" onClick={() => setAt(0)} />
+      <Lightbox
+        label="Video and photos"
+        items={withFilm}
+        index={at}
+        onIndexChange={setAt}
+        onClose={() => setAt(null)}
+        renderItem={(item) => item.id === 'film' ? <MediaPlayer source={{ from: 'file', files: [{ src: driftWebm, type: 'video/webm' }, { src: driftMp4, type: 'video/mp4' }] }} title={item.alt} poster={item.src} /> : null}
+      />
+    </>
+  );
+}
+
 export default {
   component: 'Lightbox',
   tier: 'compound',
@@ -62,6 +85,12 @@ export default {
       description: 'Next sits on the left and points left; the arrow keys follow.',
       code: `<div dir="rtl"><Lightbox … /></div>`,
       render: () => <RightToLeft />,
+    },
+    {
+      title: 'A video among the pictures',
+      description: 'LR114 renderItem: the stage draws your content for an item (here a video’s player) and the picture for the rest; return nothing to keep the picture. The count, arrows, keys and caption stay the lightbox’s.',
+      code: `<Lightbox … renderItem={(item) => item.id === 'film' ? <MediaPlayer source={…} title={item.alt} poster={item.src} /> : null} />`,
+      render: () => <WithVideo />,
     },
   ],
 } satisfies StoryFile;
