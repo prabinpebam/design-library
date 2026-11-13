@@ -32,6 +32,8 @@ export { CheckboxGroup } from './fundamentals/CheckboxGroup';
 export type { CheckboxGroupProps } from './fundamentals/CheckboxGroup';
 export { SegmentedControl } from './fundamentals/SegmentedControl';
 export { AlignmentPicker } from './fundamentals/AlignmentPicker';
+export { FocalPoint } from './fundamentals/FocalPoint';
+export type { FocalPointProps, FocalPointValue } from './fundamentals/FocalPoint';
 export type { AlignmentPickerProps, Alignment, AlignmentPoint } from './fundamentals/AlignmentPicker';
 export type { SegmentedControlProps, SegmentedControlOption } from './fundamentals/SegmentedControl';
 export { ColourField } from './compounds/ColourField';

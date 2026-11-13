@@ -1,0 +1,47 @@
+@layer fundamentals {
+  [data-dl='focal-point'] {
+    display: grid;
+    justify-items: start;
+    gap: var(--c-focal-point-gap);
+    min-inline-size: 0;
+  }
+  [data-dl='focal-point'] > [data-dl-part='picture'] {
+    position: relative;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    touch-action: none;
+    cursor: crosshair;
+  }
+  [data-dl='focal-point'] > [data-dl-part='picture'] > img {
+    display: block;
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+    max-block-size: var(--c-focal-point-preview);
+  }
+  [data-dl='focal-point'] > [data-dl-part='picture']:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
+  [data-dl='focal-point'] > [data-dl-part='picture'][aria-disabled='true'] { cursor: default; }
+  [data-dl='focal-point'] > [data-dl-part='picture'] > [data-dl-part='point'] {
+    position: absolute;
+    /* Picture coordinates are physical, independent of the reading direction. */
+    left: var(--dl-focal-x);
+    top: var(--dl-focal-y);
+    transform: translate(-50%, -50%);
+    inline-size: var(--c-focal-point-dot);
+    block-size: var(--c-focal-point-dot);
+    border: var(--c-focal-point-ring) solid var(--c-focal-point-edge);
+    border-radius: var(--radius-full);
+    background: var(--c-focal-point-fill);
+    pointer-events: none;
+  }
+  @media (forced-colors: active) {
+    [data-dl='focal-point'] > [data-dl-part='picture'] > [data-dl-part='point'] {
+      background: Highlight;
+      border-color: CanvasText;
+      forced-color-adjust: none;
+    }
+  }
+}

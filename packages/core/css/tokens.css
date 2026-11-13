@@ -507,6 +507,12 @@
   --c-alignment-picker-bar-gap: var(--border-thick);
   --c-alignment-picker-hover-fill: var(--state-hover);
   --c-alignment-picker-pressed-fill: var(--state-pressed);
+  --c-focal-point-preview: var(--size-scroll-lg);
+  --c-focal-point-gap: var(--space-stack-item);
+  --c-focal-point-dot: var(--size-target-min);
+  --c-focal-point-ring: var(--border-thick);
+  --c-focal-point-edge: var(--color-text);
+  --c-focal-point-fill: var(--color-bg);
   --c-sectioned-form-list: 13rem;
   --c-sectioned-form-list-inset: var(--space-inline-group);
   --c-sectioned-form-gap: var(--space-stack-group);
@@ -1747,6 +1753,7 @@
   --c-floating-bar-gap: var(--space-inline-pair);
   --c-floating-bar-offset: var(--space-inset-md);
   --c-floating-bar-padding: var(--space-inset-xs);
+  --c-focal-point-gap: var(--space-stack-item);
   --c-footer-column-gap: var(--space-gutter);
   --c-footer-gap: var(--space-stack-section);
   --c-footer-heading-gap: var(--space-stack-item);
@@ -2052,6 +2059,7 @@
   --c-floating-bar-gap: var(--space-inline-pair);
   --c-floating-bar-offset: var(--space-inset-md);
   --c-floating-bar-padding: var(--space-inset-xs);
+  --c-focal-point-gap: var(--space-stack-item);
   --c-footer-column-gap: var(--space-gutter);
   --c-footer-gap: var(--space-stack-section);
   --c-footer-heading-gap: var(--space-stack-item);
@@ -2357,6 +2365,7 @@
   --c-floating-bar-gap: var(--space-inline-pair);
   --c-floating-bar-offset: var(--space-inset-md);
   --c-floating-bar-padding: var(--space-inset-xs);
+  --c-focal-point-gap: var(--space-stack-item);
   --c-footer-column-gap: var(--space-gutter);
   --c-footer-gap: var(--space-stack-section);
   --c-footer-heading-gap: var(--space-stack-item);
@@ -2662,6 +2671,7 @@
   --c-floating-bar-gap: var(--space-inline-pair);
   --c-floating-bar-offset: var(--space-inset-md);
   --c-floating-bar-padding: var(--space-inset-xs);
+  --c-focal-point-gap: var(--space-stack-item);
   --c-footer-column-gap: var(--space-gutter);
   --c-footer-gap: var(--space-stack-section);
   --c-footer-heading-gap: var(--space-stack-item);
