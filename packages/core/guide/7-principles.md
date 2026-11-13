@@ -17,7 +17,7 @@ Goal: every decision you make with this library follows the frameworks behind it
 | A token in `material.*` | [Materials](#materials) |
 | A token in `duration.*`, `easing.*`, `motion.*`, `count.*` | [Motion](#motion) |
 | A component in the `arrangement` family (Cluster, Grid, ScrollArea, Stack) | [Spacing](#spacing) |
-| A component in the `buttons` family (Button, ButtonGroup, MenuButton, VisibilityToggle) | [States](#ui-states) |
+| A component in the `buttons` family (Button, ButtonGroup, MenuButton, TileButton, VisibilityToggle) | [States](#ui-states) |
 | A component in the `chat` family (ChatMessage, ChatThinking, Composer, ConversationList, ImageGeneration, MessageActions) | [Words](#ui-copy) |
 | A component in the `content` family (Carousel, CodeBlock, DescriptionList, ImageGrid, IndexList, Lightbox, MediaPlayer, Quote, Section) | [Visual noise](#visual-noise) |
 | A component in the `data` family (Accordion, Agenda, Board, Card, DataTable, RowList, StackedBar, Statistic) | [Showing information](#visual-representation) |
