@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
 import { durationOf } from '../behaviour/flip';
 import { travelPicture } from '../behaviour/shared';
 import { Button } from '../fundamentals/Button';
@@ -30,6 +30,13 @@ export interface LightboxProps extends DataAttributes {
   onClose: () => void;
   /** What the set is, as the lightbox's name: "Photos from the trip". */
   label: string;
+  /**
+   * LR114 (opt-in): content for the shown item instead of its picture, such as a video's player. Called only for the
+   * current item; return null or undefined to keep the default picture. It sits in the stage's picture part, keyed by the
+   * item's id, so it unmounts when another item is shown and when the lightbox closes. Previous, Next, the keys, swipes,
+   * the counter and the caption are unchanged; rendered content fades in and out rather than travelling from its thumbnail.
+   */
+  renderItem?: (item: LightboxItem, index: number) => ReactNode;
 }
 
 /**
@@ -48,7 +55,7 @@ export interface LightboxProps extends DataAttributes {
  * @key Left arrow, Right arrow: the previous or next picture (mirrored right to left)
  * @key Home, End: the first or last picture
  */
-export function Lightbox({ items, index, onIndexChange, onClose, label, ...data }: LightboxProps) {
+export function Lightbox({ items, index, onIndexChange, onClose, label, renderItem, ...data }: LightboxProps) {
   const id = useId();
   const ref = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -189,9 +196,13 @@ export function Lightbox({ items, index, onIndexChange, onClose, label, ...data 
             <span data-dl-part="side" data-end="start">
               {at > 0 && <Button label="Previous picture" icon="chevron-start" iconOnly size="l" onClick={() => go(at - 1)} />}
             </span>
-            <div data-dl-part="picture" key={item.id}>
-              <Image src={item.src} alt={item.alt} width={item.width} height={item.height} ratio="natural" fit="contain" rounded={false} loading="eager" />
-            </div>
+            {(() => {
+              // LR114: the consumer's content for this item, else the picture.
+              const custom = open ? renderItem?.(item, at) : undefined;
+              return <div data-dl-part="picture" key={item.id} data-rendered={custom != null ? '' : undefined}>
+                {custom ?? <Image src={item.src} alt={item.alt} width={item.width} height={item.height} ratio="natural" fit="contain" rounded={false} loading="eager" />}
+              </div>;
+            })()}
             <span data-dl-part="side" data-end="end">
               {at < items.length - 1 && <Button label="Next picture" icon="chevron-end" iconOnly size="l" onClick={() => go(at + 1)} />}
             </span>
