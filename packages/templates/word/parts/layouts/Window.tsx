@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, notify, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, WindowControls, type DataAttributes, type RibbonGroup } from '@design-library/core/components';
+import { Avatar, Button, Checkbox, DataTable, defineIconPack, Heading, Icon, IconOverrides, MenuButton, notify, NumberField, Pane, Popover, Ribbon, ScrollArea, Select, Slider, Switch, Tabs, Text, TextField, useRichText, WindowControls, type DataAttributes, type RibbonGroup, type RichTextCommand, type RichTextToggle } from '@design-library/core/components';
 import { loadFace } from '@design-library/core/fonts';
 import wordPack from '../../icons/pack.json';
 import type { WordAction, WordBackstageTemplate, WordBlock, WordCommand, WordGroup, WordRecord, WordStyleSet } from '../../types';
@@ -18,12 +18,12 @@ export interface WindowProps extends DataAttributes {
 
 const tags = { title: 'h1', 'heading-1': 'h2', 'heading-2': 'h3', body: 'p', quote: 'blockquote' } as const;
 const V_CMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
-/** The document commands whose state the selection reports, by the browser's editing command name. */
-const queried: Partial<Record<WordAction, string>> = {
-  bold: 'bold', italic: 'italic', underline: 'underline', strikethrough: 'strikeThrough', subscript: 'subscript', superscript: 'superscript',
-  'align-left': 'justifyLeft', center: 'justifyCenter', 'align-right': 'justifyRight', justify: 'justifyFull', bullets: 'insertUnorderedList', numbering: 'insertOrderedList',
+/** The document commands whose state the selection reports, by core's rich-text toggle. */
+const toggles: Partial<Record<WordAction, RichTextToggle>> = {
+  bold: 'bold', italic: 'italic', underline: 'underline', strikethrough: 'strikethrough', subscript: 'subscript', superscript: 'superscript',
+  'align-left': 'align-left', center: 'align-center', 'align-right': 'align-right', justify: 'justify', bullets: 'bullets', numbering: 'numbering',
 };
-const executed: Partial<Record<WordAction, string>> = { ...queried, clear: 'removeFormat', outdent: 'outdent', indent: 'indent', cut: 'cut', copy: 'copy', 'select-all': 'selectAll' };
+const commands: Partial<Record<WordAction, RichTextCommand>> = { ...toggles, clear: 'clear', outdent: 'outdent', indent: 'indent', cut: 'cut', copy: 'copy', 'select-all': 'select-all' };
 const BODY_PT = 11;
 const SIZES = ['8', '9', '10', '10.5', '11', '12', '14', '16', '18', '20', '22', '24', '26', '28', '36', '48', '72'];
 
@@ -77,7 +77,6 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [currentHeading, setCurrentHeading] = useState(0);
   const [ribbonCollapsed, setRibbonCollapsed] = useState(false);
   const [navTab, setNavTab] = useState('headings');
-  const [doc, setDoc] = useState<DocState>({ on: { 'align-left': true }, selected: false });
   const [docEmpty, setDocEmpty] = useState(true);
   const [docFocused, setDocFocused] = useState(false);
   const [edited, setEdited] = useState(false);
@@ -88,7 +87,28 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   const [page, setPage] = useState<{ margins?: string; orientation?: string; columns?: string }>({});
   const wordCount = () => editorRef.current?.innerText.split(/\s+/).filter(Boolean).length ?? 0;
   const editorRef = useRef<HTMLDivElement | null>(null);
-  const rangeRef = useRef<Range | null>(null);
+  /* The page is core's rich-text surface: the ribbon's document commands run on its selection, and the selection's own
+     formatting sets each command's pressed state and the font fields. */
+  const noteEdit = () => {
+    const ed = editorRef.current;
+    if (ed) setDocEmpty(isEmpty(ed));
+    setEdited(true);
+    setDocVersion((v) => v + 1);
+  };
+  const rich = useRichText(editorRef, { initial: { 'align-left': true }, onChange: noteEdit });
+  const changed = () => {
+    noteEdit();
+    rich.read();
+  };
+  const doc: DocState = (() => {
+    const s = rich.state;
+    const on: DocState['on'] = {};
+    for (const [a, t] of Object.entries(toggles)) if (t! in s.active) on[a as WordAction] = s.active[t!];
+    on.multilevel = s.listDepth > 1;
+    if (on.multilevel) on.numbering = on.bullets = false;
+    // Sizes read in points against the page's body, which Word calls 11 pt.
+    return { on, selected: s.selected, size: s.sizeRatio ? String(Math.round(s.sizeRatio * BODY_PT * 2) / 2) : undefined, font: s.font };
+  })();
   const docHtml = useRef<string | null>(null);
   const screenRef = useRef(screen);
   screenRef.current = screen;
@@ -99,8 +119,6 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   };
   useEffect(() => { void loadFace('noto-sans'); }, []);
 
-  /* The page is an editing surface: the ribbon's document commands run on its selection, and the selection's own
-     formatting sets each command's pressed state and the font fields. */
   const isEmpty = (ed: HTMLElement) => !ed.textContent?.trim() && !ed.querySelector('li');
   const fillDoc = (ed: HTMLElement) => {
     const sample = screenRef.current === 'navigation' || screenRef.current === 'comments';
@@ -111,7 +129,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
       else n.append(document.createElement('br'));
       return n;
     }));
-    rangeRef.current = null;
+    rich.reset();
     setDocEmpty(!sample);
     setEdited(false);
   };
@@ -132,97 +150,30 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     if (editorRef.current) fillDoc(editorRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen]);
-  const readDoc = useCallback(() => {
-    const ed = editorRef.current;
-    const sel = getSelection();
-    if (!ed || !sel?.rangeCount || !ed.contains(sel.anchorNode)) return;
-    rangeRef.current = sel.getRangeAt(0).cloneRange();
-    const at = sel.anchorNode instanceof Element ? sel.anchorNode : sel.anchorNode?.parentElement;
-    const on: DocState['on'] = {};
-    for (const [action, name] of Object.entries(queried)) on[action as WordAction] = document.queryCommandState(name);
-    on.multilevel = !!at?.closest('li li');
-    if (on.multilevel) on.numbering = on.bullets = false;
-    const style = at ? getComputedStyle(at) : undefined;
-    // Sizes read in points against the page's body, which Word calls 11 pt.
-    const pt = style ? Math.round((parseFloat(style.fontSize) / parseFloat(getComputedStyle(ed).fontSize)) * BODY_PT * 2) / 2 : undefined;
-    const family = style?.fontFamily.split(',')[0].replace(/["']/g, '').trim();
-    setDoc({ on, selected: !sel.isCollapsed, size: pt ? String(pt) : undefined, font: family });
-  }, []);
-  useEffect(() => {
-    document.addEventListener('selectionchange', readDoc);
-    return () => document.removeEventListener('selectionchange', readDoc);
-  }, [readDoc]);
-  /** Puts focus and the last selection back in the page, so a ribbon command acts where the person was. */
-  const toDoc = () => {
-    const ed = editorRef.current;
-    const sel = getSelection();
-    if (!ed || !sel) return false;
-    ed.focus({ preventScroll: true });
-    sel.removeAllRanges();
-    if (rangeRef.current && ed.contains(rangeRef.current.startContainer)) sel.addRange(rangeRef.current);
-    else {
-      const r = document.createRange();
-      r.selectNodeContents(ed.lastElementChild ?? ed);
-      r.collapse(false);
-      sel.addRange(r);
-    }
-    return true;
-  };
-  const changed = () => {
-    const ed = editorRef.current;
-    if (ed) setDocEmpty(isEmpty(ed));
-    setEdited(true);
-    setDocVersion((v) => v + 1);
-    readDoc();
-  };
-  const exec = (name: string, value?: string) => {
-    if (!toDoc()) return;
-    document.execCommand('styleWithCSS', false, 'false');
-    document.execCommand(name, false, value);
-    changed();
-  };
-  /** Sets the selection's size in points: the browser's own sizes are 1–7, so size 7 marks the run, then gets its points. */
-  const setSize = (pt: string) => {
-    const ed = editorRef.current;
-    if (!ed) return;
-    exec('fontSize', '7');
-    ed.querySelectorAll('font[size="7"]').forEach((f) => {
-      f.removeAttribute('size');
-      (f as HTMLElement).style.fontSize = `calc(var(--text-l) * ${parseFloat(pt) / BODY_PT})`;
-    });
-    changed();
-  };
+  const exec = (command: RichTextCommand, value?: string) => void rich.run(command, value);
+  /** Sets the selection's size in points, against the page's body (11 pt, `--text-l`). */
+  const setSize = (pt: string) => exec('size', `calc(var(--text-l) * ${parseFloat(pt) / BODY_PT})`);
   const stepSize = (by: 1 | -1) => {
     const now = parseFloat(doc.size ?? '11');
     const next = by > 0 ? SIZES.find((s) => parseFloat(s) > now) : [...SIZES].reverse().find((s) => parseFloat(s) < now);
     if (next) setSize(next);
   };
   const accent = (n: number) => (rootRef.current ? getComputedStyle(rootRef.current).getPropertyValue(`--c-icon-accent-${n}`).trim() : '') || undefined;
-  /** The blocks the selection touches (paragraphs, headings, list items). */
-  const selectedBlocks = () => {
-    const ed = editorRef.current;
-    const r = rangeRef.current;
-    if (!ed || !r) return [];
-    return [...ed.querySelectorAll<HTMLElement>(':scope > :is(p, h1, h2, h3, blockquote), li')].filter((b) => r.intersectsNode(b));
-  };
   const setCase = (mode: string) => {
-    if (!toDoc()) return;
+    if (!rich.focus()) return;
     const words = getSelection()?.toString() ?? '';
     if (!words) return;
     const lower = words.toLowerCase();
     const next = mode === 'upper' ? words.toUpperCase() : mode === 'lower' ? lower : mode === 'title' ? lower.replace(/(^|\s)\S/g, (m) => m.toUpperCase()) : lower.replace(/(^\s*|[.!?]\s+)\S/g, (m) => m.toUpperCase());
-    document.execCommand('insertText', false, next);
-    changed();
+    exec('insert-text', next);
   };
   const paste = () => {
-    if (!toDoc()) return;
-    const kept = rangeRef.current?.cloneRange();
+    if (!rich.focus()) return;
+    const kept = rich.selection()?.cloneRange();
     navigator.clipboard?.readText().then(
       (words) => {
-        toDoc();
-        if (kept) { const sel = getSelection(); sel?.removeAllRanges(); sel?.addRange(kept); }
-        document.execCommand('insertText', false, words);
-        changed();
+        if (kept) rich.select(kept);
+        exec('insert-text', words);
       },
       () => notify({ subject: 'word-paste', message: c.pasteBlocked }),
     ) ?? notify({ subject: 'word-paste', message: c.pasteBlocked });
@@ -234,20 +185,16 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
   };
   const runAction = (action: string) => {
     const [kind, arg] = action.split(':');
-    if (kind === 'style') return exec('formatBlock', tags[arg as WordBlock['style']] ?? 'p');
+    if (kind === 'style') return exec('block', tags[arg as WordBlock['style']] ?? 'p');
     if (kind === 'case') return setCase(arg);
-    if (kind === 'spacing') {
-      if (!toDoc()) return;
-      selectedBlocks().forEach((b) => { b.style.lineHeight = arg; });
-      return changed();
-    }
+    if (kind === 'spacing') return exec('line-height', arg);
     const a = kind as WordAction;
-    if (kind === 'symbol' && arg) return exec('insertText', arg);
+    if (kind === 'symbol' && arg) return exec('insert-text', arg);
     if (kind === 'margins' || kind === 'orientation' || kind === 'columns') return setPage((pg) => ({ ...pg, [kind]: arg }));
-    if (a === 'page-break') return exec('insertHTML', '<hr data-break=""><p><br></p>');
-    if (a === 'table') return exec('insertHTML', `<table><tbody>${'<tr>'.concat('<td><br></td>'.repeat(3), '</tr>').repeat(3)}</tbody></table><p><br></p>`);
-    if (a === 'date') return exec('insertText', new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }));
-    if (a === 'symbol') return exec('insertText', 'Ω');
+    if (a === 'page-break') return exec('insert-html', '<hr data-break=""><p><br></p>');
+    if (a === 'table') return exec('insert-html', `<table><tbody>${'<tr>'.concat('<td><br></td>'.repeat(3), '</tr>').repeat(3)}</tbody></table><p><br></p>`);
+    if (a === 'date') return exec('insert-text', new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }));
+    if (a === 'symbol') return exec('insert-text', 'Ω');
     if (a === 'comment') return setPane('comments');
     if (a === 'word-count') return notify({ subject: 'word-count', message: say(c.wordCountDone, { count: String(wordCount()) }) });
     if (a === 'read-aloud') {
@@ -267,29 +214,29 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     if (a === 'paste') return paste();
     if (a === 'find') return find();
     if (a === 'grow' || a === 'shrink') return stepSize(a === 'grow' ? 1 : -1);
-    if (a === 'highlight') return exec('hiliteColor', accent(1));
-    if (a === 'font-colour') return exec('foreColor', accent(2));
+    if (a === 'highlight') return exec('highlight', accent(1));
+    if (a === 'font-colour') return exec('colour', accent(2));
     if (a === 'marks') return setMarks((m) => !m);
     if (a === 'format-painter') return setPainter((p) => (p ? undefined : { ...doc.on }));
     if (a === 'multilevel') {
-      if (!doc.on.numbering && !doc.on.bullets && !doc.on.multilevel) exec('insertOrderedList');
+      if (!doc.on.numbering && !doc.on.bullets && !doc.on.multilevel) exec('numbering');
       return exec(doc.on.multilevel ? 'outdent' : 'indent');
     }
     if (a === 'cut' || a === 'copy') {
       exec(a);
       return notify({ subject: 'word-clipboard', tone: 'success', message: a === 'cut' ? c.cutDone : c.copyDone });
     }
-    const name = executed[a];
-    if (name) return exec(name);
+    const command = commands[a];
+    if (command) return exec(command);
     notBuilt(action);
   };
   /** Format Painter: the next selection takes the formatting the painter picked up. */
   const paint = () => {
     const sel = getSelection();
     if (!painter || !sel || sel.isCollapsed) return;
-    readDoc();
+    const now = rich.read();
     for (const a of ['bold', 'italic', 'underline', 'strikethrough'] as const) {
-      if (!!painter[a] !== document.queryCommandState(queried[a]!)) document.execCommand(queried[a]!, false);
+      if (!!painter[a] !== !!now.active[a]) rich.run(a);
     }
     setPainter(undefined);
     changed();
@@ -325,8 +272,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     block.scrollIntoView({ block: 'center' });
     const r = document.createRange();
     r.selectNodeContents(block);
-    rangeRef.current = r;
-    toDoc();
+    rich.select(r);
   };
   useEffect(() => {
     setPane(paneFor(screen));
@@ -406,7 +352,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
         const list = opts.includes(now) ? opts : [...opts, now];
         return (
           <div key={key} data-dl="word-field" data-width={cmd.width}>
-            <Select label={cmd.label} hideLabel size="xs" value={now} options={list.map((o) => ({ value: o, label: o }))} onChange={(v) => (isSize ? setSize(v) : exec('fontName', v.split(' (')[0]))} />
+            <Select label={cmd.label} hideLabel size="xs" value={now} options={list.map((o) => ({ value: o, label: o }))} onChange={(v) => (isSize ? setSize(v) : exec('font', v.split(' (')[0]))} />
           </div>
         );
       }
@@ -447,7 +393,7 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
     const isStacked = cmd.kind === 'stacked';
     const shownLabel = isStacked && cmd.lines ? cmd.lines.join('\n') : cmd.label;
     const set = typeof cmd.toggle === 'string' ? cmd.toggle : undefined;
-    const fromDoc = cmd.run && (cmd.run in queried || cmd.run === 'multilevel');
+    const fromDoc = cmd.run && (cmd.run in toggles || cmd.run === 'multilevel');
     const pressed = fromDoc ? !!doc.on[cmd.run!]
       : cmd.run === 'marks' ? marks
       : cmd.run === 'format-painter' ? !!painter
@@ -1113,13 +1059,9 @@ export function Window({ view, screen = 'home', picture, ...data }: WindowProps)
                         data-dl="word-doc"
                         data-marks={marks ? '' : undefined}
                         data-painter={painter ? '' : undefined}
-                        contentEditable
-                        suppressContentEditableWarning
-                        role="textbox"
-                        aria-multiline="true"
+                        {...rich.surface}
                         aria-label={view.documentName}
                         spellCheck={false}
-                        onInput={changed}
                         onFocus={() => setDocFocused(true)}
                         onBlur={() => setDocFocused(false)}
                         onMouseUp={paint}

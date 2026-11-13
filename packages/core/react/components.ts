@@ -102,6 +102,8 @@ export type { NotificationInput, NotificationTone, NotificationAction } from './
 export { announce } from './behaviour/announce';
 export { useFilter, useDebouncedValue, matchText, filterDelay } from './behaviour/filter';
 export type { FilterOptions, Filtered } from './behaviour/filter';
+export { useRichText } from './behaviour/rich-text';
+export type { RichText, RichTextCommand, RichTextOptions, RichTextState, RichTextToggle } from './behaviour/rich-text';
 export { flip, boxOf, cancelFlip, durationOf, useSlidingIndicator } from './behaviour/flip';
 export type { FlipBox } from './behaviour/flip';
 export { usePresence, exitDuration } from './behaviour/presence';
