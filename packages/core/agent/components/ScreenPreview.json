@@ -32,9 +32,9 @@
         },
         {
           "name": "width",
-          "type": "'phone' | 'tablet' | 'desktop' | 'fill'",
+          "type": "'phone' | 'landscape' | 'tablet' | 'desktop' | 'fill'",
           "default": "'fill'",
-          "description": "The window's width: `phone` (375 px), `tablet` (768 px), `fill` (the column's width) or `desktop`: the screen laid out at least as wide as a desktop window (the theme's `c.screen-preview.desktop`, 1280 px) and drawn scaled down to fit the column, so a narrower frame still shows the desktop layout (a page builder's wide canvas). Wider than that, `desktop` is `fill`."
+          "description": "The window's width: `phone` (375 px), `landscape` (568 px, a phone held sideways; LR174), `tablet` (768 px), `fill` (the column's width) or `desktop`: the screen laid out at least as wide as a desktop window (the theme's `c.screen-preview.desktop`, 1280 px) and drawn scaled down to fit the column, so a narrower frame still shows the desktop layout (a page builder's wide canvas). Wider than that, `desktop` is `fill`."
         },
         {
           "name": "caption",
@@ -64,6 +64,7 @@
     "--c-screen-preview-desktop",
     "--c-screen-preview-gap",
     "--c-screen-preview-height",
+    "--c-screen-preview-landscape",
     "--c-screen-preview-phone",
     "--c-screen-preview-radius",
     "--c-screen-preview-tablet",

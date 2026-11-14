@@ -103,6 +103,8 @@ export const icons = {
   phone: { d: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3zM11 18h2' },
   // LR108: an editor's tools as icons (a tablet width beside desktop and phone; undo and redo a step).
   tablet: { d: 'M6.5 3h11A1.5 1.5 0 0 1 19 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 19.5v-15A1.5 1.5 0 0 1 6.5 3zM11 18h2' },
+  // LR174: a phone held sideways (an editor's Mobile landscape width).
+  'phone-landscape': { d: 'M3 8A1.5 1.5 0 0 1 4.5 6.5h15A1.5 1.5 0 0 1 21 8v8a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 16V8zM18 11v2' },
   undo: { d: 'M9 14.5L4.5 10 9 5.5M4.5 10h10a5 5 0 0 1 0 10H11', flipInRtl: true },
   redo: { d: 'M15 14.5l4.5-4.5L15 5.5M19.5 10h-10a5 5 0 0 0 0 10H13', flipInRtl: true },
   compress: { d: 'M12 3.5v6M9 6.5l3 3 3-3M12 20.5v-6M9 17.5l3-3 3 3M4.5 12h15' },

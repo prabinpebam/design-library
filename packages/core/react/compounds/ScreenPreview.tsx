@@ -20,12 +20,12 @@ export interface ScreenPreviewProps extends DataAttributes {
   /** Names the frame for assistive technology: "Corporate site in a phone-sized window". */
   title: string;
   /**
-   * The window's width: `phone` (375 px), `tablet` (768 px), `fill` (the column's width) or `desktop`: the screen laid
+   * The window's width: `phone` (375 px), `landscape` (568 px, a phone held sideways; LR174), `tablet` (768 px), `fill` (the column's width) or `desktop`: the screen laid
    * out at least as wide as a desktop window (the theme's `c.screen-preview.desktop`, 1280 px) and drawn scaled down to
    * fit the column, so a narrower frame still shows the desktop layout (a page builder's wide canvas). Wider than that,
    * `desktop` is `fill`.
    */
-  width?: 'phone' | 'tablet' | 'desktop' | 'fill';
+  width?: 'phone' | 'landscape' | 'tablet' | 'desktop' | 'fill';
   /** One short line under the frame: what to notice at this width. */
   caption?: string;
   /** The window's height: `default` (the theme's `c.screen-preview.height`, 40 rem) or `fill`, the height its parent gives it (an editor's working area), less the caption. */

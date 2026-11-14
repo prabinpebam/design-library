@@ -30,6 +30,12 @@
     max-inline-size: 100%;
   }
 
+  /* LR174: a phone held sideways (Mobile landscape). */
+  [data-dl='screen-preview'][data-width='landscape'] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
+    inline-size: var(--c-screen-preview-landscape);
+    max-inline-size: 100%;
+  }
+
   /* height="fill": the figure takes its parent's height and the frame the room the caption leaves. */
   [data-dl='screen-preview'][data-height='fill'] {
     flex: 1;
