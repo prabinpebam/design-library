@@ -12,6 +12,13 @@ export interface PopoverTrigger {
   iconOnly?: boolean;
   emphasis?: 'primary' | 'default' | 'quiet';
   size?: ButtonProps['size'];
+  /**
+   * Opt-in (LR171): the words' colour for where the value it opens comes from, as a design tool's inspector shows it:
+   * `accent` set here, `warning` inherited (Webflow's blue and orange). Leave out for an ordinary trigger.
+   */
+  tone?: 'accent' | 'warning';
+  /** Words after the label that only assistive technology hears (LR171, as Button's), e.g. "padding top" after "24px". */
+  nameSuffix?: string;
 }
 
 export interface PopoverProps extends DataAttributes {
@@ -147,7 +154,7 @@ export function Popover({ trigger, anchorTo, label, title, children, side = 'bot
         }
       }}
     >
-      {trigger && <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />}
+      {trigger && <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} nameSuffix={trigger.nameSuffix} data-trigger-tone={trigger.tone} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />}
       <div ref={surface} id={`${id}-surface`} role="dialog" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : trigger?.label ?? label} data-dl-part="surface" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" tabIndex={-1} hidden={!open}>
         {title && (
           <Heading level={3} size={4} id={`${id}-title`}>

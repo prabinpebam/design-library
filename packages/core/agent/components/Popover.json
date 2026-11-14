@@ -110,6 +110,16 @@
         {
           "name": "size",
           "type": "ButtonProps['size']"
+        },
+        {
+          "name": "tone",
+          "type": "'accent' | 'warning'",
+          "description": "Opt-in (LR171): the words' colour for where the value it opens comes from, as a design tool's inspector shows it: `accent` set here, `warning` inherited (Webflow's blue and orange). Leave out for an ordinary trigger."
+        },
+        {
+          "name": "nameSuffix",
+          "type": "string",
+          "description": "Words after the label that only assistive technology hears (LR171, as Button's), e.g. \"padding top\" after \"24px\"."
         }
       ]
     }
@@ -130,7 +140,9 @@
     "--c-popup-radius",
     "--c-popup-shadow",
     "--color-focus",
+    "--color-status-warning-fg",
     "--color-text",
+    "--color-text-accent",
     "--size-focus-offset",
     "--size-focus-width",
     "--space-margin-page"

@@ -40,4 +40,8 @@
   [data-dl='popover'] > [data-dl-part='surface']:not(:popover-open) {
     display: none;
   }
+
+  /* A trigger's tone (LR171, opt-in): the words in the colour of where its value comes from (set here, inherited). */
+  [data-dl='popover'] > [data-trigger-tone='accent'] { color: var(--color-text-accent); }
+  [data-dl='popover'] > [data-trigger-tone='warning'] { color: var(--color-status-warning-fg); }
 }

@@ -135,6 +135,8 @@ export const BOX_PROPERTIES = {
   overflow: { section: 'size', css: 'overflow', ok: oneOf(['visible', 'hidden', 'scroll', 'auto']) },
   aspectRatio: { section: 'size', css: 'aspect-ratio', ok: value => typeof value === 'string' && /^(?:auto|\d{1,4}(?:\s*\/\s*\d{1,4})?)$/.test(value) },
   boxSizing: { section: 'size', css: 'box-sizing', ok: oneOf(['border-box', 'content-box']) },
+  // Webflow's Size › Fit (LR172): how a picture or video set on this Box fills it.
+  objectFit: { section: 'size', css: 'object-fit', ok: oneOf(['fill', 'contain', 'cover', 'none', 'scale-down']), inner: true },
   // Position
   position: { section: 'position', css: 'position', ok: oneOf(['static', 'relative', 'absolute', 'fixed', 'sticky']) },
   top: { section: 'position', css: 'top', ok: lengthOf({ auto: true }) },
@@ -174,9 +176,9 @@ export function boxStyleProblems(styles, at = '/styles') {
   return issues;
 }
 
-/** One breakpoint's declarations for a Box. */
-function declarations(values) {
-  return Object.entries(values).filter(([prop]) => BOX_PROPERTIES[prop]).map(([prop, value]) => {
+/** One breakpoint's declarations for a Box (`inner`: those for its pictures and videos, as a Fit, LR172). */
+function declarations(values, inner = false) {
+  return Object.entries(values).filter(([prop]) => BOX_PROPERTIES[prop] && !!BOX_PROPERTIES[prop].inner === inner).map(([prop, value]) => {
     const spec = BOX_PROPERTIES[prop];
     return `${spec.css}:${spec.value ? spec.value(value) : typeof value === 'number' ? String(value) : lengthCss(value)}`;
   }).join(';');
@@ -195,6 +197,8 @@ export function boxCss(boxes, scope = '') {
       for (const [bp, values] of Object.entries(box.styles)) {
         const body = declarations(values);
         if (body) rules.get(bp).push(`${scope ? `${scope} ` : ''}[data-box="${box.id}"]{${body}}`);
+        const media = declarations(values, true);
+        if (media) rules.get(bp).push(`${scope ? `${scope} ` : ''}[data-box="${box.id}"] :is(img, video){${media}}`);
       }
     }
     (box?.children ?? []).forEach(visit);
