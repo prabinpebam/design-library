@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR145: the component-root selector as an export (14 November 2026)
+
+DesignUp P1.7 (LR14). DesignUp's comment picker finds "the readable thing under the pointer", including any library component, so it writes the library's own attribute selector in its code (a counted override). Core API: `COMPONENT_ROOT` from `@design-library/core/components` (`'[data-dl]'`), a selector to query with, never to style with. Additive: nothing else changes.
+
+| LR145 | 2026-11-14 | The component-root selector as an export | Tools that pick a component under the pointer must write the library's attribute themselves | 3 | `COMPONENT_ROOT` (components entry) | none | E68 | shipped | | none |
 ### LR144: a Popover beside an element already on the page (14 November 2026)
 
 DesignUp P1.7 (LR14, comment review). A comment pin on the page opens a bubble with controls; core Popover only opens beside its own Button, so DesignUp drew its own bubble with Popover's surface tokens copied. Core API: Popover `anchorTo` (a ref to an existing element; opt-in) and `label` (its name without a title); `trigger` is optional with `anchorTo`. With `anchorTo` no trigger is drawn, the owner opens and closes it (`open`, `onOpenChange`), a press on the element is the owner's (never "outside"), and Escape or closing from inside returns focus to the element's control. Without `anchorTo`, nothing changes. Checked on DesignUp's harness: beside the pin, a dialog named by `label`, focus inside on opening, the pin's press closes it with focus on the pin, Escape closes and refocuses the pin, a press elsewhere closes; today's trigger Popover unchanged.
