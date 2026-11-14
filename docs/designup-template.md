@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR147: a Popover beside its anchor that stays in the window, lines up with it and leaves focus (14 November 2026)
+
+DesignUp P1.7 (LR14). Adopting LR144 would change DesignUp's approved comment bubble: beside a pin near a narrow window's edge the Popover flipped to the other side even when neither side fitted (x = -143 at 375 px), it centred beside its anchor instead of lining up with the pin's top, its width wasn't a setting (352 px against 320) and opening always moved focus into it. Core API: placement beside an anchor falls back below (or above, with more room there) and stays in the window when neither side fits, and every placement that fits is unchanged; Popover `align` (`start` | `center`, opt-in; default start above or below, centred beside) and `initialFocus` (`first` default | `anchor` | `none`; with focus outside it, Escape still closes it); the setting `--c-popover-width`.
+
+| LR147 | 2026-11-14 | A Popover beside its anchor that stays in the window, lines up with it and leaves focus | Beside an anchor it flipped off the window when neither side fitted; centred only; width not a setting; focus always moved in | 6 | placement fallback below/above when neither side fits; Popover `align`, `initialFocus`; setting `--c-popover-width` | none | E70 | shipped | | none |
 ### LR146: a page with a docked side pane (14 November 2026, logged, not built)
 
 DesignUp P1.7 (LR14, the review pane). A review or revision pane docks at the window's end while the page stays usable beside it: the page makes room, its scrollbar sits at the pane's start edge, and the pane scrolls inside. Core has no such layout, so DesignUp shifts `body` with a margin, hides the root scrollbar and mirrors it with a ScrollArea strip over the page's last column (the checker's only errors: scrollbar styling outside ScrollArea). Proposed core API (opt-in): a document-level dock (for example a `SiteLayout` or `AppLayout` `dock` slot with `dockWidth`), drawing the page in its own scroll region so the bar sits where the page ends, with no root scrollbar styling. Not built: larger than a fast-loop change; waits for a decision.

@@ -7,7 +7,7 @@
   "summary": "An anchored surface beside its button that can hold controls: contextual help with a link (the toggletip), a short form or a set of filters, a confirmation by its button. It opens on a press, never on hover, and doesn't block the page. Not for a hint without controls (use Tooltip), for a choice from a list (use Select or MenuButton), or for anything that must be answered before going on (use Dialog).",
   "family": "floating",
   "a11y": [
-    "The trigger is a Button with `aria-expanded` and `aria-controls`. The popover is a non-modal `role=\"dialog\"` named by its title (or the trigger's label) in the top layer, placed by the shared anchor rule (flips and shifts to stay in the window). Opening moves focus to its first control, or to the surface itself when it has none, so its words are read. Escape closes it and returns focus to the trigger; a press outside or Tab past its last control closes it and leaves focus where it went. Opening fades in; with reduced motion it appears at once."
+    "The trigger is a Button with `aria-expanded` and `aria-controls`. The popover is a non-modal `role=\"dialog\"` named by its title (or the trigger's label) in the top layer, placed by the shared anchor rule (flips and shifts to stay in the window). Opening moves focus to its first control, or to the surface itself when it has none, so its words are read (`initialFocus` can keep it on the anchor or where it is). Escape closes it and returns focus to the trigger; a press outside or Tab past its last control closes it and leaves focus where it went. Opening fades in; with reduced motion it appears at once."
   ],
   "keys": [
     {
@@ -62,6 +62,17 @@
           "type": "AnchorSide",
           "default": "'bottom'",
           "description": "The side it prefers; it flips when there's no room there. Default `bottom`."
+        },
+        {
+          "name": "align",
+          "type": "'start' | 'center'",
+          "description": "Opt-in (LR147): how it lines up with its anchor. `start`: level with the anchor's start edge above or below it, and level with its top beside it. `center`: centred on it either way. Default: start above or below, centred beside."
+        },
+        {
+          "name": "initialFocus",
+          "type": "'first' | 'anchor' | 'none'",
+          "default": "'first'",
+          "description": "Opt-in (LR147): where focus goes as it opens. `first` (default): its first control, or the surface. `anchor`: the element it sits beside (with `anchorTo`), so a person reading a list of pins stays on the pin. `none`: focus stays where it is, for a preview shown on hover. With `anchor` or `none`, Escape still closes it; keep it right after its anchor in reading order so Tab moves into it."
         },
         {
           "name": "open",
@@ -123,6 +134,13 @@
     "--size-focus-offset",
     "--size-focus-width",
     "--space-margin-page"
+  ],
+  "settings": [
+    {
+      "var": "--c-popover-width",
+      "default": "22rem",
+      "description": "A Popover's width (default size.pane-width, 22rem); never wider than the window less its page margins (LR147)."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/popover",
   "principles": [

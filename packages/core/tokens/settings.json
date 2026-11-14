@@ -90,6 +90,9 @@
   "Grid": {
     "--c-grid-aside": "The start column's width when ratio is aside, a heading beside its content (default size.column-min, 16rem)."
   },
+  "Popover": {
+    "--c-popover-width": "A Popover's width (default size.pane-width, 22rem); never wider than the window less its page margins (LR147)."
+  },
   "Link": {
     "--link-decoration": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus. Also the skip link's line (LR7).",
     "--link-decoration-hover": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour. Also the hover line of a linked card's title, a page header's eyebrow, an agenda's titles and a board's names, and the skip link's line while it shows (LR7).",

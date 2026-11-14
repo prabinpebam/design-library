@@ -31,6 +31,18 @@ export interface PopoverProps extends DataAttributes {
   children: ReactNode;
   /** The side it prefers; it flips when there's no room there. Default `bottom`. */
   side?: AnchorSide;
+  /**
+   * Opt-in (LR147): how it lines up with its anchor. `start`: level with the anchor's start edge above or below it, and
+   * level with its top beside it. `center`: centred on it either way. Default: start above or below, centred beside.
+   */
+  align?: 'start' | 'center';
+  /**
+   * Opt-in (LR147): where focus goes as it opens. `first` (default): its first control, or the surface. `anchor`: the
+   * element it sits beside (with `anchorTo`), so a person reading a list of pins stays on the pin. `none`: focus stays
+   * where it is, for a preview shown on hover. With `anchor` or `none`, Escape still closes it; keep it right after its
+   * anchor in reading order so Tab moves into it.
+   */
+  initialFocus?: 'first' | 'anchor' | 'none';
   /** Controlled: shown while true. Leave out to let the trigger open and close it. */
   open?: boolean;
   /** Asked to open or close: the trigger, Escape, a press outside, or focus leaving. */
@@ -47,13 +59,13 @@ export interface PopoverProps extends DataAttributes {
  * @a11y The trigger is a Button with `aria-expanded` and `aria-controls`. The popover is a non-modal `role="dialog"`
  * named by its title (or the trigger's label) in the top layer, placed by the shared anchor rule (flips and shifts to
  * stay in the window). Opening moves focus to its first control, or to the surface itself when it has none, so its
- * words are read. Escape closes it and returns focus to the trigger; a press outside or Tab past its last control
+ * words are read (`initialFocus` can keep it on the anchor or where it is). Escape closes it and returns focus to the trigger; a press outside or Tab past its last control
  * closes it and leaves focus where it went. Opening fades in; with reduced motion it appears at once.
  * @key Enter or Space on the trigger: opens or closes it
  * @key Escape: closes it; focus returns to the trigger
  * @key Tab: moves through its controls; past the last one it closes and focus moves on
  */
-export function Popover({ trigger, anchorTo, label, title, children, side = 'bottom', open: controlled, onOpenChange, ...data }: PopoverProps) {
+export function Popover({ trigger, anchorTo, label, title, children, side = 'bottom', align, initialFocus = 'first', open: controlled, onOpenChange, ...data }: PopoverProps) {
   const id = useId();
   const root = useRef<HTMLSpanElement>(null);
   const anchor = useRef<HTMLElement | null>(null);
@@ -70,7 +82,7 @@ export function Popover({ trigger, anchorTo, label, title, children, side = 'bot
   useLayoutEffect(() => {
     anchor.current = anchorTo ? anchorTo.current : root.current?.querySelector<HTMLElement>(':scope > button, :scope > [data-dl="button"] button, :scope > :first-child') ?? null;
   });
-  useAnchored(open, anchor, surface, side, '--c-popover-offset', 'start');
+  useAnchored(open, anchor, surface, side, '--c-popover-offset', align ?? 'start', align ?? 'center');
   // Where focus goes back to: the trigger, or the anchor element's own control (a span around a pin's Button).
   const focusAnchor = (options?: FocusOptions) => {
     const at = anchor.current;
@@ -84,7 +96,18 @@ export function Popover({ trigger, anchorTo, label, title, children, side = 'bot
     const el = surface.current;
     if (!open || !el) return;
     const first = el.querySelector<HTMLElement>('input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])');
-    (first ?? el).focus({ preventScroll: true });
+    if (initialFocus === 'first') (first ?? el).focus({ preventScroll: true });
+    else if (initialFocus === 'anchor' && anchorTo) focusAnchor({ preventScroll: true });
+    // Focus outside the surface (on the anchor, or anywhere for a hover preview): Escape still closes it first.
+    const escape = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || e.defaultPrevented || el.contains(document.activeElement)) return;
+      if (initialFocus === 'none' || inAnchor(document.activeElement)) {
+        e.stopPropagation();
+        e.preventDefault();
+        change(false);
+      }
+    };
+    if (initialFocus !== 'first') document.addEventListener('keydown', escape, true);
     const outside = (e: PointerEvent) => {
       const target = e.target as Node;
       if (!root.current?.contains(target) && !inAnchor(target)) {
@@ -95,6 +118,7 @@ export function Popover({ trigger, anchorTo, label, title, children, side = 'bot
     document.addEventListener('pointerdown', outside);
     return () => {
       document.removeEventListener('pointerdown', outside);
+      document.removeEventListener('keydown', escape, true);
       // Closed by an action inside it: focus would be lost with the surface, so it goes back to the trigger.
       const at = document.activeElement;
       if (!away.current && (!at || at === document.body || el.contains(at))) focusAnchor({ preventScroll: true });

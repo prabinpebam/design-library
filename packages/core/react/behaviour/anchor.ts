@@ -18,24 +18,32 @@ interface Rect {
 
 const opposite: Record<AnchorSide, AnchorSide> = { top: 'bottom', bottom: 'top', start: 'end', end: 'start' };
 
-/** Where a surface of `size` goes for an anchor rectangle, in viewport pixels. `margin` is kept clear of the window's edges. Pure. */
-export function placeAnchored(anchor: Rect, size: { width: number; height: number }, viewport: { width: number; height: number }, side: AnchorSide, offset: number, rtl = false, margin = 8, align: 'center' | 'start' = 'center') {
+/**
+ * Where a surface of `size` goes for an anchor rectangle, in viewport pixels. `margin` is kept clear of the window's
+ * edges. `align` lines it up above or below the anchor, `sideAlign` beside it: centred, or level with the anchor's start
+ * edge (its top beside it). Beside the anchor, when neither side has room for it, it goes below (or above, with more
+ * room there) and stays inside the window (LR147). Pure.
+ */
+export function placeAnchored(anchor: Rect, size: { width: number; height: number }, viewport: { width: number; height: number }, side: AnchorSide, offset: number, rtl = false, margin = 8, align: 'center' | 'start' = 'center', sideAlign: 'center' | 'start' = 'center') {
   const physical = (s: AnchorSide) => (s === 'start' ? (rtl ? 'right' : 'left') : s === 'end' ? (rtl ? 'left' : 'right') : s);
   const room = (s: AnchorSide) => {
     const p = physical(s);
     return p === 'top' ? anchor.top : p === 'bottom' ? viewport.height - anchor.bottom : p === 'left' ? anchor.left : viewport.width - anchor.right;
   };
   const need = (s: AnchorSide) => (s === 'top' || s === 'bottom' ? size.height : size.width) + offset + margin;
-  const chosen = room(side) < need(side) && room(opposite[side]) > room(side) ? opposite[side] : side;
-  const p = physical(chosen);
   const clamp = (v: number, max: number) => Math.max(margin, Math.min(v, max - margin));
-  if (p === 'top' || p === 'bottom') {
+  const vertical = (wanted: 'top' | 'bottom') => {
+    const chosen: AnchorSide = room(wanted) < need(wanted) && room(opposite[wanted]) > room(wanted) ? opposite[wanted] : wanted;
     // Above or below: centred on the anchor, or level with its start edge (a wide surface under a narrow button).
     const x = clamp(align === 'start' ? (rtl ? anchor.right - size.width : anchor.left) : (anchor.left + anchor.right) / 2 - size.width / 2, viewport.width - size.width);
-    const y = p === 'top' ? anchor.top - offset - size.height : anchor.bottom + offset;
+    const y = chosen === 'top' ? anchor.top - offset - size.height : anchor.bottom + offset;
     return { side: chosen, x, y, arrow: (anchor.left + anchor.right) / 2 - x };
-  }
-  const y = clamp((anchor.top + anchor.bottom) / 2 - size.height / 2, viewport.height - size.height);
+  };
+  if (side === 'top' || side === 'bottom') return vertical(side);
+  if (room(side) < need(side) && room(opposite[side]) < need(opposite[side])) return vertical(room('bottom') >= need('bottom') || room('bottom') >= room('top') ? 'bottom' : 'top');
+  const chosen = room(side) < need(side) ? opposite[side] : side;
+  const p = physical(chosen);
+  const y = clamp(sideAlign === 'start' ? anchor.top : (anchor.top + anchor.bottom) / 2 - size.height / 2, viewport.height - size.height);
   const x = p === 'left' ? anchor.left - offset - size.width : anchor.right + offset;
   return { side: chosen, x, y, arrow: (anchor.top + anchor.bottom) / 2 - y };
 }
@@ -61,7 +69,7 @@ export function cssMs(el: Element, name: string) {
  * Writes `data-side` and the `--anchored-start`, `--anchored-y` and `--anchored-arrow` properties for the CSS to place it.
  * `offsetVar` names the CSS length between the anchor and the surface.
  */
-export function useAnchored(open: boolean, anchor: RefObject<HTMLElement | null>, surface: RefObject<HTMLElement | null>, side: AnchorSide, offsetVar: string, align: 'center' | 'start' = 'center') {
+export function useAnchored(open: boolean, anchor: RefObject<HTMLElement | null>, surface: RefObject<HTMLElement | null>, side: AnchorSide, offsetVar: string, align: 'center' | 'start' = 'center', sideAlign: 'center' | 'start' = 'center') {
   useEffect(() => {
     const el = surface.current;
     if (!open || !el || !anchor.current) return;
@@ -70,7 +78,7 @@ export function useAnchored(open: boolean, anchor: RefObject<HTMLElement | null>
       if (!anchor.current) return;
       const doc = document.documentElement;
       const rtl = getComputedStyle(anchor.current).direction === 'rtl';
-      const p = placeAnchored(anchor.current.getBoundingClientRect(), { width: el.offsetWidth, height: el.offsetHeight }, { width: doc.clientWidth, height: doc.clientHeight }, side, cssPixels(el, offsetVar), rtl, 8, align);
+      const p = placeAnchored(anchor.current.getBoundingClientRect(), { width: el.offsetWidth, height: el.offsetHeight }, { width: doc.clientWidth, height: doc.clientHeight }, side, cssPixels(el, offsetVar), rtl, 8, align, sideAlign);
       el.dataset.side = p.side;
       // Logical, as the popup lists: from the inline start edge of the window.
       el.style.setProperty('--anchored-start', `${rtl ? doc.clientWidth - p.x - el.offsetWidth : p.x}px`);
@@ -85,5 +93,5 @@ export function useAnchored(open: boolean, anchor: RefObject<HTMLElement | null>
       window.removeEventListener('resize', place);
       if (el.matches(':popover-open')) el.hidePopover?.();
     };
-  }, [open, side]);
+  }, [open, side, align, sideAlign]);
 }
