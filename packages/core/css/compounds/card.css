@@ -74,6 +74,31 @@
     gap: var(--c-card-gap);
   }
 
+  /* Ruled (LR137, opt-in): no enclosure, a rule above and the words a step below it; cards of a list sit one under
+     another with no gap, so each rule separates two of them and the first opens the list. */
+  [data-dl='card'][data-variant='ruled'] {
+    /* Only the parts it has take a row, so no gap opens under the words of a card without a picture. */
+    grid-template-rows: none;
+    gap: var(--c-card-gap);
+    padding-block: var(--c-card-ruled-padding-block);
+    border-block-start: var(--c-card-ruled-rule-width) solid var(--c-card-ruled-rule-color);
+  }
+
+  [data-dl='card'][data-variant='ruled'] > [data-dl-part='body'],
+  [data-dl='card'][data-variant='ruled'] > [data-dl-part='body'] > [data-dl-part='message'] {
+    gap: var(--c-card-ruled-gap);
+  }
+
+  [data-dl='card'][data-variant='ruled'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='heading'] > [data-dl='heading'] {
+    font-size: var(--c-card-ruled-title-size);
+    line-height: var(--c-card-ruled-title-leading);
+    font-weight: var(--c-card-ruled-title-weight);
+  }
+
+  [data-dl='card'][data-variant='ruled'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='description'] {
+    color: var(--c-card-ruled-description-color);
+  }
+
   [data-dl='card'] > [data-dl-part='body'] > [data-dl-part='message'] > [data-dl-part='heading'] {
     display: grid;
     gap: var(--c-card-heading-gap);

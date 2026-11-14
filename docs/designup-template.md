@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR137: a ruled card, a line of a list of entries (14 November 2026)
+
+DesignUp P0.7: main's 15:12 decision, a "ruled" on/off option on Collection's Rows layout (off by default), reproducing today's ruled Rows (`compounds/Rows.tsx`): a rule above each row, the row padded below it, a heavier larger title, the line in ink. Collection's Rows draws core Cards, which have only `outlined` and `plain`. Core API, opt-in: Card `variant: 'ruled'`: no enclosure, `border-block-start` of `--c-card-ruled-rule-width` and `--c-card-ruled-rule-color`, `padding-block` `--c-card-ruled-padding-block`, title, description and meta `--c-card-ruled-gap` apart, title type `--c-card-ruled-title-weight/-size/-leading`, description colour `--c-card-ruled-description-color` (all theme settings, defaults from the plain card's look). Only the parts it has take a grid row, so no gap opens under a card without a picture. Cards laid one under another with no gap form the list. Measured in DesignUp's harness (a stand-in for Collection · Rows ruled on) against /#/sponsor: every row's title and line 0 px apart from today's at 1440/834/375 (fonts, colours, pitch); what remains is the heading block's own gap (R4, template).
+
+| LR137 | 2026-11-14 | Ruled rows: a line of a list of entries | Card has outlined and plain only: no rule, row padding, title type or ink line | 6 | opt-in Card variant `ruled` + `--c-card-ruled-*` settings | none | E64 | shipped | | none |
+
 ### LR136: a template sets the page grid's item step (14 November 2026)
 
 DesignUp P0.7. Inside DesignUp's two-column band the heading and its list sit its item step apart (`--t-designup-item-gap`, 18.75/16/16 px at 1440/834/375); a page-grid row with gap `item` is `--c-page-grid-gap-item` (space.stack-item, 14.06/12/12 px), and only the frame settings were on the allow-list. Core API: `--c-page-grid-gap-item` joins the theme-settings allow-list (default unchanged). No DesignUp page has a row with gap `item` yet, so setting it moves nothing there.

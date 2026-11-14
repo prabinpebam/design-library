@@ -52,6 +52,16 @@
     "--c-list-tile-name-size": "A tile's name (default type.label.size). A dense catalogue whose descriptions carry the detail sets a step smaller, such as var(--type-body-sm-size).",
     "--c-list-tile-radius": "A tile's corners (default radius.md, a control's). A theme whose surfaces are squarer sets var(--radius-sm)."
   },
+  "Card": {
+    "--c-card-ruled-rule-width": "A ruled card's rule above it (Card variant ruled, LR137; default border.hairline).",
+    "--c-card-ruled-rule-color": "A ruled card's rule colour (LR137; default color.border). A template whose lists rule in a stronger line sets it.",
+    "--c-card-ruled-padding-block": "Between a ruled card's rule and its words, and under its words (LR137; default space.stack-item). A template sets its list rows' padding.",
+    "--c-card-ruled-gap": "Between a ruled card's title, description and meta (LR137; default space.stack-pair).",
+    "--c-card-ruled-title-weight": "A ruled card's title weight (LR137; default type.heading-4.weight).",
+    "--c-card-ruled-title-size": "A ruled card's title size (LR137; default type.heading-4.size). A template sets its row title size.",
+    "--c-card-ruled-title-leading": "A ruled card's title line height (LR137; default type.heading-4.leading).",
+    "--c-card-ruled-description-color": "A ruled card's description colour (LR137; default color.text-muted). A template whose rows read as plain words sets its text colour."
+  },
   "PageGrid": {
     "--c-page-grid-empty-size": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in.",
     "--c-page-grid-gap-item": "Above a row with gap item (LR136; default space.stack-item). A template whose item step differs from the core's sets its own, such as the space between a band's heading and its list.",

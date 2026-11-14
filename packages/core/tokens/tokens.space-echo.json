@@ -344,6 +344,16 @@
         "$type": "dimension",
         "$value": "{space.inset-md}",
         "$description": "Inside an outlined card's words, once; the picture bleeds to its edges (echoed for space contexts)"
+      },
+      "ruled-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-pair}",
+        "$description": "Between a ruled card's title, description and meta (LR137, theme setting) (echoed for space contexts)"
+      },
+      "ruled-padding-block": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Between a ruled card's rule and its words, and under its words (LR137, theme setting) (echoed for space contexts)"
       }
     },
     "chat-layout": {

@@ -1016,6 +1016,14 @@
   --c-card-beside-min: 14rem;
   --c-card-row-media: var(--size-control-3xl);
   --c-card-actions-gap: var(--space-inline-item);
+  --c-card-ruled-rule-width: var(--border-hairline);
+  --c-card-ruled-rule-color: var(--color-border);
+  --c-card-ruled-padding-block: var(--space-stack-item);
+  --c-card-ruled-gap: var(--space-stack-pair);
+  --c-card-ruled-title-weight: var(--type-heading-4-weight);
+  --c-card-ruled-title-size: var(--type-heading-4-size);
+  --c-card-ruled-title-leading: var(--type-heading-4-leading);
+  --c-card-ruled-description-color: var(--color-text-muted);
   --c-statistic-gap: var(--space-stack-pair);
   --c-statistic-value-size-m: var(--type-heading-1-size);
   --c-statistic-value-size-l: var(--type-display-size);
@@ -1437,6 +1445,8 @@
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-canvas-name-selected: var(--color-text-muted);
+    --c-card-ruled-description-color: var(--color-text-muted);
+    --c-card-ruled-rule-color: var(--color-border);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1475,6 +1485,8 @@
   --color-status-neutral-fg: var(--color-text-muted);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
   --c-canvas-name-selected: var(--color-text-muted);
+  --c-card-ruled-description-color: var(--color-text-muted);
+  --c-card-ruled-rule-color: var(--color-border);
   --c-code-key-outline: var(--color-border-strong);
   --c-colour-field-border: var(--color-border-strong);
   --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1513,6 +1525,8 @@
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
     --c-canvas-name-selected: var(--color-text-muted);
+    --c-card-ruled-description-color: var(--color-text-muted);
+    --c-card-ruled-rule-color: var(--color-border);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1551,6 +1565,8 @@
   --color-status-neutral-fg: var(--color-text-muted);
   --c-alignment-picker-dot-colour: var(--color-text-muted);
   --c-canvas-name-selected: var(--color-text-muted);
+  --c-card-ruled-description-color: var(--color-text-muted);
+  --c-card-ruled-rule-color: var(--color-border);
   --c-code-key-outline: var(--color-border-strong);
   --c-colour-field-border: var(--color-border-strong);
   --c-context-matrix-head-fg: var(--color-text-muted);
@@ -1699,6 +1715,8 @@
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
+  --c-card-ruled-gap: var(--space-stack-pair);
+  --c-card-ruled-padding-block: var(--space-stack-item);
   --c-chat-layout-gap: var(--space-stack-section);
   --c-chat-layout-inset: var(--space-inset-sm);
   --c-chat-layout-page-margin: var(--space-inset-md);
@@ -2011,6 +2029,8 @@
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
+  --c-card-ruled-gap: var(--space-stack-pair);
+  --c-card-ruled-padding-block: var(--space-stack-item);
   --c-chat-layout-gap: var(--space-stack-section);
   --c-chat-layout-inset: var(--space-inset-sm);
   --c-chat-layout-page-margin: var(--space-inset-md);
@@ -2323,6 +2343,8 @@
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
+  --c-card-ruled-gap: var(--space-stack-pair);
+  --c-card-ruled-padding-block: var(--space-stack-item);
   --c-chat-layout-gap: var(--space-stack-section);
   --c-chat-layout-inset: var(--space-inset-sm);
   --c-chat-layout-page-margin: var(--space-inset-md);
@@ -2635,6 +2657,8 @@
   --c-card-gap: var(--space-stack-item);
   --c-card-heading-gap: var(--space-stack-pair);
   --c-card-padding: var(--space-inset-md);
+  --c-card-ruled-gap: var(--space-stack-pair);
+  --c-card-ruled-padding-block: var(--space-stack-item);
   --c-chat-layout-gap: var(--space-stack-section);
   --c-chat-layout-inset: var(--space-inset-sm);
   --c-chat-layout-page-margin: var(--space-inset-md);

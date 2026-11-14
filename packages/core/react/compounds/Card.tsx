@@ -30,8 +30,13 @@ export interface CardProps extends DataAttributes {
   actions?: ReactNode;
   /** `stacked`: the picture above the words (default). `beside`: the picture beside the words, stacked when the card is narrow (a lead item). `row`: the words first and a small square picture at the end (a line of a list). */
   layout?: 'stacked' | 'beside' | 'row';
-  /** `outlined`: a bounded surface with a hairline (default; a grid of cards on a page). `plain`: no enclosure, only the content (an index where space already groups each card). */
-  variant?: 'outlined' | 'plain';
+  /**
+   * `outlined`: a bounded surface with a hairline (default; a grid of cards on a page). `plain`: no enclosure, only the
+   * content (an index where space already groups each card). `ruled` (LR137): no enclosure, a rule above and its words
+   * a step below it (a line of a list of entries, laid out one under another with no gap); its rule, padding, title
+   * type and description colour are theme settings (`--c-card-ruled-*`).
+   */
+  variant?: 'outlined' | 'plain' | 'ruled';
   /** The heading's level in the page's outline. */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /** Shows the card's shape in shimmer while its content loads; nothing in it can be used. */
