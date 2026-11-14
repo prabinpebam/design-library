@@ -41,11 +41,13 @@ export type { SegmentedControlProps, SegmentedControlOption } from './fundamenta
 export { ColourField } from './compounds/ColourField';
 export type { ColourFieldProps } from './compounds/ColourField';
 export { MenuButton } from './fundamentals/MenuButton';
+export { ContextMenu, contextMenuPoint } from './fundamentals/ContextMenu';
 export { ListItem } from './fundamentals/ListItem';
 export type { ListItemProps } from './fundamentals/ListItem';
 export { placePopup } from './behaviour/popup';
 export { placeAnchored, type AnchorSide } from './behaviour/anchor';
 export type { MenuButtonProps, MenuButtonItem } from './fundamentals/MenuButton';
+export type { ContextMenuProps, ContextMenuItem, ContextMenuGroup } from './fundamentals/ContextMenu';
 export { PageLayout } from './layouts/PageLayout';
 export type { PageLayoutProps } from './layouts/PageLayout';
 export { ListDetail } from './layouts/ListDetail';

@@ -144,6 +144,7 @@
    * gap, so adjacent hover and selected fills never touch. Long lists scroll inside it, edge to edge.
    */
   [data-dl='menu-button'] > [data-dl-part='popup'],
+  [data-dl='context-menu'] > [data-dl-part='popup'],
   [data-dl='mentions'] > [data-dl-part='popup'],
   [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'] {
     position: fixed;
@@ -185,8 +186,31 @@
   }
 
   /* A menu fits its widest item; the shared maximum above caps it, so a long label wraps rather than widening it. */
-  [data-dl='menu-button'] > [data-dl-part='popup'] {
+  [data-dl='menu-button'] > [data-dl-part='popup'],
+  [data-dl='context-menu'] > [data-dl-part='popup'] {
     inline-size: max-content;
+  }
+
+  /* ContextMenu (LR164): its commands in groups, one hairline between groups (the one cue for a group), no scroll area. */
+  [data-dl='context-menu'] > [data-dl-part='popup'] > [data-dl-part='content'],
+  [data-dl='context-menu'] > [data-dl-part='popup'] > [data-dl-part='content'] > [data-dl-part='group'] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--c-popup-gap);
+  }
+
+  [data-dl='context-menu'] > [data-dl-part='popup'] > [data-dl-part='content'] {
+    padding: var(--c-popup-inset);
+    overflow: auto;
+  }
+
+  [data-dl='context-menu'] > [data-dl-part='popup'] > [data-dl-part='content'] > [data-dl-part='group'] + [data-dl-part='group'] {
+    padding-block-start: var(--c-popup-gap);
+    border-block-start: var(--c-popup-border-width) solid var(--c-popup-border);
+  }
+
+  [data-dl='context-menu'] > [data-dl-part='popup']:not(:popover-open) {
+    display: none;
   }
 
   [data-dl='menu-button'] > [data-dl-part='popup'][data-placement='above'],

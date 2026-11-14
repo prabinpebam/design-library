@@ -270,6 +270,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/listitem",
   "usedBy": [
+    "ContextMenu",
     "List",
     "MenuButton",
     "Select",
