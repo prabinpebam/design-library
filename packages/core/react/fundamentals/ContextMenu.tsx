@@ -95,11 +95,20 @@ export function ContextMenu({ label, groups, at, onSelect, onClose, ...data }: C
     back.current = (document.activeElement as HTMLElement | null) ?? null;
     el.showPopover?.();
     const doc = document.documentElement;
-    const p = placePopup({ top: at.y, bottom: at.y, left: at.x, right: at.x }, { width: el.offsetWidth, height: el.offsetHeight }, { width: doc.clientWidth, height: doc.clientHeight });
-    el.dataset.placement = p.placement;
-    el.style.setProperty('--popup-edge', `${p.edge}px`);
+    // The menu's whole height, measured with no side's cap (a cap left from the last opening would hide it).
+    el.style.removeProperty('--popup-room');
+    const height = el.offsetHeight;
+    const raw = getComputedStyle(el).getPropertyValue('--c-popup-offset').trim();
+    const offset = (parseFloat(raw) || 0) * (raw.endsWith('rem') ? parseFloat(getComputedStyle(doc).fontSize) : 1);
+    const p = placePopup({ top: at.y, bottom: at.y, left: at.x, right: at.x }, { width: el.offsetWidth, height: height + 2 * offset }, { width: doc.clientWidth, height: doc.clientHeight });
+    // LR178: when neither side of the point holds the whole menu but the window does, it slides to stay whole inside the
+    // window (as a desktop's menus do); it scrolls only when the window itself is too short.
+    const whole = height + 2 * offset;
+    const slide = whole > p.room && whole <= doc.clientHeight;
+    el.dataset.placement = slide ? 'below' : p.placement;
+    el.style.setProperty('--popup-edge', `${slide ? doc.clientHeight - whole : p.edge}px`);
     el.style.setProperty('--popup-start', `${p.start}px`);
-    el.style.setProperty('--popup-room', `${p.room}px`);
+    el.style.setProperty('--popup-room', `${slide ? whole : p.room}px`);
     refs.current.get(usable[0]?.key ?? '')?.focus();
     return () => {
       if (el.matches(':popover-open')) el.hidePopover?.();
