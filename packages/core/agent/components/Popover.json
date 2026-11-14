@@ -34,8 +34,17 @@
         {
           "name": "trigger",
           "type": "PopoverTrigger",
-          "required": true,
-          "description": "The Button that opens and closes it; it shows as expanded while open."
+          "description": "The Button that opens and closes it; it shows as expanded while open. Leave out only with `anchorTo`."
+        },
+        {
+          "name": "anchorTo",
+          "type": "RefObject<HTMLElement | null>",
+          "description": "Opt-in (LR144): an element already on the page it sits beside instead of its own Button (a pin, a marker, a selected word). No trigger is drawn; the owner opens and closes it with `open` and `onOpenChange`, and a press on the element is the owner's, never \"outside\". Escape returns focus to the element when it can take focus."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "description": "Its accessible name without a title, when there's no trigger to name it (with `anchorTo`)."
         },
         {
           "name": "title",

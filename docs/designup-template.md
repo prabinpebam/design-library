@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR144: a Popover beside an element already on the page (14 November 2026)
+
+DesignUp P1.7 (LR14, comment review). A comment pin on the page opens a bubble with controls; core Popover only opens beside its own Button, so DesignUp drew its own bubble with Popover's surface tokens copied. Core API: Popover `anchorTo` (a ref to an existing element; opt-in) and `label` (its name without a title); `trigger` is optional with `anchorTo`. With `anchorTo` no trigger is drawn, the owner opens and closes it (`open`, `onOpenChange`), a press on the element is the owner's (never "outside"), and Escape or closing from inside returns focus to the element's control. Without `anchorTo`, nothing changes. Checked on DesignUp's harness: beside the pin, a dialog named by `label`, focus inside on opening, the pin's press closes it with focus on the pin, Escape closes and refocuses the pin, a press elsewhere closes; today's trigger Popover unchanged.
+
+| LR144 | 2026-11-14 | A Popover beside an element already on the page | Popover opens only beside its own Button | 3 | Popover `anchorTo`, `label`; `trigger` optional with `anchorTo` | none | E68 | shipped | | none |
 ### LR143: a Link's typeface as a setting (14 November 2026)
 
 DesignUp P1.7 (LA4). DesignUp sets its interface face on every core Link with a selector on core `data-dl='link'` (`designup.css`), because a Link always takes the words around it. Core API: settings `--link-font` and `--link-font-axes` (opt-in; default inherit, unchanged), read by Link. Measured on DesignUp's dev server (Home, About, Sponsor, Talks, Editions; 187 Links): with the template's rule deleted and the two settings set on the template root, every Link's typeface, axes and width are as before.

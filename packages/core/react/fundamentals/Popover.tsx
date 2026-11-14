@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { useAnchored, type AnchorSide } from '../behaviour/anchor';
 import { Button, type ButtonProps } from './Button';
 import { Heading } from './Heading';
@@ -15,8 +15,16 @@ export interface PopoverTrigger {
 }
 
 export interface PopoverProps extends DataAttributes {
-  /** The Button that opens and closes it; it shows as expanded while open. */
-  trigger: PopoverTrigger;
+  /** The Button that opens and closes it; it shows as expanded while open. Leave out only with `anchorTo`. */
+  trigger?: PopoverTrigger;
+  /**
+   * Opt-in (LR144): an element already on the page it sits beside instead of its own Button (a pin, a marker, a
+   * selected word). No trigger is drawn; the owner opens and closes it with `open` and `onOpenChange`, and a press on
+   * the element is the owner's, never "outside". Escape returns focus to the element when it can take focus.
+   */
+  anchorTo?: RefObject<HTMLElement | null>;
+  /** Its accessible name without a title, when there's no trigger to name it (with `anchorTo`). */
+  label?: string;
   /** A short heading inside: the popover's accessible name. Without one, it's named by the trigger's label. */
   title?: string;
   /** What it holds: a few words of help with a link, a short form, filters, a confirmation's question and Buttons. */
@@ -45,7 +53,7 @@ export interface PopoverProps extends DataAttributes {
  * @key Escape: closes it; focus returns to the trigger
  * @key Tab: moves through its controls; past the last one it closes and focus moves on
  */
-export function Popover({ trigger, title, children, side = 'bottom', open: controlled, onOpenChange, ...data }: PopoverProps) {
+export function Popover({ trigger, anchorTo, label, title, children, side = 'bottom', open: controlled, onOpenChange, ...data }: PopoverProps) {
   const id = useId();
   const root = useRef<HTMLSpanElement>(null);
   const anchor = useRef<HTMLElement | null>(null);
@@ -60,9 +68,17 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
   };
 
   useLayoutEffect(() => {
-    anchor.current = root.current?.querySelector<HTMLElement>(':scope > button, :scope > [data-dl="button"] button, :scope > :first-child') ?? null;
+    anchor.current = anchorTo ? anchorTo.current : root.current?.querySelector<HTMLElement>(':scope > button, :scope > [data-dl="button"] button, :scope > :first-child') ?? null;
   });
   useAnchored(open, anchor, surface, side, '--c-popover-offset', 'start');
+  // Where focus goes back to: the trigger, or the anchor element's own control (a span around a pin's Button).
+  const focusAnchor = (options?: FocusOptions) => {
+    const at = anchor.current;
+    const target = anchorTo && at && !at.matches('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+      ? at.querySelector<HTMLElement>('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])') ?? at : at;
+    target?.focus(options);
+  };
+  const inAnchor = (node: Node | null) => !!anchorTo && !!node && !!anchor.current?.contains(node);
 
   useEffect(() => {
     const el = surface.current;
@@ -70,7 +86,8 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
     const first = el.querySelector<HTMLElement>('input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])');
     (first ?? el).focus({ preventScroll: true });
     const outside = (e: PointerEvent) => {
-      if (!root.current?.contains(e.target as Node)) {
+      const target = e.target as Node;
+      if (!root.current?.contains(target) && !inAnchor(target)) {
         away.current = true;
         change(false);
       }
@@ -80,7 +97,7 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
       document.removeEventListener('pointerdown', outside);
       // Closed by an action inside it: focus would be lost with the surface, so it goes back to the trigger.
       const at = document.activeElement;
-      if (!away.current && (!at || at === document.body || el.contains(at))) anchor.current?.focus({ preventScroll: true });
+      if (!away.current && (!at || at === document.body || el.contains(at))) focusAnchor({ preventScroll: true });
       away.current = false;
     };
   }, [open]);
@@ -94,19 +111,20 @@ export function Popover({ trigger, title, children, side = 'bottom', open: contr
         if (e.key === 'Escape' && open) {
           e.stopPropagation();
           change(false);
-          anchor.current?.focus();
+          focusAnchor();
         }
       }}
       onBlur={(e) => {
-        // Focus left both the trigger and the popover (Tab past its end): close, and let focus go where it went.
-        if (open && e.relatedTarget && !root.current?.contains(e.relatedTarget as Node)) {
+        // Focus left both the trigger and the popover (Tab past its end): close, and let focus go where it went. Focus
+        // moving to the anchor element is the owner's press on it, which opens or closes it itself.
+        if (open && e.relatedTarget && !root.current?.contains(e.relatedTarget as Node) && !inAnchor(e.relatedTarget as Node)) {
           away.current = true;
           change(false);
         }
       }}
     >
-      <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />
-      <div ref={surface} id={`${id}-surface`} role="dialog" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : trigger.label} data-dl-part="surface" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" tabIndex={-1} hidden={!open}>
+      {trigger && <Button label={trigger.label} icon={trigger.icon} iconOnly={trigger.iconOnly} emphasis={trigger.emphasis ?? 'default'} size={trigger.size} expanded={open} controls={`${id}-surface`} onClick={() => change(!open)} />}
+      <div ref={surface} id={`${id}-surface`} role="dialog" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : trigger?.label ?? label} data-dl-part="surface" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" tabIndex={-1} hidden={!open}>
         {title && (
           <Heading level={3} size={4} id={`${id}-title`}>
             {title}
