@@ -21,6 +21,8 @@ export interface AppLayoutProps extends DataAttributes {
   headerEnd?: ReactNode | ((compact: boolean) => ReactNode);
   /** Keep the header end at its natural, single-line width and let the start shrink (pair long trails with Breadcrumbs truncate). Default false. The render function's compact state follows floatBelow of the layout's own width, independently of sidebar placement. */
   compactHeader?: boolean;
+  /** Below this width of the layout (a CSS length in px, rem or em, such as "56rem"), the header wraps instead of squeezing (LR152): the toggle and its start on one row, the end on a row of its own under it, each wrapping its parts, so nothing paints over anything and every control stays reachable; a floating sidebar opens under the taller header. Left out: the header keeps one row (default). */
+  headerWrapBelow?: string;
   /** Round the sidebar and details surfaces with the layout's panel radius. Default false. */
   roundedPanels?: boolean;
   /** The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content. */
@@ -75,27 +77,45 @@ export interface AppLayoutBrand { name: string; href: string; mark?: ReactNode }
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const router = useRouter();
   const root = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLSpanElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const [narrow, setNarrow] = useState(false);
+  const [wrapped, setWrapped] = useState(false);
   const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const toPx = (length: string, el: Element) => {
+    const n = parseFloat(length);
+    return length.endsWith('rem') ? n * rem() : length.endsWith('em') ? n * parseFloat(getComputedStyle(el).fontSize) : n;
+  };
 
   // auto: the layout measures its own width against floatBelow (a prop, so not a stylesheet container query).
   useEffect(() => {
     const el = root.current;
     if ((startMode !== 'auto' && !compactHeader) || !el) return;
-    const limit = () => {
-      const n = parseFloat(floatBelow);
-      return floatBelow.endsWith('rem') ? n * rem() : floatBelow.endsWith('em') ? n * parseFloat(getComputedStyle(el).fontSize) : n;
-    };
-    const observer = new ResizeObserver(([entry]) => setNarrow(entry.contentRect.width < limit()));
+    const observer = new ResizeObserver(([entry]) => setNarrow(entry.contentRect.width < toPx(floatBelow, el)));
     observer.observe(el);
     return () => observer.disconnect();
   }, [startMode, floatBelow, compactHeader]);
+
+  // LR152 headerWrapBelow: the same measure decides the wrap; while wrapped, the floating sidebar's top follows the header's height.
+  useEffect(() => {
+    const el = root.current;
+    const head = headerRef.current;
+    if (!headerWrapBelow || !el || !head) { setWrapped(false); return; }
+    const observer = new ResizeObserver(() => {
+      const wrap = el.getBoundingClientRect().width < toPx(headerWrapBelow, el);
+      setWrapped(wrap);
+      if (wrap) el.style.setProperty('--c-app-layout-header-offset', `${head.getBoundingClientRect().height}px`);
+      else el.style.removeProperty('--c-app-layout-header-offset');
+    });
+    observer.observe(el);
+    observer.observe(head);
+    return () => { observer.disconnect(); el.style.removeProperty('--c-app-layout-header-offset'); };
+  }, [headerWrapBelow]);
 
   // The sidebar's resolved placement; undefined keeps the stylesheet's own 48 rem container query.
   const placement = startMode === 'floating' || (startMode === 'auto' && narrow) ? 'floating' : startMode ? 'docked' : undefined;
@@ -144,7 +164,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-header-wrap={wrapped ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
       <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         {onStartModeChange && canDock && (
@@ -158,7 +178,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
         </ScrollArea>
       </aside>
       <div data-dl-part="main">
-        <header data-dl-part="header">
+        <header ref={headerRef} data-dl-part="header">
           <span ref={toggle} data-dl-part="toggle">
             <Button label={sidebarOpen ? labels?.close ?? 'Close sidebar' : labels?.open ?? 'Open sidebar'} icon="menu" iconOnly size="s" emphasis="quiet" expanded={sidebarOpen} controls={sidebarId} onClick={onSidebarToggle} />
           </span>

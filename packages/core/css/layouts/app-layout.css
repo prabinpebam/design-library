@@ -129,6 +129,43 @@
     white-space: nowrap;
   }
 
+  /* LR152 headerWrapBelow: under the given width the header wraps rather than squeezing; the toggle and its start on the
+     first row, the end on its own row under it, each wrapping its parts, so nothing paints over anything. */
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] {
+    flex-wrap: wrap;
+    row-gap: var(--c-app-layout-header-gap);
+    padding-block: var(--c-app-layout-header-gap);
+  }
+
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] > :is([data-dl-part='header-start'], [data-dl-part='header-end']) {
+    flex-wrap: wrap;
+    row-gap: var(--c-app-layout-header-gap);
+  }
+
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] {
+    flex: 1 1 0;
+  }
+
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='toggle'] {
+    align-self: flex-start;
+  }
+
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-end'] {
+    flex: 1 1 100%;
+    white-space: normal;
+  }
+
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] > [data-dl-part='header-content'] {
+    display: flex;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+  }
+
+  [data-dl='app-layout'][data-header-wrap] > [data-dl-part='main'] > [data-dl-part='header'] > [data-dl-part='header-start'] > [data-dl-part='header-content'] > * {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
   /* The view's scroller is a ScrollArea (Q96): edge to edge, the library's bar at the main area's edge, its focus ring ScrollArea's. */
   [data-dl='app-layout'] > [data-dl-part='main'] > [data-dl-part='scroll'] {
     flex: 1;
@@ -208,7 +245,7 @@
     /* Over the view it's a non-blocking drawer: floating material (MT7, FR7), frosted when on (materials MB5). */
     [data-dl='app-layout'] > [data-dl-part='sidebar'] {
       position: absolute;
-      inset-block: var(--c-app-layout-header) 0;
+      inset-block: var(--c-app-layout-header-offset, var(--c-app-layout-header)) 0;
       inset-inline-start: 0;
       z-index: var(--c-app-layout-layer);
       background-color: var(--material-floating-bg, var(--c-app-layout-sidebar-fill));
@@ -289,7 +326,7 @@
      drawer is; docked: beside the view at any width, even under 48 rem. */
   [data-dl='app-layout'][data-start='floating'] > [data-dl-part='sidebar'] {
     position: absolute;
-    inset-block: var(--c-app-layout-header) 0;
+    inset-block: var(--c-app-layout-header-offset, var(--c-app-layout-header)) 0;
     inset-inline-start: 0;
     z-index: var(--c-app-layout-layer);
     background-color: var(--material-floating-bg, var(--c-app-layout-sidebar-fill));

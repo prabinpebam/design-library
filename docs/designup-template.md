@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR152: an app header that wraps in a narrow window (14 November 2026)
+
+DesignUp A3 audit O8: at 375 px the admin's top bar (AppLayout `compactHeader`, `headerSpan="across"`) keeps one row, so its start and end paint over each other and controls run past the window. Authority: the personal site's editor bar wraps below 56 rem (`EditorLayout.astro:487-490`, `.top { flex-wrap: wrap }`). Generic: any app bar with more controls than a phone's width. Core API: AppLayout `headerWrapBelow` (a CSS length in px, rem or em, measured on the layout's own width like `floatBelow`; left out, the header keeps one row, unchanged). Under it the header wraps: the toggle and brand on the first row, the header's content on a full row under the brand, the end on a row of its own, each wrapping its parts; the toggle stays on the first row; row gap and block padding are the header gap; a floating sidebar opens under the taller header (`--c-app-layout-header-offset`, set by the layout). Proof (live 5193, AdminFrame and its two Clusters served from browser memory with the prop and `wrap`): 375 light and dark no overlapping controls, header 197 px in three rows; 1440 unchanged (56 px, one row). Left to the adopter: its own Clusters must wrap and a long Breadcrumbs should truncate.
+
+| LR152 | 2026-11-14 | An app header that wraps in a narrow window | AppLayout's header is always one row; `compactHeader` keeps the end on one line, so at 375 px start and end overlap | 6 | AppLayout `headerWrapBelow` (length; default off): header, start, content and end wrap; content its own row; floating sidebar under the measured header | none | E75 | shipped | (this commit) | Adopter (A3): AdminFrame `headerWrapBelow="56rem"`, its header and end Clusters wrap when narrow, Breadcrumbs truncate |
+
 ### LR151: a Duplicate icon distinct from Copy (14 November 2026)
 
 DesignUp P2.11 O2. The admin's album card turns Duplicate into an icon-only button, but the card's other icon action is Copy address, which already uses `copy`; two identical glyphs for two different actions on one card. Generic: any admin with both a duplicate-record and a copy-to-clipboard action. Core API: icon `duplicate` (the `copy` glyph with a plus on the front sheet), not directional so no `flipInRtl`; project-drawn like `link` and other names outside the provider sets. Additive; no existing icon changes.
