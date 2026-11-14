@@ -206,6 +206,8 @@ export { useLoadIndicator } from './behaviour/load';
 export type { LoadIndicator } from './behaviour/load';
 export { ScrollArea } from './fundamentals/ScrollArea';
 export type { ScrollAreaProps } from './fundamentals/ScrollArea';
+export { PageScrollbar } from './fundamentals/PageScrollbar';
+export type { PageScrollbarProps } from './fundamentals/PageScrollbar';
 export { Slider } from './fundamentals/Slider';
 export type { SliderProps } from './fundamentals/Slider';
 export { Field } from './fundamentals/Field';

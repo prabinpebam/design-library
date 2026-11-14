@@ -7,6 +7,21 @@
  * control that scrolls its own text (TextArea).
  */
 @layer fundamentals {
+  /* LR156 PageScrollbar: the page's own bar, drawn by the library at a placed edge while the root's bar is hidden. The
+     window still scrolls the page; the strip is fixed to the window, under popups and dialogs. */
+  :root[data-dl-page-bar] {
+    scrollbar-width: none;
+  }
+
+  [data-dl='scroll-area'][data-page] {
+    position: fixed;
+    inset-block: var(--page-scrollbar-block-start, 0px) var(--page-scrollbar-block-end, 0px);
+    inset-inline-end: var(--page-scrollbar-inline-end, 0px);
+    z-index: calc(var(--layer-popover) - 1);
+    display: block;
+    inline-size: var(--c-scroll-area-track);
+  }
+
   /* The page held still (Dialog lockScroll): while such a dialog is open the page doesn't scroll, and its scrollbar's
      room stays reserved, so nothing reflows as it opens or closes. */
   :root[data-dl-scroll-lock] {
@@ -222,6 +237,10 @@
 
   /* Touch screens draw their own overlay bar while scrolling: keep it, and draw none. */
   @media (hover: none) and (pointer: coarse) {
+    :root[data-dl-page-bar] {
+      scrollbar-width: auto;
+    }
+
     [data-dl='scroll-area'] > [data-dl-part='viewport'] {
       scrollbar-width: auto;
     }
@@ -233,6 +252,10 @@
 
   /* Forced colours: the system's own bar, in system colours; the one place a bar may take a column. */
   @media (forced-colors: active) {
+    :root[data-dl-page-bar] {
+      scrollbar-width: auto;
+    }
+
     [data-dl='scroll-area'] > [data-dl-part='viewport'] {
       scrollbar-width: auto;
     }

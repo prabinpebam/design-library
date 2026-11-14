@@ -18,7 +18,7 @@ function ms(value: string, fallback: number) {
  * and render `tracks(axis)` after the viewport. Pass `active` false while the region is hidden (a closed popup) and true
  * when it shows, so it measures on opening.
  */
-export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = true) {
+export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = true, target: 'self' | 'document' = 'self') {
   const root = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement | null>(null);
   const idle = useRef(0);
@@ -62,6 +62,8 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
   }, []);
 
   useEffect(() => {
+    // LR156: `document` draws the bar for the page's own scroller; the window scrolls, the root's native bar is hidden.
+    if (target === 'document' && active) viewport.current = (document.scrollingElement ?? document.documentElement) as HTMLDivElement;
     const el = viewport.current;
     const box = root.current;
     if (!el || !box || !active) return;
@@ -71,6 +73,22 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       window.clearTimeout(idle.current);
       idle.current = window.setTimeout(() => box.removeAttribute('data-scrolling'), ms(getComputedStyle(box).getPropertyValue('--c-scroll-area-idle'), 1000));
     };
+    if (target === 'document') {
+      const html = document.documentElement;
+      html.setAttribute('data-dl-page-bar', '');
+      window.addEventListener('scroll', onScroll, { passive: true });
+      const sizes = new ResizeObserver(measure);
+      sizes.observe(html);
+      sizes.observe(document.body);
+      sizes.observe(box);
+      return () => {
+        html.removeAttribute('data-dl-page-bar');
+        window.removeEventListener('scroll', onScroll);
+        sizes.disconnect();
+        window.clearTimeout(idle.current);
+        viewport.current = null;
+      };
+    }
     el.addEventListener('scroll', onScroll, { passive: true });
     // Its initial notification measures after layout, rather than forcing layout in a discrete React commit.
     const sizes = new ResizeObserver(measure);
@@ -90,7 +108,7 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       changes.disconnect();
       window.clearTimeout(idle.current);
     };
-  }, [measure, active]);
+  }, [measure, active, target]);
 
   /** Drag the thumb, or press the track to page towards the pointer. */
   const onTrackDown = (a: Axis) => (event: ReactPointerEvent<HTMLDivElement>) => {

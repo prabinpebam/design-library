@@ -117,6 +117,7 @@
     "--c-scroll-area-track-inset",
     "--color-focus",
     "--easing-standard",
+    "--layer-popover",
     "--size-focus-width"
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/scrollarea",
