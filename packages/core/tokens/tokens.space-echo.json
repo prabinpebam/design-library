@@ -1260,6 +1260,16 @@
         "$value": "{space.stack-section}",
         "$description": "Between a lead row's columns once they stack in a narrow row or a short window (LR132, theme setting) (echoed for space contexts)"
       },
+      "lead-trail-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-item}",
+        "$description": "Between a lead row's trail and its columns, side by side (LR141, theme setting); stacked, the lead's stack gap (echoed for space contexts)"
+      },
+      "lead-trail-inset": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Above a lead row's trail, the row's breadcrumbs above its columns (LR141, theme setting) (echoed for space contexts)"
+      },
       "selected-offset": {
         "$type": "dimension",
         "$value": "{space.inset-xs}",

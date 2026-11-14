@@ -656,6 +656,8 @@
   --c-page-grid-lead-bleed: 0px;
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
+  --c-page-grid-lead-trail-inset: var(--space-stack-section);
+  --c-page-grid-lead-trail-gap: var(--space-stack-item);
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
   --c-screen-preview-desktop: 80rem;
@@ -1857,6 +1859,8 @@
   --c-page-grid-gutter: var(--space-gutter);
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
+  --c-page-grid-lead-trail-gap: var(--space-stack-item);
+  --c-page-grid-lead-trail-inset: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
@@ -2171,6 +2175,8 @@
   --c-page-grid-gutter: var(--space-gutter);
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
+  --c-page-grid-lead-trail-gap: var(--space-stack-item);
+  --c-page-grid-lead-trail-inset: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
@@ -2485,6 +2491,8 @@
   --c-page-grid-gutter: var(--space-gutter);
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
+  --c-page-grid-lead-trail-gap: var(--space-stack-item);
+  --c-page-grid-lead-trail-inset: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
@@ -2799,6 +2807,8 @@
   --c-page-grid-gutter: var(--space-gutter);
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
+  --c-page-grid-lead-trail-gap: var(--space-stack-item);
+  --c-page-grid-lead-trail-inset: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);

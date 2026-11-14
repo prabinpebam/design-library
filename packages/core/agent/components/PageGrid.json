@@ -113,6 +113,11 @@
           "description": "How the row's cells divide it (LR135): left out, on the page's twelve columns, the fixed gutter apart; `split`, their spans as shares of the row (5 and 7 are 5fr 7fr), `--c-page-grid-split-gutter` apart, so a template's two-column band keeps its own proportions. Its cells then no longer line up with the page's columns."
         },
         {
+          "name": "trail",
+          "type": "boolean",
+          "description": "A lead row's trail (LR141): its first nested row is one full-width row above the two columns (the page's breadcrumbs), the next is the two columns. The row then isn't pulled up; the trail sits `--c-page-grid-lead-trail-inset` below its top and `--c-page-grid-lead-trail-gap` above the columns (stacked, both the lead's stack gap). Lead rows only."
+        },
+        {
           "name": "cells",
           "type": "PageGridCell[]",
           "required": true,
@@ -153,6 +158,8 @@
     "--c-page-grid-lead-lift",
     "--c-page-grid-lead-pull",
     "--c-page-grid-lead-stack-gap",
+    "--c-page-grid-lead-trail-gap",
+    "--c-page-grid-lead-trail-inset",
     "--c-page-grid-selected-color",
     "--c-page-grid-selected-offset",
     "--c-page-grid-selected-width",
@@ -223,6 +230,16 @@
       "var": "--c-page-grid-lead-stack-gap",
       "default": "2rem",
       "description": "Between a lead row's columns once they stack (LR132; default space.stack-section)."
+    },
+    {
+      "var": "--c-page-grid-lead-trail-inset",
+      "default": "2rem",
+      "description": "Above a lead row's trail, side by side (LR141; default space.stack-section). Stacked, it is the lead's stack gap."
+    },
+    {
+      "var": "--c-page-grid-lead-trail-gap",
+      "default": "0.5rem",
+      "description": "Between a lead row's trail and its columns, side by side (LR141; default space.stack-item). Stacked, it is the lead's stack gap."
     },
     {
       "var": "--c-page-grid-split-gutter",

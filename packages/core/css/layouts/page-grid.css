@@ -92,6 +92,42 @@
     [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row'] + [data-dl-part='page-row'] { margin-block-start: var(--c-page-grid-lead-stack-gap); margin-inline-end: 0; }
   }
 
+  /* A lead row with a trail (LR141, opt-in): its first nested row is one full-width row above the two columns, the page's
+     breadcrumbs, so the second is the two columns. Under a trail the row isn't pulled up: the trail sits
+     --c-page-grid-lead-trail-inset below the row's top and --c-page-grid-lead-trail-gap above the columns; stacked, both
+     are the lead's stack gap. Rows after the columns are lifted as without a trail. */
+  [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] { margin-block-start: 0; }
+  [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child { padding-block-start: var(--c-page-grid-lead-trail-inset); }
+  [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child > [data-dl-part='page-columns'] { grid-template-columns: minmax(0, 1fr); }
+  [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] {
+    margin-block-start: var(--c-page-grid-lead-trail-gap);
+    margin-inline-end: 0;
+  }
+  [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
+    grid-template-columns: minmax(0, var(--c-page-grid-lead-start, 1fr)) minmax(0, 1fr);
+    column-gap: 0;
+  }
+  [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] {
+    display: grid;
+    grid-column: auto;
+  }
+  @container page-grid-lead (width < 53.0625rem) {
+    [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child { padding-block-start: var(--c-page-grid-lead-stack-gap); }
+    [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] { margin-block-start: var(--c-page-grid-lead-stack-gap); }
+    [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--c-page-grid-lead-stack-gap);
+    }
+  }
+  @media (height < 30em) {
+    [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child { padding-block-start: var(--c-page-grid-lead-stack-gap); }
+    [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] { margin-block-start: var(--c-page-grid-lead-stack-gap); }
+    [data-frame='lead'][data-trail] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child + [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--c-page-grid-lead-stack-gap);
+    }
+  }
+
   [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
     display: grid;
     /* A split row's own tracks (LR135); reset on every row, so a nested row never inherits its parent's. */

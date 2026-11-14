@@ -94,6 +94,7 @@ export function pageGridRecordProblems(grid, sections, options = {}) {
       if (row.frame !== undefined && !PAGE_GRID_FRAMES.includes(row.frame)) issues.push({ at: `${here}/frame`, what: `needs one of: ${PAGE_GRID_FRAMES.join(', ')}` });
       if (row.stack !== undefined && !PAGE_GRID_STACKS.includes(row.stack)) issues.push({ at: `${here}/stack`, what: `needs one of: ${PAGE_GRID_STACKS.join(', ')}` });
       if (row.gutter !== undefined && !PAGE_GRID_GUTTERS.includes(row.gutter)) issues.push({ at: `${here}/gutter`, what: `needs one of: ${PAGE_GRID_GUTTERS.join(', ')}` });
+      if (row.trail !== undefined && (typeof row.trail !== 'boolean' || row.frame !== 'lead')) issues.push({ at: `${here}/trail`, what: 'is true or false, on a lead row only (LR141)' });
       const spans = rowSpans(row, span);
       const own = row.cells.some((c) => isObject(c) && c.span !== undefined);
       if (!spans) {

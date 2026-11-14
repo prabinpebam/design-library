@@ -42,6 +42,12 @@ export interface PageGridRow {
    * keeps its own proportions. Its cells then no longer line up with the page's columns.
    */
   gutter?: PageGridGutter;
+  /**
+   * A lead row's trail (LR141): its first nested row is one full-width row above the two columns (the page's breadcrumbs),
+   * the next is the two columns. The row then isn't pulled up; the trail sits `--c-page-grid-lead-trail-inset` below its
+   * top and `--c-page-grid-lead-trail-gap` above the columns (stacked, both the lead's stack gap). Lead rows only.
+   */
+  trail?: boolean;
   /** The row's cells in reading order. */
   cells: PageGridCell[];
 }
@@ -123,7 +129,7 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
     const shares = row.gutter && spans && columns > 1 ? ({ '--dl-page-grid-shares': spans.map((s) => `minmax(0, ${s}fr)`).join(' ') } as CSSProperties) : undefined;
     let start = 0;
     return (
-      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-stack={row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
+      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-trail={row.frame === 'lead' && row.trail ? '' : undefined} data-stack={row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
         <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined} style={shares}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;

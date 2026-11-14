@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR141: a lead row with a trail (14 November 2026)
+
+DesignUp P1.2, Partner. A More page whose parent isn't Home opens with its breadcrumbs as their own full-width row above the words and the photo, and the opening isn't pulled up under them. LR132's lead row had no such row: its first nested row is the two columns. Core API: a lead row's `trail: true` (opt-in; record and PageGrid; lead rows only) makes its first nested row a full-width trail and the next the two columns; the row then isn't pulled up; the trail sits `--c-page-grid-lead-trail-inset` (default space.stack-section) below the row's top and `--c-page-grid-lead-trail-gap` (default space.stack-item) above the columns; stacked (narrow row or short window), both are the lead's stack gap. Rows after the columns are lifted as before. Without `trail`, nothing changes. Measured on DesignUp's harness against today's Partner opening at 1440/834/375, 924/925/926, 1440x420 and 844x390: every text and picture within 1 px, equal heights; the Sponsor page (lead row without a trail) unchanged.
+
+| LR141 | 2026-11-14 | A lead row with a trail | A lead row's first nested row is always its two columns: no full-width breadcrumbs row above them | 4 | row `trail` (lead rows) + settings `--c-page-grid-lead-trail-inset`, `--c-page-grid-lead-trail-gap` | none | E66 | shipped | | none |
 ### LR140: a call as a bold text link with an arrow, declined as a template part (14 November 2026)
 
 | LR140 | 2026-11-14 | A call drawn as the site's bold text link with the brand arrow, as a page block (P0.7 C1) | Core Button has only primary and default looks; neither draws DesignUp's Call emphasis="text" | 5 (template part) | none in core: DesignUp Button block variant 'text' renders compounds Call; rule of two, promote when a second template needs it | template part Button 'text' (MoreBlocks.tsx) | E65 | declined (template part) | DesignUp 5938830f | none |

@@ -51,6 +51,8 @@ export interface PageGridRecordRow {
   stack?: PageGridStack;
   /** How the row's cells divide it (LR135): the page's columns when left out; `split`, their spans as shares. */
   gutter?: PageGridGutter;
+  /** A lead row's trail (LR141): its first nested row is a full-width row above the two columns (the breadcrumbs). */
+  trail?: boolean;
   cells: PageGridRecordCell[];
 }
 
