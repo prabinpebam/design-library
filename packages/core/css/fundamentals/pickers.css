@@ -86,7 +86,7 @@
    * Q165, a dropdown trigger's anatomy: the words at the start and the chevron at the trailing edge. The trigger hugs
    * them, or, when its container stretches it, the words take the room and the chevron stays at the edge; never words
    * and chevron centred together. An icon or chevron at the edge sits as far from it as from the top and bottom, measured
-   * to the glyph's ink (Icon's --ink-w and --ink-h), so the trigger has no padding on that side. Not for the list buttons
+   * to the glyph's ink (Icon's --ink-w and --ink-h), so the trigger has no padding on that side; the words keep the trigger's gap from the icon's frame. Not for the list buttons
    * inside a field box, which take the field's cell.
    */
   [data-dl='menu-button'] > [data-dl-part='trigger'] { --menu-button-h: var(--c-menu-button-size); }
@@ -110,12 +110,12 @@
   }
 
   [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:first-child {
-    margin-inline: var(--edge-ink-start) var(--inner-ink-end);
+    margin-inline: var(--edge-ink-start) 0;
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
   }
 
   [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:last-child {
-    margin-inline: var(--inner-ink-start) var(--edge-ink-end);
+    margin-inline: 0 var(--edge-ink-end);
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
   }
 

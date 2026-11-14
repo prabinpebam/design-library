@@ -1311,15 +1311,13 @@
     aspect-ratio: 1;
   }
 
-  /* The outer side's ink inset equals the top and bottom ones; the inner side (a trigger's words) is the trigger's gap from the ink. */
+  /* The outer side's ink inset equals the top and bottom ones; the inner side keeps the component's gap. */
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'] {
     --ink-gap: calc((var(--edge-h) - var(--icon-a) * var(--ink-h, 0.75)) / 2);
     --ink-side: calc(var(--icon-a) * (1 - var(--ink-w, 0.75)) / 2);
     --ink-shift: calc(var(--icon-a) * var(--ink-x, 0));
     --edge-ink-start: calc(var(--ink-gap) - var(--ink-side) - var(--ink-shift));
     --edge-ink-end: calc(var(--ink-gap) - var(--ink-side) + var(--ink-shift));
-    --inner-ink-start: calc(-1 * (var(--ink-side) + var(--ink-shift)));
-    --inner-ink-end: calc(var(--ink-shift) - var(--ink-side));
   }
 
   :is([data-dl='select'], [data-dl='text-field']) [data-dl-part='box'] > [data-dl-part='leading']:first-child > [data-dl='icon'],
