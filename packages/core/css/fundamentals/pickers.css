@@ -82,6 +82,45 @@
     padding-inline: 0;
   }
 
+  /*
+   * Q164: an icon or chevron at the trigger's edge sits (H − A) / 2 from it, as from the top and bottom, at every size.
+   * H is the trigger's size token, A the icon's; the words keep the layer's gap. Not for the list buttons inside a field
+   * box, which take the field's square cell.
+   */
+  [data-dl='menu-button'] > [data-dl-part='trigger'] { --menu-button-h: var(--c-menu-button-size); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xs'] { --menu-button-h: var(--c-menu-button-size-xs); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='s'] { --menu-button-h: var(--c-menu-button-size-s); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='m'] { --menu-button-h: var(--c-menu-button-size-m); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='l'] { --menu-button-h: var(--c-menu-button-size-l); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xl'] { --menu-button-h: var(--c-menu-button-size-xl); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xxl'] { --menu-button-h: var(--c-menu-button-size-xxl); }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='sm']:first-child) { --menu-button-lead: var(--size-icon-sm); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='md']:first-child) { --menu-button-lead: var(--size-icon-md); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='lg']:first-child) { --menu-button-lead: var(--size-icon-lg); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='xl']:first-child) { --menu-button-lead: var(--size-icon-xl); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='sm']:last-child) { --menu-button-trail: var(--size-icon-sm); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='md']:last-child) { --menu-button-trail: var(--size-icon-md); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='lg']:last-child) { --menu-button-trail: var(--size-icon-lg); }
+  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='xl']:last-child) { --menu-button-trail: var(--size-icon-xl); }
+
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]):has(> [data-dl-part='layer'][data-shown] > [data-dl='icon']:first-child) {
+    padding-inline-start: calc((var(--menu-button-h) - 2 * var(--c-menu-button-border-width) - var(--menu-button-lead)) / 2);
+  }
+
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]):has(> [data-dl-part='layer'][data-shown] > [data-dl='icon']:last-child) {
+    padding-inline-end: calc((var(--menu-button-h) - 2 * var(--c-menu-button-border-width) - var(--menu-button-trail)) / 2);
+  }
+
+  /* A trigger stretched wider than its words (a dropdown in a panel's grid) keeps its trailing icon at the edge. */
+  [data-dl='menu-button'] > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer']:has(> [data-dl='icon']:last-child) {
+    justify-self: stretch;
+  }
+
+  [data-dl='menu-button'] > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:last-child:not(:first-child) {
+    margin-inline-start: auto;
+  }
+
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='quiet'] {
     border-color: transparent;
     background-color: transparent;
@@ -423,8 +462,15 @@
     min-block-size: var(--c-list-item-size-s);
   }
 
+  /* Q163: a menu or list popup takes the density of the chrome it opens from. In a compact region (a design tool's
+     panels and toolbar) its items are compact rows, whatever the item's own size. */
+  [data-density='compact'] [data-dl-part='popup'] [data-dl='list-item'] {
+    min-block-size: var(--c-list-item-size-compact);
+  }
+
   @media (pointer: coarse) {
-    [data-dl='list-item'][data-size='s'] {
+    [data-dl='list-item'][data-size='s'],
+    [data-density='compact'] [data-dl-part='popup'] [data-dl='list-item'] {
       min-block-size: var(--c-list-item-size);
     }
   }

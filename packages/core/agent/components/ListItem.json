@@ -211,6 +211,7 @@
     "--c-list-item-preview",
     "--c-list-item-radius",
     "--c-list-item-size",
+    "--c-list-item-size-compact",
     "--c-list-item-size-l",
     "--c-list-item-size-s",
     "--c-list-item-submenu-ink",

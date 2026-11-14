@@ -241,6 +241,7 @@
   --c-list-item-radius: var(--radius-md);
   --c-list-item-preview: var(--size-icon-md);
   --c-list-item-size-s: var(--size-control-sm);
+  --c-list-item-size-compact: var(--size-target-min);
   --c-list-item-size-l: var(--size-control-xl);
   --c-list-item-media: var(--size-icon-lg);
   --c-list-item-media-l: var(--size-control-md);

@@ -150,6 +150,7 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
   const [scrubbing, setScrubbing] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const root = useRef<HTMLSpanElement>(null);
+  const box = useRef<HTMLSpanElement>(null);
   const pause = useRef(0);
   const mixed = current === 'mixed';
   const base = numberOf(current);
@@ -361,7 +362,7 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
     <span {...data} ref={root} data-dl="number-field" data-size={size} data-busy={phase === 'rest' ? undefined : phase} data-invalid={error ? '' : undefined} data-auto={current === 'auto' ? '' : undefined} data-variable={variable ? '' : undefined} data-scrubbing={scrubbing ? '' : undefined}>
       <Field label={label} error={error} hideLabel={hideLabel}>
         {(control) => (
-      <span data-dl-part="box" data-dl-ring="">
+      <span ref={box} data-dl-part="box" data-dl-ring="">
         {handle && (
           <span data-dl-part="scrub" aria-hidden="true" title={`Drag to change ${label}`} onPointerDown={onScrubDown}>
             {glyph ?? (icon && <Icon name={icon} size={iconSize[size]} />)}
@@ -399,6 +400,8 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
             items={presets.map((p) => ({ value: String(p), label: show(p) }))}
             onSelect={(v) => set(Number(v), 'now')}
             disabled={disabled}
+            anchor={box}
+            data-dl-part="presets"
           />
         )}
         {choice && (

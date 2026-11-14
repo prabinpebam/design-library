@@ -1270,6 +1270,58 @@
   }
 
   /*
+   * A field's trailing part (Q164), the leading rule's mirror: a Select's chevron or a NumberField's common-values list
+   * sits in a square cell as tall as the box's inside, with no end padding after it, so the space above, after and below
+   * it is (H − A) / 2 at every size and density. The list button is part of the field: no fill or edge of its own.
+   */
+  :is([data-dl='select'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='box']:has(> :is([data-dl-part='chevron'], [data-dl-part='presets']):last-child) {
+    padding-block: 0;
+    padding-inline-end: 0;
+  }
+
+  :is([data-dl='select'], [data-dl='number-field']) [data-dl-part='box'] > :is([data-dl-part='chevron'], [data-dl-part='presets']):last-child {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    aspect-ratio: 1;
+    inline-size: auto;
+    min-inline-size: 0;
+  }
+
+  /* A text field's trailing icon button (Clear) takes the same square cell at the box's end. */
+  [data-dl='text-field'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box']:is(:has(> [data-dl='button'][data-icon-only]:last-child), :has(> [data-dl='button'][data-icon-only] + [data-dl-part='trailing']:empty:last-child)) {
+    padding-block: 0;
+    padding-inline-end: 0;
+  }
+
+  [data-dl='text-field'] [data-dl-part='box'] > [data-dl='button'][data-icon-only]:is(:last-child, :has(+ [data-dl-part='trailing']:empty:last-child)) {
+    align-self: stretch;
+    aspect-ratio: 1;
+    inline-size: auto;
+    block-size: auto;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger'] {
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: var(--color-text-muted);
+  }
+
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger']:is(:hover, [aria-expanded='true']):enabled {
+    background-color: transparent;
+    color: var(--color-text);
+  }
+
+  /*
    * NumberField (Q40 P2): the text field's label and box (c.field, shared) with a scrub handle before the number and
    * optional steppers after it. Tabular digits so a changing value never shifts.
    */

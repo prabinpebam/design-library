@@ -134,6 +134,11 @@
           "description": "Pins the menu to one width step (Q130, docs/widths.md). Leave out to fit the items, snapped up to `xs`, `sm` or `md`. Pin only so menus that sit together (one toolbar) match, or when the items change while it's open."
         },
         {
+          "name": "anchor",
+          "type": "RefObject<HTMLElement | null>",
+          "description": "What the menu opens against, when the trigger is part of a larger control (a field's list button): the menu aligns to it and is at least as wide. The trigger by default."
+        },
+        {
           "name": "open",
           "type": "boolean",
           "description": "Controlled open state, matching Popover; omit for uncontrolled behaviour."
@@ -330,9 +335,13 @@
     "--color-map-action-fill-pressed",
     "--color-text",
     "--color-text-disabled",
+    "--color-text-muted",
     "--duration-change",
     "--easing-standard",
+    "--size-icon-lg",
+    "--size-icon-md",
     "--size-icon-sm",
+    "--size-icon-xl",
     "--space-margin-page",
     "--state-hover",
     "--state-pressed",
