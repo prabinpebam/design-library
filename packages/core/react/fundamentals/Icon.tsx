@@ -17,6 +17,37 @@ export interface IconProps extends DataAttributes {
 
 const draw = (nodes: IconNode[]): ReactNode[] => nodes.map(([tag, attrs, kids], i) => createElement(tag, { key: i, ...attrs }, kids ? draw(kids) : undefined));
 
+// Q165: a glyph's ink box (its drawn bounds with the stroke, as fractions of the frame), measured once per glyph, for the
+// controls that place an icon at their edge by its ink rather than its frame.
+const inks = new WeakMap<object, { w: number; h: number; x: number; y: number }>();
+const EDGE = "[data-dl='select'], [data-dl='text-field'], [data-dl='number-field'], [data-dl='menu-button']";
+const measureInk = (key: object | undefined) => (el: SVGSVGElement | null) => {
+  if (!el || !key || !el.closest(EDGE)) return;
+  let ink = inks.get(key);
+  if (!ink) {
+    try {
+      const vb = el.viewBox.baseVal;
+      const b = el.getBBox();
+      if (!vb?.width || !b.width) return;
+      const paint = getComputedStyle(el.querySelector('path, circle, rect, line, polyline, polygon, ellipse') ?? el);
+      const stroke = paint.stroke !== 'none' ? parseFloat(paint.strokeWidth) || 0 : 0;
+      ink = {
+        w: Math.min(1, (b.width + stroke) / vb.width),
+        h: Math.min(1, (b.height + stroke) / vb.height),
+        x: (b.x + b.width / 2 - (vb.x + vb.width / 2)) / vb.width,
+        y: (b.y + b.height / 2 - (vb.y + vb.height / 2)) / vb.height,
+      };
+      inks.set(key, ink);
+    } catch {
+      return;
+    }
+  }
+  el.style.setProperty('--ink-w', ink.w.toFixed(4));
+  el.style.setProperty('--ink-h', ink.h.toFixed(4));
+  el.style.setProperty('--ink-x', ink.x.toFixed(4));
+  el.style.setProperty('--ink-y', ink.y.toFixed(4));
+};
+
 /**
  * Shows one semantic icon from the active set, drawn in the current text colour. The library's own outline set is the
  * default; a theme can draw the same names from a curated MIT or Apache-2.0 library (`setIconSet`, owner Q36), and a
@@ -43,7 +74,7 @@ export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
   };
   if (set) {
     return (
-      <svg {...common} data-set="" viewBox={set.glyph.v}>
+      <svg {...common} ref={measureInk(set.glyph)} data-set="" viewBox={set.glyph.v}>
         <g {...set.glyph.g}>{draw(set.glyph.c)}</g>
       </svg>
     );
@@ -52,7 +83,7 @@ export function Icon({ name, label, size = 'md', from, ...data }: IconProps) {
     return <svg {...common} viewBox="0 0 24 24" />;
   }
   return (
-    <svg {...common} viewBox="0 0 24 24">
+    <svg {...common} ref={measureInk(icon)} viewBox="0 0 24 24">
       <path d={icon.d} />
       {icon.fill && <path data-dl-part="fill" d={icon.fill} />}
       {icon.accentFill && <path data-dl-part="accent-fill" d={icon.accentFill} />}

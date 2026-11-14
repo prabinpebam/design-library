@@ -83,9 +83,11 @@
   }
 
   /*
-   * Q164: an icon or chevron at the trigger's edge sits (H − A) / 2 from it, as from the top and bottom, at every size.
-   * H is the trigger's size token, A the icon's; the words keep the layer's gap. Not for the list buttons inside a field
-   * box, which take the field's square cell.
+   * Q165, a dropdown trigger's anatomy: the words at the start and the chevron at the trailing edge. The trigger hugs
+   * them, or, when its container stretches it, the words take the room and the chevron stays at the edge; never words
+   * and chevron centred together. An icon or chevron at the edge sits as far from it as from the top and bottom, measured
+   * to the glyph's ink (Icon's --ink-w and --ink-h), so the trigger has no padding on that side. Not for the list buttons
+   * inside a field box, which take the field's cell.
    */
   [data-dl='menu-button'] > [data-dl-part='trigger'] { --menu-button-h: var(--c-menu-button-size); }
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xs'] { --menu-button-h: var(--c-menu-button-size-xs); }
@@ -95,30 +97,35 @@
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xl'] { --menu-button-h: var(--c-menu-button-size-xl); }
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xxl'] { --menu-button-h: var(--c-menu-button-size-xxl); }
 
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='sm']:first-child) { --menu-button-lead: var(--size-icon-sm); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='md']:first-child) { --menu-button-lead: var(--size-icon-md); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='lg']:first-child) { --menu-button-lead: var(--size-icon-lg); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='xl']:first-child) { --menu-button-lead: var(--size-icon-xl); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='sm']:last-child) { --menu-button-trail: var(--size-icon-sm); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='md']:last-child) { --menu-button-trail: var(--size-icon-md); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='lg']:last-child) { --menu-button-trail: var(--size-icon-lg); }
-  [data-dl='menu-button'] > [data-dl-part='trigger']:has(> [data-dl-part='layer'][data-shown] > [data-dl='icon'][data-size='xl']:last-child) { --menu-button-trail: var(--size-icon-xl); }
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) {
+    --edge-h: calc(var(--menu-button-h) - 2 * var(--c-menu-button-border-width));
+  }
 
   [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]):has(> [data-dl-part='layer'][data-shown] > [data-dl='icon']:first-child) {
-    padding-inline-start: calc((var(--menu-button-h) - 2 * var(--c-menu-button-border-width) - var(--menu-button-lead)) / 2);
+    padding-inline-start: 0;
   }
 
   [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]):has(> [data-dl-part='layer'][data-shown] > [data-dl='icon']:last-child) {
-    padding-inline-end: calc((var(--menu-button-h) - 2 * var(--c-menu-button-border-width) - var(--menu-button-trail)) / 2);
+    padding-inline-end: 0;
   }
 
-  /* A trigger stretched wider than its words (a dropdown in a panel's grid) keeps its trailing icon at the edge. */
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:first-child {
+    margin-inline: var(--edge-ink-start) var(--inner-ink-end);
+    translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:last-child {
+    margin-inline: var(--inner-ink-start) var(--edge-ink-end);
+    translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
   [data-dl='menu-button'] > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer']:has(> [data-dl='icon']:last-child) {
     justify-self: stretch;
   }
 
-  [data-dl='menu-button'] > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:last-child:not(:first-child) {
-    margin-inline-start: auto;
+  [data-dl='menu-button'] > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer']:has(> [data-dl='icon']:last-child) > span:not([data-dl]) {
+    flex: 1 1 auto;
+    text-align: start;
   }
 
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-emphasis='quiet'] {

@@ -1270,10 +1270,34 @@
   }
 
   /*
-   * A field's trailing part (Q164), the leading rule's mirror: a Select's chevron or a NumberField's common-values list
-   * sits in a square cell as tall as the box's inside, with no end padding after it, so the space above, after and below
-   * it is (H − A) / 2 at every size and density. The list button is part of the field: no fill or edge of its own.
+   * Q165, an edge adornment placed by its ink: an icon at a field's start or end (a leading icon, the scrub icon, a
+   * Select's chevron, a NumberField's list chevron) is as far from the box's edge as from its top and bottom, measured to
+   * the glyph's drawn ink (Icon sets --ink-w and --ink-h from the glyph), not to its frame. Its cell hugs it, the box has no
+   * padding on that side, and the icon's inline margins are (inside height − ink height) / 2 less the frame's empty side;
+   * the words keep the box's gap plus that inset. A list chevron is part of the field: no fill or edge of its own.
    */
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field']) {
+    --field-h: var(--c-field-size);
+    --edge-h: calc(var(--field-h) - 2 * var(--c-field-border-width));
+  }
+
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='xs'] { --field-h: var(--c-field-size-xs); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='s'] { --field-h: var(--c-field-size-s); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='m'] { --field-h: var(--c-field-size-m); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='l'] { --field-h: var(--c-field-size-l); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='xl'] { --field-h: var(--c-field-size-xl); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='xxl'] { --field-h: var(--c-field-size-xxl); }
+
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'][data-size='sm'] { --icon-a: var(--size-icon-sm); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'][data-size='md'] { --icon-a: var(--size-icon-md); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'][data-size='lg'] { --icon-a: var(--size-icon-lg); }
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'][data-size='xl'] { --icon-a: var(--size-icon-xl); }
+
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field']) [data-dl-part='box'] > :is([data-dl-part='leading'], [data-dl-part='scrub']):first-child:has(> [data-dl='icon']) {
+    aspect-ratio: auto;
+    min-inline-size: 0;
+  }
+
   :is([data-dl='select'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='box']:has(> :is([data-dl-part='chevron'], [data-dl-part='presets']):last-child) {
     padding-block: 0;
     padding-inline-end: 0;
@@ -1283,14 +1307,33 @@
     display: inline-flex;
     flex: none;
     align-items: center;
-    justify-content: center;
     align-self: stretch;
-    aspect-ratio: 1;
-    inline-size: auto;
-    min-inline-size: 0;
   }
 
-  /* A text field's trailing icon button (Clear) takes the same square cell at the box's end. */
+  /* Outer side: the ink inset equals the top and bottom ones. Inner side: the ink meets the cell, so the words are the box's gap from the ink at either end. */
+  :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'] {
+    --ink-gap: calc((var(--edge-h) - var(--icon-a) * var(--ink-h, 0.75)) / 2);
+    --ink-side: calc(var(--icon-a) * (1 - var(--ink-w, 0.75)) / 2);
+    --ink-shift: calc(var(--icon-a) * var(--ink-x, 0));
+    --edge-ink-start: calc(var(--ink-gap) - var(--ink-side) - var(--ink-shift));
+    --edge-ink-end: calc(var(--ink-gap) - var(--ink-side) + var(--ink-shift));
+    --inner-ink-start: calc(-1 * (var(--ink-side) + var(--ink-shift)));
+    --inner-ink-end: calc(var(--ink-shift) - var(--ink-side));
+  }
+
+  :is([data-dl='select'], [data-dl='text-field']) [data-dl-part='box'] > [data-dl-part='leading']:first-child > [data-dl='icon'],
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='scrub']:first-child > [data-dl='icon'] {
+    margin-inline: var(--edge-ink-start) var(--inner-ink-end);
+    translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
+  [data-dl='select'] [data-dl-part='box'] > [data-dl-part='chevron']:last-child > [data-dl='icon'],
+  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='presets']:last-child > [data-dl-part='trigger'] > [data-dl-part='layer'] > [data-dl='icon'] {
+    margin-inline: var(--inner-ink-start) var(--edge-ink-end);
+    translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
+  /* A text field's trailing icon button (Clear) takes a square cell at the box's end; its glyph's ink is square. */
   [data-dl='text-field'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box']:is(:has(> [data-dl='button'][data-icon-only]:last-child), :has(> [data-dl='button'][data-icon-only] + [data-dl-part='trailing']:empty:last-child)) {
     padding-block: 0;
     padding-inline-end: 0;
@@ -1305,8 +1348,7 @@
     min-block-size: 0;
   }
 
-  [data-dl='number-field'] [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger'] {
-    inline-size: 100%;
+  [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger'] {
     block-size: 100%;
     min-inline-size: 0;
     min-block-size: 0;
@@ -1316,11 +1358,10 @@
     color: var(--color-text-muted);
   }
 
-  [data-dl='number-field'] [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger']:is(:hover, [aria-expanded='true']):enabled {
+  [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger']:is(:hover, [aria-expanded='true']):enabled {
     background-color: transparent;
     color: var(--color-text);
   }
-
   /*
    * NumberField (Q40 P2): the text field's label and box (c.field, shared) with a scrub handle before the number and
    * optional steppers after it. Tabular digits so a changing value never shifts.

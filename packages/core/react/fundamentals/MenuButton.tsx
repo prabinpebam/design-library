@@ -189,6 +189,8 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
   const name = busy ? (pendingLabel ?? label) : label;
   const iconSize = ({ xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' } as const)[size];
   const lead = iconOnly && !avatar ? (icon ?? 'chevron-down') : icon;
+  // A busy trigger with words and a chevron but no leading glyph shows its progress where the chevron was, so both layers are as wide and the words don't move.
+  const busyAtEnd = !iconOnly && chevron && !iconEnd && !avatar && !lead && !flag;
   const avatarSize = ({ xs: 20, s: 24, normal: 32, m: 32, l: 40, xl: 48, xxl: 64 } as const satisfies Record<ButtonSize, AvatarSize>)[size];
   const glyph = (layer: 'rest' | 'on') =>
     layer === 'on' ? <Progress /> : avatar ? <Avatar name={avatar.name} src={avatar.src} size={avatarSize} decorative /> : lead ? <Icon name={lead} size={iconSize} /> : flag && <Flag code={flag} />;
@@ -265,10 +267,10 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
       >
         {(['rest', 'on'] as const).map((layer) => (
           <span key={layer} data-dl-part="layer" data-shown={(layer === 'on') === busy ? '' : undefined}>
-            {!iconEnd && glyph(layer)}
+            {!iconEnd && !(layer === 'on' && busyAtEnd) && glyph(layer)}
             {!iconOnly && <span>{layer === 'on' ? (pendingLabel ?? label) : label}</span>}
             {iconEnd && glyph(layer)}
-            {!iconOnly && chevron && <Icon name="chevron-down" size="sm" />}
+            {!iconOnly && chevron && (layer === 'on' && busyAtEnd ? <Progress /> : <Icon name="chevron-down" size="sm" data-dl-part="chevron" />)}
           </span>
         ))}
         {hint.tip}
