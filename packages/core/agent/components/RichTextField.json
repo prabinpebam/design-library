@@ -72,9 +72,30 @@
         },
         {
           "name": "tools",
-          "type": "Record<RichOperation, string>",
+          "type": "Record<Exclude<RichOperation, 'heading' | 'quote'>, string> & Partial<Record<'heading' | 'quote', string>>",
           "required": true,
           "description": "Localised button names, including their shortcuts."
+        },
+        {
+          "name": "target",
+          "type": "HTMLElement",
+          "description": "Opt-in page editing: a same-origin renderer's text root. Ordinary field markup is unchanged when absent."
+        },
+        {
+          "name": "onClose",
+          "type": "() => void",
+          "description": "Ends target editing after saving or Escape; failed saves keep the editor and Retry."
+        },
+        {
+          "name": "headingLevel",
+          "type": "1 | 2 | 3 | 4 | 5 | 6",
+          "default": "1",
+          "description": "The page's first Markdown heading level (matches RichBlocks). Default 1."
+        },
+        {
+          "name": "operations",
+          "type": "readonly RichOperation[]",
+          "description": "Explicit toolbar operations; the ordinary field keeps its existing three groups by default."
         },
         {
           "name": "words",
@@ -147,11 +168,13 @@
     "--border-hairline",
     "--color-accent",
     "--color-bg-control",
+    "--color-bg-raised",
     "--color-border-control",
     "--color-focus",
     "--color-text",
     "--duration-confirm-read",
     "--font-code",
+    "--layer-popover",
     "--radius-md",
     "--size-control-lg",
     "--size-focus-offset",

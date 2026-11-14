@@ -108,7 +108,7 @@ export interface RichBlocksProps {
 export function RichBlocks({ value, headingLevel = 2 }: RichBlocksProps) {
   const blocks = richBlocks(value ?? '');
   if (!blocks.length) return null;
-  return <Stack gap="group">{blocks.map((block, n) => {
+  return <Stack gap="group" data-rich-text="">{blocks.map((block, n) => {
     switch (block.kind) {
       case 'heading': {
         const level = Math.min(6, headingLevel + block.depth - 1) as 1 | 2 | 3 | 4 | 5 | 6;

@@ -1,5 +1,5 @@
 /** A rich field's portable Markdown subset. Raw HTML is always text; DOM input is reduced to safe paragraphs, lists and marks. */
-export type RichOperation = 'bold' | 'italic' | 'strikethrough' | 'code' | 'link' | 'bulleted' | 'numbered' | 'outdent' | 'indent';
+export type RichOperation = 'bold' | 'italic' | 'strikethrough' | 'code' | 'link' | 'bulleted' | 'numbered' | 'outdent' | 'indent' | 'heading' | 'quote';
 export const richGroups: readonly (readonly RichOperation[])[] = [
   ['bold', 'italic', 'strikethrough'], ['code', 'link'], ['bulleted', 'numbered', 'outdent', 'indent'],
 ];
@@ -77,7 +77,7 @@ function inlineHtml(text: string): string {
 }
 
 /** Markdown to safe editable HTML, with arbitrary nested unordered/ordered lists. */
-export function richFieldHtml(markdown: string): string {
+export function richFieldHtml(markdown: string, headingLevel = 1): string {
   if (!markdown.trim()) return '';
   const lines = markdown.replace(/\r\n?/g, '\n').split('\n');
   const item = (line: string) => /^([ \t]*)([-+*]|\d+[.)]) +(.*)$/.exec(line);
@@ -102,12 +102,24 @@ export function richFieldHtml(markdown: string): string {
     return `${html}</${tag}>`;
   };
   let html = '';
+  const heading = (line: string) => /^(#{1,6})\s+(.+?)\s*#*\s*$/.exec(line);
+  const quote = (line: string) => /^>\s?(.*)$/.exec(line);
   while (at < lines.length) {
     if (!lines[at].trim()) { at++; continue; }
     const row = item(lines[at]);
     if (row) { html += list(indent(row[1])); continue; }
+    const h = heading(lines[at]);
+    if (h) {
+      const level = Math.min(6, headingLevel + h[1].length - 1);
+      html += `<h${level}>${inlineHtml(h[2])}</h${level}>`; at++; continue;
+    }
+    if (quote(lines[at])) {
+      const words: string[] = [];
+      while (at < lines.length && quote(lines[at])) words.push(quote(lines[at++])![1]);
+      html += `<blockquote><p>${inlineHtml(words.join('\n'))}</p></blockquote>`; continue;
+    }
     const paragraph: string[] = [];
-    while (at < lines.length && lines[at].trim() && !item(lines[at])) paragraph.push(lines[at++]);
+    while (at < lines.length && lines[at].trim() && !item(lines[at]) && !heading(lines[at]) && !quote(lines[at])) paragraph.push(lines[at++]);
     html += `<p>${inlineHtml(paragraph.join('\n'))}</p>`;
   }
   return html;
@@ -144,7 +156,7 @@ function inlineMarkdown(n: RichFieldNode): string {
 }
 
 /** Editable or pasted DOM to canonical Markdown; unsupported containers keep their words, never their attributes. */
-export function richFieldMarkdown(root: RichFieldNode): string {
+export function richFieldMarkdown(root: RichFieldNode, headingLevel = 1): string {
   const list = (node: RichFieldNode, depth: number): string => {
     let index = 0;
     return children(node).flatMap(li => {
@@ -164,7 +176,15 @@ export function richFieldMarkdown(root: RichFieldNode): string {
   for (const n of children(root)) {
     if (skipped.has(n.nodeName)) continue;
     if (isList(n)) { flush(); result.push(list(n, 0)); }
-    else if (blocks.has(n.nodeName)) { flush(); const value = richFieldMarkdown(n); if (value) result.push(value); }
+    else if (blocks.has(n.nodeName)) {
+      flush();
+      const value = richFieldMarkdown(n, headingLevel);
+      if (value) {
+        if (/^H[1-6]$/.test(n.nodeName)) result.push(`${'#'.repeat(Math.max(1, Number(n.nodeName[1]) - headingLevel + 1))} ${value}`);
+        else if (n.nodeName === 'BLOCKQUOTE') result.push(value.split('\n').map(line => `> ${line}`).join('\n'));
+        else result.push(value);
+      }
+    }
     else inline += inlineMarkdown(n);
   }
   flush();
