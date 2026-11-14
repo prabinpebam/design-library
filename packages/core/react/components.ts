@@ -53,6 +53,8 @@ export { StickyBar } from './layouts/StickyBar';
 export type { StickyBarProps } from './layouts/StickyBar';
 export { PageGrid, PAGE_GRID_COLUMNS, PAGE_GRID_SPLITS, pageGridSpans, pageGridSplits, pageGridProblems } from './layouts/PageGrid';
 export type { PageGridProps, PageGridRow, PageGridCell, PageGridSplit, PageGridGap, PageGridEdge, PageGridTarget } from './layouts/PageGrid';
+export { PageBoxes, PageBoxStyles } from './layouts/PageBoxes';
+export type { PageBoxesProps, PageBoxStylesProps, Box, PageBox, BoxTag, BoxBreakpoint, BoxStyle, BoxStyles } from './layouts/PageBoxes';
 export type { ListDetailProps } from './layouts/ListDetail';
 export { Footer } from './compounds/Footer';
 export { Hero } from './layouts/Hero';

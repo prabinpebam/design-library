@@ -14,6 +14,8 @@ export interface PageGridCell {
    * a row's spans add up to its span. A row of one cell may leave it out (the whole span).
    */
   span?: number;
+  /** The cell's in-page address (LR156): drawn as its element's `id`, so `#anchor` links land on it. None by default. */
+  anchor?: string;
   /** Rows inside the cell, each dividing the cell's span again. Without rows the cell is a slot: `renderSlot` fills it. */
   rows?: PageGridRow[];
 }
@@ -21,6 +23,8 @@ export interface PageGridCell {
 export interface PageGridRow {
   /** Stable id: the key, and `data-row` on the row. */
   id: string;
+  /** The row's in-page address (LR156): drawn as its element's `id`, so `#anchor` links land on it. None by default. */
+  anchor?: string;
   /** @deprecated Give the cells `span`s. A preset division of the row's span, still read. */
   split?: PageGridSplit;
   /** The space above the row; the first row of a group has none (default `section`; `none` is exactly 0, LR127). */
@@ -129,7 +133,7 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
     const shares = row.gutter && spans && columns > 1 ? ({ '--dl-page-grid-shares': spans.map((s) => `minmax(0, ${s}fr)`).join(' ') } as CSSProperties) : undefined;
     let start = 0;
     return (
-      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-trail={row.frame === 'lead' && row.trail ? '' : undefined} data-stack={row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
+      <div key={row.id} id={row.anchor || undefined} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-trail={row.frame === 'lead' && row.trail ? '' : undefined} data-stack={row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
         <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined} style={shares}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;
@@ -140,6 +144,7 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
             return (
               <div
                 key={cell.id}
+                id={cell.anchor || undefined}
                 data-dl-part="page-cell"
                 data-cell={cell.id}
                 data-span={columns > 1 ? own : 1}

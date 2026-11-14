@@ -33,6 +33,8 @@ export interface PageGridRecordCell {
   id: string;
   /** The page columns the cell spans (absolute at every depth); its row's spans add up to the row's span. */
   span?: number;
+  /** The cell's in-page address (LR156), drawn as its element's `id`. */
+  anchor?: string;
   /** The index in the page's `sections` this cell places; neither this nor `rows`: an empty slot. */
   section?: number;
   /** Rows inside the cell, dividing its span again. */
@@ -42,6 +44,8 @@ export interface PageGridRecordCell {
 export interface PageGridRecordRow {
   /** Unique in the page's grid. */
   id: string;
+  /** The row's in-page address (LR156), drawn as its element's `id`. */
+  anchor?: string;
   /** @deprecated Use the cells' `span`s. */
   split?: PageGridSplit;
   gap?: PageGridRowGap;

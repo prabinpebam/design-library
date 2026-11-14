@@ -27,6 +27,7 @@
     "./icons": "./icons/sets.ts",
     "./colour": "./colour/index.mjs",
     "./page-grid": "./render/page-grid-model.mjs",
+    "./page-box": "./render/page-box-model.mjs",
     "./render": "./render/index.ts",
     "./presets": "./presets/index.ts",
     "./theme": "./theme/index.ts",

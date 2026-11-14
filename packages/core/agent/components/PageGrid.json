@@ -72,6 +72,11 @@
           "description": "The page columns the cell spans (absolute at every depth, at least 3 of 12 where a row has more than one cell); a row's spans add up to its span. A row of one cell may leave it out (the whole span)."
         },
         {
+          "name": "anchor",
+          "type": "string",
+          "description": "The cell's in-page address (LR156): drawn as its element's `id`, so `#anchor` links land on it. None by default."
+        },
+        {
           "name": "rows",
           "type": "PageGridRow[]",
           "description": "Rows inside the cell, each dividing the cell's span again. Without rows the cell is a slot: `renderSlot` fills it."
@@ -86,6 +91,11 @@
           "type": "string",
           "required": true,
           "description": "Stable id: the key, and `data-row` on the row."
+        },
+        {
+          "name": "anchor",
+          "type": "string",
+          "description": "The row's in-page address (LR156): drawn as its element's `id`, so `#anchor` links land on it. None by default."
         },
         {
           "name": "split",
