@@ -100,7 +100,7 @@
         {
           "name": "frame",
           "type": "PageGridFrame",
-          "description": "The band look (LR129): `band` adds the frame's space above and below; `tint` also its surface. None by default."
+          "description": "The row's look (LR129, LR132): `band` adds the frame's space above and below; `tint` also its surface; `lead` is a page opening: its first nested row two columns (`--c-page-grid-lead-start`, then the rest) pulled up and running past the end, the rows under it lifted under both; it stacks in a narrow row or a short window. None by default."
         },
         {
           "name": "cells",
@@ -139,6 +139,10 @@
     "--c-page-grid-gap-page",
     "--c-page-grid-gap-section",
     "--c-page-grid-gutter",
+    "--c-page-grid-lead-bleed",
+    "--c-page-grid-lead-lift",
+    "--c-page-grid-lead-pull",
+    "--c-page-grid-lead-stack-gap",
     "--c-page-grid-selected-color",
     "--c-page-grid-selected-offset",
     "--c-page-grid-selected-width",
@@ -174,6 +178,30 @@
       "var": "--c-page-grid-frame-radius",
       "default": "0.5rem",
       "description": "A tint frame's corners (LR129; default radius.md)."
+    },
+    {
+      "var": "--c-page-grid-lead-start",
+      "description": "A lead row's start column, as a grid track (LR132; default 1fr, the end column is always 1fr). A template sets its opening's words share, such as 0.44fr."
+    },
+    {
+      "var": "--c-page-grid-lead-pull",
+      "default": "0px",
+      "description": "How far a lead row is pulled up into the space above it (LR132; default 0). A template whose opening meets the header sets its page top."
+    },
+    {
+      "var": "--c-page-grid-lead-bleed",
+      "default": "0px",
+      "description": "How far a lead row's columns run past the column's end (LR132; default 0); the rows under them stay in the column."
+    },
+    {
+      "var": "--c-page-grid-lead-lift",
+      "default": "1rem",
+      "description": "Between a lead row's two columns and each row under them (LR132; default space.stack-group)."
+    },
+    {
+      "var": "--c-page-grid-lead-stack-gap",
+      "default": "2rem",
+      "description": "Between a lead row's columns once they stack (LR132; default space.stack-section)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/pagegrid",
