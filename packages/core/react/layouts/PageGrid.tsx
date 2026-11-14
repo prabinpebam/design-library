@@ -71,8 +71,8 @@ export interface PageGridProps extends DataAttributes {
   /** The space below the last row (LR91); none by default. */
   end?: PageGridGap;
   /**
-   * The grid sits in a gap-free group with its neighbouring regions of a SiteLayout column (Stack gap="none", LR127): a
-   * named `start` or `end` then also carries the column's gap, so it measures as before, and none is exactly 0. Off by default.
+   * @deprecated No effect since LR131: an edge step always measures as the same step between rows, also when the grid
+   * sits in a gap-free group with its neighbouring regions (LR127); none is exactly 0.
    */
   layoutEdges?: boolean;
 }
@@ -98,10 +98,12 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
     const spans = rowSpans(row, span);
     // How many of the narrowest cell fit across the row: the row stacks below that many column minimums.
     const narrowest = spans ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
+    // One cell is one column: its span's gutters alone would be wider than a phone's column (LR130).
+    const columns = spans && row.cells.length > 1 ? span : 1;
     let start = 0;
     return (
       <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
-        <div data-dl-part="page-columns" data-columns={spans ? span : 1} data-narrowest={narrowest > 1 ? narrowest : undefined}>
+        <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;
             const at = start;
@@ -113,8 +115,8 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
                 key={cell.id}
                 data-dl-part="page-cell"
                 data-cell={cell.id}
-                data-span={spans ? own : 1}
-                data-start={spans ? at : undefined}
+                data-span={columns > 1 ? own : 1}
+                data-start={columns > 1 ? at : undefined}
                 data-empty={empty ? '' : undefined}
                 data-selected={selected === cell.id ? '' : undefined}
               >

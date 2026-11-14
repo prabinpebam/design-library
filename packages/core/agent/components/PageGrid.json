@@ -53,7 +53,7 @@
         {
           "name": "layoutEdges",
           "type": "boolean",
-          "description": "The grid sits in a gap-free group with its neighbouring regions of a SiteLayout column (Stack gap=\"none\", LR127): a named `start` or `end` then also carries the column's gap, so it measures as before, and none is exactly 0. Off by default."
+          "description": "Deprecated, no effect since LR131: an edge step always measures as the same step between rows, also when the grid sits in a gap-free group with its neighbouring regions (LR127); none is exactly 0."
         }
       ]
     },
