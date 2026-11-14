@@ -158,6 +158,8 @@
     --c-field-underline-line: var(--color-border);
     --c-field-underline-line-focus: var(--color-focus);
     --c-page-grid-selected-color: var(--color-accent);
+    --c-page-grid-frame-fill: var(--color-bg-sunken);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-screen-preview-radius: var(--radius-md);
     --c-chat-layout-sidebar-fill: var(--color-bg-sunken);
     --c-chat-message-bubble-fill: var(--color-bg-tint);
@@ -352,6 +354,7 @@
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
@@ -411,6 +414,7 @@
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
@@ -470,6 +474,7 @@
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
@@ -529,6 +534,7 @@
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
@@ -588,6 +594,7 @@
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-radio-group-tile-radius: var(--radius-md);
@@ -645,6 +652,7 @@
     --c-media-player-radius: var(--radius-lg);
     --c-menu-button-radius: var(--radius-md);
     --c-navigation-item-radius: var(--radius-md);
+    --c-page-grid-frame-radius: var(--radius-md);
     --c-pagination-radius: var(--radius-md);
     --c-popup-radius: var(--radius-md);
     --c-quote-text-size-s: var(--type-body-size);

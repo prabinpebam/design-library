@@ -53,7 +53,12 @@
     "--c-list-tile-radius": "A tile's corners (default radius.md, a control's). A theme whose surfaces are squarer sets var(--radius-sm)."
   },
   "PageGrid": {
-    "--c-page-grid-empty-size": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in."
+    "--c-page-grid-empty-size": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in.",
+    "--c-page-grid-frame-inset": "Above and below a framed row's content (LR129; default space.stack-section). A template whose bands have their own rhythm sets its band padding.",
+    "--c-page-grid-frame-gap": "Between rows inside a framed row that leave their gap unset (LR129; default space.stack-group). A template sets its band's stack gap.",
+    "--c-page-grid-frame-fill": "A tint frame's surface (LR129; default color.bg-sunken). A template sets its tint.",
+    "--c-page-grid-frame-fill-inset": "A tint frame's inline inset (LR129; default space.inset-lg).",
+    "--c-page-grid-frame-radius": "A tint frame's corners (LR129; default radius.md)."
   },
   "ScreenPreview": {
     "--c-screen-preview-desktop": "The least width a screen is laid out at with width desktop, scaled down to fit a narrower window (default 80rem, 1280 px). A canvas that shows small text sets a narrower desktop (64rem) for a larger scale."

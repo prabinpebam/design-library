@@ -6,6 +6,9 @@ export type PageGridGap = 'item' | 'group' | 'section' | 'page';
 /** A row's space above: a stack step, or `none` for exactly 0 (LR127). */
 export type PageGridRowGap = PageGridGap | 'none';
 
+/** A row's band look (LR129). */
+export type PageGridFrame = 'band' | 'tint';
+
 /** @deprecated The older preset splits (LR15); a row's cells carry `span`s instead. Still read and converted. */
 export type PageGridSplit = 'whole' | 'halves' | 'thirds' | 'quarters' | 'two-thirds-start' | 'two-thirds-end';
 
@@ -26,6 +29,8 @@ export interface PageGridRecordRow {
   /** @deprecated Use the cells' `span`s. */
   split?: PageGridSplit;
   gap?: PageGridRowGap;
+  /** The band look (LR129): `band` adds the frame's space above and below; `tint` also its surface. None by default. */
+  frame?: PageGridFrame;
   cells: PageGridRecordCell[];
 }
 

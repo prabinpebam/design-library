@@ -19,6 +19,8 @@ export const PAGE_GRID_DEPTH = 3;
 export const PAGE_GRID_GAPS = ['item', 'group', 'section', 'page'];
 /** A row's gap values: `none` is exactly 0 (LR127); left out it is section. */
 export const PAGE_GRID_ROW_GAPS = ['none', ...PAGE_GRID_GAPS];
+/** A row's band look (LR129): left out, none. */
+export const PAGE_GRID_FRAMES = ['band', 'tint'];
 
 /** @deprecated The older preset splits (LR15), each a list of shares of the parent's span; converted to spans. */
 export const PAGE_GRID_SPLIT_SHARES = {
@@ -80,6 +82,7 @@ export function pageGridRecordProblems(grid, sections, options = {}) {
       if (!isObject(row) || !Array.isArray(row.cells) || !row.cells.length) return issues.push({ at: here, what: 'needs an id and cells' });
       id(row.id, here);
       if (row.gap !== undefined && !PAGE_GRID_ROW_GAPS.includes(row.gap)) issues.push({ at: `${here}/gap`, what: `needs one of: ${PAGE_GRID_ROW_GAPS.join(', ')}` });
+      if (row.frame !== undefined && !PAGE_GRID_FRAMES.includes(row.frame)) issues.push({ at: `${here}/frame`, what: `needs one of: ${PAGE_GRID_FRAMES.join(', ')}` });
       const spans = rowSpans(row, span);
       const own = row.cells.some((c) => isObject(c) && c.span !== undefined);
       if (!spans) {

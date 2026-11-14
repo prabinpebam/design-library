@@ -1200,6 +1200,21 @@
       "$extensions": {
         "owner": "PageGrid"
       },
+      "frame-fill-inset": {
+        "$type": "dimension",
+        "$value": "{space.inset-lg}",
+        "$description": "A tint frame's inline inset, inside its surface (LR129, theme setting) (echoed for space contexts)"
+      },
+      "frame-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between the rows inside a framed row that leave their gap unset (LR129, theme setting) (echoed for space contexts)"
+      },
+      "frame-inset": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Above and below the content of a framed row (frame band or tint, LR129); 0 on a side whose boundary is None (theme setting) (echoed for space contexts)"
+      },
       "gap-group": {
         "$type": "dimension",
         "$value": "{space.stack-group}",

@@ -406,6 +406,16 @@
         "$description": "Corners of an item's hover, pressed and current fills; the whole shape, never one side (echoed for shape contexts)"
       }
     },
+    "page-grid": {
+      "$extensions": {
+        "owner": "PageGrid"
+      },
+      "frame-radius": {
+        "$type": "dimension",
+        "$value": "{radius.md}",
+        "$description": "A tint frame's corners (LR129, theme setting) (echoed for shape contexts)"
+      }
+    },
     "pagination": {
       "$extensions": {
         "owner": "Pagination"

@@ -42,6 +42,19 @@
   :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'][data-gap='page'] { margin-block-start: var(--c-page-grid-gap-page); }
   /* None is exactly 0 (LR127). */
   :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'][data-gap='none'] { margin-block-start: 0; }
+  /* Rows inside a framed row that leave their gap unset: the frame's own step (LR129). */
+  :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row'][data-gap='frame'] { margin-block-start: var(--c-page-grid-frame-gap); }
+
+  /* The band look (LR129): a framed row's own space above and below its content, and a tint's surface; 0 on a side whose
+     boundary is None. */
+  [data-dl-part='page-row'][data-frame] { padding-block: var(--c-page-grid-frame-inset); }
+  [data-dl-part='page-row'][data-frame='tint'] {
+    background: var(--c-page-grid-frame-fill);
+    padding-inline: var(--c-page-grid-frame-fill-inset);
+    border-radius: var(--c-page-grid-frame-radius);
+  }
+  [data-dl-part='page-row'][data-frame][data-flush-start] { padding-block-start: 0; }
+  [data-dl-part='page-row'][data-frame][data-flush-end] { padding-block-end: 0; }
 
   /* The first row of the page, or of a cell, starts where it is placed. */
   :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row']:first-child {

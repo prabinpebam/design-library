@@ -1,10 +1,10 @@
 import type { MouseEvent, ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { PAGE_GRID_COLUMNS, PAGE_GRID_SPLIT_SHARES, pageGridRecordProblems, rowSpans, splitSpans } from '../../render/page-grid-model.mjs';
-import type { PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
+import type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
 
 export { PAGE_GRID_COLUMNS, PAGE_GRID_MIN_SPAN } from '../../render/page-grid-model.mjs';
-export type { PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
+export type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
 
 export interface PageGridCell {
   /** Stable id: the key, and `data-cell` on the cell for an editor to find it. */
@@ -25,6 +25,8 @@ export interface PageGridRow {
   split?: PageGridSplit;
   /** The space above the row; the first row of a group has none (default `section`; `none` is exactly 0, LR127). */
   gap?: PageGridRowGap;
+  /** The band look (LR129): `band` adds the frame's space above and below; `tint` also its surface. None by default. */
+  frame?: PageGridFrame;
   /** The row's cells in reading order. */
   cells: PageGridCell[];
 }
@@ -81,8 +83,16 @@ export interface PageGridTarget {
   id: string;
 }
 
-function Rows({ rows, span, renderSlot, selected }: { rows: PageGridRow[]; span: number; renderSlot: PageGridProps['renderSlot']; selected?: string }) {
-  return rows.map((row) => {
+/** Whether each side of a list of rows meets a None boundary: start and nd are the list's own edges (LR129). */
+type Edges = { start: boolean; end: boolean; framed: boolean };
+
+function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: false, framed: false } }: { rows: PageGridRow[]; span: number; renderSlot: PageGridProps['renderSlot']; selected?: string; edges?: Edges }) {
+  return rows.map((row, index) => {
+    // A frame's padding is 0 on a side whose boundary is None: the row's own gap above, the next row's below (LR127, LR129).
+    const flushStart = index === 0 ? edges.start : row.gap === 'none';
+    const flushEnd = index === rows.length - 1 ? edges.end : rows[index + 1].gap === 'none';
+    // Inside a framed row, rows that leave their gap unset sit the frame's own step apart (LR129).
+    const gap = row.gap ?? (edges.framed ? 'frame' : 'section');
     // Spans that don't add up to the row's span (or a deprecated split its span doesn't allow) stack the cells whole
     // rather than guessing.
     const spans = rowSpans(row, span);
@@ -90,7 +100,7 @@ function Rows({ rows, span, renderSlot, selected }: { rows: PageGridRow[]; span:
     const narrowest = spans ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
     let start = 0;
     return (
-      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={row.gap ?? 'section'} data-selected={selected === row.id ? '' : undefined}>
+      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
         <div data-dl-part="page-columns" data-columns={spans ? span : 1} data-narrowest={narrowest > 1 ? narrowest : undefined}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;
@@ -108,7 +118,7 @@ function Rows({ rows, span, renderSlot, selected }: { rows: PageGridRow[]; span:
                 data-empty={empty ? '' : undefined}
                 data-selected={selected === cell.id ? '' : undefined}
               >
-                {cell.rows ? <Rows rows={cell.rows} span={own} renderSlot={renderSlot} selected={selected} /> : slot}
+                {cell.rows ? <Rows rows={cell.rows} span={own} renderSlot={renderSlot} selected={selected} edges={{ start: !row.frame && flushStart, end: !row.frame && flushEnd, framed: !!row.frame || edges.framed }} /> : slot}
               </div>
             );
           })}
@@ -144,7 +154,7 @@ export function PageGrid({ rows, renderSlot, selected, onSelect, start, end, lay
   };
   return (
     <div {...data} data-dl="page-grid" data-start={start} data-end={end} data-layout-edges={layoutEdges ? '' : undefined} data-selectable={onSelect ? '' : undefined} onClick={onSelect ? pick : undefined}>
-      <Rows rows={rows} span={PAGE_GRID_COLUMNS} renderSlot={renderSlot} selected={selected} />
+      <Rows rows={rows} span={PAGE_GRID_COLUMNS} renderSlot={renderSlot} selected={selected} edges={{ start: !start, end: !end, framed: false }} />
     </div>
   );
 }

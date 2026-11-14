@@ -98,6 +98,11 @@
           "description": "The space above the row; the first row of a group has none (default `section`; `none` is exactly 0, LR127)."
         },
         {
+          "name": "frame",
+          "type": "PageGridFrame",
+          "description": "The band look (LR129): `band` adds the frame's space above and below; `tint` also its surface. None by default."
+        },
+        {
           "name": "cells",
           "type": "PageGridCell[]",
           "required": true,
@@ -124,6 +129,11 @@
   "uses": [],
   "tokens": [
     "--c-page-grid-empty-size",
+    "--c-page-grid-frame-fill",
+    "--c-page-grid-frame-fill-inset",
+    "--c-page-grid-frame-gap",
+    "--c-page-grid-frame-inset",
+    "--c-page-grid-frame-radius",
     "--c-page-grid-gap-group",
     "--c-page-grid-gap-item",
     "--c-page-grid-gap-page",
@@ -139,6 +149,31 @@
       "var": "--c-page-grid-empty-size",
       "default": "0px",
       "description": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in."
+    },
+    {
+      "var": "--c-page-grid-frame-inset",
+      "default": "2rem",
+      "description": "Above and below a framed row's content (LR129; default space.stack-section). A template whose bands have their own rhythm sets its band padding."
+    },
+    {
+      "var": "--c-page-grid-frame-gap",
+      "default": "1rem",
+      "description": "Between rows inside a framed row that leave their gap unset (LR129; default space.stack-group). A template sets its band's stack gap."
+    },
+    {
+      "var": "--c-page-grid-frame-fill",
+      "default": "#f4f4f6",
+      "description": "A tint frame's surface (LR129; default color.bg-sunken). A template sets its tint."
+    },
+    {
+      "var": "--c-page-grid-frame-fill-inset",
+      "default": "1.5rem",
+      "description": "A tint frame's inline inset (LR129; default space.inset-lg)."
+    },
+    {
+      "var": "--c-page-grid-frame-radius",
+      "default": "0.5rem",
+      "description": "A tint frame's corners (LR129; default radius.md)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/pagegrid",
