@@ -1,10 +1,10 @@
 import type { MouseEvent, ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { PAGE_GRID_COLUMNS, PAGE_GRID_SPLIT_SHARES, pageGridRecordProblems, rowSpans, splitSpans } from '../../render/page-grid-model.mjs';
-import type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
+import type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack } from '../../render/page-grid-model.mjs';
 
 export { PAGE_GRID_COLUMNS, PAGE_GRID_MIN_SPAN } from '../../render/page-grid-model.mjs';
-export type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
+export type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack } from '../../render/page-grid-model.mjs';
 
 export interface PageGridCell {
   /** Stable id: the key, and `data-cell` on the cell for an editor to find it. */
@@ -31,6 +31,11 @@ export interface PageGridRow {
    * past the end, the rows under it lifted under both; it stacks in a narrow row or a short window. None by default.
    */
   frame?: PageGridFrame;
+  /**
+   * Where the row's cells stack (LR134): left out, when its narrowest cell would be under size.column-min; `window`, only
+   * in a narrow window (width < 43.75em) or a short one (height < 30em), whatever the cells' widths.
+   */
+  stack?: PageGridStack;
   /** The row's cells in reading order. */
   cells: PageGridCell[];
 }
@@ -101,12 +106,12 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
     // rather than guessing.
     const spans = rowSpans(row, span);
     // How many of the narrowest cell fit across the row: the row stacks below that many column minimums.
-    const narrowest = spans ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
+    const narrowest = spans && !row.stack ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
     // One cell is one column: its span's gutters alone would be wider than a phone's column (LR130).
     const columns = spans && row.cells.length > 1 ? span : 1;
     let start = 0;
     return (
-      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
+      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-stack={row.stack} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
         <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;

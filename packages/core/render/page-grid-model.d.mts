@@ -9,6 +9,12 @@ export type PageGridRowGap = PageGridGap | 'none';
 /** A row's band look (LR129). */
 export type PageGridFrame = 'band' | 'tint' | 'lead';
 
+/**
+ * Where a row's cells stack (LR134). Left out, when its narrowest cell would be under size.column-min; `window`, only
+ * in a narrow window (width < 43.75em) or a short one (height < 30em), as a two-column band beside its picture does.
+ */
+export type PageGridStack = 'window';
+
 /** @deprecated The older preset splits (LR15); a row's cells carry `span`s instead. Still read and converted. */
 export type PageGridSplit = 'whole' | 'halves' | 'thirds' | 'quarters' | 'two-thirds-start' | 'two-thirds-end';
 
@@ -31,6 +37,8 @@ export interface PageGridRecordRow {
   gap?: PageGridRowGap;
   /** The band look (LR129): `band` adds the frame's space above and below; `tint` also its surface. None by default. */
   frame?: PageGridFrame;
+  /** Where the row's cells stack (LR134): by its narrowest cell when left out; `window`, only in a narrow or short window. */
+  stack?: PageGridStack;
   cells: PageGridRecordCell[];
 }
 
@@ -90,6 +98,8 @@ export declare const PAGE_GRID_DEPTH: 3;
 export declare const PAGE_GRID_GAPS: readonly PageGridGap[];
 /** A row's gap values: `none` (exactly 0, LR127) and the stack steps. */
 export declare const PAGE_GRID_ROW_GAPS: readonly PageGridRowGap[];
+/** A row's stack values (LR134). */
+export declare const PAGE_GRID_STACKS: readonly PageGridStack[];
 /** @deprecated The older preset splits' shares. */
 export declare const PAGE_GRID_SPLIT_SHARES: Readonly<Record<PageGridSplit, readonly number[]>>;
 

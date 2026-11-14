@@ -158,4 +158,12 @@
     [data-dl-part='page-columns'][data-narrowest='4'] { --dl-page-grid-columns: 1; }
     [data-dl-part='page-columns'][data-narrowest='4'] > [data-dl-part='page-cell'] { grid-column: 1 / -1; }
   }
+
+  /* A row that stacks by the window (LR134, opt-in): two or more columns whatever the cells' widths, one column only in a
+     narrow window or a short one. 43.75em is where DesignUp's two-column bands (a heading and words beside a picture)
+     have always stacked. */
+  @media (width < 43.75em), (height < 30em) {
+    [data-dl-part='page-row'][data-stack='window'] > [data-dl-part='page-columns'] { --dl-page-grid-columns: 1; }
+    [data-dl-part='page-row'][data-stack='window'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] { grid-column: 1 / -1; }
+  }
 }

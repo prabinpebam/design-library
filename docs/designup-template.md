@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR134: a row that stacks by the window (14 November 2026)
+
+DesignUp P0.7 ("A relationship, not a speaking slot" from generic blocks, C13 17:02). A 5/7 row stacked at container width 51rem or less (816 px), because `data-narrowest` rounds a 5-column cell up to a third (ceil(12/5) = 3). DesignUp's two-column band (its Split, a heading and words beside a picture) stays two columns down to a 700 px window and stacks in a short window; at 834 the generic row was stacked and 400 px taller. A real-share threshold wouldn't match either: core's container thresholds are fixed rems, and the Split's rule is the window, not a column minimum (a real 5/12 share stacks at a 648 px row, about a 714 px window). Core API, opt-in: PageGridRow `stack: 'window'` renders `data-stack` and no `data-narrowest`; the row's cells stack only at `(width < 43.75em), (height < 30em)`. Rows without it are unchanged. Measured in DesignUp's harness against /#/sponsor: stacked at 699, two columns at 700 and 701, stacked at 1440x420 and 844x390, as today.
+
+| LR134 | 2026-11-14 | A two-column row stacks where DesignUp's bands do (by the window) | A row stacks only by its narrowest cell against fixed container thresholds; a 5/7 row stacks at 816 px | 6 | opt-in row `stack: 'window'` | none | E64 | shipped | | none |
+
 ### LR133: a one-cell row inside a wider row's cell is one column (14 November 2026)
 
 DesignUp P0.7 ("A relationship, not a speaking slot" from generic blocks, C13 17:02). LR130 made a one-cell row one column (`data-columns="1"`, `data-span="1"`) but set no value for either, so a one-cell row nested in a cell of a multi-cell row inherited that row's `--dl-page-grid-columns` (12) and its cell's `--dl-page-grid-span` (5): the nested block took 5/12 of its own cell (203 px instead of 540 px at 1440). Fix, no API: `[data-columns='1']` sets 1 column and `[data-span='1']` a span of 1. Measured on DesignUp's Sponsor page at 1440/834/375: same height, 181 of 183 boxes 0 px (the other two are the depth parallax layers, which move by the same amount between two identical runs).
