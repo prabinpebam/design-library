@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { DragEvent, KeyboardEvent, ReactNode } from 'react';
 import { ListItem } from './ListItem';
 import type { ListItemProps } from './ListItem';
 import { MenuButton } from './MenuButton';
@@ -48,10 +48,17 @@ export interface ActionListProps extends DataAttributes {
 }
 
 /** One action of an action list: an id, what ListItem draws, and what it does. */
-export interface ListAction extends Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing' | 'nameLines' | 'current'> {
+export interface ListAction extends Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing' | 'nameLines' | 'current' | 'hint'> {
   id: string;
   /** Runs the action or opens the deeper level. */
   onSelect: () => void;
+  /**
+   * Opt-in (LR165): the item can be dragged out of the list (an Add panel's tile onto a page): set what it carries on
+   * `event.dataTransfer`. A press without a drag still runs `onSelect`; the keyboard is unchanged.
+   */
+  onDragStart?: (event: DragEvent<HTMLElement>) => void;
+  /** The drag ended, dropped or not. */
+  onDragEnd?: (event: DragEvent<HTMLElement>) => void;
 }
 
 /** A titled group of actions; the heading may be left out when dividers separate the groups. */
@@ -360,8 +367,9 @@ function GridList({ label, rows, selection = 'none', value = [], onChange, size,
 function ActionList({ label, actions, groups, size, dividers = 'none', layout = 'rows', mode: _mode, ...data }: ActionListProps) {
   const base = useId();
   const tiles = layout === 'tiles';
-  const item = ({ id, onSelect, ...shown }: ListAction) => (
-    <li key={id}>
+  const item = ({ id, onSelect, onDragStart, onDragEnd, ...shown }: ListAction) => (
+    <li key={id} draggable={onDragStart && !shown.disabled ? true : undefined} data-draggable={onDragStart && !shown.disabled ? '' : undefined}
+      onDragStart={onDragStart && !shown.disabled ? onDragStart : undefined} onDragEnd={onDragEnd}>
       <ListItem {...shown} role="button" size={size} layout={tiles ? 'tile' : undefined} onClick={onSelect} />
     </li>
   );

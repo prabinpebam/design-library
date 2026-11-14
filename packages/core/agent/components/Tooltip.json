@@ -107,6 +107,7 @@
   "libraryPage": "https://prabinpebam.github.io/design-library/#/tooltip",
   "usedBy": [
     "Button",
+    "ListItem",
     "MenuButton"
   ],
   "principles": [

@@ -208,6 +208,11 @@
           "name": "itemRef",
           "type": "(el: HTMLDivElement | null) => void",
           "description": "Receives the element, for a list that moves focus between its items."
+        },
+        {
+          "name": "hint",
+          "type": "string",
+          "description": "Opt-in (LR167): more about the item, shown as a tooltip on hover and focus and given as its description to assistive technology, e.g. why an unavailable tile can't be added yet. Not drawn as a line."
         }
       ]
     }
@@ -217,7 +222,8 @@
   },
   "uses": [
     "Icon",
-    "Progress"
+    "Progress",
+    "Tooltip"
   ],
   "tokens": [
     "--border-hairline",

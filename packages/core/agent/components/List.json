@@ -232,7 +232,7 @@
     },
     {
       "interface": "ListAction",
-      "extends": "Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing' | 'nameLines' | 'current'>",
+      "extends": "Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing' | 'nameLines' | 'current' | 'hint'>",
       "props": [
         {
           "name": "id",
@@ -244,6 +244,16 @@
           "type": "() => void",
           "required": true,
           "description": "Runs the action or opens the deeper level."
+        },
+        {
+          "name": "onDragStart",
+          "type": "(event: DragEvent<HTMLElement>) => void",
+          "description": "Opt-in (LR165): the item can be dragged out of the list (an Add panel's tile onto a page): set what it carries on `event.dataTransfer`. A press without a drag still runs `onSelect`; the keyboard is unchanged."
+        },
+        {
+          "name": "onDragEnd",
+          "type": "(event: DragEvent<HTMLElement>) => void",
+          "description": "The drag ended, dropped or not."
         }
       ]
     },

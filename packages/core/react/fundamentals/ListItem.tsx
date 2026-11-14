@@ -1,7 +1,8 @@
-import { useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import { Icon } from './Icon';
 import { useRouter } from '../behaviour/router';
 import { Progress } from './Progress';
+import { useHint } from './Tooltip';
 import type { IconName } from '../../icons/icons';
 import type { DataAttributes } from '../types';
 
@@ -97,6 +98,11 @@ export interface ListItemProps extends DataAttributes {
   tabbable?: boolean;
   /** Receives the element, for a list that moves focus between its items. */
   itemRef?: (el: HTMLDivElement | null) => void;
+  /**
+   * Opt-in (LR167): more about the item, shown as a tooltip on hover and focus and given as its description to
+   * assistive technology, e.g. why an unavailable tile can't be added yet. Not drawn as a line.
+   */
+  hint?: string;
 }
 
 function initials(name: string) {
@@ -178,8 +184,26 @@ export function ListItem({
   onClick,
   tabbable,
   itemRef,
+  hint,
   ...data
 }: ListItemProps) {
+  const own = useRef<HTMLElement | null>(null);
+  const tip = useHint(own, hint ?? '', { kind: 'description', enabled: !!hint });
+  // LR160: with nameLines, the row is centred while its name is one line and aligns to its top only once it wraps.
+  const name = useRef<HTMLSpanElement>(null);
+  const [wrapped, setWrapped] = useState(false);
+  useEffect(() => {
+    const el = name.current;
+    if (!nameLines || truncate || !el || typeof ResizeObserver === 'undefined') return;
+    const check = () => {
+      const line = parseFloat(getComputedStyle(el).lineHeight) || el.getBoundingClientRect().height;
+      setWrapped(el.getBoundingClientRect().height > line * 1.5);
+    };
+    check();
+    const watch = new ResizeObserver(check);
+    watch.observe(el);
+    return () => watch.disconnect();
+  }, [nameLines, truncate, label]);
   const checkable = role === 'menuitemcheckbox' || role === 'menuitemradio';
   const leadingMark = checkable || ((role === 'option' || role === 'row') && multiple);
   const cell = role === 'row' ? 'gridcell' : undefined;
@@ -207,7 +231,12 @@ export function ListItem({
   return (
     <Tag
       {...data}
-      ref={itemRef as (el: HTMLElement | null) => void}
+      {...(hint ? tip.handlers : {})}
+      ref={(el: HTMLElement | null) => {
+        own.current = el;
+        itemRef?.(el as HTMLDivElement | null);
+      }}
+      aria-describedby={hint ? tip.tipId : undefined}
       id={id}
       href={href === undefined || unavailable || busy ? undefined : router ? router.href(href) : href}
       role={role}
@@ -222,6 +251,7 @@ export function ListItem({
       data-unread={unread ? '' : undefined}
       data-truncate={truncate ? '' : undefined}
       data-name-lines={nameLines && !truncate ? nameLines : undefined}
+      data-wrapped={nameLines && !truncate && wrapped ? '' : undefined}
       aria-current={current ? 'true' : undefined}
       data-description={description && descriptionPosition === 'inline' ? 'inline' : undefined}
       aria-selected={role === 'option' ? !!selected : role === 'row' && selected !== undefined ? selected : undefined}
@@ -253,7 +283,7 @@ export function ListItem({
       )}
       {visual}
       <span data-dl-part="item-words" role={cell}>
-        <span data-dl-part="item-name">
+        <span data-dl-part="item-name" ref={name}>
           {label}
           {unread && <span data-dl-part="item-announce">, unread</span>}
         </span>
@@ -291,6 +321,7 @@ export function ListItem({
         </span>
       )}
       {role === 'option' && !multiple && mark === 'check' && <span data-dl-part="item-check">{selected && <Icon name="check" />}</span>}
+      {hint && tip.tip}
     </Tag>
   );
 }

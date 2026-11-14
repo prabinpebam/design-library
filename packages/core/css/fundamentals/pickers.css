@@ -260,6 +260,11 @@
     background-color: var(--c-list-tile-fill);
   }
 
+  /* LR165: an item that can be dragged out of its list (an Add panel's tile) shows the grab cursor. */
+  [data-dl='list'] li[data-draggable] > [data-dl='list-item'] {
+    cursor: grab;
+  }
+
   [data-dl='list-item'][data-layout='tile'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
     font-size: var(--c-list-tile-name-size);
     font-weight: var(--c-list-tile-name-weight);
@@ -428,8 +433,9 @@
     overflow: hidden;
   }
 
-  /* LR153 nameLines: the name ends in an ellipsis after its lines; the leading visual sits on the first line. */
-  [data-dl='list-item'][data-name-lines] {
+  /* LR153 nameLines: the name ends in an ellipsis after its lines; the leading visual sits on the first line once the
+     name wraps (LR160: a one-line name stays centred with its visual, as any row). */
+  [data-dl='list-item'][data-name-lines][data-wrapped] {
     align-items: flex-start;
   }
 
