@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR149: compact density keeps a product's corners (14 November 2026)
+
+DesignUp P2.11 (admin template audit, owner 20:29: "rounded corner usage is not consistant"). Compact density regions (an inspector, a rail, block tools) set controls' and surfaces' corners to the shape's small radius, so the same Button or field had different corners in a dense region than elsewhere in the admin. Core API: theme settings `--radius-compact-md` (controls) and `--radius-compact-lg` (surfaces), tokens `radius.compact.md`/`lg`, read by compact density; default `radius.sm` in every shape, so nothing changes unless a product sets them. DesignUp sets them to `var(--radius-md)` and `var(--radius-lg)` on its admin frame, which is never compact itself.
+
+| LR149 | 2026-11-14 | Compact density regions keep a product's control and surface corners | Compact density forced `radius.sm` on controls and surfaces; no setting kept the shape's corners in a dense region | 4 | settings `--radius-compact-md`, `--radius-compact-lg` (tokens radius.compact.md/lg; default radius.sm, unchanged) | none | P2.11 audit worker | adopted | `3044af2`; DesignUp 3836e530 | Done: admin-frame.css sets both on the frame |
 ### LR148: a Popover's gap from its anchor as a setting (14 November 2026)
 
 DesignUp P1.7 (LR14, LR144). DesignUp's approved comment bubble sits 8 px below its pin at 375 px; core Popover keeps `--c-popover-offset` (space.stack-pair, 4 px) between the surface and its anchor, but the token was not on the settings allow-list, so a template couldn't set it without a private `--c-*` override. Core API: `--c-popover-offset` on the allow-list (`tokens/settings.json`, Popover), read by the anchored placement on whichever side the Popover opens. Default unchanged; no markup or behaviour change.
