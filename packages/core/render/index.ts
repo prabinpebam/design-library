@@ -4,6 +4,9 @@ export type { TemplateViewProps } from './TemplateView';
 export { BLOCKS, actionButtons } from './blocks';
 export { fill } from './fill';
 export { RichText, richText, plainText } from './rich-text';
+// LR179: rich text's blocks (the Markdown RichTextField writes, with headings and quotes) as core parts.
+export { RichBlocks, richBlocks, richInline } from './rich-blocks';
+export type { RichBlock, RichBlocksProps, RichListItem } from './rich-blocks';
 export { loadTemplate, loadSite, partsSite, partRoute } from './load';
 export type { SiteFiles } from './load';
 export { SiteView, aliasFor, matchPage, pageFor, titleFor } from './SiteView';
