@@ -49,6 +49,11 @@
           "name": "end",
           "type": "PageGridGap",
           "description": "The space below the last row (LR91); none by default."
+        },
+        {
+          "name": "layoutEdges",
+          "type": "boolean",
+          "description": "The grid sits in a gap-free group with its neighbouring regions of a SiteLayout column (Stack gap=\"none\", LR127): a named `start` or `end` then also carries the column's gap, so it measures as before, and none is exactly 0. Off by default."
         }
       ]
     },
@@ -89,8 +94,8 @@
         },
         {
           "name": "gap",
-          "type": "PageGridGap",
-          "description": "The space above the row; the first row of a group has none (default `section`)."
+          "type": "PageGridRowGap",
+          "description": "The space above the row; the first row of a group has none (default `section`; `none` is exactly 0, LR127)."
         },
         {
           "name": "cells",

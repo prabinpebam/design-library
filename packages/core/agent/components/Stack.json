@@ -25,9 +25,9 @@
         },
         {
           "name": "gap",
-          "type": "'pair' | 'item' | 'group' | 'section'",
+          "type": "'pair' | 'item' | 'group' | 'section' | 'none'",
           "default": "'item'",
-          "description": "The space between children, by how strongly they belong together: `pair` (a label and its value) up to `section` (parts of a page)."
+          "description": "The space between children, by how strongly they belong together: `pair` (a label and its value) up to `section` (parts of a page); `none` when the children own the space between them (LR127)."
         },
         {
           "name": "measure",
