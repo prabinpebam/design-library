@@ -63,7 +63,8 @@
     "--c-page-grid-lead-pull": "How far a lead row is pulled up into the space above it (LR132; default 0). A template whose opening meets the header sets its page top.",
     "--c-page-grid-lead-bleed": "How far a lead row's columns run past the column's end (LR132; default 0); the rows under them stay in the column.",
     "--c-page-grid-lead-lift": "Between a lead row's two columns and each row under them (LR132; default space.stack-group).",
-    "--c-page-grid-lead-stack-gap": "Between a lead row's columns once they stack (LR132; default space.stack-section)."
+    "--c-page-grid-lead-stack-gap": "Between a lead row's columns once they stack (LR132; default space.stack-section).",
+    "--c-page-grid-split-gutter": "Between the cells of a split row (gutter split, LR135; default space.gutter). A template sets its two-column band's gap, such as its fluid column gap."
   },
   "ScreenPreview": {
     "--c-screen-preview-desktop": "The least width a screen is laid out at with width desktop, scaled down to fit a narrower window (default 80rem, 1280 px). A canvas that shows small text sets a narrower desktop (64rem) for a larger scale."

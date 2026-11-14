@@ -1,10 +1,10 @@
-import type { MouseEvent, ReactNode } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { PAGE_GRID_COLUMNS, PAGE_GRID_SPLIT_SHARES, pageGridRecordProblems, rowSpans, splitSpans } from '../../render/page-grid-model.mjs';
-import type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack } from '../../render/page-grid-model.mjs';
+import type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
 
 export { PAGE_GRID_COLUMNS, PAGE_GRID_MIN_SPAN } from '../../render/page-grid-model.mjs';
-export type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack } from '../../render/page-grid-model.mjs';
+export type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
 
 export interface PageGridCell {
   /** Stable id: the key, and `data-cell` on the cell for an editor to find it. */
@@ -36,6 +36,12 @@ export interface PageGridRow {
    * in a narrow window (width < 43.75em) or a short one (height < 30em), whatever the cells' widths.
    */
   stack?: PageGridStack;
+  /**
+   * How the row's cells divide it (LR135): left out, on the page's twelve columns, the fixed gutter apart; `split`, their
+   * spans as shares of the row (5 and 7 are 5fr 7fr), `--c-page-grid-split-gutter` apart, so a template's two-column band
+   * keeps its own proportions. Its cells then no longer line up with the page's columns.
+   */
+  gutter?: PageGridGutter;
   /** The row's cells in reading order. */
   cells: PageGridCell[];
 }
@@ -109,10 +115,12 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
     const narrowest = spans && !row.stack ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
     // One cell is one column: its span's gutters alone would be wider than a phone's column (LR130).
     const columns = spans && row.cells.length > 1 ? span : 1;
+    // A split row's cells take their spans as shares of the row (LR135).
+    const shares = row.gutter && spans && columns > 1 ? ({ '--dl-page-grid-shares': spans.map((s) => `minmax(0, ${s}fr)`).join(' ') } as CSSProperties) : undefined;
     let start = 0;
     return (
-      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-stack={row.stack} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
-        <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined}>
+      <div key={row.id} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-stack={row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
+        <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined} style={shares}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;
             const at = start;

@@ -23,6 +23,11 @@ export const PAGE_GRID_ROW_GAPS = ['none', ...PAGE_GRID_GAPS];
 export const PAGE_GRID_FRAMES = ['band', 'tint', 'lead'];
 /** Where a row's cells stack (LR134): left out, by its narrowest cell; `window`, only in a narrow or a short window. */
 export const PAGE_GRID_STACKS = ['window'];
+/**
+ * How a row's cells divide it (LR135): left out, on the page's twelve columns, the fixed gutter apart; `split`, their
+ * spans as shares of the row (5 and 7: 5fr 7fr), the split gutter apart.
+ */
+export const PAGE_GRID_GUTTERS = ['split'];
 
 /** @deprecated The older preset splits (LR15), each a list of shares of the parent's span; converted to spans. */
 export const PAGE_GRID_SPLIT_SHARES = {
@@ -86,6 +91,7 @@ export function pageGridRecordProblems(grid, sections, options = {}) {
       if (row.gap !== undefined && !PAGE_GRID_ROW_GAPS.includes(row.gap)) issues.push({ at: `${here}/gap`, what: `needs one of: ${PAGE_GRID_ROW_GAPS.join(', ')}` });
       if (row.frame !== undefined && !PAGE_GRID_FRAMES.includes(row.frame)) issues.push({ at: `${here}/frame`, what: `needs one of: ${PAGE_GRID_FRAMES.join(', ')}` });
       if (row.stack !== undefined && !PAGE_GRID_STACKS.includes(row.stack)) issues.push({ at: `${here}/stack`, what: `needs one of: ${PAGE_GRID_STACKS.join(', ')}` });
+      if (row.gutter !== undefined && !PAGE_GRID_GUTTERS.includes(row.gutter)) issues.push({ at: `${here}/gutter`, what: `needs one of: ${PAGE_GRID_GUTTERS.join(', ')}` });
       const spans = rowSpans(row, span);
       const own = row.cells.some((c) => isObject(c) && c.span !== undefined);
       if (!spans) {

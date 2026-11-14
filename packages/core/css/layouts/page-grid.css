@@ -94,10 +94,20 @@
 
   [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
     display: grid;
-    grid-template-columns: repeat(var(--dl-page-grid-columns, 1), minmax(0, 1fr));
+    /* A split row's own tracks (LR135); reset on every row, so a nested row never inherits its parent's. */
+    --dl-page-grid-template: initial;
+    grid-template-columns: var(--dl-page-grid-template, repeat(var(--dl-page-grid-columns, 1), minmax(0, 1fr)));
     column-gap: var(--c-page-grid-gutter);
     row-gap: var(--c-page-grid-stack-gap);
   }
+
+  /* A split row (LR135, opt-in): its cells take their spans as shares of the row (--dl-page-grid-shares, set by
+     PageGrid), --c-page-grid-split-gutter apart; they no longer line up with the page's columns. */
+  [data-dl-part='page-row'][data-gutter='split'] > [data-dl-part='page-columns'] {
+    --dl-page-grid-template: var(--dl-page-grid-shares);
+    column-gap: var(--c-page-grid-split-gutter);
+  }
+  [data-dl-part='page-row'][data-gutter='split'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] { grid-column: auto; }
 
   [data-dl-part='page-columns'][data-columns='2'] { --dl-page-grid-columns: 2; }
   [data-dl-part='page-columns'][data-columns='3'] { --dl-page-grid-columns: 3; }
@@ -163,7 +173,12 @@
      narrow window or a short one. 43.75em is where DesignUp's two-column bands (a heading and words beside a picture)
      have always stacked. */
   @media (width < 43.75em), (height < 30em) {
-    [data-dl-part='page-row'][data-stack='window'] > [data-dl-part='page-columns'] { --dl-page-grid-columns: 1; }
+    [data-dl-part='page-row'][data-stack='window'] > [data-dl-part='page-columns'] { --dl-page-grid-columns: 1; --dl-page-grid-template: minmax(0, 1fr); }
     [data-dl-part='page-row'][data-stack='window'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] { grid-column: 1 / -1; }
   }
+
+  /* A split row stacked by its narrowest cell drops its shares too (LR135). */
+  @container (max-width: 33.5rem) { [data-dl-part='page-row'][data-gutter='split'] > [data-dl-part='page-columns'][data-narrowest='2'] { --dl-page-grid-template: minmax(0, 1fr); } }
+  @container (max-width: 51rem) { [data-dl-part='page-row'][data-gutter='split'] > [data-dl-part='page-columns'][data-narrowest='3'] { --dl-page-grid-template: minmax(0, 1fr); } }
+  @container (max-width: 68.5rem) { [data-dl-part='page-row'][data-gutter='split'] > [data-dl-part='page-columns'][data-narrowest='4'] { --dl-page-grid-template: minmax(0, 1fr); } }
 }

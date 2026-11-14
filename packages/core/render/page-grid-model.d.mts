@@ -15,6 +15,13 @@ export type PageGridFrame = 'band' | 'tint' | 'lead';
  */
 export type PageGridStack = 'window';
 
+/**
+ * How a row's cells divide it (LR135). Left out, on the page's twelve columns with the fixed gutter between; `split`,
+ * their spans as shares of the row (5 and 7 are 5fr 7fr) with `--c-page-grid-split-gutter` between, so a template's
+ * two-column band keeps its own proportions. The cells then no longer line up with the page's columns.
+ */
+export type PageGridGutter = 'split';
+
 /** @deprecated The older preset splits (LR15); a row's cells carry `span`s instead. Still read and converted. */
 export type PageGridSplit = 'whole' | 'halves' | 'thirds' | 'quarters' | 'two-thirds-start' | 'two-thirds-end';
 
@@ -39,6 +46,8 @@ export interface PageGridRecordRow {
   frame?: PageGridFrame;
   /** Where the row's cells stack (LR134): by its narrowest cell when left out; `window`, only in a narrow or short window. */
   stack?: PageGridStack;
+  /** How the row's cells divide it (LR135): the page's columns when left out; `split`, their spans as shares. */
+  gutter?: PageGridGutter;
   cells: PageGridRecordCell[];
 }
 
@@ -100,6 +109,8 @@ export declare const PAGE_GRID_GAPS: readonly PageGridGap[];
 export declare const PAGE_GRID_ROW_GAPS: readonly PageGridRowGap[];
 /** A row's stack values (LR134). */
 export declare const PAGE_GRID_STACKS: readonly PageGridStack[];
+/** A row's gutter values (LR135). */
+export declare const PAGE_GRID_GUTTERS: readonly PageGridGutter[];
 /** @deprecated The older preset splits' shares. */
 export declare const PAGE_GRID_SPLIT_SHARES: Readonly<Record<PageGridSplit, readonly number[]>>;
 

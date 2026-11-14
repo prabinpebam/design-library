@@ -637,6 +637,7 @@
   --c-sticky-bar-padding-block: var(--space-stack-item);
   --c-sticky-bar-layer: var(--layer-raised);
   --c-page-grid-gutter: var(--space-gutter);
+  --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-grid-gap-item: var(--space-stack-item);
   --c-page-grid-gap-group: var(--space-stack-group);
@@ -1839,6 +1840,7 @@
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
+  --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
   --c-page-layout-gap: var(--space-stack-page);
@@ -2150,6 +2152,7 @@
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
+  --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
   --c-page-layout-gap: var(--space-stack-page);
@@ -2461,6 +2464,7 @@
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
+  --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
   --c-page-layout-gap: var(--space-stack-page);
@@ -2772,6 +2776,7 @@
   --c-page-grid-lead-lift: var(--space-stack-group);
   --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
+  --c-page-grid-split-gutter: var(--space-gutter);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
   --c-page-layout-gap: var(--space-stack-page);

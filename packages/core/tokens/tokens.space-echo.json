@@ -1255,6 +1255,11 @@
         "$value": "{space.inset-xs}",
         "$description": "The selection outline sits just outside the row or cell (echoed for space contexts)"
       },
+      "split-gutter": {
+        "$type": "dimension",
+        "$value": "{space.gutter}",
+        "$description": "Between the cells of a split row (gutter split, LR135), whose spans are shares of the row: a template sets its two-column band's gap (theme setting) (echoed for space contexts)"
+      },
       "stack-gap": {
         "$type": "dimension",
         "$value": "{space.stack-section}",
