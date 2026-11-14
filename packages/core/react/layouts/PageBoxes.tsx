@@ -1,4 +1,5 @@
 import { createElement, type ReactNode } from 'react';
+import { useRouter } from '../behaviour/router';
 import { boxCss } from '../../render/page-box-model.mjs';
 import type { Box } from '../../render/page-box-model.mjs';
 
@@ -18,19 +19,24 @@ export interface PageBoxesProps {
  * in a `div` with `data-box-entry`. No element of its own around the list, so it sits in a PageGrid cell or any
  * container as its children. The look is the Boxes' own layout values, from `PageBoxStyles`, once per page, and a Box's
  * page look (`look` band, tint or lead, + `trail`; LR162) drawn as `data-look` with the page grid's settings
- * (`--c-page-grid-frame-*`, `--c-page-grid-lead-*`), so a page needs no PageGrid.
+ * (`--c-page-grid-frame-*`, `--c-page-grid-lead-*`), so a page needs no PageGrid. A Box with `href` (LR169, Webflow's
+ * Link Block) is one `a` holding its Boxes and entries.
  * Model and check: `@design-library/core/page-box`.
  * Not for a block's inner layout (blocks are sealed presets) or an app's regions (use AppLayout or EditorLayout).
  * @tier layout
  * @family layout
  * @a11y Plain elements: a `div` has no role; a Box given a landmark tag (section, nav, aside, header, footer, main) is
- * that landmark, so name it from its content. Reading order is the source order at every width; `order` and grid
+ * that landmark, so name it from its content. A link Box is a native `a[href]` named by its content (keep words in it),
+ * with the focus ring; never put another link or a control inside it. Reading order is the source order at every width; `order` and grid
  * placement in styles move boxes visually only, so keep reading order and visual order the same.
  */
 export function PageBoxes({ boxes, renderEntry }: PageBoxesProps) {
+  const router = useRouter();
   return boxes.map((box) => {
     if (box.section !== undefined) return <div key={box.id} data-box={box.id} data-box-entry="" id={box.anchor || undefined}>{renderEntry(box.section)}</div>;
-    return createElement(box.tag ?? 'div', { key: box.id, 'data-box': box.id, id: box.anchor || undefined,
+    // A link Box (LR169): one `a`, router-aware as core's links; it takes no landmark tag.
+    const link = box.href ? { href: router ? router.href(box.href) : box.href, 'data-box-link': '' } : {};
+    return createElement(box.href ? 'a' : box.tag ?? 'div', { key: box.id, 'data-box': box.id, id: box.anchor || undefined, ...link,
       'data-look': box.look || undefined, 'data-trail': box.look === 'lead' && box.trail ? '' : undefined },
       box.children?.length ? <PageBoxes boxes={box.children} renderEntry={renderEntry} /> : null);
   });

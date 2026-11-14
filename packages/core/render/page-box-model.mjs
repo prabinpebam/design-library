@@ -13,6 +13,8 @@
  *   A Box in a page-grid row is its cell: an entry, a stack of rows, Boxes, or empty.
  * - **a Box with a look** (LR162): any plain Box may carry a page look, `look` band, tint or lead (+ `trail`), drawn by
  *   PageBoxes with the page grid's settings, so a page needs no page-grid Box at all.
+ * - **a link Box** (LR169, Webflow's Link Block): a plain Box with `href` is one link holding its Boxes and entries; no
+ *   link inside another.
  * The page Box (`id: 'page'`) stacks its Boxes and keeps the grid's `start` and `end`; a page of plain Boxes needs no
  * `grid`.
  */
@@ -25,6 +27,8 @@ const LOOKS = ['band', 'tint', 'lead'];
 /** Webflow's Box tags. */
 export const BOX_TAGS = ['div', 'section', 'header', 'footer', 'main', 'article', 'aside', 'nav', 'address', 'figure'];
 const ANCHOR = /^[a-z][a-z0-9-]{0,63}$/;
+/** A link Box's address (LR169): an in-app route or anchor, a path, the web, mail or a phone; nothing that runs. */
+const ADDRESS = /^(?:#\/|#[A-Za-z]|\/(?!\/)|https?:\/\/|mailto:|tel:)[^\s<>"']*$/i;
 const ID = /^[A-Za-z][\w-]{0,79}$/;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 /** Fields only a page-grid Box has. */
@@ -123,7 +127,7 @@ export function pageBoxProblems(page, sections) {
   const shown = new Set();
   if (!object(page) || !Array.isArray(page.children) || (page.grid !== 'stack' && (page.grid !== undefined || page.children.some(hasGrid)))) return [{ at: '/boxes', what: 'the page Box stacks its Boxes' }];
   /** `place`: page (the page's own stack), stack (a page-grid stack), row (a page-grid row: a cell) or box (inside a Box). */
-  const visit = (box, at, place) => {
+  const visit = (box, at, place, linked = false) => {
     if (!object(box) || typeof box.id !== 'string' || !ID.test(box.id)) return void issues.push({ at, what: 'a Box needs an id of letters, digits, - and _' });
     if (ids.has(box.id)) issues.push({ at: `${at}/id`, what: `the id ${box.id} is used twice` });
     ids.add(box.id);
@@ -134,6 +138,11 @@ export function pageBoxProblems(page, sections) {
     }
     if (box.name !== undefined && (typeof box.name !== 'string' || box.name.length > 80)) issues.push({ at: `${at}/name`, what: 'a name is up to 80 characters' });
     if (box.tag !== undefined && !BOX_TAGS.includes(box.tag)) issues.push({ at: `${at}/tag`, what: `a tag is one of ${BOX_TAGS.join(', ')}` });
+    if (box.href !== undefined) {
+      if (typeof box.href !== 'string' || !ADDRESS.test(box.href)) issues.push({ at: `${at}/href`, what: 'a link goes to a page, a section, the web, mail or a phone' });
+      if (box.section !== undefined || box.grid) issues.push({ at: `${at}/href`, what: 'only a plain Box links; put it in a Box' });
+      if (linked) issues.push({ at: `${at}/href`, what: 'a link Box sits inside another link' });
+    }
     issues.push(...boxStyleProblems(box.styles, `${at}/styles`));
     if (box.grid !== undefined && box.grid !== 'row' && box.grid !== 'stack') issues.push({ at: `${at}/grid`, what: 'a page-grid Box is a row or a stack' });
     if (box.look !== undefined && !LOOKS.includes(box.look)) issues.push({ at: `${at}/look`, what: `a look is ${LOOKS.join(', ')}` });
@@ -150,7 +159,7 @@ export function pageBoxProblems(page, sections) {
     }
     if (box.children !== undefined && !Array.isArray(box.children)) issues.push({ at: `${at}/children`, what: 'a Box holds a list' });
     const inner = box.grid === 'row' ? 'row' : box.grid === 'stack' ? 'stack' : 'box';
-    (Array.isArray(box.children) ? box.children : []).forEach((child, n) => visit(child, `${at}/children/${n}`, inner));
+    (Array.isArray(box.children) ? box.children : []).forEach((child, n) => visit(child, `${at}/children/${n}`, inner, linked || box.href !== undefined));
   };
   page.children.forEach((child, n) => visit(child, `/boxes/children/${n}`, 'page'));
   const inOrder = boxesInOrder(page);

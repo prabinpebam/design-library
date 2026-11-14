@@ -15,6 +15,8 @@ export interface Box {
   name?: string;
   /** The element it draws as (div by default). */
   tag?: BoxTag;
+  /** A link Box (LR169, Webflow's Link Block): the whole Box is one link to this address, drawn as an `a`. */
+  href?: string;
   /** Layout values per breakpoint. */
   styles?: BoxStyles;
   /** A page-grid Box: a row of cells by span, or a stack of rows. */

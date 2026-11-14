@@ -60,4 +60,11 @@
     [data-look='lead'][data-trail] > [data-box]:nth-child(2) ~ [data-box] { margin-block-start: var(--c-page-grid-lead-stack-gap); }
     [data-look='lead'][data-trail] > [data-box]:first-child { padding-block-start: var(--c-page-grid-lead-stack-gap); }
   }
+  /* A link Box (LR169, Webflow's Link Block): a block that holds its Boxes and entries, its words keeping their own
+     colour; the focus ring on the whole Box. */
+  a[data-box-link] { display: block; color: inherit; text-decoration: none; }
+  a[data-box-link]:focus-visible {
+    outline: var(--size-focus-width) solid var(--color-focus);
+    outline-offset: var(--size-focus-offset);
+  }
 }
