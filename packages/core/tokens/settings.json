@@ -93,7 +93,9 @@
   "Link": {
     "--link-decoration": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus. Also the skip link's line (LR7).",
     "--link-decoration-hover": "A link's line on hover and keyboard focus: underline (default). Keep it when the rest line is off: it is the cue that isn't colour. Also the hover line of a linked card's title, a page header's eyebrow, an agenda's titles and a board's names, and the skip link's line while it shows (LR7).",
-    "--link-color-hover": "A plain link's and a Link's colour on hover and keyboard focus (default the link colour, unchanged). A theme that turns the link lines off sets a colour 3:1 from the rest colour, so hover keeps a cue (LR106). Component links (list items, row links, buttons) keep their own states."
+    "--link-color-hover": "A plain link's and a Link's colour on hover and keyboard focus (default the link colour, unchanged). A theme that turns the link lines off sets a colour 3:1 from the rest colour, so hover keeps a cue (LR106). Component links (list items, row links, buttons) keep their own states.",
+    "--link-font": "A Link's typeface (default inherit: the words around it, unchanged). A theme whose running text and interface type differ sets its interface face, so a Link reads as a control in any text (LR143).",
+    "--link-font-axes": "A Link's font-variation-settings, set beside --link-font for a variable face (default inherit, unchanged; LR143)."
   },
   "Heading": {
     "--type-display-size": "The display step's size: Hero and page titles, Heading size=\"display\" and Statistic's large value (default text.xxxxl, 3.5rem). A token (var(--text-…)) or a length.",

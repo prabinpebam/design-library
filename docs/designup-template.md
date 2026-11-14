@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR143: a Link's typeface as a setting (14 November 2026)
+
+DesignUp P1.7 (LA4). DesignUp sets its interface face on every core Link with a selector on core `data-dl='link'` (`designup.css`), because a Link always takes the words around it. Core API: settings `--link-font` and `--link-font-axes` (opt-in; default inherit, unchanged), read by Link. Measured on DesignUp's dev server (Home, About, Sponsor, Talks, Editions; 187 Links): with the template's rule deleted and the two settings set on the template root, every Link's typeface, axes and width are as before.
+
+| LR143 | 2026-11-14 | A Link's typeface as a setting | A Link always inherits the words' face: a theme with different running and interface faces can't set it without a selector on core | 3 | settings `--link-font`, `--link-font-axes` (Link; default inherit) | none | E68 | shipped | | none |
 ### LR142: a 44 px Menu button on a narrow site header (14 November 2026)
 
 DesignUp P3.10. The narrow header's Menu button is a dense 36 px Button while the tools beside it (Search) are 44 px, so the one control that opens the site's places is the smallest target on the bar. Core API: SiteHeader `menuSize` (opt-in; `s` default, 36 px, unchanged; `normal`, 44 px, level with 44 px tools). Measured on DesignUp's header at 320/375/414 in light and dark: one 65 px bar, no sideways scroll; the Menu button 44x44 at the bar's top like Search, its end edge unchanged; only Search moves (8 px toward the start); the menu list below unchanged.

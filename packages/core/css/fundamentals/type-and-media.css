@@ -157,6 +157,8 @@
     align-items: baseline;
     gap: var(--space-inline-pair);
     color: var(--color-text-link);
+    font-family: var(--link-font, inherit);
+    font-variation-settings: var(--link-font-axes, inherit);
     text-decoration-line: var(--link-decoration);
     text-decoration-thickness: var(--border-hairline);
   }

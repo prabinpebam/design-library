@@ -111,6 +111,14 @@
     {
       "var": "--link-color-hover",
       "description": "A plain link's and a Link's colour on hover and keyboard focus (default the link colour, unchanged). A theme that turns the link lines off sets a colour 3:1 from the rest colour, so hover keeps a cue (LR106). Component links (list items, row links, buttons) keep their own states."
+    },
+    {
+      "var": "--link-font",
+      "description": "A Link's typeface (default inherit: the words around it, unchanged). A theme whose running text and interface type differ sets its interface face, so a Link reads as a control in any text (LR143)."
+    },
+    {
+      "var": "--link-font-axes",
+      "description": "A Link's font-variation-settings, set beside --link-font for a variable face (default inherit, unchanged; LR143)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/link",
