@@ -204,6 +204,11 @@
     overflow: auto;
   }
 
+  /* LR170: a context menu uses the room on its side of the point, not the picker list's cap; it scrolls only when even that is too little. */
+  [data-dl='context-menu'] > [data-dl-part='popup'] {
+    max-block-size: calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset));
+  }
+
   [data-dl='context-menu'] > [data-dl-part='popup'] > [data-dl-part='content'] > [data-dl-part='group'] + [data-dl-part='group'] {
     padding-block-start: var(--c-popup-gap);
     border-block-start: var(--c-popup-border-width) solid var(--c-popup-border);
