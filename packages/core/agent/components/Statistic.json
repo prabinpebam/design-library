@@ -31,6 +31,16 @@
           "description": "The figure. A number is written in the reader's locale with `format`; a string is shown exactly as written (\"2×\", \"4.6\")."
         },
         {
+          "name": "labelData",
+          "type": "DataAttributes",
+          "description": "Tooling attributes on the label's own element, such as a revision anchor."
+        },
+        {
+          "name": "valueData",
+          "type": "DataAttributes",
+          "description": "Tooling attributes on the displayed value's own element (not its loading skeleton)."
+        },
+        {
           "name": "format",
           "type": "Intl.NumberFormatOptions",
           "description": "How a number is written: `Intl.NumberFormat` options such as `{ notation: 'compact' }` or `{ style: 'currency', currency: 'EUR' }`."
