@@ -87,9 +87,9 @@
         },
         {
           "name": "variant",
-          "type": "'outlined' | 'plain'",
+          "type": "'outlined' | 'plain' | 'ruled'",
           "default": "'outlined'",
-          "description": "`outlined`: a bounded surface with a hairline (default; a grid of cards on a page). `plain`: no enclosure, only the content (an index where space already groups each card)."
+          "description": "`outlined`: a bounded surface with a hairline (default; a grid of cards on a page). `plain`: no enclosure, only the content (an index where space already groups each card). `ruled` (LR137): no enclosure, a rule above and its words a step below it (a line of a list of entries, laid out one under another with no gap); its rule, padding, title type and description colour are theme settings (`--c-card-ruled-*`)."
         },
         {
           "name": "headingLevel",
@@ -126,6 +126,14 @@
     "--c-card-padding",
     "--c-card-radius",
     "--c-card-row-media",
+    "--c-card-ruled-description-color",
+    "--c-card-ruled-gap",
+    "--c-card-ruled-padding-block",
+    "--c-card-ruled-rule-color",
+    "--c-card-ruled-rule-width",
+    "--c-card-ruled-title-leading",
+    "--c-card-ruled-title-size",
+    "--c-card-ruled-title-weight",
     "--color-bg-raised",
     "--color-bg-sunken",
     "--color-border",
@@ -152,6 +160,48 @@
     "--type-label-leading",
     "--type-label-size",
     "--type-label-weight"
+  ],
+  "settings": [
+    {
+      "var": "--c-card-ruled-rule-width",
+      "default": "1px",
+      "description": "A ruled card's rule above it (Card variant ruled, LR137; default border.hairline)."
+    },
+    {
+      "var": "--c-card-ruled-rule-color",
+      "default": "#e9e9ed",
+      "description": "A ruled card's rule colour (LR137; default color.border). A template whose lists rule in a stronger line sets it."
+    },
+    {
+      "var": "--c-card-ruled-padding-block",
+      "default": "0.5rem",
+      "description": "Between a ruled card's rule and its words, and under its words (LR137; default space.stack-item). A template sets its list rows' padding."
+    },
+    {
+      "var": "--c-card-ruled-gap",
+      "default": "0.25rem",
+      "description": "Between a ruled card's title, description and meta (LR137; default space.stack-pair)."
+    },
+    {
+      "var": "--c-card-ruled-title-weight",
+      "default": "600",
+      "description": "A ruled card's title weight (LR137; default type.heading-4.weight)."
+    },
+    {
+      "var": "--c-card-ruled-title-size",
+      "default": "1.25rem",
+      "description": "A ruled card's title size (LR137; default type.heading-4.size). A template sets its row title size."
+    },
+    {
+      "var": "--c-card-ruled-title-leading",
+      "default": "1.2",
+      "description": "A ruled card's title line height (LR137; default type.heading-4.leading)."
+    },
+    {
+      "var": "--c-card-ruled-description-color",
+      "default": "#55555f",
+      "description": "A ruled card's description colour (LR137; default color.text-muted). A template whose rows read as plain words sets its text colour."
+    }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/card",
   "principles": [

@@ -103,6 +103,16 @@
           "description": "The row's look (LR129, LR132): `band` adds the frame's space above and below; `tint` also its surface; `lead` is a page opening: its first nested row two columns (`--c-page-grid-lead-start`, then the rest) pulled up and running past the end, the rows under it lifted under both; it stacks in a narrow row or a short window. None by default."
         },
         {
+          "name": "stack",
+          "type": "PageGridStack",
+          "description": "Where the row's cells stack (LR134): left out, when its narrowest cell would be under size.column-min; `window`, only in a narrow window (width < 43.75em) or a short one (height < 30em), whatever the cells' widths."
+        },
+        {
+          "name": "gutter",
+          "type": "PageGridGutter",
+          "description": "How the row's cells divide it (LR135): left out, on the page's twelve columns, the fixed gutter apart; `split`, their spans as shares of the row (5 and 7 are 5fr 7fr), `--c-page-grid-split-gutter` apart, so a template's two-column band keeps its own proportions. Its cells then no longer line up with the page's columns."
+        },
+        {
           "name": "cells",
           "type": "PageGridCell[]",
           "required": true,
@@ -146,6 +156,7 @@
     "--c-page-grid-selected-color",
     "--c-page-grid-selected-offset",
     "--c-page-grid-selected-width",
+    "--c-page-grid-split-gutter",
     "--c-page-grid-stack-gap"
   ],
   "settings": [
@@ -153,6 +164,16 @@
       "var": "--c-page-grid-empty-size",
       "default": "0px",
       "description": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in."
+    },
+    {
+      "var": "--c-page-grid-stack-gap",
+      "default": "2rem",
+      "description": "Between a multi-cell row's cells once they stack or wrap (LR138; default space.stack-section). A template whose stacked split rows keep a smaller gap sets its own."
+    },
+    {
+      "var": "--c-page-grid-gap-item",
+      "default": "0.5rem",
+      "description": "Above a row with gap item (LR136; default space.stack-item). A template whose item step differs from the core's sets its own, such as the space between a band's heading and its list."
     },
     {
       "var": "--c-page-grid-frame-inset",
@@ -202,6 +223,11 @@
       "var": "--c-page-grid-lead-stack-gap",
       "default": "2rem",
       "description": "Between a lead row's columns once they stack (LR132; default space.stack-section)."
+    },
+    {
+      "var": "--c-page-grid-split-gutter",
+      "default": "1.5rem",
+      "description": "Between the cells of a split row (gutter split, LR135; default space.gutter). A template sets its two-column band's gap, such as its fluid column gap."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/pagegrid",
