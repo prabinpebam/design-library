@@ -3,8 +3,8 @@ import type { DataAttributes } from '../types';
 
 export interface StackProps extends DataAttributes {
   children: ReactNode;
-  /** The space between children, by how strongly they belong together: `pair` (a label and its value) up to `section` (parts of a page). */
-  gap?: 'pair' | 'item' | 'group' | 'section';
+  /** The space between children, by how strongly they belong together: `pair` (a label and its value) up to `section` (parts of a page); `none` when the children own the space between them (LR127). */
+  gap?: 'pair' | 'item' | 'group' | 'section' | 'none';
   /** Holds the column to a reading line (size.measure) in a wider view: a short form or list of panels that shouldn't stretch across the screen (LR99). Off by default: the column fills its parent. */
   measure?: boolean;
 }

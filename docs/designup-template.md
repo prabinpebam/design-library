@@ -17,9 +17,9 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ### LR127: spacing None is exactly zero (14 November 2026)
 
-Owner 08:24: "Spacing none should be truly 0 spacing". Measured on DesignUp /#/sponsor: the page grid's own edges were 0, but the site column's gap (56.25/48/48 px) sat above it and the column's end padding (46.88) below; rows had no None. Core API, opt-in: row gap `none` (margin 0); `PageGrid ownEdges` makes a site column holding the grid drop its gap and end padding, folding them into the grid's named start/end steps (each named size measures as before; absent = 0). DesignUp's Band drops its own padding at a None boundary (template).
+Owner 08:24: "Spacing none should be truly 0 spacing". Measured on DesignUp /#/sponsor: the page grid's own edges were 0, but the site column's gap (56.25/48/48 px) sat above it and the column's end padding (46.88) below; rows had no None. Core API, opt-in: row gap `none` (margin 0; 8870ac9); `Stack gap="none"` for a gap-free group, and `PageGrid layoutEdges`: grouped with its neighbouring regions, a named start/end also carries the column's gap (captured on the column as `--dl-site-layout-gap`, since deeper spacing contexts re-resolve the setting), so each named size measures as before and absent/None is 0. No margins, no sibling selectors. DesignUp's Band drops its own padding at a None boundary (template).
 
-| LR127 | 2026-11-14 | Spacing None renders 0 | Column gap/end padding outside PageGrid; no row None | 6 | opt-in row gap none; PageGrid ownEdges | none | Editor58 | in progress | | none |
+| LR127 | 2026-11-14 | Spacing None renders 0 | Column gap/end padding outside PageGrid; no row None | 6 | opt-in row gap none; Stack gap none; PageGrid layoutEdges | none | Editor58 | shipped | | none |
 
 ### LR126: exact statistic label and value identity (14 November 2026)
 
