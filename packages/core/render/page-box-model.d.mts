@@ -19,8 +19,9 @@ export interface Box {
   styles?: BoxStyles;
   /** A page-grid Box: a row of cells by span, or a stack of rows. */
   grid?: 'row' | 'stack';
-  /** A page-grid Box's look (the row's frame). */
+  /** A page look (LR162): on a page-grid Box its row's frame; on any plain Box drawn by PageBoxes (data-look). */
   look?: PageGridFrame;
+  /** A lead look's trail first (LR141, LR162). */
   trail?: boolean;
   gap?: PageGridRowGap;
   stacking?: PageGridStack;

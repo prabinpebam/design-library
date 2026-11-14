@@ -1,0 +1,63 @@
+/* PageBoxes looks (LR162, DesignUp R1.13): a plain Box, Webflow's way, may carry a page look, opt-in by data
+   (`look`, drawn as data-look; `trail`, drawn as data-trail). The looks are the page grid's own (page-grid.css,
+   LR129, LR132, LR141) with the same settings, keyed on the Box's children instead of rows and cells, so a page laid
+   out as Boxes draws exactly as the grid it came from. A Box's own values (PageBoxStyles, unlayered) win over these. */
+@layer layouts {
+  /* A look's Box is a size container as a page-grid row is, so the parts in it measure the same. */
+  [data-box][data-look] { container-type: inline-size; }
+
+  /* Band and tint (LR129): the look's own space above and below; a tint's surface. */
+  [data-box]:is([data-look='band'], [data-look='tint']) { padding-block: var(--c-page-grid-frame-inset); }
+  [data-box][data-look='tint'] {
+    background: var(--c-page-grid-frame-fill);
+    padding-inline: var(--c-page-grid-frame-fill-inset);
+    border-radius: var(--c-page-grid-frame-radius);
+  }
+
+  /* Lead (LR132), a page opening: its first Box (after the trail, with one) is two columns, the start column's share and
+     the rest, pulled up into the space above and running past the end; the Boxes after it are lifted under both and stay
+     in the column. Stacks to one column in a narrow look or a short window. The Box is the container `page-grid-lead`. */
+  [data-box][data-look='lead'] { container-name: page-grid-lead; }
+  [data-look='lead'] > [data-box]:first-child { margin-block-start: calc(-1 * var(--c-page-grid-lead-pull)); }
+  [data-look='lead'] > [data-box] { margin-inline-end: calc(-1 * var(--c-page-grid-lead-bleed)); }
+  [data-look='lead']:not([data-trail]) > [data-box]:first-child,
+  [data-look='lead'][data-trail] > [data-box]:nth-child(2) {
+    display: grid;
+    grid-template-columns: minmax(0, var(--c-page-grid-lead-start, 1fr)) minmax(0, 1fr);
+    column-gap: 0;
+    row-gap: var(--c-page-grid-stack-gap);
+  }
+  [data-look='lead']:not([data-trail]) > [data-box]:first-child > [data-box],
+  [data-look='lead'][data-trail] > [data-box]:nth-child(2) > [data-box] { display: grid; min-inline-size: 0; }
+  [data-look='lead']:not([data-trail]) > [data-box] + [data-box],
+  [data-look='lead'][data-trail] > [data-box]:nth-child(2) ~ [data-box] {
+    margin-block-start: var(--c-page-grid-lead-lift);
+    margin-inline-end: 0;
+  }
+
+  /* With a trail (LR141): the first Box is the page's breadcrumbs above the columns, not pulled up. */
+  [data-look='lead'][data-trail] > [data-box]:first-child { margin-block-start: 0; padding-block-start: var(--c-page-grid-lead-trail-inset); }
+  [data-look='lead'][data-trail] > [data-box]:nth-child(2) { margin-block-start: var(--c-page-grid-lead-trail-gap); }
+
+  /* 53.0625rem: where DesignUp's opening has always stacked (as page-grid.css). */
+  @container page-grid-lead (width < 53.0625rem) {
+    [data-look='lead'] > [data-box] { margin-inline-end: 0; }
+    [data-look='lead'] > [data-box]:first-child { margin-block-start: 0; }
+    [data-look='lead']:not([data-trail]) > [data-box]:first-child,
+    [data-look='lead'][data-trail] > [data-box]:nth-child(2) { grid-template-columns: minmax(0, 1fr); row-gap: var(--c-page-grid-lead-stack-gap); }
+    [data-look='lead']:not([data-trail]) > [data-box] + [data-box],
+    [data-look='lead'][data-trail] > [data-box]:nth-child(2),
+    [data-look='lead'][data-trail] > [data-box]:nth-child(2) ~ [data-box] { margin-block-start: var(--c-page-grid-lead-stack-gap); }
+    [data-look='lead'][data-trail] > [data-box]:first-child { padding-block-start: var(--c-page-grid-lead-stack-gap); }
+  }
+  @media (height < 30em) {
+    [data-look='lead'] > [data-box] { margin-inline-end: 0; }
+    [data-look='lead'] > [data-box]:first-child { margin-block-start: 0; }
+    [data-look='lead']:not([data-trail]) > [data-box]:first-child,
+    [data-look='lead'][data-trail] > [data-box]:nth-child(2) { grid-template-columns: minmax(0, 1fr); row-gap: var(--c-page-grid-lead-stack-gap); }
+    [data-look='lead']:not([data-trail]) > [data-box] + [data-box],
+    [data-look='lead'][data-trail] > [data-box]:nth-child(2),
+    [data-look='lead'][data-trail] > [data-box]:nth-child(2) ~ [data-box] { margin-block-start: var(--c-page-grid-lead-stack-gap); }
+    [data-look='lead'][data-trail] > [data-box]:first-child { padding-block-start: var(--c-page-grid-lead-stack-gap); }
+  }
+}

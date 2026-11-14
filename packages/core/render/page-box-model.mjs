@@ -11,7 +11,10 @@
  *   the page's 12 columns, `grid: 'stack'` stacks page-grid rows, with the grid's looks (band, tint, lead and trail),
  *   gap steps, stacking and shares. PageGrid draws these through `boxesToGrid`, exactly as the grid they came from.
  *   A Box in a page-grid row is its cell: an entry, a stack of rows, Boxes, or empty.
- * The page Box (`id: 'page'`) stacks its Boxes and keeps the grid's `start` and `end`.
+ * - **a Box with a look** (LR162): any plain Box may carry a page look, `look` band, tint or lead (+ `trail`), drawn by
+ *   PageBoxes with the page grid's settings, so a page needs no page-grid Box at all.
+ * The page Box (`id: 'page'`) stacks its Boxes and keeps the grid's `start` and `end`; a page of plain Boxes needs no
+ * `grid`.
  */
 import { pageGridRecordProblems } from './page-grid-model.mjs';
 import { boxStyleProblems } from './page-box-styles.mjs';
@@ -25,7 +28,11 @@ const ANCHOR = /^[a-z][a-z0-9-]{0,63}$/;
 const ID = /^[A-Za-z][\w-]{0,79}$/;
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 /** Fields only a page-grid Box has. */
-const GRID_FIELDS = ['look', 'trail', 'gap', 'stacking', 'columns'];
+const GRID_FIELDS = ['gap', 'stacking', 'columns'];
+/** A page look (LR162): on a page-grid Box, or on any plain Box, drawn by PageBoxes (page-boxes.css). */
+const LOOK_FIELDS = ['look', 'trail'];
+/** Whether any Box holds page-grid fields. */
+const hasGrid = box => object(box) && (box.grid !== undefined || box.span !== undefined || GRID_FIELDS.some(key => box[key] !== undefined) || (Array.isArray(box.children) && box.children.some(hasGrid)));
 
 /** The id a framed group's one cell has in the grid: `row-x` → `cell-x`. */
 const groupCell = id => (id.startsWith('row-') ? `cell-${id.slice(4)}` : `${id}-cell`);
@@ -114,7 +121,7 @@ export function pageBoxProblems(page, sections) {
   const ids = new Set();
   const anchors = new Set();
   const shown = new Set();
-  if (!object(page) || page.grid !== 'stack' || !Array.isArray(page.children)) return [{ at: '/boxes', what: 'the page Box stacks its Boxes' }];
+  if (!object(page) || !Array.isArray(page.children) || (page.grid !== 'stack' && (page.grid !== undefined || page.children.some(hasGrid)))) return [{ at: '/boxes', what: 'the page Box stacks its Boxes' }];
   /** `place`: page (the page's own stack), stack (a page-grid stack), row (a page-grid row: a cell) or box (inside a Box). */
   const visit = (box, at, place) => {
     if (!object(box) || typeof box.id !== 'string' || !ID.test(box.id)) return void issues.push({ at, what: 'a Box needs an id of letters, digits, - and _' });
@@ -130,15 +137,16 @@ export function pageBoxProblems(page, sections) {
     issues.push(...boxStyleProblems(box.styles, `${at}/styles`));
     if (box.grid !== undefined && box.grid !== 'row' && box.grid !== 'stack') issues.push({ at: `${at}/grid`, what: 'a page-grid Box is a row or a stack' });
     if (box.look !== undefined && !LOOKS.includes(box.look)) issues.push({ at: `${at}/look`, what: `a look is ${LOOKS.join(', ')}` });
+    if (box.trail !== undefined && (box.trail !== true || box.look !== 'lead')) issues.push({ at: `${at}/trail`, what: 'a trail goes on a lead look' });
     if (box.grid && place === 'box') issues.push({ at, what: 'page-grid rows go on the page, not inside a Box' });
-    if (place === 'row' && (box.grid === 'row' || GRID_FIELDS.some(key => box[key] !== undefined))) issues.push({ at, what: 'a cell of a page-grid row has no look of its own' });
+    if (place === 'row' && (box.grid === 'row' || [...GRID_FIELDS, ...LOOK_FIELDS].some(key => box[key] !== undefined))) issues.push({ at, what: 'a cell of a page-grid row has no look of its own' });
     if (place !== 'row' && box.span !== undefined) issues.push({ at: `${at}/span`, what: 'only a cell of a page-grid row spans columns' });
-    if (!box.grid && GRID_FIELDS.some(key => box[key] !== undefined)) issues.push({ at, what: 'looks, gap steps, stacking and shares belong to page-grid Boxes' });
+    if (!box.grid && GRID_FIELDS.some(key => box[key] !== undefined)) issues.push({ at, what: 'gap steps, stacking and shares belong to page-grid Boxes' });
     if (box.section !== undefined) {
       if (!Number.isInteger(box.section) || box.section < 0 || box.section >= sections) issues.push({ at: `${at}/section`, what: `an entry is one of the page's ${sections}` });
       else if (shown.has(box.section)) issues.push({ at: `${at}/section`, what: `entry ${box.section} is shown twice` });
       else shown.add(box.section);
-      if (box.grid || box.children !== undefined) issues.push({ at, what: 'an entry holds nothing' });
+      if (box.grid || box.children !== undefined || box.look !== undefined) issues.push({ at, what: 'an entry holds nothing and has no look; put it in a Box' });
     }
     if (box.children !== undefined && !Array.isArray(box.children)) issues.push({ at: `${at}/children`, what: 'a Box holds a list' });
     const inner = box.grid === 'row' ? 'row' : box.grid === 'stack' ? 'stack' : 'box';
@@ -147,7 +155,8 @@ export function pageBoxProblems(page, sections) {
   page.children.forEach((child, n) => visit(child, `/boxes/children/${n}`, 'page'));
   const inOrder = boxesInOrder(page);
   if (inOrder && page.children.length !== sections) issues.push({ at: '/boxes/children', what: `a page of entries has one per entry (${sections}), not ${page.children.length}` });
-  if (issues.length || inOrder) return issues;
+  // A page of plain Boxes (no page-grid Box left, LR162) is drawn by PageBoxes alone: no grid to check.
+  if (issues.length || inOrder || !page.children.some(hasGrid)) return issues;
   return pageGridRecordProblems(boxesToGrid(page), sections).map(issue => ({ at: `/boxes (as grid) ${issue.at}`, what: issue.what }));
 }
 

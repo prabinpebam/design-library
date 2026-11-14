@@ -4,7 +4,7 @@
   "tier": "layout",
   "import": "@design-library/core/components",
   "file": "@design-library/core/react/layouts/PageBoxes.tsx",
-  "summary": "Webflow's Boxes (LR156, DesignUp): each Box drawn as its `tag` (div by default) with `data-box` (its styles' handle) and its `anchor` as its `id`, holding its Boxes and entries in order; an entry is drawn by the page (`renderEntry`) in a `div` with `data-box-entry`. No element of its own around the list, so it sits in a PageGrid cell or any container as its children. The look is only the Boxes' own layout values, from `PageBoxStyles`, once per page. Model and check: `@design-library/core/page-box`. Not for a block's inner layout (blocks are sealed presets) or an app's regions (use AppLayout or EditorLayout).",
+  "summary": "Webflow's Boxes (LR156, DesignUp): each Box drawn as its `tag` (div by default) with `data-box` (its styles' handle) and its `anchor` as its `id`, holding its Boxes and entries in order; an entry is drawn by the page (`renderEntry`) in a `div` with `data-box-entry`. No element of its own around the list, so it sits in a PageGrid cell or any container as its children. The look is the Boxes' own layout values, from `PageBoxStyles`, once per page, and a Box's page look (`look` band, tint or lead, + `trail`; LR162) drawn as `data-look` with the page grid's settings (`--c-page-grid-frame-*`, `--c-page-grid-lead-*`), so a page needs no PageGrid. Model and check: `@design-library/core/page-box`. Not for a block's inner layout (blocks are sealed presets) or an app's regions (use AppLayout or EditorLayout).",
   "family": "layout",
   "a11y": [
     "Plain elements: a `div` has no role; a Box given a landmark tag (section, nav, aside, header, footer, main) is that landmark, so name it from its content. Reading order is the source order at every width; `order` and grid placement in styles move boxes visually only, so keep reading order and visual order the same."
@@ -49,7 +49,19 @@
     }
   ],
   "uses": [],
-  "tokens": [],
+  "tokens": [
+    "--c-page-grid-frame-fill",
+    "--c-page-grid-frame-fill-inset",
+    "--c-page-grid-frame-inset",
+    "--c-page-grid-frame-radius",
+    "--c-page-grid-lead-bleed",
+    "--c-page-grid-lead-lift",
+    "--c-page-grid-lead-pull",
+    "--c-page-grid-lead-stack-gap",
+    "--c-page-grid-lead-trail-gap",
+    "--c-page-grid-lead-trail-inset",
+    "--c-page-grid-stack-gap"
+  ],
   "principles": [
     "spacing"
   ]

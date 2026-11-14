@@ -16,7 +16,9 @@ export interface PageBoxesProps {
  * Webflow's Boxes (LR156, DesignUp): each Box drawn as its `tag` (div by default) with `data-box` (its styles' handle)
  * and its `anchor` as its `id`, holding its Boxes and entries in order; an entry is drawn by the page (`renderEntry`)
  * in a `div` with `data-box-entry`. No element of its own around the list, so it sits in a PageGrid cell or any
- * container as its children. The look is only the Boxes' own layout values, from `PageBoxStyles`, once per page.
+ * container as its children. The look is the Boxes' own layout values, from `PageBoxStyles`, once per page, and a Box's
+ * page look (`look` band, tint or lead, + `trail`; LR162) drawn as `data-look` with the page grid's settings
+ * (`--c-page-grid-frame-*`, `--c-page-grid-lead-*`), so a page needs no PageGrid.
  * Model and check: `@design-library/core/page-box`.
  * Not for a block's inner layout (blocks are sealed presets) or an app's regions (use AppLayout or EditorLayout).
  * @tier layout
@@ -28,7 +30,8 @@ export interface PageBoxesProps {
 export function PageBoxes({ boxes, renderEntry }: PageBoxesProps) {
   return boxes.map((box) => {
     if (box.section !== undefined) return <div key={box.id} data-box={box.id} data-box-entry="" id={box.anchor || undefined}>{renderEntry(box.section)}</div>;
-    return createElement(box.tag ?? 'div', { key: box.id, 'data-box': box.id, id: box.anchor || undefined },
+    return createElement(box.tag ?? 'div', { key: box.id, 'data-box': box.id, id: box.anchor || undefined,
+      'data-look': box.look || undefined, 'data-trail': box.look === 'lead' && box.trail ? '' : undefined },
       box.children?.length ? <PageBoxes boxes={box.children} renderEntry={renderEntry} /> : null);
   });
 }

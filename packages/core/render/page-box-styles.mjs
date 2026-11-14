@@ -12,7 +12,8 @@
  * A length is `'<number><unit>'` (px, rem, em, %, vw, vh, svh, dvh, ch; fr in grid tracks), `'0'`, `'auto'` where
  * Webflow offers Auto, or a preset `'$<step>'`: the spacing scale (`$1` to `$32`, `$0-5`) and its semantic steps
  * (`$pair`, `$row`, `$item`, `$group`, `$section`, `$page` for space between; `$gutter`, `$margin`), as Webflow's
- * 0-220 presets are its spacing steps.
+ * 0-220 presets are its spacing steps. The page's own steps (`$small`, `$frame`, `$split`, `$stacked`, LR162) are
+ * PageGrid's row steps, so a page laid out as Boxes keeps its grid's rhythm.
  *
  * @typedef {'main' | 'large' | 'xl' | 'xxl' | 'tablet' | 'landscape' | 'portrait'} BoxBreakpoint
  * @typedef {Record<string, string | number>} BoxStyle
@@ -62,7 +63,14 @@ export const BOX_UNITS = ['px', 'rem', 'em', '%', 'vw', 'vh', 'svh', 'dvh', 'ch'
 const NUMBER = '-?(?:\\d+|\\d*\\.\\d+)';
 const LENGTH = new RegExp(`^(?:${NUMBER}(?:${BOX_UNITS.join('|')})|0)$`);
 const TRACK_UNIT = new RegExp(`^(?:${NUMBER}(?:${[...BOX_UNITS, 'fr'].join('|')})|0|auto|min-content|max-content)$`);
-const preset = value => typeof value === 'string' && value.startsWith('$') && Object.hasOwn(TOKEN_STEPS, value.slice(1));
+/**
+ * The page's own steps (LR162), as a page grid spaces its rows, so a page laid out as Boxes keeps its grid's rhythm: a
+ * framed group's step, the small step, a split's gutter and a stack's gap. Their settings are PageGrid's.
+ */
+const PAGE_STEPS = { frame: '--c-page-grid-frame-gap', small: '--c-page-grid-gap-item', split: '--c-page-grid-split-gutter', stacked: '--c-page-grid-stack-gap' };
+/** The page steps a length field offers after the presets (LR162). */
+export const BOX_PAGE_PRESETS = ['$small', '$frame', '$split', '$stacked'];
+const preset = value => typeof value === 'string' && value.startsWith('$') && (Object.hasOwn(TOKEN_STEPS, value.slice(1)) || Object.hasOwn(PAGE_STEPS, value.slice(1)));
 
 const isLength = (value, { auto = false, none = false, negative = true } = {}) => typeof value === 'string'
   && (preset(value) || (auto && value === 'auto') || (none && value === 'none') || (LENGTH.test(value) && (negative || !value.startsWith('-'))));
@@ -140,7 +148,9 @@ export const BOX_PROPERTIES = {
 
 /** A length or track as CSS: a preset is its token. */
 function lengthCss(value) {
-  return preset(value) ? `var(--space-${TOKEN_STEPS[value.slice(1)]})` : String(value);
+  if (!preset(value)) return String(value);
+  const step = value.slice(1);
+  return Object.hasOwn(PAGE_STEPS, step) ? `var(${PAGE_STEPS[step]})` : `var(--space-${TOKEN_STEPS[step]})`;
 }
 function trackCss(value) {
   const minmax = /^minmax\(([^,()]+),\s*([^,()]+)\)$/.exec(value);

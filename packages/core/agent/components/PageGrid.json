@@ -80,6 +80,11 @@
           "name": "rows",
           "type": "PageGridRow[]",
           "description": "Rows inside the cell, each dividing the cell's span again. Without rows the cell is a slot: `renderSlot` fills it."
+        },
+        {
+          "name": "styles",
+          "type": "BoxStyles",
+          "description": "The cell's Box layout values (LR156, LR163): with them the cell carries `data-box={id}`, so `PageBoxStyles` draws them (a grid child's span and start win in a row drawn on its own tracks). None by default."
         }
       ]
     },
@@ -132,6 +137,11 @@
           "type": "PageGridCell[]",
           "required": true,
           "description": "The row's cells in reading order."
+        },
+        {
+          "name": "styles",
+          "type": "BoxStyles",
+          "description": "The row's Box layout values (LR156, LR163): with them the row's columns part carries `data-box={id}` (the Box is the grid), so `PageBoxStyles` draws them. Where they set `gridColumns` at any breakpoint the row draws on its own tracks (Webflow's grid): its cells drop their share spans and flow one track each unless their own styles span or place them, and the row neither stacks by its narrowest cell or the window nor takes split shares. None by default."
         }
       ]
     },

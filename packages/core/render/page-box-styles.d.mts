@@ -42,6 +42,8 @@ export interface BoxStyleIssue {
 export declare const BOX_BREAKPOINTS: readonly BoxBreakpointInfo[];
 /** The preset steps a length field offers, in order (space tokens). */
 export declare const BOX_PRESETS: readonly string[];
+/** The page's own steps (LR162): `$small`, `$frame`, `$split`, `$stacked`, PageGrid's row step settings. */
+export declare const BOX_PAGE_PRESETS: readonly string[];
 export declare const BOX_UNITS: readonly string[];
 /** Every property a Box style takes, by Style panel section, in the panel's order. */
 export declare const BOX_PROPERTIES: Readonly<Record<string, BoxPropertyInfo>>;
