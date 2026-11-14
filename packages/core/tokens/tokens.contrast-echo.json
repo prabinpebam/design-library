@@ -21,6 +21,21 @@
         "$description": "A frame's name while the frame is selected (the same as at rest by default; a theme may tint it) (echoed for contrast contexts)"
       }
     },
+    "card": {
+      "$extensions": {
+        "owner": "Card"
+      },
+      "ruled-description-color": {
+        "$type": "color",
+        "$value": "{color.text-muted}",
+        "$description": "A ruled card's description colour (LR137, theme setting): muted as other cards unless a template reads its rows as plain words (echoed for contrast contexts)"
+      },
+      "ruled-rule-color": {
+        "$type": "color",
+        "$value": "{color.border}",
+        "$description": "A ruled card's rule colour (LR137, theme setting) (echoed for contrast contexts)"
+      }
+    },
     "code": {
       "$extensions": {
         "owner": "Code"

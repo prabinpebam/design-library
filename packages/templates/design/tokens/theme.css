@@ -193,6 +193,8 @@
     --c-time-field-segment-radius: var(--radius-sm);
     --c-sheet-radius: var(--radius-lg);
     --c-card-radius: var(--radius-lg);
+    --c-card-ruled-rule-color: var(--color-border);
+    --c-card-ruled-description-color: var(--color-text-muted);
     --c-accordion-radius: var(--radius-md);
     --c-image-radius: var(--radius-lg);
     --c-image-duotone: var(--color-accent);
@@ -225,6 +227,8 @@
       --color-border-group: var(--p-standard-border-strong);
       --color-status-neutral-fg: var(--color-text-muted);
       --c-alignment-picker-dot-colour: var(--color-text-muted);
+      --c-card-ruled-description-color: var(--color-text-muted);
+      --c-card-ruled-rule-color: var(--color-border);
       --c-code-key-outline: var(--color-border-strong);
       --c-colour-field-border: var(--color-border-strong);
       --c-context-matrix-head-fg: var(--color-text-muted);
@@ -257,6 +261,8 @@
     --color-border-group: var(--color-bg-sunken);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-card-ruled-description-color: var(--color-text-muted);
+    --c-card-ruled-rule-color: var(--color-border);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
@@ -288,6 +294,8 @@
     --color-border-group: var(--p-standard-border-strong);
     --color-status-neutral-fg: var(--color-text-muted);
     --c-alignment-picker-dot-colour: var(--color-text-muted);
+    --c-card-ruled-description-color: var(--color-text-muted);
+    --c-card-ruled-rule-color: var(--color-border);
     --c-code-key-outline: var(--color-border-strong);
     --c-colour-field-border: var(--color-border-strong);
     --c-context-matrix-head-fg: var(--color-text-muted);
