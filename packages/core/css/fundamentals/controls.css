@@ -1272,9 +1272,9 @@
   /*
    * Q165, an edge adornment placed by its ink: an icon at a field's start or end (a leading icon, the scrub icon, a
    * Select's chevron, a NumberField's list chevron) is as far from the box's edge as from its top and bottom, measured to
-   * the glyph's drawn ink (Icon sets --ink-w and --ink-h from the glyph), not to its frame. Its cell hugs it, the box has no
-   * padding on that side, and the icon's inline margins are (inside height − ink height) / 2 less the frame's empty side;
-   * the words keep the box's gap plus that inset. A list chevron is part of the field: no fill or edge of its own.
+   * the glyph's drawn ink (Icon sets --ink-w, --ink-h, --ink-x and --ink-y from the glyph), not to its frame. It keeps its
+   * square cell (Q127), so the words stay where they were, and sits against the cell's outer side with a margin that puts its ink
+   * (inside height − ink height) / 2 from the edge. A list chevron is part of the field: no fill or edge of its own.
    */
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field']) {
     --field-h: var(--c-field-size);
@@ -1294,8 +1294,7 @@
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'][data-size='xl'] { --icon-a: var(--size-icon-xl); }
 
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field']) [data-dl-part='box'] > :is([data-dl-part='leading'], [data-dl-part='scrub']):first-child:has(> [data-dl='icon']) {
-    aspect-ratio: auto;
-    min-inline-size: 0;
+    justify-content: flex-start;
   }
 
   :is([data-dl='select'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='box']:has(> :is([data-dl-part='chevron'], [data-dl-part='presets']):last-child) {
@@ -1307,10 +1306,12 @@
     display: inline-flex;
     flex: none;
     align-items: center;
+    justify-content: flex-end;
     align-self: stretch;
+    aspect-ratio: 1;
   }
 
-  /* Outer side: the ink inset equals the top and bottom ones. Inner side: the ink meets the cell, so the words are the box's gap from the ink at either end. */
+  /* The outer side's ink inset equals the top and bottom ones; the inner side (a trigger's words) is the trigger's gap from the ink. */
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'], [data-dl='menu-button']) [data-dl='icon'] {
     --ink-gap: calc((var(--edge-h) - var(--icon-a) * var(--ink-h, 0.75)) / 2);
     --ink-side: calc(var(--icon-a) * (1 - var(--ink-w, 0.75)) / 2);
@@ -1323,13 +1324,13 @@
 
   :is([data-dl='select'], [data-dl='text-field']) [data-dl-part='box'] > [data-dl-part='leading']:first-child > [data-dl='icon'],
   [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='scrub']:first-child > [data-dl='icon'] {
-    margin-inline: var(--edge-ink-start) var(--inner-ink-end);
+    margin-inline: var(--edge-ink-start) 0;
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
   }
 
   [data-dl='select'] [data-dl-part='box'] > [data-dl-part='chevron']:last-child > [data-dl='icon'],
   [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='presets']:last-child > [data-dl-part='trigger'] > [data-dl-part='layer'] > [data-dl='icon'] {
-    margin-inline: var(--inner-ink-start) var(--edge-ink-end);
+    margin-inline: 0 var(--edge-ink-end);
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
   }
 
@@ -1349,7 +1350,9 @@
   }
 
   [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger'] {
+    inline-size: 100%;
     block-size: 100%;
+    place-items: center end;
     min-inline-size: 0;
     min-block-size: 0;
     padding: 0;

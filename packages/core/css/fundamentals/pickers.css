@@ -470,14 +470,14 @@
   }
 
   /* Q163: a menu or list popup takes the density of the chrome it opens from. In a compact region (a design tool's
-     panels and toolbar) its items are compact rows, whatever the item's own size. */
-  [data-density='compact'] [data-dl-part='popup'] [data-dl='list-item'] {
+     panels and toolbar) its default-size items are compact rows; an item given a size (s, l: a picture or a second line) keeps it. */
+  [data-density='compact'] [data-dl-part='popup'] [data-dl='list-item']:not([data-size]) {
     min-block-size: var(--c-list-item-size-compact);
   }
 
   @media (pointer: coarse) {
     [data-dl='list-item'][data-size='s'],
-    [data-density='compact'] [data-dl-part='popup'] [data-dl='list-item'] {
+    [data-density='compact'] [data-dl-part='popup'] [data-dl='list-item']:not([data-size]) {
       min-block-size: var(--c-list-item-size);
     }
   }

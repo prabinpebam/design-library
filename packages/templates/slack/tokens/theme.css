@@ -56,6 +56,7 @@
     --c-list-item-hover-fill: #1264a3;
     --c-list-item-hover-text: #ffffff;
     --c-list-item-size: 1.875rem;
+    --c-list-item-size-compact: 1.875rem;
     --c-list-item-padding-block: 0.25rem;
     --c-list-item-padding-inline: 1.5rem;
     --c-list-item-radius: 0;
@@ -874,6 +875,7 @@
     --c-list-item-hover-fill: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
     --c-list-item-hover-text: var(--color-text);
     --c-list-item-size: 3.25rem;
+    --c-list-item-size-compact: 3.25rem;
     --c-list-item-name-weight: var(--weight-bold);
     --c-list-item-padding-inline: var(--space-4);
   }
@@ -899,6 +901,7 @@
     --c-popup-inset: var(--space-2);
     --c-list-item-padding-inline: var(--space-3);
     --c-list-item-size: 1.9375rem;
+    --c-list-item-size-compact: 1.9375rem;
   }
   [data-dl='slack-welcome-card'] > [data-dl-part='welcome-cta'] {
     --type-body-sm-size: var(--text-s);

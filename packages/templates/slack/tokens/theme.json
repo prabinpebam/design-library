@@ -244,6 +244,10 @@
   "$value": "1.875rem",
   "$description": "Owner benchmark 04 S04.3: 10-row overflow menu totals 231 PNG = 346 CSS px (30 CSS row pitch)."
  },
+ "c.list-item.size-compact": {
+  "$value": "1.875rem",
+  "$description": "Q163: Slack's menus open from its compact sidebar; their rows keep the benchmark's 30 px pitch (S04.3), not core's 24 px compact row."
+ },
  "c.list-item.padding-block": {
   "$value": "0.25rem",
   "$description": "Owner benchmark 04 S04.3: 4 CSS px on-scale menu row block padding."
@@ -597,6 +601,7 @@
     "c.list-item.hover-fill": "color-mix(in srgb, var(--color-text) 5%, var(--color-bg))",
     "c.list-item.hover-text": "var(--color-text)",
     "c.list-item.size": "3.25rem",
+    "c.list-item.size-compact": "3.25rem",
     "c.list-item.name-weight": "var(--weight-bold)",
     "c.list-item.padding-inline": "var(--space-4)"
    }
@@ -641,7 +646,8 @@
     "c.popup.offset": "0.625rem",
     "c.popup.inset": "var(--space-2)",
     "c.list-item.padding-inline": "var(--space-3)",
-    "c.list-item.size": "1.9375rem"
+    "c.list-item.size": "1.9375rem",
+    "c.list-item.size-compact": "1.9375rem"
    }
   },
   {
