@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR138: a template sets a stacked row's gap (14 November 2026)
+
+DesignUp P0.7. Once a split row stacks (375 px), today's Split keeps its words and picture `--t-designup-stack-gap` apart (32 px); a page-grid row's stacked cells sit `--c-page-grid-stack-gap` apart (space.stack-section, 48 px), and it wasn't on the settings allow-list: +16 px. Core API: `--c-page-grid-stack-gap` joins the theme-settings allow-list (default unchanged). Measured on DesignUp: the harness's stacked photo frame now moves only with the rows above it (0 px gap difference at 375; 1440/834 unchanged); /#/sponsor with the setting applied site-wide moves no box over 0.5 px at 1440/834/375 (only the lead row stacks there, with its own lead-stack-gap).
+
+| LR138 | 2026-11-14 | A template's gap between a row's stacked cells | The stacked row gap isn't a setting | 4 | setting `--c-page-grid-stack-gap` | none | E66 | shipped | | none |
+
 ### LR137: a ruled card, a line of a list of entries (14 November 2026)
 
 DesignUp P0.7: main's 15:12 decision, a "ruled" on/off option on Collection's Rows layout (off by default), reproducing today's ruled Rows (`compounds/Rows.tsx`): a rule above each row, the row padded below it, a heavier larger title, the line in ink. Collection's Rows draws core Cards, which have only `outlined` and `plain`. Core API, opt-in: Card `variant: 'ruled'`: no enclosure, `border-block-start` of `--c-card-ruled-rule-width` and `--c-card-ruled-rule-color`, `padding-block` `--c-card-ruled-padding-block`, title, description and meta `--c-card-ruled-gap` apart, title type `--c-card-ruled-title-weight/-size/-leading`, description colour `--c-card-ruled-description-color` (all theme settings, defaults from the plain card's look). Only the parts it has take a grid row, so no gap opens under a card without a picture. Cards laid one under another with no gap form the list. Measured in DesignUp's harness (a stand-in for Collection · Rows ruled on) against /#/sponsor: every row's title and line 0 px apart from today's at 1440/834/375 (fonts, colours, pitch); what remains is the heading block's own gap (R4, template).
