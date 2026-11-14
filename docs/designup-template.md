@@ -21,7 +21,9 @@ Before-code decision: DesignUp ED8 reproduced a typed Metrics strip with equal l
 
 | ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| LR126 | 2026-11-14 | Exact statistic scalar identity for repeated words | Root-only data; label-first DOM and value-first fields misbind | 6 | opt-in labelData/valueData: DataAttributes | none | Editor56 | accepted; before code | pending | DesignUp adopts public seam, no override |
+| LR126 | 2026-11-14 | Exact statistic scalar identity for repeated words | Root-only data; label-first DOM and value-first fields misbind | 6 | opt-in labelData/valueData: DataAttributes | none | Editor56 | shipped; bounded typed strip only | c3a3c14; contract 7bc791a; DesignUp pin du.7bc791a9 | Done: NumberStrip public seam adopted, no override |
+
+Core typecheck/build:library and linked/pinned DesignUp build pass. Checkpoint pack required agent:index regeneration (not a per-change sweep); generated public props committed separately. Installed-Chrome normal-editor walkthrough uses actual disposable handlers and generated fresh documents, with ten copy-only saves. Equal label and figure edit independently; named UI Undo/Redo and linked saved-record path rebasing pass. Original-index filtering, words-only cell and correct repeated Facts preserved. Wrong/absent owner, missing/malformed/stale identity, wrong ancestry, duplicate identity and nonenumerated paths cannot authorize a save or use text fallback. Inspected light/dark 1440 captures; no default markup/style change. All API requests intercepted, zero unknown/page errors/live writes; live history and marker hashes unchanged; helpers removed. Full ED8, Opening/legacy strips and combined Metrics remain open. Stories/regressions deferred.
 
 ### LR125: Vimeo local captions and chapter seeking (14 November 2026)
 
