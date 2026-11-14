@@ -52,6 +52,20 @@ export interface TreeViewProps extends DataAttributes {
   onMove?: (id: string, parent: string | undefined, index: number) => void;
   /** Whether a row can hold others (a drop into it); default: rows with children. */
   canHold?: (item: TreeItem) => boolean;
+  /** Opt-in (LR161): the row to show hovered, e.g. while its element is hovered on a canvas. */
+  hovered?: string;
+  /** Opt-in (LR161): the pointer entered a row (its id) or left the tree (undefined); the keyboard doesn't call it. */
+  onHover?: (id: string | undefined) => void;
+  /** `compact`: a design tool's short rows (as a compact density context gives). */
+  density?: 'compact';
+  /** Opt-in (LR161): the row whose name is being edited in place (a field in the label's place). */
+  renaming?: string;
+  /** A double-click on a row's name asks to rename it (the consumer sets `renaming`); with `onRename`. */
+  onRenameStart?: (id: string) => void;
+  /** The edited name: Enter or leaving the field gives the new name (trimmed; an empty one cancels), Escape undefined. */
+  onRename?: (id: string, name: string | undefined) => void;
+  /** Opt-in (LR161): the arrow keys, Home and End select the row they move to (`onSelect`), as a design tool's layers do. */
+  selectionFollowsFocus?: boolean;
 }
 
 type Drop = { target: string; where: 'before' | 'after' | 'into' };
@@ -89,7 +103,7 @@ function visibleRows(items: TreeItem[], open: Set<string>, level = 1, parent?: s
  * @key Enter / Space: selects the row
  * @key Alt+ArrowUp / Alt+ArrowDown (reorderable): moves the row before or after its previous or next sibling
  */
-export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', reorderable = false, onReorder, onMove, canHold, ...data }: TreeViewProps) {
+export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', reorderable = false, onReorder, onMove, canHold, hovered, onHover, density, renaming, onRenameStart, onRename, selectionFollowsFocus = false, ...data }: TreeViewProps) {
   const open = new Set(expanded);
   const rows = visibleRows(items, open);
   const [active, setActive] = useState<string | undefined>(undefined);
@@ -100,6 +114,11 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     if (!id) return;
     setActive(id);
     refs.current.get(id)?.focus();
+  };
+  // selectionFollowsFocus (LR161): the arrows, Home and End also select.
+  const go = (id: string | undefined) => {
+    move(id);
+    if (id && selectionFollowsFocus) onSelect?.(id);
   };
   // Roving tab order for row actions: only the current row's controls take Tab; the others wait for their row.
   useEffect(() => {
@@ -142,6 +161,11 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
   }, [items]);
   // A move into or out of a parent (LR168): where the pointer is over the visible rows, never into the row itself or its own branch.
   const [drop, setDrop] = useState<Drop | null>(null);
+  // The row whose rename was just finished by a key, so leaving its field doesn't finish it twice (LR161).
+  const renamed = useRef<string | null>(null);
+  useEffect(() => {
+    if (renaming) renamed.current = null;
+  }, [renaming]);
   const holds = (item: TreeItem) => (canHold ? canHold(item) : !!item.children?.length);
   const branch = (id: string) => {
     const ids = new Set<string>();
@@ -179,7 +203,7 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
   };
   const onRowDown = (row: Row) => (event: PointerEvent<HTMLSpanElement>) => {
     if (!reorderable || event.button !== 0 || event.pointerType === 'touch') return;
-    if ((event.target as HTMLElement).closest('[data-dl-part="actions"], [data-dl-part="twisty"]')) return;
+    if ((event.target as HTMLElement).closest('[data-dl-part="actions"], [data-dl-part="twisty"], [data-dl-part="rename"]')) return;
     drag.current = { id: row.item.id, parent: row.parent, y: event.clientY, moved: false };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -214,12 +238,12 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     }    const hasChildren = !!row.item.children?.length;
     const isOpen = open.has(row.item.id);
     const keys: Record<string, () => void> = {
-      ArrowDown: () => move(rows[index + 1]?.item.id),
-      ArrowUp: () => move(rows[index - 1]?.item.id),
-      Home: () => move(rows[0]?.item.id),
-      End: () => move(rows[rows.length - 1]?.item.id),
-      ArrowRight: () => (hasChildren && !isOpen ? toggle(row.item.id, true) : hasChildren ? move(rows[index + 1]?.item.id) : undefined),
-      ArrowLeft: () => (hasChildren && isOpen ? toggle(row.item.id, false) : move(row.parent)),
+      ArrowDown: () => go(rows[index + 1]?.item.id),
+      ArrowUp: () => go(rows[index - 1]?.item.id),
+      Home: () => go(rows[0]?.item.id),
+      End: () => go(rows[rows.length - 1]?.item.id),
+      ArrowRight: () => (hasChildren && !isOpen ? toggle(row.item.id, true) : hasChildren ? go(rows[index + 1]?.item.id) : undefined),
+      ArrowLeft: () => (hasChildren && isOpen ? toggle(row.item.id, false) : go(row.parent)),
       Enter: () => onSelect?.(row.item.id),
       ' ': () => onSelect?.(row.item.id),
     };
@@ -259,7 +283,9 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
           <span
             data-dl-part="row"
             data-muted={item.muted ? '' : undefined}
+            data-hovered={hovered === item.id ? '' : undefined}
             data-drop={drop?.target === item.id ? drop.where : undefined}
+            onPointerEnter={onHover ? () => onHover(item.id) : undefined}
             style={{ '--level': String(level - 1) } as CSSProperties}
             onPointerDown={onRowDown(row)}
             onPointerMove={onRowMove}
@@ -279,7 +305,38 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
                 <Icon name={item.icon} size="sm" />
               </span>
             )}
-            <span data-dl-part="label">{item.label}</span>
+            {renaming === item.id && onRename ? (
+              <input
+                data-dl-part="rename"
+                aria-label={`Rename ${item.label}`}
+                defaultValue={item.label}
+                autoFocus
+                onFocus={(e) => e.currentTarget.select()}
+                onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => {
+                  e.stopPropagation();
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    refocus.current = item.id;
+                    renamed.current = item.id;
+                    onRename(item.id, e.currentTarget.value.trim() || undefined);
+                  } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    refocus.current = item.id;
+                    renamed.current = item.id;
+                    onRename(item.id, undefined);
+                    refs.current.get(item.id)?.focus();
+                  }
+                }}
+                onBlur={(e) => {
+                  if (renaming === item.id && renamed.current !== item.id) onRename(item.id, e.currentTarget.value.trim() || undefined);
+                }}
+              />
+            ) : (
+              <span data-dl-part="label" onDoubleClick={onRenameStart ? (e) => (e.stopPropagation(), onRenameStart(item.id)) : undefined}>
+                {item.label}
+              </span>
+            )}
             {item.meta && <span data-dl-part="meta">{item.meta}</span>}
             {actions && (
               <span data-dl-part="actions" data-pinned={item.pinActions ? '' : undefined} onClick={(e) => e.stopPropagation()}>
@@ -299,7 +356,7 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     });
 
   const tree = (
-    <ul {...data} data-dl="tree-view" data-reorder={reorderable ? '' : undefined} data-actions={actionsRoom === 'overlay' ? 'overlay' : undefined} data-mark={mark === 'current' ? 'current' : undefined} data-flat={items.some((i) => i.children?.length) ? undefined : ''} role="tree" aria-label={label}>
+    <ul {...data} data-dl="tree-view" data-density={density} data-reorder={reorderable ? '' : undefined} data-actions={actionsRoom === 'overlay' ? 'overlay' : undefined} data-mark={mark === 'current' ? 'current' : undefined} data-flat={items.some((i) => i.children?.length) ? undefined : ''} role="tree" aria-label={label} onPointerLeave={onHover ? () => onHover(undefined) : undefined}>
       {render(items, 1)}
     </ul>
   );

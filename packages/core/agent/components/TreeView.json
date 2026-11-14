@@ -113,6 +113,42 @@
           "name": "canHold",
           "type": "(item: TreeItem) => boolean",
           "description": "Whether a row can hold others (a drop into it); default: rows with children."
+        },
+        {
+          "name": "hovered",
+          "type": "string",
+          "description": "Opt-in (LR161): the row to show hovered, e.g. while its element is hovered on a canvas."
+        },
+        {
+          "name": "onHover",
+          "type": "(id: string | undefined) => void",
+          "description": "Opt-in (LR161): the pointer entered a row (its id) or left the tree (undefined); the keyboard doesn't call it."
+        },
+        {
+          "name": "density",
+          "type": "'compact'",
+          "description": "`compact`: a design tool's short rows (as a compact density context gives)."
+        },
+        {
+          "name": "renaming",
+          "type": "string",
+          "description": "Opt-in (LR161): the row whose name is being edited in place (a field in the label's place)."
+        },
+        {
+          "name": "onRenameStart",
+          "type": "(id: string) => void",
+          "description": "A double-click on a row's name asks to rename it (the consumer sets `renaming`); with `onRename`."
+        },
+        {
+          "name": "onRename",
+          "type": "(id: string, name: string | undefined) => void",
+          "description": "The edited name: Enter or leaving the field gives the new name (trimmed; an empty one cancels), Escape undefined."
+        },
+        {
+          "name": "selectionFollowsFocus",
+          "type": "boolean",
+          "default": "false",
+          "description": "Opt-in (LR161): the arrow keys, Home and End select the row they move to (`onSelect`), as a design tool's layers do."
         }
       ]
     },
@@ -205,6 +241,7 @@
     "--c-tree-view-selected-fill",
     "--c-tree-view-surface",
     "--c-tree-view-twisty",
+    "--color-bg",
     "--color-bg-raised",
     "--color-focus",
     "--color-text",
@@ -215,6 +252,7 @@
     "--layer-raised",
     "--shadow-raised",
     "--size-focus-width",
+    "--space-inset-xs",
     "--type-body-sm-leading",
     "--type-body-sm-size",
     "--weight-semibold"

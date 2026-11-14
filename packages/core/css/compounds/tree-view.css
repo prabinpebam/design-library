@@ -40,9 +40,30 @@
     line-height: var(--type-body-sm-leading);
   }
 
-  /* Q68: in a compact density context (a design tool's layers), rows are 32 px, as Figma UI3's. */
-  [data-density='compact'] [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] {
+  /* Q68: in a compact density context (a design tool's layers), rows are 32 px, as Figma UI3's. LR161: or the tree's own density. */
+  [data-density='compact'] [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'],
+  [data-dl='tree-view'][data-density='compact'] [role='treeitem'] > [data-dl-part='row'] {
     min-block-size: var(--c-tree-view-row-size-compact);
+  }
+
+  /* LR161: the row the consumer marks hovered (its element hovered elsewhere, a canvas) shows the hover fill too. */
+  [data-dl='tree-view'] [role='treeitem']:not([aria-selected='true']) > [data-dl-part='row'][data-hovered] {
+    --dl-row-fill: var(--c-tree-view-hover-fill);
+    background-color: var(--c-tree-view-hover-fill);
+  }
+
+  /* LR161: renaming in place: the name becomes a field in the label's own place, the row's size kept. */
+  [data-dl='tree-view'] [role='treeitem'] > [data-dl-part='row'] > [data-dl-part='rename'] {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0 var(--space-inset-xs);
+    border: var(--border-hairline) solid var(--color-focus);
+    border-radius: var(--c-tree-view-radius);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font: inherit;
+    outline: none;
   }
 
   [data-dl='tree-view'] [role='treeitem'][aria-selected='true'] > [data-dl-part='row'] {
