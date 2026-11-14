@@ -42,13 +42,13 @@
         },
         {
           "name": "start",
-          "type": "PageGridGap",
-          "description": "The space above the first row (LR91): a stack step, as a row's `gap`; none by default."
+          "type": "PageGridEdge",
+          "description": "The space above the first row (LR91): a stack step, as a row's `gap`; none by default, where a framed first row also drops its inset. `frame` (LR139): none from the grid, but a framed first row keeps its own inset."
         },
         {
           "name": "end",
-          "type": "PageGridGap",
-          "description": "The space below the last row (LR91); none by default."
+          "type": "PageGridEdge",
+          "description": "The space below the last row (LR91); none by default. `frame` (LR139): none, but a framed last row keeps its inset."
         },
         {
           "name": "layoutEdges",

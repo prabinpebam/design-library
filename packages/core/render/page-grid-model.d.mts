@@ -6,6 +6,9 @@ export type PageGridGap = 'item' | 'group' | 'section' | 'page';
 /** A row's space above: a stack step, or `none` for exactly 0 (LR127). */
 export type PageGridRowGap = PageGridGap | 'none';
 
+/** A grid edge's space: a stack step, or `frame` (LR139): none from the grid, but a framed row at that edge keeps its own inset. */
+export type PageGridEdge = PageGridGap | 'frame';
+
 /** A row's band look (LR129). */
 export type PageGridFrame = 'band' | 'tint' | 'lead';
 
@@ -53,10 +56,10 @@ export interface PageGridRecordRow {
 
 export interface PageGridRecord {
   rows: PageGridRecordRow[];
-  /** The space above the first row (LR91); none when left out. */
-  start?: PageGridGap;
-  /** The space below the last row (LR91); none when left out. */
-  end?: PageGridGap;
+  /** The space above the first row (LR91); none when left out; `frame` keeps an edge framed row's inset (LR139). */
+  start?: PageGridEdge;
+  /** The space below the last row (LR91); none when left out; `frame` keeps an edge framed row's inset (LR139). */
+  end?: PageGridEdge;
 }
 
 /** One problem: where in the page document (a JSON pointer) and what's wrong. */
@@ -107,6 +110,8 @@ export declare const PAGE_GRID_DEPTH: 3;
 export declare const PAGE_GRID_GAPS: readonly PageGridGap[];
 /** A row's gap values: `none` (exactly 0, LR127) and the stack steps. */
 export declare const PAGE_GRID_ROW_GAPS: readonly PageGridRowGap[];
+/** A grid edge's values (LR139): the stack steps and `frame`. */
+export declare const PAGE_GRID_EDGES: readonly PageGridEdge[];
 /** A row's stack values (LR134). */
 export declare const PAGE_GRID_STACKS: readonly PageGridStack[];
 /** A row's gutter values (LR135). */

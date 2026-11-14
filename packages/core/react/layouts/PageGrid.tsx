@@ -1,10 +1,10 @@
 import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { PAGE_GRID_COLUMNS, PAGE_GRID_SPLIT_SHARES, pageGridRecordProblems, rowSpans, splitSpans } from '../../render/page-grid-model.mjs';
-import type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
+import type { PageGridEdge, PageGridFrame, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
 
 export { PAGE_GRID_COLUMNS, PAGE_GRID_MIN_SPAN } from '../../render/page-grid-model.mjs';
-export type { PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
+export type { PageGridEdge, PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
 
 export interface PageGridCell {
   /** Stable id: the key, and `data-cell` on the cell for an editor to find it. */
@@ -81,10 +81,13 @@ export interface PageGridProps extends DataAttributes {
    * where no cell is (between cells). Keyboard selection belongs to the editor's outline (a TreeView of the same ids).
    */
   onSelect?: (target: PageGridTarget) => void;
-  /** The space above the first row (LR91): a stack step, as a row's `gap`; none by default. */
-  start?: PageGridGap;
-  /** The space below the last row (LR91); none by default. */
-  end?: PageGridGap;
+  /**
+   * The space above the first row (LR91): a stack step, as a row's `gap`; none by default, where a framed first row
+   * also drops its inset. `frame` (LR139): none from the grid, but a framed first row keeps its own inset.
+   */
+  start?: PageGridEdge;
+  /** The space below the last row (LR91); none by default. `frame` (LR139): none, but a framed last row keeps its inset. */
+  end?: PageGridEdge;
   /**
    * @deprecated No effect since LR131: an edge step always measures as the same step between rows, also when the grid
    * sits in a gap-free group with its neighbouring regions (LR127); none is exactly 0.
@@ -98,7 +101,8 @@ export interface PageGridTarget {
   id: string;
 }
 
-/** Whether each side of a list of rows meets a None boundary: start and nd are the list's own edges (LR129). */
+/** Whether each side of a list of rows meets a None boundary: start and end are the list's own edges (LR129). A grid
+ * edge `frame` isn't None for its rows (LR139): a framed edge row keeps its inset. */
 type Edges = { start: boolean; end: boolean; framed: boolean };
 
 function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: false, framed: false } }: { rows: PageGridRow[]; span: number; renderSlot: PageGridProps['renderSlot']; selected?: string; edges?: Edges }) {

@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR139: a framed row keeps its inset at the grid's edge (14 November 2026)
+
+DesignUp P0.7, the closing. A framed row's padding is 0 on a side whose boundary is None (LR127, LR129), the grid's own edges included; a step edge adds the grid's padding on top of the frame's. Today's closing band is the last thing on the page and keeps its band padding below (100.7/58.4/56 px at 1440/834/375), with nothing from a grid. Core API: a grid edge takes `frame` (`start`/`end`, `PAGE_GRID_EDGES`, type `PageGridEdge`): none from the grid, but a framed row at that edge keeps its own inset. Left out, an edge stays None and flushes, as before. Measured on DesignUp's harness (end `frame`): the closing row's padding equals today's at all three widths, 0 below it from the grid; /#/sponsor (end `section`) unchanged.
+
+| LR139 | 2026-11-14 | A framed row keeps its inset at the grid's edge | A None edge flushes a framed edge row; a step edge adds the grid's space too | 4 | grid edge value `frame` | none | E66 | shipped | | none |
+
 ### LR138: a template sets a stacked row's gap (14 November 2026)
 
 DesignUp P0.7. Once a split row stacks (375 px), today's Split keeps its words and picture `--t-designup-stack-gap` apart (32 px); a page-grid row's stacked cells sit `--c-page-grid-stack-gap` apart (space.stack-section, 48 px), and it wasn't on the settings allow-list: +16 px. Core API: `--c-page-grid-stack-gap` joins the theme-settings allow-list (default unchanged). Measured on DesignUp: the harness's stacked photo frame now moves only with the rows above it (0 px gap difference at 375; 1440/834 unchanged); /#/sponsor with the setting applied site-wide moves no box over 0.5 px at 1440/834/375 (only the lead row stacks there, with its own lead-stack-gap).

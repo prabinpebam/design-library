@@ -19,6 +19,8 @@ export const PAGE_GRID_DEPTH = 3;
 export const PAGE_GRID_GAPS = ['item', 'group', 'section', 'page'];
 /** A row's gap values: `none` is exactly 0 (LR127); left out it is section. */
 export const PAGE_GRID_ROW_GAPS = ['none', ...PAGE_GRID_GAPS];
+/** A grid edge's values: the stack steps, or `frame` (LR139): none from the grid, but a framed row at that edge keeps its own inset. Left out, none. */
+export const PAGE_GRID_EDGES = [...PAGE_GRID_GAPS, 'frame'];
 /** A row's band look (LR129): left out, none. */
 export const PAGE_GRID_FRAMES = ['band', 'tint', 'lead'];
 /** Where a row's cells stack (LR134): left out, by its narrowest cell; `window`, only in a narrow or a short window. */
@@ -121,7 +123,7 @@ export function pageGridRecordProblems(grid, sections, options = {}) {
     });
   };
   rows(grid.rows, PAGE_GRID_COLUMNS, 1, '/grid/rows');
-  for (const edge of ['start', 'end']) if (grid[edge] !== undefined && !PAGE_GRID_GAPS.includes(grid[edge])) issues.push({ at: `/grid/${edge}`, what: `needs one of: ${PAGE_GRID_GAPS.join(', ')}` });
+  for (const edge of ['start', 'end']) if (grid[edge] !== undefined && !PAGE_GRID_EDGES.includes(grid[edge])) issues.push({ at: `/grid/${edge}`, what: `needs one of: ${PAGE_GRID_EDGES.join(', ')}` });
   return issues;
 }
 

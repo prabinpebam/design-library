@@ -12,6 +12,7 @@ export {
   PAGE_GRID_MIN_SPAN,
   PAGE_GRID_DEPTH,
   PAGE_GRID_GAPS,
+  PAGE_GRID_EDGES,
   PAGE_GRID_SPLIT_SHARES,
   splitSpans,
   rowSpans,
@@ -28,6 +29,7 @@ export {
 } from './page-grid-model.mjs';
 export type {
   PageGridRecord,
+  PageGridEdge,
   PageGridRecordRow,
   PageGridRecordCell,
   PageGridIssue,
