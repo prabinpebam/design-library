@@ -178,6 +178,10 @@
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='11'] { --dl-page-grid-span: 11; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='12'] { --dl-page-grid-span: 12; }
 
+  /* A row drawn on its Box's own tracks (LR163, opt-in by data): its cells flow one track each, so their own Box spans
+     and starts (grid-column-end: span n, grid-column-start) aren't overridden by a share span. */
+  [data-dl-part='page-columns'][data-tracks] > [data-dl-part='page-cell'] { grid-column: auto; }
+
   /* An empty slot keeps its size (none by default), so a preview lays out as the editor's canvas does (LR23). */
   [data-dl-part='page-cell'][data-empty] {
     min-block-size: var(--c-page-grid-empty-size);

@@ -2,6 +2,7 @@ import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { PAGE_GRID_COLUMNS, PAGE_GRID_SPLIT_SHARES, pageGridRecordProblems, rowSpans, splitSpans } from '../../render/page-grid-model.mjs';
 import type { PageGridEdge, PageGridFrame, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
+import type { BoxStyles } from '../../render/page-box-styles.mjs';
 
 export { PAGE_GRID_COLUMNS, PAGE_GRID_MIN_SPAN } from '../../render/page-grid-model.mjs';
 export type { PageGridEdge, PageGridFrame, PageGridGap, PageGridRowGap, PageGridSplit, PageGridStack, PageGridGutter } from '../../render/page-grid-model.mjs';
@@ -18,6 +19,11 @@ export interface PageGridCell {
   anchor?: string;
   /** Rows inside the cell, each dividing the cell's span again. Without rows the cell is a slot: `renderSlot` fills it. */
   rows?: PageGridRow[];
+  /**
+   * The cell's Box layout values (LR156, LR163): with them the cell carries `data-box={id}`, so `PageBoxStyles` draws
+   * them (a grid child's span and start win in a row drawn on its own tracks). None by default.
+   */
+  styles?: BoxStyles;
 }
 
 export interface PageGridRow {
@@ -54,6 +60,13 @@ export interface PageGridRow {
   trail?: boolean;
   /** The row's cells in reading order. */
   cells: PageGridCell[];
+  /**
+   * The row's Box layout values (LR156, LR163): with them the row's columns part carries `data-box={id}` (the Box is the
+   * grid), so `PageBoxStyles` draws them. Where they set `gridColumns` at any breakpoint the row draws on its own tracks
+   * (Webflow's grid): its cells drop their share spans and flow one track each unless their own styles span or place
+   * them, and the row neither stacks by its narrowest cell or the window nor takes split shares. None by default.
+   */
+  styles?: BoxStyles;
 }
 
 /** @deprecated The older preset splits (cells now carry spans). */
@@ -125,16 +138,18 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
     // Spans that don't add up to the row's span (or a deprecated split its span doesn't allow) stack the cells whole
     // rather than guessing.
     const spans = rowSpans(row, span);
+    // A row whose Box sets grid tracks draws on them (LR163): no share spans, column minimums or split shares.
+    const tracks = !!row.styles && Object.values(row.styles).some((values) => values?.gridColumns !== undefined);
     // How many of the narrowest cell fit across the row: the row stacks below that many column minimums.
-    const narrowest = spans && !row.stack ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
+    const narrowest = spans && !row.stack && !tracks ? Math.min(4, Math.max(1, Math.ceil(span / Math.min(...spans)))) : 1;
     // One cell is one column: its span's gutters alone would be wider than a phone's column (LR130).
-    const columns = spans && row.cells.length > 1 ? span : 1;
+    const columns = spans && row.cells.length > 1 && !tracks ? span : 1;
     // A split row's cells take their spans as shares of the row (LR135).
     const shares = row.gutter && spans && columns > 1 ? ({ '--dl-page-grid-shares': spans.map((s) => `minmax(0, ${s}fr)`).join(' ') } as CSSProperties) : undefined;
     let start = 0;
     return (
-      <div key={row.id} id={row.anchor || undefined} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-trail={row.frame === 'lead' && row.trail ? '' : undefined} data-stack={row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
-        <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined} style={shares}>
+      <div key={row.id} id={row.anchor || undefined} data-dl-part="page-row" data-row={row.id} data-gap={gap} data-frame={row.frame} data-trail={row.frame === 'lead' && row.trail ? '' : undefined} data-stack={tracks ? undefined : row.stack} data-gutter={shares ? row.gutter : undefined} data-flush-start={row.frame && flushStart ? '' : undefined} data-flush-end={row.frame && flushEnd ? '' : undefined} data-selected={selected === row.id ? '' : undefined}>
+        <div data-dl-part="page-columns" data-columns={columns} data-narrowest={narrowest > 1 ? narrowest : undefined} data-tracks={tracks ? '' : undefined} data-box={row.styles ? row.id : undefined} style={shares}>
           {row.cells.map((cell, c) => {
             const own = spans ? spans[c] : span;
             const at = start;
@@ -147,8 +162,9 @@ function Rows({ rows, span, renderSlot, selected, edges = { start: false, end: f
                 id={cell.anchor || undefined}
                 data-dl-part="page-cell"
                 data-cell={cell.id}
-                data-span={columns > 1 ? own : 1}
+                data-span={tracks ? undefined : columns > 1 ? own : 1}
                 data-start={columns > 1 ? at : undefined}
+                data-box={cell.styles ? cell.id : undefined}
                 data-empty={empty ? '' : undefined}
                 data-selected={selected === cell.id ? '' : undefined}
               >
