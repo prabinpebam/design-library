@@ -601,5 +601,19 @@
         "$description": "A row's corners, seen on hover and selection (echoed for shape contexts)"
       }
     }
+  },
+  "radius": {
+    "compact": {
+      "lg": {
+        "$type": "dimension",
+        "$value": "{radius.sm}",
+        "$description": "Surfaces' corners inside a compact density region: the shape's small radius by default. A product whose tool regions keep its corners sets the theme setting to var(--radius-lg) on its root (LR149) (echoed for shape contexts)"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.sm}",
+        "$description": "Controls' corners inside a compact density region: the shape's small radius by default. A product whose tool regions keep its corners sets the theme setting to var(--radius-md) on its root (LR149) (echoed for shape contexts)"
+      }
+    }
   }
 }

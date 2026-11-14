@@ -58,6 +58,8 @@
     --type-label-compact-size: var(--text-xs);
     --type-caption-size: var(--text-s);
     --type-code-size: var(--text-s);
+    --radius-compact-md: var(--radius-sm);
+    --radius-compact-lg: var(--radius-sm);
     --c-colour-field-radius: var(--radius-md);
     --c-menu-button-radius: var(--radius-md);
     --c-menu-button-border: var(--color-border-control);
@@ -323,6 +325,8 @@
     --c-skeleton-fill: var(--color-border);
   }
   [data-shape='sharp'] [data-template='design'], [data-template='design'][data-shape='sharp'] {
+    --radius-compact-lg: var(--radius-sm);
+    --radius-compact-md: var(--radius-sm);
     --c-accordion-radius: var(--radius-md);
     --c-agenda-session-radius: var(--radius-md);
     --c-alert-radius: var(--radius-md);
@@ -383,6 +387,8 @@
     --c-tree-view-radius: var(--radius-md);
   }
   [data-shape='mild'] [data-template='design'], [data-template='design'][data-shape='mild'] {
+    --radius-compact-lg: var(--radius-sm);
+    --radius-compact-md: var(--radius-sm);
     --c-accordion-radius: var(--radius-md);
     --c-agenda-session-radius: var(--radius-md);
     --c-alert-radius: var(--radius-md);
@@ -443,6 +449,8 @@
     --c-tree-view-radius: var(--radius-md);
   }
   [data-shape='rounded'] [data-template='design'], [data-template='design'][data-shape='rounded'] {
+    --radius-compact-lg: var(--radius-sm);
+    --radius-compact-md: var(--radius-sm);
     --c-accordion-radius: var(--radius-md);
     --c-agenda-session-radius: var(--radius-md);
     --c-alert-radius: var(--radius-md);
@@ -503,6 +511,8 @@
     --c-tree-view-radius: var(--radius-md);
   }
   [data-shape='soft'] [data-template='design'], [data-template='design'][data-shape='soft'] {
+    --radius-compact-lg: var(--radius-sm);
+    --radius-compact-md: var(--radius-sm);
     --c-accordion-radius: var(--radius-md);
     --c-agenda-session-radius: var(--radius-md);
     --c-alert-radius: var(--radius-md);
@@ -563,6 +573,8 @@
     --c-tree-view-radius: var(--radius-md);
   }
   [data-shape='super-soft'] [data-template='design'], [data-template='design'][data-shape='super-soft'] {
+    --radius-compact-lg: var(--radius-sm);
+    --radius-compact-md: var(--radius-sm);
     --c-accordion-radius: var(--radius-md);
     --c-agenda-session-radius: var(--radius-md);
     --c-alert-radius: var(--radius-md);

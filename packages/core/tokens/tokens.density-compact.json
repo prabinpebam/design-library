@@ -19,13 +19,13 @@
   "radius": {
     "md": {
       "$type": "dimension",
-      "$value": "{radius.sm}",
-      "$description": "Controls' corners in app chrome (compact density): the shape's small radius"
+      "$value": "{radius.compact.md}",
+      "$description": "Controls' corners in app chrome (compact density): radius.compact.md, the shape's small radius unless the product keeps its corners (LR149)"
     },
     "lg": {
       "$type": "dimension",
-      "$value": "{radius.sm}",
-      "$description": "Surfaces' corners in app chrome (compact density): the shape's small radius"
+      "$value": "{radius.compact.lg}",
+      "$description": "Surfaces' corners in app chrome (compact density): radius.compact.lg, the shape's small radius unless the product keeps its corners (LR149)"
     }
   }
 }
