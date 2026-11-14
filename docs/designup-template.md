@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR136: a template sets the page grid's item step (14 November 2026)
+
+DesignUp P0.7. Inside DesignUp's two-column band the heading and its list sit its item step apart (`--t-designup-item-gap`, 18.75/16/16 px at 1440/834/375); a page-grid row with gap `item` is `--c-page-grid-gap-item` (space.stack-item, 14.06/12/12 px), and only the frame settings were on the allow-list. Core API: `--c-page-grid-gap-item` joins the theme-settings allow-list (default unchanged). No DesignUp page has a row with gap `item` yet, so setting it moves nothing there.
+
+| LR136 | 2026-11-14 | A template's item step between page-grid rows | The item gap step isn't a setting | 4 | setting `--c-page-grid-gap-item` | none | E64 | shipped | | none |
+
 ### LR135: a split row, its cells as shares with their own gutter (14 November 2026)
 
 DesignUp P0.7 ("A relationship, not a speaking slot" from generic blocks, C13 17:02). DesignUp's two-column band (its Split) is `minmax(0, 5fr) minmax(0, 7fr)` with its fluid column gap (72 px at 1440). A 5/7 page-grid row is 5 and 7 of twelve columns with eleven fixed gutters (37.5 px), so its words were 8.1 px wider and its picture started 26.4 px earlier and was 26.4 px wider at 1440. No gutter value reproduces 5fr/7fr plus one gap on twelve columns. Core API, opt-in: PageGridRow `gutter: 'split'` renders `data-gutter` and sets `--dl-page-grid-shares` on its columns (each cell's span as an `fr` share); the row's tracks are those shares, `--c-page-grid-split-gutter` apart (setting, default space.gutter), so the cells no longer line up with the page's columns. The tracks are reset on every row (so a nested row never inherits them) and dropped when the row stacks. Rows without it are unchanged. Measured in DesignUp's harness against /#/sponsor with the setting at DesignUp's column gap: the words column and the picture frame 0 px at 1440, 834 and 700.

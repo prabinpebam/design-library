@@ -54,6 +54,7 @@
   },
   "PageGrid": {
     "--c-page-grid-empty-size": "The least height of an empty cell (default 0: an empty cell takes no height). An editor's preview sets the height its canvas gives an empty cell, so a page previews with the layout it's edited in.",
+    "--c-page-grid-gap-item": "Above a row with gap item (LR136; default space.stack-item). A template whose item step differs from the core's sets its own, such as the space between a band's heading and its list.",
     "--c-page-grid-frame-inset": "Above and below a framed row's content (LR129; default space.stack-section). A template whose bands have their own rhythm sets its band padding.",
     "--c-page-grid-frame-gap": "Between rows inside a framed row that leave their gap unset (LR129; default space.stack-group). A template sets its band's stack gap.",
     "--c-page-grid-frame-fill": "A tint frame's surface (LR129; default color.bg-sunken). A template sets its tint.",
