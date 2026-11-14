@@ -1240,6 +1240,16 @@
         "$value": "{space.gutter}",
         "$description": "Between a row's cells, fixed for the whole grid (echoed for space contexts)"
       },
+      "lead-lift": {
+        "$type": "dimension",
+        "$value": "{space.stack-group}",
+        "$description": "Between a lead row's two columns and each row under them (LR132, theme setting) (echoed for space contexts)"
+      },
+      "lead-stack-gap": {
+        "$type": "dimension",
+        "$value": "{space.stack-section}",
+        "$description": "Between a lead row's columns once they stack in a narrow row or a short window (LR132, theme setting) (echoed for space contexts)"
+      },
       "selected-offset": {
         "$type": "dimension",
         "$value": "{space.inset-xs}",

@@ -651,6 +651,10 @@
   --c-page-grid-frame-fill: var(--color-bg-sunken);
   --c-page-grid-frame-fill-inset: var(--space-inset-lg);
   --c-page-grid-frame-radius: var(--radius-md);
+  --c-page-grid-lead-pull: 0px;
+  --c-page-grid-lead-bleed: 0px;
+  --c-page-grid-lead-lift: var(--space-stack-group);
+  --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-screen-preview-phone: 23.4375rem;
   --c-screen-preview-tablet: 48rem;
   --c-screen-preview-desktop: 80rem;
@@ -1832,6 +1836,8 @@
   --c-page-grid-gap-page: var(--space-stack-page);
   --c-page-grid-gap-section: var(--space-stack-section);
   --c-page-grid-gutter: var(--space-gutter);
+  --c-page-grid-lead-lift: var(--space-stack-group);
+  --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
@@ -2141,6 +2147,8 @@
   --c-page-grid-gap-page: var(--space-stack-page);
   --c-page-grid-gap-section: var(--space-stack-section);
   --c-page-grid-gutter: var(--space-gutter);
+  --c-page-grid-lead-lift: var(--space-stack-group);
+  --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
@@ -2450,6 +2458,8 @@
   --c-page-grid-gap-page: var(--space-stack-page);
   --c-page-grid-gap-section: var(--space-stack-section);
   --c-page-grid-gutter: var(--space-gutter);
+  --c-page-grid-lead-lift: var(--space-stack-group);
+  --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);
@@ -2759,6 +2769,8 @@
   --c-page-grid-gap-page: var(--space-stack-page);
   --c-page-grid-gap-section: var(--space-stack-section);
   --c-page-grid-gutter: var(--space-gutter);
+  --c-page-grid-lead-lift: var(--space-stack-group);
+  --c-page-grid-lead-stack-gap: var(--space-stack-section);
   --c-page-grid-selected-offset: var(--space-inset-xs);
   --c-page-grid-stack-gap: var(--space-stack-section);
   --c-page-header-gap: var(--space-stack-item);

@@ -58,7 +58,12 @@
     "--c-page-grid-frame-gap": "Between rows inside a framed row that leave their gap unset (LR129; default space.stack-group). A template sets its band's stack gap.",
     "--c-page-grid-frame-fill": "A tint frame's surface (LR129; default color.bg-sunken). A template sets its tint.",
     "--c-page-grid-frame-fill-inset": "A tint frame's inline inset (LR129; default space.inset-lg).",
-    "--c-page-grid-frame-radius": "A tint frame's corners (LR129; default radius.md)."
+    "--c-page-grid-frame-radius": "A tint frame's corners (LR129; default radius.md).",
+    "--c-page-grid-lead-start": "A lead row's start column, as a grid track (LR132; default 1fr, the end column is always 1fr). A template sets its opening's words share, such as 0.44fr.",
+    "--c-page-grid-lead-pull": "How far a lead row is pulled up into the space above it (LR132; default 0). A template whose opening meets the header sets its page top.",
+    "--c-page-grid-lead-bleed": "How far a lead row's columns run past the column's end (LR132; default 0); the rows under them stay in the column.",
+    "--c-page-grid-lead-lift": "Between a lead row's two columns and each row under them (LR132; default space.stack-group).",
+    "--c-page-grid-lead-stack-gap": "Between a lead row's columns once they stack (LR132; default space.stack-section)."
   },
   "ScreenPreview": {
     "--c-screen-preview-desktop": "The least width a screen is laid out at with width desktop, scaled down to fit a narrower window (default 80rem, 1280 px). A canvas that shows small text sets a narrower desktop (64rem) for a larger scale."

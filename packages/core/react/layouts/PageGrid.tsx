@@ -25,7 +25,11 @@ export interface PageGridRow {
   split?: PageGridSplit;
   /** The space above the row; the first row of a group has none (default `section`; `none` is exactly 0, LR127). */
   gap?: PageGridRowGap;
-  /** The band look (LR129): `band` adds the frame's space above and below; `tint` also its surface. None by default. */
+  /**
+   * The row's look (LR129, LR132): `band` adds the frame's space above and below; `tint` also its surface; `lead` is a
+   * page opening: its first nested row two columns (`--c-page-grid-lead-start`, then the rest) pulled up and running
+   * past the end, the rows under it lifted under both; it stacks in a narrow row or a short window. None by default.
+   */
   frame?: PageGridFrame;
   /** The row's cells in reading order. */
   cells: PageGridCell[];

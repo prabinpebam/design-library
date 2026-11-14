@@ -7,7 +7,7 @@ export type PageGridGap = 'item' | 'group' | 'section' | 'page';
 export type PageGridRowGap = PageGridGap | 'none';
 
 /** A row's band look (LR129). */
-export type PageGridFrame = 'band' | 'tint';
+export type PageGridFrame = 'band' | 'tint' | 'lead';
 
 /** @deprecated The older preset splits (LR15); a row's cells carry `span`s instead. Still read and converted. */
 export type PageGridSplit = 'whole' | 'halves' | 'thirds' | 'quarters' | 'two-thirds-start' | 'two-thirds-end';

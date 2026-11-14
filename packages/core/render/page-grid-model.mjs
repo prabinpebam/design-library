@@ -20,7 +20,7 @@ export const PAGE_GRID_GAPS = ['item', 'group', 'section', 'page'];
 /** A row's gap values: `none` is exactly 0 (LR127); left out it is section. */
 export const PAGE_GRID_ROW_GAPS = ['none', ...PAGE_GRID_GAPS];
 /** A row's band look (LR129): left out, none. */
-export const PAGE_GRID_FRAMES = ['band', 'tint'];
+export const PAGE_GRID_FRAMES = ['band', 'tint', 'lead'];
 
 /** @deprecated The older preset splits (LR15), each a list of shares of the parent's span; converted to spans. */
 export const PAGE_GRID_SPLIT_SHARES = {

@@ -39,7 +39,7 @@
 
   /* The band look (LR129): a framed row's own space above and below its content, and a tint's surface; 0 on a side whose
      boundary is None. */
-  [data-dl-part='page-row'][data-frame] { padding-block: var(--c-page-grid-frame-inset); }
+  [data-dl-part='page-row']:is([data-frame='band'], [data-frame='tint']) { padding-block: var(--c-page-grid-frame-inset); }
   [data-dl-part='page-row'][data-frame='tint'] {
     background: var(--c-page-grid-frame-fill);
     padding-inline: var(--c-page-grid-frame-fill-inset);
@@ -51,6 +51,45 @@
   /* The first row of the page, or of a cell, starts where it is placed. */
   :is([data-dl='page-grid'], [data-dl-part='page-cell']) > [data-dl-part='page-row']:first-child {
     margin-block-start: 0;
+  }
+
+  /* The lead look (LR132), a page opening: the row's first nested row is two columns (the start column's share, then
+     the rest), pulled up into the space above and running past the column's end; the rows under it are lifted under
+     both and stay in the column. It stacks to one column in a narrow row and in a short window. The row is the
+     container `page-grid-lead`, so a template's parts in it can follow the same switch. */
+  [data-dl-part='page-row'][data-frame='lead'] { container-name: page-grid-lead; }
+  [data-frame='lead'] > [data-dl-part='page-columns'] {
+    margin-block-start: calc(-1 * var(--c-page-grid-lead-pull));
+    margin-inline-end: calc(-1 * var(--c-page-grid-lead-bleed));
+  }
+  [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child > [data-dl-part='page-columns'] {
+    grid-template-columns: minmax(0, var(--c-page-grid-lead-start, 1fr)) minmax(0, 1fr);
+    column-gap: 0;
+  }
+  [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] {
+    display: grid;
+    grid-column: auto;
+  }
+  [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row'] + [data-dl-part='page-row'] {
+    margin-block-start: var(--c-page-grid-lead-lift);
+    margin-inline-end: var(--c-page-grid-lead-bleed);
+  }
+  /* 53.0625rem: the column width where DesignUp's opening has always stacked (a 925 px window at 16 px). */
+  @container page-grid-lead (width < 53.0625rem) {
+    [data-frame='lead'] > [data-dl-part='page-columns'] { margin-block-start: 0; margin-inline-end: 0; }
+    [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child > [data-dl-part='page-columns'] {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--c-page-grid-lead-stack-gap);
+    }
+    [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row'] + [data-dl-part='page-row'] { margin-block-start: var(--c-page-grid-lead-stack-gap); margin-inline-end: 0; }
+  }
+  @media (height < 30em) {
+    [data-frame='lead'] > [data-dl-part='page-columns'] { margin-block-start: 0; margin-inline-end: 0; }
+    [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row']:first-child > [data-dl-part='page-columns'] {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--c-page-grid-lead-stack-gap);
+    }
+    [data-frame='lead'] > [data-dl-part='page-columns'] > [data-dl-part='page-cell'] > [data-dl-part='page-row'] + [data-dl-part='page-row'] { margin-block-start: var(--c-page-grid-lead-stack-gap); margin-inline-end: 0; }
   }
 
   [data-dl-part='page-row'] > [data-dl-part='page-columns'] {
