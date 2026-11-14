@@ -44,6 +44,7 @@ DesignUp R1.6 (C17 numbering). The grid edit mode stores a row's tracks and gaps
 | LR165 | 2026-11-15 | Drag a tile from a list onto a page (DesignUp R1.7) | `List` tiles are buttons only | 6 | opt-in `draggable` items with `onDragStartItem(id, event)` | none | E78 | shipped | designup 657f9fd | DesignUp Add panel |
 | LR167 | 2026-11-15 | An unavailable tile says why on hover and focus (DesignUp R1.7) | A `List` item's `description` is a second line; no tooltip hint | 6 | opt-in item `hint`, drawn as core Tooltip, named as its description | none | E78 | shipped | designup 657f9fd | DesignUp Add panel |
 | LR160 | 2026-11-15 | A single-line name in a `nameLines` row sits centred | `[data-name-lines]` sets `align-items: flex-start` on every row (pickers.css) | 6 | centred while the name is one line; top-aligned only when it wraps | none | E78 | shipped | designup 657f9fd | none |
+| LR170 | 2026-11-15 | A context menu uses the room it has (DesignUp R1.9, A8's 11-command menu) | ContextMenu shares the popup list's cap, `max-block-size: min(var(--c-popup-height), room)` (pickers.css:161), so an 11-command menu stops at 350 px and scrolls with 685 px free | 6 | ContextMenu only: its popup's height is capped by the room on its side of the point (less the popup offset), never by the picker cap; MenuButton, Select and Mentions unchanged | none | E78 | open (logged) | | none |
 
 ### LR159: a wrapped app header whose content stays beside the brand (14 November 2026)
 
