@@ -15,6 +15,14 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR126: exact statistic label and value identity (14 November 2026)
+
+Before-code decision: DesignUp ED8 reproduced a typed Metrics strip with equal label/value dispatching the label edit to the value field. Statistic's root-only DataAttributes cannot identify its sealed label/value destinations; existing props, slots, contexts and settings cannot fix that, so step 6, generic core tooling semantics (prior art ContextMatrix.cellData). R7 code, no album, block, preset, visible parameter, ink, layout or motion change. Add opt-in `labelData` / `valueData` DataAttributes; defaults and existing markup/styles unchanged. DesignUp NumberStrip adopts only for typed Metrics strip, retaining original item indices and public local scalar paths, never page/private/save paths. Admin resolves only existing selected-owner fields with nearest-ancestry/path/value guards and no malformed/stale identity fallback. Correct Facts and inspector order preserved. Opening/legacy strips, combined Metrics sentence and unverified families remain open. Editor56 owns both sides under C10 sole writer grant; focused types/build/pin/browser proof only, deferred stories/regressions on merge night.
+
+| ID | Date | Need | Exact limitation (evidence) | Step | Proposed API | Override / part | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR126 | 2026-11-14 | Exact statistic scalar identity for repeated words | Root-only data; label-first DOM and value-first fields misbind | 6 | opt-in labelData/valueData: DataAttributes | none | Editor56 | accepted; before code | pending | DesignUp adopts public seam, no override |
+
 ### LR125: Vimeo local captions and chapter seeking (14 November 2026)
 
 Decision before code: generic playback/accessibility behaviour, R7, existing video album presentation. MediaSource exposes tracks/seek only for YouTube; sealed iframe markup cannot be controlled by props/slots/context/theme today. Step 6: opt-in Vimeo tracks/seek through its official free CDN iframe API (https://github.com/vimeo/player.js/, observed 14 November: ready/timeupdate/setCurrentTime/play/destroy). Reuse the exact existing caption selection/Off, text-only WebVTT overlay, full-screen figure, loading/error/Retry UI, not a second pattern. No new block/preset/visible parameter, enclosure, style or motion. Plain Vimeo embeds and YouTube defaults unchanged. Editor45 owns core and DesignUp TalkPage adoption, no override. Types/build, linked types, checkpoint pin/build and targeted browser only; stories/regressions deferred.

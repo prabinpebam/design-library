@@ -7,6 +7,10 @@ export interface StatisticProps extends DataAttributes {
   label: string;
   /** The figure. A number is written in the reader's locale with `format`; a string is shown exactly as written ("2×", "4.6"). */
   value: number | string;
+  /** Tooling attributes on the label's own element, such as a revision anchor. */
+  labelData?: DataAttributes;
+  /** Tooling attributes on the displayed value's own element (not its loading skeleton). */
+  valueData?: DataAttributes;
   /** How a number is written: `Intl.NumberFormat` options such as `{ notation: 'compact' }` or `{ style: 'currency', currency: 'EUR' }`. */
   format?: Intl.NumberFormatOptions;
   /** A unit after the figure, set smaller: "ms", "km", "%". */
@@ -55,6 +59,8 @@ function trendPoints(values: number[]) {
 export function Statistic({
   label,
   value,
+  labelData,
+  valueData,
   format,
   unit,
   change,
@@ -72,14 +78,14 @@ export function Statistic({
 
   return (
     <div {...data} data-dl="statistic" data-size={size} aria-busy={loading || undefined}>
-      <p data-dl-part="label">{label}</p>
+      <p {...labelData} data-dl-part="label">{label}</p>
       {loading ? (
         <div data-dl-part="value" aria-hidden="true">
           <Skeleton lines={1} size="lg" />
         </div>
       ) : (
         <>
-          <p data-dl-part="value">
+          <p {...valueData} data-dl-part="value">
             <span data-dl-part="figure">{figure}</span>
             {unit && <span data-dl-part="unit">{unit}</span>}
           </p>
