@@ -91,7 +91,8 @@
     "--c-grid-aside": "The start column's width when ratio is aside, a heading beside its content (default size.column-min, 16rem)."
   },
   "Popover": {
-    "--c-popover-width": "A Popover's width (default size.pane-width, 22rem); never wider than the window less its page margins (LR147)."
+    "--c-popover-width": "A Popover's width (default size.pane-width, 22rem); never wider than the window less its page margins (LR147).",
+    "--c-popover-offset": "The gap between a Popover and its anchor (default space.stack-pair, 0.25rem), on whichever side it opens (LR148)."
   },
   "Link": {
     "--link-decoration": "A link's line at rest: underline (default) or none. With none, the link colour must stand 3:1 from the text around it; the line still shows on hover and keyboard focus. Also the skip link's line (LR7).",

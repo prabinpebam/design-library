@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR148: a Popover's gap from its anchor as a setting (14 November 2026)
+
+DesignUp P1.7 (LR14, LR144). DesignUp's approved comment bubble sits 8 px below its pin at 375 px; core Popover keeps `--c-popover-offset` (space.stack-pair, 4 px) between the surface and its anchor, but the token was not on the settings allow-list, so a template couldn't set it without a private `--c-*` override. Core API: `--c-popover-offset` on the allow-list (`tokens/settings.json`, Popover), read by the anchored placement on whichever side the Popover opens. Default unchanged; no markup or behaviour change.
+
+| LR148 | 2026-11-14 | A Popover's gap from its anchor as a setting | `--c-popover-offset` existed (4 px) but wasn't on the settings allow-list; DesignUp's bubble needs 8 px | 4 | setting `--c-popover-offset` (default space.stack-pair) | none | E72 | shipped | | none |
 ### LR147: a Popover beside its anchor that stays in the window, lines up with it and leaves focus (14 November 2026)
 
 DesignUp P1.7 (LR14). Adopting LR144 would change DesignUp's approved comment bubble: beside a pin near a narrow window's edge the Popover flipped to the other side even when neither side fitted (x = -143 at 375 px), it centred beside its anchor instead of lining up with the pin's top, its width wasn't a setting (352 px against 320) and opening always moved focus into it. Core API: placement beside an anchor falls back below (or above, with more room there) and stays in the window when neither side fits, and every placement that fits is unchanged; Popover `align` (`start` | `center`, opt-in; default start above or below, centred beside) and `initialFocus` (`first` default | `anchor` | `none`; with focus outside it, Escape still closes it); the setting `--c-popover-width`.

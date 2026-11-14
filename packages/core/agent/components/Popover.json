@@ -140,6 +140,11 @@
       "var": "--c-popover-width",
       "default": "22rem",
       "description": "A Popover's width (default size.pane-width, 22rem); never wider than the window less its page margins (LR147)."
+    },
+    {
+      "var": "--c-popover-offset",
+      "default": "0.25rem",
+      "description": "The gap between a Popover and its anchor (default space.stack-pair, 0.25rem), on whichever side it opens (LR148)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/popover",
