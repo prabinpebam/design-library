@@ -15,6 +15,10 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR140: a call as a bold text link with an arrow, declined as a template part (14 November 2026)
+
+| LR140 | 2026-11-14 | A call drawn as the site's bold text link with the brand arrow, as a page block (P0.7 C1) | Core Button has only primary and default looks; neither draws DesignUp's Call emphasis="text" | 5 (template part) | none in core: DesignUp Button block variant 'text' renders compounds Call; rule of two, promote when a second template needs it | template part Button 'text' (MoreBlocks.tsx) | E65 | declined (template part) | DesignUp 5938830f | none |
+
 ### LR139: a framed row keeps its inset at the grid's edge (14 November 2026)
 
 DesignUp P0.7, the closing. A framed row's padding is 0 on a side whose boundary is None (LR127, LR129), the grid's own edges included; a step edge adds the grid's padding on top of the frame's. Today's closing band is the last thing on the page and keeps its band padding below (100.7/58.4/56 px at 1440/834/375), with nothing from a grid. Core API: a grid edge takes `frame` (`start`/`end`, `PAGE_GRID_EDGES`, type `PageGridEdge`): none from the grid, but a framed row at that edge keeps its own inset. Left out, an edge stays None and flushes, as before. Measured on DesignUp's harness (end `frame`): the closing row's padding equals today's at all three widths, 0 below it from the grid; /#/sponsor (end `section`) unchanged.
