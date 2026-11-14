@@ -36,7 +36,8 @@ export function placeAnchored(anchor: Rect, size: { width: number; height: numbe
     const chosen: AnchorSide = room(wanted) < need(wanted) && room(opposite[wanted]) > room(wanted) ? opposite[wanted] : wanted;
     // Above or below: centred on the anchor, or level with its start edge (a wide surface under a narrow button).
     const x = clamp(align === 'start' ? (rtl ? anchor.right - size.width : anchor.left) : (anchor.left + anchor.right) / 2 - size.width / 2, viewport.width - size.width);
-    const y = chosen === 'top' ? anchor.top - offset - size.height : anchor.bottom + offset;
+    // LR176: kept inside the window; it overlaps the anchor only when neither side has room for it.
+    const y = clamp(chosen === 'top' ? anchor.top - offset - size.height : anchor.bottom + offset, viewport.height - size.height);
     return { side: chosen, x, y, arrow: (anchor.left + anchor.right) / 2 - x };
   };
   if (side === 'top' || side === 'bottom') return vertical(side);
