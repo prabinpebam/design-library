@@ -689,4 +689,18 @@
     --c-token-specimen-shadow-radius: var(--radius-lg);
     --c-tree-view-radius: var(--radius-md);
   }
+  [data-type-scale='library'] [data-template='design'], [data-template='design'][data-type-scale='library'] {
+    --type-body-size: var(--text-m);
+    --type-body-sm-size: var(--text-s);
+    --type-label-size: var(--text-m);
+    --type-label-compact-size: var(--text-xs);
+    --type-caption-size: var(--text-s);
+    --type-code-size: var(--text-s);
+    --c-app-layout-brand-name-size: var(--type-body-sm-size);
+    --c-breadcrumbs-size: var(--type-body-sm-size);
+    --c-list-tile-name-size: var(--type-label-size);
+    --c-navigation-item-text-size-s: var(--type-body-sm-size);
+    --c-navigation-title-size-s: var(--type-label-compact-size);
+    --c-quote-text-size-s: var(--type-body-size);
+  }
 }

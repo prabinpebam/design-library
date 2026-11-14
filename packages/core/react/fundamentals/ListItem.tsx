@@ -47,6 +47,10 @@ export interface ListItemProps extends DataAttributes {
    * must keep one height. The full words stay in the item for assistive technology. Off by default: words wrap.
    */
   truncate?: boolean;
+  /** Clamps the name to this many lines (LR153), ending in an ellipsis; the full words stay for assistive technology. For an entry whose name is a person's own words (a comment, a note). Left out: the name wraps in full. Not with `truncate`. */
+  nameLines?: 2 | 3 | 4;
+  /** The item that is open beside the list now (LR153): `aria-current="true"` and the selected fill, so a list of entries shows which one its detail, popover or canvas has open. For an action or a static item; an option uses `selected`. */
+  current?: boolean;
   /** The keys that do the same thing, as the platform writes them (e.g. "Ctrl+C"). Sets `aria-keyshortcuts`. */
   shortcut?: string;
   /** Opens a submenu: shows the chevron and sets `aria-haspopup`. A `menuitem` only. */
@@ -151,6 +155,8 @@ export function ListItem({
   preview,
   meta,
   truncate,
+  nameLines,
+  current,
   shortcut,
   submenu,
   drillIn,
@@ -215,6 +221,8 @@ export function ListItem({
       data-inactive={inactive ? '' : undefined}
       data-unread={unread ? '' : undefined}
       data-truncate={truncate ? '' : undefined}
+      data-name-lines={nameLines && !truncate ? nameLines : undefined}
+      aria-current={current ? 'true' : undefined}
       data-description={description && descriptionPosition === 'inline' ? 'inline' : undefined}
       aria-selected={role === 'option' ? !!selected : role === 'row' && selected !== undefined ? selected : undefined}
       aria-checked={checkable ? !!selected : undefined}

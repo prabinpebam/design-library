@@ -48,7 +48,7 @@ export interface ActionListProps extends DataAttributes {
 }
 
 /** One action of an action list: an id, what ListItem draws, and what it does. */
-export interface ListAction extends Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing'> {
+export interface ListAction extends Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing' | 'nameLines' | 'current'> {
   id: string;
   /** Runs the action or opens the deeper level. */
   onSelect: () => void;

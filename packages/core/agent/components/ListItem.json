@@ -93,6 +93,16 @@
           "description": "One line, whatever the width: the name and the meta each end in an ellipsis when there isn't room, the meta giving way first (it shrinks ten times faster) and sitting at the end. For dense result lists where every row must keep one height. The full words stay in the item for assistive technology. Off by default: words wrap."
         },
         {
+          "name": "nameLines",
+          "type": "2 | 3 | 4",
+          "description": "Clamps the name to this many lines (LR153), ending in an ellipsis; the full words stay for assistive technology. For an entry whose name is a person's own words (a comment, a note). Left out: the name wraps in full. Not with `truncate`."
+        },
+        {
+          "name": "current",
+          "type": "boolean",
+          "description": "The item that is open beside the list now (LR153): `aria-current=\"true\"` and the selected fill, so a list of entries shows which one its detail, popover or canvas has open. For an action or a static item; an option uses `selected`."
+        },
+        {
           "name": "shortcut",
           "type": "string",
           "description": "The keys that do the same thing, as the platform writes them (e.g. \"Ctrl+C\"). Sets `aria-keyshortcuts`."

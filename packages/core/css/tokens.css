@@ -1425,6 +1425,9 @@
   --color-status-neutral-fill: light-dark(var(--p-base-600), var(--p-base-300));
   --color-status-neutral-on-fill: light-dark(var(--p-base-0), var(--p-base-950));
   --color-shadow: light-dark(var(--p-alpha-base-shadow), var(--p-alpha-black-shadow));
+  --color-marker-fill: var(--p-accent-500);
+  --color-marker-ring: var(--p-base-0);
+  --color-marker-edge: var(--p-base-950);
   --state-hover: light-dark(var(--p-alpha-base-6), var(--p-alpha-white-8));
   --state-pressed: light-dark(var(--p-alpha-base-12), var(--p-alpha-white-14));
   --state-selected: var(--p-alpha-accent-14);
@@ -3334,4 +3337,35 @@
   --c-token-specimen-colour-radius: var(--radius-md);
   --c-token-specimen-shadow-radius: var(--radius-lg);
   --c-tree-view-radius: var(--radius-md);
+}
+
+[data-type-scale='library'] {
+  --type-jumbo-size: var(--text-jumbo);
+  --type-display-size: var(--text-xxxxl);
+  --type-body-size: var(--text-m);
+  --type-lead-size: var(--text-l);
+  --type-statement-size: 3rem;
+  --type-body-sm-size: var(--text-s);
+  --type-label-size: var(--text-m);
+  --type-label-compact-size: var(--text-xs);
+  --type-caption-size: var(--text-s);
+  --type-code-size: var(--text-s);
+  --type-heading-1-size: var(--text-xxxl);
+  --type-heading-2-size: var(--text-xxl);
+  --type-heading-3-size: var(--text-xl);
+  --type-heading-4-size: var(--text-l);
+  --c-agenda-title-size: var(--type-heading-4-size);
+  --c-app-layout-brand-name-size: var(--type-body-sm-size);
+  --c-breadcrumbs-size: var(--type-body-sm-size);
+  --c-card-ruled-title-size: var(--type-heading-4-size);
+  --c-list-tile-name-size: var(--type-label-size);
+  --c-navigation-item-text-size-s: var(--type-body-sm-size);
+  --c-navigation-title-size-s: var(--type-label-compact-size);
+  --c-quote-text-size-l: var(--type-heading-2-size);
+  --c-quote-text-size-m: var(--type-heading-4-size);
+  --c-quote-text-size-s: var(--type-body-size);
+  --c-site-header-name-size: var(--type-heading-4-size);
+  --c-site-header-name-size-large: var(--type-heading-2-size);
+  --c-statistic-value-size-l: var(--type-display-size);
+  --c-statistic-value-size-m: var(--type-heading-1-size);
 }

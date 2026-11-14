@@ -404,6 +404,31 @@
     overflow: hidden;
   }
 
+  /* LR153 nameLines: the name ends in an ellipsis after its lines; the leading visual sits on the first line. */
+  [data-dl='list-item'][data-name-lines] {
+    align-items: flex-start;
+  }
+
+  [data-dl='list-item'][data-name-lines] > [data-dl-part='item-words'] > [data-dl-part='item-name'] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  [data-dl='list-item'][data-name-lines='2'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] { -webkit-line-clamp: 2; line-clamp: 2; }
+  [data-dl='list-item'][data-name-lines='3'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] { -webkit-line-clamp: 3; line-clamp: 3; }
+  [data-dl='list-item'][data-name-lines='4'] > [data-dl-part='item-words'] > [data-dl-part='item-name'] { -webkit-line-clamp: 4; line-clamp: 4; }
+
+  [data-dl='list-item'][data-name-lines] > :not([data-dl-part='item-words'], [data-dl-part='item-meta']) {
+    margin-block-start: max(0px, calc(var(--c-list-item-padding-block) + (var(--type-label-size) * var(--type-label-leading) - var(--size-icon-md)) / 2));
+  }
+
+  /* LR153 current: the entry open beside the list carries the selected fill, as a chosen option does. */
+  [data-dl='list-item'][aria-current='true'],
+  [data-dl='list-item'][aria-current='true']:hover {
+    background-color: var(--state-selected);
+  }
+
   /* Leading selection mark, in its own column so every item's words line up: a check (menu checkbox), a box (an option
    * in a listbox of several) or a dot (menu radio). Only the box has a resting outline: it is the control's boundary. */
   [data-dl='list-item'] > [data-dl-part='item-mark'] {

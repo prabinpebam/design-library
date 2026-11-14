@@ -252,6 +252,24 @@
       "$type": "color",
       "$value": "{p.alpha.black-shadow}",
       "$description": "Shadow colour for floating layers"
+    },
+    "marker": {
+      "$description": "LR154: a marker placed on content (a comment pin, a map pin): the same in both schemes, so it reads on light, dark and photo backgrounds alike.",
+      "fill": {
+        "$type": "color",
+        "$value": "{p.accent.500}",
+        "$description": "A marker's fill"
+      },
+      "ring": {
+        "$type": "color",
+        "$value": "{p.base.0}",
+        "$description": "A marker's ring inside its edge, and its glyph"
+      },
+      "edge": {
+        "$type": "color",
+        "$value": "{p.base.950}",
+        "$description": "A marker's thin outer edge, which parts the ring from a light background"
+      }
     }
   },
   "state": {

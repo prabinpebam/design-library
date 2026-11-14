@@ -232,7 +232,7 @@
     },
     {
       "interface": "ListAction",
-      "extends": "Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing'>",
+      "extends": "Pick<ListItemProps, 'label' | 'description' | 'descriptionPosition' | 'icon' | 'inset' | 'avatar' | 'thumbnail' | 'meta' | 'tone' | 'unread' | 'busy' | 'disabled' | 'inactive' | 'drillIn' | 'trailing' | 'nameLines' | 'current'>",
       "props": [
         {
           "name": "id",

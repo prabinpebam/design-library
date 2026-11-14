@@ -104,6 +104,17 @@
       },
       "default": "normal",
       "$comment": "Owner Q97: data-density='compact' on a region that is app chrome (an inspector, panels, a dense toolbar): small text and the shape's small radius. Content regions keep the default. Space is its own context (data-space)."
+    },
+    "type-scale": {
+      "contexts": {
+        "template": [],
+        "library": [
+          "tokens.type-scale-library.json",
+          "tokens.type-scale-echo.json"
+        ]
+      },
+      "default": "template",
+      "$comment": "LR155: data-type-scale='library' on a subtree (app chrome inside a template's page) restores the library's own type sizes; the template's type roles apply everywhere else."
     }
   }
 }
