@@ -87,6 +87,7 @@ const results = await page.evaluate(() => ({
 
 - **This repository:** the root `AGENTS.md` project rule "The adversarial loop" makes it the way every UI packet is built and reviewed.
 - **Projects using the library:** the package's `AGENTS.md` ("The adversarial loop") and [guide step 8](https://github.com/prabinpebam/design-library/blob/main/packages/core/guide/8-review.md) tell the agent in that project to run it, with the same index, probe commands and exit rule.
+- **Templates that pressure-test the library (DesignUp):** DesignUp is a library template, not an outside consumer. Its gaps are fixed in core on the branch `designup` (new behaviour opt-in, defaults kept), seen live in DesignUp's dev server, pinned there at checkpoints, adopted with the workaround deleted, and logged in [DesignUp template](designup-template.md) and DesignUp's own request log. `designup` joins `main` only serially, with the full check and regression sweep on the combined result.
 
 ## Sources
 
