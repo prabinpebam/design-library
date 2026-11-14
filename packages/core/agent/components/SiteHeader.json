@@ -85,6 +85,12 @@
           "name": "tools",
           "type": "ReactNode",
           "description": "Small icon controls that stay on the bar at every width, before Menu (a scheme or search button)."
+        },
+        {
+          "name": "menuSize",
+          "type": "'s' | 'normal'",
+          "default": "'s'",
+          "description": "The narrow Menu button's size: `s` (default, 36 px, dense) or `normal` (44 px, level with 44 px tools)."
         }
       ]
     },

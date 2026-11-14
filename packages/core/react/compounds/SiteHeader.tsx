@@ -46,6 +46,8 @@ arrow is ow: ow (default) side by side, wrapping; list one
   menuActions?: 'row' | 'list';
   /** Small icon controls that stay on the bar at every width, before Menu (a scheme or search button). */
   tools?: ReactNode;
+  /** The narrow Menu button's size: `s` (default, 36 px, dense) or `normal` (44 px, level with 44 px tools). */
+  menuSize?: 's' | 'normal';
 }
 
 /**
@@ -59,7 +61,7 @@ arrow is ow: ow (default) side by side, wrapping; list one
  * closes it, and Escape returns focus to the button.
  * @key Escape: closes the menu
  */
-export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, nav, wordmark, current, narrow, menuActions, tools, ...data }: SiteHeaderProps) {
+export function SiteHeader({ name, href, mark, links = [], label = 'Main', actions, nav, wordmark, current, narrow, menuActions, tools, menuSize = 's', ...data }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const panelId = useId();
@@ -111,7 +113,7 @@ export function SiteHeader({ name, href, mark, links = [], label = 'Main', actio
           {tools}
           {links.length > 0 && (
             <span ref={button} data-dl-part="menu">
-              <Button label={open ? 'Close menu' : 'Menu'} icon={open ? 'close' : 'menu'} iconOnly emphasis="quiet" size="s" expanded={open} controls={panelId} onClick={() => setOpen((o) => !o)} />
+              <Button label={open ? 'Close menu' : 'Menu'} icon={open ? 'close' : 'menu'} iconOnly emphasis="quiet" size={menuSize} expanded={open} controls={panelId} onClick={() => setOpen((o) => !o)} />
             </span>
           )}
         </span>
