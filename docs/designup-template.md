@@ -35,7 +35,7 @@ DesignUp P0.7 ("A relationship, not a speaking slot" from generic blocks, C13 17
 
 DesignUp P0.6 (main 16:21): Sponsor's Title and summary as Text + Media + Collection on one row, looking exactly as its template Hero does. Core API, opt-in: PageGridRow `frame: 'lead'`: the row is pulled up by `--c-page-grid-lead-pull` and bleeds past the end by `--c-page-grid-lead-bleed`; its first nested row takes two columns, `minmax(0, var(--c-page-grid-lead-start)) minmax(0, 1fr)`, with no column gap and a stretched start cell; later nested rows sit `--c-page-grid-lead-lift` apart and cancel the bleed. A narrow row (container query) stacks to one column, `--c-page-grid-lead-stack-gap` apart, without pull or bleed; a short window (height < 30em) stacks it too. Defaults change nothing for rows without it. No new visual element: the template's own parts fill the cells.
 
-| LR132 | 2026-11-14 | A page opening from generic blocks (lead row look) | Rows have only band/tint frames: no two-column share, pull, end bleed or foot lift | 6 | opt-in row frame lead + lead settings | none | Editor63 | in progress | | none |
+| LR132 | 2026-11-14 | A page opening from generic blocks (lead row look) | Rows have only band/tint frames: no two-column share, pull, end bleed or foot lift | 6 | opt-in row frame lead + lead settings | none | Editor63 | shipped | 806116e, 877ab08; DesignUp pinned du.877ab081 (e687e0f6), adopted 1c41e3ae, 102ff66e | none |
 
 ### LR129: the band look as a row option (14 November 2026)
 
