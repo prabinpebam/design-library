@@ -1,0 +1,60 @@
+/* word-figma.Page: the document on the canvas. Reads core roles only; Figma's look comes from tokens/theme.json. */
+@layer templates {
+  /* The canvas fills the editor's work area beside the panels. */
+  [data-dl='word-figma-canvas'] { flex: 1 1 auto; min-inline-size: 0; display: grid; }
+  [data-dl='word-figma-page'] {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    min-block-size: 100%;
+    padding: var(--space-12) var(--space-8);
+  }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] {
+    inline-size: 40rem;
+    min-block-size: 52rem;
+    padding-block: var(--space-12);
+    padding-inline: var(--space-16);
+    background: var(--color-bg);
+    color: var(--color-text);
+    box-shadow: var(--shadow-sm);
+    font-family: 'Noto Sans', var(--font-body);
+    font-size: var(--text-l);
+    line-height: var(--leading-normal);
+  }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-zoom='50'] { zoom: 0.5; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-zoom='75'] { zoom: 0.75; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-zoom='125'] { zoom: 1.25; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-zoom='150'] { zoom: 1.5; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-zoom='200'] { zoom: 2; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-margins='narrow'] { padding: var(--space-6); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-margins='wide'] { padding-block: var(--space-16); padding-inline: calc(var(--space-16) * 1.5); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-orientation='landscape'] { inline-size: 56rem; min-block-size: 40rem; }
+
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    min-block-size: 100%;
+    outline: none;
+    caret-color: currentColor;
+  }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet']:is([data-columns='2'], [data-columns='3']) > [data-dl-part='doc'] { display: block; column-gap: var(--space-8); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-columns='2'] > [data-dl-part='doc'] { column-count: 2; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'][data-columns='3'] > [data-dl-part='doc'] { column-count: 3; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet']:is([data-columns='2'], [data-columns='3']) > [data-dl-part='doc'] > * + * { margin-block-start: var(--space-3); }
+
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > :is(p, h1, h2, h3, blockquote, ul, ol) { margin: 0; font-weight: 400; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > h1 { font-family: var(--font-display); font-size: var(--text-xxxl); line-height: var(--leading-tight); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > :is(h2, h3) { margin-block: var(--space-2) calc(-1 * var(--space-2)); font-family: var(--font-display); line-height: var(--leading-tight); color: var(--color-text-accent-display); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > h2 { font-size: var(--text-xxl); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > h3 { font-size: var(--text-xl); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > blockquote { padding-inline: var(--space-8); font-style: italic; color: var(--color-text-muted); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > :is(ul, ol) { padding-inline-start: var(--space-6); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > hr { block-size: var(--border-hairline); margin-block: var(--space-6); border: 0; background: var(--color-border-strong); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > hr[data-break] { margin-block: var(--space-12); border-block-start: var(--border-hairline) dashed var(--color-border-strong); background: none; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > table { border-collapse: collapse; inline-size: 100%; }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] > table > tbody > tr > td { padding: var(--space-1); border: var(--border-hairline) solid var(--color-border-strong); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'][data-marks] > :is(p, h1, h2, h3, blockquote)::after { content: '\00B6'; color: var(--color-text-muted); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc'] ::highlight(word-figma-find) { background-color: var(--state-selected); }
+  [data-dl='word-figma-page'] > [data-dl-part='sheet'] > [data-dl-part='doc']::highlight(word-figma-find) { background-color: var(--state-selected); }
+}

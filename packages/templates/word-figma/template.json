@@ -1,0 +1,28 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "word-figma",
+  "version": "0.1.0",
+  "title": "Document editor in design-tool chrome",
+  "summary": "An experiment (Q161): a word processor's document and functions in a design tool's chrome: tools, pages and outline, the page on a canvas, and a properties panel.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "editor",
+  "sections": [
+    { "id": "editor", "title": "Editor", "summary": "Write, format, find and comment on a document.", "flows": [
+      { "id": "write", "title": "Write and format", "summary": "The page with nothing selected, then a heading selected in the outline.", "screens": ["editor", "text"] },
+      { "id": "find", "title": "Find", "summary": "Find words in the document from the left panel.", "screens": ["find"] },
+      { "id": "review", "title": "Comment and read", "summary": "Comment mode and read mode.", "screens": ["comments", "read"] }
+    ] }
+  ],
+  "works": { "notes": 0 },
+  "layouts": [
+    { "id": "editor", "title": "Editor", "component": "EditorLayout", "content": "content/editor.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "text", "title": "Heading selected", "component": "EditorLayout", "content": "content/editor/text.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "comments", "title": "Comments", "component": "EditorLayout", "content": "content/editor/comments.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "find", "title": "Find", "component": "EditorLayout", "content": "content/editor/find.json", "regions": [{"id":"main","accepts":["*"]}] },
+    { "id": "read", "title": "Read mode", "component": "EditorLayout", "content": "content/editor/read.json", "regions": [{"id":"main","accepts":["*"]}] }
+  ],
+  "parts": { "compounds": [{ "name": "word-figma.Page", "source": "parts/compounds/Page.tsx" }] }
+}

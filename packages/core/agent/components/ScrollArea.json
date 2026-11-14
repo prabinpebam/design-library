@@ -151,6 +151,7 @@
     "ListDetail",
     "slack.Workspace",
     "word.Window",
+    "word-figma.Page",
     "youtube.Site"
   ],
   "principles": [

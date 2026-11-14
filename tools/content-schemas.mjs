@@ -20,6 +20,7 @@ const records = {
   ikea: { shared: 'StoreRecord' },
   slack: { shared: 'WorkspaceRecord' },
   word: { shared: 'WordRecord' },
+  'word-figma': { shared: 'WordFigmaRecord' },
   youtube: { shared: 'YoutubeRecord' },
 };
 

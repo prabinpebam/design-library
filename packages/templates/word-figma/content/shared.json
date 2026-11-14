@@ -1,0 +1,232 @@
+{
+  "$schema": "../content.schema.json",
+  "template": "word-figma",
+  "shared": true,
+  "contentVersion": 1,
+  "record": {
+    "file": "Harbour survey notes",
+    "project": "Breakwater survey",
+    "people": [
+      { "name": "Maya Chen", "presence": "available" },
+      { "name": "Alex Rivera", "presence": "away" }
+    ],
+    "me": "Sam Okafor",
+    "menu": [
+      { "value": "file", "label": "File", "items": [
+        { "value": "new", "label": "New document", "shortcut": "Ctrl+Alt+N" },
+        { "value": "open", "label": "Open…", "shortcut": "Ctrl+O" },
+        { "value": "save", "label": "Save", "shortcut": "Ctrl+S", "startsGroup": true },
+        { "value": "print", "label": "Print…", "shortcut": "Ctrl+P" },
+        { "value": "export", "label": "Export as PDF…" },
+        { "value": "history", "label": "Show version history", "startsGroup": true }
+      ] },
+      { "value": "edit", "label": "Edit", "items": [
+        { "value": "undo", "label": "Undo", "shortcut": "Ctrl+Z" },
+        { "value": "redo", "label": "Redo", "shortcut": "Ctrl+Shift+Z" },
+        { "value": "cut", "label": "Cut", "shortcut": "Ctrl+X", "startsGroup": true },
+        { "value": "copy", "label": "Copy", "shortcut": "Ctrl+C" },
+        { "value": "paste", "label": "Paste", "shortcut": "Ctrl+V" },
+        { "value": "select-all", "label": "Select all", "shortcut": "Ctrl+A", "startsGroup": true },
+        { "value": "find", "label": "Find…", "shortcut": "Ctrl+F" }
+      ] },
+      { "value": "view", "label": "View", "items": [
+        { "value": "zoom-in", "label": "Zoom in", "shortcut": "Ctrl+=" },
+        { "value": "zoom-out", "label": "Zoom out", "shortcut": "Ctrl+-" },
+        { "value": "zoom-100", "label": "Zoom to 100%", "shortcut": "Ctrl+0" },
+        { "value": "read", "label": "Read mode", "startsGroup": true },
+        { "value": "marks", "label": "Show paragraph marks" }
+      ] },
+      { "value": "insert", "label": "Insert", "items": [
+        { "value": "table", "label": "Table" },
+        { "value": "page-break", "label": "Page break" },
+        { "value": "line", "label": "Horizontal line" },
+        { "value": "date", "label": "Date" },
+        { "value": "symbol", "label": "Symbol Ω" }
+      ] },
+      { "value": "format", "label": "Format", "items": [
+        { "value": "bold", "label": "Bold", "shortcut": "Ctrl+B" },
+        { "value": "italic", "label": "Italic", "shortcut": "Ctrl+I" },
+        { "value": "underline", "label": "Underline", "shortcut": "Ctrl+U" },
+        { "value": "clear", "label": "Clear formatting", "startsGroup": true }
+      ] },
+      { "value": "word-count", "label": "Word count", "startsGroup": true },
+      { "value": "help", "label": "Help and account" }
+    ],
+    "tools": [
+      { "value": "move", "label": "Move", "icon": "pointer" },
+      { "value": "text", "label": "Text", "icon": "text" },
+      { "value": "table", "label": "Table", "icon": "grid", "menu": [
+        { "value": "table", "label": "Table", "icon": "grid" },
+        { "value": "page-break", "label": "Page break", "icon": "file" },
+        { "value": "line", "label": "Horizontal line", "icon": "minus" },
+        { "value": "date", "label": "Date", "icon": "clock" },
+        { "value": "symbol", "label": "Symbol", "icon": "character-border" }
+      ] },
+      { "value": "comment", "label": "Comment", "icon": "comment" }
+    ],
+    "modes": [
+      { "value": "edit", "label": "Edit", "icon": "edit" },
+      { "value": "read", "label": "Read", "icon": "book" }
+    ],
+    "zooms": [0.5, 0.75, 1, 1.25, 1.5, 2],
+    "fonts": ["Noto Sans", "Georgia", "Arial", "Times New Roman", "Courier New"],
+    "sizes": [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 36, 48, 72],
+    "styles": [
+      { "value": "p", "label": "Normal" },
+      { "value": "h1", "label": "Title" },
+      { "value": "h2", "label": "Heading 1" },
+      { "value": "h3", "label": "Heading 2" },
+      { "value": "blockquote", "label": "Quote" }
+    ],
+    "colours": [
+      { "value": "#000000", "label": "Black" },
+      { "value": "#1f4e79", "label": "Dark blue" },
+      { "value": "#c00000", "label": "Dark red" },
+      { "value": "#38761d", "label": "Green" },
+      { "value": "#7030a0", "label": "Purple" }
+    ],
+    "highlights": [
+      { "value": "transparent", "label": "No highlight" },
+      { "value": "#fff59d", "label": "Yellow" },
+      { "value": "#b9f6ca", "label": "Bright green" },
+      { "value": "#80d8ff", "label": "Turquoise" },
+      { "value": "#ff80ab", "label": "Pink" }
+    ],
+    "lineHeights": [1, 1.15, 1.5, 2, 2.5, 3],
+    "alignments": [
+      { "value": "align-left", "label": "Align left", "icon": "text-start" },
+      { "value": "align-center", "label": "Centre", "icon": "text-center" },
+      { "value": "align-right", "label": "Align right", "icon": "text-end" },
+      { "value": "justify", "label": "Justify", "icon": "text-justify" }
+    ],
+    "lists": [
+      { "value": "none", "label": "No list", "icon": "minus" },
+      { "value": "bullets", "label": "Bullets", "icon": "list-bulleted" },
+      { "value": "numbering", "label": "Numbering", "icon": "list-numbered" }
+    ],
+    "cases": [
+      { "value": "none", "label": "As typed" },
+      { "value": "sentence", "label": "Sentence case" },
+      { "value": "lower", "label": "lowercase" },
+      { "value": "upper", "label": "UPPERCASE" },
+      { "value": "title", "label": "Capitalise Each Word" }
+    ],
+    "margins": [
+      { "value": "normal", "label": "Normal" },
+      { "value": "narrow", "label": "Narrow" },
+      { "value": "wide", "label": "Wide" }
+    ],
+    "orientations": [
+      { "value": "portrait", "label": "Portrait" },
+      { "value": "landscape", "label": "Landscape" }
+    ],
+    "columns": [
+      { "value": "1", "label": "One" },
+      { "value": "2", "label": "Two" },
+      { "value": "3", "label": "Three" }
+    ],
+    "document": [
+      { "style": "title", "text": "Harbour survey notes" },
+      { "style": "body", "text": "These notes collect what the survey team saw along the east breakwater during the spring tides. They are a working draft: add what you measured, and leave a comment where a reading needs a second look." },
+      { "style": "heading-1", "text": "Where we looked" },
+      { "style": "body", "text": "We walked the breakwater from the lighthouse steps to the fuel jetty at low water, logging each section’s condition, the depth beside it and anything that had moved since the autumn survey." },
+      { "style": "body", "text": "Most of the wall is sound. Three sections near the jetty show fresh scour at the foot, and one capping stone has shifted about four centimetres seaward." },
+      { "style": "heading-2", "text": "Readings to check" },
+      { "style": "body", "text": "The depth at section 14 reads shallower than last year, which doesn’t match the scour we saw. It may be a sounding error; we’ll repeat it on the next low tide before drawing anything from it." },
+      { "style": "quote", "text": "Repeat any reading that disagrees with what you saw before you write it up." },
+      { "style": "heading-1", "text": "Next steps" },
+      { "style": "body", "text": "Photograph the shifted capping stone at the same angle each week, ask the harbour office for the dredging log, and book a diver for the jetty end before the summer moorings go in." }
+    ],
+    "threads": [
+      { "id": "t1", "anchor": "about four centimetres", "author": "Maya Chen", "time": "A few seconds ago", "text": "Was this measured from the old paint mark or from the joint? Worth saying which, so next week’s reading compares like with like.", "replies": [] },
+      { "id": "t2", "anchor": "section 14", "author": "Alex Rivera", "time": "Yesterday", "text": "I can take the boat out on Thursday’s low tide and repeat the sounding.", "replies": [{ "author": "Maya Chen", "time": "Yesterday", "text": "Thanks, that settles it." }] }
+    ],
+    "copy": {
+      "mainMenu": "Main menu",
+      "tool": "Tools",
+      "mode": "Mode",
+      "moreTools": "More {tool} tools",
+      "fileTab": "File",
+      "stylesTab": "Styles",
+      "pages": "Pages",
+      "page": "Page {n}",
+      "layers": "Outline",
+      "noHeadings": "No headings yet. Pick Heading 1 in Style to add one to the outline.",
+      "find": "Find in document",
+      "findClose": "Close find",
+      "findCount": "{count} matches",
+      "findNone": "No matches. Check the spelling or try fewer words.",
+      "stylesHint": "Choose a style to apply it to the paragraph you’re in.",
+      "working": "Working on this document",
+      "present": "Read mode",
+      "share": "Share",
+      "inspector": "Properties",
+      "design": "Design",
+      "zoom": "Zoom",
+      "zoomValue": "{percent}%",
+      "zoomTo": "Zoom to {percent}%",
+      "canvas": "{file}: the document",
+      "selection": "Text selection",
+      "caret": "Text at the cursor",
+      "pageSelection": "Page",
+      "documentKind": "Document",
+      "headingKind": "Heading",
+      "style": "Style",
+      "text": "Text",
+      "font": "Font",
+      "fontSize": "Font size",
+      "decoration": "Text style",
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strikethrough": "Strikethrough",
+      "subscript": "Subscript",
+      "superscript": "Superscript",
+      "case": "Case",
+      "clear": "Clear formatting",
+      "fill": "Fill",
+      "colour": "Text colour",
+      "highlight": "Highlight",
+      "paragraph": "Paragraph",
+      "alignment": "Alignment",
+      "lineHeight": "Line height",
+      "list": "List",
+      "outdent": "Decrease indent",
+      "indent": "Increase indent",
+      "marks": "Show paragraph marks",
+      "pageSection": "Page",
+      "margins": "Margins",
+      "orientation": "Orientation",
+      "columns": "Columns",
+      "documentSection": "Document",
+      "pagesCount": "{count} pages",
+      "pageCount": "1 page",
+      "wordsCount": "{count} words",
+      "charactersCount": "{count} characters",
+      "export": "Export",
+      "exportPdf": "Export as PDF",
+      "comments": "Comments",
+      "showResolved": "Show resolved comments",
+      "onWords": "On “{words}”",
+      "reply": "Reply",
+      "replyLabel": "Reply",
+      "replyFirst": "Write a reply first",
+      "now": "Just now",
+      "resolve": "Resolve",
+      "reopen": "Reopen",
+      "resolved": "Resolved: “{words}”",
+      "noComments": "No open comments. Select some words and add one.",
+      "newComment": "Comment on the selection",
+      "addComment": "Add comment",
+      "selectFirst": "Select some words in the document first",
+      "added": "Comment added",
+      "notInExample": "{label} isn’t in this example",
+      "saved": "Saved",
+      "cutDone": "Cut to the clipboard",
+      "copyDone": "Copied to the clipboard",
+      "pasteBlocked": "Paste with Ctrl+V: the browser blocked reading the clipboard",
+      "wordCountDone": "{count} words",
+      "readOn": "Read mode: the document can’t be changed. Switch to Edit to write."
+    }
+  }
+}

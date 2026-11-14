@@ -16,8 +16,9 @@ import harbour from './harbour';
 import ikea from './ikea';
 import slack from './slack';
 import word from './word';
+import wordFigma from './word-figma';
 import youtube from './youtube';
 
-export const templates: Template[] = [corporate, chat, portfolio, blog, conference, design, projects, harbour, ikea, slack, word, youtube];
+export const templates: Template[] = [corporate, chat, portfolio, blog, conference, design, projects, harbour, ikea, slack, word, wordFigma, youtube];
 
 export const templateOf = (id: string) => templates.find((t) => t.manifest.id === id);
