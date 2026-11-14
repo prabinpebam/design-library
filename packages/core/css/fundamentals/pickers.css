@@ -219,6 +219,7 @@
   }
 
   [data-dl='menu-button'] > [data-dl-part='popup'][data-placement='above'],
+  [data-dl='context-menu'] > [data-dl-part='popup'][data-placement='above'],
   [data-dl='mentions'] > [data-dl-part='popup'][data-placement='above'],
   [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'][data-placement='above'] {
     inset-block-start: auto;
