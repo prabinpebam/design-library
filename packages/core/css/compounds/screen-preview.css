@@ -36,6 +36,72 @@
     max-inline-size: 100%;
   }
 
+  /* LR177: a width in px, set by the handles or the app. */
+  [data-dl='screen-preview'][data-width='custom'] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
+    inline-size: var(--dl-screen-window);
+    max-inline-size: 100%;
+  }
+
+  /* LR177 resizable: the window is centred and its drawn width known, so the handles sit on its side edges. */
+  [data-dl='screen-preview'][data-resizable] {
+    position: relative;
+    --dl-screen-shown: 100%;
+  }
+
+  [data-dl='screen-preview'][data-resizable] > :is([data-dl-part='frame'], [data-dl-part='loading']) {
+    margin-inline: auto;
+  }
+
+  [data-dl='screen-preview'][data-resizable][data-width='phone'] { --dl-screen-shown: var(--c-screen-preview-phone); }
+  [data-dl='screen-preview'][data-resizable][data-width='landscape'] { --dl-screen-shown: var(--c-screen-preview-landscape); }
+  [data-dl='screen-preview'][data-resizable][data-width='tablet'] { --dl-screen-shown: var(--c-screen-preview-tablet); }
+  [data-dl='screen-preview'][data-resizable][data-width='custom'] { --dl-screen-shown: var(--dl-screen-window); }
+
+  /* A hit strip centred on each edge; nothing drawn at rest, a line while hovered, focused or dragged (a transient cue). */
+  [data-dl='screen-preview'] > [data-dl-part='resize'] {
+    position: absolute;
+    inset-block: 0;
+    inline-size: var(--c-screen-preview-resize);
+    cursor: col-resize;
+    touch-action: none;
+    outline: none;
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='resize'][data-side='start'] {
+    inset-inline-start: calc(50% - min(var(--dl-screen-shown), 100%) / 2 - var(--c-screen-preview-resize) / 2);
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='resize'][data-side='end'] {
+    inset-inline-end: calc(50% - min(var(--dl-screen-shown), 100%) / 2 - var(--c-screen-preview-resize) / 2);
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='resize']::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(50% - var(--size-focus-width) / 2);
+    inline-size: var(--size-focus-width);
+    background-color: var(--color-accent);
+    opacity: 0;
+    transition: opacity var(--duration-quick) var(--easing-standard);
+  }
+
+  [data-dl='screen-preview'] > [data-dl-part='resize']:is(:focus-visible, [data-dragging])::after {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    [data-dl='screen-preview'] > [data-dl-part='resize']:hover::after {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-dl='screen-preview'] > [data-dl-part='resize']::after {
+      transition: none;
+    }
+  }
+
   /* height="fill": the figure takes its parent's height and the frame the room the caption leaves. */
   [data-dl='screen-preview'][data-height='fill'] {
     flex: 1;

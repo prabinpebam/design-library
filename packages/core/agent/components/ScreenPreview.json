@@ -32,9 +32,32 @@
         },
         {
           "name": "width",
-          "type": "'phone' | 'landscape' | 'tablet' | 'desktop' | 'fill'",
+          "type": "'phone' | 'landscape' | 'tablet' | 'desktop' | 'fill' | number",
           "default": "'fill'",
-          "description": "The window's width: `phone` (375 px), `landscape` (568 px, a phone held sideways; LR174), `tablet` (768 px), `fill` (the column's width) or `desktop`: the screen laid out at least as wide as a desktop window (the theme's `c.screen-preview.desktop`, 1280 px) and drawn scaled down to fit the column, so a narrower frame still shows the desktop layout (a page builder's wide canvas). Wider than that, `desktop` is `fill`."
+          "description": "The window's width: `phone` (375 px), `landscape` (568 px, a phone held sideways; LR174), `tablet` (768 px), a number of px (LR177), `fill` (the column's width) or `desktop`: the screen laid out at least as wide as a desktop window (the theme's `c.screen-preview.desktop`, 1280 px) and drawn scaled down to fit the column, so a narrower frame still shows the desktop layout (a page builder's wide canvas). Wider than that, `desktop` is `fill`."
+        },
+        {
+          "name": "resizable",
+          "type": "boolean",
+          "default": "false",
+          "description": "LR177 (opt-in): handles on the window's side edges resize it (a page builder's canvas, tested at any width). The window stays centred, so a handle grows or shrinks it on both sides. A handle is a separator: drag it, or focus it and use the arrow keys (Shift for four steps), Home and End. Reports through `onWidthChange`; pass the width back as a number."
+        },
+        {
+          "name": "onWidthChange",
+          "type": "(px: number, done: boolean) => void",
+          "description": "The width a handle sets, in px, while it's dragged (`done` false) and when it's let go or a key sets it (`done` true)."
+        },
+        {
+          "name": "resizeLabel",
+          "type": "string",
+          "default": "'Resize the screen'",
+          "description": "The handles' accessible name (default \"Resize the screen\"); their value is the width in px."
+        },
+        {
+          "name": "resizeMin",
+          "type": "number",
+          "default": "320",
+          "description": "The least width a handle sets, in px (default 320)."
         },
         {
           "name": "caption",
@@ -67,10 +90,15 @@
     "--c-screen-preview-landscape",
     "--c-screen-preview-phone",
     "--c-screen-preview-radius",
+    "--c-screen-preview-resize",
     "--c-screen-preview-tablet",
+    "--color-accent",
     "--color-bg",
     "--color-border",
     "--color-text-muted",
+    "--duration-quick",
+    "--easing-standard",
+    "--size-focus-width",
     "--type-body-sm-size"
   ],
   "settings": [
