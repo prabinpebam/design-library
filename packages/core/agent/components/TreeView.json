@@ -103,6 +103,16 @@
           "name": "onReorder",
           "type": "(parent: string | undefined, ids: string[]) => void",
           "description": "A row moved: its parent's id (undefined at the top level) and that parent's children's ids in their new order."
+        },
+        {
+          "name": "onMove",
+          "type": "(id: string, parent: string | undefined, index: number) => void",
+          "description": "Opt-in (LR168): with it a drag (with `reorderable`) can also move a row into another item or out of its parent, as a design tool's layers do. Nothing moves while dragging: a line shows where the row lands (before or after a row) or a mark shows the item it lands in (the middle of a row that `canHold`), and the drop calls `onMove` with the row's new parent (undefined at the top level) and its index among that parent's children once moved. No keys are bound for moving: the consumer owns its move keys."
+        },
+        {
+          "name": "canHold",
+          "type": "(item: TreeItem) => boolean",
+          "description": "Whether a row can hold others (a drop into it); default: rows with children."
         }
       ]
     },

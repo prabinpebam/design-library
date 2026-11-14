@@ -42,7 +42,19 @@ export interface TreeViewProps extends DataAttributes {
   reorderable?: boolean;
   /** A row moved: its parent's id (undefined at the top level) and that parent's children's ids in their new order. */
   onReorder?: (parent: string | undefined, ids: string[]) => void;
+  /**
+   * Opt-in (LR168): with it a drag (with `reorderable`) can also move a row into another item or out of its parent, as
+   * a design tool's layers do. Nothing moves while dragging: a line shows where the row lands (before or after a row) or
+   * a mark shows the item it lands in (the middle of a row that `canHold`), and the drop calls `onMove` with the row's
+   * new parent (undefined at the top level) and its index among that parent's children once moved. No keys are bound
+   * for moving: the consumer owns its move keys.
+   */
+  onMove?: (id: string, parent: string | undefined, index: number) => void;
+  /** Whether a row can hold others (a drop into it); default: rows with children. */
+  canHold?: (item: TreeItem) => boolean;
 }
+
+type Drop = { target: string; where: 'before' | 'after' | 'into' };
 
 interface Row {
   item: TreeItem;
@@ -77,7 +89,7 @@ function visibleRows(items: TreeItem[], open: Set<string>, level = 1, parent?: s
  * @key Enter / Space: selects the row
  * @key Alt+ArrowUp / Alt+ArrowDown (reorderable): moves the row before or after its previous or next sibling
  */
-export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', reorderable = false, onReorder, ...data }: TreeViewProps) {
+export function TreeView({ label, items, selected, onSelect, expanded, onExpandedChange, actions, actionsRoom = 'held', mark = 'selection', reorderable = false, onReorder, onMove, canHold, ...data }: TreeViewProps) {
   const open = new Set(expanded);
   const rows = visibleRows(items, open);
   const [active, setActive] = useState<string | undefined>(undefined);
@@ -128,6 +140,43 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     refocus.current = null;
     if (id && document.activeElement !== refs.current.get(id)) refs.current.get(id)?.focus();
   }, [items]);
+  // A move into or out of a parent (LR168): where the pointer is over the visible rows, never into the row itself or its own branch.
+  const [drop, setDrop] = useState<Drop | null>(null);
+  const holds = (item: TreeItem) => (canHold ? canHold(item) : !!item.children?.length);
+  const branch = (id: string) => {
+    const ids = new Set<string>();
+    const walk = (list: TreeItem[] = []) => list.forEach((i) => (ids.add(i.id), walk(i.children)));
+    const at = (list: TreeItem[]): TreeItem | undefined => list.reduce<TreeItem | undefined>((found, i) => found ?? (i.id === id ? i : i.children && at(i.children)), undefined);
+    const own = at(items);
+    ids.add(id);
+    walk(own?.children);
+    return ids;
+  };
+  const dropAt = (id: string, y: number): Drop | null => {
+    const off = branch(id);
+    for (const r of rows) {
+      const box = refs.current.get(r.item.id)?.querySelector(':scope > [data-dl-part="row"]')?.getBoundingClientRect();
+      if (!box || y < box.top || y > box.bottom) continue;
+      if (off.has(r.item.id)) return null;
+      const part = (y - box.top) / (box.height || 1);
+      if (holds(r.item) && part > 0.25 && part < 0.75) return { target: r.item.id, where: 'into' };
+      return { target: r.item.id, where: part < 0.5 ? 'before' : 'after' };
+    }
+    return null;
+  };
+  const land = (id: string, to: Drop) => {
+    const target = rows.find((r) => r.item.id === to.target);
+    const moving = rows.find((r) => r.item.id === id);
+    if (!target || !moving) return;
+    const parent = to.where === 'into' ? target.item.id : target.parent;
+    const siblings = siblingsOf(parent).map((s) => s.id).filter((s) => s !== id);
+    const index = to.where === 'into' ? siblings.length : siblings.indexOf(target.item.id) + (to.where === 'after' ? 1 : 0);
+    if (parent === moving.parent && index === moving.position - 1) return;
+    refocus.current = id;
+    onMove?.(id, parent, index);
+    const into = parent === undefined ? undefined : rows.find((r) => r.item.id === parent)?.item.label;
+    setSaid(into ? `Moved ${moving.item.label} into ${into}, position ${index + 1}.` : `Moved ${moving.item.label} to position ${index + 1}.`);
+  };
   const onRowDown = (row: Row) => (event: PointerEvent<HTMLSpanElement>) => {
     if (!reorderable || event.button !== 0 || event.pointerType === 'touch') return;
     if ((event.target as HTMLElement).closest('[data-dl-part="actions"], [data-dl-part="twisty"]')) return;
@@ -140,6 +189,7 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     if (!d.moved && Math.abs(event.clientY - d.y) < 4) return;
     if (!d.moved) setDragId(d.id);
     d.moved = true;
+    if (onMove) return setDrop(dropAt(d.id, event.clientY));
     const ids = siblingsOf(d.parent).map((s) => s.id);
     const boxes = ids.map((id) => refs.current.get(id)?.querySelector(':scope > [data-dl-part="row"]')?.getBoundingClientRect() ?? { top: 0, height: 0 });
     const from = ids.indexOf(d.id);
@@ -148,6 +198,9 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
   };
   const onRowUp = () => {
     if (!drag.current) return;
+    const d = drag.current;
+    if (onMove && d.moved && drop) land(d.id, drop);
+    setDrop(null);
     setDragId(null);
     setTimeout(() => (drag.current = null));
   };
@@ -206,6 +259,7 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
           <span
             data-dl-part="row"
             data-muted={item.muted ? '' : undefined}
+            data-drop={drop?.target === item.id ? drop.where : undefined}
             style={{ '--level': String(level - 1) } as CSSProperties}
             onPointerDown={onRowDown(row)}
             onPointerMove={onRowMove}
