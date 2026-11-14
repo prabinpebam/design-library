@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR150: a frame that spans consecutive page rows (14 November 2026, logged, not built)
+
+DesignUp P1.2 / P1.8 follow-up (main 21:05). A page-grid row's band or tint frame (LR129) belongs to one row, so a band that holds a heading row above a gallery row has to be one framed row whose cell nests two rows (Partner: Row 2 > Cell > Row heading / Row gallery, DesignUp aaae82e4). Made flat, each row would draw its own frame and insets: two bands instead of one. Proposed core API (opt-in): a frame that spans consecutive rows (for example a row `frameWith: 'previous'` that joins the frame above it, or a frame group of rows), drawing one frame with one set of insets around them; rows without it unchanged. It removes the nesting (owner, 2026-11-12 23:38: no page inside a page). Not built: waits for P1.2.
+
+| LR150 | 2026-11-14 | A frame (band) that spans consecutive page rows | LR129's frame is a row property; a band with a heading row and a gallery row must nest two rows in one framed cell (Partner aaae82e4), flat rows draw two frames and two insets | 6 | proposed: opt-in frame spanning consecutive rows (e.g. `frameWith: 'previous'` or a row group), one frame and one set of insets; rows without it unchanged | DesignUp Partner Row 2 nesting (heading row + gallery row inside one band row) | E72 (log); build after P1.2 | open (logged, not built) | | Partner's band becomes flat rows sharing one frame; the nested cell rows removed |
 ### LR149: compact density keeps a product's corners (14 November 2026)
 
 DesignUp P2.11 (admin template audit, owner 20:29: "rounded corner usage is not consistant"). Compact density regions (an inspector, a rail, block tools) set controls' and surfaces' corners to the shape's small radius, so the same Button or field had different corners in a dense region than elsewhere in the admin. Core API: theme settings `--radius-compact-md` (controls) and `--radius-compact-lg` (surfaces), tokens `radius.compact.md`/`lg`, read by compact density; default `radius.sm` in every shape, so nothing changes unless a product sets them. DesignUp sets them to `var(--radius-md)` and `var(--radius-lg)` on its admin frame, which is never compact itself.
