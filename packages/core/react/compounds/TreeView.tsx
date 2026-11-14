@@ -205,13 +205,21 @@ export function TreeView({ label, items, selected, onSelect, expanded, onExpande
     if (!reorderable || event.button !== 0 || event.pointerType === 'touch') return;
     if ((event.target as HTMLElement).closest('[data-dl-part="actions"], [data-dl-part="twisty"], [data-dl-part="rename"]')) return;
     drag.current = { id: row.item.id, parent: row.parent, y: event.clientY, moved: false };
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
   const onRowMove = (event: PointerEvent<HTMLSpanElement>) => {
     const d = drag.current;
     if (!d) return;
+    // The press ended elsewhere before a drag began: nothing to drag.
+    if (!d.moved && !(event.buttons & 1)) {
+      drag.current = null;
+      return;
+    }
     if (!d.moved && Math.abs(event.clientY - d.y) < 4) return;
-    if (!d.moved) setDragId(d.id);
+    // LR173: the row takes the pointer only once a drag begins, so a click or a double-click (rename) reaches the label.
+    if (!d.moved) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+      setDragId(d.id);
+    }
     d.moved = true;
     if (onMove) return setDrop(dropAt(d.id, event.clientY));
     const ids = siblingsOf(d.parent).map((s) => s.id);
