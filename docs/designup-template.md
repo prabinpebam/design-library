@@ -15,6 +15,12 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR133: a one-cell row inside a wider row's cell is one column (14 November 2026)
+
+DesignUp P0.7 ("A relationship, not a speaking slot" from generic blocks, C13 17:02). LR130 made a one-cell row one column (`data-columns="1"`, `data-span="1"`) but set no value for either, so a one-cell row nested in a cell of a multi-cell row inherited that row's `--dl-page-grid-columns` (12) and its cell's `--dl-page-grid-span` (5): the nested block took 5/12 of its own cell (203 px instead of 540 px at 1440). Fix, no API: `[data-columns='1']` sets 1 column and `[data-span='1']` a span of 1. Measured on DesignUp's Sponsor page at 1440/834/375: same height, 181 of 183 boxes 0 px (the other two are the depth parallax layers, which move by the same amount between two identical runs).
+
+| LR133 | 2026-11-14 | A one-cell row nested in a wider row's cell fills that cell | A nested one-cell row inherits the parent row's column count and the cell's span | 6 | none (bug fix: data-columns 1 and data-span 1 set their values) | none | E64 | shipped | | none |
+
 ### LR131: a page grid's named edge is one step, a meaning change (14 November 2026)
 
 **Meaning change, kept by DesignUp's main chat 2026-11-14 16:10.** Before (LR127 `layoutEdges`), a named `start`/`end` (`page`, `section`) measured the column's gap plus that step. Now it measures exactly that step, the same as a row `gap` of that name; None stays 0 and `layoutEdges` is a no-op kept for compatibility. Every other named edge size therefore shrinks by one column gap (56.25/48/48 px in DesignUp at Wide/Tablet/Phone). Only DesignUp's Sponsor page had a grid when it shipped, and it was measured against its page without a grid (0 px), so nothing else moved. DesignUp guards it: `tools/grid-parity.mjs` (run by its `validate.mjs`) fails if a page adopts a grid without a recorded parity measurement in `web/grid-parity.json`. Another template adopting named edges must measure against its own page without a grid.

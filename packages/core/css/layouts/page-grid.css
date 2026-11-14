@@ -110,12 +110,16 @@
   [data-dl-part='page-columns'][data-columns='10'] { --dl-page-grid-columns: 10; }
   [data-dl-part='page-columns'][data-columns='11'] { --dl-page-grid-columns: 11; }
   [data-dl-part='page-columns'][data-columns='12'] { --dl-page-grid-columns: 12; }
+  /* A one-cell row is one column at every depth (LR130), also inside a cell of a wider row, whose own count and span
+     would otherwise be inherited (LR133). */
+  [data-dl-part='page-columns'][data-columns='1'] { --dl-page-grid-columns: 1; }
 
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'] {
     grid-column: span var(--dl-page-grid-span, 1);
     min-inline-size: 0;
   }
 
+  [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='1'] { --dl-page-grid-span: 1; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='2'] { --dl-page-grid-span: 2; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='3'] { --dl-page-grid-span: 3; }
   [data-dl-part='page-columns'] > [data-dl-part='page-cell'][data-span='4'] { --dl-page-grid-span: 4; }
