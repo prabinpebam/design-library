@@ -73,6 +73,12 @@
           "description": "Below this width of the layout (a CSS length in px, rem or em, such as \"56rem\"), the header wraps instead of squeezing (LR152): the toggle and its start on one row, the end on a row of its own under it, each wrapping its parts, so nothing paints over anything and every control stays reachable; a floating sidebar opens under the taller header. Left out: the header keeps one row (default)."
         },
         {
+          "name": "headerWrapContent",
+          "type": "'row' | 'beside'",
+          "default": "'row'",
+          "description": "With headerWrapBelow, where the header's content goes while the header is wrapped (LR159): `row` (default) a full row of its own under the brand; `beside` beside the brand while it keeps at least `--c-app-layout-header-content-min` (a setting, default 8 rem), under it otherwise, its parts shrinking and truncating as with compactHeader."
+        },
+        {
           "name": "roundedPanels",
           "type": "boolean",
           "default": "false",
@@ -206,7 +212,7 @@
         },
         {
           "name": "Escape",
-          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', headMeasure = false, ...data }: AppLayoutProps) { const sidebarId = useId()",
+          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, headerWrapContent = 'row', roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', headMeasure = false, ...data }: AppLayoutProps) { const sidebarId = useId()",
           "required": true
         },
         {
@@ -255,6 +261,7 @@
     "--c-app-layout-head-gap",
     "--c-app-layout-head-gap-s",
     "--c-app-layout-header",
+    "--c-app-layout-header-content-min",
     "--c-app-layout-header-divider-width",
     "--c-app-layout-header-gap",
     "--c-app-layout-header-s",
@@ -296,6 +303,11 @@
       "var": "--c-app-layout-end",
       "default": "1rem",
       "description": "Room under the view's last part, inside its scroller (default c.app-layout.margin, the same as its other sides). Set more for an editing app whose last field shouldn't sit at the window's edge (LR75)."
+    },
+    {
+      "var": "--c-app-layout-header-content-min",
+      "default": "8rem",
+      "description": "With headerWrapContent=\"beside\" (LR159): the least room the header's content keeps beside the brand in a wrapped header before it moves under it (default 8rem)."
     }
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/applayout"

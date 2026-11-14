@@ -585,6 +585,7 @@
   --c-app-layout-header-s: var(--size-control-md);
   --c-app-layout-sidebar-s: 13rem;
   --c-app-layout-header-gap: var(--space-inline-pair);
+  --c-app-layout-header-content-min: 8rem;
   --c-app-layout-head-gap: var(--space-stack-page);
   --c-app-layout-head-gap-s: var(--space-stack-section);
   --c-app-layout-brand-gap: var(--space-inline-pair);

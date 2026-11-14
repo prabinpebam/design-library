@@ -23,6 +23,8 @@ export interface AppLayoutProps extends DataAttributes {
   compactHeader?: boolean;
   /** Below this width of the layout (a CSS length in px, rem or em, such as "56rem"), the header wraps instead of squeezing (LR152): the toggle and its start on one row, the end on a row of its own under it, each wrapping its parts, so nothing paints over anything and every control stays reachable; a floating sidebar opens under the taller header. Left out: the header keeps one row (default). */
   headerWrapBelow?: string;
+  /** With headerWrapBelow, where the header's content goes while the header is wrapped (LR159): `row` (default) a full row of its own under the brand; `beside` beside the brand while it keeps at least `--c-app-layout-header-content-min` (a setting, default 8 rem), under it otherwise, its parts shrinking and truncating as with compactHeader. */
+  headerWrapContent?: 'row' | 'beside';
   /** Round the sidebar and details surfaces with the layout's panel radius. Default false. */
   roundedPanels?: boolean;
   /** The view's head: its title (and a line under it). It leads everything in the view, one unit at the page level above the view's content. */
@@ -79,7 +81,7 @@ export interface AppLayoutBrand { name: string; href: string; mark?: ReactNode }
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', headMeasure = false, ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, headerWrapContent = 'row', roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', headMeasure = false, ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const router = useRouter();
   const root = useRef<HTMLDivElement>(null);
@@ -166,7 +168,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-header-wrap={wrapped ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined} data-head-measure={headMeasure ? '' : undefined}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-header-wrap={wrapped ? (headerWrapContent === 'beside' ? 'beside' : '') : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined} data-head-measure={headMeasure ? '' : undefined}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
       <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         {onStartModeChange && canDock && (
