@@ -15,6 +15,11 @@ Owner, 2026-11-12 14:34 (verbatim): *"DesignUp site is behind from the current s
 
 ## The fourth case of the ruling
 
+### LR146: a page with a docked side pane (14 November 2026, logged, not built)
+
+DesignUp P1.7 (LR14, the review pane). A review or revision pane docks at the window's end while the page stays usable beside it: the page makes room, its scrollbar sits at the pane's start edge, and the pane scrolls inside. Core has no such layout, so DesignUp shifts `body` with a margin, hides the root scrollbar and mirrors it with a ScrollArea strip over the page's last column (the checker's only errors: scrollbar styling outside ScrollArea). Proposed core API (opt-in): a document-level dock (for example a `SiteLayout` or `AppLayout` `dock` slot with `dockWidth`), drawing the page in its own scroll region so the bar sits where the page ends, with no root scrollbar styling. Not built: larger than a fast-loop change; waits for a decision.
+
+| LR146 | 2026-11-14 | A page with a docked side pane | No layout docks a pane beside a scrolling page; DesignUp hides and mirrors the root scrollbar | 4 | proposed: a document-level `dock` slot (+ width), page in its own scroll region | DesignUp revision-panel.css (body margin, root scrollbar hidden, mirrored bar) | E68 | open (logged, not built) | | none |
 ### LR145: the component-root selector as an export (14 November 2026)
 
 DesignUp P1.7 (LR14). DesignUp's comment picker finds "the readable thing under the pointer", including any library component, so it writes the library's own attribute selector in its code (a counted override). Core API: `COMPONENT_ROOT` from `@design-library/core/components` (`'[data-dl]'`), a selector to query with, never to style with. Additive: nothing else changes.
