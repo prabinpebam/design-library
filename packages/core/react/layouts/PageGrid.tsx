@@ -1,10 +1,10 @@
 import type { MouseEvent, ReactNode } from 'react';
 import type { DataAttributes } from '../types';
 import { PAGE_GRID_COLUMNS, PAGE_GRID_SPLIT_SHARES, pageGridRecordProblems, rowSpans, splitSpans } from '../../render/page-grid-model.mjs';
-import type { PageGridGap, PageGridSplit } from '../../render/page-grid-model.mjs';
+import type { PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
 
 export { PAGE_GRID_COLUMNS, PAGE_GRID_MIN_SPAN } from '../../render/page-grid-model.mjs';
-export type { PageGridGap, PageGridSplit } from '../../render/page-grid-model.mjs';
+export type { PageGridGap, PageGridRowGap, PageGridSplit } from '../../render/page-grid-model.mjs';
 
 export interface PageGridCell {
   /** Stable id: the key, and `data-cell` on the cell for an editor to find it. */
@@ -23,8 +23,8 @@ export interface PageGridRow {
   id: string;
   /** @deprecated Give the cells `span`s. A preset division of the row's span, still read. */
   split?: PageGridSplit;
-  /** The space above the row; the first row of a group has none (default `section`). */
-  gap?: PageGridGap;
+  /** The space above the row; the first row of a group has none (default `section`; `none` is exactly 0, LR127). */
+  gap?: PageGridRowGap;
   /** The row's cells in reading order. */
   cells: PageGridCell[];
 }

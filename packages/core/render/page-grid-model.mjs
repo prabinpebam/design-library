@@ -17,6 +17,8 @@ export const PAGE_GRID_MIN_SPAN = 3;
 export const PAGE_GRID_DEPTH = 3;
 /** The space above a row, from the spacing scale's stack steps. */
 export const PAGE_GRID_GAPS = ['item', 'group', 'section', 'page'];
+/** A row's gap values: `none` is exactly 0 (LR127); left out it is section. */
+export const PAGE_GRID_ROW_GAPS = ['none', ...PAGE_GRID_GAPS];
 
 /** @deprecated The older preset splits (LR15), each a list of shares of the parent's span; converted to spans. */
 export const PAGE_GRID_SPLIT_SHARES = {
@@ -77,7 +79,7 @@ export function pageGridRecordProblems(grid, sections, options = {}) {
       const here = `${at}/${r}`;
       if (!isObject(row) || !Array.isArray(row.cells) || !row.cells.length) return issues.push({ at: here, what: 'needs an id and cells' });
       id(row.id, here);
-      if (row.gap !== undefined && !PAGE_GRID_GAPS.includes(row.gap)) issues.push({ at: `${here}/gap`, what: `needs one of: ${PAGE_GRID_GAPS.join(', ')}` });
+      if (row.gap !== undefined && !PAGE_GRID_ROW_GAPS.includes(row.gap)) issues.push({ at: `${here}/gap`, what: `needs one of: ${PAGE_GRID_ROW_GAPS.join(', ')}` });
       const spans = rowSpans(row, span);
       const own = row.cells.some((c) => isObject(c) && c.span !== undefined);
       if (!spans) {

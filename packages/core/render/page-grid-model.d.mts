@@ -3,6 +3,9 @@
 /** The space above a row, from the spacing scale's stack steps: item, group, section (default) or page. */
 export type PageGridGap = 'item' | 'group' | 'section' | 'page';
 
+/** A row's space above: a stack step, or `none` for exactly 0 (LR127). */
+export type PageGridRowGap = PageGridGap | 'none';
+
 /** @deprecated The older preset splits (LR15); a row's cells carry `span`s instead. Still read and converted. */
 export type PageGridSplit = 'whole' | 'halves' | 'thirds' | 'quarters' | 'two-thirds-start' | 'two-thirds-end';
 
@@ -22,7 +25,7 @@ export interface PageGridRecordRow {
   id: string;
   /** @deprecated Use the cells' `span`s. */
   split?: PageGridSplit;
-  gap?: PageGridGap;
+  gap?: PageGridRowGap;
   cells: PageGridRecordCell[];
 }
 
@@ -80,6 +83,8 @@ export declare const PAGE_GRID_COLUMNS: 12;
 export declare const PAGE_GRID_MIN_SPAN: 3;
 export declare const PAGE_GRID_DEPTH: 3;
 export declare const PAGE_GRID_GAPS: readonly PageGridGap[];
+/** A row's gap values: `none` (exactly 0, LR127) and the stack steps. */
+export declare const PAGE_GRID_ROW_GAPS: readonly PageGridRowGap[];
 /** @deprecated The older preset splits' shares. */
 export declare const PAGE_GRID_SPLIT_SHARES: Readonly<Record<PageGridSplit, readonly number[]>>;
 
