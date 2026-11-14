@@ -23,8 +23,14 @@ export interface StaticListProps extends DataAttributes {
   gap?: 'item' | 'group';
   /** Each item gets a Move handle: drag it, or open its menu (Move up, down, to top, to bottom). Items need a `label`. */
   reorderable?: boolean;
-  /** The ids in their new order, after a drag step or a Move. */
+  /** The ids in their new order, after a drag step or a Move (with `reorderCommit="drop"`, once when the drag ends). */
   onReorder?: (ids: string[]) => void;
+  /**
+   * When a drag reports its order: `live` (default) at every row it passes; `drop` (LR175) once on release, the rows
+   * reordering in place under the pointer meanwhile, so a consumer that saves each order makes one save and one Undo
+   * step per drag. The menu's moves report once either way.
+   */
+  reorderCommit?: 'live' | 'drop';
 }
 
 export interface ActionListProps extends DataAttributes {
@@ -182,7 +188,7 @@ function RowLink({ item }: { item: ListEntry }) {
   return <a href={router ? router.href(item.href) : item.href} data-dl-part="row-link" aria-label={item.label ?? item.id} />;
 }
 
-function PlainList({ items, variant = 'bulleted', dividers = 'none', gap = 'item', reorderable: _r, onReorder: _o, mode: _mode, ...data }: StaticListProps) {
+function PlainList({ items, variant = 'bulleted', dividers = 'none', gap = 'item', reorderable: _r, onReorder: _o, reorderCommit: _c, mode: _mode, ...data }: StaticListProps) {
   const Tag = variant === 'numbered' ? 'ol' : 'ul';
   // Q65 C11: an item added fades in, one removed fades out where it is, and the others travel into place (MU8).
   const shown = useExiting(items, (i) => i.id);
@@ -199,12 +205,15 @@ function PlainList({ items, variant = 'bulleted', dividers = 'none', gap = 'item
   );
 }
 
-function ReorderList({ items, variant = 'plain', dividers = 'none', gap = 'item', onReorder, reorderable: _r, mode: _mode, ...data }: StaticListProps) {
+function ReorderList({ items: given, variant = 'plain', dividers = 'none', gap = 'item', onReorder, reorderCommit = 'live', reorderable: _r, mode: _mode, ...data }: StaticListProps) {
   const Tag = variant === 'numbered' ? 'ol' : 'ul';
   const rows = useRef<(HTMLLIElement | null)[]>([]);
   const drag = useRef<{ from: number; y: number; moved: boolean; id: string } | null>(null);
   const [dragId, setDragId] = useState<string | null>(null);
   const [said, setSaid] = useState('');
+  // reorderCommit="drop" (LR175): the order shown while a drag is under way, reported once on release.
+  const [preview, setPreview] = useState<string[] | null>(null);
+  const items = preview ? preview.map((id) => given.find((i) => i.id === id)).filter((i): i is ListEntry => !!i) : given;
   const ids = items.map((i) => i.id);
   // Q65 C11: a Move from the menu slides the rows into their new order; a drag reorders under the pointer at once (Z5).
   const root = useFlipList<HTMLUListElement & HTMLOListElement>(ids.join('|'), { paused: dragId !== null });
@@ -212,6 +221,10 @@ function ReorderList({ items, variant = 'plain', dividers = 'none', gap = 'item'
   const move = (from: number, to: number) => {
     if (from === to) return;
     const next = moveItem(ids, from, to);
+    if (reorderCommit === 'drop' && drag.current?.moved) {
+      setPreview(next);
+      return;
+    }
     onReorder?.(next);
     setSaid(`Moved ${name(ids[from])} to position ${to + 1} of ${ids.length}.`);
   };
@@ -233,6 +246,15 @@ function ReorderList({ items, variant = 'plain', dividers = 'none', gap = 'item'
   };
   const onUp = () => {
     setDragId(null);
+    if (preview) {
+      const from = given.findIndex((i) => i.id === drag.current?.id);
+      const to = preview.indexOf(drag.current?.id ?? '');
+      setPreview(null);
+      if (preview.join('|') !== given.map((i) => i.id).join('|')) {
+        onReorder?.(preview);
+        if (from >= 0 && to >= 0) setSaid(`Moved ${name(given[from].id)} to position ${to + 1} of ${preview.length}.`);
+      }
+    }
     setTimeout(() => (drag.current = null));
   };
   return (

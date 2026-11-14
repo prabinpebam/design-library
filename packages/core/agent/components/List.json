@@ -79,7 +79,12 @@
         {
           "name": "onReorder",
           "type": "(ids: string[]) => void",
-          "description": "The ids in their new order, after a drag step or a Move."
+          "description": "The ids in their new order, after a drag step or a Move (with `reorderCommit=\"drop\"`, once when the drag ends)."
+        },
+        {
+          "name": "reorderCommit",
+          "type": "'live' | 'drop'",
+          "description": "When a drag reports its order: `live` (default) at every row it passes; `drop` (LR175) once on release, the rows reordering in place under the pointer meanwhile, so a consumer that saves each order makes one save and one Undo step per drag. The menu's moves report once either way."
         }
       ]
     },
