@@ -173,6 +173,12 @@
           "type": "'measure' | 'wide'",
           "default": "'measure'",
           "description": "How wide the view's fields, lists and form rows may grow: measure (default) a reading line (size.measure); wide up to size.wide (LR80), an editing app whose rows fill its panels."
+        },
+        {
+          "name": "headMeasure",
+          "type": "boolean",
+          "default": "false",
+          "description": "The view's head (its title and headActions) stops at the same measure as the lists and fields under it (LR158), so its actions end with the content beneath them, not at the window's end, as an editor's screen head does. Default false: the head spans the view."
         }
       ]
     },
@@ -200,7 +206,7 @@
         },
         {
           "name": "Escape",
-          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) { const sidebarId = useId()",
+          "type": "closes the floating sidebar */ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', headMeasure = false, ...data }: AppLayoutProps) { const sidebarId = useId()",
           "required": true
         },
         {
@@ -262,6 +268,7 @@
     "--c-app-layout-sidebar-fill",
     "--c-app-layout-sidebar-gap",
     "--c-app-layout-sidebar-s",
+    "--c-list-measure",
     "--color-bg",
     "--color-border",
     "--color-text",

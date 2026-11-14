@@ -59,6 +59,8 @@ export interface AppLayoutProps extends DataAttributes {
   size?: 'm' | 's';
   /** How wide the view's fields, lists and form rows may grow: measure (default) a reading line (size.measure); wide up to size.wide (LR80), an editing app whose rows fill its panels. */
   measure?: 'measure' | 'wide';
+  /** The view's head (its title and headActions) stops at the same measure as the lists and fields under it (LR158), so its actions end with the content beneath them, not at the window's end, as an editor's screen head does. Default false: the head spans the view. */
+  headMeasure?: boolean;
 }
 
 /** AppLayout's brand (LR90): the app's name, where it leads and an optional mark drawn before the name. */
@@ -77,7 +79,7 @@ export interface AppLayoutBrand { name: string; href: string; mark?: ReactNode }
  * `width="edge"` keeps the view the `main` region, named by `label`, without the layout's scroller.
  * @key Escape: closes the floating sidebar
  */
-export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', ...data }: AppLayoutProps) {
+export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, onSidebarToggle, brand, header, headerEnd, compactHeader = false, headerWrapBelow, roundedPanels = false, head, headActions, children, label, aside, asideLabel = 'Details', width = 'column', height = 'fill', startMode, floatBelow = '48rem', onStartModeChange, headerSpan = 'main', labels, size = 'm', measure = 'measure', headMeasure = false, ...data }: AppLayoutProps) {
   const sidebarId = useId();
   const router = useRouter();
   const root = useRef<HTMLDivElement>(null);
@@ -164,7 +166,7 @@ export function AppLayout({ sidebar, sidebarLabel = 'Navigation', sidebarOpen, o
   );
 
   return (
-    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-header-wrap={wrapped ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined}>
+    <div ref={root} {...data} data-dl="app-layout" data-sidebar={sidebarOpen ? 'open' : 'closed'} data-height={height} data-width={width} data-start={placement} data-header={headerSpan === 'across' ? 'across' : undefined} data-compact-header={compactHeader ? '' : undefined} data-header-wrap={wrapped ? '' : undefined} data-rounded-panels={roundedPanels ? '' : undefined} data-size={size === 's' ? 's' : undefined} data-measure={measure === 'wide' ? 'wide' : undefined} data-head-measure={headMeasure ? '' : undefined}>
       {/* The sidebar is app chrome (Q97): the compact density context, small text and tighter corners. */}
       <aside ref={sidebarRef} id={sidebarId} data-dl-part="sidebar" data-density="compact" aria-label={sidebarLabel} hidden={!sidebarOpen}>
         {onStartModeChange && canDock && (

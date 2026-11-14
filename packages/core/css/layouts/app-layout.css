@@ -364,4 +364,11 @@
     --c-field-measure: var(--size-wide);
     --c-list-measure: var(--size-wide);
   }
+
+  /* LR158 headMeasure: the view's head stops at the lists' measure, so its actions end with the content under them. */
+  [data-dl='app-layout'][data-head-measure] > [data-dl-part='main'] > [data-dl-part='scroll'] > [data-dl-part='viewport'] > [data-dl-part='content'] > [data-dl-part='body'] > [data-dl-part='view'] > [data-dl-part='head'] {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: var(--c-list-measure);
+  }
 }
