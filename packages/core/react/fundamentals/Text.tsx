@@ -18,6 +18,8 @@ export interface TextProps extends DataAttributes {
    * variant's own weight.
    */
   weight?: 'regular' | 'strong';
+  /** One line, cut short with an ellipsis when its space is short, shrinking in a row (LR182): a name in a toolbar. The full words stay in the page. Default off: words wrap. */
+  truncate?: boolean;
 }
 
 /**
@@ -27,9 +29,9 @@ export interface TextProps extends DataAttributes {
  * @family text
  * @a11y Plain text element; inherits language and direction. Tone is never the only carrier of meaning.
  */
-export function Text({ children, variant = 'body', tone = 'default', as: Element = 'p', id, weight, ...data }: TextProps) {
+export function Text({ children, variant = 'body', tone = 'default', as: Element = 'p', id, weight, truncate = false, ...data }: TextProps) {
   return (
-    <Element {...data} id={id} data-dl="text" data-variant={variant} data-tone={tone} data-weight={weight}>
+    <Element {...data} id={id} data-dl="text" data-variant={variant} data-tone={tone} data-weight={weight} data-truncate={truncate ? '' : undefined}>
       {children}
     </Element>
   );

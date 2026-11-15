@@ -81,6 +81,14 @@
     font-weight: var(--weight-regular);
   }
 
+  /* One line with an ellipsis (LR182): a name in a toolbar. Words aren't focusable, so the clip hides no focus ring. */
+  [data-dl='text'][data-truncate] {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   /* IP22: large text (heading 2 and larger, a statement) may take the accent display role at 3:1; everything inside
      it, such as an accent span, reads the same ink. Elsewhere accent words take the accent text role at 4.5:1. */
   [data-dl='heading']:is([data-size='jumbo'], [data-size='display'], [data-size='1'], [data-size='2']),
