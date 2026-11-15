@@ -1154,14 +1154,15 @@
   /*
    * A field's leading part (Q127): its first icon, colour swatch or scrub glyph sits in a square cell as tall as the box's
    * inside, centred, with no start padding before it, so the space above, before and below it is equal at every size and
-   * density. The swatch's cell is the picker's root; its border and corners move to the colour itself.
+   * density. The swatch's cell is the picker's root; its border and corners move to the colour itself. A word glyph
+   * (NumberField glyphWidth="content", LR181) is not a cell: it sizes to its words after the field's normal start inset.
    */
-  :is([data-dl='text-field'], [data-dl='select'], [data-dl='number-field']) :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box']:has(> :is([data-dl-part='leading'], [data-dl-part='swatch'], [data-dl-part='scrub']):first-child) {
+  :is([data-dl='text-field'], [data-dl='select'], [data-dl='number-field']) :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box']:has(> :is([data-dl-part='leading'], [data-dl-part='swatch'], [data-dl-part='scrub']:not([data-glyph-width='content'])):first-child) {
     padding-block: 0;
     padding-inline-start: 0;
   }
 
-  :is([data-dl='text-field'], [data-dl='select'], [data-dl='number-field']) [data-dl-part='box'] > :is([data-dl-part='leading'], [data-dl-part='swatch'], [data-dl-part='scrub']):first-child {
+  :is([data-dl='text-field'], [data-dl='select'], [data-dl='number-field']) [data-dl-part='box'] > :is([data-dl-part='leading'], [data-dl-part='swatch'], [data-dl-part='scrub']:not([data-glyph-width='content'])):first-child {
     display: inline-flex;
     align-items: center;
     justify-content: center;

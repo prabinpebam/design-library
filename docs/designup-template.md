@@ -21,6 +21,14 @@ DesignUp R1.2, numbered by C16 (22:59). Mirror of DesignUp's row. Built by R1b o
 
 | LR156 | 2026-11-14 | A page laid out as Boxes, the Webflow way (DesignUp R1.2, R1): the Box record (tag, name, anchor, styles per breakpoint, children; page-grid Boxes for laid-out pages), its check, the converter from page grid records, each Box's anchor drawn as its in-page address | Core has only the rows-and-cells record (`page-grid-model.mjs`); `PageGrid` draws no address on a row or cell | 6 | `@design-library/core/page-box` (model + styles), `PageBoxes`, `PageBoxStyles`; `PageGrid` row and cell `anchor` → `id` (opt-in) | DesignUp template modules `page-box-styles.mjs`, `BoxTree.tsx`, the model part of `page-boxes.mjs` | R1b | shipped | designup 91ed004; DesignUp 5de62095 (pin du.91ed0045) | Done: DesignUp imports core and deleted its copies; `page-boxes.mjs` keeps only the editor bridge until R1.13 |
 
+### LR181: a word scrub glyph keeps the field's normal inset (15 November 2026)
+
+DesignUp's inspector Size fields label themselves inside the field with a word ("Width", "Min W", Webflow's Size panel). The leading-cell rule (Q127) made every scrub glyph a square cell with no start padding, so a word overflowed it and touched the field's edge.
+
+| ID | Date | Need | Exact limitation | Step | Proposed API | Override | Owner | Status | Shipped in | Removal step |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| LR181 | 2026-11-15 | A word scrub glyph keeps the field's normal inner inset | Q127's square leading cell and zero start padding apply to every scrub glyph | 6 | `NumberField glyphWidth="content"` (opt-in; default `"square"` unchanged) | none | R1d (C20 sole writer grant) | proposed | | DesignUp ValueField passes it for word glyphs |
+
 ### LR180: on-page Rich Text selection formatting (15 November 2026)
 
 Coupled renderer correction: recursive inline marks now use a per-call regular expression. The shared global cursor previously reset during nested parsing, making a saved bold, italic or link repeatedly render the same match and hang the canvas. Core typecheck and library build pass. Heading passed separately; Bold, Italic, Link, List and Quote then passed actual on-page selection/action/save/public drawing/exact Undo in one isolated memory context (12 writes, zero blocked requests and page errors). DesignUp adoption `6409fe67` includes checkpoint `du.13cf5306`, linked typecheck and combined pinned build. The separate Image + Video error-free gate remains open; this is the Rich Text editing seam, not whole-R1.11 closure.

@@ -28,6 +28,8 @@ export interface NumberFieldProps extends DataAttributes {
   unit?: string;
   /** A short mark before the number, e.g. "W", "H", "X", "Y". Drag it to change the value. */
   glyph?: string;
+  /** How the glyph sits (LR181): "square" (default), a square leading cell with no start padding, for one letter; "content", sized to its words with the field's normal start inset, for a word glyph ("Width", "Min W"). */
+  glyphWidth?: 'square' | 'content';
   /** An icon before the number (rotation, corner radius). Drag it to change the value. */
   icon?: IconName;
   /** Adds − and + buttons; hold one to repeat. */
@@ -135,7 +137,7 @@ export function parseNumberInput(text: string, current: number, unit?: string): 
  * @key Escape: puts back the stored value; while scrubbing, cancels the drag
  * @key Drag the label, glyph or icon sideways: changes the value with the pointer hidden (Shift: ten, Alt: a tenth)
  */
-export function NumberField({ label, value, onCommit, mode = 'commit', min, max, step = 1, precision, unit, glyph, icon, steppers = false, size = 'normal', hideLabel = false, disabled = false, error, auto, units, onUnitChange, presets, choice, variable, ...data }: NumberFieldProps) {
+export function NumberField({ label, value, onCommit, mode = 'commit', min, max, step = 1, precision, unit, glyph, glyphWidth = 'square', icon, steppers = false, size = 'normal', hideLabel = false, disabled = false, error, auto, units, onUnitChange, presets, choice, variable, ...data }: NumberFieldProps) {
   // One decimal finer than the step by default, so Alt (×0.1) can reach between steps; trailing zeros aren't shown.
   const places = precision ?? decimals(step) + 1;
   const clamp = (n: number) => {
@@ -363,7 +365,7 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
         {(control) => (
       <span data-dl-part="box" data-dl-ring="">
         {handle && (
-          <span data-dl-part="scrub" aria-hidden="true" title={`Drag to change ${label}`} onPointerDown={onScrubDown}>
+          <span data-dl-part="scrub" data-glyph-width={glyph && glyphWidth === 'content' ? 'content' : undefined} aria-hidden="true" title={`Drag to change ${label}`} onPointerDown={onScrubDown}>
             {glyph ?? (icon && <Icon name={icon} size={iconSize[size]} />)}
           </span>
         )}

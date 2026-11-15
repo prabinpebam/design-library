@@ -97,6 +97,12 @@
           "description": "A short mark before the number, e.g. \"W\", \"H\", \"X\", \"Y\". Drag it to change the value."
         },
         {
+          "name": "glyphWidth",
+          "type": "'square' | 'content'",
+          "default": "'square'",
+          "description": "How the glyph sits (LR181): \"square\" (default), a square leading cell with no start padding, for one letter; \"content\", sized to its words with the field's normal start inset, for a word glyph (\"Width\", \"Min W\")."
+        },
+        {
           "name": "icon",
           "type": "IconName",
           "description": "An icon before the number (rotation, corner radius). Drag it to change the value."
