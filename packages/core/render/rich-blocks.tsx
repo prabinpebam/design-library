@@ -72,8 +72,8 @@ const INLINE = /\\([\\`*_[\]~()>#+\-.!])|\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))
 export function richInline(text: string): ReactNode {
   const out: ReactNode[] = [];
   let at = 0, marked = false;
-  INLINE.lastIndex = 0;
-  for (let m = INLINE.exec(text); m; m = INLINE.exec(text)) {
+  const inline = new RegExp(INLINE);
+  for (let m = inline.exec(text); m; m = inline.exec(text)) {
     if (m.index > at) out.push(text.slice(at, m.index));
     const key = out.length;
     if (m[1] !== undefined) out.push(m[1]);

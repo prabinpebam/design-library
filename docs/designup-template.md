@@ -23,6 +23,8 @@ DesignUp R1.2, numbered by C16 (22:59). Mirror of DesignUp's row. Built by R1b o
 
 ### LR180: on-page Rich Text selection formatting (15 November 2026)
 
+Coupled renderer correction: recursive inline marks now use a per-call regular expression. The shared global cursor previously reset during nested parsing, making a saved bold, italic or link repeatedly render the same match and hang the canvas. Core typecheck and library build pass; the six-action on-page save/draw/Undo walk remains the release bar.
+
 Before-code decision: DesignUp R1.11, owner 04:55: edit Rich Text in place; selecting text exposes heading, bold, italic, link, list and quote. Admin R7 generic editing; no picture/block/preset, one transient six-action formatting group, bare buttons and no resting decoration or motion. Seam steps 1-4 cannot attach RichTextField to existing same-origin page DOM; a template controller at step 5 would duplicate core. Step 6 extends the existing controller opt-in: target HTMLElement, onClose, headingLevel and operations; toolbar follows the selected range in the target document. Existing ordinary field defaults stay. Markdown heading/quote support belongs in the shared safe formatter; RichBlocks publishes data-rich-text on its owning root for target discovery.
 
 | LR180 | 2026-11-15 | Actual in-place Rich Text selection formatting | RichTextField owns only its field DOM; heading/quote omitted from operations and serialization | 6 | RichTextField target/onClose/headingLevel/operations; RichBlocks data-rich-text | none | A10 (C19 sole writer grant) | in progress | | Core typecheck/build then DesignUp adoption, linked typecheck/checkpoint pin/build and isolated normal-UI memory walks; no lasting override |
