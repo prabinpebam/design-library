@@ -660,7 +660,7 @@
     padding-inline: calc(var(--switch-inset) - var(--c-switch-border-width));
     border: var(--c-switch-border-width) solid var(--c-switch-off-border);
     border-radius: var(--radius-full);
-    background-color: transparent;
+    background-color: var(--c-switch-off-fill);
     /* Q65 C4: the track's fill and edge interpolate; with reduced motion they still fade while the knob snaps. */
     transition:
       background-color var(--duration-change) var(--easing-standard),
@@ -1296,17 +1296,23 @@
   }
 
   /*
-   * Q165, an edge adornment placed by its ink: an icon at a field's start or end (a leading icon, the scrub icon, a
-   * Select's chevron) is as far from the box's edge as from its top and bottom, measured to the glyph's drawn ink (Icon
-   * sets --ink-w, --ink-h, --ink-x and --ink-y from the glyph), not to its frame. It keeps its square cell (Q127), so the
-   * words stay where they were, and sits against the cell's outer side with a margin that puts its ink
-   * (inside height − ink height) / 2 from the edge. Only a glyph with no cell of its own sits this way; a control's glyph
-   * (a NumberField's common values, Q167) is an attached segment centred in its own cell.
+   * Q165, an edge adornment placed by its ink: a square glyph at a field's start or end (a leading icon, the scrub icon)
+   * is as far from the box's edge as from its top and bottom, measured to the glyph's drawn ink (Icon sets --ink-w,
+   * --ink-h, --ink-x and --ink-y from the glyph), not to its frame. It keeps its square cell (Q127), so the words stay
+   * where they were, and sits against the cell's outer side with a margin that puts its ink (inside height − ink height)
+   * / 2 from the edge. A Select's chevron is flat, so it matches the leading side instead (Q171). Only a glyph with no
+   * cell of its own sits this way; a control's glyph (a NumberField's common values, Q167) is an attached segment
+   * centred in its own cell.
    */
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field']) {
     --field-h: var(--c-field-size);
     --edge-h: calc(var(--field-h) - 2 * var(--c-field-border-width));
   }
+
+  /* Q171: the box's start padding, per size, so a Select's chevron can match it at the other end. */
+  [data-dl='select'] { --field-pad: var(--c-field-padding-inline); }
+  [data-dl='select']:is([data-size='xs'], [data-size='s']) { --field-pad: var(--c-field-padding-inline-sm); }
+  [data-dl='select']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) { --field-pad: var(--c-field-padding-inline-lg); }
 
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='xs'] { --field-h: var(--c-field-size-xs); }
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field'])[data-size='s'] { --field-h: var(--c-field-size-s); }
@@ -1333,9 +1339,7 @@
     display: inline-flex;
     flex: none;
     align-items: center;
-    justify-content: flex-end;
     align-self: stretch;
-    aspect-ratio: 1;
   }
 
   /* The outer side's ink inset equals the top and bottom ones; the inner side keeps the component's gap. */
@@ -1354,8 +1358,14 @@
   }
 
   [data-dl='select'] [data-dl-part='box'] > [data-dl-part='chevron']:last-child > [data-dl='icon'] {
-    margin-inline: 0 var(--edge-ink-end);
+    margin-inline: 0 calc(var(--field-pad) - var(--ink-side) + var(--ink-shift));
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
+  /* Q171: after a leading glyph, the chevron matches that glyph's ink inset (Icon lends its ink height to the box as
+     --lead-ink-h; both glyphs share Select's icon size). */
+  [data-dl='select'] [data-dl-part='box']:has(> [data-dl-part='leading']:first-child > [data-dl='icon']) > [data-dl-part='chevron']:last-child > [data-dl='icon'] {
+    margin-inline: 0 calc((var(--edge-h) - var(--icon-a) * var(--lead-ink-h, 0.75)) / 2 - var(--ink-side) + var(--ink-shift));
   }
 
   /* A text field's trailing icon button (Clear) takes a square cell at the box's end; its glyph's ink is square. */

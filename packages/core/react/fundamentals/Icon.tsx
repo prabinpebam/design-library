@@ -19,33 +19,78 @@ const draw = (nodes: IconNode[]): ReactNode[] => nodes.map(([tag, attrs, kids], 
 
 // Q165: a glyph's ink box (its drawn bounds with the stroke, as fractions of the frame), measured once per glyph, for the
 // controls that place an icon at their edge by its ink rather than its frame.
-const inks = new WeakMap<object, { w: number; h: number; x: number; y: number }>();
+type Ink = { w: number; h: number; x: number; y: number };
+const inks = new WeakMap<object, Ink>();
 const EDGE = "[data-dl='select'], [data-dl='text-field'], [data-dl='number-field'], [data-dl='menu-button']";
-const measureInk = (key: object | undefined) => (el: SVGSVGElement | null) => {
-  if (!el || !key || !el.closest(EDGE)) return;
-  let ink = inks.get(key);
-  if (!ink) {
-    try {
-      const vb = el.viewBox.baseVal;
-      const b = el.getBBox();
-      if (!vb?.width || !b.width) return;
-      const paint = getComputedStyle(el.querySelector('path, circle, rect, line, polyline, polygon, ellipse') ?? el);
-      const stroke = paint.stroke !== 'none' ? parseFloat(paint.strokeWidth) || 0 : 0;
-      ink = {
-        w: Math.min(1, (b.width + stroke) / vb.width),
-        h: Math.min(1, (b.height + stroke) / vb.height),
-        x: (b.x + b.width / 2 - (vb.x + vb.width / 2)) / vb.width,
-        y: (b.y + b.height / 2 - (vb.y + vb.height / 2)) / vb.height,
-      };
-      inks.set(key, ink);
-    } catch {
-      return;
-    }
-  }
+const setInk = (el: SVGSVGElement, ink: Ink) => {
   el.style.setProperty('--ink-w', ink.w.toFixed(4));
   el.style.setProperty('--ink-h', ink.h.toFixed(4));
   el.style.setProperty('--ink-x', ink.x.toFixed(4));
   el.style.setProperty('--ink-y', ink.y.toFixed(4));
+  // Q171: a glyph that starts a dropdown's row (a MenuButton layer, a Select box) lends its ink height to that row, so the
+  // chevron at the other end can sit as far from its edge as this glyph's ink sits from the leading one.
+  const cell = el.parentElement?.matches("[data-dl-part='leading']") ? el.parentElement : el;
+  const row = cell.parentElement;
+  if (!cell.previousElementSibling && row?.matches("[data-dl-part='layer'], [data-dl-part='box']")) row.style.setProperty('--lead-ink-h', ink.h.toFixed(4));
+};
+/** Measures a drawn glyph; null while it has no box (inside a closed popup or a hidden panel). */
+function inkOf(el: SVGSVGElement): Ink | null {
+  try {
+    const vb = el.viewBox.baseVal;
+    const b = el.getBBox();
+    if (!vb?.width || !b.width) return null;
+    const paint = getComputedStyle(el.querySelector('path, circle, rect, line, polyline, polygon, ellipse') ?? el);
+    const stroke = paint.stroke !== 'none' ? parseFloat(paint.strokeWidth) || 0 : 0;
+    return {
+      w: Math.min(1, (b.width + stroke) / vb.width),
+      h: Math.min(1, (b.height + stroke) / vb.height),
+      x: (b.x + b.width / 2 - (vb.x + vb.width / 2)) / vb.width,
+      y: (b.y + b.height / 2 - (vb.y + vb.height / 2)) / vb.height,
+    };
+  } catch {
+    return null;
+  }
+}
+// Q170: a glyph not measured yet is measured once it has a box, after layout (a ResizeObserver), never during a render's
+// commit: getBBox there forces the whole page's styles, and an icon in a closed popup has no box, so it was retried, and
+// the page restyled, on every render of every control around it.
+const waiting = new WeakMap<Element, object>();
+let sizes: ResizeObserver | undefined;
+const watch = (el: SVGSVGElement, key: object) => {
+  sizes ??= new ResizeObserver((entries) => {
+    for (const { target } of entries) {
+      const glyph = waiting.get(target);
+      if (!glyph) continue;
+      const ink = inks.get(glyph) ?? inkOf(target as SVGSVGElement);
+      if (!ink) continue;
+      inks.set(glyph, ink);
+      setInk(target as SVGSVGElement, ink);
+      waiting.delete(target);
+      sizes!.unobserve(target);
+    }
+  });
+  waiting.set(el, key);
+  sizes.observe(el);
+};
+// One ref per glyph, so React attaches it once per icon rather than again on every render.
+const refs = new WeakMap<object, (el: SVGSVGElement | null) => (() => void) | void>();
+const measureInk = (key: object | undefined) => {
+  if (!key) return undefined;
+  let ref = refs.get(key);
+  if (!ref) {
+    ref = (el) => {
+      if (!el || typeof ResizeObserver === 'undefined' || !el.closest(EDGE)) return;
+      const ink = inks.get(key);
+      if (ink) return setInk(el, ink);
+      watch(el, key);
+      return () => {
+        waiting.delete(el);
+        sizes?.unobserve(el);
+      };
+    };
+    refs.set(key, ref);
+  }
+  return ref;
 };
 
 /**

@@ -1,0 +1,21 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "alignui",
+  "version": "0.1.0",
+  "title": "Component library in AlignUI's look",
+  "summary": "An adaptation of AlignUI (Q169): the core fundamentals and compounds in AlignUI's look and feel, on one scrollable page grouped by kind and AlignUI's own categories.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "components",
+  "sections": [
+    { "id": "library", "title": "Library", "summary": "Every component, grouped by kind and category.", "flows": [
+      { "id": "browse", "title": "Browse the components", "summary": "Scroll the page or jump to a category from the side.", "screens": ["components"] }
+    ] }
+  ],
+  "works": { "notes": 0 },
+  "layouts": [
+    { "id": "components", "title": "Components", "component": "ShowcaseLayout", "content": "content/components.json", "regions": [{"id":"main","accepts":["*"]}] }
+  ]
+}

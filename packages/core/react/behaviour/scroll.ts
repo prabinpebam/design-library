@@ -52,8 +52,10 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
       const min = parseFloat(a === 'y' ? thumbStyle.minHeight : thumbStyle.minWidth) || 0;
       const size = Math.min(track, Math.max(min, (track * view) / full));
       const offset = (pos / (full - view)) * (track - size);
-      box.style.setProperty(`--scroll-area-thumb-size-${a}`, `${size}px`);
-      box.style.setProperty(`--scroll-area-thumb-offset-${a}`, `${offset}px`);
+      // On the track, not the region: a custom property set on the region would restyle everything inside it on every
+      // scroll step (Q170); only the thumb reads these.
+      bar.style.setProperty(`--scroll-area-thumb-size-${a}`, `${size}px`);
+      bar.style.setProperty(`--scroll-area-thumb-offset-${a}`, `${offset}px`);
     }
   }, []);
 
@@ -64,26 +66,39 @@ export function useOverlayScroll(viewportRef?: Ref<HTMLDivElement>, active = tru
     measure();
     const onScroll = () => {
       measure();
-      box.setAttribute('data-scrolling', '');
+      if (!box.hasAttribute('data-scrolling')) box.setAttribute('data-scrolling', '');
       window.clearTimeout(idle.current);
       idle.current = window.setTimeout(() => box.removeAttribute('data-scrolling'), ms(getComputedStyle(box).getPropertyValue('--c-scroll-area-idle'), 1000));
     };
     el.addEventListener('scroll', onScroll, { passive: true });
     const sizes = new ResizeObserver(measure);
     sizes.observe(el);
+    const seen = new WeakSet<Element>();
     const watchChildren = () => {
-      for (const child of el.children) sizes.observe(child);
+      for (const child of el.children)
+        if (!seen.has(child)) {
+          seen.add(child);
+          sizes.observe(child);
+        }
     };
     watchChildren();
+    // Content changes are measured once per frame (Q170): measuring straight after each change forced the whole region's
+    // style and layout mid-frame, again on every render that touched text inside it (every move of a colour drag).
+    let frame = 0;
     const changes = new MutationObserver(() => {
       watchChildren();
-      measure();
+      if (!frame)
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          measure();
+        });
     });
     changes.observe(el, { childList: true, subtree: true });
     return () => {
       el.removeEventListener('scroll', onScroll);
       sizes.disconnect();
       changes.disconnect();
+      cancelAnimationFrame(frame);
       window.clearTimeout(idle.current);
     };
   }, [measure, active]);

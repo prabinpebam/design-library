@@ -85,17 +85,19 @@
   /*
    * Q165, a dropdown trigger's anatomy: the words at the start and the chevron at the trailing edge. The trigger hugs
    * them, or, when its container stretches it, the words take the room and the chevron stays at the edge; never words
-   * and chevron centred together. An icon or chevron at the edge sits as far from it as from the top and bottom, measured
-   * to the glyph's ink (Icon's --ink-w and --ink-h), so the trigger has no padding on that side; the words keep the trigger's gap from the icon's frame. Not for the list buttons
+   * and chevron centred together. A square glyph at the edge sits as far from it as from the top and bottom, measured
+   * to the glyph's ink (Icon's --ink-w and --ink-h), so the trigger has no padding on that side; the words keep the
+   * trigger's gap from the icon's frame. The chevron matches the leading side instead (Q171, below). Not for the list buttons
    * inside a field box, which take the field's cell.
    */
-  [data-dl='menu-button'] > [data-dl-part='trigger'] { --menu-button-h: var(--c-menu-button-size); }
-  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xs'] { --menu-button-h: var(--c-menu-button-size-xs); }
-  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='s'] { --menu-button-h: var(--c-menu-button-size-s); }
+  /* --lead-a: the leading glyph's frame, as MenuButton picks its size. */
+  [data-dl='menu-button'] > [data-dl-part='trigger'] { --menu-button-h: var(--c-menu-button-size); --lead-a: var(--size-icon-md); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xs'] { --menu-button-h: var(--c-menu-button-size-xs); --lead-a: var(--size-icon-sm); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='s'] { --menu-button-h: var(--c-menu-button-size-s); --lead-a: var(--size-icon-sm); }
   [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='m'] { --menu-button-h: var(--c-menu-button-size-m); }
-  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='l'] { --menu-button-h: var(--c-menu-button-size-l); }
-  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xl'] { --menu-button-h: var(--c-menu-button-size-xl); }
-  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xxl'] { --menu-button-h: var(--c-menu-button-size-xxl); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='l'] { --menu-button-h: var(--c-menu-button-size-l); --lead-a: var(--size-icon-lg); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xl'] { --menu-button-h: var(--c-menu-button-size-xl); --lead-a: var(--size-icon-lg); }
+  [data-dl='menu-button'] > [data-dl-part='trigger'][data-size='xxl'] { --menu-button-h: var(--c-menu-button-size-xxl); --lead-a: var(--size-icon-xl); }
 
   [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) {
     --edge-h: calc(var(--menu-button-h) - 2 * var(--c-menu-button-border-width));
@@ -117,6 +119,24 @@
   [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon']:last-child {
     margin-inline: 0 var(--edge-ink-end);
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
+  /*
+   * Q171: a chevron's ink is flat, so matching the top and bottom pushed it further from the edge the taller the trigger.
+   * It sits as far from the trailing edge as the first content sits from the leading one, measured to the ink: the
+   * trigger's padding before words (or an avatar or flag), and a leading glyph's own inset before an icon (Icon lends that
+   * glyph's ink height to the layer as --lead-ink-h).
+   */
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] {
+    --lead-inset: var(--c-menu-button-padding-inline);
+  }
+
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer']:has(> [data-dl='icon']:first-child) {
+    --lead-inset: calc((var(--edge-h) - var(--lead-a) * var(--lead-ink-h, 0.75)) / 2);
+  }
+
+  [data-dl='menu-button']:not([data-dl-part='box'] > *) > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer'] > [data-dl='icon'][data-dl-part='chevron']:last-child {
+    margin-inline: 0 calc(var(--lead-inset) - var(--ink-side) + var(--ink-shift));
   }
 
   [data-dl='menu-button'] > [data-dl-part='trigger']:not([data-icon-only]) > [data-dl-part='layer']:has(> [data-dl='icon']:last-child) {

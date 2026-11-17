@@ -116,6 +116,7 @@
     "--c-switch-disabled-opacity",
     "--c-switch-gap",
     "--c-switch-off-border",
+    "--c-switch-off-fill",
     "--c-switch-off-thumb",
     "--c-switch-on-fill",
     "--c-switch-on-fill-hover",

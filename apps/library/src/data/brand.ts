@@ -171,11 +171,9 @@ function mapSheet(standard: Record<string, string>, more: Record<string, string>
   ].join('\n');
 }
 
-let applied: string[] = [];
+let applied: Record<string, string> = {};
 function apply(vars: Record<string, string>, draft: boolean, sheet: string) {
   const root = document.documentElement.style;
-  for (const name of applied) root.removeProperty(name);
-  applied = [];
   let el = document.getElementById('brand-map-sheet');
   if (!el) {
     el = document.createElement('style');
@@ -184,10 +182,14 @@ function apply(vars: Record<string, string>, draft: boolean, sheet: string) {
   }
   // The map applies only to a brand being tried (Q142): the theme's own colours stay as the build generated them, so
   // trying the map never restyles the library or a template that nobody re-branded.
-  el.textContent = draft ? sheet : '';
-  if (!draft) return;
-  for (const [name, value] of Object.entries(vars)) root.setProperty(name, value);
-  applied = Object.keys(vars);
+  // Q170: only what changed is written. A new stylesheet text re-matches every rule on the page, and each root property
+  // restyles the whole document, so rewriting them all on every move of a colour picker made each move a long task.
+  const text = draft ? sheet : '';
+  if (el.textContent !== text) el.textContent = text;
+  const next = draft ? vars : {};
+  for (const name of Object.keys(applied)) if (!(name in next)) root.removeProperty(name);
+  for (const [name, value] of Object.entries(next)) if (applied[name] !== value) root.setProperty(name, value);
+  applied = { ...next };
 }
 
 let state: BrandState;

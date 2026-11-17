@@ -2,13 +2,13 @@
  * Library-app inspectors: above-core tooling that presents token data (O21). They read only semantic tokens and set
  * only data custom properties; core never imports them.
  */
-import { useLayoutEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Button, Cluster, Code, Heading, Icon, Link, RowList, Stack, StackedBar as CoreStackedBar, Switch, Text, TokenSpecimen } from '@design-library/core/components';
 import { colourRoles, contrastPairs, palette, primitiveIn, readable, reducedLiteral, resolveLiteral, statuses, tokenFiles, tokensIn, valueOf, type TokenEntry } from '../data/tokens';
 import type { SpecimenContext } from '../data/contexts';
 import { ContextMatrix } from './specimens';
 import { INSPECTORS, rev, tokenRev } from '../revisions/target';
-import { useBrand } from '../data/brand';
+import { subscribeBrand, useBrand } from '../data/brand';
 import { setMaterial, useMaterial } from '../data/material';
 import { catalogue } from '../data/catalogue';
 import { pages } from '../data/pages';
@@ -21,15 +21,21 @@ const tokenTarget = (t: TokenEntry) => ({ identity: { token: t.css }, sources: [
 
 /**
  * Reads a computed colour from the rendered element, so each context cell reports what it actually shows. Measured again
- * whenever the brand draft changes (F7d), since the draft recolours every role that reads the accent.
+ * whenever the brand draft changes (F7d), since the draft recolours every role that reads the accent. Q170: as a
+ * transition, so while a colour is being dragged the page's hundreds of cells don't re-render and re-read their styles on
+ * every move; they catch up as soon as the drag pauses, and the picker keeps up with the pointer.
  */
 function useComputed<T extends HTMLElement>(read: (cs: CSSStyleDeclaration) => string) {
   const ref = useRef<T>(null);
   const [value, setValue] = useState('');
-  const { brand } = useBrand();
+  const [version, setVersion] = useState(0);
+  useEffect(() => {
+    const stop = subscribeBrand(() => startTransition(() => setVersion((v) => v + 1)));
+    return () => void stop();
+  }, []);
   useLayoutEffect(() => {
     if (ref.current) setValue(read(getComputedStyle(ref.current)));
-  }, [brand]);
+  }, [version]);
   return [ref, value] as const;
 }
 

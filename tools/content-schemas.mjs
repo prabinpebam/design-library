@@ -22,6 +22,9 @@ const records = {
   word: { shared: 'WordRecord' },
   'word-figma': { shared: 'WordFigmaRecord' },
   youtube: { shared: 'YoutubeRecord' },
+  coss: { shared: 'CossRecord' },
+  alignui: { shared: 'AlignuiRecord' },
+  heroui: { shared: 'HerouiRecord' },
 };
 
 const tmp = mkdtempSync(join(tmpdir(), 'content-schemas-'));

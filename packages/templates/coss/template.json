@@ -1,0 +1,21 @@
+{
+  "$schema": "../../core/schemas/template.schema.json",
+  "id": "coss",
+  "version": "0.1.0",
+  "title": "Component library in coss ui's look",
+  "summary": "An adaptation of coss ui (Q168): the core fundamentals and compounds in coss ui's look and feel, on one scrollable page grouped by kind and category.",
+  "contentSchema": "content.schema.json",
+  "contentVersion": 1,
+  "shared": "content/shared.json",
+  "assets": "assets.json",
+  "home": "components",
+  "sections": [
+    { "id": "library", "title": "Library", "summary": "Every component, grouped by kind and category.", "flows": [
+      { "id": "browse", "title": "Browse the components", "summary": "Scroll the page or jump to a category from the side.", "screens": ["components"] }
+    ] }
+  ],
+  "works": { "notes": 0 },
+  "layouts": [
+    { "id": "components", "title": "Components", "component": "ShowcaseLayout", "content": "content/components.json", "regions": [{"id":"main","accepts":["*"]}] }
+  ]
+}

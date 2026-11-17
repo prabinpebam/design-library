@@ -152,12 +152,33 @@ export const tokenFiles = (path: string) => definedIn.filter(([, paths]) => path
  * --p-base-50. Private standard-contrast indirections are followed through, so the name is the ink actually used.
  */
 export function primitiveIn(path: string, scheme: 'light' | 'dark', contrast?: 'more' | 'standard'): string {
-  const map = new Map(themeMaps[scheme]);
-  if (contrast === 'more') for (const t of moreTokens) map.set(t.path, t);
-  let t = map.get(path);
-  for (let hops = 0; t?.alias && hops < 8; hops++) t = map.get(t.alias);
-  if (!t) return '';
-  return t.path.startsWith('p.') ? t.css : (t.literal ?? '');
+  const key = `${scheme} ${contrast === 'more' ? 'more' : 'standard'}`;
+  let found = inkCache.get(key);
+  if (!found) inkCache.set(key, (found = new Map()));
+  let ink = found.get(path);
+  if (ink === undefined) {
+    const map = contextMap(scheme, contrast === 'more');
+    let t = map.get(path);
+    for (let hops = 0; t?.alias && hops < 8; hops++) t = map.get(t.alias);
+    ink = !t ? '' : t.path.startsWith('p.') ? t.css : (t.literal ?? '');
+    found.set(path, ink);
+  }
+  return ink;
+}
+
+// Q170: the token files are fixed for the page's life, so each context's map and each answer is built once; the brand
+// draft's contrast checks and the role matrices ask thousands of times per colour change.
+const inkCache = new Map<string, Map<string, string>>();
+const contextMaps = new Map<string, Map<string, TokenEntry>>();
+function contextMap(scheme: 'light' | 'dark', more: boolean) {
+  const key = `${scheme} ${more}`;
+  let map = contextMaps.get(key);
+  if (!map) {
+    map = new Map(themeMaps[scheme]);
+    if (more) for (const t of moreTokens) map.set(t.path, t);
+    contextMaps.set(key, map);
+  }
+  return map;
 }
 
 export interface ContrastPair {

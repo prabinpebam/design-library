@@ -60,6 +60,26 @@ export default {
       arrangement: 'row',
     },
     {
+      title: 'Sizes',
+      description: 'The Button size scale, words first and the chevron at the trailing edge. The chevron’s ink sits as far from that edge as the words’ ink from the leading one, at every size and emphasis.',
+      code: `<MenuButton label="Export" size="m" items={exports} onSelect={exportAs} />
+<MenuButton label="Export" size="m" emphasis="quiet" items={exports} onSelect={exportAs} />`,
+      render: () => (
+        <>
+          {(['xs', 's', 'normal', 'm', 'l', 'xl', 'xxl'] as const).map((size) => (
+            <MenuButton key={size} label="Export" size={size} items={exports} onSelect={() => undefined} />
+          ))}
+          {(['xs', 's', 'normal', 'm', 'l', 'xl', 'xxl'] as const).map((size) => (
+            <MenuButton key={`q-${size}`} label="Export" size={size} emphasis="quiet" items={exports} onSelect={() => undefined} />
+          ))}
+          {(['s', 'normal', 'l', 'xxl'] as const).map((size) => (
+            <MenuButton key={`p-${size}`} label="Export" size={size} emphasis="primary" icon="copy" items={exports} onSelect={() => undefined} />
+          ))}
+        </>
+      ),
+      arrangement: 'row',
+    },
+    {
       title: 'Unavailable',
       description: 'The menu can’t open here; say why nearby.',
       code: `<MenuButton label="Presets" disabled items={presets} onSelect={applyPreset} />`,

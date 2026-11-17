@@ -36,6 +36,7 @@
     "check:generic": "node ./tools/check-generic.mjs",
     "check:regression": "node ./tools/template-regression.mjs --exclude youtube",
     "check:works": "node ./tools/check-works.mjs",
+    "probe:dropdown-inset": "node ./tools/dropdown-inset-probe.mjs",
     "check:core-log": "node ./tools/check-core-log.mjs",
     "check:copy": "node ./tools/check-copy.mjs",
     "check:states": "node ./tools/state-coverage.mjs --check",

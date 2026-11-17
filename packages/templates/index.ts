@@ -18,7 +18,10 @@ import slack from './slack';
 import word from './word';
 import wordFigma from './word-figma';
 import youtube from './youtube';
+import coss from './coss';
+import alignui from './alignui';
+import heroui from './heroui';
 
-export const templates: Template[] = [corporate, chat, portfolio, blog, conference, design, projects, harbour, ikea, slack, word, wordFigma, youtube];
+export const templates: Template[] = [corporate, chat, portfolio, blog, conference, design, projects, harbour, ikea, slack, word, wordFigma, youtube, coss, alignui, heroui];
 
 export const templateOf = (id: string) => templates.find((t) => t.manifest.id === id);
