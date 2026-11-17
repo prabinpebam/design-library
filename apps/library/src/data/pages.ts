@@ -12,7 +12,7 @@ import { docsHref, docsSource } from './site-links';
 import corePackage from '../../../../packages/core/package.json';
 import { blocks as registryBlocks, templates as registryTemplates } from '../../../../packages/core/agent/index.json';
 import { type StoryFile, type NavigationFamily, type NavigationGroup, type NavigationItem } from '@design-library/core/components';
-import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, visibilityToggleStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories, conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, illustrationStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, themeStories, fontsStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, iconOverridesStories, picturesStories, linkStories, navigationStories, segmentedControlStories, schemeControlStories, tableOfContentsStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories } from '@design-library/core/stories';
+import { alignmentPickerStories, propertySectionStories, propertyRowStories, agendaStories, floatingBarStories, boardStories, appLayoutStories, treeViewStories, visibilityToggleStories, canvasStories, editorLayoutStories, screenPreviewStories, siteHeaderStories, siteLayoutStories, conversationListStories, chatLayoutStories, imageGenerationStories, composerStories, chatMessageStories, messageActionsStories, chatThinkingStories, alertStories, errorSummaryStories, emptyStateStories, fileUploadStories, timeFieldStories, dateFieldStories, notificationsStories, heroStories, footerStories, listDetailStories, mediaPlayerStories, sheetStories, popoverStories, tooltipStories, mentionsStories, inlineEditStories, quoteStories, lightboxStories, imageGridStories, imageStories, illustrationStories, accordionStories, statisticStories, cardStories, dialogStories, paginationStories, tabsStories, breadcrumbsStories, avatarStories, avatarGroupStories, personaStories, carouselStories, datePickerStories, dateRangePickerStories, calendarStories, colourPickerStories, allocationSliderStories, revealStories, morphStories, radioGroupStories, tagInputStories, fieldStories, ratingStories, gradientEditorStories, buttonGroupStories, colourFieldStories, menuButtonStories, listItemStories, scrollAreaStories, sliderStories, progressStories, skeletonStories, loadingStories, badgeStories, chipStories, chipGroupStories, exampleStories, indexListStories, contextMatrixStories, stackStories, stackedBarStories, rowListStories, tokenSpecimenStories, clusterStories, gridStories, paneStories, toolbarStories, codeStories, listStories, motionStories, widthsStories, themeStories, fontsStories, codeBlockStories, dataTableStories, descriptionListStories, pageHeaderStories, sectionStories, titleBarStories, buttonStories, checkboxStories, checkboxGroupStories, headingStories, iconStories, iconOverridesStories, picturesStories, linkStories, navigationStories, segmentedControlStories, schemeControlStories, tableOfContentsStories, selectStories, switchStories, textAreaStories, textFieldStories, numberFieldStories, textStories } from '@design-library/core/stories';
 
 export type Block =
   /** Literal colour ramps shown once: primitives narrowed by `only`, the spectrum, or the custom sets. */
@@ -800,6 +800,63 @@ applySettings({
         intro: 'Every place a core component changes with the window or with its own container, read from its CSS. Window widths use a breakpoint above, or say what they’re tied to; npm run check:breakpoints fails on any other. Code reads the same set with breakpointQuery and useBreakpoint.',
         block: { type: 'change-points' },
       },
+    ],
+  },
+  {
+    id: 'widths',
+    section: 'foundations',
+    title: 'Widths',
+    summary: 'One scale of seven widths for every menu, list, popover, picker, dialog, sheet and notification: lists fit their content and snap to a step; everything else has one width per purpose.',
+    source: foundationSource,
+    blocks: [
+      {
+        heading: 'The scale',
+        intro: 'Steps of 4 rem up to lg, then 8 rem. Every floating or overlaid surface reads one of these through its own component token or a prop; none keeps a width number of its own.',
+        block: { type: 'token-rows', group: 'size', match: '^size\\.width-' },
+      },
+      {
+        heading: 'Which width',
+        intro: 'Find the surface, then what it holds. “Fits” means it measures its content as it opens and takes the narrowest step that holds it.',
+        block: table(
+          'Width by surface and content',
+          [['surface', 'Surface'], ['content', 'Content'], ['width', 'Width'], ['how', 'How']],
+          [
+            { surface: 'Menu, select list, mentions', content: 'Any items', width: 'Fits: xs, sm or md', how: 'Default' },
+            { surface: 'Select list', content: 'Short options', width: 'The box’s width', how: 'Default: never narrower than the box' },
+            { surface: 'Menu, select list', content: 'Items with descriptions', width: 'lg', how: 'listWidth="lg"' },
+            { surface: 'Menus side by side', content: 'One toolbar', width: 'The widest one’s step', how: 'listWidth, the same on each' },
+            { surface: 'Select list', content: 'Options that load while open', width: 'The step the longest needs', how: 'listWidth' },
+            { surface: 'Tooltip', content: 'A name or a hint', width: 'Fits, up to md, then wraps', how: 'Default' },
+            { surface: 'Popover', content: 'A line and a button', width: 'sm', how: 'width="sm"' },
+            { surface: 'Popover', content: 'Help with a link, a short form', width: 'md', how: 'Default' },
+            { surface: 'Popover', content: 'Filters, paired fields', width: 'lg', how: 'width="lg"' },
+            { surface: 'Colour picker', content: 'Plane, sliders, fields', width: 'lg', how: 'Fixed' },
+            { surface: 'Date picker', content: 'The month grid', width: 'The grid’s own', how: 'Fixed by its content' },
+            { surface: 'Dialog', content: 'A question and two buttons', width: 'lg', how: 'size="s"' },
+            { surface: 'Dialog', content: 'A form, a short task', width: 'xl', how: 'size="m" (default)' },
+            { surface: 'Dialog', content: 'A table, several steps', width: '3xl', how: 'size="l"' },
+            { surface: 'Sheet', content: 'A narrow list', width: 'md', how: 'size="s"' },
+            { surface: 'Sheet', content: 'Details or a form', width: 'lg', how: 'size="m" (default)' },
+            { surface: 'Sheet', content: 'An editor', width: '2xl', how: 'size="l"' },
+            { surface: 'Notification', content: 'One line of status', width: 'Fits, up to xl', how: 'Default' },
+          ],
+        ),
+      },
+      {
+        heading: 'Rules',
+        block: {
+          type: 'points',
+          items: [
+            'Only steps: never a raw width, never an in-between one.',
+            'Fit, then snap up: a list is measured once as it opens, so its width never shifts while you type to narrow it.',
+            'Cap, then wrap: a list or tooltip stops at md; a longer item wraps inside it.',
+            'One width per purpose: the same kind of dialog or sheet has the same size on every page.',
+            'The window wins: every surface stays inside the window with the page margin either side, and dialogs fill a phone.',
+            'No step fits? The content belongs one surface up: popover, dialog, sheet, then a page.',
+          ],
+        },
+      },
+      { heading: 'In use', intro: 'Open each one: the lists fit their items, and every surface sits at a step.', block: { type: 'stories', file: widthsStories } },
     ],
   },
   {

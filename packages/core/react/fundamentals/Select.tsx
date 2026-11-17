@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useId, useRef, useState, type KeyboardEvent, type RefObject } from 'react';
 import { useCommit } from '../behaviour/commit';
 import { listboxKey, typeAhead } from '../behaviour/listbox';
-import { usePopup } from '../behaviour/popup';
+import { usePopup, type ListWidth } from '../behaviour/popup';
 import { useOverlayScroll } from '../behaviour/scroll';
 import { Button, type ButtonSize } from './Button';
 import { Field } from './Field';
@@ -95,6 +95,9 @@ interface SelectBase extends DataAttributes {
   /** Called with what's typed, for options that come from a server: fetch, set `loading` while waiting, then pass the
    * results as `options` (they're still narrowed by what's typed). */
   onSearch?: (query: string) => void;
+  /** Pins the list to one width step (Q130, docs/widths.md). Leave out to fit the options, snapped up to `xs`, `sm`
+   * or `md`, and never narrower than the box. Pin when the options load or change while it's open (`onSearch`). */
+  listWidth?: ListWidth;
 }
 
 const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: 'sm', normal: 'md', m: 'md', l: 'lg', xl: 'lg', xxl: 'xl' };
@@ -134,7 +137,7 @@ const iconSize: Record<ButtonSize, 'sm' | 'md' | 'lg' | 'xl'> = { xs: 'sm', s: '
  * an `input[role=combobox]` with `aria-autocomplete="list"`, and the number of matches announced politely.
  */
 export function Select(props: SelectProps) {
-  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, ...data } = props;
+  const { label, value, options, onChange, mode = 'commit', savedText = 'Saved', multiple = false, size = 'normal', icon, placeholder = multiple ? 'Choose any' : 'Choose one', hint, error, optional = false, readOnly = false, disabled = false, loading = false, emptyText = 'Nothing to choose from yet.', failedText, name, search = false, noMatchText = (q: string) => `Nothing matches “${q}”`, onSearch, orientation, hideLabel = false, listWidth, ...data } = props;
   const id = useId();
   const { phase, run, reset } = useCommit('--duration-confirm-min');
   const [open, setOpen] = useState(false);
@@ -414,7 +417,7 @@ export function Select(props: SelectProps) {
           </button>
         );
       })()}
-      <div ref={list} data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open}>
+      <div ref={list} data-dl-part="popup" data-width={listWidth} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open}>
         <div ref={scroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
           <div ref={scroll.setViewport} data-dl-part="viewport">
             {loading || empty || matches === 0 ? (

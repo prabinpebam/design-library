@@ -3,6 +3,7 @@
  * The popup opens in the top layer as a manual popover, so no scrolling or clipping ancestor cuts it off; it sits under
  * its anchor at least as wide as it, flips above when there's more room there, stays inside the window, follows the
  * anchor as the page scrolls or resizes, is never taller than the room on its side (it scrolls instead), and a press outside `within` dismisses it.
+ * Its width fits its content, snapped up to the next width step (Q130, docs/widths.md), unless pinned with `data-width`.
  */
 import { useEffect, type RefObject } from 'react';
 
@@ -15,11 +16,47 @@ export function placePopup(anchor: { top: number; bottom: number; left: number; 
   return { placement: flip ? ('above' as const) : ('below' as const), edge: flip ? anchor.top : anchor.bottom, room: flip ? above : below, start: Math.max(0, Math.min(start, viewport.width - popup.width)) };
 }
 
+/** The width steps a popup list may take (Q130, `size.width-*`), narrowest first. Lists never snap wider than `md`. */
+export const listWidthSteps = ['xs', 'sm', 'md'] as const;
+/** A width step a popup list can be pinned to (Q130): the list steps, and `lg` for lists with descriptions or previews. */
+export type ListWidth = 'xs' | 'sm' | 'md' | 'lg';
+
+/** Q130: the narrowest step at least as wide as the content; past the widest step, the widest (the content wraps). Pure. */
+export function snapWidth(natural: number, steps: number[]): number {
+  return steps.find((s) => s >= natural) ?? steps[steps.length - 1] ?? natural;
+}
+
+/** The list steps in pixels, read from the tokens so a theme that changes them is followed. */
+function stepPixels(el: HTMLElement): number[] {
+  const root = getComputedStyle(document.documentElement);
+  const rem = parseFloat(root.fontSize) || 16;
+  return listWidthSteps.map((s) => {
+    const v = root.getPropertyValue(`--size-width-${s}`).trim();
+    return v.endsWith('rem') ? parseFloat(v) * rem : parseFloat(v) || el.offsetWidth;
+  });
+}
+
+/**
+ * Q130: sizes a popup list to its content, snapped up to the next width step, measured once as it opens so the width
+ * never shifts while it's open (typing to narrow, scrolling). A popup with `data-width` is pinned and left alone.
+ */
+function fitPopup(el: HTMLElement) {
+  if (el.dataset.width) return;
+  el.style.removeProperty('--popup-fit');
+  el.style.setProperty('min-inline-size', '0px');
+  el.style.setProperty('inline-size', 'max-content');
+  const natural = el.offsetWidth;
+  el.style.removeProperty('inline-size');
+  el.style.removeProperty('min-inline-size');
+  el.style.setProperty('--popup-fit', `${snapWidth(natural, stepPixels(el))}px`);
+}
+
 export function usePopup(open: boolean, anchor: RefObject<HTMLElement | null>, popup: RefObject<HTMLElement | null>, within: RefObject<HTMLElement | null>, onDismiss: () => void) {
   useEffect(() => {
     const el = popup.current;
     if (!open || !el || !anchor.current) return;
     el.showPopover?.();
+    fitPopup(el);
     const place = () => {
       if (!anchor.current) return;
       const r = anchor.current.getBoundingClientRect();

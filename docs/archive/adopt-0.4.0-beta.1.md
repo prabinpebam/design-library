@@ -2,11 +2,11 @@
 
 > **TL;DR:** 0.4.0-beta.1 is "Data-driven sites": a whole site as JSON (a site document, page documents and collections) drawn by one `SiteView`, with commands to find blocks, check the site, write its types and rebuild generated collections. It's additive: a site on 0.3.0-beta.1 or 0.2.0-beta.x installs it and keeps working unchanged. Paste the block below into your agent to upgrade, then move to data one step at a time; the site works between steps.
 
-**Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."* **Owner, 2026-11-10 01:52 ([DoD Q107](definition-of-done.md#owner-instructions)):** the data-driven requirement, folded into [Part 3 of the plan](improvement-plan.md).
+**Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](../definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."* **Owner, 2026-11-10 01:52 ([DoD Q107](../definition-of-done.md#owner-instructions)):** the data-driven requirement, folded into [Part 3 of the plan](improvement-plan.md).
 
 **Paste this into DesignUp's agent:** *"Upgrade the Design Library to 0.4.0-beta.1: follow node_modules/@design-library/core/UPGRADE.md, section 0.3.0-beta.1 → 0.4.0-beta.1, after running its install line; do steps 1–3 now and stop for review before step 4 of its migration."*
 
-**Release:** [v0.4.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.4.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 3](improvement-plan.md), [Stage: DesignUp improvements](definition-of-done.md#stage-designup-improvements) rows B4.1–B4.15.
+**Release:** [v0.4.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.4.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 3](improvement-plan.md), [Stage: DesignUp improvements](../definition-of-done.md#stage-designup-improvements) rows B4.1–B4.15.
 
 ## The brief for your agent
 
@@ -121,7 +121,7 @@ Run 2026-11-10 about 05:33–06:05 +05:30 by worker 59 (Q105.5). Two copies of t
 
 ## The reference site and the acceptance test
 
-Harbour Books (`@design-library/templates/harbour/site/`, open at [site.html?demo=site](https://prabinpebam.github.io/design-library/site.html?demo=site)) is the whole flow in generic data: three pages and a page per reading, two collections, a binding, derived counts. The acceptance test (plan AT1–AT6) ran on it as JSON edits only: a new page opens at its address with its title, a moved section moves, a headline with an accent mark changes, a new book raises Home's counts, a misspelt block type fails the check at its JSON path while the page leaves the section out, and the words-in-code and page-specific checks report zero ([B4.14](definition-of-done.md#stage-designup-improvements)).
+Harbour Books (`@design-library/templates/harbour/site/`, open at [site.html?demo=site](https://prabinpebam.github.io/design-library/site.html?demo=site)) is the whole flow in generic data: three pages and a page per reading, two collections, a binding, derived counts. The acceptance test (plan AT1–AT6) ran on it as JSON edits only: a new page opens at its address with its title, a moved section moves, a headline with an accent mark changes, a new book raises Home's counts, a misspelt block type fails the check at its JSON path while the page leaves the section out, and the words-in-code and page-specific checks report zero ([B4.14](../definition-of-done.md#stage-designup-improvements)).
 
 ## What's in it, by plan packet
 

@@ -155,6 +155,8 @@
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     min-inline-size: var(--popup-min-inline, auto);
+    /* Q130: fits its content, snapped up to a width step by usePopup; never wider than c.popup.width on its own. */
+    inline-size: var(--popup-fit, auto);
     max-inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
     max-block-size: min(var(--c-popup-height), calc(var(--popup-room, 100vh) - 2 * var(--c-popup-offset)));
     padding: 0;
@@ -183,9 +185,15 @@
     padding: var(--c-popup-inset);
   }
 
-  [data-dl='menu-button'] > [data-dl-part='popup'] {
-    inline-size: min(var(--c-popup-width), calc(100vw - 2 * var(--space-margin-page)));
+  /* Q130: a list pinned to a width step (`listWidth`), so menus that sit together match; still never past the window. */
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width] {
+    max-inline-size: calc(100vw - 2 * var(--space-margin-page));
   }
+
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='xs'] { inline-size: var(--size-width-xs); }
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='sm'] { inline-size: var(--size-width-sm); }
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='md'] { inline-size: var(--size-width-md); }
+  :is([data-dl='menu-button'] > [data-dl-part='popup'], [data-dl='select'] [data-dl-part='control'] > [data-dl-part='popup'])[data-width='lg'] { inline-size: var(--size-width-lg); }
 
   [data-dl='menu-button'] > [data-dl-part='popup'][data-placement='above'],
   [data-dl='mentions'] > [data-dl-part='popup'][data-placement='above'],

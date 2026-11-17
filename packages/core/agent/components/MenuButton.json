@@ -114,6 +114,11 @@
           "name": "pendingLabel",
           "type": "string",
           "description": "Present tense while `busy`, e.g. \"Applying…\"; the label stays when left out."
+        },
+        {
+          "name": "listWidth",
+          "type": "ListWidth",
+          "description": "Pins the menu to one width step (Q130, docs/widths.md). Leave out to fit the items, snapped up to `xs`, `sm` or `md`. Pin only so menus that sit together (one toolbar) match, or when the items change while it's open."
         }
       ]
     },
@@ -194,6 +199,10 @@
     "--duration-change",
     "--easing-standard",
     "--size-icon-sm",
+    "--size-width-lg",
+    "--size-width-md",
+    "--size-width-sm",
+    "--size-width-xs",
     "--space-margin-page",
     "--state-hover",
     "--state-pressed",

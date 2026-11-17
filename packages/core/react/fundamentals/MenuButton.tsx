@@ -1,6 +1,6 @@
 import type { ButtonSize } from './Button';
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
-import { usePopup } from '../behaviour/popup';
+import { usePopup, type ListWidth } from '../behaviour/popup';
 import { useOverlayScroll } from '../behaviour/scroll';
 import { Flag, flagSrc, type FlagCode } from './Flag';
 import { Icon } from './Icon';
@@ -48,6 +48,9 @@ export interface MenuButtonProps extends DataAttributes {
   busy?: boolean;
   /** Present tense while `busy`, e.g. "Applying…"; the label stays when left out. */
   pendingLabel?: string;
+  /** Pins the menu to one width step (Q130, docs/widths.md). Leave out to fit the items, snapped up to `xs`, `sm` or
+   * `md`. Pin only so menus that sit together (one toolbar) match, or when the items change while it's open. */
+  listWidth?: ListWidth;
 }
 
 /**
@@ -72,7 +75,7 @@ export interface MenuButtonProps extends DataAttributes {
  * @key Enter or Space on an item: chooses it
  * @key Escape: closes the menu and returns to the button
  */
-export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, busy = false, pendingLabel, ...data }: MenuButtonProps) {
+export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size = 'normal', disabled = false, emphasis = 'default', iconOnly = false, busy = false, pendingLabel, listWidth, ...data }: MenuButtonProps) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -161,7 +164,7 @@ export function MenuButton({ label, icon, flag, items, onSelect, menuLabel, size
         ))}
         {hint.tip}
       </button>
-      <div ref={menu} data-dl-part="popup" data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open} onKeyDown={onMenuKey}>
+      <div ref={menu} data-dl-part="popup" data-width={listWidth} data-presence="popup" data-material="floating" data-elevation="3" popover="manual" hidden={!open} inert={!open} onKeyDown={onMenuKey}>
         <div ref={scroll.root} data-dl="scroll-area" data-mode="auto" data-axis="block" data-max="fill" data-surface="none" data-contain="">
           <div ref={scroll.setViewport} data-dl-part="viewport">
             <div id={`${id}-menu`} data-dl-part="content" role="menu" aria-label={menuLabel ?? label}>

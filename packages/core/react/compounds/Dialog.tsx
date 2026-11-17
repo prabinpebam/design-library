@@ -18,7 +18,7 @@ export interface DialogProps extends DataAttributes {
   children?: ReactNode;
   /** The answers, as Buttons: the safest first, the main action last (it sits at the end). */
   actions?: ReactNode;
-  /** Width: `s` 24 rem (a question), `m` 32 rem (default; a short form), `l` 48 rem (a table or longer reading). Every size fills a narrow window. */
+  /** Width, a step of the width scale (Q130, docs/widths.md): `s` 24 rem (a question), `m` 32 rem (default; a short form), `l` 48 rem (a table or longer reading). Every size fills a narrow window. */
   size?: 's' | 'm' | 'l';
   /**
    * An alert dialog: for answers that can't be undone. It must be answered with one of the actions: no close button,

@@ -2,9 +2,9 @@
 
 > **TL;DR:** 0.3.0-beta.1 is the second round of improvements from the DesignUp beta and the foundations for data-driven sites. It's additive: a site on 0.2.0-beta.2 installs it and keeps working unchanged (proof below). Paste the block below into your agent to upgrade, then adopt each improvement when you want, one step at a time; the site works between steps.
 
-**Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."*
+**Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](../definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."*
 
-**Release:** [v0.3.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.3.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan](improvement-plan.md), [Stage: DesignUp improvements](definition-of-done.md#stage-designup-improvements) rows B3.1–B3.28.
+**Release:** [v0.3.0-beta.1](https://github.com/prabinpebam/design-library/releases/tag/v0.3.0-beta.1). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan](improvement-plan.md), [Stage: DesignUp improvements](../definition-of-done.md#stage-designup-improvements) rows B3.1–B3.28.
 
 ## The brief for your agent
 

@@ -110,6 +110,7 @@
     "MenuButton"
   ],
   "principles": [
-    "elevation"
+    "elevation",
+    "widths"
   ]
 }

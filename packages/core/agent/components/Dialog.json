@@ -64,7 +64,7 @@
           "name": "size",
           "type": "'s' | 'm' | 'l'",
           "default": "'m'",
-          "description": "Width: `s` 24 rem (a question), `m` 32 rem (default; a short form), `l` 48 rem (a table or longer reading). Every size fills a narrow window."
+          "description": "Width, a step of the width scale (Q130, docs/widths.md): `s` 24 rem (a question), `m` 32 rem (default; a short form), `l` 48 rem (a table or longer reading). Every size fills a narrow window."
         },
         {
           "name": "alert",
@@ -111,6 +111,7 @@
   ],
   "libraryPage": "https://prabinpebam.github.io/design-library/#/dialog",
   "principles": [
-    "elevation"
+    "elevation",
+    "widths"
   ]
 }

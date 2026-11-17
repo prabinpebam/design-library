@@ -4,11 +4,11 @@
 
 **Status: released** (worker 65, 2026-11-10; drafted by worker 64).
 
-**Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."* Planned in [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110) (Q110, Q111, Q112, Q113).
+**Owner, 2026-11-10 01:27 (verbatim, [DoD Q105](../definition-of-done.md#owner-instructions)):** *"Improve Design library as per recommendation but want to do it in a way where the Design library stasy true to its goal of being a generic and versatile Design library and at the same time make it super easy for the Design up site to just use the updated version without much work. After the update, we should be just able to pass a detail of what has changed so that DesignUp site can adopt it wiothout breaking the site."* Planned in [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110) (Q110, Q111, Q112, Q113).
 
 **Paste this into DesignUp's agent:** *"Upgrade the Design Library to 0.4.0-beta.2: follow node_modules/@design-library/core/UPGRADE.md, section → 0.4.0-beta.2, after running its install line; do steps 1–3 now and stop for review before step 4."*
 
-**Release:** [v0.4.0-beta.2](https://github.com/prabinpebam/design-library/releases/tag/v0.4.0-beta.2). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110), [Migration readiness](definition-of-done.md#migration-readiness-q110) rows BM.1–BM.15.
+**Release:** [v0.4.0-beta.2](https://github.com/prabinpebam/design-library/releases/tag/v0.4.0-beta.2). **In the package:** `node_modules/@design-library/core/UPGRADE.md` (the same block). **Detail:** `CHANGELOG.md`. **Plan and Definition of Done:** [Improvement plan, Part 4](improvement-plan.md#part-4-moving-a-site-completely-onto-the-library-q110), [Migration readiness](../definition-of-done.md#migration-readiness-q110) rows BM.1–BM.15.
 
 ## The brief for your agent
 

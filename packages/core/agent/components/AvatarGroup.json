@@ -123,6 +123,7 @@
     "--c-popup-offset",
     "--c-popup-radius",
     "--c-popup-shadow",
+    "--c-popup-width",
     "--color-bg",
     "--color-focus",
     "--color-status-neutral-bg",
@@ -133,6 +134,7 @@
     "--radius-full",
     "--size-focus-offset",
     "--size-focus-width",
+    "--space-margin-page",
     "--space-stack-item",
     "--state-hover"
   ],

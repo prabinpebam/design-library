@@ -114,6 +114,7 @@ export { default as progressStories } from './Progress.stories';
 export { default as skeletonStories } from './Skeleton.stories';
 export { default as loadingStories } from './Loading.stories';
 export { default as motionStories } from './Motion.stories';
+export { default as widthsStories } from './Widths.stories';
 export { default as themeStories } from './Theme.stories';
 export { default as fontsStories } from './Fonts.stories';
 export { default as picturesStories } from './Pictures.stories';

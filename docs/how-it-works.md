@@ -1,8 +1,8 @@
-# How the library works
+# How the library works: the contract
 
-**In the library:** the [Design Library](http://127.0.0.1:8766/#/overview) itself, every token, component and template rendered live.
+**Status:** the technical contract ([DoD Q152.1](definition-of-done.md#owner-instructions)), 2026-11-12, restructured from the earlier explainer. **In the library:** the [Design Library](http://127.0.0.1:8766/#/overview), where every token, component and template renders live.
 
-> **TL;DR:** Every decision about how things look is a **token**. Components are built in four tiers on those tokens, and they're **sealed**: you change them through props, slots and tokens, never with your own styles. Whole screens come from **content written as JSON**, checked against a schema, then drawn by one renderer through a template’s layouts. Presets let a person switch the look at run time; materials and motion follow the same token rules. Agents follow the step-by-step guide shipped in the package (`packages/core/AGENTS.md`); this page explains the ideas behind it.
+> **TL;DR:** Every decision about how things look is a **token**. Components are built in four tiers on those tokens and are **sealed**: you change them through props, slots, context and tokens, never your own styles. Screens come from **content written as JSON**, checked against a schema and drawn by one renderer through a template's layouts. A template holds a product's brand values and compositions; core holds only generic patterns, with defaults that never move. Below, the library's rules are **57 numbered invariants**, each naming the check that enforces it or saying "unenforced". 26 are unenforced in whole or in part, and 4 only warn (K9's raw geometry also warns); after core hardening C1–C3 (Worker 109), 19 are unenforced; those are the gaps the [pressure-test loop](pressure-test-loop.md) and the [scorecard](library-scorecard.md) watch.
 
 <figure class="slate-figure">
   <svg viewBox="0 0 960 430" role="img" aria-labelledby="hiw-title hiw-desc" data-slate-svg-motion="viewport" data-slate-safe-margin="24">
@@ -54,75 +54,156 @@
   <figcaption>Content is data; the renderer turns it into a template’s layout; every tier above tokens reads its look only from tokens.</figcaption>
 </figure>
 
-## The tiers
+## How to read the contract
 
-Each part of the library sits in exactly one tier, by a test anyone can apply. A part is made only from the tiers below it.
+Each invariant has an ID, the rule, and how it's **enforced**:
 
-| Tier | Belongs here when… | Examples | You change it by |
+- **Gate:** a command in `npm run check` fails when the rule breaks.
+- **Warn:** a command reports it but doesn't fail, so it can be missed.
+- **Probe:** a browser probe (`tools/*-probe.js`, shipped as `@design-library/core/probes/*`) that the [adversarial loop](adversarial-loop.md) runs on the screens a packet touched.
+- **Sweep:** `npm run check:regression` (`tools/template-regression.mjs`). It's in the template worktrees' `package.json`, not in main's, and it isn't part of `npm run check`.
+- **Unenforced:** nothing checks it; only review catches a break. Each unenforced invariant is a candidate for a new check (listed in [Uncovered and weakly enforced](#uncovered-and-weakly-enforced)).
+
+The reasons and the detail live in the pages linked from each group; this page doesn't restate them. The [Template pressure-test loop](pressure-test-loop.md) cites these IDs at its gates, and the [Library scorecard](library-scorecard.md) maps its indicators to them.
+
+## T: tiers
+
+Detail: [Foundation](foundation.md), and [Templates and the library](templates-and-library.md#the-rule-library-or-template) for what goes where.
+
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| T1 | Each part is in exactly one tier (tokens, fundamentals, compounds, layouts, templates) and is made only from the tiers below it: a fundamental never imports a compound or layout, and a compound never imports a layout | **Unenforced** (holds today: 0 upward imports in `packages/core/react/fundamentals` and `compounds`, by a grep) |
+| T2 | Templates, the library app and outside projects use core only through its public entries (`@design-library/core/*`) | **Unenforced** for templates; the library app is covered by **Gate** `check:views` (`tools/check-views.mjs`) |
+| T3 | A need goes to core only when it passes the three questions: a second, unrelated product would use it; it's more than layout; every brand's look reduces to tokens. Otherwise it's a template part | **Unenforced** (judged at review; the evaluator records it in the boundary audit, RR11) |
+
+## K: tokens
+
+Detail: [Colour model](foundation.md#colour-model), [Token presets](foundation.md#token-presets-q70), [Brand colour](brand-colour.md).
+
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| K1 | Tokens are W3C DTCG JSON in `packages/core/tokens/`; `tokens.css` and `tokens.resolved.json` are generated and never edited by hand | **Gate** `tokens:check` (`agentic-craft/tools/build-tokens.mjs --check`) |
+| K2 | Colour changes go through `colour.config.json` and `npm run tokens`, never the generated `tokens.colour.json`; space and shape through their configs | **Gate** `tokens:check` (`tools/colour.mjs --check`, `tools/space-shape.mjs --check`, `tools/token-contexts.mjs --check`) |
+| K3 | Layers: primitives → semantic roles → component settings (`c.<component>.*`) → template (`tokens/theme.json`, part tokens `t.<template>.*`). Components read semantic roles and their own `c.*`, never primitives | **Unenforced** in core; **Warn** in templates and projects (`check:project` rule `primitive`, `packages/core/tools/check-project.mjs`) |
+| K4 | Status meaning only through `color.status.*`; a template theme may never set it | **Gate** `tokens:check` (`tools/template-tokens.mjs`, R1) |
+| K5 | `spectrum.*` and `set.*` tokens are used only for the purpose they declare | **Unenforced** (the purpose is in token data; nothing reads it) |
+| K6 | Template part tokens alias core semantic roles | **Gate** `tokens:check` (`tools/template-tokens.mjs --check`) |
+| K7 | Every text, focus and control pair passes contrast in light, dark and both contrast contexts; so does every pair a template theme redefines | **Gate** `tokens:check` (`agentic-craft/tools/check-tokens.mjs`, `packages/core/tokens/checks.json`); **Gate** `check:template-contrast` (`tools/check-template-contrast.mjs`) |
+| K8 | Core CSS holds no literal look values: colours, sizes, timings, stacking orders, blur and alpha all come from tokens | Timings: **Gate** `check:motion`. Stacking: **Gate** `check:layers`. Blur and alpha: **Gate** `check:materials`. Change points: **Gate** `check:breakpoints`. Colours and sizes: **Unenforced** (0 hex today, by a grep) |
+| K9 | Template part CSS sets no core token and writes type only from tokens; a brand value lives in token data: part-scoped core tokens in `tokens/theme.json` `$parts`, measured template values in `tokens/tokens.json` | **Gate** `check:project` (C1, Worker 109, `dl-integrate`): in a template's parts, `core-token` (any core or `--c-*` token set in part CSS) and `raw-size` on type (`font-size`, `letter-spacing`, `line-height`, `font`, `word-spacing`) are errors; `npm run tokens` validates `$parts` (own-namespace selectors, core token names, no primitives, no `color.status.*`) and allows a raw `rem`/`em` template token only as a `dimension` with `$extensions["org.design-library"].measured`. Raw geometry (widths, tracks) stays a counted **Warn** (`raw-size`). L0 had 47 literals ([LG3](library-scorecard.md#fix-list-request-log-format)); C1 moved all 178 core-token settings (Slack 101, Word 72, IKEA 5) and 9 raw type values, with the sweep at 0 different |
+
+## S: sealed components and the seam ladder
+
+Detail: [Seam ladder](pressure-test-loop.md#1-the-seam-ladder), [Foundation](foundation.md).
+
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| S1 | No core component takes `className` or `style`; it changes only through props, slots, context attributes and tokens | **Gate** by type: no such prop exists (`npm run typecheck`, `tsc -p apps/library`) |
+| S2 | Nothing outside a component selects its `data-dl` name or reaches into its parts | **Gate** `check:project` rule `core-selector` (error, `--strict`), every attribute-selector form: single, double or no quotes and the `~=`, `|=`, `^=`, `$=`, `*=` operators (L1a, F19); descendant part paths in any quote form: rule `part-path`; **Gate** `check:views` for the library app |
+| S3 | A compound, layout or template part reaches its own parts by child paths, never by descendant selectors | **Gate** `check:parts` (`tools/check-parts.mjs`) in core; **Gate** `check:project` rule `part-path` in templates |
+| S4 | Nobody copies, wraps or rebuilds a core component: no raw interactive markup and no hand-built widget roles (`role="dialog"`, `"table"`, `"menu"`) in parts | Raw markup: **Warn** `check:project` rule `raw-markup`. Widget roles on plain markup: **Gate** `check:project` rule `widget-role`, an error in template parts, also for string-valued expressions (`role={'dialog'}`) and `aria-modal` (C2, Worker 109; L1a, F21; missed in L0: LG4, LG5) |
+| S5 | Seams are tried in order: prop, slot, context, theme, template part, core change. Steps 5 and 6 are findings and get logged | **Unenforced** (review, and the boundary audit) |
+| S6 | Native controls that core replaces (`<select>`) aren't used | **Gate** `check:project` rule `native-select` |
+| S7 | A binary setting is a Switch unless a written `binary-setting:` reason says otherwise | **Gate** `check:project` rule `toggle-justification` |
+
+## V: views assembled from data
+
+Detail: [Templates, content and customization](foundation.md#templates-content-and-customization).
+
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| V1 | Library and template views hold no styles; they assemble core components from data | **Gate** `check:views` (`tools/check-views.mjs`); **Gate** `check:project` rule `view-style` |
+| V2 | Screen content is pure JSON, valid against its template's schema, with every reference (picture, route, icon) resolving | **Gate** `check:content` (`packages/core/tools/check-content.mjs`) |
+| V3 | No words written in code, and no page-specific code (a literal route compared in TSX) | **Warn** `check:project` rules `words-in-code` and `page-specific`. The words themselves: **Gate** `npm run check:copy` (C3, `tools/check-copy.mjs`): banned words, "click", three dots and straight quotes (CP1–CP4) fail over core stories, the library's page data and template content (replicas keep their reference's words, so CP1–CP2 warn there); sentence case and action length (CP5, CP6) warn. Debt present at C3 is listed in `tools/copy-baseline.json` (29 findings) and warns until a copy pass |
+| V4 | The agent index and the consumer guides match the source | **Gate** `agent:index:check` (`tools/agent-index.mjs --check`); **Gate** `check:names` (`tools/check-names.mjs`) |
+
+## P: templates
+
+Detail: [Templates and the library](templates-and-library.md), [Replica method and rules](replica-rules.md).
+
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| P1 | A template is one folder: `template.json` manifest, content schema, `content/*.json`, `assets.json` and pictures, `tokens/theme.json`, and `parts/` | **Gate** `check:content` |
+| P2 | A template's parts are named in its namespace (`data-dl="<template>-…"`, `t.<template>.*`); core never carries a template namespace | Core side: **Gate** `check:generic` (`tools/check-generic.mjs`). Template side: **Unenforced** (holds today by a grep) |
+| P3 | Brand values (colours, fonts, shape, component sizes) live in `tokens/theme.json`, never in part code; part CSS has no colour literals | Theme: **Gate** `tokens:check`. Part CSS colours: **Gate** `check:project` rule `colour-literal`, an error in template parts for hex, `rgb()`, `hsl()`, `hwb()`, `lab()`, `lch()`, `oklab()`, `oklch()` and `color()` (L1a, F20; a mask stop is `black` or `transparent`) Component settings: see K9 |
+| P4 | A part moves into core only when a second, unrelated template needs it (the rule of two), with its look as `c.*` tokens and the old parts deleted | **Unenforced** (review) |
+| P5 | A replica uses only invented names, copy and pictures, and the library's own icons and open fonts | **Unenforced** (evaluator licence audit, [RR4](replica-rules.md#the-rules)) |
+
+## C: theming and contexts
+
+Detail: [Colour model](foundation.md#colour-model), [Density: content and chrome](foundation.md#density-content-and-chrome).
+
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| C1 | Light, dark, more contrast, density, reduced motion and materials are context attributes on an ancestor (`data-scheme`, `data-contrast`, `data-density`, `data-material`), followed by every component below it | Contrast: **Gate** `tokens:check`. Density chrome: **Probe** `context-probe.js`. Every component in every context: **Sweep** (light and dark only) |
+| C2 | Built-in presets are read-only; a person's own presets are saved in their browser | **Unenforced** |
+
+## R: scroll, clipping, motion, materials, layers, SVG and icons
+
+| ID | Invariant | Detail | Enforced by |
 | --- | --- | --- | --- |
-| **Tokens** | It's a decision: a colour, a size, a duration, a radius | `color.text`, `space.stack-item`, `radius.md`, `duration.fast` | Editing a config file or choosing a preset |
-| **Fundamentals** | Almost every product needs it | Text, Heading, Button and its kinds, fields, Switch, Stack, Cluster, Grid | Props and context attributes |
-| **Compounds** | Some products need this arrangement of fundamentals | Card, Dialog, Toolbar, Navigation, Notifications | Props and slots |
-| **Layouts** | It's a screen or a section with named regions | SiteLayout, AppLayout, ChatLayout, EditorLayout, ListDetail | Filling its regions |
-| **Templates** | It's a collection of layouts for one kind of product | Corporate site, Blog, Conference, AI chat, Design tool, Project management | Writing its content, or adapting it as your own |
+| R1 | Every scroll region is a `ScrollArea` at its surface's edge; there's no raw `overflow: auto \| scroll` anywhere (one barless exception: Carousel's track) | [Scrolling](scrolling.md) | **Gate** `check:clipping` (`tools/check-clipping.mjs`); **Gate** `check:project` rule `scroll-region`; **Probe** `scroll-probe.js` |
+| R2 | A clip appears only on the allow-list, with its reason; focus rings are never clipped | [Clipping](clipping.md) | **Gate** `check:clipping` (`tools/clipping-allow.json`); **Probe** `clipping-probe.js` |
+| R3 | Motion uses duration and easing tokens, never `all`; reduced motion removes movement but keeps every confirmation | [Motion](motion.md) | **Gate** `check:motion`; **Probe** `motion-probe.js` |
+| R4 | Blur and see-through fills only through material tokens, in frosted places, above the tint floor | [Materials](materials.md) | **Gate** `check:materials`; **Probe** `material-probe.js` |
+| R5 | Every `z-index` reads a layer token | [Foundation](foundation.md) | **Gate** `check:layers` |
+| R6 | Window-width change points come from the set | [Layout](layout.md) | **Gate** `check:breakpoints` (core fails, templates warn) |
+| R7 | Every SVG is safe, has a `viewBox`, has no SMIL or its own `@keyframes`, and is coloured only by role classes | — | **Gate** `check:svg` (`packages/core/tools/check-svg.mjs`), on `.svg` files. Inline `<svg>` and `createElement('svg')` in template parts: **Gate** `check:project` rule `inline-svg` (C2; L1a, F21), unless a comment within two lines above says why (`inline-svg: <why>`, Word's two live rulers) |
+| R8 | Icons are drawn by `Icon` under semantic names; a brand redraws them through `IconOverrides`; a template's own names come only from a `--custom` pack | — | **Warn** `check:project` rule `icon-name`. Custom names are typed by `defineIconPack(pack)` (`name()` for the pack's names, `of()` for names read from content); an `as IconName` cast in a template part is a **Gate** error, `icon-cast` (C2; LG8, Word's 45 casts and YouTube's 2 removed) |
+| R9 | Probes in `tools/` and the copies shipped in the package are identical | — | **Gate** `probes:check` (`tools/probes.mjs`) |
 
-About 47 fundamentals, 55 compounds, 8 layouts and 7 templates exist today. Browse them in the [library](http://127.0.0.1:8766/).
+## L: layout, spacing, states and noise on rendered screens
 
-## Components are sealed
+| ID | Invariant | Detail | Enforced by |
+| --- | --- | --- | --- |
+| L1 | Space comes from the scale and its roles; a group's inner space is never larger than the space around it; the layout owns space (gap and padding on the parent) | [Spacing](spacing.md) | **Probe** `spacing-probe.js` |
+| L2 | Regions reflow down to 320 px with no page-level horizontal scroll; region geometry comes from layout, not drawn in pictures | [Layout](layout.md) | **Probe** `layout-probe.js`; pictures painting regions: **Probe** `noise-probe.js` row VN7 (C2), whatever the picture's role, and background-image gradients painting bands (L1a, F22) |
+| L3 | Every state that can occur (loading, saving, success, error, empty, disabled) has its place, look, timing and announcement | [UI states](ui-states.md) | **Probe** `ui-states-probe.js`; per-component coverage: **Gate** `npm run check:states` (C3, `tools/state-coverage.mjs`): the matrix `tools/state-coverage.json` lists, per component, the states its props allow (disabled, loading, error, empty) and whether its stories show each (44 of 59 at C3); it fails when stale or when a shown state stops being shown |
+| L4 | Every mark carries information; enclosures stay within the depth limit; one cue per meaning | [Visual noise](visual-noise.md) | **Probe** `noise-probe.js`; fills painted by a picture (decorative or `role="img"`) or a background-image gradient over a transparent region: **Probe** row VN7, and each painted fill counts toward VN5 (C2; L1a, F22: both planted forms fail) |
+| L5 | Charts and visuals follow the representation rules | [Visual representation](visual-representation.md) | **Probe** `visual-probe.js` |
 
-A component has no `className` or `style` prop, and its CSS reads only tokens. That's what lets one theme change reach every screen, and lets a component work in light, dark and more contrast without anyone checking each screen by hand. When something needs to look or behave differently, there's an order of seams to try, from the cheapest:
+## A: accessibility floors
 
-<ol class="slate-steps">
-  <li class="slate-step"><p class="slate-step__title">A prop or variant</p><p>Most needs already are one: a button's emphasis or size, a card's layout.</p></li>
-  <li class="slate-step"><p class="slate-step__title">A slot</p><p>Pass another part in: a badge into a card's meta, buttons into its actions.</p></li>
-  <li class="slate-step"><p class="slate-step__title">A context attribute</p><p>Change a whole region by token: compact density, a dark subtree, solid materials.</p></li>
-  <li class="slate-step"><p class="slate-step__title">The theme</p><p>Change a token's default for every screen, through its config file.</p></li>
-  <li class="slate-step"><p class="slate-step__title">A part inside a template</p><p>A new fundamental, compound, layout or block type, named in the template's namespace and documented like a core part.</p></li>
-  <li class="slate-step"><p class="slate-step__title">A core change</p><p>A new variant or slot two products need, reviewed on its own.</p></li>
-</ol>
-
-What's never on the list: copying a component, wrapping it to replace its markup, or writing CSS that targets it.
-
-## Screens come from data
-
-A product's screens are content files: plain JSON that says what each screen shows (words, facts, links, picture ids), never how it looks. A template declares its layouts, the regions of each, and which kinds of block each region accepts.
-
-| Kind of screen | Content is | Example |
+| ID | Invariant | Enforced by |
 | --- | --- | --- |
-| A document: a site page, an article, a form | **Regions of blocks**: `{ "type": "hero", "title": "…" }`, `{ "type": "cards", … }` | Corporate site's home |
-| An application: a chat, a board, an editor | **One record** typed for that screen | AI chat's conversation |
+| A1 | Text and non-text contrast meet WCAG 2.2 AA in every scheme | **Gate** `tokens:check`, `check:template-contrast` (see K7) |
+| A2 | Widgets follow their WAI-ARIA APG pattern: roles, keys, focus moving and returning, Escape | Roles and ARIA attributes: **Probe** axe-core in the sweep (`npm run check:regression -- --axe`, C3, every screen and scheme, `.shots/regression/axe.json`). Keys, focus and Escape: **Unenforced** automatically (stories and evaluator; hand-built widget roles now fail `check:project` `widget-role`) |
+| A3 | Interactive targets are at least 44 px, or have spacing that makes them equivalent | **Unenforced** (no probe measures targets) |
+| A4 | Reduced motion and forced colours are respected; icons paint in `currentColor` | Motion: **Gate** `check:motion`. Icons: built in by `design-library-icons` (`packages/core/tools/icons.mjs`). Forced colours on screens: **Unenforced** |
+| A5 | Accessible names exist for every control, picture and region | **Probe** axe-core in the sweep (`--axe`, C3): `button-name`, `link-name`, `image-alt`, `aria-input-field-name` and the rest of its name rules, on every working-copy screen in light and dark |
 
-Before anything renders, `npm run check:content` checks every file against its schema and names each mistake with its file, its place in the file and how to fix it. A typo never reaches a screen half-drawn. The library shows each screen's JSON beside the screen it draws.
+## Q: performance
 
-## Tokens, contexts and presets
+Detail: the performance and perceived-performance skills. Nothing has been measured yet.
 
-| Idea | What it is | Where to see it |
+| ID | Invariant | Enforced by |
 | --- | --- | --- |
-| **Semantic roles** | Tokens named for their job (`color.text`, `space.gutter`); the only tokens components read | [Colour](http://127.0.0.1:8766/#/colour), [Space](http://127.0.0.1:8766/#/space) |
-| **Theme** | The default of each category, kept in config files and generated into CSS; a colour theme that fails contrast is refused | [Colour model](foundation.md#colour-model) |
-| **Contexts** | Settings a whole subtree follows: light or dark, standard or more contrast, reduced motion, density | The title bar's appearance controls |
-| **Presets** | Named choices per category (colour, type, icons, space, shape, material) and global presets that combine them; built-in ones are read-only, a person's own are saved in their browser | [Token presets](foundation.md#token-presets-q70); the gear button in the title bar |
+| Q1 | Loading, rendering and bundle size have budgets, measured by one command against a committed baseline, with noise-aware regression checks | **Unenforced** (no benchmark exists; [scorecard D12](library-scorecard.md#baseline-score-q1513)) |
+| Q2 | Every wait a person feels has feedback that fits its length, never blocks or loses input, and keeps the old view until the new one is ready | **Unenforced** (partly through L3 and the UI-states probe) |
 
-## Materials and motion
+## G: core stays generic, and the process that keeps it true
 
-**Materials** are the surfaces parts sit on: the page, raised cards, floating popovers and bars, modal dialogs. Floating surfaces can be **frosted** (a blur of what's behind them) or solid, by one global setting, and always solid when the person asks for less transparency or more contrast. See [Materials and backgrounds](materials.md).
+Detail: [Template pressure-test loop](pressure-test-loop.md), [Replica method and rules](replica-rules.md).
 
-**Motion** explains change: content that changes in place morphs in its own box, things that open grow from where they are, nothing blinks out and back. Durations and easings are tokens, and reduced motion removes movement but keeps every confirmation. See [Motion and transitions](motion.md).
+| ID | Invariant | Enforced by |
+| --- | --- | --- |
+| G1 | Core never names a product or holds a product's brand values (code, selectors, token names and values) | **Gate** `check:generic` (`tools/check-generic.mjs`) |
+| G2 | A core change keeps every default: every other template and library page stays pixel-identical, except declared catalogue inventory | **Sweep** `check:regression` (`tools/template-regression.mjs`, `tools/regression-noise.json`); not in `npm run check` |
+| G3 | Parallel template branches integrate one at a time, with the full sweep on the combined result before the next merge or refreeze | **Unenforced** (procedure; [pressure-test loop 5b](pressure-test-loop.md#3-end-to-end-procedure)) |
+| G4 | Every core change is recorded in [Templates and the library](templates-and-library.md), with its reason and default | **Gate** by procedure: `npm run check:core-log` (`tools/check-core-log.mjs`, C2) fails when a core file changed since the frozen base isn't named there by file (case-insensitively), by its component, or for a shared stylesheet by any component it styles (L1a, F27; a change of line endings only is skipped), or a core token added or changed isn't named by its dotted name; run at P3 with `--doc` (this page lives in main's docs, not in the branches) |
+| G5 | The same kind of miss twice adds a check or a "Rules agents miss" row in the packet that closes it | **Unenforced** (procedure; [pressure-test loop §7](pressure-test-loop.md#7-feedback-into-checks-and-agent-guidance)) |
+| G6 | `npm run check` passes before any packet is called done or pushed | **Gate** by procedure (the guard hook doesn't run it). Line endings: `.gitattributes` (`* text=auto eol=lf`) checks out LF on every platform, so a fresh Windows clone with `core.autocrlf=true` passes (L1a, F23) |
 
-## Templates and customization
+## Uncovered and weakly enforced
 
-Customizing a product always starts with a template. Use one as it is by writing its content; adapt one as your own by copying it into a new namespace. Anything the core lacks is added **inside that template**: its own parts, tokens, block types and stories, never in the core and never shared with another template. A part two templates need becomes a candidate for the core, through its own review. See [Templates, content and customization](foundation.md#templates-content-and-customization).
+| Kind | Invariants | Count |
+| --- | --- | --- |
+| Unenforced | T1, T2 (templates), T3, K3 (core), K5, K8 (colours and sizes), S5, P2 (template side), P4, P5, C2, A2 (keys and focus), A3, A4 (forced colours), Q1, Q2, G3, G5 | 18 (P3 part colours gate since L1a, F20) |
+| Warning only (can be missed) | K3 (templates), K9 (raw geometry only; core tokens and type gate since C1), S4 (raw markup; widget roles gate since C2), V3, R8 (`icon-name`; casts gate since C2) | 4 (plus K9's geometry) |
+| Outside `npm run check` (run by procedure) | G2 (sweep), G4 (`check:core-log`); L1–L5 and parts of R1–R4 (probes) | 2 groups and 1 gate |
 
-## Checks that keep it true
-
-| Check | Keeps true |
-| --- | --- |
-| `npm run tokens:check` | Generated tokens match their sources; every text, focus and control pair passes contrast in all four contexts |
-| `npm run check:content` | Every template's manifest and content is valid and every reference resolves |
-| `npm run check:views`, `check:parts` | Views hold no styles; parts are reached by their own structure |
-| `npm run check:materials`, `check:motion`, `check:layers` | Blur, motion and stacking only through tokens |
-| `npm run agent:index:check` | The agents' index of components, blocks, tokens and templates matches the source |
+The cheapest moves from unenforced to gate: turn `raw-markup` into an error for `packages/templates` (S4; `core-token` and raw type became errors in C1, K9; widget roles, inline `<svg>` and icon casts in C2, S4, R7, R8); add widget roles and inline `<svg>` to `check:project` (S4, R7); add `check:regression` to the documented gate list for any packet that touches core (G2); and add a check that every core diff has a row in Templates and the library (G4).
 
 ## For agents
 
-Agents building with the library read `packages/core/AGENTS.md` first: the rules it must never break, the seams, and seven step-by-step guides (install, content, tokens, components, layouts, templates, principles), each ending with the commands that prove the step. The principles guide is generated from `packages/core/principles/principles.json`, the same file that gives every library page its short Principles section: people read the plain summary there, agents the rules and decision procedures here. Exact names come from `packages/core/agent/index.json`, generated from the source so it can't drift. How this was planned: [Consumer guide audit](consumer-audit.md).
+Building with the library: read `packages/core/AGENTS.md` first (the Never rules, the seams, the seven step guides, and "Rules agents miss"), and take exact names from `packages/core/agent/index.json`. Building a template or replica in this repository: follow the [Template pressure-test loop](pressure-test-loop.md), whose gates cite the IDs above. Scoring the library: the [Library scorecard](library-scorecard.md).

@@ -1,6 +1,6 @@
 # Get started (technical)
 
-> **TL;DR:** The library is two packages, `@design-library/core` and `@design-library/templates`, released as tarballs on [GitHub releases](https://github.com/prabinpebam/design-library/releases) under the MIT licence; there is no registry package. A React 19 + Vite 8 app installs both by URL with npm 10 or later, imports `css/index.css` once, builds screens from layouts and components (or renders a template from JSON with `TemplateView`), and sets its look with `@design-library/core/theme`. Checks: `npx design-library-check-content`, `npx tsc --noEmit`, `npx vite build`. This page is every step, command and fix; the short version is the library's [Get started](http://127.0.0.1:8766/#/get-started), and an agent's version ships inside the package (`AGENTS.md` and `guide/`). Proven by a fresh project outside this repository ([Handoff readiness](handoff-readiness.md#the-proof-f15r6)).
+> **TL;DR:** The library is two packages, `@design-library/core` and `@design-library/templates`, released as tarballs on [GitHub releases](https://github.com/prabinpebam/design-library/releases) under the MIT licence; there is no registry package. A React 19 + Vite 8 app installs both by URL with npm 10 or later, imports `css/index.css` once, builds screens from layouts and components (or renders a template from JSON with `TemplateView`), and sets its look with `@design-library/core/theme`. Checks: `npx design-library-check-content`, `npx tsc --noEmit`, `npx vite build`. This page is every step, command and fix; the short version is the library's [Get started](http://127.0.0.1:8766/#/get-started), and an agent's version ships inside the package (`AGENTS.md` and `guide/`). Proven by a fresh project outside this repository ([Handoff readiness](archive/handoff-readiness.md#the-proof-f15r6)).
 
 Owner, 2026-11-09 07:59 ([DoD Q83](definition-of-done.md#owner-instructions)): *"When everything is done, add the get started section in the Design library and a much more detailed and technical version of the same in Slate."*
 
@@ -221,6 +221,6 @@ The package guide's steps 2, 5 and 6 hold the full content model (regions, block
 ## Links
 
 - [Get started](http://127.0.0.1:8766/#/get-started) in the library (the short version)
-- [How the library works](how-it-works.md), [Handoff readiness](handoff-readiness.md), [Hosting](hosting.md)
+- [How the library works](how-it-works.md), [Handoff readiness](archive/handoff-readiness.md), [Hosting](hosting.md)
 - [The package guide](https://github.com/prabinpebam/design-library/tree/main/packages/core/guide) and [AGENTS.md](https://github.com/prabinpebam/design-library/blob/main/packages/core/AGENTS.md)
 - [Releases](https://github.com/prabinpebam/design-library/releases)
