@@ -992,57 +992,83 @@
   }
 
   /*
-   * Attached parts (Q40): a choice before the box (country code) and an action after it (Search) join the box as one
-   * shape, the split button's box model: every part takes the same size token, the row stretches them to one height,
-   * the outer ends alone are rounded, and the box keeps all four sides of its outline (its state colours stay whole),
-   * so the attached buttons drop the side they share with it.
+   * Attached parts (Q40, Q167): a choice before the box (country code) and an action or a list after it (Search, a
+   * NumberField's common values) join the box as one shape, the split button's box model: every part takes the same size
+   * token, the row stretches them to one height, the outer ends alone are rounded, and the box keeps all four sides of its
+   * outline (its state colours stay whole), so the attached segments drop the side they share with it. A segment is a
+   * whole cell: its hover, press and open fill cover all of it and its glyph sits at its centre.
    */
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] {
     display: flex;
     align-items: stretch;
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box'] {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box'] {
     flex: 1 1 auto;
     min-inline-size: 0;
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box']:not(:first-child) {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box']:not(:first-child) {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box']:not(:last-child) {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl-part='box']:not(:last-child) {
     border-start-end-radius: 0;
     border-end-end-radius: 0;
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button'] > [data-dl-part='trigger'] {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button'] {
+    flex: none;
+  }
+
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button'] > [data-dl-part='trigger'] {
     block-size: 100%;
+  }
+
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button']:first-child > [data-dl-part='trigger'] {
     border-start-end-radius: 0;
     border-end-end-radius: 0;
     border-inline-end-width: 0;
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'] {
-    flex: none; /* a narrow field gives way in its text box, never in its joined action */
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button']:last-child > [data-dl-part='trigger'],
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'] {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
     border-inline-start-width: 0;
   }
 
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'] {
+    flex: none; /* a narrow field gives way in its text box, never in its joined action */
+  }
+
   /* Q145.Y: the joined action's own fill, edge and width, so a theme can style a search button apart from other buttons. */
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'][data-emphasis='default'] {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'][data-emphasis='default'],
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button']:last-child > [data-dl-part='trigger'][data-emphasis='default'] {
     border-color: var(--c-field-action-edge);
     background-color: var(--c-field-action-fill);
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'][data-icon-only] {
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='button'][data-icon-only] {
     padding-inline: var(--c-field-action-padding-inline);
   }
 
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > :focus-visible,
-  [data-dl='text-field'] [data-dl-part='control'] > [data-dl-part='row'] > :has(:focus-visible) {
+  /* An icon-only list segment (common values) is a square as tall as the field, its chevron at the centre. */
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button']:last-child > [data-dl-part='trigger'][data-icon-only] {
+    inline-size: var(--field-h);
+    min-inline-size: 0;
+    min-block-size: 0;
+    padding: 0;
+    place-items: center;
+  }
+
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > [data-dl='menu-button']:last-child > [data-dl-part='trigger'][data-icon-only] [data-dl='icon'] {
+    translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
+  }
+
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > :focus-visible,
+  :is([data-dl='text-field'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='row'] > :has(:focus-visible) {
     z-index: var(--c-button-group-focus-layer);
   }
 
@@ -1271,10 +1297,11 @@
 
   /*
    * Q165, an edge adornment placed by its ink: an icon at a field's start or end (a leading icon, the scrub icon, a
-   * Select's chevron, a NumberField's list chevron) is as far from the box's edge as from its top and bottom, measured to
-   * the glyph's drawn ink (Icon sets --ink-w, --ink-h, --ink-x and --ink-y from the glyph), not to its frame. It keeps its
-   * square cell (Q127), so the words stay where they were, and sits against the cell's outer side with a margin that puts its ink
-   * (inside height − ink height) / 2 from the edge. A list chevron is part of the field: no fill or edge of its own.
+   * Select's chevron) is as far from the box's edge as from its top and bottom, measured to the glyph's drawn ink (Icon
+   * sets --ink-w, --ink-h, --ink-x and --ink-y from the glyph), not to its frame. It keeps its square cell (Q127), so the
+   * words stay where they were, and sits against the cell's outer side with a margin that puts its ink
+   * (inside height − ink height) / 2 from the edge. Only a glyph with no cell of its own sits this way; a control's glyph
+   * (a NumberField's common values, Q167) is an attached segment centred in its own cell.
    */
   :is([data-dl='select'], [data-dl='number-field'], [data-dl='text-field']) {
     --field-h: var(--c-field-size);
@@ -1297,12 +1324,12 @@
     justify-content: flex-start;
   }
 
-  :is([data-dl='select'], [data-dl='number-field']) [data-dl-part='control'] > [data-dl-part='box']:has(> :is([data-dl-part='chevron'], [data-dl-part='presets']):last-child) {
+  [data-dl='select'] [data-dl-part='control'] > [data-dl-part='box']:has(> [data-dl-part='chevron']:last-child) {
     padding-block: 0;
     padding-inline-end: 0;
   }
 
-  :is([data-dl='select'], [data-dl='number-field']) [data-dl-part='box'] > :is([data-dl-part='chevron'], [data-dl-part='presets']):last-child {
+  [data-dl='select'] [data-dl-part='box'] > [data-dl-part='chevron']:last-child {
     display: inline-flex;
     flex: none;
     align-items: center;
@@ -1326,8 +1353,7 @@
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
   }
 
-  [data-dl='select'] [data-dl-part='box'] > [data-dl-part='chevron']:last-child > [data-dl='icon'],
-  [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='presets']:last-child > [data-dl-part='trigger'] > [data-dl-part='layer'] > [data-dl='icon'] {
+  [data-dl='select'] [data-dl-part='box'] > [data-dl-part='chevron']:last-child > [data-dl='icon'] {
     margin-inline: 0 var(--edge-ink-end);
     translate: 0 calc(-1 * var(--icon-a) * var(--ink-y, 0));
   }
@@ -1347,22 +1373,6 @@
     min-block-size: 0;
   }
 
-  [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger'] {
-    inline-size: 100%;
-    block-size: 100%;
-    place-items: center end;
-    min-inline-size: 0;
-    min-block-size: 0;
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    color: var(--color-text-muted);
-  }
-
-  [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] > [data-dl='menu-button'][data-dl-part='presets'] > [data-dl-part='trigger']:is(:hover, [aria-expanded='true']):enabled {
-    background-color: transparent;
-    color: var(--color-text);
-  }
   /*
    * NumberField (Q40 P2): the text field's label and box (c.field, shared) with a scrub handle before the number and
    * optional steppers after it. Tabular digits so a changing value never shifts.
@@ -1377,7 +1387,7 @@
   }
 
 
-  [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     display: flex;
     align-items: center;
     gap: var(--space-inline-pair);
@@ -1390,20 +1400,20 @@
     transition: border-color var(--duration-change) var(--easing-standard);
   }
 
-  [data-dl='number-field']:is([data-size='xs'], [data-size='s']) [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field']:is([data-size='xs'], [data-size='s']) :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     gap: var(--space-inline-pair);
     padding-inline: var(--c-field-padding-inline-sm);
     font-size: var(--type-body-sm-size);
   }
 
-  [data-dl='number-field'][data-size='xs'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-xs); }
-  [data-dl='number-field'][data-size='s'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-s); }
-  [data-dl='number-field'][data-size='m'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-m); }
-  [data-dl='number-field'][data-size='l'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-l); }
-  [data-dl='number-field'][data-size='xl'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-xl); }
-  [data-dl='number-field'][data-size='xxl'] [data-dl-part='control'] > [data-dl-part='box'] { min-block-size: var(--c-field-size-xxl); }
+  [data-dl='number-field'][data-size='xs'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] { min-block-size: var(--c-field-size-xs); }
+  [data-dl='number-field'][data-size='s'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] { min-block-size: var(--c-field-size-s); }
+  [data-dl='number-field'][data-size='m'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] { min-block-size: var(--c-field-size-m); }
+  [data-dl='number-field'][data-size='l'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] { min-block-size: var(--c-field-size-l); }
+  [data-dl='number-field'][data-size='xl'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] { min-block-size: var(--c-field-size-xl); }
+  [data-dl='number-field'][data-size='xxl'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] { min-block-size: var(--c-field-size-xxl); }
 
-  [data-dl='number-field']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field']:is([data-size='l'], [data-size='xl'], [data-size='xxl']) :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     padding-inline: var(--c-field-padding-inline-lg);
     font-size: var(--type-heading-4-size);
   }
@@ -1457,16 +1467,6 @@
     cursor: none;
   }
 
-  /* Common values: a quiet list button at the box's end. At xs it takes the box's inside height, so the field stays 24 px. */
-  [data-dl='number-field'] [data-dl-part='box'] > [data-dl='menu-button'] {
-    flex: none;
-  }
-
-  [data-dl='number-field'][data-size='xs'] [data-dl-part='box'] > [data-dl='menu-button'] > [data-dl-part='trigger'] {
-    min-block-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
-    min-inline-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
-  }
-
   /* The choice at the box's end (Hug, Fixed, Fill): a quiet word and chevron that opens its menu. Choosing applies at once,
      so it needs no room for a pending state; it stays as narrow as its word and leaves the rest to the number. */
   [data-dl='number-field'] [data-dl-part='box'] > [data-dl-part='choice'] {
@@ -1504,7 +1504,7 @@
     min-inline-size: calc(var(--c-field-size-xs) - 2 * var(--c-field-border-width));
   }
 
-  [data-dl='number-field'][data-scrubbing] [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field'][data-scrubbing] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     border-color: var(--color-map-progress);
   }
 
@@ -1560,20 +1560,20 @@
     cursor: not-allowed;
   }
 
-  [data-dl='number-field'][data-invalid] [data-dl-part='control'] > [data-dl-part='box'],
-  [data-dl='number-field'][data-busy='failed'] [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field'][data-invalid] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'],
+  [data-dl='number-field'][data-busy='failed'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     border-color: var(--color-status-danger-fg);
   }
 
-  [data-dl='number-field'][data-busy='on'] [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field'][data-busy='on'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     border-color: var(--color-map-progress);
   }
 
-  [data-dl='number-field'][data-busy='done'] [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field'][data-busy='done'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     border-color: var(--color-status-success-fg);
   }
 
-  [data-dl='number-field']:has(input:disabled) [data-dl-part='control'] > [data-dl-part='box'] {
+  [data-dl='number-field']:has(input:disabled) :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
     border-color: var(--color-border);
     background-color: var(--color-bg-sunken);
     color: var(--color-text-disabled);
@@ -1581,7 +1581,7 @@
 
 
   @media (forced-colors: active) {
-    [data-dl='number-field'] [data-dl-part='control'] > [data-dl-part='box'] {
+    [data-dl='number-field'] :is([data-dl-part='control'], [data-dl-part='row']) > [data-dl-part='box'] {
       border-color: CanvasText;
     }
   }

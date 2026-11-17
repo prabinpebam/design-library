@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent as ReactPointerEvent, type ReactElement } from 'react';
 import { cssMs } from '../behaviour/anchor';
 import { useCommit } from '../behaviour/commit';
 import { Field } from './Field';
@@ -151,6 +151,7 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
   const input = useRef<HTMLInputElement>(null);
   const root = useRef<HTMLSpanElement>(null);
   const box = useRef<HTMLSpanElement>(null);
+  const row = useRef<HTMLSpanElement>(null);
   const pause = useRef(0);
   const mixed = current === 'mixed';
   const base = numberOf(current);
@@ -358,10 +359,30 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
 
   const handle = glyph ?? icon;
 
+  // Q167: common values are a segment attached after the box (TextField's Search model), never a button inside it.
+  const attach = (field: ReactElement) =>
+    presets && !variable ? (
+      <span ref={row} data-dl-part="row">
+        {field}
+        <MenuButton
+          size={size}
+          iconOnly
+          label={`${label}: common values`}
+          items={presets.map((p) => ({ value: String(p), label: show(p) }))}
+          onSelect={(v) => set(Number(v), 'now')}
+          disabled={disabled}
+          anchor={row}
+          data-dl-part="presets"
+        />
+      </span>
+    ) : (
+      field
+    );
+
   return (
     <span {...data} ref={root} data-dl="number-field" data-size={size} data-busy={phase === 'rest' ? undefined : phase} data-invalid={error ? '' : undefined} data-auto={current === 'auto' ? '' : undefined} data-variable={variable ? '' : undefined} data-scrubbing={scrubbing ? '' : undefined}>
       <Field label={label} error={error} hideLabel={hideLabel}>
-        {(control) => (
+        {(control) => attach(
       <span ref={box} data-dl-part="box" data-dl-ring="">
         {handle && (
           <span data-dl-part="scrub" aria-hidden="true" title={`Drag to change ${label}`} onPointerDown={onScrubDown}>
@@ -391,19 +412,6 @@ export function NumberField({ label, value, onCommit, mode = 'commit', min, max,
           onKeyDown={onKeyDown}
         />
         {variable && !disabled && <Button size={listSize[size]} emphasis="quiet" icon="close" iconOnly label={`Detach ${variable.name}`} onClick={() => { variable.onDetach(); input.current?.focus(); }} />}
-        {presets && !variable && (
-          <MenuButton
-            size={listSize[size]}
-            emphasis="quiet"
-            iconOnly
-            label={`${label}: common values`}
-            items={presets.map((p) => ({ value: String(p), label: show(p) }))}
-            onSelect={(v) => set(Number(v), 'now')}
-            disabled={disabled}
-            anchor={box}
-            data-dl-part="presets"
-          />
-        )}
         {choice && (
           <MenuButton
             size={listSize[size]}

@@ -199,7 +199,7 @@ export default {
     },
     {
       title: 'Auto, units and common values',
-      description: 'The type section of an inspector. Font size offers common sizes in a list; line height can be Auto (type "auto" or empty the box), a number or a %; letter spacing switches between % and px when you type the other unit.',
+      description: 'The type section of an inspector. Font size offers common sizes in a list, a segment attached at the end of the field like the Search segment of a text field; line height can be Auto (type "auto" or empty the box), a number or a %; letter spacing switches between % and px when you type the other unit.',
       code: `<NumberField label="Font size" unit="px" presets={[12, 14, 16, 20, 24]} value={size} onCommit={setSize} />
 <NumberField label="Line height" unit={unit} units={['px', '%']} onUnitChange={setUnit}
   value={lh} auto={{ computed: 19, onAuto: () => setLh('auto') }} onCommit={setLh} />`,

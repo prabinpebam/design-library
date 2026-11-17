@@ -292,8 +292,8 @@
   "tokens": [
     "--border-hairline",
     "--c-button-group-focus-layer",
-    "--c-field-border-width",
-    "--c-field-size-xs",
+    "--c-field-action-edge",
+    "--c-field-action-fill",
     "--c-list-item-padding-block",
     "--c-list-item-padding-inline",
     "--c-menu-button-border",
@@ -335,7 +335,6 @@
     "--color-map-action-fill-pressed",
     "--color-text",
     "--color-text-disabled",
-    "--color-text-muted",
     "--duration-change",
     "--easing-standard",
     "--size-icon-lg",
